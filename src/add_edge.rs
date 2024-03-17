@@ -10,7 +10,7 @@ pub trait AddEdge {
 impl AddEdge for Vec<Vec<usize>> {
     /// # Panics
     ///
-    /// Panics if `s >= self.vertex_count()`.
+    /// May panic if `s` is out of bounds.
     ///
     /// # Complexity
     ///
@@ -26,7 +26,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s >= self.vertex_count()`.
+    /// May panic if `s` is out of bounds.
     ///
     /// # Complexity
     ///

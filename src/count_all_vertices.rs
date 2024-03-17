@@ -3,10 +3,6 @@ pub trait CountAllVertices {
 }
 
 impl<E> CountAllVertices for Vec<E> {
-    /// # Panics
-    ///
-    /// Panics if `s >= self.vertex_count()`.
-    ///
     /// # Complexity
     ///
     /// O(1)

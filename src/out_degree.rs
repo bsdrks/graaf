@@ -10,7 +10,7 @@ pub trait OutDegree {
 impl<E> OutDegree for Vec<Vec<E>> {
     /// # Panics
     ///
-    /// Panics if `s >= self.vertex_count()`.
+    /// May panic if `s` is out of bounds.
     ///
     /// # Complexity
     ///
@@ -26,7 +26,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s >= self.vertex_count()`.
+    /// May panic if `s` is out of bounds.
     ///
     /// # Complexity
     ///

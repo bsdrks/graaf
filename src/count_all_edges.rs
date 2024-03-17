@@ -13,7 +13,7 @@ pub trait CountAllEdges {
 impl<E> CountAllEdges for Vec<Vec<E>> {
     /// # Panics
     ///
-    /// Panics if the number of vertices exceeds `usize::MAX`.
+    /// May panic if the number of edges exceeds `usize::MAX`.
     ///
     /// # Complexity
     ///
@@ -29,7 +29,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if the number of vertices exceeds `usize::MAX`.
+    /// May panic if the number of edges exceeds `usize::MAX`.
     ///
     /// # Complexity
     ///
@@ -45,7 +45,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if the number of vertices exceeds `usize::MAX`.
+    /// May panic if the number of edges exceeds `usize::MAX`.
     ///
     /// # Complexity
     ///

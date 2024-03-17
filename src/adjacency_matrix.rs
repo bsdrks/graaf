@@ -65,7 +65,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s >= V` or `t >= V`.
+    /// May panic if `s` or `t` is out of bounds.
     ///
     /// # Complexity
     ///
@@ -114,7 +114,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s >= V` or `t >= V`.
+    /// May panic if `s` or `t` is out of bounds.
     ///
     /// # Complexity
     ///
@@ -132,7 +132,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `t >= V`.
+    /// May panic if `t` is out of bounds.
     ///
     /// # Complexity
     ///
@@ -160,7 +160,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s >= V`.
+    /// May panic if `s` is out of bounds.
     ///
     /// # Complexity
     ///
@@ -176,7 +176,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s >= V` or `t >= V`.
+    /// May panic if `s` or `t` is out of bounds.
     ///
     /// # Complexity
     ///

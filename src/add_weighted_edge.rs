@@ -10,7 +10,7 @@ pub trait AddWeightedEdge<W> {
 impl<W> AddWeightedEdge<W> for Vec<Vec<(usize, W)>> {
     /// # Panics
     ///
-    /// Panics if `s >= self.vertex_count()`.
+    /// May panic if `s` is out of bounds.
     ///
     /// # Complexity
     ///
@@ -26,7 +26,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s >= self.vertex_count()`.
+    /// May panic if `s` is out of bounds.
     ///
     /// # Complexity
     ///

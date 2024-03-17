@@ -14,7 +14,8 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s >= self.vertex_count()` or if there is no edge `s -> t`.
+    /// May panic if `s` is out of bounds, or if there is no edge from `s` to
+    /// `t`.
     ///
     /// # Complexity
     ///
