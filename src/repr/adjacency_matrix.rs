@@ -1,12 +1,15 @@
 use crate::{
-    AddEdge,
-    CountAllEdges,
-    CountAllVertices,
-    InDegree,
-    IsEdge,
-    IterVertices,
-    OutDegree,
-    RemoveEdge,
+    ops::{
+        AddEdge,
+        CountAllEdges,
+        CountAllVertices,
+        InDegree,
+        IsEdge,
+        IterVertices,
+        OutDegree,
+        RemoveEdge,
+    },
+    IterEdges,
 };
 
 macro_rules! blocks {
@@ -65,7 +68,7 @@ where
 {
     /// # Panics
     ///
-    /// May panic if `s` or `t` is out of bounds.
+    /// Panics if `s` or `t` is out of bounds.
     ///
     /// # Complexity
     ///
@@ -108,13 +111,29 @@ where
     }
 }
 
+impl<const V: usize> InDegree for &AdjacencyMatrix<V>
+where
+    [(); blocks!(V)]:,
+{
+    /// # Panics
+    ///
+    /// Panics if `t` is out of bounds.
+    ///
+    /// # Complexity
+    ///
+    /// O(V)
+    fn in_degree(&self, t: usize) -> usize {
+        (0..V).filter(|&s| self.is_edge(s, t)).count()
+    }
+}
+
 impl<const V: usize> IsEdge for &AdjacencyMatrix<V>
 where
     [(); blocks!(V)]:,
 {
     /// # Panics
     ///
-    /// May panic if `s` or `t` is out of bounds.
+    /// Panics if `s` or `t` is out of bounds.
     ///
     /// # Complexity
     ///
@@ -126,19 +145,15 @@ where
     }
 }
 
-impl<const V: usize> InDegree for &AdjacencyMatrix<V>
+impl<const V: usize> IterEdges for &AdjacencyMatrix<V>
 where
     [(); blocks!(V)]:,
 {
-    /// # Panics
-    ///
-    /// May panic if `t` is out of bounds.
-    ///
     /// # Complexity
     ///
     /// O(V)
-    fn in_degree(&self, t: usize) -> usize {
-        (0..V).filter(|&s| self.is_edge(s, t)).count()
+    fn iter_edges(&self, s: usize) -> impl Iterator<Item = usize> {
+        (0..V).filter(move |&t| self.is_edge(s, t))
     }
 }
 
@@ -160,7 +175,7 @@ where
 {
     /// # Panics
     ///
-    /// May panic if `s` is out of bounds.
+    /// Panics if `s` is out of bounds.
     ///
     /// # Complexity
     ///
@@ -176,7 +191,7 @@ where
 {
     /// # Panics
     ///
-    /// May panic if `s` or `t` is out of bounds.
+    /// Panics if `s` or `t` is out of bounds.
     ///
     /// # Complexity
     ///

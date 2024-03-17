@@ -22,7 +22,31 @@ where
     }
 }
 
+impl<const V: usize, H> InDegree for [HashSet<usize, H>; V]
+where
+    H: BuildHasher,
+{
+    /// # Complexity
+    ///
+    /// TODO: O(E) or O(V)?
+    fn in_degree(&self, t: usize) -> usize {
+        self.iter().filter(|set| set.contains(&t)).count()
+    }
+}
+
 impl<W, H> InDegree for Vec<HashMap<usize, W, H>>
+where
+    H: BuildHasher,
+{
+    /// # Complexity
+    ///
+    /// TODO: O(E) or O(V)?
+    fn in_degree(&self, t: usize) -> usize {
+        self.iter().filter(|map| map.contains_key(&t)).count()
+    }
+}
+
+impl<const V: usize, W, H> InDegree for [HashMap<usize, W, H>; V]
 where
     H: BuildHasher,
 {
