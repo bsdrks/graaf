@@ -32,7 +32,3 @@ pub use ops::{
 mod repr;
 
 pub use repr::AdjacencyMatrix;
-
-mod weight;
-
-pub use weight::Weight;
