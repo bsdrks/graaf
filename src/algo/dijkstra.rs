@@ -33,113 +33,99 @@ pub fn dijkstra<W, G>(
 
 #[cfg(test)]
 mod test {
-    use super::*;
+    use {
+        super::*,
+        crate::{
+            AddEdge,
+            AdjacencyMatrix,
+        },
+        std::collections::HashSet,
+    };
 
-    mod adjacency_list_vec {
-        use super::*;
+    #[test]
+    fn adjacency_list_vec_empty() {
+        let graph = [Vec::new(); 0];
+        let mut dist = Vec::new();
+        let mut heap = BinaryHeap::new();
+        let _ = dijkstra(1, &graph, &mut dist, &mut heap);
 
-        #[test]
-        fn empty() {
-            let graph = [Vec::new(); 0];
-            let mut dist = Vec::new();
-            let mut heap = BinaryHeap::new();
-            let _ = dijkstra(1, &graph, &mut dist, &mut heap);
-
-            assert!(dist.is_empty());
-        }
-
-        #[test]
-        fn small() {
-            let graph: [Vec<usize>; 4] = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
-            let mut dist = vec![0, usize::MAX, usize::MAX, usize::MAX];
-            let mut heap = BinaryHeap::new();
-
-            dist[0] = 0;
-            heap.push((Reverse(0), 0));
-
-            let _ = dijkstra(1, &graph, &mut dist, &mut heap);
-
-            assert_eq!(dist, vec![0, 1, 1, 2]);
-        }
+        assert!(dist.is_empty());
     }
 
-    mod adjacency_list_hash_set {
-        use {
-            super::*,
-            std::collections::HashSet,
-        };
+    #[test]
+    fn adjacency_list_vec_small() {
+        let graph: [Vec<usize>; 4] = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let mut dist = vec![0, usize::MAX, usize::MAX, usize::MAX];
+        let mut heap = BinaryHeap::new();
 
-        #[test]
-        fn empty() {
-            let graph = [HashSet::new(); 0];
-            let mut dist = Vec::new();
-            let mut heap = BinaryHeap::new();
-            let _ = dijkstra(1, &graph, &mut dist, &mut heap);
+        dist[0] = 0;
+        heap.push((Reverse(0), 0));
 
-            assert!(dist.is_empty());
-        }
+        let _ = dijkstra(1, &graph, &mut dist, &mut heap);
 
-        #[test]
-        fn small() {
-            let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]]
-                .into_iter()
-                .map(|v| v.into_iter().collect::<HashSet<_>>())
-                .collect::<Vec<_>>();
-            let mut dist = vec![0, usize::MAX, usize::MAX, usize::MAX];
-            let mut heap = BinaryHeap::new();
-
-            dist[0] = 0;
-            heap.push((Reverse(0), 0));
-
-            let _ = dijkstra(1, &graph, &mut dist, &mut heap);
-
-            assert_eq!(dist, vec![0, 1, 1, 2]);
-        }
+        assert_eq!(dist, vec![0, 1, 1, 2]);
     }
 
-    mod adjacency_matrix {
-        use {
-            super::*,
-            crate::{
-                AddEdge,
-                AdjacencyMatrix,
-            },
-        };
+    #[test]
+    fn adjacency_list_hash_set_empty() {
+        let graph = [HashSet::new(); 0];
+        let mut dist = Vec::new();
+        let mut heap = BinaryHeap::new();
+        let _ = dijkstra(1, &graph, &mut dist, &mut heap);
 
-        #[test]
-        fn small() {
-            let graph = AdjacencyMatrix::<0>::new();
-            let mut dist = Vec::new();
-            let mut heap = BinaryHeap::new();
-            let _ = dijkstra(1, &&graph, &mut dist, &mut heap);
+        assert!(dist.is_empty());
+    }
 
-            assert!(dist.is_empty());
-        }
+    #[test]
+    fn adjacency_list_hash_set_small() {
+        let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]]
+            .into_iter()
+            .map(|v| v.into_iter().collect::<HashSet<_>>())
+            .collect::<Vec<_>>();
+        let mut dist = vec![0, usize::MAX, usize::MAX, usize::MAX];
+        let mut heap = BinaryHeap::new();
 
-        #[test]
-        fn small_adj_matrix() {
-            let mut graph = AdjacencyMatrix::<4>::new();
+        dist[0] = 0;
+        heap.push((Reverse(0), 0));
 
-            graph.add_edge(0, 1);
-            graph.add_edge(0, 2);
-            graph.add_edge(1, 0);
-            graph.add_edge(1, 2);
-            graph.add_edge(1, 3);
-            graph.add_edge(2, 0);
-            graph.add_edge(2, 1);
-            graph.add_edge(2, 3);
-            graph.add_edge(3, 1);
-            graph.add_edge(3, 2);
+        let _ = dijkstra(1, &graph, &mut dist, &mut heap);
 
-            let mut dist = vec![0, usize::MAX, usize::MAX, usize::MAX];
-            let mut heap = BinaryHeap::new();
+        assert_eq!(dist, vec![0, 1, 1, 2]);
+    }
 
-            dist[0] = 0;
-            heap.push((Reverse(0), 0));
+    #[test]
+    fn adjacency_matrix_empty() {
+        let graph = AdjacencyMatrix::<0>::new();
+        let mut dist = Vec::new();
+        let mut heap = BinaryHeap::new();
+        let _ = dijkstra(1, &&graph, &mut dist, &mut heap);
 
-            let _ = dijkstra(1, &&graph, &mut dist, &mut heap);
+        assert!(dist.is_empty());
+    }
 
-            assert_eq!(dist, vec![0, 1, 1, 2]);
-        }
+    #[test]
+    fn adjacency_matrix_small() {
+        let mut graph = AdjacencyMatrix::<4>::new();
+
+        graph.add_edge(0, 1);
+        graph.add_edge(0, 2);
+        graph.add_edge(1, 0);
+        graph.add_edge(1, 2);
+        graph.add_edge(1, 3);
+        graph.add_edge(2, 0);
+        graph.add_edge(2, 1);
+        graph.add_edge(2, 3);
+        graph.add_edge(3, 1);
+        graph.add_edge(3, 2);
+
+        let mut dist = vec![0, usize::MAX, usize::MAX, usize::MAX];
+        let mut heap = BinaryHeap::new();
+
+        dist[0] = 0;
+        heap.push((Reverse(0), 0));
+
+        let _ = dijkstra(1, &&graph, &mut dist, &mut heap);
+
+        assert_eq!(dist, vec![0, 1, 1, 2]);
     }
 }
