@@ -9,7 +9,7 @@ use {
 
 #[must_use]
 pub fn dijkstra<W, G>(
-    increment: W,
+    step: fn(W) -> W,
     graph: &G,
     dist: &mut [W],
     heap: &mut BinaryHeap<(Reverse<W>, usize)>,
@@ -18,7 +18,7 @@ pub fn dijkstra<W, G>(
     W: Add<Output = W> + Copy + Ord,
 {
     while let Some((Reverse(w), s)) = heap.pop() {
-        let w = w + increment;
+        let w = step(w);
 
         for t in graph.iter_edges(s) {
             if w >= dist[t] {
@@ -47,7 +47,7 @@ mod test {
         let graph = [Vec::new(); 0];
         let mut dist = Vec::new();
         let mut heap = BinaryHeap::new();
-        let _ = dijkstra(1, &graph, &mut dist, &mut heap);
+        let _ = dijkstra(|w: usize| w + 1, &graph, &mut dist, &mut heap);
 
         assert!(dist.is_empty());
     }
@@ -61,7 +61,7 @@ mod test {
         dist[0] = 0;
         heap.push((Reverse(0), 0));
 
-        let _ = dijkstra(1, &graph, &mut dist, &mut heap);
+        let _ = dijkstra(|w: usize| w + 1, &graph, &mut dist, &mut heap);
 
         assert_eq!(dist, vec![0, 1, 1, 2]);
     }
@@ -71,7 +71,7 @@ mod test {
         let graph = [HashSet::new(); 0];
         let mut dist = Vec::new();
         let mut heap = BinaryHeap::new();
-        let _ = dijkstra(1, &graph, &mut dist, &mut heap);
+        let _ = dijkstra(|w: usize| w + 1, &graph, &mut dist, &mut heap);
 
         assert!(dist.is_empty());
     }
@@ -90,7 +90,7 @@ mod test {
         dist[0] = 0;
         heap.push((Reverse(0), 0));
 
-        let _ = dijkstra(1, &graph, &mut dist, &mut heap);
+        let _ = dijkstra(|w: usize| w + 1, &graph, &mut dist, &mut heap);
 
         assert_eq!(dist, vec![0, 1, 1, 2]);
     }
@@ -100,7 +100,7 @@ mod test {
         let graph = AdjacencyMatrix::<0>::new();
         let mut dist = Vec::new();
         let mut heap = BinaryHeap::new();
-        let _ = dijkstra(1, &&graph, &mut dist, &mut heap);
+        let _ = dijkstra(|w: usize| w + 1, &&graph, &mut dist, &mut heap);
 
         assert!(dist.is_empty());
     }
@@ -126,7 +126,7 @@ mod test {
         dist[0] = 0;
         heap.push((Reverse(0), 0));
 
-        let _ = dijkstra(1, &&graph, &mut dist, &mut heap);
+        let _ = dijkstra(|w: usize| w + 1, &&graph, &mut dist, &mut heap);
 
         assert_eq!(dist, vec![0, 1, 1, 2]);
     }
