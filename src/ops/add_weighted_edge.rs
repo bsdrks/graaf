@@ -1,6 +1,12 @@
 use std::{
-    collections::HashMap,
-    hash::BuildHasher,
+    collections::{
+        HashMap,
+        HashSet,
+    },
+    hash::{
+        BuildHasher,
+        Hash,
+    },
 };
 
 pub trait AddWeightedEdge<W> {
@@ -33,6 +39,40 @@ impl<const V: usize, W> AddWeightedEdge<W> for [Vec<(usize, W)>; V] {
     }
 }
 
+impl<W, H> AddWeightedEdge<W> for Vec<HashSet<(usize, W), H>>
+where
+    H: BuildHasher,
+    W: Eq + Hash,
+{
+    /// # Panics
+    ///
+    /// Panics if `s` is out of bounds.
+    ///
+    /// # Complexity
+    ///
+    /// O(1)
+    fn add_weighted_edge(&mut self, s: usize, t: usize, w: W) {
+        self[s].insert((t, w));
+    }
+}
+
+impl<W, const V: usize, H> AddWeightedEdge<W> for [HashSet<(usize, W), H>; V]
+where
+    H: BuildHasher,
+    W: Eq + Hash,
+{
+    /// # Panics
+    ///
+    /// Panics if `s` is out of bounds.
+    ///
+    /// # Complexity
+    ///
+    /// O(1)
+    fn add_weighted_edge(&mut self, s: usize, t: usize, w: W) {
+        self[s].insert((t, w));
+    }
+}
+
 impl<W, H> AddWeightedEdge<W> for Vec<HashMap<usize, W, H>>
 where
     H: BuildHasher,
@@ -62,5 +102,22 @@ where
     /// O(1)
     fn add_weighted_edge(&mut self, s: usize, t: usize, w: W) {
         self[s].insert(t, w);
+    }
+}
+
+impl<W, H> AddWeightedEdge<W> for HashMap<usize, HashMap<usize, W, H>, H>
+where
+    H: BuildHasher,
+    HashMap<usize, W, H>: Default,
+{
+    /// # Panics
+    ///
+    /// Panics if `s` is out of bounds.
+    ///
+    /// # Complexity
+    ///
+    /// O(1)
+    fn add_weighted_edge(&mut self, s: usize, t: usize, w: W) {
+        self.entry(s).or_default().insert(t, w);
     }
 }
