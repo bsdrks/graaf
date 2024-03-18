@@ -106,7 +106,10 @@ mod tests {
         crate::IterEdges,
         std::{
             assert_matches::assert_matches,
-            collections::HashSet,
+            collections::{
+                HashMap,
+                HashSet,
+            },
         },
     };
 
@@ -208,7 +211,7 @@ mod tests {
 
     #[test]
     fn hash_map_vec() {
-        let graph: std::collections::HashMap<usize, Vec<usize>> = [
+        let graph: HashMap<usize, Vec<usize>> = [
             (0, vec![1, 2]),
             (1, vec![0, 2, 3]),
             (2, vec![0, 1, 3]),
@@ -247,7 +250,7 @@ mod tests {
 
     #[test]
     fn hash_map_hash_set() {
-        let graph: std::collections::HashMap<usize, HashSet<usize>> = [
+        let graph: HashMap<usize, HashSet<usize>> = [
             (0, HashSet::from([1, 2])),
             (1, HashSet::from([0, 2, 3])),
             (2, HashSet::from([0, 1, 3])),
