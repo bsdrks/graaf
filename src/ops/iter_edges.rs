@@ -74,7 +74,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is out of bounds.
+    /// Panics if `s` is not in the map.
     ///
     /// # Complexity
     ///
@@ -90,7 +90,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is out of bounds.
+    /// Panics if `s` is not in the map.
     ///
     /// # Complexity
     ///
