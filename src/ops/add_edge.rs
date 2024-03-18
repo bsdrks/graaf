@@ -1,5 +1,8 @@
 use std::{
-    collections::HashSet,
+    collections::{
+        HashMap,
+        HashSet,
+    },
     hash::BuildHasher,
 };
 
@@ -64,5 +67,30 @@ where
     /// O(1)
     fn add_edge(&mut self, s: usize, t: usize) {
         self[s].insert(t);
+    }
+}
+
+impl<H> AddEdge for HashMap<usize, Vec<usize>, H>
+where
+    H: BuildHasher,
+{
+    /// # Complexity
+    ///
+    /// O(1)
+    fn add_edge(&mut self, s: usize, t: usize) {
+        self.entry(s).or_default().push(t);
+    }
+}
+
+impl<H> AddEdge for HashMap<usize, HashSet<usize, H>, H>
+where
+    H: BuildHasher,
+    HashSet<usize, H>: Default,
+{
+    /// # Complexity
+    ///
+    /// O(1)
+    fn add_edge(&mut self, s: usize, t: usize) {
+        self.entry(s).or_default().insert(t);
     }
 }
