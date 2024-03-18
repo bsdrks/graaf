@@ -74,7 +74,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the map.
+    /// Panics if `s` is not in the graph.
     ///
     /// # Complexity
     ///
@@ -90,7 +90,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the map.
+    /// Panics if `s` is not in the graph.
     ///
     /// # Complexity
     ///

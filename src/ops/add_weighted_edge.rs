@@ -110,10 +110,6 @@ where
     H: BuildHasher,
     HashMap<usize, W, H>: Default,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is out of bounds.
-    ///
     /// # Complexity
     ///
     /// O(1)
