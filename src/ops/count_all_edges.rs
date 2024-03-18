@@ -41,7 +41,7 @@ where
     }
 }
 
-impl<W, H> CountAllEdges for Vec<HashMap<usize, W, H>>
+impl<K, W, H> CountAllEdges for Vec<HashMap<K, W, H>>
 where
     H: BuildHasher,
 {
@@ -88,7 +88,7 @@ where
     }
 }
 
-impl<const V: usize, W, H> CountAllEdges for [HashMap<usize, W, H>; V]
+impl<const V: usize, K, W, H> CountAllEdges for [HashMap<K, W, H>; V]
 where
     H: BuildHasher,
 {
@@ -106,7 +106,7 @@ where
 
 // HashMap
 
-impl<K, V, H> CountAllEdges for HashMap<K, Vec<V>, H>
+impl<K, T, H> CountAllEdges for HashMap<K, Vec<T>, H>
 where
     H: BuildHasher,
 {
@@ -122,7 +122,7 @@ where
     }
 }
 
-impl<K, H> CountAllEdges for HashMap<K, HashSet<usize, H>, H>
+impl<K, T, H> CountAllEdges for HashMap<K, HashSet<T, H>, H>
 where
     H: BuildHasher,
 {
@@ -138,7 +138,7 @@ where
     }
 }
 
-impl<K, W, H> CountAllEdges for HashMap<K, HashMap<usize, W, H>, H>
+impl<K, W, H> CountAllEdges for HashMap<K, HashMap<K, W, H>, H>
 where
     H: BuildHasher,
 {
