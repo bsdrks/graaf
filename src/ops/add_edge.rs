@@ -10,21 +10,9 @@ pub trait AddEdge {
     fn add_edge(&mut self, s: usize, t: usize);
 }
 
-impl AddEdge for Vec<Vec<usize>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is out of bounds or if the new capacity of the vector
-    /// exceeds `isize::MAX`.
-    ///
-    /// # Complexity
-    ///
-    /// O(1)
-    fn add_edge(&mut self, s: usize, t: usize) {
-        self[s].push(t);
-    }
-}
+// Vec
 
-impl<const V: usize> AddEdge for [Vec<usize>; V] {
+impl AddEdge for Vec<Vec<usize>> {
     /// # Panics
     ///
     /// Panics if `s` is out of bounds or if the new capacity of the vector
@@ -54,6 +42,22 @@ where
     }
 }
 
+// Array
+
+impl<const V: usize> AddEdge for [Vec<usize>; V] {
+    /// # Panics
+    ///
+    /// Panics if `s` is out of bounds or if the new capacity of the vector
+    /// exceeds `isize::MAX`.
+    ///
+    /// # Complexity
+    ///
+    /// O(1)
+    fn add_edge(&mut self, s: usize, t: usize) {
+        self[s].push(t);
+    }
+}
+
 impl<const V: usize, H> AddEdge for [HashSet<usize, H>; V]
 where
     H: BuildHasher,
@@ -69,6 +73,8 @@ where
         self[s].insert(t);
     }
 }
+
+// HashMap
 
 impl<H> AddEdge for HashMap<usize, Vec<usize>, H>
 where
