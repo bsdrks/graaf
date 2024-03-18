@@ -78,10 +78,12 @@ mod test {
 
     #[test]
     fn adjacency_list_hash_set_small() {
-        let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]]
-            .into_iter()
-            .map(|v| v.into_iter().collect::<HashSet<_>>())
-            .collect::<Vec<_>>();
+        let graph = [
+            HashSet::from([1, 2]),
+            HashSet::from([0, 2, 3]),
+            HashSet::from([0, 1, 3]),
+            HashSet::from([1, 2]),
+        ];
         let mut dist = vec![0, usize::MAX, usize::MAX, usize::MAX];
         let mut heap = BinaryHeap::new();
 
