@@ -11,7 +11,7 @@ impl<T> IterVertices for Vec<T> {
     }
 }
 
-impl<const V: usize> IterVertices for [(); V] {
+impl<T, const V: usize> IterVertices for [T; V] {
     /// # Complexity
     ///
     /// O(V)
