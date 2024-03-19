@@ -13,3 +13,11 @@ divan = "0.1.14"
 [[bench]]
 name = "adjacency_list"
 harness = false
+
+[[bench]]
+name = "add_edge"
+harness = false
+
+[[bench]]
+name = "count_all_edges"
+harness = false
