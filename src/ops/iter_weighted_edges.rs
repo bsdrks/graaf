@@ -6,6 +6,10 @@ impl<W> IterWeightedEdges<W> for Vec<Vec<(usize, W)>>
 where
     W: Copy,
 {
+    /// # Panics
+    ///
+    /// Panics if `s` is out of bounds.
+    ///
     /// # Complexity
     ///
     /// O(1)
@@ -18,6 +22,10 @@ impl<const V: usize, W> IterWeightedEdges<W> for [Vec<(usize, W)>; V]
 where
     W: Copy,
 {
+    /// # Panics
+    ///
+    /// Panics if `s` is out of bounds.
+    ///
     /// # Complexity
     ///
     /// O(1)
