@@ -10,20 +10,9 @@ pub trait IterEdges {
     fn iter_edges(&self, s: usize) -> impl Iterator<Item = usize>;
 }
 
-impl IterEdges for Vec<Vec<usize>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is out of bounds.
-    ///
-    /// # Complexity
-    ///
-    /// O(V)
-    fn iter_edges(&self, s: usize) -> impl Iterator<Item = usize> {
-        self[s].iter().copied()
-    }
-}
+// Vec
 
-impl<const V: usize> IterEdges for [Vec<usize>; V] {
+impl IterEdges for Vec<Vec<usize>> {
     /// # Panics
     ///
     /// Panics if `s` is out of bounds.
@@ -52,6 +41,21 @@ where
     }
 }
 
+// Arr
+
+impl<const V: usize> IterEdges for [Vec<usize>; V] {
+    /// # Panics
+    ///
+    /// Panics if `s` is out of bounds.
+    ///
+    /// # Complexity
+    ///
+    /// O(V)
+    fn iter_edges(&self, s: usize) -> impl Iterator<Item = usize> {
+        self[s].iter().copied()
+    }
+}
+
 impl<const V: usize, H> IterEdges for [HashSet<usize, H>; V]
 where
     H: BuildHasher,
@@ -67,6 +71,8 @@ where
         self[s].iter().copied()
     }
 }
+
+// HashMap
 
 impl<H> IterEdges for HashMap<usize, Vec<usize>, H>
 where
