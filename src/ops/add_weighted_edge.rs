@@ -61,7 +61,7 @@ where
     }
 }
 
-// Array
+// Arr
 
 impl<const V: usize, W> AddWeightedEdge<W> for [Vec<(usize, W)>; V] {
     /// # Panics
