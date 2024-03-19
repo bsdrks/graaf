@@ -42,7 +42,7 @@ where
     }
 }
 
-// Array
+// Arr
 
 impl<const V: usize> AddEdge for [Vec<usize>; V] {
     /// # Panics
