@@ -11,7 +11,7 @@ edition = "2021"
 divan = "0.1.14"
 
 [[bench]]
-name = "adjacency_list"
+name = "new"
 harness = false
 
 [[bench]]
