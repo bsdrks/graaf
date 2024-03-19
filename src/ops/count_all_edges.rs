@@ -57,7 +57,7 @@ where
     }
 }
 
-// Array
+// Arr
 
 impl<const V: usize, T> CountAllEdges for [Vec<T>; V] {
     /// # Panics

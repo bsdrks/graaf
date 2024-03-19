@@ -21,7 +21,7 @@ impl<T> CountAllVertices for Vec<T> {
     }
 }
 
-// Array
+// Arr
 
 impl<const V: usize, T> CountAllVertices for [T; V] {
     /// # Complexity
