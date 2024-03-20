@@ -6,6 +6,7 @@ use std::{
     hash::BuildHasher,
 };
 
+/// A trait for adding edges to a graph.
 pub trait AddEdge {
     fn add_edge(&mut self, s: usize, t: usize);
 }
