@@ -85,7 +85,7 @@ where
     ///
     /// O(1)
     fn add_edge(&mut self, s: usize, t: usize) {
-        self.entry(s).or_default().push(t);
+        self.get_mut(&s).unwrap().push(t);
     }
 }
 
@@ -98,6 +98,6 @@ where
     ///
     /// O(1)
     fn add_edge(&mut self, s: usize, t: usize) {
-        self.entry(s).or_default().insert(t);
+        self.get_mut(&s).unwrap().insert(t);
     }
 }
