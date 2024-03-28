@@ -86,6 +86,7 @@ where
     fn add_edge(&mut self, s: usize, t: usize) {
         assert!(s < V, "s is not in the graph");
         assert!(t < V, "t is not in the graph");
+
         let i = Self::index(s, t);
 
         self.blocks[i >> 6] |= Self::mask(i);
