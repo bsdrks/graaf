@@ -1,3 +1,7 @@
-mod dijkstra;
+mod dijkstra_unweighted;
+mod dijkstra_weighted;
 
-pub use dijkstra::dijkstra;
+pub use {
+    dijkstra_unweighted::DijkstraUnweighted,
+    dijkstra_weighted::DijkstraWeighted,
+};

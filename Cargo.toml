@@ -21,3 +21,7 @@ harness = false
 [[bench]]
 name = "count_all_edges"
 harness = false
+
+[[bench]]
+name = "kattis_shortestpath1"
+harness = false

@@ -1,61 +1,48 @@
-use std::{
-    collections::{
-        HashMap,
-        HashSet,
-    },
-    hash::BuildHasher,
-};
-
+/// A trait for graph representations to iterate over all edges in a graph.
 pub trait IterAllEdges {
-    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)>;
+    /// Returns an iterator that iterates over all edges in a graph.
+    fn iter_all_edges(&self) -> impl Iterator<Item = &(usize, usize)>;
 }
 
 // Vec
 
 impl IterAllEdges for Vec<(usize, usize)> {
-    /// # Complexity
-    ///
-    /// O(V)
-    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter().copied()
+    fn iter_all_edges(&self) -> impl Iterator<Item = &(usize, usize)> {
+        self.iter()
     }
 }
 
 // Arr
 
 impl<const V: usize> IterAllEdges for [(usize, usize); V] {
-    /// # Complexity
-    ///
-    /// O(V)
-    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter().copied()
+    fn iter_all_edges(&self) -> impl Iterator<Item = &(usize, usize)> {
+        self.iter()
     }
 }
 
-// HashMap
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-impl<H> IterAllEdges for HashMap<usize, Vec<usize>, H>
-where
-    H: BuildHasher,
-{
-    /// # Complexity
-    ///
-    /// O(V)
-    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .flat_map(|(s, t)| t.iter().copied().map(move |t| (*s, t)))
+    #[test]
+    fn vec() {
+        let graph = vec![(0, 1), (1, 2), (2, 0)];
+        let mut iter = graph.iter_all_edges();
+
+        assert_eq!(iter.next(), Some(&(0, 1)));
+        assert_eq!(iter.next(), Some(&(1, 2)));
+        assert_eq!(iter.next(), Some(&(2, 0)));
+        assert_eq!(iter.next(), None);
     }
-}
 
-impl<H> IterAllEdges for HashMap<usize, HashSet<usize, H>>
-where
-    H: BuildHasher,
-{
-    /// # Complexity
-    ///
-    /// O(V)
-    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .flat_map(|(s, ts)| ts.iter().map(move |t| (*s, *t)))
+    #[test]
+    fn arr() {
+        let graph = [(0, 1), (1, 2), (2, 0)];
+        let mut iter = graph.iter_all_edges();
+
+        assert_eq!(iter.next(), Some(&(0, 1)));
+        assert_eq!(iter.next(), Some(&(1, 2)));
+        assert_eq!(iter.next(), Some(&(2, 0)));
+        assert_eq!(iter.next(), None);
     }
 }

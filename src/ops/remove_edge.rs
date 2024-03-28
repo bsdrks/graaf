@@ -4,10 +4,16 @@ use std::{
         HashSet,
     },
     hash::BuildHasher,
-    ops::IndexMut,
 };
 
+/// A trait for removing an edge from a graph.
 pub trait RemoveEdge {
+    /// Remove the edge from `s` to `t`.
+    ///
+    /// # Arguments
+    ///
+    /// * `s`: The source vertex.
+    /// * `t`: The target vertex.
     fn remove_edge(&mut self, s: usize, t: usize);
 }
 
@@ -19,13 +25,9 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is out of bounds.
-    ///
-    /// # Complexity
-    ///
-    /// O(1)
+    /// Panics if `s` is not in the graph.
     fn remove_edge(&mut self, s: usize, t: usize) {
-        self[s].remove(&t);
+        let _ = self[s].remove(&t);
     }
 }
 
@@ -35,13 +37,9 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is out of bounds.
-    ///
-    /// # Complexity
-    ///
-    /// O(1)
+    /// Panics if `s` is not in the graph.
     fn remove_edge(&mut self, s: usize, t: usize) {
-        self[s].remove(&t);
+        let _ = self[s].remove(&t);
     }
 }
 
@@ -53,13 +51,9 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is out of bounds.
-    ///
-    /// # Complexity
-    ///
-    /// O(1)
+    /// Panics if `s` is not in the graph.
     fn remove_edge(&mut self, s: usize, t: usize) {
-        self[s].remove(&t);
+        let _ = self[s].remove(&t);
     }
 }
 
@@ -69,48 +63,310 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is out of bounds.
-    ///
-    /// # Complexity
-    ///
-    /// O(1)
+    /// Panics if `s` is not in the graph.
     fn remove_edge(&mut self, s: usize, t: usize) {
-        self[s].remove(&t);
+        let _ = self[s].remove(&t);
     }
 }
 
 // HashMap
 
-impl<H> RemoveEdge for HashMap<usize, HashSet<usize, H>>
+impl<H> RemoveEdge for HashMap<usize, HashSet<usize, H>, H>
 where
     H: BuildHasher,
-    Self: IndexMut<usize, Output = HashSet<usize, H>>,
 {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    ///
-    /// # Complexity
-    ///
-    /// O(1)
     fn remove_edge(&mut self, s: usize, t: usize) {
-        self[s].remove(&t);
+        let _ = self.get_mut(&s).unwrap().remove(&t);
     }
 }
 
-impl<H, W> RemoveEdge for HashMap<usize, HashMap<usize, W, H>>
+impl<H, W> RemoveEdge for HashMap<usize, HashMap<usize, W, H>, H>
 where
     H: BuildHasher,
-    Self: IndexMut<usize, Output = HashMap<usize, W, H>>,
 {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    ///
-    /// # Complexity
-    ///
-    /// O(1)
     fn remove_edge(&mut self, s: usize, t: usize) {
-        self[s].remove(&t);
+        let _ = self.get_mut(&s).unwrap().remove(&t);
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn vec_hash_set() {
+        let mut graph = vec![
+            HashSet::from([1, 2]),
+            HashSet::from([0]),
+            HashSet::from([1]),
+        ];
+
+        assert_eq!(
+            graph,
+            vec![
+                HashSet::from([1, 2]),
+                HashSet::from([0]),
+                HashSet::from([1])
+            ]
+        );
+
+        graph.remove_edge(0, 1);
+
+        assert_eq!(
+            graph,
+            vec![HashSet::from([2]), HashSet::from([0]), HashSet::from([1])]
+        );
+
+        graph.remove_edge(0, 2);
+
+        assert_eq!(
+            graph,
+            vec![HashSet::new(), HashSet::from([0]), HashSet::from([1])]
+        );
+
+        graph.remove_edge(1, 0);
+
+        assert_eq!(
+            graph,
+            vec![HashSet::new(), HashSet::new(), HashSet::from([1])]
+        );
+    }
+
+    #[test]
+    fn vec_hash_map() {
+        let mut graph = vec![
+            HashMap::from([(1, 1), (2, 1)]),
+            HashMap::from([(0, 1)]),
+            HashMap::from([(1, 1)]),
+        ];
+
+        assert_eq!(
+            graph,
+            vec![
+                HashMap::from([(1, 1), (2, 1)]),
+                HashMap::from([(0, 1)]),
+                HashMap::from([(1, 1)])
+            ]
+        );
+
+        graph.remove_edge(0, 1);
+
+        assert_eq!(
+            graph,
+            vec![
+                HashMap::from([(2, 1)]),
+                HashMap::from([(0, 1)]),
+                HashMap::from([(1, 1)])
+            ]
+        );
+
+        graph.remove_edge(0, 2);
+
+        assert_eq!(
+            graph,
+            vec![
+                HashMap::new(),
+                HashMap::from([(0, 1)]),
+                HashMap::from([(1, 1)])
+            ]
+        );
+
+        graph.remove_edge(1, 0);
+
+        assert_eq!(
+            graph,
+            vec![HashMap::new(), HashMap::new(), HashMap::from([(1, 1)])]
+        );
+    }
+
+    #[test]
+    fn arr_hash_set() {
+        let mut graph = [
+            HashSet::from([1, 2]),
+            HashSet::from([0]),
+            HashSet::from([1]),
+        ];
+
+        assert_eq!(
+            graph,
+            [
+                HashSet::from([1, 2]),
+                HashSet::from([0]),
+                HashSet::from([1])
+            ]
+        );
+
+        graph.remove_edge(0, 1);
+
+        assert_eq!(
+            graph,
+            [HashSet::from([2]), HashSet::from([0]), HashSet::from([1])]
+        );
+
+        graph.remove_edge(0, 2);
+
+        assert_eq!(
+            graph,
+            [HashSet::new(), HashSet::from([0]), HashSet::from([1])]
+        );
+
+        graph.remove_edge(1, 0);
+
+        assert_eq!(graph, [HashSet::new(), HashSet::new(), HashSet::from([1])]);
+    }
+
+    #[test]
+    fn arr_hash_map() {
+        let mut graph = [
+            HashMap::from([(1, 1), (2, 1)]),
+            HashMap::from([(0, 1)]),
+            HashMap::from([(1, 1)]),
+        ];
+
+        assert_eq!(
+            graph,
+            [
+                HashMap::from([(1, 1), (2, 1)]),
+                HashMap::from([(0, 1)]),
+                HashMap::from([(1, 1)])
+            ]
+        );
+
+        graph.remove_edge(0, 1);
+
+        assert_eq!(
+            graph,
+            [
+                HashMap::from([(2, 1)]),
+                HashMap::from([(0, 1)]),
+                HashMap::from([(1, 1)])
+            ]
+        );
+
+        graph.remove_edge(0, 2);
+
+        assert_eq!(
+            graph,
+            [
+                HashMap::new(),
+                HashMap::from([(0, 1)]),
+                HashMap::from([(1, 1)])
+            ]
+        );
+
+        graph.remove_edge(1, 0);
+
+        assert_eq!(
+            graph,
+            [HashMap::new(), HashMap::new(), HashMap::from([(1, 1)])]
+        );
+    }
+
+    #[test]
+    fn hash_map_hash_set() {
+        let mut graph: HashMap<usize, HashSet<usize>> = HashMap::from([
+            (0, HashSet::from([1, 2])),
+            (1, HashSet::from([0])),
+            (2, HashSet::from([1])),
+        ]);
+
+        assert_eq!(
+            graph,
+            HashMap::from([
+                (0, HashSet::from([1, 2])),
+                (1, HashSet::from([0])),
+                (2, HashSet::from([1]))
+            ])
+        );
+
+        graph.remove_edge(0, 1);
+
+        assert_eq!(
+            graph,
+            HashMap::from([
+                (0, HashSet::from([2])),
+                (1, HashSet::from([0])),
+                (2, HashSet::from([1]))
+            ])
+        );
+
+        graph.remove_edge(0, 2);
+
+        assert_eq!(
+            graph,
+            HashMap::from([
+                (0, HashSet::new()),
+                (1, HashSet::from([0])),
+                (2, HashSet::from([1]))
+            ])
+        );
+
+        graph.remove_edge(1, 0);
+
+        assert_eq!(
+            graph,
+            HashMap::from([
+                (0, HashSet::new()),
+                (1, HashSet::new()),
+                (2, HashSet::from([1]))
+            ])
+        );
+    }
+
+    #[test]
+    fn hash_map_hash_map() {
+        let mut graph: HashMap<usize, HashMap<usize, usize>> = HashMap::from([
+            (0, HashMap::from([(1, 1), (2, 1)])),
+            (1, HashMap::from([(0, 1)])),
+            (2, HashMap::from([(1, 1)])),
+        ]);
+
+        assert_eq!(
+            graph,
+            HashMap::from([
+                (0, HashMap::from([(1, 1), (2, 1)])),
+                (1, HashMap::from([(0, 1)])),
+                (2, HashMap::from([(1, 1)]))
+            ])
+        );
+
+        graph.remove_edge(0, 1);
+
+        assert_eq!(
+            graph,
+            HashMap::from([
+                (0, HashMap::from([(2, 1)])),
+                (1, HashMap::from([(0, 1)])),
+                (2, HashMap::from([(1, 1)]))
+            ])
+        );
+
+        graph.remove_edge(0, 2);
+
+        assert_eq!(
+            graph,
+            HashMap::from([
+                (0, HashMap::new()),
+                (1, HashMap::from([(0, 1)])),
+                (2, HashMap::from([(1, 1)]))
+            ])
+        );
+
+        graph.remove_edge(1, 0);
+
+        assert_eq!(
+            graph,
+            HashMap::from([
+                (0, HashMap::new()),
+                (1, HashMap::new()),
+                (2, HashMap::from([(1, 1)]))
+            ])
+        );
     }
 }
