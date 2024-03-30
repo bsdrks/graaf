@@ -1,3 +1,8 @@
+use std::{
+    collections::HashSet,
+    hash::BuildHasher,
+};
+
 /// A trait for graph representations to iterate over all edges in a graph.
 pub trait IterAllEdges {
     /// Returns an iterator that iterates over all edges in a graph.
@@ -20,9 +25,23 @@ impl<const V: usize> IterAllEdges for [(usize, usize); V] {
     }
 }
 
+// HashSet
+
+impl<H> IterAllEdges for HashSet<(usize, usize), H>
+where
+    H: BuildHasher,
+{
+    fn iter_all_edges(&self) -> impl Iterator<Item = &(usize, usize)> {
+        self.iter()
+    }
+}
+
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use {
+        super::*,
+        std::assert_matches::assert_matches,
+    };
 
     #[test]
     fn vec() {
@@ -43,6 +62,17 @@ mod tests {
         assert_eq!(iter.next(), Some(&(0, 1)));
         assert_eq!(iter.next(), Some(&(1, 2)));
         assert_eq!(iter.next(), Some(&(2, 0)));
+        assert_eq!(iter.next(), None);
+    }
+
+    #[test]
+    fn hash_set() {
+        let graph: HashSet<(usize, usize)> = HashSet::from([(0, 1), (1, 2), (2, 0)]);
+        let mut iter = graph.iter_all_edges();
+
+        assert_matches!(iter.next(), Some(&(0, 1) | &(1, 2) | &(2, 0)));
+        assert_matches!(iter.next(), Some(&(0, 1) | &(1, 2) | &(2, 0)));
+        assert_matches!(iter.next(), Some(&(0, 1) | &(1, 2) | &(2, 0)));
         assert_eq!(iter.next(), None);
     }
 }

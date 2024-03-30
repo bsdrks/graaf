@@ -23,5 +23,16 @@ name = "count_all_edges"
 harness = false
 
 [[bench]]
-name = "kattis_shortestpath1"
+name = "crosscountry"
+path = "benches/dijkstra_weighted/crosscountry.rs"
+harness = false
+
+[[bench]]
+name = "shortestpath1"
+path = "benches/dijkstra_weighted/shortestpath1.rs"
+harness = false
+
+[[bench]]
+name = "small_graph1"
+path = "benches/dijkstra_weighted/small_graph1.rs"
 harness = false

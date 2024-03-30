@@ -3,10 +3,10 @@ use crate::{
         AddEdge,
         CountAllEdges,
         CountAllVertices,
-        InDegree,
+        Indegree,
         IsEdge,
         IterVertices,
-        OutDegree,
+        Outdegree,
         RemoveEdge,
     },
     IterEdges,
@@ -117,7 +117,7 @@ where
     }
 }
 
-impl<const V: usize> InDegree for AdjacencyMatrix<V>
+impl<const V: usize> Indegree for AdjacencyMatrix<V>
 where
     [(); blocks!(V)]:,
 {
@@ -169,7 +169,7 @@ where
     }
 }
 
-impl<const V: usize> OutDegree for AdjacencyMatrix<V>
+impl<const V: usize> Outdegree for AdjacencyMatrix<V>
 where
     [(); blocks!(V)]:,
 {

@@ -6,9 +6,9 @@ use std::{
     hash::BuildHasher,
 };
 
-/// A trait for getting the in-degree of a vertex.
-pub trait InDegree {
-    /// Returns the in-degree of a vertex.
+/// A trait for getting the indegree of a vertex.
+pub trait Indegree {
+    /// Returns the indegree of a vertex.
     ///
     /// # Arguments
     ///
@@ -18,7 +18,7 @@ pub trait InDegree {
 
 // Vec
 
-impl<H> InDegree for Vec<HashSet<usize, H>>
+impl<H> Indegree for Vec<HashSet<usize, H>>
 where
     H: BuildHasher,
 {
@@ -27,7 +27,7 @@ where
     }
 }
 
-impl<W, H> InDegree for Vec<HashMap<usize, W, H>>
+impl<W, H> Indegree for Vec<HashMap<usize, W, H>>
 where
     H: BuildHasher,
 {
@@ -38,7 +38,7 @@ where
 
 // Arr
 
-impl<const V: usize, H> InDegree for [HashSet<usize, H>; V]
+impl<const V: usize, H> Indegree for [HashSet<usize, H>; V]
 where
     H: BuildHasher,
 {
@@ -47,7 +47,7 @@ where
     }
 }
 
-impl<const V: usize, W, H> InDegree for [HashMap<usize, W, H>; V]
+impl<const V: usize, W, H> Indegree for [HashMap<usize, W, H>; V]
 where
     H: BuildHasher,
 {
@@ -58,7 +58,7 @@ where
 
 // HashMap
 
-impl<H> InDegree for HashMap<usize, HashSet<usize, H>, H>
+impl<H> Indegree for HashMap<usize, HashSet<usize, H>, H>
 where
     H: BuildHasher,
 {

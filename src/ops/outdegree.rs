@@ -6,9 +6,9 @@ use std::{
     hash::BuildHasher,
 };
 
-/// A trait for getting the out-degree of a vertex.
-pub trait OutDegree {
-    /// Returns the out-degree of a vertex.
+/// A trait for getting the outdegree of a vertex.
+pub trait Outdegree {
+    /// Returns the outdegree of a vertex.
     ///
     /// # Arguments
     ///
@@ -18,7 +18,7 @@ pub trait OutDegree {
 
 // Vec
 
-impl<T> OutDegree for Vec<Vec<T>> {
+impl<T> Outdegree for Vec<Vec<T>> {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
@@ -27,7 +27,7 @@ impl<T> OutDegree for Vec<Vec<T>> {
     }
 }
 
-impl<H> OutDegree for Vec<HashSet<usize, H>>
+impl<H> Outdegree for Vec<HashSet<usize, H>>
 where
     H: BuildHasher,
 {
@@ -41,7 +41,7 @@ where
 
 // Arr
 
-impl<const V: usize, T> OutDegree for [Vec<T>; V] {
+impl<const V: usize, T> Outdegree for [Vec<T>; V] {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
@@ -50,7 +50,7 @@ impl<const V: usize, T> OutDegree for [Vec<T>; V] {
     }
 }
 
-impl<const V: usize, H> OutDegree for [HashSet<usize, H>; V]
+impl<const V: usize, H> Outdegree for [HashSet<usize, H>; V]
 where
     H: BuildHasher,
 {
@@ -64,7 +64,7 @@ where
 
 // HashMap
 
-impl<H> OutDegree for HashMap<usize, Vec<usize>, H>
+impl<H> Outdegree for HashMap<usize, Vec<usize>, H>
 where
     H: BuildHasher,
 {
@@ -76,7 +76,7 @@ where
     }
 }
 
-impl<H> OutDegree for HashMap<usize, HashSet<usize, H>, H>
+impl<H> Outdegree for HashMap<usize, HashSet<usize, H>, H>
 where
     H: BuildHasher,
 {
@@ -88,7 +88,7 @@ where
     }
 }
 
-impl<H> OutDegree for HashMap<usize, HashMap<usize, usize, H>, H>
+impl<H> Outdegree for HashMap<usize, HashMap<usize, usize, H>, H>
 where
     H: BuildHasher,
 {
