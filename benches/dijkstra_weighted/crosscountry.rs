@@ -4,7 +4,7 @@ fn main() {
 
 use {
     divan::Bencher,
-    graph::DijkstraWeighted,
+    graaf::DijkstraWeighted,
     std::{
         cmp::Reverse,
         collections::{
