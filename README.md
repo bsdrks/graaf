@@ -2,6 +2,8 @@
 
 Functions and types for working with graphs.
 
+**WARNING: this crate is pre-alpha**
+
 ## Graph representations
 
 ### Adjacency list
