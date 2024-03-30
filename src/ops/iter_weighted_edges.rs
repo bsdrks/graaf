@@ -123,6 +123,7 @@ mod tests {
             vec![(2, 3), (3, 4), (4, 5)],
             vec![(3, 4), (4, 5), (5, 6)],
         ];
+
         let mut iter = graph.iter_weighted_edges(1);
 
         assert_eq!(iter.next(), Some((2, 3)));
@@ -138,6 +139,7 @@ mod tests {
             HashSet::from([(2, 3), (3, 4), (4, 5)]),
             HashSet::from([(3, 4), (4, 5), (5, 6)]),
         ];
+
         let mut iter = graph.iter_weighted_edges(1);
 
         assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
@@ -153,6 +155,7 @@ mod tests {
             vec![(2, 3), (3, 4), (4, 5)],
             vec![(3, 4), (4, 5), (5, 6)],
         ];
+
         let mut iter = graph.iter_weighted_edges(1);
 
         assert_eq!(iter.next(), Some((2, 3)));
@@ -168,6 +171,7 @@ mod tests {
             HashSet::from([(2, 3), (3, 4), (4, 5)]),
             HashSet::from([(3, 4), (4, 5), (5, 6)]),
         ];
+
         let mut iter = graph.iter_weighted_edges(1);
 
         assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
@@ -183,6 +187,7 @@ mod tests {
             (1, vec![(2, 3), (3, 4), (4, 5)]),
             (2, vec![(3, 4), (4, 5), (5, 6)]),
         ]);
+
         let mut iter = graph.iter_weighted_edges(1);
 
         assert_eq!(iter.next(), Some((2, 3)));
@@ -198,6 +203,7 @@ mod tests {
             (1, HashSet::from([(2, 3), (3, 4), (4, 5)])),
             (2, HashSet::from([(3, 4), (4, 5), (5, 6)])),
         ]);
+
         let mut iter = graph.iter_weighted_edges(1);
 
         assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
@@ -213,6 +219,7 @@ mod tests {
             (1, HashMap::from([(2, 3), (3, 4), (4, 5)])),
             (2, HashMap::from([(3, 4), (4, 5), (5, 6)])),
         ]);
+
         let mut iter = graph.iter_weighted_edges(1);
 
         assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));

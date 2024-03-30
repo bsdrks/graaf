@@ -13,7 +13,7 @@ pub trait Indegree {
     /// # Arguments
     ///
     /// * `t`: The target vertex.
-    fn in_degree(&self, t: usize) -> usize;
+    fn indegree(&self, t: usize) -> usize;
 }
 
 // Vec
@@ -22,7 +22,7 @@ impl<H> Indegree for Vec<HashSet<usize, H>>
 where
     H: BuildHasher,
 {
-    fn in_degree(&self, t: usize) -> usize {
+    fn indegree(&self, t: usize) -> usize {
         self.iter().filter(|set| set.contains(&t)).count()
     }
 }
@@ -31,7 +31,7 @@ impl<W, H> Indegree for Vec<HashMap<usize, W, H>>
 where
     H: BuildHasher,
 {
-    fn in_degree(&self, t: usize) -> usize {
+    fn indegree(&self, t: usize) -> usize {
         self.iter().filter(|map| map.contains_key(&t)).count()
     }
 }
@@ -42,7 +42,7 @@ impl<const V: usize, H> Indegree for [HashSet<usize, H>; V]
 where
     H: BuildHasher,
 {
-    fn in_degree(&self, t: usize) -> usize {
+    fn indegree(&self, t: usize) -> usize {
         self.iter().filter(|set| set.contains(&t)).count()
     }
 }
@@ -51,7 +51,7 @@ impl<const V: usize, W, H> Indegree for [HashMap<usize, W, H>; V]
 where
     H: BuildHasher,
 {
-    fn in_degree(&self, t: usize) -> usize {
+    fn indegree(&self, t: usize) -> usize {
         self.iter().filter(|map| map.contains_key(&t)).count()
     }
 }
@@ -62,7 +62,7 @@ impl<H> Indegree for HashMap<usize, HashSet<usize, H>, H>
 where
     H: BuildHasher,
 {
-    fn in_degree(&self, t: usize) -> usize {
+    fn indegree(&self, t: usize) -> usize {
         self.values()
             .map(|set| set.iter().filter(|&&u| u == t).count())
             .sum()
@@ -78,9 +78,9 @@ mod tests {
         let graph: Vec<HashSet<usize>> =
             vec![HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
 
-        assert_eq!(graph.in_degree(0), 0);
-        assert_eq!(graph.in_degree(1), 1);
-        assert_eq!(graph.in_degree(2), 2);
+        assert_eq!(graph.indegree(0), 0);
+        assert_eq!(graph.indegree(1), 1);
+        assert_eq!(graph.indegree(2), 2);
     }
 
     #[test]
@@ -91,9 +91,9 @@ mod tests {
             HashMap::from([]),
         ];
 
-        assert_eq!(graph.in_degree(0), 0);
-        assert_eq!(graph.in_degree(1), 1);
-        assert_eq!(graph.in_degree(2), 2);
+        assert_eq!(graph.indegree(0), 0);
+        assert_eq!(graph.indegree(1), 1);
+        assert_eq!(graph.indegree(2), 2);
     }
 
     #[test]
@@ -101,9 +101,9 @@ mod tests {
         let graph: [HashSet<usize>; 3] =
             [HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
 
-        assert_eq!(graph.in_degree(0), 0);
-        assert_eq!(graph.in_degree(1), 1);
-        assert_eq!(graph.in_degree(2), 2);
+        assert_eq!(graph.indegree(0), 0);
+        assert_eq!(graph.indegree(1), 1);
+        assert_eq!(graph.indegree(2), 2);
     }
 
     #[test]
@@ -114,9 +114,9 @@ mod tests {
             HashMap::from([]),
         ];
 
-        assert_eq!(graph.in_degree(0), 0);
-        assert_eq!(graph.in_degree(1), 1);
-        assert_eq!(graph.in_degree(2), 2);
+        assert_eq!(graph.indegree(0), 0);
+        assert_eq!(graph.indegree(1), 1);
+        assert_eq!(graph.indegree(2), 2);
     }
 
     #[test]
@@ -127,8 +127,8 @@ mod tests {
             (2, HashSet::new()),
         ]);
 
-        assert_eq!(graph.in_degree(0), 0);
-        assert_eq!(graph.in_degree(1), 1);
-        assert_eq!(graph.in_degree(2), 2);
+        assert_eq!(graph.indegree(0), 0);
+        assert_eq!(graph.indegree(1), 1);
+        assert_eq!(graph.indegree(2), 2);
     }
 }

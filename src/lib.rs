@@ -5,9 +5,14 @@
 //! ## Example
 //!
 //! ```
-//! use graaf::AdjacencyMatrix;
+//! use graaf::{
+//!     AddEdge,
+//!     AdjacencyMatrix,
+//!     Indegree,
+//!     Outdegree,
+//! };
 //!
-//! let mut adj = AdjacencyMatrix::<usize, 4>::new();
+//! let mut adj = AdjacencyMatrix::<4>::new();
 //!
 //! adj.add_edge(0, 1);
 //! adj.add_edge(0, 2);

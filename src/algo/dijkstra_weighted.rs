@@ -85,7 +85,7 @@ mod test {
     }
 
     #[test]
-    fn small_graph_1() {
+    fn small_graph1() {
         let graph: [Vec<(usize, usize)>; 9] = [
             vec![(1, 4), (7, 8)],
             vec![(0, 4), (2, 8), (7, 11)],

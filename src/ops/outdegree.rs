@@ -13,7 +13,7 @@ pub trait Outdegree {
     /// # Arguments
     ///
     /// * `s`: The source vertex.
-    fn out_degree(&self, s: usize) -> usize;
+    fn outdegree(&self, s: usize) -> usize;
 }
 
 // Vec
@@ -22,7 +22,7 @@ impl<T> Outdegree for Vec<Vec<T>> {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn out_degree(&self, s: usize) -> usize {
+    fn outdegree(&self, s: usize) -> usize {
         self[s].len()
     }
 }
@@ -34,7 +34,7 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn out_degree(&self, s: usize) -> usize {
+    fn outdegree(&self, s: usize) -> usize {
         self[s].len()
     }
 }
@@ -45,7 +45,7 @@ impl<const V: usize, T> Outdegree for [Vec<T>; V] {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn out_degree(&self, s: usize) -> usize {
+    fn outdegree(&self, s: usize) -> usize {
         self[s].len()
     }
 }
@@ -57,7 +57,7 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn out_degree(&self, s: usize) -> usize {
+    fn outdegree(&self, s: usize) -> usize {
         self[s].len()
     }
 }
@@ -71,7 +71,7 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn out_degree(&self, s: usize) -> usize {
+    fn outdegree(&self, s: usize) -> usize {
         self[&s].len()
     }
 }
@@ -83,7 +83,7 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn out_degree(&self, s: usize) -> usize {
+    fn outdegree(&self, s: usize) -> usize {
         self[&s].len()
     }
 }
@@ -95,7 +95,7 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn out_degree(&self, s: usize) -> usize {
+    fn outdegree(&self, s: usize) -> usize {
         self[&s].len()
     }
 }
@@ -108,9 +108,9 @@ mod tests {
     fn vec_vec() {
         let graph = vec![vec![1, 2], vec![0], vec![1]];
 
-        assert_eq!(graph.out_degree(0), 2);
-        assert_eq!(graph.out_degree(1), 1);
-        assert_eq!(graph.out_degree(2), 1);
+        assert_eq!(graph.outdegree(0), 2);
+        assert_eq!(graph.outdegree(1), 1);
+        assert_eq!(graph.outdegree(2), 1);
     }
 
     #[test]
@@ -121,18 +121,18 @@ mod tests {
             HashSet::from([1]),
         ];
 
-        assert_eq!(graph.out_degree(0), 2);
-        assert_eq!(graph.out_degree(1), 1);
-        assert_eq!(graph.out_degree(2), 1);
+        assert_eq!(graph.outdegree(0), 2);
+        assert_eq!(graph.outdegree(1), 1);
+        assert_eq!(graph.outdegree(2), 1);
     }
 
     #[test]
     fn arr_vec() {
         let graph = [vec![1, 2], vec![0], vec![1]];
 
-        assert_eq!(graph.out_degree(0), 2);
-        assert_eq!(graph.out_degree(1), 1);
-        assert_eq!(graph.out_degree(2), 1);
+        assert_eq!(graph.outdegree(0), 2);
+        assert_eq!(graph.outdegree(1), 1);
+        assert_eq!(graph.outdegree(2), 1);
     }
 
     #[test]
@@ -143,18 +143,18 @@ mod tests {
             HashSet::from([1]),
         ];
 
-        assert_eq!(graph.out_degree(0), 2);
-        assert_eq!(graph.out_degree(1), 1);
-        assert_eq!(graph.out_degree(2), 1);
+        assert_eq!(graph.outdegree(0), 2);
+        assert_eq!(graph.outdegree(1), 1);
+        assert_eq!(graph.outdegree(2), 1);
     }
 
     #[test]
     fn hash_map_vec() {
         let graph = HashMap::from([(0, vec![1, 2]), (1, vec![0]), (2, vec![1])]);
 
-        assert_eq!(graph.out_degree(0), 2);
-        assert_eq!(graph.out_degree(1), 1);
-        assert_eq!(graph.out_degree(2), 1);
+        assert_eq!(graph.outdegree(0), 2);
+        assert_eq!(graph.outdegree(1), 1);
+        assert_eq!(graph.outdegree(2), 1);
     }
 
     #[test]
@@ -165,9 +165,9 @@ mod tests {
             (2, HashSet::from([1])),
         ]);
 
-        assert_eq!(graph.out_degree(0), 2);
-        assert_eq!(graph.out_degree(1), 1);
-        assert_eq!(graph.out_degree(2), 1);
+        assert_eq!(graph.outdegree(0), 2);
+        assert_eq!(graph.outdegree(1), 1);
+        assert_eq!(graph.outdegree(2), 1);
     }
 
     #[test]
@@ -178,8 +178,8 @@ mod tests {
             (2, HashMap::from([(1, 1)])),
         ]);
 
-        assert_eq!(graph.out_degree(0), 2);
-        assert_eq!(graph.out_degree(1), 1);
-        assert_eq!(graph.out_degree(2), 1);
+        assert_eq!(graph.outdegree(0), 2);
+        assert_eq!(graph.outdegree(1), 1);
+        assert_eq!(graph.outdegree(2), 1);
     }
 }

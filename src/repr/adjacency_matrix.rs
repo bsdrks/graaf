@@ -18,7 +18,8 @@ macro_rules! blocks {
     };
 }
 
-/// An adjacency matrix representation of a graph.
+/// An adjacency matrix representation of an unweighted directed graph stored as
+/// a bit array.
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd)]
 pub struct AdjacencyMatrix<const V: usize>
 where
@@ -124,7 +125,7 @@ where
     /// # Panics
     ///
     /// Panics if `t >= V`.
-    fn in_degree(&self, t: usize) -> usize {
+    fn indegree(&self, t: usize) -> usize {
         assert!(t < V, "t is not in the graph");
 
         (0..V).filter(|&s| self.is_edge(s, t)).count()
@@ -176,7 +177,7 @@ where
     /// # Panics
     ///
     /// Panics if `s >= V`.
-    fn out_degree(&self, s: usize) -> usize {
+    fn outdegree(&self, s: usize) -> usize {
         assert!(s < V, "s is not in the graph");
 
         (0..V).filter(|&t| self.is_edge(s, t)).count()
@@ -303,27 +304,26 @@ mod tests {
     }
 
     #[test]
-    fn in_degree() {
+    fn indegree() {
         let mut graph = AdjacencyMatrix::<3>::new();
 
-        assert_eq!(graph.in_degree(0), 0);
-        assert_eq!(graph.in_degree(1), 0);
-        assert_eq!(graph.in_degree(2), 0);
+        assert_eq!(graph.indegree(0), 0);
+        assert_eq!(graph.indegree(1), 0);
+        assert_eq!(graph.indegree(2), 0);
 
         graph.add_edge(0, 1);
         graph.add_edge(0, 2);
 
-        assert_eq!(graph.in_degree(0), 0);
-        assert_eq!(graph.in_degree(1), 1);
-        assert_eq!(graph.in_degree(2), 1);
+        assert_eq!(graph.indegree(0), 0);
+        assert_eq!(graph.indegree(1), 1);
+        assert_eq!(graph.indegree(2), 1);
     }
 
     #[test]
     #[should_panic(expected = "t is not in the graph")]
-    fn in_degree_t_gte_v() {
+    fn indegree_t_gte_v() {
         let graph = AdjacencyMatrix::<3>::new();
-
-        let _ = graph.in_degree(3);
+        let _ = graph.indegree(3);
     }
 
     #[test]
@@ -368,7 +368,6 @@ mod tests {
     #[should_panic(expected = "s is not in the graph")]
     fn iter_edges_s_gte_v() {
         let graph = AdjacencyMatrix::<3>::new();
-
         let _ = graph.iter_edges(3);
     }
 
@@ -380,28 +379,27 @@ mod tests {
     }
 
     #[test]
-    fn out_degree() {
+    fn outdegree() {
         let mut graph = AdjacencyMatrix::<3>::new();
 
-        assert_eq!(graph.out_degree(0), 0);
-        assert_eq!(graph.out_degree(1), 0);
-        assert_eq!(graph.out_degree(2), 0);
+        assert_eq!(graph.outdegree(0), 0);
+        assert_eq!(graph.outdegree(1), 0);
+        assert_eq!(graph.outdegree(2), 0);
 
         graph.add_edge(0, 1);
         graph.add_edge(0, 2);
         graph.add_edge(2, 1);
 
-        assert_eq!(graph.out_degree(0), 2);
-        assert_eq!(graph.out_degree(1), 0);
-        assert_eq!(graph.out_degree(2), 1);
+        assert_eq!(graph.outdegree(0), 2);
+        assert_eq!(graph.outdegree(1), 0);
+        assert_eq!(graph.outdegree(2), 1);
     }
 
     #[test]
     #[should_panic(expected = "s is not in the graph")]
-    fn out_degree_s_gte_v() {
+    fn outdegree_s_gte_v() {
         let graph = AdjacencyMatrix::<3>::new();
-
-        let _ = graph.out_degree(3);
+        let _ = graph.outdegree(3);
     }
 
     #[test]

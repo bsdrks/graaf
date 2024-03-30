@@ -26,7 +26,9 @@ Functions and types for working with graphs.
 
 ### Adjacency matrix
 
-- `AdjacencyMatrix`
+`AdjacencyMatrix`
+
+An adjacency matrix representation of an unweighted directed graph stored as a bit array.
 
 ### Edge list
 
