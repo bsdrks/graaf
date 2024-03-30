@@ -1,6 +1,6 @@
 # Graaf
 
-This crate contains functions and types for working with graphs.
+Functions and types for working with graphs.
 
 ## Graph representations
 

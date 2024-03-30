@@ -3,6 +3,7 @@
 //! A simple graph library.
 #![deny(
     clippy::all,
+    clippy::cargo,
     clippy::nursery,
     clippy::pedantic,
     clippy::missing_const_for_fn,

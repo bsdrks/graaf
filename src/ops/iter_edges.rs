@@ -40,6 +40,33 @@ use std::{
 /// assert_eq!(iter.next(), Some(2));
 /// assert_eq!(iter.next(), None);
 /// ```
+///
+/// The order of the edges is not guaranteed for, e.g., `Vec<HashSet<_>>`:
+///
+/// ```
+/// #![feature(assert_matches)]
+///
+/// use {
+///     graaf::IterEdges,
+///     std::{
+///         assert_matches::assert_matches,
+///         collections::HashSet
+///     }
+/// };
+///
+/// let graph = vec![
+///     HashSet::from([1, 2]),
+///     HashSet::from([0, 2, 3]),
+///     HashSet::from([0, 1, 3]),
+///     HashSet::from([1, 2]),
+/// ];
+///
+/// let mut iter = graph.iter_edges(0);
+///
+/// assert_matches!(iter.next(), Some(1 | 2));
+/// assert_matches!(iter.next(), Some(1 | 2));
+/// assert_eq!(iter.next(), None);
+/// ```
 pub trait IterEdges {
     /// Returns an iterator over the edges of the vertex `s`.
     ///
