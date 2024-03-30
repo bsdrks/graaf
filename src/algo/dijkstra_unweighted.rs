@@ -13,7 +13,6 @@ pub trait DijkstraUnweighted<W> {
     ///
     /// # Arguments
     ///
-    /// * `self`: The graph.
     /// * `step`: A function that calculates the accumulated distance.
     /// * `dist`: The distances from the source vertices.
     /// * `heap`: The vertices to visit.

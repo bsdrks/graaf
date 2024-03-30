@@ -1,11 +1,31 @@
 //! # Graph
 //!
 //! Functions and types for working with graphs
+//!
+//! ## Example
+//!
+//! ```
+//! use graaf::AdjacencyMatrix;
+//!
+//! let mut adj = AdjacencyMatrix::<usize, 4>::new();
+//!
+//! adj.add_edge(0, 1);
+//! adj.add_edge(0, 2);
+//! adj.add_edge(1, 3);
+//! adj.add_edge(2, 3);
+//!
+//! assert_eq!(adj.indegree(0), 0);
+//! assert_eq!(adj.indegree(1), 1);
+//! assert_eq!(adj.indegree(2), 1);
+//! assert_eq!(adj.indegree(3), 2);
+//!
+//! assert_eq!(adj.outdegree(0), 2);
+//! assert_eq!(adj.outdegree(1), 1);
+//! assert_eq!(adj.outdegree(2), 1);
+//! assert_eq!(adj.outdegree(3), 0);
+//! ```
+#![deny(clippy::all, clippy::cargo, clippy::nursery, clippy::pedantic)]
 #![deny(
-    clippy::all,
-    clippy::cargo,
-    clippy::nursery,
-    clippy::pedantic,
     clippy::missing_const_for_fn,
     clippy::missing_errors_doc,
     clippy::missing_panics_doc,
@@ -14,6 +34,8 @@
     missing_copy_implementations,
     missing_debug_implementations,
     missing_docs,
+    rustdoc::missing_crate_level_docs,
+    rustdoc::missing_doc_code_examples,
     rust_2018_idioms,
     trivial_casts,
     trivial_numeric_casts,
@@ -23,7 +45,7 @@
     variant_size_differences
 )]
 #![allow(incomplete_features)]
-#![feature(assert_matches, generic_const_exprs)]
+#![feature(assert_matches, generic_const_exprs, rustdoc_missing_doc_code_examples)]
 
 mod algo;
 mod ops;

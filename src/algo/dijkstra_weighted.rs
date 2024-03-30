@@ -13,7 +13,6 @@ pub trait DijkstraWeighted<W> {
     ///
     /// # Arguments
     ///
-    /// * `self`: The graph.
     /// * `step`: A function that calculates the accumulated weight.
     /// * `dist`: The distances from the source vertices.
     /// * `heap`: The vertices to visit.
@@ -56,7 +55,7 @@ mod test {
     use super::*;
 
     #[test]
-    fn kattis_shortestpath1() {
+    fn shortestpath1() {
         let graph: [Vec<(usize, usize)>; 4] =
             [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
 
@@ -69,7 +68,7 @@ mod test {
     }
 
     #[test]
-    fn kattis_crosscountry() {
+    fn crosscountry() {
         let graph: [Vec<(usize, usize)>; 4] = [
             vec![(1, 1), (2, 3), (3, 14)],
             vec![(0, 2), (2, 4), (3, 22)],
