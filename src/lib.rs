@@ -1,6 +1,6 @@
 //! # Graph
 //!
-//! A simple graph library.
+//! Functions and types for working with graphs
 #![deny(
     clippy::all,
     clippy::cargo,
