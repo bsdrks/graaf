@@ -35,25 +35,32 @@ This crate contains functions and types for working with graphs.
 - `HashSet<(usize, usize)>`
 - `HashSet<(usize, usize, W)>`
 
-## Graph operations
+## Graph operation traits
 
-- Add edge
-- Add weighted edge
-- Count all edges
-- Count all vertices
-- Edge weight
-- Indegree
-- Is edge
-- Iter all edges
-- Iter all weighted edges
-- Iter edges
-- Iter vertices
-- Iter weighted edges
-- Outdegree
-- Remove edge
-- Vertex weight
+- `AddEdge` adds an edge to an unweighted graph
+- `AddWeightedEdge` adds an edge to a weighted graph
+- `CountAllEdges` counts all the edges in a graph
+- `CountAllVertices` counts all the vertices in a graph
+- `EdgeWeight` returns the weight of an edge
+- `Indegree` returns the indegree of an edge
+- `IsEdge` returns whether an edge exists in a graph
+- `IterAllEdges` iterates over all the edges in an unweighted graph
+- `IterAllWeightedEdges` iterates over all the edges in a weighted graph
+- `IterEdges` iterates over all the edges from a vertex in an unweighted graph
+- `IterVertices` iterates over all the vertices in a graph
+- `IterWeightedEdges` iterates over all the edges from a vertex in a weighted graph
+- `Outdegree` returns the outdegree of an edge
+- `RemoveEdge` removes an edge from a graph
+- `VertexWeight` returns the weight of a vertex
 
 ## Algorithms
 
-- Dijkstra's algorithm for unweighted directed graphs
-- Dijkstra's algorithm for weighted directed graphs
+### Shortest path
+
+`DijkstraUnweighted`
+
+Dijkstra's algorithm with binary heap for unweighted directed graphs. Works on graph representations that implement `AddEdge`.
+
+`DijkstraWeighted`
+
+Dijkstra's algorithm with binary heap for weighted directed graphs. Works on graph representations that implement `AddWeightedEdge`.
