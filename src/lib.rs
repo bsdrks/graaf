@@ -1,4 +1,4 @@
-//! # Graph
+//! # Graaf
 //!
 //! Functions and types for working with graphs
 //!
