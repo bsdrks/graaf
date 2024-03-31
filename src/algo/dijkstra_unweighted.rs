@@ -99,54 +99,32 @@ mod test {
             vec![3, 4, 6],
         ];
 
-        assert_eq!(
-            dijkstra_sssp_unweighted(&graph, 0),
-            [0, 1, 2, 1, 2, 3, 3, 2]
-        );
-
-        assert_eq!(
-            dijkstra_sssp_unweighted(&graph, 1),
-            [1, 0, 1, 2, 3, 4, 4, 3]
-        );
-
-        assert_eq!(
-            dijkstra_sssp_unweighted(&graph, 2),
-            [2, 1, 0, 3, 4, 5, 5, 4]
-        );
-
-        assert_eq!(
-            dijkstra_sssp_unweighted(&graph, 3),
-            [1, 2, 3, 0, 1, 2, 2, 1]
-        );
-
-        assert_eq!(
-            dijkstra_sssp_unweighted(&graph, 4),
-            [2, 3, 4, 1, 0, 1, 1, 1]
-        );
-
-        assert_eq!(
-            dijkstra_sssp_unweighted(&graph, 5),
-            [3, 4, 5, 2, 1, 0, 1, 2]
-        );
-
-        assert_eq!(
-            dijkstra_sssp_unweighted(&graph, 6),
-            [3, 4, 5, 2, 1, 1, 0, 1]
-        );
-
-        assert_eq!(
-            dijkstra_sssp_unweighted(&graph, 7),
-            [2, 3, 4, 1, 1, 2, 1, 0]
-        );
+        for (i, &d) in [
+            [0, 1, 2, 1, 2, 3, 3, 2],
+            [1, 0, 1, 2, 3, 4, 4, 3],
+            [2, 1, 0, 3, 4, 5, 5, 4],
+            [1, 2, 3, 0, 1, 2, 2, 1],
+            [2, 3, 4, 1, 0, 1, 1, 1],
+            [3, 4, 5, 2, 1, 0, 1, 2],
+            [3, 4, 5, 2, 1, 1, 0, 1],
+            [2, 3, 4, 1, 1, 2, 1, 0],
+        ]
+        .iter()
+        .enumerate()
+        {
+            assert_eq!(dijkstra_sssp_unweighted(&graph, i), d);
+        }
     }
 
     #[test]
     fn small_graph2() {
         let graph: [Vec<usize>; 4] = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        assert!(dijkstra_sssp_unweighted(&graph, 0) == vec![0, 1, 1, 2]);
-        assert!(dijkstra_sssp_unweighted(&graph, 1) == vec![1, 0, 1, 1]);
-        assert!(dijkstra_sssp_unweighted(&graph, 2) == vec![1, 1, 0, 1]);
-        assert!(dijkstra_sssp_unweighted(&graph, 3) == vec![2, 1, 1, 0]);
+        for (i, &d) in [[0, 1, 3, 2], [1, 0, 2, 1], [2, 1, 0, 1], [2, 3, 1, 0]]
+            .iter()
+            .enumerate()
+        {
+            assert_eq!(dijkstra_sssp_unweighted(&graph, i), d);
+        }
     }
 }
