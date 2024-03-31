@@ -23,21 +23,29 @@ jobs:
           components: rustfmt, clippy
 
   clippy:
+    runs-on: ubuntu-latest
+
     steps:
       - name: Run clippy
         run: cargo clippy --verbose
 
   fmt:
+    runs-on: ubuntu-latest
+
     steps:
       - name: Check formatting
         run: cargo fmt --check --verbose
 
   test:
+    runs-on: ubuntu-latest
+
     steps:
       - name: Run tests
         run: cargo test --verbose
 
   doc:
+    runs-on: ubuntu-latest
+
     steps:
       - name: Generate documentation
         run: cargo doc --verbose
