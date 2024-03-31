@@ -1,12 +1,12 @@
-use std::{
-    collections::{
+use {
+    core::hash::BuildHasher,
+    std::collections::{
         HashMap,
         HashSet,
     },
-    hash::BuildHasher,
 };
 
-/// A trait for getting the indegree of a vertex.
+/// A trait to get the indegree of a given vertex
 pub trait Indegree {
     /// Returns the indegree of a vertex.
     ///

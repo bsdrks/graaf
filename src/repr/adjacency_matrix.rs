@@ -1,15 +1,13 @@
-use crate::{
-    ops::{
-        AddEdge,
-        CountAllEdges,
-        CountAllVertices,
-        Indegree,
-        IsEdge,
-        IterVertices,
-        Outdegree,
-        RemoveEdge,
-    },
+use crate::ops::{
+    AddEdge,
+    CountAllEdges,
+    CountAllVertices,
+    Indegree,
+    IsEdge,
     IterEdges,
+    IterVertices,
+    Outdegree,
+    RemoveEdge,
 };
 
 macro_rules! blocks {
@@ -19,7 +17,7 @@ macro_rules! blocks {
 }
 
 /// An adjacency matrix representation of an unweighted directed graph stored as
-/// a bit array.
+/// a bit array
 #[derive(Clone, Debug, Eq, PartialEq, PartialOrd)]
 pub struct AdjacencyMatrix<const V: usize>
 where

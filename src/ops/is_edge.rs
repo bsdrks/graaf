@@ -1,12 +1,12 @@
-use std::{
-    collections::{
+use {
+    core::hash::BuildHasher,
+    std::collections::{
         HashMap,
         HashSet,
     },
-    hash::BuildHasher,
 };
 
-/// A trait for checking if an edge exists in a graph.
+/// A trait to check if an edge exists between two vertices
 pub trait IsEdge {
     /// Checks if there is an edge from `s` to `t`.
     ///

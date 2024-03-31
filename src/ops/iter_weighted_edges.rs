@@ -1,12 +1,12 @@
-use std::{
-    collections::{
+use {
+    core::hash::BuildHasher,
+    std::collections::{
         HashMap,
         HashSet,
     },
-    hash::BuildHasher,
 };
 
-/// A trait for iterating over the edges of a vertex in a weighted graph.
+/// A trait to iterate over all weighted edges with a given source vertex
 pub trait IterWeightedEdges<W> {
     /// Returns an iterator over the edges of the vertex `s`.
     ///

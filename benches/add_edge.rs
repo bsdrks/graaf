@@ -22,7 +22,7 @@ macro_rules! bench_local_add_edge_complete_graph {
 mod add_edge {
     use {
         divan::Bencher,
-        graaf::AddEdge,
+        graaf::ops::AddEdge,
         std::{
             array::from_fn,
             collections::{

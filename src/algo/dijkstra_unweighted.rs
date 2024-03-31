@@ -1,15 +1,17 @@
+extern crate alloc;
+
 use {
-    crate::IterEdges,
-    std::{
-        cmp::Reverse,
-        collections::BinaryHeap,
+    crate::ops::{
+        CountAllVertices,
+        IterEdges,
     },
+    alloc::collections::BinaryHeap,
+    core::cmp::Reverse,
 };
 
-/// A trait for representations of unweighted directed graphs that implement
-/// Dijkstra's algorithm.
+/// Dijkstra's algorithm with binary-heap for unweighted graphs
 pub trait DijkstraUnweighted<W> {
-    /// Dijkstra's algorithm for a directed unweighted graph.
+    /// Run Dijkstra's algorithm on a directed unweighted graph
     ///
     /// # Arguments
     ///
@@ -22,6 +24,26 @@ pub trait DijkstraUnweighted<W> {
         dist: &mut [W],
         heap: &mut BinaryHeap<(Reverse<W>, usize)>,
     );
+}
+
+/// Single-source shortest path
+///
+/// # Arguments
+///
+/// * `graph`: The graph.
+/// * `s`: The source vertex.
+pub fn dijkstra_sssp_unweighted<G>(graph: &G, s: usize) -> Vec<usize>
+where
+    G: CountAllVertices + DijkstraUnweighted<usize>,
+{
+    let mut dist = vec![usize::MAX; graph.count_all_vertices()];
+    let mut heap = BinaryHeap::from([(Reverse(0), s)]);
+
+    dist[s] = 0;
+
+    graph.dijkstra(|w| w + 1, &mut dist, &mut heap);
+
+    dist
 }
 
 impl<W, T> DijkstraUnweighted<W> for T
@@ -52,17 +74,10 @@ where
 
 #[cfg(test)]
 mod test {
-    use {
-        super::*,
-        crate::{
-            AddEdge,
-            AdjacencyMatrix,
-        },
-        std::collections::HashSet,
-    };
+    use super::*;
 
     #[test]
-    fn adjacency_list_arr_vec_empty() {
+    fn empty_graph() {
         let graph: [Vec<usize>; 0] = [];
         let mut dist = Vec::new();
         let mut heap = BinaryHeap::new();
@@ -72,69 +87,66 @@ mod test {
     }
 
     #[test]
-    fn adjacency_list_arr_vec_small() {
-        let graph: [Vec<usize>; 4] = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
-        let mut dist = vec![0, usize::MAX, usize::MAX, usize::MAX];
-        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-        let () = graph.dijkstra(|w: usize| w + 1, &mut dist, &mut heap);
-
-        assert_eq!(dist, vec![0, 1, 1, 2]);
-    }
-
-    #[test]
-    fn adjacency_list_arr_hash_set_empty() {
-        let graph: [Vec<usize>; 0] = [];
-        let mut dist = Vec::new();
-        let mut heap = BinaryHeap::new();
-        let () = graph.dijkstra(|w: usize| w + 1, &mut dist, &mut heap);
-
-        assert!(dist.is_empty());
-    }
-
-    #[test]
-    fn adjacency_list_arr_hash_set_small() {
-        let graph = [
-            HashSet::from([1, 2]),
-            HashSet::from([0, 2, 3]),
-            HashSet::from([0, 1, 3]),
-            HashSet::from([1, 2]),
+    fn small_graph1() {
+        let graph: [Vec<usize>; 8] = [
+            vec![1, 3],
+            vec![0, 2],
+            vec![1],
+            vec![0, 4, 7],
+            vec![3, 5, 6, 7],
+            vec![4, 6],
+            vec![4, 5, 7],
+            vec![3, 4, 6],
         ];
-        let mut dist = vec![0, usize::MAX, usize::MAX, usize::MAX];
-        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-        let () = graph.dijkstra(|w: usize| w + 1, &mut dist, &mut heap);
 
-        assert_eq!(dist, vec![0, 1, 1, 2]);
+        assert_eq!(
+            dijkstra_sssp_unweighted(&graph, 0),
+            [0, 1, 2, 1, 2, 3, 3, 2]
+        );
+
+        assert_eq!(
+            dijkstra_sssp_unweighted(&graph, 1),
+            [1, 0, 1, 2, 3, 4, 4, 3]
+        );
+
+        assert_eq!(
+            dijkstra_sssp_unweighted(&graph, 2),
+            [2, 1, 0, 3, 4, 5, 5, 4]
+        );
+
+        assert_eq!(
+            dijkstra_sssp_unweighted(&graph, 3),
+            [1, 2, 3, 0, 1, 2, 2, 1]
+        );
+
+        assert_eq!(
+            dijkstra_sssp_unweighted(&graph, 4),
+            [2, 3, 4, 1, 0, 1, 1, 1]
+        );
+
+        assert_eq!(
+            dijkstra_sssp_unweighted(&graph, 5),
+            [3, 4, 5, 2, 1, 0, 1, 2]
+        );
+
+        assert_eq!(
+            dijkstra_sssp_unweighted(&graph, 6),
+            [3, 4, 5, 2, 1, 1, 0, 1]
+        );
+
+        assert_eq!(
+            dijkstra_sssp_unweighted(&graph, 7),
+            [2, 3, 4, 1, 1, 2, 1, 0]
+        );
     }
 
     #[test]
-    fn adjacency_matrix_empty() {
-        let graph = AdjacencyMatrix::<0>::new();
-        let mut dist = Vec::new();
-        let mut heap = BinaryHeap::new();
-        let () = graph.dijkstra(|w: usize| w + 1, &mut dist, &mut heap);
+    fn small_graph2() {
+        let graph: [Vec<usize>; 4] = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        assert!(dist.is_empty());
-    }
-
-    #[test]
-    fn adjacency_matrix_small() {
-        let mut graph = AdjacencyMatrix::<4>::new();
-
-        graph.add_edge(0, 1);
-        graph.add_edge(0, 2);
-        graph.add_edge(1, 0);
-        graph.add_edge(1, 2);
-        graph.add_edge(1, 3);
-        graph.add_edge(2, 0);
-        graph.add_edge(2, 1);
-        graph.add_edge(2, 3);
-        graph.add_edge(3, 1);
-        graph.add_edge(3, 2);
-
-        let mut dist = vec![0, usize::MAX, usize::MAX, usize::MAX];
-        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-        let () = graph.dijkstra(|w: usize| w + 1, &mut dist, &mut heap);
-
-        assert_eq!(dist, vec![0, 1, 1, 2]);
+        assert!(dijkstra_sssp_unweighted(&graph, 0) == vec![0, 1, 1, 2]);
+        assert!(dijkstra_sssp_unweighted(&graph, 1) == vec![1, 0, 1, 1]);
+        assert!(dijkstra_sssp_unweighted(&graph, 2) == vec![1, 1, 0, 1]);
+        assert!(dijkstra_sssp_unweighted(&graph, 3) == vec![2, 1, 1, 0]);
     }
 }

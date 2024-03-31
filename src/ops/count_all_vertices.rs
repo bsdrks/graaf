@@ -1,12 +1,12 @@
-use std::{
-    collections::HashMap,
-    hash::{
+use {
+    core::hash::{
         BuildHasher,
         Hash,
     },
+    std::collections::HashMap,
 };
 
-/// A trait for counting all vertices in a graph.
+/// A trait to count all vertices in a graph
 pub trait CountAllVertices {
     /// Counts all vertices.
     fn count_all_vertices(&self) -> usize;

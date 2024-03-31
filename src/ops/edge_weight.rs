@@ -1,9 +1,9 @@
-use std::{
-    collections::HashMap,
-    hash::BuildHasher,
+use {
+    core::hash::BuildHasher,
+    std::collections::HashMap,
 };
 
-/// A trait for getting the weight of an edge in a graph.
+/// A trait to get the weight of a given edge
 pub trait EdgeWeight<W> {
     /// Get the weight of the edge from `s` to `t`.
     ///

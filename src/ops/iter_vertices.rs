@@ -1,9 +1,9 @@
-use std::{
-    collections::HashMap,
-    hash::BuildHasher,
+use {
+    core::hash::BuildHasher,
+    std::collections::HashMap,
 };
 
-/// A trait for iterating over the vertices in a graph.
+/// A trait to iterate over all vertices in a graph
 pub trait IterVertices {
     /// Returns an iterator over the vertices.
     fn iter_vertices(&self) -> impl Iterator<Item = usize>;

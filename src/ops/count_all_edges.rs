@@ -1,12 +1,12 @@
-use std::{
-    collections::{
+use {
+    core::hash::BuildHasher,
+    std::collections::{
         HashMap,
         HashSet,
     },
-    hash::BuildHasher,
 };
 
-/// A trait for counting all edges in a graph.
+/// A trait to count all edges in a graph
 pub trait CountAllEdges {
     /// Counts all edges.
     fn count_all_edges(&self) -> usize;

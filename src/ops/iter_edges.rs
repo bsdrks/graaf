@@ -1,17 +1,17 @@
-use std::{
-    collections::{
+use {
+    core::hash::BuildHasher,
+    std::collections::{
         HashMap,
         HashSet,
     },
-    hash::BuildHasher,
 };
 
-/// A trait for getting the edges of a vertex in a graph.
+/// A trait to iterate over all unweighted edges with a given source vertex
 ///
 /// # Example
 ///
 /// ```
-/// use graaf::IterEdges;
+/// use graaf::ops::IterEdges;
 ///
 /// let graph: [Vec<usize>; 4] = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 /// let mut iter = graph.iter_edges(0);
@@ -47,7 +47,7 @@ use std::{
 /// #![feature(assert_matches)]
 ///
 /// use {
-///     graaf::IterEdges,
+///     graaf::ops::IterEdges,
 ///     std::{
 ///         assert_matches::assert_matches,
 ///         collections::HashSet
@@ -151,14 +151,8 @@ where
 #[cfg(test)]
 mod tests {
     use {
-        crate::IterEdges,
-        std::{
-            assert_matches::assert_matches,
-            collections::{
-                HashMap,
-                HashSet,
-            },
-        },
+        super::*,
+        std::assert_matches::assert_matches,
     };
 
     #[test]

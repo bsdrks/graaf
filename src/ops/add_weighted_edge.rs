@@ -1,17 +1,17 @@
-use std::{
-    collections::{
-        HashMap,
-        HashSet,
-    },
-    hash::{
+use {
+    core::hash::{
         BuildHasher,
         Hash,
     },
+    std::collections::{
+        HashMap,
+        HashSet,
+    },
 };
 
-/// A trait for adding a weighted edge to a graph.
+/// A trait to add an edge to a weighted graph
 pub trait AddWeightedEdge<W> {
-    /// Add the weighted edge from `s` to `t` with weight `w`.
+    /// Add an edge from `s` to `t` with weight `w`.
     ///
     /// # Arguments
     ///
@@ -127,9 +127,10 @@ where
 
 #[cfg(test)]
 mod tests {
-    use std::iter::once;
-
-    use super::*;
+    use {
+        super::*,
+        core::iter::once,
+    };
 
     #[test]
     fn vec_vec() {

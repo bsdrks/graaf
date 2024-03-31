@@ -32,7 +32,7 @@ macro_rules! complete_weighted_graph {
 mod count_all_edges {
     use {
         divan::Bencher,
-        graaf::{
+        graaf::ops::{
             AddEdge,
             AddWeightedEdge,
             CountAllEdges,

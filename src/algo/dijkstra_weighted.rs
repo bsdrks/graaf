@@ -1,15 +1,14 @@
+extern crate alloc;
+
 use {
-    crate::IterWeightedEdges,
-    std::{
-        cmp::Reverse,
-        collections::BinaryHeap,
-    },
+    crate::ops::IterWeightedEdges,
+    alloc::collections::BinaryHeap,
+    core::cmp::Reverse,
 };
 
-/// A trait for representations of weighted graphs that implement
-/// Dijkstra's algorithm.
+/// Dijkstra's algorithm with binary-heap for weighted graphs
 pub trait DijkstraWeighted<W> {
-    /// Dijkstra's algorithm for a weighted graph.
+    /// Run Dijkstra's algorithm on a weighted graph.
     ///
     /// # Arguments
     ///

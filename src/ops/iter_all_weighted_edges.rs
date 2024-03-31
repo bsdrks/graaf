@@ -1,10 +1,9 @@
-use std::{
-    collections::HashSet,
-    hash::BuildHasher,
+use {
+    core::hash::BuildHasher,
+    std::collections::HashSet,
 };
 
-/// A trait for graph representations to iterate over all weighted edges in a
-/// graph.
+/// A trait to iterate over all weighted edges in a graph
 pub trait IterAllWeightedEdges<W> {
     /// Returns an iterator that iterates over all weighted edges in a graph.
     fn iter_all_weighted_edges<'a>(&'a self) -> impl Iterator<Item = &(usize, usize, W)>

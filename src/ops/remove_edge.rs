@@ -1,12 +1,12 @@
-use std::{
-    collections::{
+use {
+    core::hash::BuildHasher,
+    std::collections::{
         HashMap,
         HashSet,
     },
-    hash::BuildHasher,
 };
 
-/// A trait for removing an edge from a graph.
+/// A trait to remove an edge from a graph
 pub trait RemoveEdge {
     /// Remove the edge from `s` to `t`.
     ///

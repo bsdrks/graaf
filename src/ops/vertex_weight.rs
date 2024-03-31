@@ -1,4 +1,4 @@
-/// A trait for getting the weight of a vertex in a graph.
+/// A trait to get the weight of a given vertex
 pub trait VertexWeight<W> {
     /// Get the weight of vertex `s`.
     ///

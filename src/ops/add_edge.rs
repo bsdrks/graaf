@@ -1,12 +1,12 @@
-use std::{
-    collections::{
+use {
+    core::hash::BuildHasher,
+    std::collections::{
         HashMap,
         HashSet,
     },
-    hash::BuildHasher,
 };
 
-/// A trait for adding edges to a graph.
+/// A trait to adding edges to an unweighted graph
 pub trait AddEdge {
     /// Add an edge from `s` to `t`.
     ///
