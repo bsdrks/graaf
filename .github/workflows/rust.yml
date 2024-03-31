@@ -51,6 +51,8 @@ jobs:
         run: cargo doc --verbose
 
   build:
+    runs-on: ubuntu-latest
+
     steps:
       - name: Build
         run: cargo build --verbose
