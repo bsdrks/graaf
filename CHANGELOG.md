@@ -27,3 +27,10 @@
 - Enable selected lints from `restriction` group.
 - Group lints into groups, restrictions, `rustdoc`, and `rustc` lints.
 - Use `core` and `alloc` imports over `std` where possible.
+
+# 0.2.2
+
+## Documentation
+
+- Fix trait descriptions in `README.md`.
+- Add doctest example for `DijkstraWeighted.dijkstra`.
