@@ -120,7 +120,7 @@ mod test {
     fn small_graph2() {
         let graph: [Vec<usize>; 4] = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        for (i, &d) in [[0, 1, 3, 2], [1, 0, 2, 1], [2, 1, 0, 1], [2, 3, 1, 0]]
+        for (i, &d) in [[0, 1, 1, 2], [1, 0, 1, 1], [1, 1, 0, 1], [2, 1, 1, 0]]
             .iter()
             .enumerate()
         {
