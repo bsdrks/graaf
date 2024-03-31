@@ -109,7 +109,10 @@ where
 
 #[cfg(test)]
 mod test {
-    use super::*;
+    use {
+        super::*,
+        crate::ops::AddWeightedEdge,
+    };
 
     #[test]
     fn shortestpath1() {
@@ -175,6 +178,93 @@ mod test {
         .enumerate()
         {
             assert_eq!(dijkstra_sssp_weighted(&graph, i), d);
+        }
+    }
+
+    #[test]
+    fn bryr1() {
+        let mut graph = vec![Vec::new(); 3];
+
+        for (s, t, w) in [(2, 0, 1), (0, 1, 1), (1, 2, 1)] {
+            graph.add_weighted_edge(s, t, w);
+            graph.add_weighted_edge(t, s, w);
+        }
+
+        for (s, dist) in [[0, 1, 1], [1, 0, 1], [1, 1, 0]].iter().enumerate() {
+            assert_eq!(dijkstra_sssp_weighted(&graph, s), dist);
+        }
+    }
+
+    #[test]
+    fn bryr2() {
+        let mut graph = vec![Vec::new(); 6];
+
+        for (s, t, w) in [
+            (4, 5, 1),
+            (4, 3, 1),
+            (1, 0, 1),
+            (1, 2, 1),
+            (3, 2, 1),
+            (0, 3, 1),
+        ] {
+            graph.add_weighted_edge(s, t, w);
+            graph.add_weighted_edge(t, s, w);
+        }
+
+        for (s, dist) in [
+            [0, 1, 2, 1, 2, 3],
+            [1, 0, 1, 2, 3, 4],
+            [2, 1, 0, 1, 2, 3],
+            [1, 2, 1, 0, 1, 2],
+            [2, 3, 2, 1, 0, 1],
+            [3, 4, 3, 2, 1, 0],
+        ]
+        .iter()
+        .enumerate()
+        {
+            assert_eq!(dijkstra_sssp_weighted(&graph, s), dist);
+        }
+    }
+
+    #[test]
+    fn bryr3() {
+        let mut graph = vec![Vec::new(); 10];
+
+        for (s, t, w) in [
+            (6, 2, 0),
+            (6, 9, 1),
+            (7, 1, 0),
+            (9, 1, 1),
+            (3, 5, 0),
+            (3, 0, 0),
+            (8, 4, 1),
+            (5, 8, 0),
+            (6, 5, 1),
+            (2, 9, 0),
+            (3, 4, 0),
+            (4, 6, 1),
+            (3, 7, 0),
+        ] {
+            graph.add_weighted_edge(s, t, w);
+            graph.add_weighted_edge(t, s, w);
+        }
+
+        for (s, dist) in [
+            [0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
+            [0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
+            [1, 1, 0, 1, 1, 1, 0, 1, 1, 0],
+            [0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
+            [0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
+            [0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
+            [1, 1, 0, 1, 1, 1, 0, 1, 1, 0],
+            [0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
+            [0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
+            [1, 1, 0, 1, 1, 1, 0, 1, 1, 0],
+        ]
+        .iter()
+        .enumerate()
+        {
+            assert_eq!(dijkstra_sssp_weighted(&graph, s), dist);
         }
     }
 }
