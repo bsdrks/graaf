@@ -10,7 +10,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
+  install:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,13 +21,28 @@ jobs:
           toolchain: nightly
           override: true
           components: rustfmt, clippy
+
+  clippy:
+    steps:
       - name: Run clippy
         run: cargo clippy --verbose
+
+  fmt:
+    steps:
       - name: Check formatting
         run: cargo fmt --check --verbose
+
+  test:
+    steps:
       - name: Run tests
         run: cargo test --verbose
-      - name: Build
-        run: cargo build --verbose
+
+  doc:
+    steps:
       - name: Generate documentation
         run: cargo doc --verbose
+
+  build:
+    steps:
+      - name: Build
+        run: cargo build --verbose
