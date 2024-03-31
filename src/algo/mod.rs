@@ -9,5 +9,8 @@ pub use {
         dijkstra_sssp_unweighted,
         DijkstraUnweighted,
     },
-    dijkstra_weighted::DijkstraWeighted,
+    dijkstra_weighted::{
+        dijkstra_sssp_weighted,
+        DijkstraWeighted,
+    },
 };

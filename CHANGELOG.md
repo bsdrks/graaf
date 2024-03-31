@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Add `dijkstra_sssp_weighted`.
+
+### Changed
+
+- Test `DijkstraWeighted.dijkstra_sssp_weighted` for every source vertex.
+- Make `CHANGELOG.md` adhere to [keep a changelog](https://keepachangelog.com/en/1.0.0/).
+
 ## [0.2.2] - 2024-03-31
 
 ### Added
