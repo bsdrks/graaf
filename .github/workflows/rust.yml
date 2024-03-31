@@ -15,6 +15,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - name: Install nightly toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
+          components: rustfmt, clippy
       - name: Run clippy
         run: cargo clippy --verbose
       - name: Check formatting
