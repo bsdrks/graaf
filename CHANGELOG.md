@@ -1,36 +1,40 @@
-# 0.1.0
+# Changelog
 
-- Initial release
+## [0.2.2] - 2024-03-31
 
-# 0.2.0
+### Added
 
-- Rename `Indegree.in_degree` to `Indegree.indegree`.
-- Rename `Outdegree.out_degree` to `Outdegree.outdegree`.
+- Add doctest example for `DijkstraWeighted.dijkstra`.
 
-# 0.2.1
+### Fixed
 
-## Features
+- Fix trait descriptions in `README.md`.
+
+## [0.2.1] - 2024-03-31
+
+### Added
 
 - Add `dijkstra_sssp_unweighted`.
-
-## API
-
-- Export `algo`, `ops`, and `repr` modules.
-
-## Documentation
-
-- Make descriptions more consistent.
 - Add missing documentation for the public API.
 
-## Clippy
+### Changed
 
+- Export `algo`, `ops`, and `repr` modules.
 - Enable selected lints from `restriction` group.
 - Group lints into groups, restrictions, `rustdoc`, and `rustc` lints.
 - Use `core` and `alloc` imports over `std` where possible.
 
-# 0.2.2
+### Fixed
 
-## Documentation
+- Make descriptions more consistent.
 
-- Fix trait descriptions in `README.md`.
-- Add doctest example for `DijkstraWeighted.dijkstra`.
+## [0.2.0] - 2024-03-30
+
+### Changed
+
+- Rename `Indegree.in_degree` to `Indegree.indegree`.
+- Rename `Outdegree.out_degree` to `Outdegree.outdegree`.
+
+## [0.1.0] - 2024-03-30
+
+- Initial release
