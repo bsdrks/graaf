@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-# Added
+### Added
 
 - Add `dijkstra_sssp_weighted`.
 
