@@ -5,6 +5,7 @@
 ### Added
 
 - Add `dijkstra_sssp_weighted`.
+- Add GitHub Action on push to main and PRs on main.
 
 ### Changed
 
