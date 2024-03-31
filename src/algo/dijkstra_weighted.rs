@@ -15,6 +15,41 @@ pub trait DijkstraWeighted<W> {
     /// * `step`: A function that calculates the accumulated weight.
     /// * `dist`: The distances from the source vertices.
     /// * `heap`: The vertices to visit.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// extern crate alloc;
+    ///
+    /// use {
+    ///     alloc::collections::BinaryHeap,
+    ///     core::cmp::Reverse,
+    ///     graaf::algo::DijkstraWeighted,
+    /// };
+    ///
+    /// // ╭───╮       ╭───╮
+    /// // │ 0 │  2 →  │ 1 │
+    /// // ╰───╯       ╰───╯
+    /// //   ↑           2
+    /// //   2           ↓
+    /// // ╭───╮       ╭───╮
+    /// // │ 3 │       │ 2 │
+    /// // ╰───╯       ╰───╯
+    ///
+    /// let graph: [Vec<(usize, usize)>; 4] = [
+    ///     vec![(1, 2)],
+    ///     vec![(2, 2)],
+    ///     Vec::new(),
+    ///     vec![(0, 2)],
+    /// ];
+    ///
+    /// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
+    /// let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+    ///
+    /// graph.dijkstra(|acc, w| acc + w, &mut dist, &mut heap);
+    ///
+    /// assert_eq!(dist, [0, 2, 4, usize::MAX]);
+    /// ```
     fn dijkstra(
         &self,
         step: fn(W, W) -> W,
