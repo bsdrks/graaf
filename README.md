@@ -1,6 +1,6 @@
 # Graaf
 
-Functions and types for working with graphs.
+Functions and types for working with graphs
 
 **WARNING: this crate is pre-alpha**
 
