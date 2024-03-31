@@ -1,7 +1,10 @@
 extern crate alloc;
 
 use {
-    crate::ops::IterWeightedEdges,
+    crate::ops::{
+        CountAllVertices,
+        IterWeightedEdges,
+    },
     alloc::collections::BinaryHeap,
     core::cmp::Reverse,
 };
@@ -58,6 +61,26 @@ pub trait DijkstraWeighted<W> {
     );
 }
 
+/// Single-source shortest path
+///
+/// # Arguments
+///
+/// * `graph`: The graph.
+/// * `s`: The source vertex.
+pub fn dijkstra_sssp_weighted<G>(graph: &G, s: usize) -> Vec<usize>
+where
+    G: CountAllVertices + DijkstraWeighted<usize>,
+{
+    let mut dist = vec![usize::MAX; graph.count_all_vertices()];
+    let mut heap = BinaryHeap::from([(Reverse(0), s)]);
+
+    dist[s] = 0;
+
+    graph.dijkstra(|acc, w| acc + w, &mut dist, &mut heap);
+
+    dist
+}
+
 impl<W, T> DijkstraWeighted<W> for T
 where
     T: IterWeightedEdges<W>,
@@ -93,12 +116,17 @@ mod test {
         let graph: [Vec<(usize, usize)>; 4] =
             [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
 
-        let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
-        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-
-        graph.dijkstra(|acc, w| acc + w, &mut dist, &mut heap);
-
-        assert_eq!(dist, [0, 2, 4, usize::MAX]);
+        for (i, &d) in [
+            [0, 2, 4, usize::MAX],
+            [usize::MAX, 0, 2, usize::MAX],
+            [usize::MAX, usize::MAX, 0, usize::MAX],
+            [2, 4, 6, 0],
+        ]
+        .iter()
+        .enumerate()
+        {
+            assert_eq!(dijkstra_sssp_weighted(&graph, i), d);
+        }
     }
 
     #[test]
@@ -110,12 +138,12 @@ mod test {
             vec![(0, 13), (1, 8), (2, 2)],
         ];
 
-        let mut dist = [usize::MAX, 0, usize::MAX, usize::MAX];
-        let mut heap = BinaryHeap::from([(Reverse(0), 1)]);
-
-        graph.dijkstra(|acc, w| acc + w, &mut dist, &mut heap);
-
-        assert_eq!(dist, [2, 0, 4, 11]);
+        for (i, &d) in [[0, 1, 3, 10], [2, 0, 4, 11], [3, 4, 0, 7], [5, 6, 2, 0]]
+            .iter()
+            .enumerate()
+        {
+            assert_eq!(dijkstra_sssp_weighted(&graph, i), d);
+        }
     }
 
     #[test]
@@ -132,22 +160,21 @@ mod test {
             vec![(2, 2), (6, 6), (7, 7)],
         ];
 
-        let mut dist = [
-            0,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-        ];
-
-        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-
-        graph.dijkstra(|acc, w| acc + w, &mut dist, &mut heap);
-
-        assert_eq!(dist, [0, 4, 12, 19, 21, 11, 9, 8, 14]);
+        for (i, &d) in [
+            [0, 4, 12, 19, 21, 11, 9, 8, 14],
+            [4, 0, 8, 15, 22, 12, 12, 11, 10],
+            [12, 8, 0, 7, 14, 4, 6, 7, 2],
+            [19, 15, 7, 0, 9, 11, 13, 14, 9],
+            [21, 22, 14, 9, 0, 10, 12, 13, 16],
+            [11, 12, 4, 11, 10, 0, 2, 3, 6],
+            [9, 12, 6, 13, 12, 2, 0, 1, 6],
+            [8, 11, 7, 14, 13, 3, 1, 0, 7],
+            [14, 10, 2, 9, 16, 6, 6, 7, 0],
+        ]
+        .iter()
+        .enumerate()
+        {
+            assert_eq!(dijkstra_sssp_weighted(&graph, i), d);
+        }
     }
 }
