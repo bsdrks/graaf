@@ -17,8 +17,8 @@ Functions and types for working with graphs
 
 ### Multiple sources shortest paths
 
-- `DijkstraUnweighted.dijkstra` for unweighted directed graphs
-- `DijkstraWeighted.dijkstra` for weighted directed graphs
+- `Unweighted.dijkstra` for unweighted directed graphs
+- `Weighted.dijkstra` for weighted directed graphs
 
 ## Graph operation traits
 
@@ -42,35 +42,45 @@ These traits are implemented for various graph representations built from standa
 
 ## Graph representations
 
-### Adjacency list
+### Adjacency list, unweighted
+
+#### Unweighted
 
 - `Vec<Vec<usize>>`
-- `Vec<Vec<(usize, usize)>>`
 - `Vec<HashSet<usize>>`
-- `Vec<HashSet<usize, W>>`
-- `Vec<HashMap<usize, W>>`
 - `[Vec<usize>]`
-- `[Vec<(usize, usize)>]`
 - `[HashSet<usize>]`
-- `[HashSet<usize, W>]`
-- `[HashMap<usize, W>]`
 - `HashMap<usize, Vec<usize>>`
-- `HashMap<usize, Vec<(usize, W)>>`
 - `HashMap<usize, HashSet<usize>>`
+
+#### Weighted
+
+- `Vec<Vec<(usize, W)>>`
+- `Vec<HashSet<(usize, W)>>`
+- `Vec<HashMap<usize, W>>`
+- `[Vec<(usize, W)>]`
+- `[HashSet<(usize, W)>]`
+- `[HashMap<usize, W>]`
+- `HashMap<usize, Vec<(usize, W)>>`
 - `HashMap<usize, HashSet<(usize, W)>>`
 - `HashMap<usize, HashMap<usize, W>>`
 
 ### Adjacency matrix
 
-`AdjacencyMatrix`
+#### Unweighted
 
-An adjacency matrix representation of an unweighted directed graph stored as a bit array.
+- `AdjacencyMatrix`: an adjacency matrix representation of an unweighted directed graph stored as a bit array.
 
 ### Edge list
 
+#### Unweighted
+
 - `Vec<(usize, usize)>`
-- `Vec<(usize, usize, W)>`
 - `[(usize, usize)]`
-- `[(usize, usize, W)]`
 - `HashSet<(usize, usize)>`
+
+#### Weighted
+
+- `Vec<(usize, usize, W)>`
+- `[(usize, usize, W)]`
 - `HashSet<(usize, usize, W)>`

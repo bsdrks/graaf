@@ -4,7 +4,7 @@ fn main() {
 
 use {
     divan::Bencher,
-    graaf::algo::DijkstraWeighted,
+    graaf::algo::dijkstra::weighted::min_distances,
     std::{
         cmp::Reverse,
         collections::{
@@ -31,7 +31,7 @@ fn vec_vec(bencher: Bencher) {
     let mut heap = BinaryHeap::from(HEAP);
 
     bencher.bench_local(|| {
-        graph.min_distances(|acc, w| acc + w, &mut dist, &mut heap);
+        min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
         dist
     });
@@ -50,7 +50,7 @@ fn vec_hash_set(bencher: Bencher) {
     let mut heap = BinaryHeap::from(HEAP);
 
     bencher.bench_local(|| {
-        graph.min_distances(|acc, w| acc + w, &mut dist, &mut heap);
+        min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
         dist
     });
@@ -69,7 +69,7 @@ fn arr_vec(bencher: Bencher) {
     let mut heap = BinaryHeap::from(HEAP);
 
     bencher.bench_local(|| {
-        graph.min_distances(|acc, w| acc + w, &mut dist, &mut heap);
+        min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
         dist
     });
@@ -88,7 +88,7 @@ fn arr_hash_set(bencher: Bencher) {
     let mut heap = BinaryHeap::from(HEAP);
 
     bencher.bench_local(|| {
-        graph.min_distances(|acc, w| acc + w, &mut dist, &mut heap);
+        min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
         dist
     });
@@ -107,7 +107,7 @@ fn hash_map_vec(bencher: Bencher) {
     let mut heap = BinaryHeap::from(HEAP);
 
     bencher.bench_local(|| {
-        graph.min_distances(|acc, w| acc + w, &mut dist, &mut heap);
+        min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
         dist
     });
@@ -126,7 +126,7 @@ fn hash_map_hash_set(bencher: Bencher) {
     let mut heap = BinaryHeap::from(HEAP);
 
     bencher.bench_local(|| {
-        graph.min_distances(|acc, w| acc + w, &mut dist, &mut heap);
+        min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
         dist
     });
@@ -145,7 +145,7 @@ fn hash_map_hash_map(bencher: Bencher) {
     let mut heap = BinaryHeap::from(HEAP);
 
     bencher.bench_local(|| {
-        graph.min_distances(|acc, w| acc + w, &mut dist, &mut heap);
+        min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
         dist
     });

@@ -50,8 +50,8 @@ use {
 ///     graaf::ops::IterEdges,
 ///     std::{
 ///         assert_matches::assert_matches,
-///         collections::HashSet
-///     }
+///         collections::HashSet,
+///     },
 /// };
 ///
 /// let graph = vec![

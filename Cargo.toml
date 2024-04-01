@@ -1,6 +1,6 @@
 [package]
 name = "graaf"
-version = "0.2.3"
+version = "0.3.0"
 edition = "2021"
 license = "Apache-2.0"
 description = "Functions and types for working with graphs"
@@ -17,10 +17,6 @@ categories = ["data-structures"]
 
 [dev-dependencies]
 divan = "0.1.14"
-
-[[bench]]
-name = "new"
-harness = false
 
 [[bench]]
 name = "add_edge"

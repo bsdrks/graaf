@@ -11,7 +11,7 @@
 //!         Indegree,
 //!         Outdegree,
 //!     },
-//!     repr::AdjacencyMatrix
+//!     repr::AdjacencyMatrix,
 //! };
 //!
 //! let mut adj = AdjacencyMatrix::<4>::new();

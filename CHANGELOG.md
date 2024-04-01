@@ -1,14 +1,23 @@
 # Changelog
 
-## [0.3.0] - Unreleased
+## [0.3.0] - 2024-04-01
 
 ### Added
 
-- Add doctest example for `dijkstra_sssp_weighted`.
+- Add `algo::dijkstra::unweighted::min_distances_single_source`.
+- Add doctest example for `algo::dijkstra::weighted::min_distances_single_source`.
+- Add doctest example for `algo::dijkstra::unweighted::min_distances_single_source`
+- Add doctest example for `algo::dijkstra::unweighted::min_distances`
 
 ### Changed
 
-- Rename `algo::DijkstraWeighted::dijkstra` to `min_distances`.
+- Move `algo::dijkstra::dijkstra_sssp_weighted` to `algo::dijkstra::weighted::min_distances_single_source`.
+- Move `algo::DijkstraWeighted::dijkstra` to `algo::dijkstra::weighted::min_distances`.
+- Move `algo::DijkstraUnweighted::dijkstra` to `algo::dijkstra::unweighted::min_distances`.
+
+### Removed
+
+- Remove `new` benchmark.
 
 ## [0.2.3] - 2024-03-31
 
@@ -19,14 +28,14 @@
 
 ### Changed
 
-- Test `DijkstraUnweighted.dijkstra_sssp_unweighted` for every source vertex.
+- Test `Dijkstra.Unweighted.dijkstra_sssp_unweighted` for every source vertex.
 - Make `CHANGELOG.md` adhere to [keep a changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [0.2.2] - 2024-03-31
 
 ### Added
 
-- Add doctest example for `DijkstraWeighted.dijkstra`.
+- Add doctest example for `Weighted.dijkstra`.
 
 ### Fixed
 

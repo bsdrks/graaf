@@ -9,70 +9,25 @@ use {
     core::cmp::Reverse,
 };
 
-/// Dijkstra's algorithm with binary-heap for weighted graphs
-pub trait DijkstraWeighted<W> {
-    /// Return the minimum distances from the source vertices to all other
-    /// vertices.
-    ///
-    /// # Arguments
-    ///
-    /// * `step`: A function that calculates the accumulated weight.
-    /// * `dist`: The distances from the source vertices.
-    /// * `heap`: The vertices to visit.
-    ///
-    /// # Example
-    ///
-    /// ```
-    /// extern crate alloc;
-    ///
-    /// use {
-    ///     alloc::collections::BinaryHeap,
-    ///     core::cmp::Reverse,
-    ///     graaf::algo::DijkstraWeighted,
-    /// };
-    ///
-    /// // ╭───╮       ╭───╮
-    /// // │ 0 │  2 →  │ 1 │
-    /// // ╰───╯       ╰───╯
-    /// //   ↑           2
-    /// //   2           ↓
-    /// // ╭───╮       ╭───╮
-    /// // │ 3 │       │ 2 │
-    /// // ╰───╯       ╰───╯
-    ///
-    /// let graph: [Vec<(usize, usize)>; 4] = [
-    ///     vec![(1, 2)],
-    ///     vec![(2, 2)],
-    ///     Vec::new(),
-    ///     vec![(0, 2)],
-    /// ];
-    ///
-    /// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
-    /// let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-    ///
-    /// graph.min_distances(|acc, w| acc + w, &mut dist, &mut heap);
-    ///
-    /// assert_eq!(dist, [0, 2, 4, usize::MAX]);
-    /// ```
-    fn min_distances(
-        &self,
-        step: fn(W, W) -> W,
-        dist: &mut [W],
-        heap: &mut BinaryHeap<(Reverse<W>, usize)>,
-    );
-}
-
-/// Single-source shortest path
+/// Calculate the minimum distances from the source vertices to all other
+/// vertices.
 ///
 /// # Arguments
 ///
-/// * `graph`: The graph.
-/// * `s`: The source vertex.
+/// * `step`: A function that calculates the accumulated weight.
+/// * `dist`: The distances from the source vertices.
+/// * `heap`: The vertices to visit.
 ///
 /// # Example
 ///
 /// ```
-/// use graaf::algo::dijkstra_sssp_weighted;
+/// extern crate alloc;
+///
+/// use {
+///     alloc::collections::BinaryHeap,
+///     core::cmp::Reverse,
+///     graaf::algo::dijkstra::weighted::min_distances,
+/// };
 ///
 /// // ╭───╮       ╭───╮
 /// // │ 0 │  2 →  │ 1 │
@@ -83,53 +38,79 @@ pub trait DijkstraWeighted<W> {
 /// // │ 3 │       │ 2 │
 /// // ╰───╯       ╰───╯
 ///
-/// let graph: [Vec<(usize, usize)>; 4] = [
-///     vec![(1, 2)],
-///     vec![(2, 2)],
-///     Vec::new(),
-///     vec![(0, 2)],
-/// ];
+/// let graph: [Vec<(usize, usize)>; 4] = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
 ///
-/// assert_eq!(dijkstra_sssp_weighted(&graph, 0), [0, 2, 4, usize::MAX]);
+/// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
+/// let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+///
+/// min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
+///
+/// assert_eq!(dist, [0, 2, 4, usize::MAX]);
 /// ```
-pub fn dijkstra_sssp_weighted<G>(graph: &G, s: usize) -> Vec<usize>
+pub fn min_distances<G, W>(
+    graph: &G,
+    step: fn(W, W) -> W,
+    dist: &mut [W],
+    heap: &mut BinaryHeap<(Reverse<W>, usize)>,
+) where
+    G: IterWeightedEdges<W>,
+    W: Copy + Ord,
+{
+    while let Some((Reverse(acc), s)) = heap.pop() {
+        for (t, w) in graph.iter_weighted_edges(s) {
+            let w = step(acc, w);
+
+            if w >= dist[t] {
+                continue;
+            }
+
+            dist[t] = w;
+            heap.push((Reverse(w), t));
+        }
+    }
+}
+
+/// Calculate the minimum distances from the source vertex to all other
+/// vertices.
+///
+/// # Arguments
+///
+/// * `graph`: The graph.
+/// * `s`: The source vertex.
+///
+/// # Example
+///
+/// ```
+/// use graaf::algo::dijkstra::weighted::min_distances_single_source;
+///
+/// // ╭───╮       ╭───╮
+/// // │ 0 │  2 →  │ 1 │
+/// // ╰───╯       ╰───╯
+/// //   ↑           2
+/// //   2           ↓
+/// // ╭───╮       ╭───╮
+/// // │ 3 │       │ 2 │
+/// // ╰───╯       ╰───╯
+///
+/// let graph: [Vec<(usize, usize)>; 4] = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
+///
+/// assert_eq!(
+///     min_distances_single_source(&graph, 0),
+///     [0, 2, 4, usize::MAX]
+/// );
+/// ```
+pub fn min_distances_single_source<G>(graph: &G, s: usize) -> Vec<usize>
 where
-    G: CountAllVertices + DijkstraWeighted<usize>,
+    G: CountAllVertices + IterWeightedEdges<usize>,
 {
     let mut dist = vec![usize::MAX; graph.count_all_vertices()];
     let mut heap = BinaryHeap::from([(Reverse(0), s)]);
 
     dist[s] = 0;
 
-    graph.min_distances(|acc, w| acc + w, &mut dist, &mut heap);
+    min_distances(graph, |acc, w| acc + w, &mut dist, &mut heap);
 
     dist
-}
-
-impl<W, T> DijkstraWeighted<W> for T
-where
-    T: IterWeightedEdges<W>,
-    W: Copy + Ord,
-{
-    fn min_distances(
-        &self,
-        step: fn(W, W) -> W,
-        dist: &mut [W],
-        heap: &mut BinaryHeap<(Reverse<W>, usize)>,
-    ) {
-        while let Some((Reverse(acc), s)) = heap.pop() {
-            for (t, w) in self.iter_weighted_edges(s) {
-                let w = step(acc, w);
-
-                if w >= dist[t] {
-                    continue;
-                }
-
-                dist[t] = w;
-                heap.push((Reverse(w), t));
-            }
-        }
-    }
 }
 
 #[cfg(test)]
@@ -153,7 +134,7 @@ mod test {
         .iter()
         .enumerate()
         {
-            assert_eq!(dijkstra_sssp_weighted(&graph, i), d);
+            assert_eq!(min_distances_single_source(&graph, i), d);
         }
     }
 
@@ -170,7 +151,7 @@ mod test {
             .iter()
             .enumerate()
         {
-            assert_eq!(dijkstra_sssp_weighted(&graph, i), d);
+            assert_eq!(min_distances_single_source(&graph, i), d);
         }
     }
 
@@ -202,7 +183,7 @@ mod test {
         .iter()
         .enumerate()
         {
-            assert_eq!(dijkstra_sssp_weighted(&graph, i), d);
+            assert_eq!(min_distances_single_source(&graph, i), d);
         }
     }
 
@@ -216,7 +197,7 @@ mod test {
         }
 
         for (s, dist) in [[0, 1, 1], [1, 0, 1], [1, 1, 0]].iter().enumerate() {
-            assert_eq!(dijkstra_sssp_weighted(&graph, s), dist);
+            assert_eq!(min_distances_single_source(&graph, s), dist);
         }
     }
 
@@ -247,7 +228,7 @@ mod test {
         .iter()
         .enumerate()
         {
-            assert_eq!(dijkstra_sssp_weighted(&graph, s), dist);
+            assert_eq!(min_distances_single_source(&graph, s), dist);
         }
     }
 
@@ -289,7 +270,7 @@ mod test {
         .iter()
         .enumerate()
         {
-            assert_eq!(dijkstra_sssp_weighted(&graph, s), dist);
+            assert_eq!(min_distances_single_source(&graph, s), dist);
         }
     }
 }
