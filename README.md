@@ -8,6 +8,8 @@ Functions and types for working with graphs
 
 **WARNING: this crate is pre-alpha**
 
+This crate builds on `nightly`. This will change in version `1.0.0`.
+
 ## Algorithms
 
 ### Single-source shortest paths
