@@ -25,7 +25,7 @@ fn vec_vec(bencher: Bencher) {
     let mut heap = BinaryHeap::from(HEAP);
 
     bencher.bench_local(|| {
-        graph.dijkstra(|acc, w| acc + w, &mut dist, &mut heap);
+        graph.min_distances(|acc, w| acc + w, &mut dist, &mut heap);
 
         dist
     });
@@ -44,7 +44,7 @@ fn vec_hash_set(bencher: Bencher) {
     let mut heap = BinaryHeap::from(HEAP);
 
     bencher.bench_local(|| {
-        graph.dijkstra(|acc, w| acc + w, &mut dist, &mut heap);
+        graph.min_distances(|acc, w| acc + w, &mut dist, &mut heap);
 
         dist
     });
@@ -57,7 +57,7 @@ fn arr_vec(bencher: Bencher) {
     let mut heap = BinaryHeap::from(HEAP);
 
     bencher.bench_local(|| {
-        graph.dijkstra(|acc, w| acc + w, &mut dist, &mut heap);
+        graph.min_distances(|acc, w| acc + w, &mut dist, &mut heap);
 
         dist
     });
@@ -76,7 +76,7 @@ fn arr_hash_set(bencher: Bencher) {
     let mut heap = BinaryHeap::from(HEAP);
 
     bencher.bench_local(|| {
-        graph.dijkstra(|acc, w| acc + w, &mut dist, &mut heap);
+        graph.min_distances(|acc, w| acc + w, &mut dist, &mut heap);
 
         dist
     });
@@ -95,7 +95,7 @@ fn hash_map_vec(bencher: Bencher) {
     let mut heap = BinaryHeap::from(HEAP);
 
     bencher.bench_local(|| {
-        graph.dijkstra(|acc, w| acc + w, &mut dist, &mut heap);
+        graph.min_distances(|acc, w| acc + w, &mut dist, &mut heap);
 
         dist
     });
@@ -114,7 +114,7 @@ fn hash_map_hash_set(bencher: Bencher) {
     let mut heap = BinaryHeap::from(HEAP);
 
     bencher.bench_local(|| {
-        graph.dijkstra(|acc, w| acc + w, &mut dist, &mut heap);
+        graph.min_distances(|acc, w| acc + w, &mut dist, &mut heap);
 
         dist
     });
@@ -133,7 +133,7 @@ fn hash_map_hash_map(bencher: Bencher) {
     let mut heap = BinaryHeap::from(HEAP);
 
     bencher.bench_local(|| {
-        graph.dijkstra(|acc, w| acc + w, &mut dist, &mut heap);
+        graph.min_distances(|acc, w| acc + w, &mut dist, &mut heap);
 
         dist
     });

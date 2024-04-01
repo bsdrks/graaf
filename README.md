@@ -10,33 +10,35 @@ Functions and types for working with graphs
 
 ## Algorithms
 
-### Shortest path
+### Single-source shortest paths
 
-`DijkstraUnweighted`
+- `dijkstra_sssp_unweighted` for unweighted directed graphs
+- `dijkstra_sssp_weighted` for weighted directed graphs
 
-Dijkstra's algorithm with binary heap for unweighted directed graphs. Works on graph representations that implement `AddEdge`.
+### Multiple sources shortest paths
 
-`DijkstraWeighted`
-
-Dijkstra's algorithm with binary heap for weighted directed graphs. Works on graph representations that implement `AddWeightedEdge`.
+- `DijkstraUnweighted.dijkstra` for unweighted directed graphs
+- `DijkstraWeighted.dijkstra` for weighted directed graphs
 
 ## Graph operation traits
 
-- `AddEdge` adds an edge to an unweighted graph
-- `AddWeightedEdge` adds an edge to a weighted graph
-- `CountAllEdges` counts all edges in a graph
-- `CountAllVertices` counts all vertices in a graph
-- `EdgeWeight` gets the weight of a given edge
-- `Indegree` returns the indegree of a given vertex
-- `IsEdge` returns whether an edge exists between two vertices
-- `IterAllEdges` iterates over all unweighted edges in a graph
-- `IterAllWeightedEdges` iterates over all weighted edges in a graph
-- `IterEdges` iterates over all unweighted edges with a given source vertex
-- `IterVertices` iterates over all vertices in a graph
-- `IterWeightedEdges` iterates over all weighted edges with a given source vertex
-- `Outdegree` returns the outdegree of a vertex
-- `RemoveEdge` removes an edge from a graph
-- `VertexWeight` returns the weight of a given vertex
+These traits are implemented for various graph representations built from standard library containers.
+
+- `AddEdge` adds an edge to an unweighted graph.
+- `AddWeightedEdge` adds an edge to a weighted graph.
+- `CountAllEdges` counts all edges in a graph.
+- `CountAllVertices` counts all vertices in a graph.
+- `EdgeWeight` gets the weight of a given edge.
+- `Indegree` returns the indegree of a given vertex.
+- `IsEdge` returns whether an edge exists between two vertices.
+- `IterAllEdges` iterates over all unweighted edges in a graph.
+- `IterAllWeightedEdges` iterates over all weighted edges in a graph.
+- `IterEdges` iterates over all unweighted edges with a given source vertex.
+- `IterVertices` iterates over all vertices in a graph.
+- `IterWeightedEdges` iterates over all weighted edges with a given source vertex.
+- `Outdegree` returns the outdegree of a vertex.
+- `RemoveEdge` removes an edge from a graph.
+- `VertexWeight` returns the weight of a given vertex.
 
 ## Graph representations
 

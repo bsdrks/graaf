@@ -1,10 +1,14 @@
 # Changelog
 
-## Unreleased
+## [0.3.0] - Unreleased
 
 ### Added
 
 - Add doctest example for `dijkstra_sssp_weighted`.
+
+### Changed
+
+- Rename `algo::DijkstraWeighted::dijkstra` to `min_distances`.
 
 ## [0.2.3] - 2024-03-31
 

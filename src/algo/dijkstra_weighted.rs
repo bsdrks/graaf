@@ -11,7 +11,8 @@ use {
 
 /// Dijkstra's algorithm with binary-heap for weighted graphs
 pub trait DijkstraWeighted<W> {
-    /// Run Dijkstra's algorithm on a weighted graph.
+    /// Return the minimum distances from the source vertices to all other
+    /// vertices.
     ///
     /// # Arguments
     ///
@@ -49,11 +50,11 @@ pub trait DijkstraWeighted<W> {
     /// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
     /// let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
     ///
-    /// graph.dijkstra(|acc, w| acc + w, &mut dist, &mut heap);
+    /// graph.distances(|acc, w| acc + w, &mut dist, &mut heap);
     ///
     /// assert_eq!(dist, [0, 2, 4, usize::MAX]);
     /// ```
-    fn dijkstra(
+    fn min_distances(
         &self,
         step: fn(W, W) -> W,
         dist: &mut [W],
@@ -100,7 +101,7 @@ where
 
     dist[s] = 0;
 
-    graph.dijkstra(|acc, w| acc + w, &mut dist, &mut heap);
+    graph.min_distances(|acc, w| acc + w, &mut dist, &mut heap);
 
     dist
 }
@@ -110,7 +111,7 @@ where
     T: IterWeightedEdges<W>,
     W: Copy + Ord,
 {
-    fn dijkstra(
+    fn min_distances(
         &self,
         step: fn(W, W) -> W,
         dist: &mut [W],
