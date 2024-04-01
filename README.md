@@ -12,15 +12,10 @@ This crate builds on `nightly`. This will change in version `1.0.0`.
 
 ## Algorithms
 
-### Single-source shortest paths
-
-- `dijkstra_sssp_unweighted` for unweighted directed graphs
-- `dijkstra_sssp_weighted` for weighted directed graphs
-
-### Multiple sources shortest paths
-
-- `Unweighted.dijkstra` for unweighted directed graphs
-- `Weighted.dijkstra` for weighted directed graphs
+- `algo::dijkstra::unweighted::min_distances` calculates the minimum distances from multiple source vertices to all other vertices in an unweighted directed graph.
+- `algo::dijkstra::weighted::min_distances` calculates the minimum distances from multiple source vertices to all other vertices in a weighted directed graph.
+- `algo::dijkstra::unweighted::min_distances_single_source` calculates the minimum distances from the source vertex to all other vertices in an unweighted graph.
+- `algo::dijkstra::weighted::min_distances_single_source` calculates the minimum distances from the source vertex to all other vertices in a weighted graph.
 
 ## Graph operation traits
 
