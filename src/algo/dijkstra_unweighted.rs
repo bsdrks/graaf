@@ -11,14 +11,43 @@ use {
 
 /// Dijkstra's algorithm with binary-heap for unweighted graphs
 pub trait DijkstraUnweighted<W> {
-    /// Run Dijkstra's algorithm on a directed unweighted graph
+    /// Return the minimum distances from the source vertices to all other
+    /// vertices.
     ///
     /// # Arguments
     ///
-    /// * `step`: A function that calculates the accumulated distance.
+    /// * `step`: A function that calculates the accumulated weight.
     /// * `dist`: The distances from the source vertices.
     /// * `heap`: The vertices to visit.
-    fn dijkstra(
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// extern crate alloc;
+    ///
+    /// use {
+    ///     alloc::collections::BinaryHeap,
+    ///     core::cmp::Reverse,
+    ///     graaf::algo::DijkstraUnweighted,
+    /// };
+    ///
+    /// // ╭───╮       ╭───╮
+    /// // │ 0 │   →   │ 1 │
+    /// // ╰───╯       ╰───╯
+    /// //   ↑           ↓
+    /// // ╭───╮       ╭───╮
+    /// // │ 3 │       │ 2 │
+    /// // ╰───╯       ╰───╯
+    ///
+    /// let graph: [Vec<usize>; 4] = [vec![1], vec![2], Vec::new(), vec![0]];
+    /// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
+    /// let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+    ///
+    /// graph.min_distances(|w| w + 1, &mut dist, &mut heap);
+    ///
+    /// assert_eq!(dist, [0, 1, 2, usize::MAX]);
+    /// ```
+    fn min_distances(
         &self,
         step: fn(W) -> W,
         dist: &mut [W],
@@ -41,7 +70,7 @@ where
 
     dist[s] = 0;
 
-    graph.dijkstra(|w| w + 1, &mut dist, &mut heap);
+    graph.min_distances(|w| w + 1, &mut dist, &mut heap);
 
     dist
 }
@@ -51,7 +80,7 @@ where
     W: Copy + Ord,
     T: IterEdges,
 {
-    fn dijkstra(
+    fn min_distances(
         &self,
         step: fn(W) -> W,
         dist: &mut [W],
@@ -81,7 +110,7 @@ mod test {
         let graph: [Vec<usize>; 0] = [];
         let mut dist = Vec::new();
         let mut heap = BinaryHeap::new();
-        let () = graph.dijkstra(|w: usize| w + 1, &mut dist, &mut heap);
+        let () = graph.min_distances(|w: usize| w + 1, &mut dist, &mut heap);
 
         assert!(dist.is_empty());
     }
