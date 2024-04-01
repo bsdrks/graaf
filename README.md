@@ -39,7 +39,7 @@ These traits are implemented for various graph representations built from standa
 
 ## Graph representations
 
-### Adjacency list, unweighted
+### Adjacency list
 
 #### Unweighted
 
