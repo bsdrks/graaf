@@ -68,7 +68,8 @@ pub fn min_distances<G, W>(
     }
 }
 
-/// Return the minimum distances from the source vertex to all other vertices.
+/// Calculate the minimum distances from the source vertex to all other
+/// vertices.
 ///
 /// # Arguments
 ///
