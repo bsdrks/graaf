@@ -9,7 +9,7 @@ use {
     core::cmp::Reverse,
 };
 
-/// Calculates the minimum distances from the source vertices to all other
+/// Calculate the minimum distances from the source vertices to all other
 /// vertices.
 ///
 /// # Arguments
