@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.2] - Unreleased
+
+### Added
+
+- Add `algo::dijkstra::unweighted::shortest_paths.
+- Test `algo::dijkstra::unweighted::min_distances` with multiple source vertices.
+- Test `algo::dijkstra::weighted::min_distances` without sources.
+
 ## [0.3.1] - 2024-04-01
 
 ### Changed
