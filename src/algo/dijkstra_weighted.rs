@@ -50,7 +50,7 @@ pub trait DijkstraWeighted<W> {
     /// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
     /// let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
     ///
-    /// graph.distances(|acc, w| acc + w, &mut dist, &mut heap);
+    /// graph.min_distances(|acc, w| acc + w, &mut dist, &mut heap);
     ///
     /// assert_eq!(dist, [0, 2, 4, usize::MAX]);
     /// ```
