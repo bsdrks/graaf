@@ -14,6 +14,7 @@ use {
 ///
 /// # Arguments
 ///
+/// * `graph`: The graph.
 /// * `step`: A function that calculates the accumulated weight.
 /// * `dist`: The distances from the source vertices.
 /// * `heap`: The vertices to visit.
