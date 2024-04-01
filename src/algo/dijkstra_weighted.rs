@@ -67,6 +67,30 @@ pub trait DijkstraWeighted<W> {
 ///
 /// * `graph`: The graph.
 /// * `s`: The source vertex.
+///
+/// # Example
+///
+/// ```
+/// use graaf::algo::dijkstra_sssp_weighted;
+///
+/// // ╭───╮       ╭───╮
+/// // │ 0 │  2 →  │ 1 │
+/// // ╰───╯       ╰───╯
+/// //   ↑           2
+/// //   2           ↓
+/// // ╭───╮       ╭───╮
+/// // │ 3 │       │ 2 │
+/// // ╰───╯       ╰───╯
+///
+/// let graph: [Vec<(usize, usize)>; 4] = [
+///     vec![(1, 2)],
+///     vec![(2, 2)],
+///     Vec::new(),
+///     vec![(0, 2)],
+/// ];
+///
+/// assert_eq!(dijkstra_sssp_weighted(&graph, 0), [0, 2, 4, usize::MAX]);
+/// ```
 pub fn dijkstra_sssp_weighted<G>(graph: &G, s: usize) -> Vec<usize>
 where
     G: CountAllVertices + DijkstraWeighted<usize>,
