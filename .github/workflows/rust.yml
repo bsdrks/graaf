@@ -27,3 +27,5 @@ jobs:
         run: cargo build --verbose
       - name: Generate documentation
         run: cargo doc --verbose
+      - name: Coveralls
+        uses: coverallsapp/github-action@v2
