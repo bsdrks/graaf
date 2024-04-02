@@ -9,7 +9,7 @@
 
 ### Changed
 
-- Removed `algo::dijkstra::unweighted`.
+- Remove `algo::dijkstra::unweighted`.
 - Move `algo::dijkstra::weighted` to `algo::dijkstra`.
 
 ## [0.3.3] - 2024-04-02
