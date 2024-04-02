@@ -1,10 +1,15 @@
 # Changelog
 
-## [0.4.0] - 2024-04-03
+## [0.4.1] - 2024-04-03
 
 ### Added
 
 - Add `algo::bfs::shortest_paths`.
+
+## [0.4.0] - 2024-04-03
+
+### Added
+
 - Add `algo::dijkstra::shortest_paths`.
 
 ### Changed

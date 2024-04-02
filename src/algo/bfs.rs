@@ -104,13 +104,79 @@ where
     G: CountAllVertices + IterEdges,
 {
     let mut dist = vec![usize::MAX; graph.count_all_vertices()];
-    let mut heap = VecDeque::from(vec![(s, 0)]);
+    let mut queue = VecDeque::from(vec![(s, 0)]);
 
     dist[s] = 0;
 
-    min_distances(graph, |w| w + 1, &mut dist, &mut heap);
+    min_distances(graph, |w| w + 1, &mut dist, &mut queue);
 
     dist
+}
+
+/// Calculate the shortest paths from the source vertices to all other
+/// vertices in a weighted directed graph.
+///
+/// # Arguments
+///
+/// * `graph`: The graph.
+/// * `step`: The function that calculates the accumulated weight.
+/// * `pred`: The predecessors on the shortest paths from the source vertices.
+/// * `dist`: The distances from the source vertices.
+/// * `queue`: The vertices to visit.
+///
+/// # Example
+///
+/// ```
+/// extern crate alloc;
+///
+/// use {
+///     alloc::collections::VecDeque,
+///     core::cmp::Reverse,
+///     graaf::algo::bfs::shortest_paths,
+/// };
+///
+/// // ╭───╮       ╭───╮
+/// // │ 0 │  2 →  │ 1 │
+/// // ╰───╯       ╰───╯
+/// //   ↑           2
+/// //   2           ↓
+/// // ╭───╮       ╭───╮
+/// // │ 3 │       │ 2 │
+/// // ╰───╯       ╰───╯
+///
+/// let graph: [Vec<usize>; 4] = [vec![1], vec![2], Vec::new(), vec![0]];
+/// let mut pred = [None, None, None, None];
+/// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
+/// let mut queue = VecDeque::from([(0, 0)]);
+///
+/// shortest_paths(&graph, |w| w + 1, &mut pred, &mut dist, &mut queue);
+///
+/// assert_eq!(pred, [None, Some(0), Some(1), None]);
+/// assert_eq!(dist, [0, 1, 2, usize::MAX]);
+/// ```
+pub fn shortest_paths<G, W>(
+    graph: &G,
+    step: fn(W) -> W,
+    pred: &mut [Option<usize>],
+    dist: &mut [W],
+    queue: &mut VecDeque<(usize, W)>,
+) where
+    G: IterEdges,
+    W: Copy + Ord,
+{
+    while let Some((s, w)) = queue.pop_front() {
+        let w = step(w);
+
+        for t in graph.iter_edges(s) {
+            if w >= dist[t] {
+                continue;
+            }
+
+            dist[t] = w;
+            pred[t] = Some(s);
+            queue.push_back((t, w));
+        }
+    }
 }
 
 #[cfg(test)]
