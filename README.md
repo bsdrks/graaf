@@ -8,12 +8,20 @@ This crate builds on `nightly`. This will change in version `1.0.0`.
 
 ## Algorithms
 
-- `algo::bfs::min_distances_single_source` calculates the minimum distances from the source verticex to all vertices.
-- `algo::bfs::min_distances` calculates the minimum distances from multiple source vertices to all vertices.
-- `algo::bfs::shortest_paths` calculates the shortest paths from multiple source vertices to all vertices.
-- `algo::dijkstra::min_distances_single_source` calculates the minimum distances from the source vertex to all vertices.
-- `algo::dijkstra::min_distances` calculates the minimum distances from multiple source vertices to all vertices.
-- `algo::dijkstra::shortest_paths` calculates the shortest paths from multiple source vertices to all vertices.
+### Minimum distances, _n_ sources
+
+- `algo::bfs::min_distances` for unweighted graphs
+- `algo::dijkstra::min_distances` for weighted graphs
+
+### Minimum distances, single source
+
+- `algo::bfs::min_distances_single_source` for unweighted graphs
+- `algo::dijkstra::min_distances_single_source` for weighted graphs
+
+### Shortest paths, _n_ sources
+
+- `algo::bfs::shortest_paths` for unweighted graphs
+- `algo::dijkstra::shortest_paths` for weighted graphs
 
 ## Graph operation traits
 
