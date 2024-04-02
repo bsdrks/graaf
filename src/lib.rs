@@ -56,7 +56,6 @@
 )]
 // Rustc
 #![deny(
-    // is this part of ruleset?
     missing_copy_implementations,
     missing_debug_implementations,
     missing_docs,
