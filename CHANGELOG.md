@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.3.3] - 2024-04-02
+
+- Add `algo::bfs::min_distances`.
+- Add `algo::bfs::min_distances_single_source`.
+- Add benchmarks for `algo::bfs::*`
+
 ## [0.3.2] - 2024-04-01
 
 ### Added

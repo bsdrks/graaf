@@ -1,6 +1,6 @@
 [package]
 name = "graaf"
-version = "0.3.2"
+version = "0.3.3"
 edition = "2021"
 license = "Apache-2.0"
 description = "Functions and types for working with graphs"
@@ -28,15 +28,20 @@ harness = false
 
 [[bench]]
 name = "crosscountry"
-path = "benches/dijkstra_weighted_min_distances/crosscountry.rs"
+path = "benches/min_distances_weighted/crosscountry.rs"
 harness = false
 
 [[bench]]
 name = "shortestpath1"
-path = "benches/dijkstra_weighted_min_distances/shortestpath1.rs"
+path = "benches/min_distances_weighted/shortestpath1.rs"
 harness = false
 
 [[bench]]
-name = "small_graph1"
-path = "benches/dijkstra_weighted_min_distances/small_graph1.rs"
+name = "small_graph_1"
+path = "benches/min_distances_weighted/small_graph_1.rs"
+harness = false
+
+[[bench]]
+name = "min_distances_unweighted_graph_1"
+path = "benches/min_distances_unweighted/graph_1.rs"
 harness = false

@@ -1,18 +1,20 @@
 # Graaf &emsp; [![Build status](https://github.com/bsdrks/graaf/actions/workflows/rust.yml/badge.svg)](https://github.com/bsdrks/graaf/actions) [![Crates.io](https://img.shields.io/crates/v/graaf.svg)](https://crates.io/crates/graaf) [![API reference](https://docs.rs/graaf/badge.svg)](https://docs.rs/graaf) [![Coverage Status](https://coveralls.io/repos/github/bsdrks/graaf/badge.svg?branch=integrate-coveralls)](https://coveralls.io/github/bsdrks/graaf?branch=integrate-coveralls)
 
-Functions and types for working with graphs
-
 **WARNING: this crate is pre-alpha**
+
+Functions and types for working with graphs
 
 This crate builds on `nightly`. This will change in version `1.0.0`.
 
 ## Algorithms
 
-- `algo::dijkstra::unweighted::min_distances_single_source` calculates the minimum distances from the source vertex to all other vertices in an unweighted graph.
-- `algo::dijkstra::unweighted::min_distances` calculates the minimum distances from multiple source vertices to all other vertices in an unweighted directed graph.
-- `algo::dijkstra::unweighted::shortest_paths` calculates the shortest paths from multiple source vertices to all other vertices in an unweighted graph.
-- `algo::dijkstra::weighted::min_distances_single_source` calculates the minimum distances from the source vertex to all other vertices in a weighted graph.
-- `algo::dijkstra::weighted::min_distances` calculates the minimum distances from multiple source vertices to all other vertices in a weighted directed graph.
+- `algo::bfs::min_distances_single_source` calculates the minimum distances from the source verticex to all vertices.
+- `algo::bfs::min_distances` calculates the minimum distances from multiple source vertices to all vertices.
+- `algo::dijkstra::unweighted::min_distances_single_source` calculates the minimum distances from the source vertex to all vertices.
+- `algo::dijkstra::unweighted::min_distances` calculates the minimum distances from multiple source vertices to all vertices.
+- `algo::dijkstra::unweighted::shortest_paths` calculates the shortest paths from multiple source vertices to all vertices.
+- `algo::dijkstra::weighted::min_distances_single_source` calculates the minimum distances from the source vertex to all vertices.
+- `algo::dijkstra::weighted::min_distances` calculates the minimum distances from multiple source vertices to all vertices.
 
 ## Graph operation traits
 

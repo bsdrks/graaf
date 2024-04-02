@@ -10,12 +10,12 @@ use {
 };
 
 /// Calculate the minimum distances from the source vertices to all other
-/// vertices.
+/// vertices in a weighted directed graph.
 ///
 /// # Arguments
 ///
 /// * `graph`: The graph.
-/// * `step`: A function that calculates the accumulated weight.
+/// * `step`: The function that calculates the accumulated weight.
 /// * `dist`: The distances from the source vertices.
 /// * `heap`: The vertices to visit.
 ///
@@ -71,7 +71,7 @@ pub fn min_distances<G, W>(
 }
 
 /// Calculate the minimum distances from the source vertex to all other
-/// vertices.
+/// vertices in a weighted directed graph.
 ///
 /// # Arguments
 ///
