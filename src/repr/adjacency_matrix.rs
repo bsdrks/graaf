@@ -335,6 +335,7 @@ mod tests {
         assert!(!graph.is_edge(2, 0));
         assert!(!graph.is_edge(2, 1));
         assert!(!graph.is_edge(3, 0));
+        assert!(!graph.is_edge(0, 3));
 
         graph.add_edge(0, 1);
         graph.add_edge(0, 2);
@@ -347,6 +348,7 @@ mod tests {
         assert!(!graph.is_edge(2, 0));
         assert!(graph.is_edge(2, 1));
         assert!(!graph.is_edge(3, 0));
+        assert!(!graph.is_edge(0, 3));
     }
 
     #[test]
