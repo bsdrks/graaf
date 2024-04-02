@@ -1,11 +1,20 @@
 # Changelog
 
-## [0.3.4] - Unreleased
+## [0.4.0] - 2024-04-03
 
-- Add `algo::bfs::min_distances`.
-- Add `algo::dijkstra::weighted::shortest_paths`.
+### Added
+
+- Add `algo::bfs::shortest_paths`.
+- Add `algo::dijkstra::shortest_paths`.
+
+### Changed
+
+- Removed `algo::dijkstra::unweighted`.
+- Move `algo::dijkstra::weighted` to `algo::dijkstra`.
 
 ## [0.3.3] - 2024-04-02
+
+### Added
 
 - Add `algo::bfs::min_distances`.
 - Add `algo::bfs::min_distances_single_source`.

@@ -4,7 +4,7 @@ fn main() {
 
 use {
     divan::Bencher,
-    graaf::algo::dijkstra::weighted::min_distances,
+    graaf::algo::dijkstra::min_distances,
     std::{
         cmp::Reverse,
         collections::{

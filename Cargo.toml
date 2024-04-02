@@ -1,6 +1,6 @@
 [package]
 name = "graaf"
-version = "0.3.3"
+version = "0.4.0"
 edition = "2021"
 license = "Apache-2.0"
 description = "Functions and types for working with graphs"

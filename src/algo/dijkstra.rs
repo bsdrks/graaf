@@ -27,7 +27,7 @@ use {
 /// use {
 ///     alloc::collections::BinaryHeap,
 ///     core::cmp::Reverse,
-///     graaf::algo::dijkstra::weighted::min_distances,
+///     graaf::algo::dijkstra::min_distances,
 /// };
 ///
 /// // ╭───╮       ╭───╮
@@ -81,7 +81,7 @@ pub fn min_distances<G, W>(
 /// # Example
 ///
 /// ```
-/// use graaf::algo::dijkstra::weighted::min_distances_single_source;
+/// use graaf::algo::dijkstra::min_distances_single_source;
 ///
 /// // ╭───╮       ╭───╮
 /// // │ 0 │  2 →  │ 1 │
@@ -132,7 +132,7 @@ where
 /// use {
 ///     alloc::collections::BinaryHeap,
 ///     core::cmp::Reverse,
-///     graaf::algo::dijkstra::weighted::shortest_paths,
+///     graaf::algo::dijkstra::shortest_paths,
 /// };
 ///
 /// // ╭───╮       ╭───╮
