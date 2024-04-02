@@ -113,6 +113,72 @@ where
     dist
 }
 
+/// Calculate the shortest paths from the source vertices to all other
+/// vertices in a weighted directed graph.
+///
+/// # Arguments
+///
+/// * `graph`: The graph.
+/// * `step`: The function that calculates the accumulated weight.
+/// * `pred`: The predecessors on the shortest paths from the source vertices.
+/// * `dist`: The distances from the source vertices.
+/// * `heap`: The vertices to visit.
+///
+/// # Example
+///
+/// ```
+/// extern crate alloc;
+///
+/// use {
+///     alloc::collections::BinaryHeap,
+///     core::cmp::Reverse,
+///     graaf::algo::dijkstra::weighted::shortest_paths,
+/// };
+///
+/// // ╭───╮       ╭───╮
+/// // │ 0 │  2 →  │ 1 │
+/// // ╰───╯       ╰───╯
+/// //   ↑           2
+/// //   2           ↓
+/// // ╭───╮       ╭───╮
+/// // │ 3 │       │ 2 │
+/// // ╰───╯       ╰───╯
+///
+/// let graph: [Vec<(usize, usize)>; 4] = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
+/// let mut pred = [None, None, None, None];
+/// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
+/// let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+///
+/// shortest_paths(&graph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
+///
+/// assert_eq!(pred, [None, Some(0), Some(1), None]);
+/// assert_eq!(dist, [0, 2, 4, usize::MAX]);
+/// ```
+pub fn shortest_paths<G, W>(
+    graph: &G,
+    step: fn(W, W) -> W,
+    pred: &mut [Option<usize>],
+    dist: &mut [W],
+    heap: &mut BinaryHeap<(Reverse<W>, usize)>,
+) where
+    G: IterWeightedEdges<W>,
+    W: Copy + Ord,
+{
+    while let Some((Reverse(acc), s)) = heap.pop() {
+        for (t, w) in graph.iter_weighted_edges(s) {
+            let w = step(acc, w);
+
+            if w >= dist[t] {
+                continue;
+            }
+
+            dist[t] = w;
+            pred[t] = Some(s);
+            heap.push((Reverse(w), t));
+        }
+    }
+}
+
 #[cfg(test)]
 mod test {
     use {
