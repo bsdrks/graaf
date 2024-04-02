@@ -76,13 +76,7 @@ pub fn min_distances<G, W>(
 /// # Example
 ///
 /// ```
-/// extern crate alloc;
-///
-/// use {
-///     alloc::collections::BinaryHeap,
-///     core::cmp::Reverse,
-///     graaf::algo::bfs::min_distances_single_source,
-/// };
+/// use graaf::algo::bfs::min_distances_single_source;
 ///
 /// // ╭───╮       ╭───╮
 /// // │ 0 │   →   │ 1 │
@@ -190,8 +184,8 @@ mod test {
         fn no_source() {
             let graph: [Vec<usize>; 0] = [];
             let mut dist = Vec::new();
-            let mut heap = VecDeque::new();
-            let () = min_distances(&graph, |w: usize| w + 1, &mut dist, &mut heap);
+            let mut queue = VecDeque::new();
+            let () = min_distances(&graph, |w: usize| w + 1, &mut dist, &mut queue);
 
             assert!(dist.is_empty());
         }
@@ -200,8 +194,8 @@ mod test {
         fn single_source() {
             let graph: [Vec<usize>; 4] = [vec![1], vec![2], Vec::new(), vec![0]];
             let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
-            let mut heap = VecDeque::from([(0, 0)]);
-            let () = min_distances(&graph, |w| w + 1, &mut dist, &mut heap);
+            let mut queue = VecDeque::from([(0, 0)]);
+            let () = min_distances(&graph, |w| w + 1, &mut dist, &mut queue);
 
             assert_eq!(dist, [0, 1, 2, usize::MAX]);
         }

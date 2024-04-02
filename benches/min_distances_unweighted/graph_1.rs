@@ -23,7 +23,7 @@ fn dijkstra(bencher: Bencher) {
         vec![(3, 1), (4, 1), (6, 1)],
     ];
 
-    bencher.bench_local(|| {
+    bencher.bench(|| {
         dijkstra::min_distances_single_source(&graph, 0);
     });
 }
@@ -41,7 +41,7 @@ fn bfs(bencher: Bencher) {
         vec![3, 4, 6],
     ];
 
-    bencher.bench_local(|| {
+    bencher.bench(|| {
         bfs::min_distances_single_source(&graph, 0);
     });
 }
