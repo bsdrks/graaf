@@ -28,15 +28,15 @@ harness = false
 
 [[bench]]
 name = "crosscountry"
-path = "benches/dijkstra_weighted/crosscountry.rs"
+path = "benches/dijkstra_weighted_min_distances/crosscountry.rs"
 harness = false
 
 [[bench]]
 name = "shortestpath1"
-path = "benches/dijkstra_weighted/shortestpath1.rs"
+path = "benches/dijkstra_weighted_min_distances/shortestpath1.rs"
 harness = false
 
 [[bench]]
 name = "small_graph1"
-path = "benches/dijkstra_weighted/small_graph1.rs"
+path = "benches/dijkstra_weighted_min_distances/small_graph1.rs"
 harness = false
