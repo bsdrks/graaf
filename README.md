@@ -1,6 +1,6 @@
 # Graaf &emsp; [![Build status](https://github.com/bsdrks/graaf/actions/workflows/rust.yml/badge.svg)](https://github.com/bsdrks/graaf/actions) [![Crates.io](https://img.shields.io/crates/v/graaf.svg)](https://crates.io/crates/graaf) [![API reference](https://docs.rs/graaf/badge.svg)](https://docs.rs/graaf) [![Coverage Status](https://coveralls.io/repos/github/bsdrks/graaf/badge.svg?branch=main)](https://coveralls.io/github/bsdrks/graaf?branch=main)
 
-**WARNING: this crate is pre-alpha**
+**WARNING: this crate is in early alpha. The API is unstable.**
 
 Functions and types for working with graphs
 
@@ -8,20 +8,12 @@ This crate builds on `nightly`. This will change in version `1.0.0`.
 
 ## Algorithms
 
-### Minimum distances, _n_ sources
-
-- `algo::bfs::min_distances` for unweighted graphs
-- `algo::dijkstra::min_distances` for weighted graphs
-
-### Minimum distances, single source
-
-- `algo::bfs::min_distances_single_source` for unweighted graphs
-- `algo::dijkstra::min_distances_single_source` for weighted graphs
-
-### Shortest paths, _n_ sources
-
-- `algo::bfs::shortest_paths` for unweighted graphs
-- `algo::dijkstra::shortest_paths` for weighted graphs
+- `algo::bfs::min_distances_single_source`
+- `algo::bfs::min_distances`
+- `algo::bfs::shortest_paths`
+- `algo::dijkstra::min_distances_single_source`
+- `algo::dijkstra::min_distances`
+- `algo::dijkstra::shortest_paths`
 
 ## Graph operation traits
 
