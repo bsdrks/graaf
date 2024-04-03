@@ -39,6 +39,18 @@ where
     }
 }
 
+impl<W, H> Outdegree for Vec<HashMap<usize, W, H>>
+where
+    H: BuildHasher,
+{
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn outdegree(&self, s: usize) -> usize {
+        self[s].len()
+    }
+}
+
 // Arr
 
 impl<const V: usize, T> Outdegree for [Vec<T>; V] {
@@ -51,6 +63,18 @@ impl<const V: usize, T> Outdegree for [Vec<T>; V] {
 }
 
 impl<const V: usize, H> Outdegree for [HashSet<usize, H>; V]
+where
+    H: BuildHasher,
+{
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn outdegree(&self, s: usize) -> usize {
+        self[s].len()
+    }
+}
+
+impl<const V: usize, W, H> Outdegree for [HashMap<usize, W, H>; V]
 where
     H: BuildHasher,
 {
@@ -127,6 +151,19 @@ mod tests {
     }
 
     #[test]
+    fn vec_hash_map() {
+        let graph = vec![
+            HashMap::from([(1, 1), (2, 1)]),
+            HashMap::from([(0, 1)]),
+            HashMap::from([(1, 1)]),
+        ];
+
+        assert_eq!(graph.outdegree(0), 2);
+        assert_eq!(graph.outdegree(1), 1);
+        assert_eq!(graph.outdegree(2), 1);
+    }
+
+    #[test]
     fn arr_vec() {
         let graph = [vec![1, 2], vec![0], vec![1]];
 
@@ -141,6 +178,19 @@ mod tests {
             HashSet::from([1, 2]),
             HashSet::from([0]),
             HashSet::from([1]),
+        ];
+
+        assert_eq!(graph.outdegree(0), 2);
+        assert_eq!(graph.outdegree(1), 1);
+        assert_eq!(graph.outdegree(2), 1);
+    }
+
+    #[test]
+    fn arr_hash_map() {
+        let graph = [
+            HashMap::from([(1, 1), (2, 1)]),
+            HashMap::from([(0, 1)]),
+            HashMap::from([(1, 1)]),
         ];
 
         assert_eq!(graph.outdegree(0), 2);

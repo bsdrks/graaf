@@ -6,6 +6,8 @@
 
 - Implement `IterWeightedEdges` for `Vec<HashMap<usize, W>>`
 - Implement `IterWeightedEdges` for `[HashMap<usize, W>; V]`
+- Implement `Outdegree` for `Vec<HashMap<usize, W>>`
+- Implement `Outdegree` for `[HashMap<usize, W>; V]`
 
 ### Removed
 
