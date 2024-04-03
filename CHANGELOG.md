@@ -4,6 +4,7 @@
 
 ### Added
 
+- Implement `Indegree` for `HashMap<usize, HashMap<usize, W>>`.
 - Implement `IsEdge` for `HashSet<(usize, usize)>`.
 - Implement `IterVertices` for `HashSet<T>`.
 - Implement `IterWeightedEdges` for `Vec<HashMap<usize, W>>`.

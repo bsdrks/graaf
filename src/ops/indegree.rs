@@ -69,6 +69,17 @@ where
     }
 }
 
+impl<W, H> Indegree for HashMap<usize, HashMap<usize, W, H>, H>
+where
+    H: BuildHasher,
+{
+    fn indegree(&self, t: usize) -> usize {
+        self.values()
+            .map(|map| map.keys().filter(|&&u| u == t).count())
+            .sum()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -125,6 +136,19 @@ mod tests {
             (0, HashSet::from([1, 2])),
             (1, HashSet::from([2])),
             (2, HashSet::new()),
+        ]);
+
+        assert_eq!(graph.indegree(0), 0);
+        assert_eq!(graph.indegree(1), 1);
+        assert_eq!(graph.indegree(2), 2);
+    }
+
+    #[test]
+    fn hash_map_hash_map() {
+        let graph: HashMap<usize, HashMap<usize, usize>> = HashMap::from([
+            (0, HashMap::from([(1, 2), (2, 3)])),
+            (1, HashMap::from([(2, 1)])),
+            (2, HashMap::new()),
         ]);
 
         assert_eq!(graph.indegree(0), 0);
