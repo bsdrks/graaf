@@ -32,7 +32,7 @@
 //! assert_eq!(adj.outdegree(3), 0);
 //! ```
 
-#![cfg_attr(tarpaulin, skip)]
+#![cfg(not(tarpaulin_include))]
 // Groups
 #![forbid(clippy::all, clippy::cargo, clippy::nursery, clippy::pedantic)]
 // Restrictions
