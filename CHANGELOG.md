@@ -1,6 +1,15 @@
 # Changelog
 
-## [0.4.2] - Unreleased
+## [0.4.3] - Unreleased
+
+### Added
+
+- Add `algo::bfs::sssp`.
+- Add `algo::bfs::mssp`.
+- Add `algo::dijkstra::sssp`.
+- Add `algo::dijkstra::mssp`.
+
+### [0.4.2] - 2024-04-03
 
 ### Changed
 
