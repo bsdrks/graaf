@@ -113,8 +113,8 @@ where
     dist
 }
 
-/// Calculate the shortest paths from the source vertices to all other
-/// vertices in a weighted directed graph.
+/// Calculate the predecessor tree and distances of the shortest paths from the
+/// source vertices to all other vertices in a weighted directed graph.
 ///
 /// # Arguments
 ///
@@ -132,7 +132,7 @@ where
 /// use {
 ///     alloc::collections::BinaryHeap,
 ///     core::cmp::Reverse,
-///     graaf::algo::dijkstra::shortest_paths,
+///     graaf::algo::dijkstra::predecessors,
 /// };
 ///
 /// // ╭───╮       ╭───╮
@@ -149,12 +149,12 @@ where
 /// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
 /// let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 ///
-/// shortest_paths(&graph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
+/// predecessors(&graph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
 ///
 /// assert_eq!(pred, [None, Some(0), Some(1), None]);
 /// assert_eq!(dist, [0, 2, 4, usize::MAX]);
 /// ```
-pub fn shortest_paths<G, W>(
+pub fn predecessors<G, W>(
     graph: &G,
     step: fn(W, W) -> W,
     pred: &mut [Option<usize>],

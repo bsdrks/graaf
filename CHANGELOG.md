@@ -2,7 +2,9 @@
 
 ## [0.4.2] - Unreleased
 
-TBA
+### Changed
+
+- Rename `*::shortest_paths` to `predecessors`.
 
 ## [0.4.1] - 2024-04-03
 

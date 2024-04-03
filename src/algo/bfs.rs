@@ -107,8 +107,8 @@ where
     dist
 }
 
-/// Calculate the shortest paths from the source vertices to all other
-/// vertices in a weighted directed graph.
+/// Calculate the predecessor tree and distances of the shortest paths from the
+/// source vertices to all other vertices in an unweighted directed graph.
 ///
 /// # Arguments
 ///
@@ -126,7 +126,7 @@ where
 /// use {
 ///     alloc::collections::VecDeque,
 ///     core::cmp::Reverse,
-///     graaf::algo::bfs::shortest_paths,
+///     graaf::algo::bfs::predecessors,
 /// };
 ///
 /// // ╭───╮       ╭───╮
@@ -143,12 +143,12 @@ where
 /// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
 /// let mut queue = VecDeque::from([(0, 0)]);
 ///
-/// shortest_paths(&graph, |w| w + 1, &mut pred, &mut dist, &mut queue);
+/// predecessors(&graph, |w| w + 1, &mut pred, &mut dist, &mut queue);
 ///
 /// assert_eq!(pred, [None, Some(0), Some(1), None]);
 /// assert_eq!(dist, [0, 1, 2, usize::MAX]);
 /// ```
-pub fn shortest_paths<G, W>(
+pub fn predecessors<G, W>(
     graph: &G,
     step: fn(W) -> W,
     pred: &mut [Option<usize>],
