@@ -2,6 +2,12 @@
 
 Functions and types for working with graphs
 
+**Graaf** is Dutch for
+
+1. graph
+2. count
+3. dig
+
 **WARNING: this crate is in early alpha. The API is unstable.**
 
 ## Algorithms
