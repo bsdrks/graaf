@@ -7,7 +7,7 @@
 - Implement `IterWeightedEdges` for `Vec<HashMap<usize, W>>`
 - Implement `IterWeightedEdges` for `[HashMap<usize, W>; V]`
 
-### [0.4.2] - 2024-04-03
+## [0.4.2] - 2024-04-03
 
 ### Changed
 
