@@ -29,6 +29,6 @@ jobs:
         uses: actions-rs/tarpaulin@v0.1
         with:
           version: "0.15.0"
-          args: "-- --test-threads 1"
+          args: "-- --test-threads 1 --exclude-files src/lib.rs"
       - name: Coveralls
         uses: coverallsapp/github-action@v2
