@@ -4,10 +4,8 @@
 
 ### Added
 
-- Add `algo::bfs::sssp`.
-- Add `algo::bfs::mssp`.
-- Add `algo::dijkstra::sssp`.
-- Add `algo::dijkstra::mssp`.
+- Implement `IterWeightedEdges` for `Vec<HashMap<usize, W>>`
+- Implement `IterWeightedEdges` for `[HashMap<usize, W>; V]`
 
 ### [0.4.2] - 2024-04-03
 
