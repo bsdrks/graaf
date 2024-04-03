@@ -120,7 +120,7 @@ mod tests {
     }
 
     #[test]
-    fn hash_map() {
+    fn hash_map_hash_set() {
         let graph: HashMap<usize, HashSet<usize>> = HashMap::from([
             (0, HashSet::from([1, 2])),
             (1, HashSet::from([2])),
