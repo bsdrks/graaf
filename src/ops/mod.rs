@@ -40,9 +40,6 @@ pub mod outdegree;
 /// A trait to remove an edge from a graph
 pub mod remove_edge;
 
-/// A trait to get the weight of a given vertex
-pub mod vertex_weight;
-
 pub use {
     add_edge::AddEdge,
     add_weighted_edge::AddWeightedEdge,
@@ -58,5 +55,4 @@ pub use {
     iter_weighted_edges::IterWeightedEdges,
     outdegree::Outdegree,
     remove_edge::RemoveEdge,
-    vertex_weight::VertexWeight,
 };

@@ -1,11 +1,15 @@
 # Changelog
 
-## [0.4.3] - Unreleased
+## [0.5.0] - Unreleased
 
 ### Added
 
 - Implement `IterWeightedEdges` for `Vec<HashMap<usize, W>>`
 - Implement `IterWeightedEdges` for `[HashMap<usize, W>; V]`
+
+### Removed
+
+- Remove `VertexWeight` trait.
 
 ## [0.4.2] - 2024-04-03
 

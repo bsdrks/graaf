@@ -31,7 +31,6 @@ These traits are implemented for various graph representations built from standa
 - `ops::IterWeightedEdges` iterates over all weighted edges of a source vertex.
 - `ops::Outdegree` returns the outdegree of a vertex.
 - `ops::RemoveEdge` removes an edge from a graph.
-- `ops::VertexWeight` returns the weight of a vertex.
 
 ## Graph representations
 
