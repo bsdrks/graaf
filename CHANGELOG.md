@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.4.2] - Unreleased
+
+TBA
+
 ## [0.4.1] - 2024-04-03
 
 ### Added
