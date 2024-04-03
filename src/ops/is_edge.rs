@@ -61,6 +61,17 @@ where
     }
 }
 
+// HashSet
+
+impl<H> IsEdge for HashSet<(usize, usize), H>
+where
+    H: BuildHasher,
+{
+    fn is_edge(&self, s: usize, t: usize) -> bool {
+        self.contains(&(s, t))
+    }
+}
+
 // HashMap
 
 impl<H> IsEdge for HashMap<usize, HashSet<usize, H>, H>
@@ -149,6 +160,21 @@ mod tests {
             HashMap::from([(0, 1)]),
             HashMap::from([(0, 1), (1, 1)]),
         ];
+
+        assert!(!graph.is_edge(0, 0));
+        assert!(graph.is_edge(0, 1));
+        assert!(graph.is_edge(0, 2));
+        assert!(graph.is_edge(1, 0));
+        assert!(!graph.is_edge(1, 1));
+        assert!(!graph.is_edge(1, 2));
+        assert!(graph.is_edge(2, 0));
+        assert!(graph.is_edge(2, 1));
+        assert!(!graph.is_edge(2, 2));
+    }
+
+    #[test]
+    fn hash_set() {
+        let graph = HashSet::from([(0, 1), (0, 2), (1, 0), (2, 0), (2, 1)]);
 
         assert!(!graph.is_edge(0, 0));
         assert!(graph.is_edge(0, 1));
