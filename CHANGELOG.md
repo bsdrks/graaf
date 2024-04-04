@@ -22,12 +22,17 @@
 - Add doctest for `Outdegree`.
 - Add doctest for `RemoveEdge`.
 
-## [0.5.0] - Unreleased
+## [0.5.1] - 2024-04-04
 
 ### Added
 
 - Add `bfs::predecessors_single_source`.
 - Add `dijkstra::predecessors_single_source`.
+
+## [0.5.0] - 2024-04-03
+
+### Added
+
 - Implement `Indegree` for `HashMap<usize, HashMap<usize, W>>`.
 - Implement `IsEdge` for `HashSet<(usize, usize)>`.
 - Implement `IterVertices` for `HashSet<T>`.
