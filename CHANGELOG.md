@@ -4,6 +4,7 @@
 
 - Add `bfs::mssp`.
 - Add `bfs::sssp`.
+- Add `dfs::*`.
 - Add `dijkstra::mssp`.
 - Add `dijkstra::sssp`.
 - Add doctest for `AddEdge`.
