@@ -12,10 +12,15 @@ Functions and types for working with graphs
 
 ## Algorithms
 
+### Breadth-first search
+
 - `algo::bfs::min_distances_single_source`
 - `algo::bfs::min_distances`
 - `algo::bfs::predecessors_single_source`
 - `algo::bfs::predecessors`
+
+### Dijkstra's algorithm
+
 - `algo::dijkstra::min_distances_single_source`
 - `algo::dijkstra::min_distances`
 - `algo::dijkstra::predecessors_single_source`
