@@ -104,8 +104,8 @@ pub fn min_distances<G, W>(
 }
 
 /// Calculate the minimum distances from the source vertex to all other
-/// vertices in an unweighted directed graph. Use [`predecessors`] if you also
-/// need the predecessor tree.
+/// vertices in an unweighted directed graph. Use [`predecessors_single_source`]
+/// if you also need the predecessor tree.
 ///
 /// # Arguments
 ///
