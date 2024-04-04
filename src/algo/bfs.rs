@@ -9,7 +9,8 @@ use {
 };
 
 /// Calculate the minimum distances from the source vertices to all other
-/// vertices in an unweighted graph.
+/// vertices in an unweighted graph. Use [`predecessors`] if you also need the
+/// predecessor tree.
 ///
 /// # Arguments
 ///
@@ -66,7 +67,8 @@ pub fn min_distances<G, W>(
 }
 
 /// Calculate the minimum distances from the source vertex to all other
-/// vertices in an unweighted directed graph.
+/// vertices in an unweighted directed graph. Use [`predecessors`] if you also
+/// need the predecessor tree.
 ///
 /// # Arguments
 ///
@@ -130,10 +132,9 @@ where
 /// };
 ///
 /// // ╭───╮       ╭───╮
-/// // │ 0 │  2 →  │ 1 │
+/// // │ 0 │   →   │ 1 │
 /// // ╰───╯       ╰───╯
-/// //   ↑           2
-/// //   2           ↓
+/// //   ↑           ↓
 /// // ╭───╮       ╭───╮
 /// // │ 3 │       │ 2 │
 /// // ╰───╯       ╰───╯
@@ -171,6 +172,48 @@ pub fn predecessors<G, W>(
             queue.push_back((t, w));
         }
     }
+}
+
+/// Calculate the predecessor tree and distances of the shortest paths from the
+/// source vertex to all other vertices in an unweighted directed graph.
+///
+/// # Arguments
+///
+/// * `graph`: The graph.
+/// * `s`: The source vertex.
+///
+/// # Example
+///
+/// ```
+/// use graaf::algo::bfs::predecessors_single_source;
+///
+/// // ╭───╮       ╭───╮
+/// // │ 0 │   →   │ 1 │
+/// // ╰───╯       ╰───╯
+/// //   ↑           ↓
+/// // ╭───╮       ╭───╮
+/// // │ 3 │       │ 2 │
+/// // ╰───╯       ╰───╯
+///
+/// let graph: [Vec<usize>; 4] = [vec![1], vec![2], Vec::new(), vec![0]];
+/// let (pred, dist) = predecessors_single_source(&graph, 0);
+///
+/// assert_eq!(pred, [None, Some(0), Some(1), None]);
+/// assert_eq!(dist, [0, 1, 2, usize::MAX]);
+/// ```
+pub fn predecessors_single_source<G>(graph: &G, s: usize) -> (Vec<Option<usize>>, Vec<usize>)
+where
+    G: CountAllVertices + IterEdges,
+{
+    let mut pred = vec![None; graph.count_all_vertices()];
+    let mut dist = vec![usize::MAX; graph.count_all_vertices()];
+    let mut queue = VecDeque::from(vec![(s, 0)]);
+
+    dist[s] = 0;
+
+    predecessors(graph, |w| w + 1, &mut pred, &mut dist, &mut queue);
+
+    (pred, dist)
 }
 
 #[cfg(test)]
@@ -244,6 +287,34 @@ mod test {
             {
                 assert_eq!(min_distances_single_source(&graph, i), d);
             }
+        }
+    }
+
+    mod predecessors {
+        use super::*;
+
+        #[test]
+        fn no_source() {
+            let graph: [Vec<usize>; 0] = [];
+            let mut pred = Vec::new();
+            let mut dist = Vec::new();
+            let mut queue = VecDeque::new();
+            let () = predecessors(&graph, |w: usize| w + 1, &mut pred, &mut dist, &mut queue);
+
+            assert!(pred.is_empty());
+            assert!(dist.is_empty());
+        }
+
+        #[test]
+        fn single_source() {
+            let graph: [Vec<usize>; 4] = [vec![1], vec![2], Vec::new(), vec![0]];
+            let mut pred = [None, None, None, None];
+            let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
+            let mut queue = VecDeque::from([(0, 0)]);
+            let () = predecessors(&graph, |w| w + 1, &mut pred, &mut dist, &mut queue);
+
+            assert_eq!(pred, [None, Some(0), Some(1), None]);
+            assert_eq!(dist, [0, 1, 2, usize::MAX]);
         }
     }
 }

@@ -10,7 +10,8 @@ use {
 };
 
 /// Calculate the minimum distances from the source vertices to all other
-/// vertices in a weighted directed graph.
+/// vertices in a weighted directed graph. Use [`predecessors`] if you also need
+/// the predecessor tree.
 ///
 /// # Arguments
 ///
@@ -71,7 +72,8 @@ pub fn min_distances<G, W>(
 }
 
 /// Calculate the minimum distances from the source vertex to all other
-/// vertices in a weighted directed graph.
+/// vertices in a weighted directed graph. Use [`predecessors`] if you also need
+/// the predecessor tree.
 ///
 /// # Arguments
 ///
@@ -179,6 +181,50 @@ pub fn predecessors<G, W>(
     }
 }
 
+/// Calculate the predecessor tree and distances of the shortest paths from the
+/// source vertex to all other vertices in a weighted directed graph.
+///
+/// # Arguments
+///
+/// * `graph`: The graph.
+/// * `s`: The source vertex.
+///
+/// # Example
+///
+/// ```
+/// use graaf::algo::dijkstra::predecessors_single_source;
+///
+/// // ╭───╮       ╭───╮
+/// // │ 0 │  2 →  │ 1 │
+/// // ╰───╯       ╰───╯
+/// //   ↑           2
+/// //   2           ↓
+/// // ╭───╮       ╭───╮
+/// // │ 3 │       │ 2 │
+/// // ╰───╯       ╰───╯
+///
+/// let graph: [Vec<(usize, usize)>; 4] = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
+/// let (pred, dist) = predecessors_single_source(&graph, 0);
+///
+/// assert_eq!(pred, [None, Some(0), Some(1), None]);
+/// assert_eq!(dist, [0, 2, 4, usize::MAX]);
+/// ```
+pub fn predecessors_single_source<G>(graph: &G, s: usize) -> (Vec<Option<usize>>, Vec<usize>)
+where
+    G: CountAllVertices + IterWeightedEdges<usize>,
+{
+    let v = graph.count_all_vertices();
+    let mut pred = vec![None; v];
+    let mut dist = vec![usize::MAX; v];
+    let mut heap = BinaryHeap::from([(Reverse(0), s)]);
+
+    dist[s] = 0;
+
+    predecessors(graph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
+
+    (pred, dist)
+}
+
 #[cfg(test)]
 mod test {
     use {
@@ -197,6 +243,18 @@ mod test {
             let () = min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
             assert!(dist.is_empty());
+        }
+
+        #[test]
+        fn single_source() {
+            let graph: [Vec<(usize, usize)>; 4] =
+                [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
+            let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
+            let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+            min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
+
+            assert_eq!(dist, [0, 2, 4, usize::MAX]);
         }
     }
 
@@ -355,6 +413,36 @@ mod test {
             {
                 assert_eq!(min_distances_single_source(&graph, s), dist);
             }
+        }
+    }
+
+    mod predecessors {
+        use super::*;
+
+        #[test]
+        fn no_source() {
+            let graph: [Vec<(usize, usize)>; 0] = [];
+            let mut pred = Vec::new();
+            let mut dist = Vec::new();
+            let mut heap = BinaryHeap::new();
+            let () = predecessors(&graph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
+
+            assert!(pred.is_empty());
+            assert!(dist.is_empty());
+        }
+
+        #[test]
+        fn single_source() {
+            let graph: [Vec<(usize, usize)>; 4] =
+                [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
+            let mut pred = [None, None, None, None];
+            let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
+            let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+            predecessors(&graph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
+
+            assert_eq!(pred, [None, Some(0), Some(1), None]);
+            assert_eq!(dist, [0, 2, 4, usize::MAX]);
         }
     }
 }

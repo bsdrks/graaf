@@ -1,9 +1,32 @@
 # Changelog
 
+## [x.x.x] - Planned
+
+- Add `bfs::mssp`.
+- Add `bfs::sssp`.
+- Add `dijkstra::mssp`.
+- Add `dijkstra::sssp`.
+- Add doctest for `AddEdge`.
+- Add doctest for `AddWeightedEdge`.
+- Add doctest for `AdjacencyMatrix::new`.
+- Add doctest for `AdjacencyMatrix::toggle`.
+- Add doctest for `CountAllEdges`.
+- Add doctest for `CountAllVertices`.
+- Add doctest for `EdgeWeight`.
+- Add doctest for `IsEdge`.
+- Add doctest for `IterAllEdges`.
+- Add doctest for `IterAllWeightedEdges`.
+- Add doctest for `IterEdges`.
+- Add doctest for `IterWeightedEdges`.
+- Add doctest for `Outdegree`.
+- Add doctest for `RemoveEdge`.
+
 ## [0.5.0] - Unreleased
 
 ### Added
 
+- Add `bfs::predecessors_single_source`.
+- Add `dijkstra::predecessors_single_source`.
 - Implement `Indegree` for `HashMap<usize, HashMap<usize, W>>`.
 - Implement `IsEdge` for `HashSet<(usize, usize)>`.
 - Implement `IterVertices` for `HashSet<T>`.

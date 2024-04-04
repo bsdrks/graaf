@@ -14,9 +14,11 @@ Functions and types for working with graphs
 
 - `algo::bfs::min_distances_single_source`
 - `algo::bfs::min_distances`
+- `algo::bfs::predecessors_single_source`
 - `algo::bfs::predecessors`
 - `algo::dijkstra::min_distances_single_source`
 - `algo::dijkstra::min_distances`
+- `algo::dijkstra::predecessors_single_source`
 - `algo::dijkstra::predecessors`
 
 ## Graph operation traits
