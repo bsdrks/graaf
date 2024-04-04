@@ -1,4 +1,3 @@
-/// A trait to add an edge to an unweighted graph
 pub mod add_edge;
 
 /// A trait to add an edge to a weighted graph

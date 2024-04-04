@@ -8,7 +8,7 @@ use {
 
 /// A trait to iterate over all unweighted edges with a given source vertex
 ///
-/// # Example
+/// # Examples
 ///
 /// ```
 /// use graaf::ops::IterEdges;

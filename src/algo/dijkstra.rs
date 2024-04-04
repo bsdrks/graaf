@@ -1,6 +1,6 @@
 //! Dijkstra's algorithm with binary-heap
 //!
-//! # Example
+//! # Examples
 //!
 //! ```
 //! use graaf::algo::dijkstra::predecessors_single_source;
@@ -59,7 +59,7 @@ use {
 /// * `dist`: The distances from the source vertices.
 /// * `heap`: The vertices to visit.
 ///
-/// # Example
+/// # Examples
 ///
 /// ```
 /// extern crate alloc;
@@ -119,7 +119,7 @@ pub fn min_distances<G, W>(
 /// * `graph`: The graph.
 /// * `s`: The source vertex.
 ///
-/// # Example
+/// # Examples
 ///
 /// ```
 /// use graaf::algo::dijkstra::min_distances_single_source;
@@ -165,7 +165,7 @@ where
 /// * `dist`: The distances from the source vertices.
 /// * `heap`: The vertices to visit.
 ///
-/// # Example
+/// # Examples
 ///
 /// ```
 /// extern crate alloc;
@@ -228,7 +228,7 @@ pub fn predecessors<G, W>(
 /// * `graph`: The graph.
 /// * `s`: The source vertex.
 ///
-/// # Example
+/// # Examples
 ///
 /// ```
 /// use graaf::algo::dijkstra::predecessors_single_source;

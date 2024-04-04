@@ -2,7 +2,7 @@
 //!
 //! Functions and types for working with graphs
 //!
-//! ## Example
+//! ## Examples
 //!
 //! ```
 //! use graaf::{
