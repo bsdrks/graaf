@@ -45,9 +45,9 @@ use {
     alloc::collections::VecDeque,
 };
 
-/// Calculate the minimum distances from the source vertices to all other
-/// vertices in an unweighted graph. Use [`predecessors`] if you also need the
-/// predecessor tree.
+/// Calculate the minimum distances from the source vertices to all vertices in
+/// an unweighted graph. Use [`predecessors`] if you also need the predecessor
+/// tree.
 ///
 /// # Arguments
 ///
@@ -103,9 +103,9 @@ pub fn min_distances<G, W>(
     }
 }
 
-/// Calculate the minimum distances from the source vertex to all other
-/// vertices in an unweighted directed graph. Use [`predecessors_single_source`]
-/// if you also need the predecessor tree.
+/// Calculate the minimum distances from the source vertex to all vertices in an
+/// unweighted directed graph. Use [`predecessors_single_source`] if you also
+/// need the predecessor tree.
 ///
 /// # Arguments
 ///
@@ -147,7 +147,7 @@ where
 }
 
 /// Calculate the predecessor tree and distances of the shortest paths from the
-/// source vertices to all other vertices in an unweighted directed graph.
+/// source vertices to all vertices in an unweighted directed graph.
 ///
 /// # Arguments
 ///
@@ -212,7 +212,7 @@ pub fn predecessors<G, W>(
 }
 
 /// Calculate the predecessor tree and distances of the shortest paths from the
-/// source vertex to all other vertices in an unweighted directed graph.
+/// source vertex to all vertices in an unweighted directed graph.
 ///
 /// # Arguments
 ///
