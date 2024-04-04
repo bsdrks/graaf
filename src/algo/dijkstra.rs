@@ -1,3 +1,42 @@
+//! Dijkstra's algorithm with binary-heap
+//!
+//! # Example
+//!
+//! ```
+//! use graaf::algo::dijkstra::predecessors_single_source;
+//!
+//! // ╭───╮       ╭───╮
+//! // │ 0 │  2 →  │ 1 │
+//! // ╰───╯       ╰───╯
+//! //   ↑           2
+//! //   2           ↓
+//! // ╭───╮       ╭───╮
+//! // │ 3 │       │ 2 │
+//! // ╰───╯       ╰───╯
+//!
+//! let graph: [Vec<(usize, usize)>; 4] = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
+//!
+//! let (pred, dist) = predecessors_single_source(&graph, 0);
+//!
+//! assert_eq!(pred, [None, Some(0), Some(1), None]);
+//! assert_eq!(dist, [0, 2, 4, usize::MAX]);
+//!
+//! let (pred, dist) = predecessors_single_source(&graph, 1);
+//!
+//! assert_eq!(pred, [None, None, Some(1), None]);
+//! assert_eq!(dist, [usize::MAX, 0, 2, usize::MAX]);
+//!
+//! let (pred, dist) = predecessors_single_source(&graph, 2);
+//!
+//! assert_eq!(pred, [None, None, None, None]);
+//! assert_eq!(dist, [usize::MAX, usize::MAX, 0, usize::MAX]);
+//!
+//! let (pred, dist) = predecessors_single_source(&graph, 3);
+//!
+//! assert_eq!(pred, [Some(3), Some(0), Some(1), None]);
+//! assert_eq!(dist, [2, 4, 6, 0]);
+//! ```
+
 extern crate alloc;
 
 use {

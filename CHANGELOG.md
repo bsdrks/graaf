@@ -22,6 +22,13 @@
 - Add doctest for `Outdegree`.
 - Add doctest for `RemoveEdge`.
 
+## [0.5.2] - 2024-04-04
+
+### Added
+
+- Add module-level doctest for `algo::bfs`.
+- Add module-level doctest for `algo::dijkstra`.
+
 ## [0.5.1] - 2024-04-04
 
 ### Added
