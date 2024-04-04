@@ -1,3 +1,19 @@
+//! A trait to add a weighted edge to a graph
+//!
+//! # Examples
+//!
+//! ```
+//! use graaf::ops::AddWeightedEdge;
+//!
+//! let mut graph: Vec<Vec<(usize, i32)>> = vec![Vec::new(); 3];
+//!
+//! graph.add_weighted_edge(0, 1, 2);
+//! graph.add_weighted_edge(0, 2, 1);
+//! graph.add_weighted_edge(1, 2, -3);
+//!
+//! assert_eq!(graph, vec![vec![(1, 2), (2, 1)], vec![(2, -3)], Vec::new()]);
+//! ```
+
 use {
     core::hash::{
         BuildHasher,
@@ -10,6 +26,53 @@ use {
 };
 
 /// A trait to add an edge to a weighted graph
+///
+/// # `AddWeightedEdge` and [`crate::ops::RemoveEdge`]
+///
+/// Types that also implement [`crate::ops::RemoveEdge`] should ensure that the
+/// following property holds for every `graph`, `s`, `t`, and `w` of the given
+/// types:
+///
+/// ```
+/// use graaf::ops::{
+///     AddWeightedEdge,
+///     RemoveEdge,
+/// };
+///
+/// fn prop_add_weighted_edge_remove_edge<G, W>(graph: G, s: usize, t: usize, w: W) -> bool
+/// where
+///     G: AddWeightedEdge<W> + Clone + PartialEq + RemoveEdge,
+/// {
+///     let mut clone = graph.clone();
+///
+///     clone.add_weighted_edge(s, t, w);
+///     clone.remove_edge(s, t);
+///
+///     graph == clone
+/// }
+/// ```
+///
+/// # `AddWeightedEdge` and [`crate::ops::IsEdge`]
+///
+/// Types that also implement [`crate::ops::IsEdge`] should ensure that the
+/// following property holds for every `graph`, `s`, `t`, and `w` of the given
+/// types:
+///
+/// ```
+/// use graaf::ops::{
+///     AddWeightedEdge,
+///     IsEdge,
+/// };
+///
+/// fn prop_add_edge_is_edge<G, W>(graph: &mut G, s: usize, t: usize, w: W) -> bool
+/// where
+///     G: AddWeightedEdge<W> + IsEdge,
+/// {
+///     graph.add_weighted_edge(s, t, w);
+///
+///     graph.is_edge(s, t)
+/// }
+/// ```
 pub trait AddWeightedEdge<W> {
     /// Add an edge from `s` to `t` with weight `w`.
     ///
@@ -18,6 +81,20 @@ pub trait AddWeightedEdge<W> {
     /// * `s`: The source vertex.
     /// * `t`: The target vertex.
     /// * `w`: The weight of the edge.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use graaf::ops::AddWeightedEdge;
+    ///
+    /// let mut graph: Vec<Vec<(usize, i32)>> = vec![Vec::new(); 3];
+    ///
+    /// graph.add_weighted_edge(0, 1, 2);
+    /// graph.add_weighted_edge(0, 2, 1);
+    /// graph.add_weighted_edge(1, 2, -3);
+    ///
+    /// assert_eq!(graph, vec![vec![(1, 2), (2, 1)], vec![(2, -3)], Vec::new()]);
+    /// ```
     fn add_weighted_edge(&mut self, s: usize, t: usize, w: W);
 }
 

@@ -27,28 +27,46 @@ use {
 /// # `AddEdge` and [`crate::ops::RemoveEdge`]
 ///
 /// Types that also implement [`crate::ops::RemoveEdge`] should ensure that the
-/// following property holds for all `graph: &mut G`, `s: usize`, and `t: usize`
-/// where `G: AddEdge + RemoveEdge`:
+/// following property holds for every `graph`, `s`, and `t` of the given types:
 ///
-/// ```ignore
-/// let clone = graph.clone();
+/// ```
+/// use graaf::ops::{
+///     AddEdge,
+///     RemoveEdge,
+/// };
 ///
-/// graph.add_edge(s, t);
-/// graph.remove_edge(s, t);
+/// fn prop_add_edge_remove_edge<G, W>(graph: G, s: usize, t: usize) -> bool
+/// where
+///     G: AddEdge + Clone + PartialEq + RemoveEdge,
+/// {
+///     let mut clone = graph.clone();
 ///
-/// assert_eq!(graph, clone);
+///     clone.add_edge(s, t);
+///     clone.remove_edge(s, t);
+///
+///     graph == clone
+/// }
 /// ```
 ///
 /// # `AddEdge` and [`crate::ops::IsEdge`]
 ///
 /// Types that also implement [`crate::ops::IsEdge`] should ensure that the
-/// following property holds for all `graph: &mut G`, `s: usize`, and `t: usize`
-/// where `G: AddEdge + IsEdge`:
+/// following property holds for every `graph`, `s`, and `t` of the given types:
 ///
-/// ```ignore
-/// graph.add_edge(s, t);
+/// ```
+/// use graaf::ops::{
+///     AddEdge,
+///     IsEdge,
+/// };
 ///
-/// assert!(graph.is_edge(s, t));
+/// fn prop_add_edge_is_edge<G, W>(graph: &mut G, s: usize, t: usize) -> bool
+/// where
+///     G: AddEdge + IsEdge,
+/// {
+///     graph.add_edge(s, t);
+///
+///     graph.is_edge(s, t)
+/// }
 /// ```
 pub trait AddEdge {
     /// Add an edge from `s` to `t`.

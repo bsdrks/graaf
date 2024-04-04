@@ -1,6 +1,4 @@
 pub mod add_edge;
-
-/// A trait to add an edge to a weighted graph
 pub mod add_weighted_edge;
 
 /// A trait to count all edges in a graph

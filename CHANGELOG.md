@@ -7,7 +7,6 @@
 - Add `dfs::*`.
 - Add `dijkstra::mssp`.
 - Add `dijkstra::sssp`.
-- Add doctest for `AddWeightedEdge`.
 - Add doctest for `AdjacencyMatrix::new`.
 - Add doctest for `AdjacencyMatrix::toggle`.
 - Add doctest for `CountAllEdges`.
@@ -20,6 +19,13 @@
 - Add doctest for `IterWeightedEdges`.
 - Add doctest for `Outdegree`.
 - Add doctest for `RemoveEdge`.
+
+## [0.5.3] - Unreleased
+
+### Added
+
+- Add doctest for `ops::add_weighted_edge::AddWeightedEdge`.
+- Add documentation for `ops::add_weighted_edge`.
 
 ## [0.5.2] - 2024-04-04
 
