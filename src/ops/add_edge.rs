@@ -30,7 +30,7 @@ use {
 /// following property holds for all `graph: &mut G`, `s: usize`, and `t: usize`
 /// where `G: AddEdge + RemoveEdge`:
 ///
-/// ```no_run
+/// ```ignore
 /// let clone = graph.clone();
 ///
 /// graph.add_edge(s, t);
@@ -45,7 +45,7 @@ use {
 /// following property holds for all `graph: &mut G`, `s: usize`, and `t: usize`
 /// where `G: AddEdge + IsEdge`:
 ///
-/// ```no_run
+/// ```ignore
 /// graph.add_edge(s, t);
 ///
 /// assert!(graph.is_edge(s, t));

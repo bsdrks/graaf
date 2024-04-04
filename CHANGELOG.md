@@ -7,7 +7,6 @@
 - Add `dfs::*`.
 - Add `dijkstra::mssp`.
 - Add `dijkstra::sssp`.
-- Add doctest for `AddEdge`.
 - Add doctest for `AddWeightedEdge`.
 - Add doctest for `AdjacencyMatrix::new`.
 - Add doctest for `AdjacencyMatrix::toggle`.
@@ -26,6 +25,8 @@
 
 ### Added
 
+- Add doctest for `ops::add_edge::AddEdge`.
+- Add documentation for `ops::add_edge`.
 - Add module-level doctest for `algo::bfs`.
 - Add module-level doctest for `algo::dijkstra`.
 
