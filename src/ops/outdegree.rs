@@ -22,6 +22,25 @@ use {
 
 /// A trait to get the outdegree of a given vertex
 ///
+/// # How can I implement `Outdegree`?
+///
+/// Provide an implementation of `outdegree` that returns the outdegree of the
+/// target vertex.
+///
+/// ```
+/// use graaf::ops::Outdegree;
+///
+/// struct Graph {
+///     edges: Vec<Vec<usize>>,
+/// }
+///
+/// impl Outdegree for Graph {
+///     fn outdegree(&self, s: usize) -> usize {
+///         self.edges[s].len()
+///     }
+/// }
+/// ```
+///
 /// # Examples
 ///
 /// ```

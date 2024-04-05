@@ -24,6 +24,25 @@ use {
 
 /// A trait to add an edge to an unweighted graph
 ///
+/// # How can I implement `AddEdge`?
+///
+/// Provide an implementation of `add_edge` that adds an edge from `s` to `t` to
+/// the type.
+///
+/// ```
+/// use graaf::ops::AddEdge;
+///
+/// struct Graph {
+///     edges: Vec<Vec<usize>>,
+/// }
+///
+/// impl AddEdge for Graph {
+///     fn add_edge(&mut self, s: usize, t: usize) {
+///         self.edges[s].push(t);
+///     }
+/// }
+/// ```
+///
 /// # Examples
 ///
 /// ```

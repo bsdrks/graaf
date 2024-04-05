@@ -19,6 +19,25 @@ use {
 
 /// A trait to count all vertices in a graph
 ///
+/// # How can I implement `CountAllVertices`?
+///
+/// Provide an implementation of `count_all_vertices` that returns the number of
+/// vertices in the graph.
+///
+/// ```
+/// use graaf::ops::CountAllVertices;
+///
+/// struct Graph {
+///     vertices: Vec<usize>,
+/// }
+///
+/// impl CountAllVertices for Graph {
+///     fn count_all_vertices(&self) -> usize {
+///         self.vertices.len()
+///     }
+/// }
+/// ```
+///
 /// # Example
 ///
 /// ```

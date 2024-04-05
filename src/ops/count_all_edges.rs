@@ -20,6 +20,25 @@ use {
 
 /// A trait to count all edges in a graph
 ///
+/// # How can I implement `CountAllEdges`?
+///
+/// Provide an implementation of `count_all_edges` that returns the number of
+/// edges in the graph.
+///
+/// ```
+/// use graaf::ops::CountAllEdges;
+///
+/// struct Graph {
+///     edges: Vec<Vec<usize>>,
+/// }
+///
+/// impl CountAllEdges for Graph {
+///     fn count_all_edges(&self) -> usize {
+///         self.edges.iter().map(Vec::len).sum()
+///     }
+/// }
+/// ```
+///
 /// # Examples
 ///
 /// ```

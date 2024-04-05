@@ -50,6 +50,28 @@ use {
 
 /// A trait to remove an edge from a graph
 ///
+/// # How can I implement `RemoveEdge`?
+///
+/// Provide an implementation of `remove_edge` that removes the edge from `s` to
+/// `t`.
+///
+/// ```
+/// use {
+///     graaf::ops::RemoveEdge,
+///     std::collections::HashSet,
+/// };
+///
+/// struct Graph {
+///     edges: Vec<HashSet<usize>>,
+/// }
+///
+/// impl RemoveEdge for Graph {
+///     fn remove_edge(&mut self, s: usize, t: usize) {
+///         let _ = self.edges[s].remove(&t);
+///     }
+/// }
+/// ```
+///
 /// # Examples
 ///
 /// ```

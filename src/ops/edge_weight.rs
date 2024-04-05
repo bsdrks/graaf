@@ -31,6 +31,28 @@ use {
 
 /// A trait to get the weight of a given edge
 ///
+/// # How can I implement `EdgeWeight`?
+///
+/// Provide an implementation of `edge_weight` that returns the weight of the
+/// edge from `s` to `t`.
+///
+/// ```
+/// use {
+///     graaf::ops::EdgeWeight,
+///     std::collections::HashMap,
+/// };
+///
+/// struct Graph {
+///     edges: Vec<HashMap<usize, usize>>,
+/// }
+///
+/// impl EdgeWeight<usize> for Graph {
+///     fn edge_weight(&self, s: usize, t: usize) -> Option<&usize> {
+///         self.edges.get(s).and_then(|m| m.get(&t))
+///     }
+/// }
+/// ```
+///
 /// # Examples
 ///
 /// ```

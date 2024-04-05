@@ -25,6 +25,25 @@ use {
 
 /// A trait to iterate over all vertices in a graph
 ///
+/// # How can I implement `IterVertices`?
+///
+/// Provide an implementation of `iter_vertices` that returns an iterator over
+/// all vertices in the graph.
+///
+/// ```
+/// use graaf::ops::IterVertices;
+///
+/// struct Graph {
+///     vertices: Vec<usize>,
+/// }
+///
+/// impl IterVertices for Graph {
+///     fn iter_vertices(&self) -> impl Iterator<Item = usize> {
+///         0..self.vertices.len()
+///     }
+/// }
+/// ```
+///
 /// # Example
 ///
 /// ```

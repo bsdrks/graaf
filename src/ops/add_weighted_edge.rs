@@ -27,6 +27,25 @@ use {
 
 /// A trait to add an edge to a weighted graph
 ///
+/// # How can I implement `AddWeightedEdge`?
+///
+/// Provide an implementation of `add_weighted_edge` that adds an edge from `s`
+/// to `t` with weight `w` to the type.
+///
+/// ```
+/// use graaf::ops::AddWeightedEdge;
+///
+/// struct Graph {
+///     edges: Vec<Vec<(usize, i32)>>,
+/// }
+///
+/// impl AddWeightedEdge<i32> for Graph {
+///     fn add_weighted_edge(&mut self, s: usize, t: usize, w: i32) {
+///         self.edges[s].push((t, w));
+///     }
+/// }
+/// ```
+///
 /// # Examples
 ///
 /// ```

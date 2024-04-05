@@ -10,11 +10,7 @@ pub mod iter_all_weighted_edges;
 pub mod iter_edges;
 pub mod iter_vertices;
 pub mod iter_weighted_edges;
-
-/// A trait to get the outdegree of a given vertex
 pub mod outdegree;
-
-/// A trait to remove an edge from a graph
 pub mod remove_edge;
 
 pub use {

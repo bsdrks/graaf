@@ -7,6 +7,14 @@
 - Add `dfs::*`.
 - Add `dijkstra::mssp`.
 - Add `dijkstra::sssp`.
+- Move doctest properties to `prop` module.
+
+## [0.5.4] - Unreleased
+
+### Added
+
+- Add doctest for `AdjacencyMatrix::new`.
+- Add doctest for `AdjacencyMatrix::toggle`.
 - Add implementation documentation for `AddEdge`.
 - Add implementation documentation for `AddWeightedEdge`.
 - Add implementation documentation for `CountAllEdges`.
@@ -20,14 +28,6 @@
 - Add implementation documentation for `IterWeightedEdges`.
 - Add implementation documentation for `Outdegree`.
 - Add implementation documentation for `RemoveEdge`.
-- Add doctest for `AdjacencyMatrix::new`.
-- Add doctest for `AdjacencyMatrix::toggle`.
-
-## [0.5.4] - Unreleased
-
-### Changed
-
-- Move doctest properties to `prop` module.
 
 ## [0.5.3] - 2024-04-04
 

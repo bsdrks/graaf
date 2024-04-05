@@ -43,6 +43,25 @@ use {
 
 /// A trait to iterate over all weighted edges with a given source vertex
 ///
+/// # How can I implement `IterWeightedEdges`?
+///
+/// Provide an implementation of `iter_weighted_edges` that returns an iterator
+/// over all weighted edges with the source vertex `s`.
+///
+/// ```
+/// use graaf::ops::IterWeightedEdges;
+///
+/// struct Graph {
+///     edges: Vec<Vec<(usize, usize)>>,
+/// }
+///
+/// impl IterWeightedEdges<usize> for Graph {
+///     fn iter_weighted_edges(&self, s: usize) -> impl Iterator<Item = (usize, usize)> {
+///         self.edges[s].iter().copied()
+///     }
+/// }
+/// ```
+///
 /// # Examples
 ///
 /// ```

@@ -21,6 +21,25 @@ use {
 
 /// A trait to iterate over all unweighted edges in a graph
 ///
+/// # How can I implement `IterAllEdges`?
+///
+/// Provide an implementation of `iter_all_edges` that returns an iterator over
+/// all edges in the graph.
+///
+/// ```
+/// use graaf::ops::IterAllEdges;
+///
+/// struct Graph {
+///     edges: Vec<(usize, usize)>,
+/// }
+///
+/// impl IterAllEdges for Graph {
+///     fn iter_all_edges(&self) -> impl Iterator<Item = &(usize, usize)> {
+///         self.edges.iter()
+///     }
+/// }
+/// ```
+///
 /// # Examples
 ///
 /// ```

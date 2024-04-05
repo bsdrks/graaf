@@ -31,6 +31,23 @@ where
     [(); blocks!(V)]:,
 {
     /// Create a new adjacency matrix.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use graaf::{
+    ///     ops::{
+    ///         CountAllEdges,
+    ///         CountAllVertices,
+    ///     },
+    ///     repr::AdjacencyMatrix,
+    /// };
+    ///
+    /// let graph = AdjacencyMatrix::<3>::new();
+    ///
+    /// assert_eq!(graph.count_all_edges(), 0);
+    /// assert_eq!(graph.count_all_vertices(), 3);
+    /// ```
     #[must_use]
     pub const fn new() -> Self {
         Self {
@@ -56,6 +73,23 @@ where
     /// # Panics
     ///
     /// Panics if `s >= V` or `t >= V`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use graaf::{
+    ///     ops::IsEdge,
+    ///     repr::AdjacencyMatrix,
+    /// };
+    ///
+    /// let mut graph = AdjacencyMatrix::<3>::new();
+    ///
+    /// assert!(!graph.is_edge(0, 1));
+    ///
+    /// graph.toggle(0, 1);
+    ///
+    /// assert!(graph.is_edge(0, 1));
+    /// ```
     pub fn toggle(&mut self, s: usize, t: usize) {
         assert!(s < V, "s is not in the graph");
         assert!(t < V, "t is not in the graph");

@@ -26,6 +26,29 @@ use {
 
 /// A trait to get the indegree of a given vertex
 ///
+/// # How can I implement `Indegree`?
+///
+/// Provide an implementation of `indegree` that returns the indegree of the
+/// target vertex.
+///
+/// ```
+/// use {
+///     graaf::ops::Indegree,
+///     std::collections::HashSet,
+/// };
+///
+/// struct Graph {
+///     edges: Vec<HashSet<usize>>,
+///     vertices: usize,
+/// }
+///
+/// impl Indegree for Graph {
+///     fn indegree(&self, t: usize) -> usize {
+///         self.edges.iter().filter(|set| set.contains(&t)).count()
+///     }
+/// }
+/// ```
+///
 /// # Examples
 ///
 /// ```

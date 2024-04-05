@@ -35,6 +35,28 @@ use {
 
 /// A trait to check if an edge exists between two vertices
 ///
+/// # How can I implement `IsEdge`?
+///
+/// Provide an implementation of `is_edge` that returns `true` if there is an
+/// edge from `s` to `t`.
+///
+/// ```
+/// use {
+///     graaf::ops::IsEdge,
+///     std::collections::HashSet,
+/// };
+///
+/// struct Graph {
+///     edges: Vec<HashSet<usize>>,
+/// }
+///
+/// impl IsEdge for Graph {
+///     fn is_edge(&self, s: usize, t: usize) -> bool {
+///         self.edges.get(s).map_or(false, |set| set.contains(&t))
+///     }
+/// }
+/// ```
+///
 /// # Examples
 ///
 /// ```
