@@ -1,3 +1,38 @@
+//! A trait to iterate over all weighted edges with a given source vertex
+//!
+//! # Examples
+//!
+//! ```
+//! use graaf::ops::IterWeightedEdges;
+//!
+//! let graph = vec![
+//!     vec![(1, 2), (2, 3), (3, 4)],
+//!     vec![(2, 3), (3, 4), (4, 5)],
+//!     vec![(3, 4), (4, 5), (5, 6)],
+//! ];
+//!
+//! let mut iter = graph.iter_weighted_edges(0);
+//!
+//! assert_eq!(iter.next(), Some((1, 2)));
+//! assert_eq!(iter.next(), Some((2, 3)));
+//! assert_eq!(iter.next(), Some((3, 4)));
+//! assert_eq!(iter.next(), None);
+//!
+//! let mut iter = graph.iter_weighted_edges(1);
+//!
+//! assert_eq!(iter.next(), Some((2, 3)));
+//! assert_eq!(iter.next(), Some((3, 4)));
+//! assert_eq!(iter.next(), Some((4, 5)));
+//! assert_eq!(iter.next(), None);
+//!
+//! let mut iter = graph.iter_weighted_edges(2);
+//!
+//! assert_eq!(iter.next(), Some((3, 4)));
+//! assert_eq!(iter.next(), Some((4, 5)));
+//! assert_eq!(iter.next(), Some((5, 6)));
+//! assert_eq!(iter.next(), None);
+//! ```
+
 use {
     core::hash::BuildHasher,
     std::collections::{
@@ -7,6 +42,39 @@ use {
 };
 
 /// A trait to iterate over all weighted edges with a given source vertex
+///
+/// # Examples
+///
+/// ```
+/// use graaf::ops::IterWeightedEdges;
+///
+/// let graph = vec![
+///     vec![(1, 2), (2, 3), (3, 4)],
+///     vec![(2, 3), (3, 4), (4, 5)],
+///     vec![(3, 4), (4, 5), (5, 6)],
+/// ];
+///
+/// let mut iter = graph.iter_weighted_edges(0);
+///
+/// assert_eq!(iter.next(), Some((1, 2)));
+/// assert_eq!(iter.next(), Some((2, 3)));
+/// assert_eq!(iter.next(), Some((3, 4)));
+/// assert_eq!(iter.next(), None);
+///
+/// let mut iter = graph.iter_weighted_edges(1);
+///
+/// assert_eq!(iter.next(), Some((2, 3)));
+/// assert_eq!(iter.next(), Some((3, 4)));
+/// assert_eq!(iter.next(), Some((4, 5)));
+/// assert_eq!(iter.next(), None);
+///
+/// let mut iter = graph.iter_weighted_edges(2);
+///
+/// assert_eq!(iter.next(), Some((3, 4)));
+/// assert_eq!(iter.next(), Some((4, 5)));
+/// assert_eq!(iter.next(), Some((5, 6)));
+/// assert_eq!(iter.next(), None);
+/// ```
 pub trait IterWeightedEdges<W> {
     /// Returns an iterator over the edges of the vertex `s`.
     ///

@@ -1,9 +1,39 @@
+//! A trait to iterate over all weighted edges in a graph
+//!
+//! # Examples
+//!
+//! ```
+//! use graaf::ops::IterAllWeightedEdges;
+//!
+//! let graph = vec![(0, 1, 2), (1, 2, 3), (2, 0, 4)];
+//! let mut iter = graph.iter_all_weighted_edges();
+//!
+//! assert_eq!(iter.next(), Some(&(0, 1, 2)));
+//! assert_eq!(iter.next(), Some(&(1, 2, 3)));
+//! assert_eq!(iter.next(), Some(&(2, 0, 4)));
+//! assert_eq!(iter.next(), None);
+//! ```
+
 use {
     core::hash::BuildHasher,
     std::collections::HashSet,
 };
 
 /// A trait to iterate over all weighted edges in a graph
+///
+/// # Examples
+///
+/// ```
+/// use graaf::ops::IterAllWeightedEdges;
+///
+/// let graph = vec![(0, 1, 2), (1, 2, 3), (2, 0, 4)];
+/// let mut iter = graph.iter_all_weighted_edges();
+///
+/// assert_eq!(iter.next(), Some(&(0, 1, 2)));
+/// assert_eq!(iter.next(), Some(&(1, 2, 3)));
+/// assert_eq!(iter.next(), Some(&(2, 0, 4)));
+/// assert_eq!(iter.next(), None);
+/// ```
 pub trait IterAllWeightedEdges<W> {
     /// Returns an iterator that iterates over all weighted edges in a graph.
     fn iter_all_weighted_edges<'a>(&'a self) -> impl Iterator<Item = &(usize, usize, W)>

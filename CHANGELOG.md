@@ -7,16 +7,21 @@
 - Add `dfs::*`.
 - Add `dijkstra::mssp`.
 - Add `dijkstra::sssp`.
+- Add implementation documentation for `AddEdge`.
+- Add implementation documentation for `AddWeightedEdge`.
+- Add implementation documentation for `CountAllEdges`.
+- Add implementation documentation for `CountAllVertices`.
+- Add implementation documentation for `EdgeWeight`.
+- Add implementation documentation for `Indegree`.
+- Add implementation documentation for `IsEdge`.
+- Add implementation documentation for `IterAllEdges`.
+- Add implementation documentation for `IterAllWeightedEdges`.
+- Add implementation documentation for `IterEdges`.
+- Add implementation documentation for `IterWeightedEdges`.
+- Add implementation documentation for `Outdegree`.
+- Add implementation documentation for `RemoveEdge`.
 - Add doctest for `AdjacencyMatrix::new`.
 - Add doctest for `AdjacencyMatrix::toggle`.
-- Add doctest for `Indegree`.
-- Add doctest for `IsEdge`.
-- Add doctest for `IterAllEdges`.
-- Add doctest for `IterAllWeightedEdges`.
-- Add doctest for `IterEdges`.
-- Add doctest for `IterWeightedEdges`.
-- Add doctest for `Outdegree`.
-- Add doctest for `RemoveEdge`.
 
 ## [0.5.3] - Unreleased
 
@@ -26,10 +31,28 @@
 - Add doctest for `ops::count_all_edges::CountAllEdges`.
 - Add doctest for `ops::count_all_vertices::CountAllVertices`.
 - Add doctest for `ops::edge_weight::EdgeWeight`.
+- Add doctest for `ops::indegree::Indegree`.
+- Add doctest for `ops::is_edge::IsEdge`.
+- Add doctest for `ops::iter_all_edges::IterAllEdges`.
+- Add doctest for `ops::iter_all_weighted_edges::IterAllWeightedEdges`.
+- Add doctest for `ops::iter_edges::IterEdges`.
+- Add doctest for `ops::iter_weighted_edges::IterWeightedEdges`.
+- Add doctest for `ops::iter_vertices::IterVertices`.
+- Add doctest for `ops::outdegree::OutDegree`.
+- Add doctest for `ops::remove_edge::RemoveEdge`.
 - Add documentation for `ops::add_weighted_edge`.
 - Add documentation for `ops::count_all_edges`.
 - Add documentation for `ops::count_all_vertices`.
 - Add documentation for `ops::edge_weight`.
+- Add documentation for `ops::indegree`.
+- Add documentation for `ops::is_edge`.
+- Add documentation for `ops::iter_all_edges`.
+- Add documentation for `ops::iter_all_weighted_edges`.
+- Add documentation for `ops::iter_edges`.
+- Add documentation for `ops::iter_vertices`.
+- Add documentation for `ops::iter_weighted_edges`.
+- Add documentation for `ops::outdegree`.
+- Add documentation for `ops::remove_edge`.
 
 ## [0.5.2] - 2024-04-04
 

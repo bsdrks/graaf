@@ -1,3 +1,30 @@
+//! A trait to check if an edge exists between two vertices
+//!
+//! # Examples
+//!
+//! ```
+//! use {
+//!     graaf::ops::IsEdge,
+//!     std::collections::HashSet,
+//! };
+//!
+//! let graph = vec![
+//!     HashSet::from([1, 2]),
+//!     HashSet::from([0]),
+//!     HashSet::from([0, 1]),
+//! ];
+//!
+//! assert!(!graph.is_edge(0, 0));
+//! assert!(graph.is_edge(0, 1));
+//! assert!(graph.is_edge(0, 2));
+//! assert!(graph.is_edge(1, 0));
+//! assert!(!graph.is_edge(1, 1));
+//! assert!(!graph.is_edge(1, 2));
+//! assert!(graph.is_edge(2, 0));
+//! assert!(graph.is_edge(2, 1));
+//! assert!(!graph.is_edge(2, 2));
+//! ```
+
 use {
     core::hash::BuildHasher,
     std::collections::{
@@ -7,6 +34,97 @@ use {
 };
 
 /// A trait to check if an edge exists between two vertices
+///
+/// # Examples
+///
+/// ```
+/// use {
+///     graaf::ops::IsEdge,
+///     std::collections::HashSet,
+/// };
+///
+/// let graph = vec![
+///     HashSet::from([1, 2]),
+///     HashSet::from([0]),
+///     HashSet::from([0, 1]),
+/// ];
+///
+/// assert!(!graph.is_edge(0, 0));
+/// assert!(graph.is_edge(0, 1));
+/// assert!(graph.is_edge(0, 2));
+/// assert!(graph.is_edge(1, 0));
+/// assert!(!graph.is_edge(1, 1));
+/// assert!(!graph.is_edge(1, 2));
+/// assert!(graph.is_edge(2, 0));
+/// assert!(graph.is_edge(2, 1));
+/// assert!(!graph.is_edge(2, 2));
+/// ```
+///
+/// # Properties
+///
+/// ## `IsEdge` and [`crate::ops::AddEdge`]
+///
+/// Types that also implement [`crate::ops::AddEdge`] should ensure that the
+/// following property holds for every `graph`, `s`, and `t` of the given types:
+///
+/// ```
+/// use graaf::ops::{
+///     AddEdge,
+///     IsEdge,
+/// };
+///
+/// fn prop_add_edge_is_edge<G, W>(graph: &mut G, s: usize, t: usize) -> bool
+/// where
+///     G: AddEdge + IsEdge,
+/// {
+///     graph.add_edge(s, t);
+///
+///     graph.is_edge(s, t)
+/// }
+/// ```
+///
+/// ## `IsEdge` and [`crate::ops::AddWeightedEdge`]
+///
+/// Types that also implement [`crate::ops::AddWeightedEdge`] should ensure that
+/// the following property holds for every `graph`, `s`, `t`, and `w` of the
+/// given types:
+///
+/// ```
+/// use graaf::ops::{
+///     AddWeightedEdge,
+///     IsEdge,
+/// };
+///
+/// fn prop_add_weighted_edge_is_edge<G, W>(graph: &mut G, s: usize, t: usize, w: W) -> bool
+/// where
+///     G: AddWeightedEdge<W> + IsEdge,
+/// {
+///     graph.add_weighted_edge(s, t, w);
+///
+///     graph.is_edge(s, t)
+/// }
+/// ```
+///
+/// ## `IsEdge` and [`crate::ops::RemoveEdge`]
+///
+/// Types that also implement [`crate::ops::RemoveEdge`] should ensure that the
+/// following property holds for every `graph`, `s`, and `t` of the given types:
+///
+/// ```
+/// use graaf::ops::{
+///     IsEdge,
+///     RemoveEdge,
+/// };
+///
+/// fn prop_remove_edge_is_edge<G, W>(graph: &mut G, s: usize, t: usize) -> bool
+/// where
+///     G: IsEdge + RemoveEdge,
+/// {
+///     graph.remove_edge(s, t);
+///
+///     !graph.is_edge(s, t)
+/// }
+/// ```
 pub trait IsEdge {
     /// Checks if there is an edge from `s` to `t`.
     ///

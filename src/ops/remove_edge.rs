@@ -1,3 +1,45 @@
+//! A trait to remove an edge from a graph
+//!
+//! # Examples
+//!
+//! ```
+//! use {
+//!     graaf::ops::RemoveEdge,
+//!     std::collections::HashSet,
+//! };
+//!
+//! let mut graph = vec![
+//!     HashSet::from([1, 2]),
+//!     HashSet::from([0]),
+//!     HashSet::from([1]),
+//! ];
+//!
+//! graph.remove_edge(0, 1);
+//!
+//! assert_eq!(
+//!     graph,
+//!     vec![HashSet::from([2]), HashSet::from([0]), HashSet::from([1])]
+//! );
+//!
+//! graph.remove_edge(0, 2);
+//!
+//! assert_eq!(
+//!     graph,
+//!     vec![HashSet::new(), HashSet::from([0]), HashSet::from([1])]
+//! );
+//!
+//! graph.remove_edge(1, 0);
+//!
+//! assert_eq!(
+//!     graph,
+//!     vec![HashSet::new(), HashSet::new(), HashSet::from([1])]
+//! );
+//!
+//! graph.remove_edge(2, 1);
+//!
+//! assert_eq!(graph, vec![HashSet::new(), HashSet::new(), HashSet::new()]);
+//! ```
+
 use {
     core::hash::BuildHasher,
     std::collections::{
@@ -7,6 +49,117 @@ use {
 };
 
 /// A trait to remove an edge from a graph
+///
+/// # Examples
+///
+/// ```
+/// use {
+///     graaf::ops::RemoveEdge,
+///     std::collections::HashSet,
+/// };
+///
+/// let mut graph = vec![
+///     HashSet::from([1, 2]),
+///     HashSet::from([0]),
+///     HashSet::from([1]),
+/// ];
+///
+/// graph.remove_edge(0, 1);
+///
+/// assert_eq!(
+///     graph,
+///     vec![HashSet::from([2]), HashSet::from([0]), HashSet::from([1])]
+/// );
+///
+/// graph.remove_edge(0, 2);
+///
+/// assert_eq!(
+///     graph,
+///     vec![HashSet::new(), HashSet::from([0]), HashSet::from([1])]
+/// );
+///
+/// graph.remove_edge(1, 0);
+///
+/// assert_eq!(
+///     graph,
+///     vec![HashSet::new(), HashSet::new(), HashSet::from([1])]
+/// );
+///
+/// graph.remove_edge(2, 1);
+///
+/// assert_eq!(graph, vec![HashSet::new(), HashSet::new(), HashSet::new()]);
+/// ```
+///
+/// # Properties
+///
+/// ## `RemoveEdge` and [`crate::ops::AddEdge`]
+///
+/// Types that also implement [`crate::ops::AddEdge`] should ensure that the
+/// following property holds for every `graph`, `s`, and `t` of the given types:
+///
+/// ```
+/// use graaf::ops::{
+///     AddEdge,
+///     RemoveEdge,
+/// };
+///
+/// fn prop_add_edge_remove_edge<G, W>(graph: G, s: usize, t: usize) -> bool
+/// where
+///     G: AddEdge + Clone + PartialEq + RemoveEdge,
+/// {
+///     let mut clone = graph.clone();
+///
+///     clone.add_edge(s, t);
+///     clone.remove_edge(s, t);
+///
+///     graph == clone
+/// }
+/// ```
+///
+/// ## `RemoveEdge` and [`crate::ops::AddWeightedEdge`]
+///
+/// Types that also implement [`crate::ops::AddWeightedEdge`] should ensure that
+/// the following property holds for every `graph`, `s`, `t`, and `w` of the
+///
+/// ```
+/// use graaf::ops::{
+///     AddWeightedEdge,
+///     RemoveEdge,
+/// };
+///
+/// fn prop_add_weighted_edge_remove_edge<G, W>(graph: G, s: usize, t: usize, w: W) -> bool
+/// where
+///     G: AddWeightedEdge<W> + Clone + PartialEq + RemoveEdge,
+/// {
+///     let mut clone = graph.clone();
+///
+///     clone.add_weighted_edge(s, t, w);
+///     clone.remove_edge(s, t);
+///
+///     graph == clone
+/// }
+/// ```
+///
+/// ## `RemoveEdge` and [`crate::ops::IsEdge`]
+///
+/// Types that also implement [`crate::ops::IsEdge`] should ensure that the
+/// following property holds for every `graph`, `s`, and `t` of the given types:
+///
+/// ```
+/// use graaf::ops::{
+///     IsEdge,
+///     RemoveEdge,
+/// };
+///
+/// fn prop_remove_edge_is_edge<G, W>(graph: &mut G, s: usize, t: usize) -> bool
+/// where
+///     G: IsEdge + RemoveEdge,
+/// {
+///     graph.remove_edge(s, t);
+///
+///     !graph.is_edge(s, t)
+/// }
+/// ```
 pub trait RemoveEdge {
     /// Remove the edge from `s` to `t`.
     ///

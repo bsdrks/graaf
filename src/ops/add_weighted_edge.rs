@@ -27,7 +27,23 @@ use {
 
 /// A trait to add an edge to a weighted graph
 ///
-/// # `AddWeightedEdge` and [`crate::ops::RemoveEdge`]
+/// # Examples
+///
+/// ```
+/// use graaf::ops::AddWeightedEdge;
+///
+/// let mut graph: Vec<Vec<(usize, i32)>> = vec![Vec::new(); 3];
+///
+/// graph.add_weighted_edge(0, 1, 2);
+/// graph.add_weighted_edge(0, 2, 1);
+/// graph.add_weighted_edge(1, 2, -3);
+///
+/// assert_eq!(graph, vec![vec![(1, 2), (2, 1)], vec![(2, -3)], Vec::new()]);
+/// ```
+///
+/// # Properties
+///
+/// ## `AddWeightedEdge` and [`crate::ops::RemoveEdge`]
 ///
 /// Types that also implement [`crate::ops::RemoveEdge`] should ensure that the
 /// following property holds for every `graph`, `s`, `t`, and `w` of the given
@@ -52,7 +68,7 @@ use {
 /// }
 /// ```
 ///
-/// # `AddWeightedEdge` and [`crate::ops::IsEdge`]
+/// ## `AddWeightedEdge` and [`crate::ops::IsEdge`]
 ///
 /// Types that also implement [`crate::ops::IsEdge`] should ensure that the
 /// following property holds for every `graph`, `s`, `t`, and `w` of the given
@@ -64,7 +80,7 @@ use {
 ///     IsEdge,
 /// };
 ///
-/// fn prop_add_edge_is_edge<G, W>(graph: &mut G, s: usize, t: usize, w: W) -> bool
+/// fn prop_add_edge_weighted_is_edge<G, W>(graph: &mut G, s: usize, t: usize, w: W) -> bool
 /// where
 ///     G: AddWeightedEdge<W> + IsEdge,
 /// {
@@ -81,20 +97,6 @@ pub trait AddWeightedEdge<W> {
     /// * `s`: The source vertex.
     /// * `t`: The target vertex.
     /// * `w`: The weight of the edge.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use graaf::ops::AddWeightedEdge;
-    ///
-    /// let mut graph: Vec<Vec<(usize, i32)>> = vec![Vec::new(); 3];
-    ///
-    /// graph.add_weighted_edge(0, 1, 2);
-    /// graph.add_weighted_edge(0, 2, 1);
-    /// graph.add_weighted_edge(1, 2, -3);
-    ///
-    /// assert_eq!(graph, vec![vec![(1, 2), (2, 1)], vec![(2, -3)], Vec::new()]);
-    /// ```
     fn add_weighted_edge(&mut self, s: usize, t: usize, w: W);
 }
 

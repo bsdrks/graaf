@@ -1,3 +1,17 @@
+//! A trait to get the outdegree of a given vertex
+//!
+//! # Examples
+//!
+//! ```
+//! use graaf::ops::Outdegree;
+//!
+//! let graph = vec![vec![1, 2], vec![0], vec![1]];
+//!
+//! assert_eq!(graph.outdegree(0), 2);
+//! assert_eq!(graph.outdegree(1), 1);
+//! assert_eq!(graph.outdegree(2), 1);
+//! ```
+
 use {
     core::hash::BuildHasher,
     std::collections::{
@@ -7,6 +21,18 @@ use {
 };
 
 /// A trait to get the outdegree of a given vertex
+///
+/// # Examples
+///
+/// ```
+/// use graaf::ops::Outdegree;
+///
+/// let graph = vec![vec![1, 2], vec![0], vec![1]];
+///
+/// assert_eq!(graph.outdegree(0), 2);
+/// assert_eq!(graph.outdegree(1), 1);
+/// assert_eq!(graph.outdegree(2), 1);
+/// ```
 pub trait Outdegree {
     /// Returns the outdegree of a vertex.
     ///

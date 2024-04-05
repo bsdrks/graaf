@@ -1,3 +1,65 @@
+//! A trait to iterate over all unweighted edges with a given source vertex
+//!
+//! # Examples
+//!
+//! ```
+//! use graaf::ops::IterEdges;
+//!
+//! let graph: [Vec<usize>; 4] = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+//! let mut iter = graph.iter_edges(0);
+//!
+//! assert_eq!(iter.next(), Some(1));
+//! assert_eq!(iter.next(), Some(2));
+//! assert_eq!(iter.next(), None);
+//!
+//! let mut iter = graph.iter_edges(1);
+//!
+//! assert_eq!(iter.next(), Some(0));
+//! assert_eq!(iter.next(), Some(2));
+//! assert_eq!(iter.next(), Some(3));
+//! assert_eq!(iter.next(), None);
+//!
+//! let mut iter = graph.iter_edges(2);
+//!
+//! assert_eq!(iter.next(), Some(0));
+//! assert_eq!(iter.next(), Some(1));
+//! assert_eq!(iter.next(), Some(3));
+//! assert_eq!(iter.next(), None);
+//!
+//! let mut iter = graph.iter_edges(3);
+//!
+//! assert_eq!(iter.next(), Some(1));
+//! assert_eq!(iter.next(), Some(2));
+//! assert_eq!(iter.next(), None);
+//! ```
+//!
+//! The order of the edges is not guaranteed for, e.g., `Vec<HashSet<_>>`:
+//!
+//! ```
+//! #![feature(assert_matches)]
+//!
+//! use {
+//!     graaf::ops::IterEdges,
+//!     std::{
+//!         assert_matches::assert_matches,
+//!         collections::HashSet,
+//!     },
+//! };
+//!
+//! let graph = vec![
+//!     HashSet::from([1, 2]),
+//!     HashSet::from([0, 2, 3]),
+//!     HashSet::from([0, 1, 3]),
+//!     HashSet::from([1, 2]),
+//! ];
+//!
+//! let mut iter = graph.iter_edges(0);
+//!
+//! assert_matches!(iter.next(), Some(1 | 2));
+//! assert_matches!(iter.next(), Some(1 | 2));
+//! assert_eq!(iter.next(), None);
+//! ```
+
 use {
     core::hash::BuildHasher,
     std::collections::{

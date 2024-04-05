@@ -24,7 +24,23 @@ use {
 
 /// A trait to add an edge to an unweighted graph
 ///
-/// # `AddEdge` and [`crate::ops::RemoveEdge`]
+/// # Examples
+///
+/// ```
+/// use graaf::ops::AddEdge;
+///
+/// let mut graph = vec![Vec::new(); 3];
+///
+/// graph.add_edge(0, 1);
+/// graph.add_edge(0, 2);
+/// graph.add_edge(2, 0);
+///
+/// assert_eq!(graph, vec![vec![1, 2], Vec::new(), vec![0]]);
+/// ```
+///
+/// # Properties
+///
+/// ## `AddEdge` and [`crate::ops::RemoveEdge`]
 ///
 /// Types that also implement [`crate::ops::RemoveEdge`] should ensure that the
 /// following property holds for every `graph`, `s`, and `t` of the given types:
@@ -48,7 +64,7 @@ use {
 /// }
 /// ```
 ///
-/// # `AddEdge` and [`crate::ops::IsEdge`]
+/// ## `AddEdge` and [`crate::ops::IsEdge`]
 ///
 /// Types that also implement [`crate::ops::IsEdge`] should ensure that the
 /// following property holds for every `graph`, `s`, and `t` of the given types:
@@ -75,20 +91,6 @@ pub trait AddEdge {
     ///
     /// * `s`: The source vertex.
     /// * `t`: The target vertex.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use graaf::ops::AddEdge;
-    ///
-    /// let mut graph = vec![Vec::new(); 3];
-    ///
-    /// graph.add_edge(0, 1);
-    /// graph.add_edge(0, 2);
-    /// graph.add_edge(2, 0);
-    ///
-    /// assert_eq!(graph, vec![vec![1, 2], Vec::new(), vec![0]]);
-    /// ```
     fn add_edge(&mut self, s: usize, t: usize);
 }
 

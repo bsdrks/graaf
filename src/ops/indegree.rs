@@ -1,3 +1,21 @@
+//! A trait to get the indegree of a given vertex
+//!
+//! # Examples
+//!
+//! ```
+//! use {
+//!     graaf::ops::Indegree,
+//!     std::collections::HashSet,
+//! };
+//!
+//! let graph: Vec<HashSet<usize>> =
+//!     vec![HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
+//!
+//! assert_eq!(graph.indegree(0), 0);
+//! assert_eq!(graph.indegree(1), 1);
+//! assert_eq!(graph.indegree(2), 2);
+//! ```
+
 use {
     core::hash::BuildHasher,
     std::collections::{
@@ -7,6 +25,22 @@ use {
 };
 
 /// A trait to get the indegree of a given vertex
+///
+/// # Examples
+///
+/// ```
+/// use {
+///     graaf::ops::Indegree,
+///     std::collections::HashSet,
+/// };
+///
+/// let graph: Vec<HashSet<usize>> =
+///     vec![HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
+///
+/// assert_eq!(graph.indegree(0), 0);
+/// assert_eq!(graph.indegree(1), 1);
+/// assert_eq!(graph.indegree(2), 2);
+/// ```
 pub trait Indegree {
     /// Returns the indegree of a vertex.
     ///
