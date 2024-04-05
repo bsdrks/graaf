@@ -23,7 +23,7 @@
 - Add doctest for `AdjacencyMatrix::new`.
 - Add doctest for `AdjacencyMatrix::toggle`.
 
-## [0.5.3] - Unreleased
+## [0.5.3] - 2024-04-04
 
 ### Added
 
