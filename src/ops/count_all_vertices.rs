@@ -1,3 +1,14 @@
+//! A trait to count all vertices in a graph
+//!
+//! # Example
+//!
+//! ```
+//! use graaf::ops::CountAllVertices;
+//!
+//! let graph: Vec<Vec<usize>> = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+//!
+//! assert_eq!(graph.count_all_vertices(), 4);
+//! ```
 use {
     core::hash::{
         BuildHasher,
@@ -7,6 +18,16 @@ use {
 };
 
 /// A trait to count all vertices in a graph
+///
+/// # Example
+///
+/// ```
+/// use graaf::ops::CountAllVertices;
+///
+/// let graph: Vec<Vec<usize>> = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+///
+/// assert_eq!(graph.count_all_vertices(), 4);
+/// ```
 pub trait CountAllVertices {
     /// Counts all vertices.
     fn count_all_vertices(&self) -> usize;

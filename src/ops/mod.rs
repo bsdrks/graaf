@@ -1,13 +1,7 @@
 pub mod add_edge;
 pub mod add_weighted_edge;
-
-/// A trait to count all edges in a graph
 pub mod count_all_edges;
-
-/// A trait to count all vertices in a graph
 pub mod count_all_vertices;
-
-/// A trait to get the weight of a given edge
 pub mod edge_weight;
 
 /// A trait to get the indegree of a given vertex

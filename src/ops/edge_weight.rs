@@ -1,9 +1,59 @@
+//! A trait to get the weight of a given edge
+//!
+//! # Examples
+//!
+//! ```
+//! use {
+//!     graaf::ops::EdgeWeight,
+//!     std::collections::HashMap,
+//! };
+//!
+//! let graph = vec![
+//!     HashMap::from([(1, 2), (2, 3)]),
+//!     HashMap::from([(0, 4)]),
+//!     HashMap::from([(0, 7), (1, 8)]),
+//! ];
+//!
+//! assert_eq!(graph.edge_weight(0, 0), None);
+//! assert_eq!(graph.edge_weight(0, 1), Some(&2));
+//! assert_eq!(graph.edge_weight(0, 2), Some(&3));
+//! assert_eq!(graph.edge_weight(1, 0), Some(&4));
+//! assert_eq!(graph.edge_weight(1, 1), None);
+//! assert_eq!(graph.edge_weight(2, 0), Some(&7));
+//! assert_eq!(graph.edge_weight(2, 1), Some(&8));
+//! assert_eq!(graph.edge_weight(2, 2), None);
+//! ```
+
 use {
     core::hash::BuildHasher,
     std::collections::HashMap,
 };
 
 /// A trait to get the weight of a given edge
+///
+/// # Examples
+///
+/// ```
+/// use {
+///     graaf::ops::EdgeWeight,
+///     std::collections::HashMap,
+/// };
+///
+/// let graph = vec![
+///     HashMap::from([(1, 2), (2, 3)]),
+///     HashMap::from([(0, 4)]),
+///     HashMap::from([(0, 7), (1, 8)]),
+/// ];
+///
+/// assert_eq!(graph.edge_weight(0, 0), None);
+/// assert_eq!(graph.edge_weight(0, 1), Some(&2));
+/// assert_eq!(graph.edge_weight(0, 2), Some(&3));
+/// assert_eq!(graph.edge_weight(1, 0), Some(&4));
+/// assert_eq!(graph.edge_weight(1, 1), None);
+/// assert_eq!(graph.edge_weight(2, 0), Some(&7));
+/// assert_eq!(graph.edge_weight(2, 1), Some(&8));
+/// assert_eq!(graph.edge_weight(2, 2), None);
+/// ```
 pub trait EdgeWeight<W> {
     /// Get the weight of the edge from `s` to `t`.
     ///

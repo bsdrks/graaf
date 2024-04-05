@@ -9,9 +9,7 @@
 - Add `dijkstra::sssp`.
 - Add doctest for `AdjacencyMatrix::new`.
 - Add doctest for `AdjacencyMatrix::toggle`.
-- Add doctest for `CountAllEdges`.
-- Add doctest for `CountAllVertices`.
-- Add doctest for `EdgeWeight`.
+- Add doctest for `Indegree`.
 - Add doctest for `IsEdge`.
 - Add doctest for `IterAllEdges`.
 - Add doctest for `IterAllWeightedEdges`.
@@ -25,7 +23,13 @@
 ### Added
 
 - Add doctest for `ops::add_weighted_edge::AddWeightedEdge`.
+- Add doctest for `ops::count_all_edges::CountAllEdges`.
+- Add doctest for `ops::count_all_vertices::CountAllVertices`.
+- Add doctest for `ops::edge_weight::EdgeWeight`.
 - Add documentation for `ops::add_weighted_edge`.
+- Add documentation for `ops::count_all_edges`.
+- Add documentation for `ops::count_all_vertices`.
+- Add documentation for `ops::edge_weight`.
 
 ## [0.5.2] - 2024-04-04
 

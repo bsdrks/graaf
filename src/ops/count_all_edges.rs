@@ -1,3 +1,15 @@
+//! A trait to count all edges in a graph
+//!
+//! # Examples
+//!
+//! ```
+//! use graaf::ops::CountAllEdges;
+//!
+//! let graph: Vec<Vec<usize>> = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+//!
+//! assert_eq!(graph.count_all_edges(), 10);
+//! ```
+
 use {
     core::hash::BuildHasher,
     std::collections::{
@@ -7,6 +19,16 @@ use {
 };
 
 /// A trait to count all edges in a graph
+///
+/// # Examples
+///
+/// ```
+/// use graaf::ops::CountAllEdges;
+///
+/// let graph: Vec<Vec<usize>> = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+///
+/// assert_eq!(graph.count_all_edges(), 10);
+/// ```
 pub trait CountAllEdges {
     /// Counts all edges.
     fn count_all_edges(&self) -> usize;
