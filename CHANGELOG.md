@@ -13,7 +13,12 @@
 ### Added
 
 - Add tests to `algo::bfs`.
-- Implement `*` for `&[&[usize]]`.
+- Add tests to `algo::dijkstra`.
+- Implement `AddEdge` for `&mut [Vec<usize>]`.
+- Implement `AddEdge` for `&mut [HashSet<usize>]`.
+- Implement `AddWeightedEdge` for `&mut [Vec<(usize, W)>]`.
+- Implement `AddWeightedEdge` for `&mut [HashSet<(usize, W)>]`.
+- Implement `AddWeightedEdge` for `&mut [HashMap<usize, W>]`.
 
 ## [0.6.1] - 2024-04-06
 

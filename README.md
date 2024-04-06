@@ -53,6 +53,8 @@ These traits are implemented for various graph representations built from standa
 
 - `Vec<Vec<usize>>`
 - `Vec<HashSet<usize>>`
+- `&mut [Vec<usize>]`
+- `&mut [HashSet<usize>]`
 - `[Vec<usize>]`
 - `[HashSet<usize>]`
 - `HashMap<usize, Vec<usize>>`
@@ -63,6 +65,9 @@ These traits are implemented for various graph representations built from standa
 - `Vec<Vec<(usize, W)>>`
 - `Vec<HashSet<(usize, W)>>`
 - `Vec<HashMap<usize, W>>`
+- `&mut [(usize, W)]`
+- `&mut [HashSet<(usize, W)>]`
+- `&mut [HashMap<usize, W>]`
 - `[Vec<(usize, W)>]`
 - `[HashSet<(usize, W)>]`
 - `[HashMap<usize, W>]`
@@ -71,8 +76,6 @@ These traits are implemented for various graph representations built from standa
 - `HashMap<usize, HashMap<usize, W>>`
 
 ### Adjacency matrix
-
-#### Unweighted
 
 - `AdjacencyMatrix`: an adjacency matrix representation of an unweighted directed graph stored as a bit array.
 

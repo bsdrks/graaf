@@ -102,6 +102,30 @@ where
     }
 }
 
+// Slice
+
+impl AddEdge for &mut [Vec<usize>] {
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph or if the new capacity of the vector
+    /// exceeds `isize::MAX`.
+    fn add_edge(&mut self, s: usize, t: usize) {
+        self[s].push(t);
+    }
+}
+
+impl<H> AddEdge for &mut [HashSet<usize, H>]
+where
+    H: BuildHasher,
+{
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn add_edge(&mut self, s: usize, t: usize) {
+        let _ = self[s].insert(t);
+    }
+}
+
 // Arr
 
 impl<const V: usize> AddEdge for [Vec<usize>; V] {
@@ -210,6 +234,63 @@ mod tests {
         assert_eq!(
             graph,
             vec![
+                HashSet::from([1, 2]),
+                HashSet::from([2]),
+                HashSet::from([0, 1])
+            ]
+        );
+    }
+
+    #[test]
+    fn slice_vec() {
+        let mut graph = [Vec::new(), Vec::new(), Vec::new()];
+
+        graph.add_edge(0, 1);
+
+        assert_eq!(graph, [vec![1], Vec::new(), Vec::new()]);
+
+        graph.add_edge(0, 2);
+
+        assert_eq!(graph, [vec![1, 2], Vec::new(), Vec::new()]);
+
+        graph.add_edge(1, 2);
+
+        assert_eq!(graph, [vec![1, 2], vec![2], Vec::new()]);
+
+        graph.add_edge(2, 0);
+        graph.add_edge(2, 1);
+
+        assert_eq!(graph, [vec![1, 2], vec![2], vec![0, 1]]);
+    }
+
+    #[test]
+    fn slice_hash_set() {
+        let mut graph = [HashSet::new(), HashSet::new(), HashSet::new()];
+
+        graph.add_edge(0, 1);
+
+        assert_eq!(graph, [HashSet::from([1]), HashSet::new(), HashSet::new()]);
+
+        graph.add_edge(0, 2);
+
+        assert_eq!(
+            graph,
+            [HashSet::from([1, 2]), HashSet::new(), HashSet::new()]
+        );
+
+        graph.add_edge(1, 2);
+
+        assert_eq!(
+            graph,
+            [HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()]
+        );
+
+        graph.add_edge(2, 0);
+        graph.add_edge(2, 1);
+
+        assert_eq!(
+            graph,
+            [
                 HashSet::from([1, 2]),
                 HashSet::from([2]),
                 HashSet::from([0, 1])
