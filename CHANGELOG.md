@@ -7,9 +7,8 @@
 - Add `dfs::*`.
 - Add `dijkstra::mssp`.
 - Add `dijkstra::sssp`.
-- Move doctest properties to `prop` module.
 
-## [0.5.4] - Unreleased
+## [0.6.0] - 2024-04-06
 
 ### Added
 
@@ -32,11 +31,12 @@
 
 ### Changed
 
+- **BREAKING** Move `ops` to `op`.
 - Adapt benchmark code to linting rules.
+- Move doctest trait properties to `op::prop`.
 - Move lints from `lib.rs` to `Cargo.toml`.
-- Move `ops` to `op`.
 
-## [0.5.3] - 2024-04-04
+## [0.5.3] - 2024-04-05
 
 ### Added
 

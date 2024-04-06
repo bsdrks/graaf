@@ -84,69 +84,20 @@ use {
 ///
 /// # Properties
 ///
-/// ## `IsEdge` and [`crate::op::AddEdge`]
+/// ## `IsEdge` and `AddEdge`
 ///
-/// Types that also implement [`crate::op::AddEdge`] should ensure that the
-/// following property holds for every `graph`, `s`, and `t` of the given types:
+/// Types that also implement [`crate::op::AddEdge`] should ensure that
+/// [`crate::op::prop::add_edge_is_edge`] holds.
 ///
-/// ```
-/// use graaf::op::{
-///     AddEdge,
-///     IsEdge,
-/// };
-///
-/// fn prop_add_edge_is_edge<G, W>(graph: &mut G, s: usize, t: usize) -> bool
-/// where
-///     G: AddEdge + IsEdge,
-/// {
-///     graph.add_edge(s, t);
-///
-///     graph.is_edge(s, t)
-/// }
-/// ```
-///
-/// ## `IsEdge` and [`crate::op::AddWeightedEdge`]
+/// ## `IsEdge` and `AddWeightedEdge`
 ///
 /// Types that also implement [`crate::op::AddWeightedEdge`] should ensure that
-/// the following property holds for every `graph`, `s`, `t`, and `w` of the
-/// given types:
+/// [`crate::op::prop::add_weighted_edge_is_edge`] holds.
 ///
-/// ```
-/// use graaf::op::{
-///     AddWeightedEdge,
-///     IsEdge,
-/// };
+/// ## `IsEdge` and `RemoveEdge`
 ///
-/// fn prop_add_weighted_edge_is_edge<G, W>(graph: &mut G, s: usize, t: usize, w: W) -> bool
-/// where
-///     G: AddWeightedEdge<W> + IsEdge,
-/// {
-///     graph.add_weighted_edge(s, t, w);
-///
-///     graph.is_edge(s, t)
-/// }
-/// ```
-///
-/// ## `IsEdge` and [`crate::op::RemoveEdge`]
-///
-/// Types that also implement [`crate::op::RemoveEdge`] should ensure that the
-/// following property holds for every `graph`, `s`, and `t` of the given types:
-///
-/// ```
-/// use graaf::op::{
-///     IsEdge,
-///     RemoveEdge,
-/// };
-///
-/// fn prop_remove_edge_is_edge<G, W>(graph: &mut G, s: usize, t: usize) -> bool
-/// where
-///     G: IsEdge + RemoveEdge,
-/// {
-///     graph.remove_edge(s, t);
-///
-///     !graph.is_edge(s, t)
-/// }
-/// ```
+/// Types that also implement [`crate::op::RemoveEdge`] should ensure that
+/// [`crate::op::prop::remove_edge_is_edge`] holds.
 pub trait IsEdge {
     /// Checks if there is an edge from `s` to `t`.
     ///
