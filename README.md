@@ -53,13 +53,10 @@ These traits are implemented for various graph representations built from standa
 
 - `Vec<Vec<usize>>`
 - `Vec<HashSet<usize>>`
-
 - `[Vec<usize>]`
 - `[HashSet<usize>]`
-
 - `[Vec<usize>; V]`
 - `[HashSet<usize>; V]`
-
 - `HashMap<usize, Vec<usize>>`
 - `HashMap<usize, HashSet<usize>>`
 
@@ -68,15 +65,12 @@ These traits are implemented for various graph representations built from standa
 - `Vec<Vec<(usize, W)>>`
 - `Vec<HashSet<(usize, W)>>`
 - `Vec<HashMap<usize, W>>`
-
 - `[Vec<(usize, W)>]`
 - `[HashSet<(usize, W)>]`
 - `[HashMap<usize, W>]`
-
 - `[Vec<(usize, W)>; V]`
 - `[HashSet<(usize, W)>; V]`
 - `[HashMap<usize, W>; V]`
-
 - `HashMap<usize, Vec<(usize, W)>>`
 - `HashMap<usize, HashSet<(usize, W)>>`
 - `HashMap<usize, HashMap<usize, W>>`

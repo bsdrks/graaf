@@ -8,6 +8,12 @@
 - Add `dijkstra::mssp`.
 - Add `dijkstra::sssp`.
 
+## [0.6.3] - 2024-04-06
+
+### Changed
+
+- Fix `README` formatting.
+
 ## [0.6.2] - 2024-04-06
 
 ### Added
