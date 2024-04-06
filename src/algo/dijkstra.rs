@@ -40,7 +40,7 @@
 extern crate alloc;
 
 use {
-    crate::ops::{
+    crate::op::{
         CountAllVertices,
         IterWeightedEdges,
     },
@@ -268,7 +268,7 @@ where
 mod test {
     use {
         super::*,
-        crate::ops::AddWeightedEdge,
+        crate::op::AddWeightedEdge,
     };
 
     mod min_distances {

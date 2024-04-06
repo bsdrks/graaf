@@ -38,7 +38,7 @@
 extern crate alloc;
 
 use {
-    crate::ops::{
+    crate::op::{
         CountAllVertices,
         IterEdges,
     },

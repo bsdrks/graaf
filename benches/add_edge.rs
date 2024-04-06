@@ -1,4 +1,4 @@
-//! Benchmark implementations of [`graaf::ops::AddEdge`].
+//! Benchmark implementations of [`graaf::op::AddEdge`].
 fn main() {
     divan::main();
 }
@@ -24,7 +24,7 @@ mod add_edge {
     use {
         core::array::from_fn,
         divan::Bencher,
-        graaf::ops::AddEdge,
+        graaf::op::AddEdge,
         std::collections::{
             HashMap,
             HashSet,

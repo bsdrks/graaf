@@ -6,7 +6,7 @@
 //!
 //! ```
 //! use graaf::{
-//!     ops::{
+//!     op::{
 //!         AddEdge,
 //!         Indegree,
 //!         Outdegree,
@@ -40,7 +40,7 @@
 pub mod algo;
 
 /// Operations on graphs
-pub mod ops;
+pub mod op;
 
 /// Types that represent graphs
 pub mod repr;

@@ -1,4 +1,4 @@
-use crate::ops::{
+use crate::op::{
     AddEdge,
     CountAllEdges,
     CountAllVertices,
@@ -36,7 +36,7 @@ where
     ///
     /// ```
     /// use graaf::{
-    ///     ops::{
+    ///     op::{
     ///         CountAllEdges,
     ///         CountAllVertices,
     ///     },
@@ -78,7 +78,7 @@ where
     ///
     /// ```
     /// use graaf::{
-    ///     ops::IsEdge,
+    ///     op::IsEdge,
     ///     repr::AdjacencyMatrix,
     /// };
     ///

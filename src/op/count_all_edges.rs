@@ -3,7 +3,7 @@
 //! # Examples
 //!
 //! ```
-//! use graaf::ops::CountAllEdges;
+//! use graaf::op::CountAllEdges;
 //!
 //! let graph: Vec<Vec<usize>> = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 //!
@@ -26,7 +26,7 @@ use {
 /// edges in the graph.
 ///
 /// ```
-/// use graaf::ops::CountAllEdges;
+/// use graaf::op::CountAllEdges;
 ///
 /// struct Graph {
 ///     edges: Vec<Vec<usize>>,
@@ -42,7 +42,7 @@ use {
 /// # Examples
 ///
 /// ```
-/// use graaf::ops::CountAllEdges;
+/// use graaf::op::CountAllEdges;
 ///
 /// let graph: Vec<Vec<usize>> = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 ///

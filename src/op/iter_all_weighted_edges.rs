@@ -3,7 +3,7 @@
 //! # Examples
 //!
 //! ```
-//! use graaf::ops::IterAllWeightedEdges;
+//! use graaf::op::IterAllWeightedEdges;
 //!
 //! let graph = vec![(0, 1, 2), (1, 2, 3), (2, 0, 4)];
 //! let mut iter = graph.iter_all_weighted_edges();
@@ -27,7 +27,7 @@ use {
 /// iterator over all weighted edges in the graph.
 ///
 /// ```
-/// use graaf::ops::IterAllWeightedEdges;
+/// use graaf::op::IterAllWeightedEdges;
 ///
 /// struct Graph {
 ///     edges: Vec<(usize, usize, usize)>,
@@ -46,7 +46,7 @@ use {
 /// # Examples
 ///
 /// ```
-/// use graaf::ops::IterAllWeightedEdges;
+/// use graaf::op::IterAllWeightedEdges;
 ///
 /// let graph = vec![(0, 1, 2), (1, 2, 3), (2, 0, 4)];
 /// let mut iter = graph.iter_all_weighted_edges();

@@ -4,7 +4,7 @@
 //!
 //! ```
 //! use {
-//!     graaf::ops::RemoveEdge,
+//!     graaf::op::RemoveEdge,
 //!     std::collections::HashSet,
 //! };
 //!
@@ -57,7 +57,7 @@ use {
 ///
 /// ```
 /// use {
-///     graaf::ops::RemoveEdge,
+///     graaf::op::RemoveEdge,
 ///     std::collections::HashSet,
 /// };
 ///
@@ -76,7 +76,7 @@ use {
 ///
 /// ```
 /// use {
-///     graaf::ops::RemoveEdge,
+///     graaf::op::RemoveEdge,
 ///     std::collections::HashSet,
 /// };
 ///
@@ -114,13 +114,13 @@ use {
 ///
 /// # Properties
 ///
-/// ## `RemoveEdge` and [`crate::ops::AddEdge`]
+/// ## `RemoveEdge` and [`crate::op::AddEdge`]
 ///
-/// Types that also implement [`crate::ops::AddEdge`] should ensure that the
+/// Types that also implement [`crate::op::AddEdge`] should ensure that the
 /// following property holds for every `graph`, `s`, and `t` of the given types:
 ///
 /// ```
-/// use graaf::ops::{
+/// use graaf::op::{
 ///     AddEdge,
 ///     RemoveEdge,
 /// };
@@ -138,13 +138,13 @@ use {
 /// }
 /// ```
 ///
-/// ## `RemoveEdge` and [`crate::ops::AddWeightedEdge`]
+/// ## `RemoveEdge` and [`crate::op::AddWeightedEdge`]
 ///
-/// Types that also implement [`crate::ops::AddWeightedEdge`] should ensure that
+/// Types that also implement [`crate::op::AddWeightedEdge`] should ensure that
 /// the following property holds for every `graph`, `s`, `t`, and `w` of the
 ///
 /// ```
-/// use graaf::ops::{
+/// use graaf::op::{
 ///     AddWeightedEdge,
 ///     RemoveEdge,
 /// };
@@ -162,13 +162,13 @@ use {
 /// }
 /// ```
 ///
-/// ## `RemoveEdge` and [`crate::ops::IsEdge`]
+/// ## `RemoveEdge` and [`crate::op::IsEdge`]
 ///
-/// Types that also implement [`crate::ops::IsEdge`] should ensure that the
+/// Types that also implement [`crate::op::IsEdge`] should ensure that the
 /// following property holds for every `graph`, `s`, and `t` of the given types:
 ///
 /// ```
-/// use graaf::ops::{
+/// use graaf::op::{
 ///     IsEdge,
 ///     RemoveEdge,
 /// };

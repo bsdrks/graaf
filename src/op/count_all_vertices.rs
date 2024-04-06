@@ -3,7 +3,7 @@
 //! # Example
 //!
 //! ```
-//! use graaf::ops::CountAllVertices;
+//! use graaf::op::CountAllVertices;
 //!
 //! let graph: Vec<Vec<usize>> = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 //!
@@ -25,7 +25,7 @@ use {
 /// vertices in the graph.
 ///
 /// ```
-/// use graaf::ops::CountAllVertices;
+/// use graaf::op::CountAllVertices;
 ///
 /// struct Graph {
 ///     vertices: Vec<usize>,
@@ -41,7 +41,7 @@ use {
 /// # Example
 ///
 /// ```
-/// use graaf::ops::CountAllVertices;
+/// use graaf::op::CountAllVertices;
 ///
 /// let graph: Vec<Vec<usize>> = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 ///

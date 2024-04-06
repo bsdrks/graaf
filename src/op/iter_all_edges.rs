@@ -3,7 +3,7 @@
 //! # Examples
 //!
 //! ```
-//! use graaf::ops::IterAllEdges;
+//! use graaf::op::IterAllEdges;
 //!
 //! let graph = vec![(0, 1), (1, 2), (2, 0)];
 //! let mut iter = graph.iter_all_edges();
@@ -27,7 +27,7 @@ use {
 /// all edges in the graph.
 ///
 /// ```
-/// use graaf::ops::IterAllEdges;
+/// use graaf::op::IterAllEdges;
 ///
 /// struct Graph {
 ///     edges: Vec<(usize, usize)>,
@@ -43,7 +43,7 @@ use {
 /// # Examples
 ///
 /// ```
-/// use graaf::ops::IterAllEdges;
+/// use graaf::op::IterAllEdges;
 ///
 /// let graph = vec![(0, 1), (1, 2), (2, 0)];
 /// let mut iter = graph.iter_all_edges();

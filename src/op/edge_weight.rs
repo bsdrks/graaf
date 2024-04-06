@@ -4,7 +4,7 @@
 //!
 //! ```
 //! use {
-//!     graaf::ops::EdgeWeight,
+//!     graaf::op::EdgeWeight,
 //!     std::collections::HashMap,
 //! };
 //!
@@ -38,7 +38,7 @@ use {
 ///
 /// ```
 /// use {
-///     graaf::ops::EdgeWeight,
+///     graaf::op::EdgeWeight,
 ///     std::collections::HashMap,
 /// };
 ///
@@ -57,7 +57,7 @@ use {
 ///
 /// ```
 /// use {
-///     graaf::ops::EdgeWeight,
+///     graaf::op::EdgeWeight,
 ///     std::collections::HashMap,
 /// };
 ///

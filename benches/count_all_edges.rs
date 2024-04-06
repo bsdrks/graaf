@@ -1,4 +1,4 @@
-//! Benchmark implementations of [`graaf::ops::CountAllEdges`].
+//! Benchmark implementations of [`graaf::op::CountAllEdges`].
 fn main() {
     divan::main();
 }
@@ -34,7 +34,7 @@ mod count_all_edges {
     use {
         core::array::from_fn,
         divan::Bencher,
-        graaf::ops::{
+        graaf::op::{
             AddEdge,
             AddWeightedEdge,
             CountAllEdges,

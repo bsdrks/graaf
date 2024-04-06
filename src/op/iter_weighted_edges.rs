@@ -3,7 +3,7 @@
 //! # Examples
 //!
 //! ```
-//! use graaf::ops::IterWeightedEdges;
+//! use graaf::op::IterWeightedEdges;
 //!
 //! let graph = vec![
 //!     vec![(1, 2), (2, 3), (3, 4)],
@@ -49,7 +49,7 @@ use {
 /// over all weighted edges with the source vertex `s`.
 ///
 /// ```
-/// use graaf::ops::IterWeightedEdges;
+/// use graaf::op::IterWeightedEdges;
 ///
 /// struct Graph {
 ///     edges: Vec<Vec<(usize, usize)>>,
@@ -65,7 +65,7 @@ use {
 /// # Examples
 ///
 /// ```
-/// use graaf::ops::IterWeightedEdges;
+/// use graaf::op::IterWeightedEdges;
 ///
 /// let graph = vec![
 ///     vec![(1, 2), (2, 3), (3, 4)],

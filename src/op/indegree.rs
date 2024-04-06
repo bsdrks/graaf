@@ -4,7 +4,7 @@
 //!
 //! ```
 //! use {
-//!     graaf::ops::Indegree,
+//!     graaf::op::Indegree,
 //!     std::collections::HashSet,
 //! };
 //!
@@ -33,7 +33,7 @@ use {
 ///
 /// ```
 /// use {
-///     graaf::ops::Indegree,
+///     graaf::op::Indegree,
 ///     std::collections::HashSet,
 /// };
 ///
@@ -53,7 +53,7 @@ use {
 ///
 /// ```
 /// use {
-///     graaf::ops::Indegree,
+///     graaf::op::Indegree,
 ///     std::collections::HashSet,
 /// };
 ///

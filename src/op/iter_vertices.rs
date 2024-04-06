@@ -3,7 +3,7 @@
 //! # Example
 //!
 //! ```
-//! use graaf::ops::IterVertices;
+//! use graaf::op::IterVertices;
 //!
 //! let graph: [Vec<usize>; 4] = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 //! let mut iter = graph.iter_vertices();
@@ -31,7 +31,7 @@ use {
 /// all vertices in the graph.
 ///
 /// ```
-/// use graaf::ops::IterVertices;
+/// use graaf::op::IterVertices;
 ///
 /// struct Graph {
 ///     vertices: Vec<usize>,
@@ -47,7 +47,7 @@ use {
 /// # Example
 ///
 /// ```
-/// use graaf::ops::IterVertices;
+/// use graaf::op::IterVertices;
 ///
 /// let graph: [Vec<usize>; 4] = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 /// let mut iter = graph.iter_vertices();

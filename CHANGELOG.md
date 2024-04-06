@@ -34,44 +34,45 @@
 
 - Adapt benchmark code to linting rules.
 - Move lints from `lib.rs` to `Cargo.toml`.
+- Move `ops` to `op`.
 
 ## [0.5.3] - 2024-04-04
 
 ### Added
 
-- Add doctest for `ops::add_weighted_edge::AddWeightedEdge`.
-- Add doctest for `ops::count_all_edges::CountAllEdges`.
-- Add doctest for `ops::count_all_vertices::CountAllVertices`.
-- Add doctest for `ops::edge_weight::EdgeWeight`.
-- Add doctest for `ops::indegree::Indegree`.
-- Add doctest for `ops::is_edge::IsEdge`.
-- Add doctest for `ops::iter_all_edges::IterAllEdges`.
-- Add doctest for `ops::iter_all_weighted_edges::IterAllWeightedEdges`.
-- Add doctest for `ops::iter_edges::IterEdges`.
-- Add doctest for `ops::iter_weighted_edges::IterWeightedEdges`.
-- Add doctest for `ops::iter_vertices::IterVertices`.
-- Add doctest for `ops::outdegree::OutDegree`.
-- Add doctest for `ops::remove_edge::RemoveEdge`.
-- Add documentation for `ops::add_weighted_edge`.
-- Add documentation for `ops::count_all_edges`.
-- Add documentation for `ops::count_all_vertices`.
-- Add documentation for `ops::edge_weight`.
-- Add documentation for `ops::indegree`.
-- Add documentation for `ops::is_edge`.
-- Add documentation for `ops::iter_all_edges`.
-- Add documentation for `ops::iter_all_weighted_edges`.
-- Add documentation for `ops::iter_edges`.
-- Add documentation for `ops::iter_vertices`.
-- Add documentation for `ops::iter_weighted_edges`.
-- Add documentation for `ops::outdegree`.
-- Add documentation for `ops::remove_edge`.
+- Add doctest for `op::add_weighted_edge::AddWeightedEdge`.
+- Add doctest for `op::count_all_edges::CountAllEdges`.
+- Add doctest for `op::count_all_vertices::CountAllVertices`.
+- Add doctest for `op::edge_weight::EdgeWeight`.
+- Add doctest for `op::indegree::Indegree`.
+- Add doctest for `op::is_edge::IsEdge`.
+- Add doctest for `op::iter_all_edges::IterAllEdges`.
+- Add doctest for `op::iter_all_weighted_edges::IterAllWeightedEdges`.
+- Add doctest for `op::iter_edges::IterEdges`.
+- Add doctest for `op::iter_weighted_edges::IterWeightedEdges`.
+- Add doctest for `op::iter_vertices::IterVertices`.
+- Add doctest for `op::outdegree::OutDegree`.
+- Add doctest for `op::remove_edge::RemoveEdge`.
+- Add documentation for `op::add_weighted_edge`.
+- Add documentation for `op::count_all_edges`.
+- Add documentation for `op::count_all_vertices`.
+- Add documentation for `op::edge_weight`.
+- Add documentation for `op::indegree`.
+- Add documentation for `op::is_edge`.
+- Add documentation for `op::iter_all_edges`.
+- Add documentation for `op::iter_all_weighted_edges`.
+- Add documentation for `op::iter_edges`.
+- Add documentation for `op::iter_vertices`.
+- Add documentation for `op::iter_weighted_edges`.
+- Add documentation for `op::outdegree`.
+- Add documentation for `op::remove_edge`.
 
 ## [0.5.2] - 2024-04-04
 
 ### Added
 
-- Add doctest for `ops::add_edge::AddEdge`.
-- Add documentation for `ops::add_edge`.
+- Add doctest for `op::add_edge::AddEdge`.
+- Add documentation for `op::add_edge`.
 - Add module-level doctest for `algo::bfs`.
 - Add module-level doctest for `algo::dijkstra`.
 
@@ -193,7 +194,7 @@
 
 ### Changed
 
-- Export `algo`, `ops`, and `repr` modules.
+- Export `algo`, `op`, and `repr` modules.
 - Enable selected lints from `restriction` group.
 - Group lints into groups, restrictions, `rustdoc`, and `rustc` lints.
 - Use `core` and `alloc` imports over `std` where possible.

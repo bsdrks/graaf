@@ -30,20 +30,20 @@ Functions and types for working with graphs
 
 These traits are implemented for various graph representations built from standard library containers.
 
-- `ops::AddEdge` adds an edge to an unweighted graph.
-- `ops::AddWeightedEdge` adds an edge to a weighted graph.
-- `ops::CountAllEdges` counts all edges in a graph.
-- `ops::CountAllVertices` counts all vertices in a graph.
-- `ops::EdgeWeight` gets the weight of an edge.
-- `ops::Indegree` returns the indegree of a vertex.
-- `ops::IsEdge` returns whether an edge exists between two vertices.
-- `ops::IterAllEdges` iterates over all unweighted edges in a graph.
-- `ops::IterAllWeightedEdges` iterates over all weighted edges in a graph.
-- `ops::IterEdges` iterates over all unweighted edges of a source vertex.
-- `ops::IterVertices` iterates over all vertices in a graph.
-- `ops::IterWeightedEdges` iterates over all weighted edges of a source vertex.
-- `ops::Outdegree` returns the outdegree of a vertex.
-- `ops::RemoveEdge` removes an edge from a graph.
+- `op::AddEdge` adds an edge to an unweighted graph.
+- `op::AddWeightedEdge` adds an edge to a weighted graph.
+- `op::CountAllEdges` counts all edges in a graph.
+- `op::CountAllVertices` counts all vertices in a graph.
+- `op::EdgeWeight` gets the weight of an edge.
+- `op::Indegree` returns the indegree of a vertex.
+- `op::IsEdge` returns whether an edge exists between two vertices.
+- `op::IterAllEdges` iterates over all unweighted edges in a graph.
+- `op::IterAllWeightedEdges` iterates over all weighted edges in a graph.
+- `op::IterEdges` iterates over all unweighted edges of a source vertex.
+- `op::IterVertices` iterates over all vertices in a graph.
+- `op::IterWeightedEdges` iterates over all weighted edges of a source vertex.
+- `op::Outdegree` returns the outdegree of a vertex.
+- `op::RemoveEdge` removes an edge from a graph.
 
 ## Graph representations
 

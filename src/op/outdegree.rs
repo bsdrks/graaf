@@ -3,7 +3,7 @@
 //! # Examples
 //!
 //! ```
-//! use graaf::ops::Outdegree;
+//! use graaf::op::Outdegree;
 //!
 //! let graph = vec![vec![1, 2], vec![0], vec![1]];
 //!
@@ -28,7 +28,7 @@ use {
 /// target vertex.
 ///
 /// ```
-/// use graaf::ops::Outdegree;
+/// use graaf::op::Outdegree;
 ///
 /// struct Graph {
 ///     edges: Vec<Vec<usize>>,
@@ -44,7 +44,7 @@ use {
 /// # Examples
 ///
 /// ```
-/// use graaf::ops::Outdegree;
+/// use graaf::op::Outdegree;
 ///
 /// let graph = vec![vec![1, 2], vec![0], vec![1]];
 ///

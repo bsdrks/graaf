@@ -3,7 +3,7 @@
 //! # Examples
 //!
 //! ```
-//! use graaf::ops::IterEdges;
+//! use graaf::op::IterEdges;
 //!
 //! let graph: [Vec<usize>; 4] = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 //! let mut iter = graph.iter_edges(0);
@@ -39,7 +39,7 @@
 //! #![feature(assert_matches)]
 //!
 //! use {
-//!     graaf::ops::IterEdges,
+//!     graaf::op::IterEdges,
 //!     std::{
 //!         assert_matches::assert_matches,
 //!         collections::HashSet,
@@ -76,7 +76,7 @@ use {
 /// edges of the source vertex.
 ///
 /// ```
-/// use graaf::ops::IterEdges;
+/// use graaf::op::IterEdges;
 ///
 /// struct Graph {
 ///     edges: Vec<Vec<usize>>,
@@ -92,7 +92,7 @@ use {
 /// # Examples
 ///
 /// ```
-/// use graaf::ops::IterEdges;
+/// use graaf::op::IterEdges;
 ///
 /// let graph: [Vec<usize>; 4] = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 /// let mut iter = graph.iter_edges(0);
@@ -128,7 +128,7 @@ use {
 /// #![feature(assert_matches)]
 ///
 /// use {
-///     graaf::ops::IterEdges,
+///     graaf::op::IterEdges,
 ///     std::{
 ///         assert_matches::assert_matches,
 ///         collections::HashSet,

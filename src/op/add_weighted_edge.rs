@@ -3,7 +3,7 @@
 //! # Examples
 //!
 //! ```
-//! use graaf::ops::AddWeightedEdge;
+//! use graaf::op::AddWeightedEdge;
 //!
 //! let mut graph: Vec<Vec<(usize, i32)>> = vec![Vec::new(); 3];
 //!
@@ -33,7 +33,7 @@ use {
 /// to `t` with weight `w` to the graph.
 ///
 /// ```
-/// use graaf::ops::AddWeightedEdge;
+/// use graaf::op::AddWeightedEdge;
 ///
 /// struct Graph {
 ///     edges: Vec<Vec<(usize, i32)>>,
@@ -49,7 +49,7 @@ use {
 /// # Examples
 ///
 /// ```
-/// use graaf::ops::AddWeightedEdge;
+/// use graaf::op::AddWeightedEdge;
 ///
 /// let mut graph: Vec<Vec<(usize, i32)>> = vec![Vec::new(); 3];
 ///
@@ -62,14 +62,14 @@ use {
 ///
 /// # Properties
 ///
-/// ## `AddWeightedEdge` and [`crate::ops::RemoveEdge`]
+/// ## `AddWeightedEdge` and [`crate::op::RemoveEdge`]
 ///
-/// Types that also implement [`crate::ops::RemoveEdge`] should ensure that the
+/// Types that also implement [`crate::op::RemoveEdge`] should ensure that the
 /// following property holds for every `graph`, `s`, `t`, and `w` of the given
 /// types:
 ///
 /// ```
-/// use graaf::ops::{
+/// use graaf::op::{
 ///     AddWeightedEdge,
 ///     RemoveEdge,
 /// };
@@ -87,14 +87,14 @@ use {
 /// }
 /// ```
 ///
-/// ## `AddWeightedEdge` and [`crate::ops::IsEdge`]
+/// ## `AddWeightedEdge` and [`crate::op::IsEdge`]
 ///
-/// Types that also implement [`crate::ops::IsEdge`] should ensure that the
+/// Types that also implement [`crate::op::IsEdge`] should ensure that the
 /// following property holds for every `graph`, `s`, `t`, and `w` of the given
 /// types:
 ///
 /// ```
-/// use graaf::ops::{
+/// use graaf::op::{
 ///     AddWeightedEdge,
 ///     IsEdge,
 /// };
