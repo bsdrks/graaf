@@ -14,11 +14,13 @@
 
 - Add tests to `algo::bfs`.
 - Add tests to `algo::dijkstra`.
-- Implement `AddEdge` for `[Vec<usize>]`.
 - Implement `AddEdge` for `[HashSet<usize>]`.
-- Implement `AddWeightedEdge` for `[Vec<(usize, W)>]`.
-- Implement `AddWeightedEdge` for `[HashSet<(usize, W)>]`.
+- Implement `AddEdge` for `[Vec<usize>]`.
 - Implement `AddWeightedEdge` for `[HashMap<usize, W>]`.
+- Implement `AddWeightedEdge` for `[HashSet<(usize, W)>]`.
+- Implement `AddWeightedEdge` for `[Vec<(usize, W)>]`.
+- Implement `IterAllEdges` for `[(usize, usize)]`.
+- Implement `IterAllWeightedEdges` for `[(usize, usize, W)]`.
 
 ## [0.6.1] - 2024-04-06
 

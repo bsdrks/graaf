@@ -30,20 +30,20 @@ Functions and types for working with graphs
 
 These traits are implemented for various graph representations built from standard library containers.
 
-- `op::AddEdge` adds an edge to an unweighted graph.
-- `op::AddWeightedEdge` adds an edge to a weighted graph.
-- `op::CountAllEdges` counts all edges in a graph.
-- `op::CountAllVertices` counts all vertices in a graph.
+- `op::AddEdge` adds an unweighted edge.
+- `op::AddWeightedEdge` adds a weighted edge.
+- `op::CountAllEdges` counts all edges.
+- `op::CountAllVertices` counts all vertices.
 - `op::EdgeWeight` gets the weight of an edge.
 - `op::Indegree` returns the indegree of a vertex.
-- `op::IsEdge` returns whether an edge exists between two vertices.
-- `op::IterAllEdges` iterates over all unweighted edges in a graph.
-- `op::IterAllWeightedEdges` iterates over all weighted edges in a graph.
+- `op::IsEdge` returns whether an edge exists.
+- `op::IterAllEdges` iterates over all unweighted edges.
+- `op::IterAllWeightedEdges` iterates over all weighted edges.
 - `op::IterEdges` iterates over all unweighted edges of a source vertex.
-- `op::IterVertices` iterates over all vertices in a graph.
+- `op::IterVertices` iterates over all vertices.
 - `op::IterWeightedEdges` iterates over all weighted edges of a source vertex.
 - `op::Outdegree` returns the outdegree of a vertex.
-- `op::RemoveEdge` removes an edge from a graph.
+- `op::RemoveEdge` removes an edge.
 
 ## Graph representations
 
@@ -90,11 +90,13 @@ These traits are implemented for various graph representations built from standa
 #### Unweighted
 
 - `Vec<(usize, usize)>`
+- `[(usize, usize)]`
 - `[(usize, usize); V]`
 - `HashSet<(usize, usize)>`
 
 #### Weighted
 
 - `Vec<(usize, usize, W)>`
+- `[(usize, usize, W)]`
 - `[(usize, usize, W); V]`
 - `HashSet<(usize, usize, W)>`
