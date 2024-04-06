@@ -8,6 +8,13 @@
 - Add `dijkstra::mssp`.
 - Add `dijkstra::sssp`.
 
+## [0.6.2] - Unreleased
+
+### Added
+
+- Add tests to `algo::bfs`.
+- Implement `*` for `&[&[usize]]`.
+
 ## [0.6.1] - 2024-04-06
 
 ### Added

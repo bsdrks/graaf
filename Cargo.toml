@@ -27,13 +27,13 @@ name = "count_all_edges"
 harness = false
 
 [[bench]]
-name = "crosscountry"
-path = "benches/min_distances_weighted/crosscountry.rs"
+name = "cross_country"
+path = "benches/min_distances_weighted/cross_country.rs"
 harness = false
 
 [[bench]]
-name = "shortestpath1"
-path = "benches/min_distances_weighted/shortestpath1.rs"
+name = "shortest_path_1"
+path = "benches/min_distances_weighted/shortest_path_1.rs"
 harness = false
 
 [[bench]]
