@@ -374,7 +374,7 @@ mod tests {
 
     #[test]
     fn slice_vec() {
-        let graph = &mut [Vec::new(), Vec::new(), Vec::new()];
+        let graph: &mut [Vec<(usize, i32)>] = &mut [Vec::new(), Vec::new(), Vec::new()];
 
         graph.add_weighted_edge(0, 1, 2);
 
@@ -405,7 +405,8 @@ mod tests {
 
     #[test]
     fn slice_hash_set() {
-        let graph = &mut [HashSet::new(), HashSet::new(), HashSet::new()];
+        let graph: &mut [HashSet<(usize, i32)>] =
+            &mut [HashSet::new(), HashSet::new(), HashSet::new()];
 
         graph.add_weighted_edge(0, 1, 2);
 
@@ -461,7 +462,8 @@ mod tests {
 
     #[test]
     fn slice_hash_map() {
-        let graph = &mut [HashMap::new(), HashMap::new(), HashMap::new()];
+        let graph: &mut [HashMap<usize, i32>] =
+            &mut [HashMap::new(), HashMap::new(), HashMap::new()];
 
         graph.add_weighted_edge(0, 1, 2);
 
