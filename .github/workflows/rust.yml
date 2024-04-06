@@ -29,6 +29,7 @@ jobs:
         uses: actions-rs/tarpaulin@v0.1
         with:
           version: "0.15.0"
+          # Tarpaulin does not parse `lib.rs` correctly
           args: "--exclude-files src/lib.rs"
       - name: Coveralls
         uses: coverallsapp/github-action@v2
