@@ -104,7 +104,7 @@ where
 
 // Slice
 
-impl AddEdge for &mut [Vec<usize>] {
+impl AddEdge for [Vec<usize>] {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph or if the new capacity of the vector
@@ -114,7 +114,7 @@ impl AddEdge for &mut [Vec<usize>] {
     }
 }
 
-impl<H> AddEdge for &mut [HashSet<usize, H>]
+impl<H> AddEdge for [HashSet<usize, H>]
 where
     H: BuildHasher,
 {
@@ -243,45 +243,45 @@ mod tests {
 
     #[test]
     fn slice_vec() {
-        let mut graph = [Vec::new(), Vec::new(), Vec::new()];
+        let graph: &mut [Vec<usize>] = &mut [Vec::new(), Vec::new(), Vec::new()];
 
         graph.add_edge(0, 1);
 
-        assert_eq!(graph, [vec![1], Vec::new(), Vec::new()]);
+        assert_eq!(*graph, [vec![1], Vec::new(), Vec::new()]);
 
         graph.add_edge(0, 2);
 
-        assert_eq!(graph, [vec![1, 2], Vec::new(), Vec::new()]);
+        assert_eq!(*graph, [vec![1, 2], Vec::new(), Vec::new()]);
 
         graph.add_edge(1, 2);
 
-        assert_eq!(graph, [vec![1, 2], vec![2], Vec::new()]);
+        assert_eq!(*graph, [vec![1, 2], vec![2], Vec::new()]);
 
         graph.add_edge(2, 0);
         graph.add_edge(2, 1);
 
-        assert_eq!(graph, [vec![1, 2], vec![2], vec![0, 1]]);
+        assert_eq!(*graph, [vec![1, 2], vec![2], vec![0, 1]]);
     }
 
     #[test]
     fn slice_hash_set() {
-        let mut graph = [HashSet::new(), HashSet::new(), HashSet::new()];
+        let graph: &mut [HashSet<usize>] = &mut [HashSet::new(), HashSet::new(), HashSet::new()];
 
         graph.add_edge(0, 1);
 
-        assert_eq!(graph, [HashSet::from([1]), HashSet::new(), HashSet::new()]);
+        assert_eq!(*graph, [HashSet::from([1]), HashSet::new(), HashSet::new()]);
 
         graph.add_edge(0, 2);
 
         assert_eq!(
-            graph,
+            *graph,
             [HashSet::from([1, 2]), HashSet::new(), HashSet::new()]
         );
 
         graph.add_edge(1, 2);
 
         assert_eq!(
-            graph,
+            *graph,
             [HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()]
         );
 
@@ -289,7 +289,7 @@ mod tests {
         graph.add_edge(2, 1);
 
         assert_eq!(
-            graph,
+            *graph,
             [
                 HashSet::from([1, 2]),
                 HashSet::from([2]),

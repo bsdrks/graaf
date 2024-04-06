@@ -53,10 +53,13 @@ These traits are implemented for various graph representations built from standa
 
 - `Vec<Vec<usize>>`
 - `Vec<HashSet<usize>>`
-- `&mut [Vec<usize>]`
-- `&mut [HashSet<usize>]`
+
 - `[Vec<usize>]`
 - `[HashSet<usize>]`
+
+- `[Vec<usize>; V]`
+- `[HashSet<usize>; V]`
+
 - `HashMap<usize, Vec<usize>>`
 - `HashMap<usize, HashSet<usize>>`
 
@@ -65,12 +68,15 @@ These traits are implemented for various graph representations built from standa
 - `Vec<Vec<(usize, W)>>`
 - `Vec<HashSet<(usize, W)>>`
 - `Vec<HashMap<usize, W>>`
-- `&mut [(usize, W)]`
-- `&mut [HashSet<(usize, W)>]`
-- `&mut [HashMap<usize, W>]`
+
 - `[Vec<(usize, W)>]`
 - `[HashSet<(usize, W)>]`
 - `[HashMap<usize, W>]`
+
+- `[Vec<(usize, W)>; V]`
+- `[HashSet<(usize, W)>; V]`
+- `[HashMap<usize, W>; V]`
+
 - `HashMap<usize, Vec<(usize, W)>>`
 - `HashMap<usize, HashSet<(usize, W)>>`
 - `HashMap<usize, HashMap<usize, W>>`
@@ -84,11 +90,11 @@ These traits are implemented for various graph representations built from standa
 #### Unweighted
 
 - `Vec<(usize, usize)>`
-- `[(usize, usize)]`
+- `[(usize, usize); V]`
 - `HashSet<(usize, usize)>`
 
 #### Weighted
 
 - `Vec<(usize, usize, W)>`
-- `[(usize, usize, W)]`
+- `[(usize, usize, W); V]`
 - `HashSet<(usize, usize, W)>`

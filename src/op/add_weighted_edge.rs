@@ -120,7 +120,7 @@ where
 
 // Slice
 
-impl<W> AddWeightedEdge<W> for &mut [Vec<(usize, W)>] {
+impl<W> AddWeightedEdge<W> for [Vec<(usize, W)>] {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
@@ -129,7 +129,7 @@ impl<W> AddWeightedEdge<W> for &mut [Vec<(usize, W)>] {
     }
 }
 
-impl<W, H> AddWeightedEdge<W> for &mut [HashSet<(usize, W), H>]
+impl<W, H> AddWeightedEdge<W> for [HashSet<(usize, W), H>]
 where
     H: BuildHasher,
     W: Eq + Hash,
@@ -142,7 +142,7 @@ where
     }
 }
 
-impl<W, H> AddWeightedEdge<W> for &mut [HashMap<usize, W, H>]
+impl<W, H> AddWeightedEdge<W> for [HashMap<usize, W, H>]
 where
     H: BuildHasher,
 {
@@ -374,51 +374,50 @@ mod tests {
 
     #[test]
     fn slice_vec() {
-        let mut graph: [Vec<(usize, i32)>; 3] = [Vec::new(), Vec::new(), Vec::new()];
+        let graph = &mut [Vec::new(), Vec::new(), Vec::new()];
 
         graph.add_weighted_edge(0, 1, 2);
 
-        assert_eq!(graph, [vec![(1, 2)], Vec::new(), Vec::new()]);
+        assert_eq!(*graph, [vec![(1, 2)], Vec::new(), Vec::new()]);
 
         graph.add_weighted_edge(0, 2, 1);
 
-        assert_eq!(graph, [vec![(1, 2), (2, 1)], Vec::new(), Vec::new()]);
+        assert_eq!(*graph, [vec![(1, 2), (2, 1)], Vec::new(), Vec::new()]);
 
         graph.add_weighted_edge(1, 2, 4);
 
-        assert_eq!(graph, [vec![(1, 2), (2, 1)], vec![(2, 4)], Vec::new()]);
+        assert_eq!(*graph, [vec![(1, 2), (2, 1)], vec![(2, 4)], Vec::new()]);
 
         graph.add_weighted_edge(1, 0, -2);
 
         assert_eq!(
-            graph,
+            *graph,
             [vec![(1, 2), (2, 1)], vec![(2, 4), (0, -2)], Vec::new()]
         );
 
         graph.add_weighted_edge(2, 0, 3);
 
         assert_eq!(
-            graph,
+            *graph,
             [vec![(1, 2), (2, 1)], vec![(2, 4), (0, -2)], vec![(0, 3)]]
         );
     }
 
     #[test]
     fn slice_hash_set() {
-        let mut graph: [HashSet<(usize, i32)>; 3] =
-            [HashSet::new(), HashSet::new(), HashSet::new()];
+        let graph = &mut [HashSet::new(), HashSet::new(), HashSet::new()];
 
         graph.add_weighted_edge(0, 1, 2);
 
         assert_eq!(
-            graph,
+            *graph,
             [HashSet::from([(1, 2)]), HashSet::new(), HashSet::new()]
         );
 
         graph.add_weighted_edge(0, 2, 1);
 
         assert_eq!(
-            graph,
+            *graph,
             [
                 HashSet::from([(1, 2), (2, 1)]),
                 HashSet::new(),
@@ -429,7 +428,7 @@ mod tests {
         graph.add_weighted_edge(1, 2, 4);
 
         assert_eq!(
-            graph,
+            *graph,
             [
                 HashSet::from([(1, 2), (2, 1)]),
                 HashSet::from([(2, 4)]),
@@ -440,7 +439,7 @@ mod tests {
         graph.add_weighted_edge(1, 0, -2);
 
         assert_eq!(
-            graph,
+            *graph,
             [
                 HashSet::from([(1, 2), (2, 1)]),
                 HashSet::from([(2, 4), (0, -2)]),
@@ -451,7 +450,7 @@ mod tests {
         graph.add_weighted_edge(2, 0, 3);
 
         assert_eq!(
-            graph,
+            *graph,
             [
                 HashSet::from([(1, 2), (2, 1)]),
                 HashSet::from([(2, 4), (0, -2)]),
@@ -462,19 +461,19 @@ mod tests {
 
     #[test]
     fn slice_hash_map() {
-        let mut graph: [HashMap<usize, i32>; 3] = [HashMap::new(), HashMap::new(), HashMap::new()];
+        let graph = &mut [HashMap::new(), HashMap::new(), HashMap::new()];
 
         graph.add_weighted_edge(0, 1, 2);
 
         assert_eq!(
-            graph,
+            *graph,
             [HashMap::from([(1, 2)]), HashMap::new(), HashMap::new()]
         );
 
         graph.add_weighted_edge(0, 2, 1);
 
         assert_eq!(
-            graph,
+            *graph,
             [
                 HashMap::from([(1, 2), (2, 1)]),
                 HashMap::new(),
@@ -485,7 +484,7 @@ mod tests {
         graph.add_weighted_edge(1, 2, 4);
 
         assert_eq!(
-            graph,
+            *graph,
             [
                 HashMap::from([(1, 2), (2, 1)]),
                 HashMap::from([(2, 4)]),
@@ -496,7 +495,7 @@ mod tests {
         graph.add_weighted_edge(1, 0, -2);
 
         assert_eq!(
-            graph,
+            *graph,
             [
                 HashMap::from([(1, 2), (2, 1)]),
                 HashMap::from([(2, 4), (0, -2)]),
@@ -507,7 +506,7 @@ mod tests {
         graph.add_weighted_edge(2, 0, 3);
 
         assert_eq!(
-            graph,
+            *graph,
             [
                 HashMap::from([(1, 2), (2, 1)]),
                 HashMap::from([(2, 4), (0, -2)]),
