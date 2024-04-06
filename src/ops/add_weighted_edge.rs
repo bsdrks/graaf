@@ -30,7 +30,7 @@ use {
 /// # How can I implement `AddWeightedEdge`?
 ///
 /// Provide an implementation of `add_weighted_edge` that adds an edge from `s`
-/// to `t` with weight `w` to the type.
+/// to `t` with weight `w` to the graph.
 ///
 /// ```
 /// use graaf::ops::AddWeightedEdge;

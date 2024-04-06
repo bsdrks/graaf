@@ -27,7 +27,7 @@ use {
 /// # How can I implement `AddEdge`?
 ///
 /// Provide an implementation of `add_edge` that adds an edge from `s` to `t` to
-/// the type.
+/// the graph.
 ///
 /// ```
 /// use graaf::ops::AddEdge;
