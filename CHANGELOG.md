@@ -8,12 +8,12 @@
 - Add `dijkstra::mssp`.
 - Add `dijkstra::sssp`.
 
-## [0.6.2] - Unreleased
+## [0.6.2] - 2024-04-06
 
 ### Added
 
-- Add tests to `algo::bfs`.
-- Add tests to `algo::dijkstra`.
+- Add more tests to `algo::bfs`.
+- Add more tests to `algo::dijkstra`.
 - Implement `AddEdge` for `[HashSet<usize>]`.
 - Implement `AddEdge` for `[Vec<usize>]`.
 - Implement `AddWeightedEdge` for `[HashMap<usize, W>]`.
