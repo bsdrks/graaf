@@ -1,3 +1,5 @@
+//! Benchmark different algorithms for finding the minimum distances from
+//! a single source to all other vertices in a graph.
 use {
     divan::Bencher,
     graaf::algo::{
@@ -11,7 +13,7 @@ fn main() {
 }
 
 #[divan::bench(min_time = 1)]
-fn dijkstra(bencher: Bencher) {
+fn dijkstra(bencher: Bencher<'_, '_>) {
     let graph = vec![
         vec![(1, 1), (3, 1)],
         vec![(0, 1), (2, 1)],
@@ -24,12 +26,12 @@ fn dijkstra(bencher: Bencher) {
     ];
 
     bencher.bench(|| {
-        dijkstra::min_distances_single_source(&graph, 0);
+        let _ = dijkstra::min_distances_single_source(&graph, 0);
     });
 }
 
 #[divan::bench(min_time = 1)]
-fn bfs(bencher: Bencher) {
+fn bfs(bencher: Bencher<'_, '_>) {
     let graph = vec![
         vec![1, 3],
         vec![0, 2],
@@ -42,6 +44,6 @@ fn bfs(bencher: Bencher) {
     ];
 
     bencher.bench(|| {
-        bfs::min_distances_single_source(&graph, 0);
+        let _ = bfs::min_distances_single_source(&graph, 0);
     });
 }

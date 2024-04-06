@@ -13,6 +13,7 @@
 
 ### Added
 
+- Add `authors` to `README.md`.
 - Add doctest for `AdjacencyMatrix::new`.
 - Add doctest for `AdjacencyMatrix::toggle`.
 - Add implementation documentation for `AddEdge`.
@@ -28,6 +29,11 @@
 - Add implementation documentation for `IterWeightedEdges`.
 - Add implementation documentation for `Outdegree`.
 - Add implementation documentation for `RemoveEdge`.
+
+### Changed
+
+- Adapt benchmark code to linting rules.
+- Move lints from `lib.rs` to `Cargo.toml`.
 
 ## [0.5.3] - 2024-04-04
 
