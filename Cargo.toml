@@ -67,7 +67,7 @@ std_instead_of_core = "deny"
 unnecessary_self_imports = "deny"
 unneeded_field_pattern = "deny"
 unseparated_literal_suffix = "deny"
-unwrap_in_resul = "deny"
+unwrap_in_result = "deny"
 
 [lints.rust]
 rust_2018_idioms = { level = "deny", priority = -1 }
