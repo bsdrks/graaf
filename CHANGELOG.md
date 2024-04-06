@@ -8,6 +8,17 @@
 - Add `dijkstra::mssp`.
 - Add `dijkstra::sssp`.
 
+## [0.6.1] - 2024-04-06
+
+### Added
+
+- Add "algorithms" and "mathematics" to `Cargo.toml` categories.
+- Add "bfs" and "dijkstra" to `Cargo.toml` keywords.
+
+### Removed
+
+- Remove redundant `homepage` metadata.
+
 ## [0.6.0] - 2024-04-06
 
 ### Added
