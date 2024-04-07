@@ -8,6 +8,26 @@
 - Add `dijkstra::mssp`.
 - Add `dijkstra::sssp`.
 
+- Implement `CountAllVertices` for slices.
+- Implement `EdgeWeight` for slices.
+- Implement `Indegree` for slices.
+- Implement `IsEdge` for slices.
+- Implement `IterEdges` for slices.
+- Implement `IterVertices` for slices.
+- Implement `IterWeightedEdges` for slices.
+- Implement `Outdegree` for slices.
+- Implement `RemoveEdge` for slices.
+- Test implementations of traits with properties in `op::prop`.
+- Return borrowed values in traits.
+
+## [0.6.4] - Unreleased
+
+### Added
+
+- Implement `CountAllEdges` for `[Vec<T>]`.
+- Implement `CountAllEdges` for `[HashSet<T>]`.
+- Implement `CountAllEdges` for `[HashMap<K, W>]`.
+
 ## [0.6.3] - 2024-04-06
 
 ### Changed
