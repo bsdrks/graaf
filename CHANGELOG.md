@@ -37,7 +37,7 @@
 - Implement `IterWeightedEdges` for `[HashMap<usize, W>]`.
 - Implement `Outdegree` for `[Vec<T>]`.
 - Implement `Outdegree` for `[HashSet<T>]`.
-- Implement `Outdegree` for `[HashMap<K, V>]`.
+- Implement `Outdegree` for `[HashMap<K, W>]`.
 - Implement `RemoveEdge` for `[HashSet<usize>]`.
 - Implement `RemoveEdge` for `[HashMap<usize, W>]`.
 
@@ -69,10 +69,10 @@
 - Remove `IterVertices` for `[T; V]`. Use `[T]`.
 - Remove `Outdegree` for `Vec<Vec<T>>`. Use `[Vec<T>]`.
 - Remove `Outdegree` for `Vec<HashSet<usize>>`. Use `[HashSet<T>]`.
-- Remove `Outdegree` for `Vec<HashMap<usize, W>>`. Use `[HashMap<K, V>]`.
+- Remove `Outdegree` for `Vec<HashMap<usize, W>>`. Use `[HashMap<K, W>]`.
 - Remove `Outdegree` for `[Vec<T>; V]`. Use `[Vec<T>]`.
 - Remove `Outdegree` for `[HashSet<usize>; V]>`. Use `[HashSet<T>]`.
-- Remove `Outdegree` for `[HashMap<usize, W>; V]>`. Use `[HashMap<K, V>]`.
+- Remove `Outdegree` for `[HashMap<usize, W>; V]>`. Use `[HashMap<K, W>]`.
 - Remove `RemoveEdge` for `Vec<HashSet<usize>>`. Use `[HashSet<usize>]`.
 - Remove `RemoveEdge` for `Vec<HashMap<usize, W>>`. Use `[HashMap<usize, W>]`.
 - Remove `RemoveEdge` for `[HashSet<usize>; V]`. Use `[HashSet<usize>]`.
