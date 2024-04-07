@@ -13,23 +13,23 @@
 //!
 //! let mut iter = graph.iter_weighted_edges(0);
 //!
-//! assert_eq!(iter.next(), Some((1, 2)));
-//! assert_eq!(iter.next(), Some((2, 3)));
-//! assert_eq!(iter.next(), Some((3, 4)));
+//! assert_eq!(iter.next(), Some((&1, &2)));
+//! assert_eq!(iter.next(), Some((&2, &3)));
+//! assert_eq!(iter.next(), Some((&3, &4)));
 //! assert_eq!(iter.next(), None);
 //!
 //! let mut iter = graph.iter_weighted_edges(1);
 //!
-//! assert_eq!(iter.next(), Some((2, 3)));
-//! assert_eq!(iter.next(), Some((3, 4)));
-//! assert_eq!(iter.next(), Some((4, 5)));
+//! assert_eq!(iter.next(), Some((&2, &3)));
+//! assert_eq!(iter.next(), Some((&3, &4)));
+//! assert_eq!(iter.next(), Some((&4, &5)));
 //! assert_eq!(iter.next(), None);
 //!
 //! let mut iter = graph.iter_weighted_edges(2);
 //!
-//! assert_eq!(iter.next(), Some((3, 4)));
-//! assert_eq!(iter.next(), Some((4, 5)));
-//! assert_eq!(iter.next(), Some((5, 6)));
+//! assert_eq!(iter.next(), Some((&3, &4)));
+//! assert_eq!(iter.next(), Some((&4, &5)));
+//! assert_eq!(iter.next(), Some((&5, &6)));
 //! assert_eq!(iter.next(), None);
 //! ```
 
@@ -56,8 +56,14 @@ use {
 /// }
 ///
 /// impl IterWeightedEdges<usize> for Graph {
-///     fn iter_weighted_edges(&self, s: usize) -> impl Iterator<Item = (usize, usize)> {
-///         self.edges[s].iter().copied()
+///     fn iter_weighted_edges<'a>(
+///         &'a self,
+///         s: usize,
+///     ) -> impl Iterator<Item = (&'a usize, &'a usize)>
+///     where
+///         usize: 'a,
+///     {
+///         self.edges[s].iter().map(|(t, w)| (t, w))
 ///     }
 /// }
 /// ```
@@ -75,23 +81,23 @@ use {
 ///
 /// let mut iter = graph.iter_weighted_edges(0);
 ///
-/// assert_eq!(iter.next(), Some((1, 2)));
-/// assert_eq!(iter.next(), Some((2, 3)));
-/// assert_eq!(iter.next(), Some((3, 4)));
+/// assert_eq!(iter.next(), Some((&1, &2)));
+/// assert_eq!(iter.next(), Some((&2, &3)));
+/// assert_eq!(iter.next(), Some((&3, &4)));
 /// assert_eq!(iter.next(), None);
 ///
 /// let mut iter = graph.iter_weighted_edges(1);
 ///
-/// assert_eq!(iter.next(), Some((2, 3)));
-/// assert_eq!(iter.next(), Some((3, 4)));
-/// assert_eq!(iter.next(), Some((4, 5)));
+/// assert_eq!(iter.next(), Some((&2, &3)));
+/// assert_eq!(iter.next(), Some((&3, &4)));
+/// assert_eq!(iter.next(), Some((&4, &5)));
 /// assert_eq!(iter.next(), None);
 ///
 /// let mut iter = graph.iter_weighted_edges(2);
 ///
-/// assert_eq!(iter.next(), Some((3, 4)));
-/// assert_eq!(iter.next(), Some((4, 5)));
-/// assert_eq!(iter.next(), Some((5, 6)));
+/// assert_eq!(iter.next(), Some((&3, &4)));
+/// assert_eq!(iter.next(), Some((&4, &5)));
+/// assert_eq!(iter.next(), Some((&5, &6)));
 /// assert_eq!(iter.next(), None);
 /// ```
 pub trait IterWeightedEdges<W> {
@@ -100,7 +106,9 @@ pub trait IterWeightedEdges<W> {
     /// # Arguments
     ///
     /// * `s`: The source vertex.
-    fn iter_weighted_edges(&self, s: usize) -> impl Iterator<Item = (usize, W)>;
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (&'a usize, &'a W)>
+    where
+        W: 'a;
 }
 
 // Vec
@@ -112,8 +120,11 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges(&self, s: usize) -> impl Iterator<Item = (usize, W)> {
-        self[s].iter().copied()
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (&'a usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self[s].iter().map(|(t, w)| (t, w))
     }
 }
 
@@ -125,8 +136,11 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges(&self, s: usize) -> impl Iterator<Item = (usize, W)> {
-        self[s].iter().copied()
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (&'a usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self[s].iter().map(|(t, w)| (t, w))
     }
 }
 
@@ -138,8 +152,60 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges(&self, s: usize) -> impl Iterator<Item = (usize, W)> {
-        self[s].iter().map(|(k, v)| (*k, *v))
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (&'a usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self[s].iter()
+    }
+}
+
+// Slice
+
+impl<W> IterWeightedEdges<W> for [Vec<(usize, W)>]
+where
+    W: Copy,
+{
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (&'a usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self[s].iter().map(|(t, w)| (t, w))
+    }
+}
+
+impl<W, H> IterWeightedEdges<W> for [HashSet<(usize, W), H>]
+where
+    W: Copy,
+    H: BuildHasher,
+{
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (&'a usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self[s].iter().map(|(t, w)| (t, w))
+    }
+}
+
+impl<W, H> IterWeightedEdges<W> for [HashMap<usize, W, H>]
+where
+    W: Copy,
+    H: BuildHasher,
+{
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (&'a usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self[s].iter()
     }
 }
 
@@ -149,36 +215,37 @@ impl<const V: usize, W> IterWeightedEdges<W> for [Vec<(usize, W)>; V]
 where
     W: Copy,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges(&self, s: usize) -> impl Iterator<Item = (usize, W)> {
-        self[s].iter().copied()
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (&'a usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self[s].iter().map(|(t, w)| (t, w))
     }
 }
 
-impl<W, H, const V: usize> IterWeightedEdges<W> for [HashSet<(usize, W), H>; V]
-where
-    W: Copy,
-{
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges(&self, s: usize) -> impl Iterator<Item = (usize, W)> {
-        self[s].iter().copied()
-    }
-}
-
-impl<W, H, const V: usize> IterWeightedEdges<W> for [HashMap<usize, W, H>; V]
+impl<const V: usize, W, H> IterWeightedEdges<W> for [HashSet<(usize, W), H>; V]
 where
     W: Copy,
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges(&self, s: usize) -> impl Iterator<Item = (usize, W)> {
-        self[s].iter().map(|(k, v)| (*k, *v))
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (&'a usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self[s].iter().map(|(t, w)| (t, w))
+    }
+}
+
+impl<const V: usize, W, H> IterWeightedEdges<W> for [HashMap<usize, W, H>; V]
+where
+    W: Copy,
+    H: BuildHasher,
+{
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (&'a usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self[s].iter()
     }
 }
 
@@ -192,8 +259,11 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges(&self, s: usize) -> impl Iterator<Item = (usize, W)> {
-        self[&s].iter().copied()
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (&'a usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self[&s].iter().map(|(t, w)| (t, w))
     }
 }
 
@@ -205,8 +275,11 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges(&self, s: usize) -> impl Iterator<Item = (usize, W)> {
-        self[&s].iter().copied()
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (&'a usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self[&s].iter().map(|(t, w)| (t, w))
     }
 }
 
@@ -218,8 +291,11 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges(&self, s: usize) -> impl Iterator<Item = (usize, W)> {
-        self[&s].iter().map(|(&k, &v)| (k, v))
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (&'a usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self[&s].iter()
     }
 }
 
@@ -231,6 +307,7 @@ mod tests {
 
     #[test]
     fn vec_vec() {
+        #[allow(clippy::useless_vec)]
         let graph = vec![
             vec![(1, 2), (2, 3), (3, 4)],
             vec![(2, 3), (3, 4), (4, 5)],
@@ -239,14 +316,15 @@ mod tests {
 
         let mut iter = graph.iter_weighted_edges(1);
 
-        assert_eq!(iter.next(), Some((2, 3)));
-        assert_eq!(iter.next(), Some((3, 4)));
-        assert_eq!(iter.next(), Some((4, 5)));
+        assert_eq!(iter.next(), Some((&2, &3)));
+        assert_eq!(iter.next(), Some((&3, &4)));
+        assert_eq!(iter.next(), Some((&4, &5)));
         assert_eq!(iter.next(), None);
     }
 
     #[test]
     fn vec_hash_set() {
+        #[allow(clippy::useless_vec)]
         let graph = vec![
             HashSet::from([(1, 2), (2, 3), (3, 4)]),
             HashSet::from([(2, 3), (3, 4), (4, 5)]),
@@ -263,7 +341,56 @@ mod tests {
 
     #[test]
     fn vec_hash_map() {
+        #[allow(clippy::useless_vec)]
         let graph = vec![
+            HashMap::from([(1, 2), (2, 3), (3, 4)]),
+            HashMap::from([(2, 3), (3, 4), (4, 5)]),
+            HashMap::from([(3, 4), (4, 5), (5, 6)]),
+        ];
+
+        let mut iter = graph.iter_weighted_edges(1);
+
+        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
+        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
+        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
+        assert_eq!(iter.next(), None);
+    }
+
+    #[test]
+    fn slice_vec() {
+        let graph: &[Vec<(usize, i32)>] = &[
+            vec![(1, 2), (2, 3), (3, 4)],
+            vec![(2, 3), (3, 4), (4, 5)],
+            vec![(3, 4), (4, 5), (5, 6)],
+        ];
+
+        let mut iter = graph.iter_weighted_edges(1);
+
+        assert_eq!(iter.next(), Some((&2, &3)));
+        assert_eq!(iter.next(), Some((&3, &4)));
+        assert_eq!(iter.next(), Some((&4, &5)));
+        assert_eq!(iter.next(), None);
+    }
+
+    #[test]
+    fn slice_hash_set() {
+        let graph: &[HashSet<(usize, i32)>] = &[
+            HashSet::from([(1, 2), (2, 3), (3, 4)]),
+            HashSet::from([(2, 3), (3, 4), (4, 5)]),
+            HashSet::from([(3, 4), (4, 5), (5, 6)]),
+        ];
+
+        let mut iter = graph.iter_weighted_edges(1);
+
+        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
+        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
+        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
+        assert_eq!(iter.next(), None);
+    }
+
+    #[test]
+    fn slice_hash_map() {
+        let graph: &[HashMap<usize, i32>] = &[
             HashMap::from([(1, 2), (2, 3), (3, 4)]),
             HashMap::from([(2, 3), (3, 4), (4, 5)]),
             HashMap::from([(3, 4), (4, 5), (5, 6)]),
@@ -287,9 +414,9 @@ mod tests {
 
         let mut iter = graph.iter_weighted_edges(1);
 
-        assert_eq!(iter.next(), Some((2, 3)));
-        assert_eq!(iter.next(), Some((3, 4)));
-        assert_eq!(iter.next(), Some((4, 5)));
+        assert_eq!(iter.next(), Some((&2, &3)));
+        assert_eq!(iter.next(), Some((&3, &4)));
+        assert_eq!(iter.next(), Some((&4, &5)));
         assert_eq!(iter.next(), None);
     }
 
@@ -335,9 +462,9 @@ mod tests {
 
         let mut iter = graph.iter_weighted_edges(1);
 
-        assert_eq!(iter.next(), Some((2, 3)));
-        assert_eq!(iter.next(), Some((3, 4)));
-        assert_eq!(iter.next(), Some((4, 5)));
+        assert_eq!(iter.next(), Some((&2, &3)));
+        assert_eq!(iter.next(), Some((&3, &4)));
+        assert_eq!(iter.next(), Some((&4, &5)));
         assert_eq!(iter.next(), None);
     }
 

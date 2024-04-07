@@ -71,26 +71,6 @@ pub trait Indegree {
     fn indegree(&self, t: usize) -> usize;
 }
 
-// Vec
-
-impl<H> Indegree for Vec<HashSet<usize, H>>
-where
-    H: BuildHasher,
-{
-    fn indegree(&self, t: usize) -> usize {
-        self.iter().filter(|set| set.contains(&t)).count()
-    }
-}
-
-impl<W, H> Indegree for Vec<HashMap<usize, W, H>>
-where
-    H: BuildHasher,
-{
-    fn indegree(&self, t: usize) -> usize {
-        self.iter().filter(|map| map.contains_key(&t)).count()
-    }
-}
-
 // Slice
 
 impl<H> Indegree for [HashSet<usize, H>]
@@ -103,26 +83,6 @@ where
 }
 
 impl<W, H> Indegree for [HashMap<usize, W, H>]
-where
-    H: BuildHasher,
-{
-    fn indegree(&self, t: usize) -> usize {
-        self.iter().filter(|map| map.contains_key(&t)).count()
-    }
-}
-
-// Arr
-
-impl<const V: usize, H> Indegree for [HashSet<usize, H>; V]
-where
-    H: BuildHasher,
-{
-    fn indegree(&self, t: usize) -> usize {
-        self.iter().filter(|set| set.contains(&t)).count()
-    }
-}
-
-impl<const V: usize, W, H> Indegree for [HashMap<usize, W, H>; V]
 where
     H: BuildHasher,
 {
@@ -161,6 +121,7 @@ mod tests {
 
     #[test]
     fn vec_hash_set() {
+        #[allow(clippy::useless_vec)]
         let graph = vec![HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
 
         assert_eq!(graph.indegree(0), 0);
@@ -170,6 +131,7 @@ mod tests {
 
     #[test]
     fn vec_hash_map() {
+        #[allow(clippy::useless_vec)]
         let graph = vec![
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(2, 1)]),

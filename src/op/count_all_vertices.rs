@@ -52,11 +52,27 @@ pub trait CountAllVertices {
     fn count_all_vertices(&self) -> usize;
 }
 
-// Slice
+// Vec
 
-impl<T> CountAllVertices for [T] {
+impl<T> CountAllVertices for Vec<T> {
     fn count_all_vertices(&self) -> usize {
         self.len()
+    }
+}
+
+// Slice
+
+impl<T> CountAllVertices for &[T] {
+    fn count_all_vertices(&self) -> usize {
+        self.len()
+    }
+}
+
+// Arr
+
+impl<const V: usize, T> CountAllVertices for [T; V] {
+    fn count_all_vertices(&self) -> usize {
+        V
     }
 }
 
@@ -78,6 +94,7 @@ mod tests {
 
     #[test]
     fn vec() {
+        #[allow(clippy::useless_vec)]
         let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
         assert_eq!(graph.count_all_vertices(), 4);

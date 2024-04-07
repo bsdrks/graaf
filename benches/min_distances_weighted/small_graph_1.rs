@@ -88,7 +88,7 @@ mod dijkstra {
 
     #[divan::bench]
     fn arr_vec(bencher: Bencher<'_, '_>) {
-        let graph = [
+        let graph: [Vec<(usize, usize)>; 9] = [
             vec![(1, 4), (7, 8)],
             vec![(0, 4), (2, 8), (7, 11)],
             vec![(1, 8), (3, 7), (5, 4), (8, 2)],

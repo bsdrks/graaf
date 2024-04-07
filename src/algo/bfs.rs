@@ -86,7 +86,7 @@ pub fn min_distances<G, W>(
     dist: &mut [W],
     queue: &mut VecDeque<(usize, W)>,
 ) where
-    G: IterEdges,
+    G: IterEdges + ?Sized,
     W: Copy + Ord,
 {
     while let Some((s, w)) = queue.pop_front() {
@@ -134,7 +134,8 @@ pub fn min_distances<G, W>(
 /// ```
 pub fn min_distances_single_source<G>(graph: &G, s: usize) -> Vec<usize>
 where
-    G: CountAllVertices + IterEdges,
+    for<'a> &'a G: CountAllVertices,
+    G: IterEdges + ?Sized,
 {
     let mut dist = vec![usize::MAX; graph.count_all_vertices()];
     let mut queue = VecDeque::from(vec![(s, 0)]);
@@ -193,7 +194,7 @@ pub fn predecessors<G, W>(
     dist: &mut [W],
     queue: &mut VecDeque<(usize, W)>,
 ) where
-    G: IterEdges,
+    G: IterEdges + ?Sized,
     W: Copy + Ord,
 {
     while let Some((s, w)) = queue.pop_front() {
@@ -240,7 +241,8 @@ pub fn predecessors<G, W>(
 /// ```
 pub fn predecessors_single_source<G>(graph: &G, s: usize) -> (Vec<Option<usize>>, Vec<usize>)
 where
-    G: CountAllVertices + IterEdges,
+    for<'a> &'a G: CountAllVertices,
+    G: IterEdges + ?Sized,
 {
     let mut pred = vec![None; graph.count_all_vertices()];
     let mut dist = vec![usize::MAX; graph.count_all_vertices()];
@@ -257,13 +259,13 @@ where
 mod test {
     use super::*;
 
-    const GRAPH_0: [Vec<usize>; 0] = [];
+    const GRAPH_0: [&[usize]; 0] = [];
 
-    const GRAPH_1: &[&[usize]] = &[&[1], &[2], &[], &[0]];
+    const GRAPH_1: [&[usize]; 4] = [&[1], &[2], &[], &[0]];
 
-    const GRAPH_2: &[&[usize]] = &[&[1, 2], &[0, 2, 3], &[0, 1, 3], &[1, 2]];
+    const GRAPH_2: [&[usize]; 4] = [&[1, 2], &[0, 2, 3], &[0, 1, 3], &[1, 2]];
 
-    const GRAPH_3: &[&[usize]] = &[
+    const GRAPH_3: [&[usize]; 8] = [
         &[1, 3],
         &[0, 2],
         &[1],
@@ -286,18 +288,21 @@ mod test {
 
         #[test]
         fn graph_0() {
+            let graph = to_vec(&GRAPH_0);
             let mut dist = Vec::new();
             let mut queue = VecDeque::new();
-            min_distances(&GRAPH_0, |w: usize| w + 1, &mut dist, &mut queue);
+
+            min_distances(&graph, |w: usize| w + 1, &mut dist, &mut queue);
 
             assert!(dist.is_empty());
         }
 
         #[test]
         fn graph_1() {
-            let graph = to_vec(GRAPH_1);
+            let graph = to_vec(&GRAPH_1);
             let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
             let mut queue = VecDeque::from([(0, 0)]);
+
             min_distances(&graph, |w| w + 1, &mut dist, &mut queue);
 
             assert_eq!(dist, [0, 1, 2, usize::MAX]);
@@ -305,9 +310,10 @@ mod test {
 
         #[test]
         fn graph_2() {
-            let graph = to_vec(GRAPH_2);
+            let graph = to_vec(&GRAPH_2);
             let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
             let mut queue = VecDeque::from([(0, 0)]);
+
             min_distances(&graph, |w| w + 1, &mut dist, &mut queue);
 
             assert_eq!(dist, [0, 1, 1, 2]);
@@ -315,7 +321,7 @@ mod test {
 
         #[test]
         fn graph_3() {
-            let graph = to_vec(GRAPH_3);
+            let graph = to_vec(&GRAPH_3);
 
             let mut dist = [
                 0,
@@ -341,7 +347,8 @@ mod test {
         #[test]
         #[should_panic(expected = "index out of bounds: the len is 0 but the index is 0")]
         fn graph_0() {
-            let _ = min_distances_single_source(&GRAPH_0, 0);
+            let graph = to_vec(&GRAPH_0);
+            let _ = min_distances_single_source(&graph, 0);
         }
 
         #[test]
@@ -356,7 +363,7 @@ mod test {
                 [1, 2, 3, 0],
             ];
 
-            let graph = to_vec(GRAPH_1);
+            let graph = to_vec(&GRAPH_1);
 
             for (i, &d) in EXPECTED.iter().enumerate() {
                 assert_eq!(min_distances_single_source(&graph, i), d);
@@ -373,7 +380,7 @@ mod test {
                 [2, 1, 1, 0],
             ];
 
-            let graph = to_vec(GRAPH_2);
+            let graph = to_vec(&GRAPH_2);
 
             for (i, &d) in EXPECTED.iter().enumerate() {
                 assert_eq!(min_distances_single_source(&graph, i), d);
@@ -394,7 +401,7 @@ mod test {
                 [2, 3, 4, 1, 1, 2, 1, 0],
             ];
 
-            let graph = to_vec(GRAPH_3);
+            let graph = to_vec(&GRAPH_3);
 
             for (i, &d) in EXPECTED.iter().enumerate() {
                 assert_eq!(min_distances_single_source(&graph, i), d);
@@ -407,11 +414,12 @@ mod test {
 
         #[test]
         fn graph_0() {
+            let graph = to_vec(&GRAPH_0);
             let mut pred = Vec::new();
             let mut dist = Vec::new();
             let mut queue = VecDeque::new();
 
-            predecessors(&GRAPH_0, |w: usize| w + 1, &mut pred, &mut dist, &mut queue);
+            predecessors(&graph, |w: usize| w + 1, &mut pred, &mut dist, &mut queue);
 
             assert!(pred.is_empty());
             assert!(dist.is_empty());
@@ -419,7 +427,7 @@ mod test {
 
         #[test]
         fn graph_1() {
-            let graph = to_vec(GRAPH_1);
+            let graph = to_vec(&GRAPH_1);
             let mut pred = [None, None, None, None];
             let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
             let mut queue = VecDeque::from([(0, 0)]);
@@ -432,7 +440,7 @@ mod test {
 
         #[test]
         fn graph_2() {
-            let graph = to_vec(GRAPH_2);
+            let graph = to_vec(&GRAPH_2);
             let mut pred = [None, None, None, None];
             let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
             let mut queue = VecDeque::from([(0, 0)]);
@@ -445,7 +453,7 @@ mod test {
 
         #[test]
         fn graph_3() {
-            let graph = to_vec(GRAPH_3);
+            let graph = to_vec(&GRAPH_3);
             let mut pred = [None, None, None, None, None, None, None, None];
 
             let mut dist = [
@@ -487,12 +495,13 @@ mod test {
         #[test]
         #[should_panic(expected = "index out of bounds: the len is 0 but the index is 0")]
         fn graph_0() {
-            let _ = predecessors_single_source(&GRAPH_0, 0);
+            let graph = to_vec(&GRAPH_0);
+            let _ = predecessors_single_source(&graph, 0);
         }
 
         #[test]
         fn graph_1() {
-            let graph = to_vec(GRAPH_1);
+            let graph = to_vec(&GRAPH_1);
             let (pred, dist) = predecessors_single_source(&graph, 0);
 
             assert_eq!(pred, [None, Some(0), Some(1), None]);
@@ -501,7 +510,7 @@ mod test {
 
         #[test]
         fn graph_2() {
-            let graph = to_vec(GRAPH_2);
+            let graph = to_vec(&GRAPH_2);
             let (pred, dist) = predecessors_single_source(&graph, 0);
 
             assert_eq!(pred, [None, Some(0), Some(0), Some(1)]);
@@ -510,7 +519,7 @@ mod test {
 
         #[test]
         fn graph_3() {
-            let graph = to_vec(GRAPH_3);
+            let graph = to_vec(&GRAPH_3);
             let (pred, dist) = predecessors_single_source(&graph, 0);
 
             assert_eq!(

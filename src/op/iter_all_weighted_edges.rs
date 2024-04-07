@@ -58,37 +58,15 @@ use {
 /// ```
 pub trait IterAllWeightedEdges<W> {
     /// Returns an iterator that iterates over all weighted edges in a graph.
-    fn iter_all_weighted_edges<'a>(&'a self) -> impl Iterator<Item = &(usize, usize, W)>
+    fn iter_all_weighted_edges<'a>(&'a self) -> impl Iterator<Item = &'a (usize, usize, W)>
     where
         W: 'a;
-}
-
-// Vec
-
-impl<W> IterAllWeightedEdges<W> for Vec<(usize, usize, W)> {
-    fn iter_all_weighted_edges<'a>(&'a self) -> impl Iterator<Item = &(usize, usize, W)>
-    where
-        W: 'a,
-    {
-        self.iter()
-    }
 }
 
 // Slice
 
 impl<W> IterAllWeightedEdges<W> for [(usize, usize, W)] {
-    fn iter_all_weighted_edges<'a>(&'a self) -> impl Iterator<Item = &(usize, usize, W)>
-    where
-        W: 'a,
-    {
-        self.iter()
-    }
-}
-
-// Arr
-
-impl<const V: usize, W> IterAllWeightedEdges<W> for [(usize, usize, W); V] {
-    fn iter_all_weighted_edges<'a>(&'a self) -> impl Iterator<Item = &(usize, usize, W)>
+    fn iter_all_weighted_edges<'a>(&'a self) -> impl Iterator<Item = &'a (usize, usize, W)>
     where
         W: 'a,
     {
@@ -102,7 +80,7 @@ impl<W, H> IterAllWeightedEdges<W> for HashSet<(usize, usize, W), H>
 where
     H: BuildHasher,
 {
-    fn iter_all_weighted_edges<'a>(&'a self) -> impl Iterator<Item = &(usize, usize, W)>
+    fn iter_all_weighted_edges<'a>(&'a self) -> impl Iterator<Item = &'a (usize, usize, W)>
     where
         W: 'a,
     {
@@ -119,6 +97,7 @@ mod tests {
 
     #[test]
     fn vec() {
+        #[allow(clippy::useless_vec)]
         let graph = vec![(0, 1, 2), (1, 2, 3), (2, 0, 4)];
         let mut iter = graph.iter_all_weighted_edges();
 

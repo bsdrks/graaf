@@ -93,7 +93,7 @@ mod dijkstra {
 
     #[divan::bench]
     fn hash_map_vec(bencher: Bencher<'_, '_>) {
-        let graph = HashMap::from([
+        let graph: HashMap<usize, Vec<(usize, _)>> = HashMap::from([
             (0, vec![(1, 2)]),
             (1, vec![(2, 2)]),
             (2, Vec::new()),

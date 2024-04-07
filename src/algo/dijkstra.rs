@@ -92,19 +92,19 @@ pub fn min_distances<G, W>(
     dist: &mut [W],
     heap: &mut BinaryHeap<(Reverse<W>, usize)>,
 ) where
-    G: IterWeightedEdges<W>,
+    G: CountAllVertices + IterWeightedEdges<W>,
     W: Copy + Ord,
 {
     while let Some((Reverse(acc), s)) = heap.pop() {
         for (t, w) in graph.iter_weighted_edges(s) {
-            let w = step(acc, w);
+            let w = step(acc, *w);
 
-            if w >= dist[t] {
+            if w >= dist[*t] {
                 continue;
             }
 
-            dist[t] = w;
-            heap.push((Reverse(w), t));
+            dist[*t] = w;
+            heap.push((Reverse(w), *t));
         }
     }
 }
@@ -132,7 +132,7 @@ pub fn min_distances<G, W>(
 /// // │ 3 │       │ 2 │
 /// // ╰───╯       ╰───╯
 ///
-/// let graph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
+/// let graph: [Vec<(usize, usize)>; 4] = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
 ///
 /// assert_eq!(
 ///     min_distances_single_source(&graph, 0),
@@ -196,25 +196,25 @@ where
 /// ```
 pub fn predecessors<G, W>(
     graph: &G,
-    step: fn(W, W) -> W,
+    step: fn(W, &W) -> W,
     pred: &mut [Option<usize>],
     dist: &mut [W],
     heap: &mut BinaryHeap<(Reverse<W>, usize)>,
 ) where
-    G: IterWeightedEdges<W>,
+    G: CountAllVertices + IterWeightedEdges<W>,
     W: Copy + Ord,
 {
     while let Some((Reverse(acc), s)) = heap.pop() {
         for (t, w) in graph.iter_weighted_edges(s) {
             let w = step(acc, w);
 
-            if w >= dist[t] {
+            if w >= dist[*t] {
                 continue;
             }
 
-            dist[t] = w;
-            pred[t] = Some(s);
-            heap.push((Reverse(w), t));
+            dist[*t] = w;
+            pred[*t] = Some(s);
+            heap.push((Reverse(w), *t));
         }
     }
 }
@@ -267,9 +267,9 @@ where
 mod test {
     use super::*;
 
-    const GRAPH_0: [Vec<(usize, usize)>; 0] = [];
+    const GRAPH_0: [&[(usize, usize)]; 0] = [];
 
-    const GRAPH_1: &[&[(usize, usize)]] = &[
+    const GRAPH_1: [&[(usize, usize)]; 9] = [
         &[(1, 4), (7, 8)],
         &[(0, 4), (2, 8), (7, 11)],
         &[(1, 8), (3, 7), (5, 4), (8, 2)],
@@ -281,9 +281,9 @@ mod test {
         &[(2, 2), (6, 6), (7, 7)],
     ];
 
-    const GRAPH_SHORTEST_PATH_1: &[&[(usize, usize)]] = &[&[(1, 2)], &[(2, 2)], &[], &[(0, 2)]];
+    const GRAPH_SHORTEST_PATH_1: [&[(usize, usize)]; 4] = [&[(1, 2)], &[(2, 2)], &[], &[(0, 2)]];
 
-    const GRAPH_CROSS_COUNTRY: &[&[(usize, usize)]] = &[
+    const GRAPH_CROSS_COUNTRY: [&[(usize, usize)]; 4] = [
         &[(1, 1), (2, 3), (3, 14)],
         &[(0, 2), (2, 4), (3, 22)],
         &[(0, 3), (1, 10), (3, 7)],
@@ -332,16 +332,18 @@ mod test {
 
         #[test]
         fn graph_0() {
+            let graph = to_vec(&GRAPH_0);
             let mut dist = Vec::new();
             let mut heap = BinaryHeap::new();
-            min_distances(&GRAPH_0, |acc, w| acc + w, &mut dist, &mut heap);
+
+            min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
             assert!(dist.is_empty());
         }
 
         #[test]
         fn graph_1() {
-            let graph = to_vec(GRAPH_1);
+            let graph = to_vec(&GRAPH_1);
 
             let mut dist = [
                 0,
@@ -356,6 +358,7 @@ mod test {
             ];
 
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
             min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
             assert_eq!(dist, [0, 4, 12, 19, 21, 11, 9, 8, 14]);
@@ -363,9 +366,10 @@ mod test {
 
         #[test]
         fn graph_shortest_path_1() {
-            let graph = to_vec(GRAPH_SHORTEST_PATH_1);
+            let graph = to_vec(&GRAPH_SHORTEST_PATH_1);
             let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
             min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
             assert_eq!(dist, [0, 2, 4, usize::MAX]);
@@ -373,9 +377,10 @@ mod test {
 
         #[test]
         fn graph_cross_country() {
-            let graph = to_vec(GRAPH_CROSS_COUNTRY);
+            let graph = to_vec(&GRAPH_CROSS_COUNTRY);
             let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
             min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
             assert_eq!(dist, [0, 1, 3, 10]);
@@ -392,6 +397,7 @@ mod test {
 
             let mut dist = [0, usize::MAX, usize::MAX];
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
             min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
             assert_eq!(dist, [0, 1, 1]);
@@ -416,6 +422,7 @@ mod test {
             ];
 
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
             min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
             assert_eq!(dist, [0, 1, 2, 1, 2, 3]);
@@ -444,6 +451,7 @@ mod test {
             ];
 
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
             min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
             assert_eq!(dist, [0, 0, 1, 0, 0, 0, 1, 0, 0, 1,]);
@@ -459,7 +467,8 @@ mod test {
         #[test]
         #[should_panic(expected = "index out of bounds: the len is 0 but the index is 0")]
         fn graph_0() {
-            let _ = min_distances_single_source(&GRAPH_0, 0);
+            let graph = to_vec(&GRAPH_0);
+            let _ = min_distances_single_source(&graph, 0);
         }
 
         #[test]
@@ -477,7 +486,7 @@ mod test {
                 [14, 10,  2,  9, 16,  6,  6,  7,  0],
             ];
 
-            let graph = to_vec(GRAPH_1);
+            let graph = to_vec(&GRAPH_1);
 
             for (i, &d) in EXPECTED.iter().enumerate() {
                 assert_eq!(min_distances_single_source(&graph, i), d);
@@ -496,7 +505,7 @@ mod test {
                 [2, 4, 6, 0],
             ];
 
-            let graph = to_vec(GRAPH_SHORTEST_PATH_1);
+            let graph = to_vec(&GRAPH_SHORTEST_PATH_1);
 
             for (i, &d) in EXPECTED.iter().enumerate() {
                 assert_eq!(min_distances_single_source(&graph, i), d);
@@ -513,7 +522,7 @@ mod test {
                 [ 5,  6,  2,  0],
             ];
 
-            let graph = to_vec(GRAPH_CROSS_COUNTRY);
+            let graph = to_vec(&GRAPH_CROSS_COUNTRY);
 
             for (i, &d) in EXPECTED.iter().enumerate() {
                 assert_eq!(min_distances_single_source(&graph, i), d);
@@ -602,11 +611,12 @@ mod test {
 
         #[test]
         fn graph_0() {
+            let graph = to_vec(&GRAPH_0);
             let mut pred = Vec::new();
             let mut dist = Vec::new();
             let mut heap = BinaryHeap::new();
 
-            predecessors(&GRAPH_0, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
+            predecessors(&graph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
 
             assert!(pred.is_empty());
             assert!(dist.is_empty());
@@ -614,6 +624,7 @@ mod test {
 
         #[test]
         fn graph_1() {
+            let graph = to_vec(&GRAPH_1);
             let mut pred = [None; 9];
 
             let mut dist = [
@@ -630,13 +641,7 @@ mod test {
 
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
-            predecessors(
-                &to_vec(GRAPH_1),
-                |acc, w| acc + w,
-                &mut pred,
-                &mut dist,
-                &mut heap,
-            );
+            predecessors(&graph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
 
             assert_eq!(
                 pred,
@@ -658,7 +663,7 @@ mod test {
 
         #[test]
         fn graph_shortest_path_1() {
-            let graph = to_vec(GRAPH_SHORTEST_PATH_1);
+            let graph = to_vec(&GRAPH_SHORTEST_PATH_1);
             let mut pred = [None; 4];
             let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
@@ -671,7 +676,7 @@ mod test {
 
         #[test]
         fn graph_cross_country() {
-            let graph = to_vec(GRAPH_CROSS_COUNTRY);
+            let graph = to_vec(&GRAPH_CROSS_COUNTRY);
             let mut pred = [None; 4];
             let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
@@ -786,7 +791,8 @@ mod test {
         #[test]
         #[should_panic(expected = "index out of bounds: the len is 0 but the index is 0")]
         fn graph_0() {
-            let _ = predecessors_single_source(&GRAPH_0, 0);
+            let graph = to_vec(&GRAPH_0);
+            let _ = predecessors_single_source(&graph, 0);
         }
 
         #[test]
@@ -817,7 +823,7 @@ mod test {
                 [14, 10,  2,  9, 16,  6,  6,  7,  0],
             ];
 
-            let graph = to_vec(GRAPH_1);
+            let graph = to_vec(&GRAPH_1);
 
             for i in 0..9 {
                 let (pred, dist) = predecessors_single_source(&graph, i);
@@ -847,7 +853,7 @@ mod test {
                 [2, 4, 6, 0],
             ];
 
-            let graph = to_vec(GRAPH_SHORTEST_PATH_1);
+            let graph = to_vec(&GRAPH_SHORTEST_PATH_1);
 
             for i in 0..4 {
                 let (pred, dist) = predecessors_single_source(&graph, i);
@@ -875,7 +881,7 @@ mod test {
                 [ 5,  6,  2,  0],
             ];
 
-            let graph = to_vec(GRAPH_CROSS_COUNTRY);
+            let graph = to_vec(&GRAPH_CROSS_COUNTRY);
 
             for i in 0..4 {
                 let (pred, dist) = predecessors_single_source(&graph, i);
