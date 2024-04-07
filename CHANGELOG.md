@@ -11,7 +11,7 @@
 - Return borrowed values in traits.
 - Test implementations of traits with properties in `op::prop`.
 
-## [0.7.0] - Unreleased
+## [0.7.0] - 2024-04-07
 
 ### Added
 
