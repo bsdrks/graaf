@@ -51,42 +51,42 @@ assert_eq!(adj.outdegree(3), 0);
 
 ## Features
 
-### Algorithms: `algo`
+### Algorithms: [`algo`](https://docs.rs/graaf/latest/graaf/algo/index.html)
 
-#### Breadth-first search: `bfs`
+#### Breadth-first search: [`bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs/index.html)
 
-- `min_distances_single_source`
-- `min_distances`
-- `predecessors_single_source`
-- `predecessors`
+- [`min_distances_single_source`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.min_distances_single_source.html)
+- [`min_distances`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.min_distances.html)
+- [`predecessors_single_source`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.predecessors_single_source.html)
+- [`predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.predecessors.html)
 
-#### Dijkstra's algorithm: `dijkstra`
+#### Dijkstra's algorithm: [`dijkstra`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/index.html)
 
-- `min_distances_single_source`
-- `min_distances`
-- `predecessors_single_source`
-- `predecessors`
+- [`min_distances_single_source`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.min_distances_single_source.html)
+- [`min_distances`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.min_distances.html)
+- [`predecessors_single_source`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.predecessors_single_source.html)
+- [`predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.predecessors.html)
 
-### Operations: `op`
+### Operations: [`op`](https://docs.rs/graaf/latest/graaf/op/index.html)
 
 These traits are implemented for various graph representations built from standard library containers.
 
-- `AddEdge` adds an unweighted edge.
-- `AddWeightedEdge` adds a weighted edge.
-- `CountAllEdges` counts all edges.
-- `CountAllVertices` counts all vertices.
-- `EdgeWeight` gets the weight of an edge.
-- `Indegree` returns the indegree of a vertex.
-- `IsEdge` returns whether an edge exists.
-- `IterAllEdges` iterates over all unweighted edges.
-- `IterAllWeightedEdges` iterates over all weighted edges.
-- `IterEdges` iterates over all unweighted edges of a source vertex.
-- `IterVertices` iterates over all vertices.
-- `IterWeightedEdges` iterates over all weighted edges of a source vertex.
-- `Outdegree` returns the outdegree of a vertex.
-- `RemoveEdge` removes an edge.
+- [`AddEdge`](https://docs.rs/graaf/latest/graaf/op/add_edge/trait.AddEdge.html) adds an unweighted edge.
+- [`AddWeightedEdge`](https://docs.rs/graaf/latest/graaf/op/add_weighted_edge/trait.AddWeightedEdge.html) adds a weighted edge.
+- [`CountAllEdges`](https://docs.rs/graaf/latest/graaf/op/count_all_edges/trait.CountAllEdges.html) counts all edges.
+- [`CountAllVertices`](https://docs.rs/graaf/latest/graaf/op/count_all_vertices/trait.CountAllVertices.html) counts all vertices.
+- [`EdgeWeight`](https://docs.rs/graaf/latest/graaf/op/edge_weight/trait.EdgeWeight.html) gets the weight of an edge.
+- [`Indegree`](https://docs.rs/graaf/latest/graaf/op/indegree/trait.Indegree.html) returns the indegree of a vertex.
+- [`IsEdge`](https://docs.rs/graaf/latest/graaf/op/is_edge/trait.IsEdge.html) returns whether an edge exists.
+- [`IterAllEdges`](https://docs.rs/graaf/latest/graaf/op/iter_all_edges/trait.IterAllEdges.html) iterates over all unweighted edges.
+- [`IterAllWeightedEdges`](https://docs.rs/graaf/latest/graaf/op/iter_all_weighted_edges/trait.IterAllWeightedEdges.html) iterates over all weighted edges.
+- [`IterEdges`](https://docs.rs/graaf/latest/graaf/op/iter_edges/trait.IterEdges.html) iterates over all unweighted edges of a source vertex.
+- [`IterVertices`](https://docs.rs/graaf/latest/graaf/op/iter_vertices/trait.IterVertices.html) iterates over all vertices.
+- [`IterWeightedEdges`](https://docs.rs/graaf/latest/graaf/op/iter_weighted_edges/trait.IterWeightedEdges.html) iterates over all weighted edges of a source vertex.
+- [`Outdegree`](https://docs.rs/graaf/latest/graaf/op/outdegree/trait.Outdegree.html) returns the outdegree of a vertex.
+- [`RemoveEdge`](https://docs.rs/graaf/latest/graaf/op/remove_edge/trait.RemoveEdge.html) removes an edge.
 
-### Representations: `repr`
+### Representations: [`repr`](https://docs.rs/graaf/latest/graaf/repr/index.html)
 
 #### Adjacency list, unweighted
 
@@ -116,7 +116,7 @@ These traits are implemented for various graph representations built from standa
 
 #### Adjacency matrix, unweighted
 
-- `AdjacencyMatrix`: an adjacency matrix representation of an unweighted directed graph stored as a bit array.
+- [`AdjacencyMatrix`](https://docs.rs/graaf/latest/graaf/repr/adjacency_matrix/index.html): an adjacency matrix representation of an unweighted directed graph stored as a bit array.
 
 #### Edge list, unweighted
 
