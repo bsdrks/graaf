@@ -2,6 +2,9 @@
 
 ## [x.x.x] - Planned
 
+- Add example to `README`.
+- Add instructions to run benchmarks to `README`.
+- Add instructions to run tests to `README`.
 - Add `bfs::mssp`.
 - Add `bfs::sssp`.
 - Add `dfs::*`.
