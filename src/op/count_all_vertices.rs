@@ -52,27 +52,11 @@ pub trait CountAllVertices {
     fn count_all_vertices(&self) -> usize;
 }
 
-// Vec
-
-impl<T> CountAllVertices for Vec<T> {
-    fn count_all_vertices(&self) -> usize {
-        self.len()
-    }
-}
-
 // Slice
 
 impl<T> CountAllVertices for [T] {
     fn count_all_vertices(&self) -> usize {
         self.len()
-    }
-}
-
-// Arr
-
-impl<const V: usize, T> CountAllVertices for [T; V] {
-    fn count_all_vertices(&self) -> usize {
-        V
     }
 }
 
