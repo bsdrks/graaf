@@ -5,7 +5,7 @@
 //! ```
 //! use graaf::op::IterEdges;
 //!
-//! let graph: [Vec<usize>; 4] = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+//! let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 //! let mut iter = graph.iter_edges(0);
 //!
 //! assert_eq!(iter.next(), Some(1));
@@ -94,7 +94,7 @@ use {
 /// ```
 /// use graaf::op::IterEdges;
 ///
-/// let graph: [Vec<usize>; 4] = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+/// let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 /// let mut iter = graph.iter_edges(0);
 ///
 /// assert_eq!(iter.next(), Some(1));

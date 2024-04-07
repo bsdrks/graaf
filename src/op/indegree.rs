@@ -8,8 +8,7 @@
 //!     std::collections::HashSet,
 //! };
 //!
-//! let graph: Vec<HashSet<usize>> =
-//!     vec![HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
+//! let graph = vec![HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
 //!
 //! assert_eq!(graph.indegree(0), 0);
 //! assert_eq!(graph.indegree(1), 1);
@@ -57,8 +56,7 @@ use {
 ///     std::collections::HashSet,
 /// };
 ///
-/// let graph: Vec<HashSet<usize>> =
-///     vec![HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
+/// let graph = vec![HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
 ///
 /// assert_eq!(graph.indegree(0), 0);
 /// assert_eq!(graph.indegree(1), 1);
@@ -163,8 +161,7 @@ mod tests {
 
     #[test]
     fn vec_hash_set() {
-        let graph: Vec<HashSet<usize>> =
-            vec![HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
+        let graph = vec![HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
 
         assert_eq!(graph.indegree(0), 0);
         assert_eq!(graph.indegree(1), 1);
@@ -173,7 +170,7 @@ mod tests {
 
     #[test]
     fn vec_hash_map() {
-        let graph: Vec<HashMap<usize, usize>> = vec![
+        let graph = vec![
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(2, 1)]),
             HashMap::from([]),
@@ -208,8 +205,7 @@ mod tests {
 
     #[test]
     fn arr_hash_set() {
-        let graph: [HashSet<usize>; 3] =
-            [HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
+        let graph = [HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
 
         assert_eq!(graph.indegree(0), 0);
         assert_eq!(graph.indegree(1), 1);
@@ -218,7 +214,7 @@ mod tests {
 
     #[test]
     fn arr_hash_map() {
-        let graph: [HashMap<usize, usize>; 3] = [
+        let graph = [
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(2, 1)]),
             HashMap::from([]),
@@ -231,7 +227,7 @@ mod tests {
 
     #[test]
     fn hash_map_hash_set() {
-        let graph: HashMap<usize, HashSet<usize>> = HashMap::from([
+        let graph = HashMap::from([
             (0, HashSet::from([1, 2])),
             (1, HashSet::from([2])),
             (2, HashSet::new()),
@@ -244,7 +240,7 @@ mod tests {
 
     #[test]
     fn hash_map_hash_map() {
-        let graph: HashMap<usize, HashMap<usize, usize>> = HashMap::from([
+        let graph = HashMap::from([
             (0, HashMap::from([(1, 2), (2, 3)])),
             (1, HashMap::from([(2, 1)])),
             (2, HashMap::new()),

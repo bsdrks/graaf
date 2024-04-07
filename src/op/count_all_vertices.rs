@@ -5,7 +5,7 @@
 //! ```
 //! use graaf::op::CountAllVertices;
 //!
-//! let graph: Vec<Vec<usize>> = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+//! let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 //!
 //! assert_eq!(graph.count_all_vertices(), 4);
 //! ```
@@ -43,7 +43,7 @@ use {
 /// ```
 /// use graaf::op::CountAllVertices;
 ///
-/// let graph: Vec<Vec<usize>> = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+/// let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 ///
 /// assert_eq!(graph.count_all_vertices(), 4);
 /// ```
@@ -94,7 +94,7 @@ mod tests {
 
     #[test]
     fn vec() {
-        let graph: Vec<Vec<usize>> = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
         assert_eq!(graph.count_all_vertices(), 4);
     }
@@ -108,15 +108,14 @@ mod tests {
 
     #[test]
     fn arr() {
-        let graph: [(usize, usize); 3] = [(0, 1), (1, 2), (2, 0)];
+        let graph = [(0, 1), (1, 2), (2, 0)];
 
         assert_eq!(graph.count_all_vertices(), 3);
     }
 
     #[test]
     fn hash_map() {
-        let mut graph: HashMap<usize, Vec<usize>> = HashMap::new();
-
+        let mut graph = HashMap::new();
         let _ = graph.insert(0, vec![1, 2]);
         let _ = graph.insert(1, vec![0, 2]);
         let _ = graph.insert(2, vec![0, 1]);

@@ -58,25 +58,9 @@ pub trait IterAllEdges {
     fn iter_all_edges(&self) -> impl Iterator<Item = &(usize, usize)>;
 }
 
-// Vec
-
-impl IterAllEdges for Vec<(usize, usize)> {
-    fn iter_all_edges(&self) -> impl Iterator<Item = &(usize, usize)> {
-        self.iter()
-    }
-}
-
 // Slice
 
 impl IterAllEdges for [(usize, usize)] {
-    fn iter_all_edges(&self) -> impl Iterator<Item = &(usize, usize)> {
-        self.iter()
-    }
-}
-
-// Arr
-
-impl<const V: usize> IterAllEdges for [(usize, usize); V] {
     fn iter_all_edges(&self) -> impl Iterator<Item = &(usize, usize)> {
         self.iter()
     }
@@ -102,6 +86,7 @@ mod tests {
 
     #[test]
     fn vec() {
+        #[allow(clippy::useless_vec)]
         let graph = vec![(0, 1), (1, 2), (2, 0)];
         let mut iter = graph.iter_all_edges();
 

@@ -391,7 +391,7 @@ mod tests {
 
     #[test]
     fn hash_map_hash_set() {
-        let mut graph: HashMap<usize, HashSet<usize>> = HashMap::from([
+        let mut graph = HashMap::from([
             (0, HashSet::from([1, 2])),
             (1, HashSet::from([0])),
             (2, HashSet::from([1])),
@@ -442,7 +442,7 @@ mod tests {
 
     #[test]
     fn hash_map_hash_map() {
-        let mut graph: HashMap<usize, HashMap<usize, usize>> = HashMap::from([
+        let mut graph = HashMap::from([
             (0, HashMap::from([(1, 1), (2, 1)])),
             (1, HashMap::from([(0, 1)])),
             (2, HashMap::from([(1, 1)])),

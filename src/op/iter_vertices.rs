@@ -5,7 +5,7 @@
 //! ```
 //! use graaf::op::IterVertices;
 //!
-//! let graph: [Vec<usize>; 4] = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+//! let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 //! let mut iter = graph.iter_vertices();
 //!
 //! assert_eq!(iter.next(), Some(0));
@@ -49,7 +49,7 @@ use {
 /// ```
 /// use graaf::op::IterVertices;
 ///
-/// let graph: [Vec<usize>; 4] = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+/// let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 /// let mut iter = graph.iter_vertices();
 ///
 /// assert_eq!(iter.next(), Some(0));
@@ -102,7 +102,7 @@ mod tests {
 
     #[test]
     fn vec() {
-        let graph: Vec<Vec<usize>> = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
         let mut iter = graph.iter_vertices();
 
         assert_eq!(iter.next(), Some(0));
@@ -126,7 +126,7 @@ mod tests {
 
     #[test]
     fn arr() {
-        let graph: [Vec<usize>; 4] = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
         let mut iter = graph.iter_vertices();
 
         assert_eq!(iter.next(), Some(0));
@@ -138,7 +138,7 @@ mod tests {
 
     #[test]
     fn hash_set() {
-        let graph: HashSet<usize> = HashSet::from([0, 1, 2, 3]);
+        let graph = HashSet::from([0, 1, 2, 3]);
         let mut iter = graph.iter_vertices();
 
         assert_matches!(iter.next(), Some(0..=3));

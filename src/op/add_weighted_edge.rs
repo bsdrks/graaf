@@ -231,7 +231,7 @@ mod tests {
 
     #[test]
     fn vec_vec() {
-        let mut graph: Vec<Vec<(usize, i32)>> = vec![Vec::new(); 3];
+        let mut graph = vec![Vec::new(); 3];
 
         graph.add_weighted_edge(0, 1, 2);
 
@@ -262,7 +262,7 @@ mod tests {
 
     #[test]
     fn vec_hash_set() {
-        let mut graph: Vec<HashSet<(usize, i32)>> = vec![HashSet::new(); 3];
+        let mut graph = vec![HashSet::new(); 3];
 
         graph.add_weighted_edge(0, 1, 2);
 
@@ -318,7 +318,7 @@ mod tests {
 
     #[test]
     fn vec_hash_map() {
-        let mut graph: Vec<HashMap<usize, i32>> = vec![HashMap::new(); 3];
+        let mut graph = vec![HashMap::new(); 3];
 
         graph.add_weighted_edge(0, 1, 2);
 
@@ -519,7 +519,7 @@ mod tests {
 
     #[test]
     fn arr_vec() {
-        let mut graph: [Vec<(usize, i32)>; 3] = [Vec::new(), Vec::new(), Vec::new()];
+        let mut graph = [Vec::new(), Vec::new(), Vec::new()];
 
         graph.add_weighted_edge(0, 1, 2);
 
@@ -550,8 +550,7 @@ mod tests {
 
     #[test]
     fn arr_hash_set() {
-        let mut graph: [HashSet<(usize, i32)>; 3] =
-            [HashSet::new(), HashSet::new(), HashSet::new()];
+        let mut graph = [HashSet::new(), HashSet::new(), HashSet::new()];
 
         graph.add_weighted_edge(0, 1, 2);
 
@@ -607,7 +606,7 @@ mod tests {
 
     #[test]
     fn arr_hash_map() {
-        let mut graph: [HashMap<usize, i32>; 3] = [HashMap::new(), HashMap::new(), HashMap::new()];
+        let mut graph = [HashMap::new(), HashMap::new(), HashMap::new()];
 
         graph.add_weighted_edge(0, 1, 2);
 
@@ -663,7 +662,7 @@ mod tests {
 
     #[test]
     fn hash_map_vec() {
-        let mut graph: HashMap<usize, Vec<(usize, i32)>> = HashMap::new();
+        let mut graph = HashMap::new();
 
         graph.add_weighted_edge(0, 1, 2);
 
@@ -701,7 +700,7 @@ mod tests {
 
     #[test]
     fn hash_map_hash_set() {
-        let mut graph: HashMap<usize, HashSet<(usize, i32)>> = HashMap::new();
+        let mut graph = HashMap::new();
 
         graph.add_weighted_edge(0, 1, 2);
 
@@ -745,7 +744,7 @@ mod tests {
 
     #[test]
     fn hash_map_hash_map() {
-        let mut graph: HashMap<usize, HashMap<usize, i32>> = HashMap::new();
+        let mut graph = HashMap::new();
 
         graph.add_weighted_edge(0, 1, 2);
 

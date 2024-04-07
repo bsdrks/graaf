@@ -15,7 +15,7 @@
 - Return borrowed values in traits.
 - Test implementations of traits with properties in `op::prop`.
 
-## [0.6.4] - Unreleased
+## [0.7.0] - Unreleased
 
 ### Added
 
@@ -30,6 +30,14 @@
 - Implement `IsEdge` for `[HashMap<usize, W>]`.
 - Implement `IterEdges` for `[Vec<usize>]`.
 - Implement `IterEdges` for `[HashSet<usize>]`.
+- Implement `IterVertices` for `[T]`.
+
+### Removed
+
+- Remove implementation of `IterAllEdges` for `Vec<(usize, usize)>`. Use `&[(usize, usize)]`.
+- Remove implementation of `IterAllEdges` for `[(usize, usize); V]`. Use `&[(usize, usize)]`.
+- Remove implementation of `IterVertices` for `Vec<T>`. Use `&[T]`.
+- Remove implementation of `IterVertices` for `[T; V]`. Use `&[T]`.
 
 ## [0.6.3] - 2024-04-06
 
