@@ -24,9 +24,9 @@
 
 ### Changed
 
-- `iter_all_edges` now returns `impl Iterator<Item = (usize, usize)>`.
-- `iter_all_weighted_edges` now returns `impl Iterator<Item = (usize, usize, &'a W)>`.
-- `iter_weighted_edges` now returns `impl Iterator<Item = (usize, &'a W)>`.
+- Change `iter_all_edges` returns type to `impl Iterator<Item = (usize, usize)>`.
+- Change `iter_all_weighted_edges` return type to `impl Iterator<Item = (usize, usize, &'a W)>`.
+- Change `iter_weighted_edges` return type to `impl Iterator<Item = (usize, &'a W)>`.
 
 ## [0.7.0] - 2024-04-07
 
