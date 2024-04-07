@@ -8,48 +8,87 @@ Functions and types for working with graphs
 2. count
 3. dig
 
-**This crate is in early alpha. The API is unstable.**
+This crate is in alpha, and the API will change.
 
-## Algorithms
+## Installation
 
-### Breadth-first search
+Add the following to your `Cargo.toml`:
 
-- `algo::bfs::min_distances_single_source`
-- `algo::bfs::min_distances`
-- `algo::bfs::predecessors_single_source`
-- `algo::bfs::predecessors`
+```toml
+[dependencies]
+graaf = "0.7.0"
+```
 
-### Dijkstra's algorithm
+## Usage
 
-- `algo::dijkstra::min_distances_single_source`
-- `algo::dijkstra::min_distances`
-- `algo::dijkstra::predecessors_single_source`
-- `algo::dijkstra::predecessors`
+```rust
+use graaf::{
+    op::{
+        AddEdge,
+        Indegree,
+        Outdegree,
+    },
+    repr::AdjacencyMatrix,
+};
 
-## Graph operation traits
+let mut adj = AdjacencyMatrix::<4>::new();
+
+adj.add_edge(0, 1);
+adj.add_edge(0, 2);
+adj.add_edge(1, 3);
+adj.add_edge(2, 3);
+
+assert_eq!(adj.indegree(0), 0);
+assert_eq!(adj.indegree(1), 1);
+assert_eq!(adj.indegree(2), 1);
+assert_eq!(adj.indegree(3), 2);
+
+assert_eq!(adj.outdegree(0), 2);
+assert_eq!(adj.outdegree(1), 1);
+assert_eq!(adj.outdegree(2), 1);
+assert_eq!(adj.outdegree(3), 0);
+```
+
+## Features
+
+### Algorithms: `algo`
+
+#### Breadth-first search: `bfs`
+
+- `min_distances_single_source`
+- `min_distances`
+- `predecessors_single_source`
+- `predecessors`
+
+#### Dijkstra's algorithm: `dijkstra`
+
+- `min_distances_single_source`
+- `min_distances`
+- `predecessors_single_source`
+- `predecessors`
+
+### Operations: `op`
 
 These traits are implemented for various graph representations built from standard library containers.
 
-- `op::AddEdge` adds an unweighted edge.
-- `op::AddWeightedEdge` adds a weighted edge.
-- `op::CountAllEdges` counts all edges.
-- `op::CountAllVertices` counts all vertices.
-- `op::EdgeWeight` gets the weight of an edge.
-- `op::Indegree` returns the indegree of a vertex.
-- `op::IsEdge` returns whether an edge exists.
-- `op::IterAllEdges` iterates over all unweighted edges.
-- `op::IterAllWeightedEdges` iterates over all weighted edges.
-- `op::IterEdges` iterates over all unweighted edges of a source vertex.
-- `op::IterVertices` iterates over all vertices.
-- `op::IterWeightedEdges` iterates over all weighted edges of a source vertex.
-- `op::Outdegree` returns the outdegree of a vertex.
-- `op::RemoveEdge` removes an edge.
+- `AddEdge` adds an unweighted edge.
+- `AddWeightedEdge` adds a weighted edge.
+- `CountAllEdges` counts all edges.
+- `CountAllVertices` counts all vertices.
+- `EdgeWeight` gets the weight of an edge.
+- `Indegree` returns the indegree of a vertex.
+- `IsEdge` returns whether an edge exists.
+- `IterAllEdges` iterates over all unweighted edges.
+- `IterAllWeightedEdges` iterates over all weighted edges.
+- `IterEdges` iterates over all unweighted edges of a source vertex.
+- `IterVertices` iterates over all vertices.
+- `IterWeightedEdges` iterates over all weighted edges of a source vertex.
+- `Outdegree` returns the outdegree of a vertex.
+- `RemoveEdge` removes an edge.
 
-## Graph representations
+### Representations: `repr`
 
-### Adjacency list
-
-#### Unweighted
+#### Adjacency list, unweighted
 
 - `Vec<Vec<usize>>`
 - `Vec<HashSet<usize>>`
@@ -60,7 +99,7 @@ These traits are implemented for various graph representations built from standa
 - `HashMap<usize, Vec<usize>>`
 - `HashMap<usize, HashSet<usize>>`
 
-#### Weighted
+#### Adjacency list, weighted
 
 - `Vec<Vec<(usize, W)>>`
 - `Vec<HashSet<(usize, W)>>`
@@ -75,20 +114,18 @@ These traits are implemented for various graph representations built from standa
 - `HashMap<usize, HashSet<(usize, W)>>`
 - `HashMap<usize, HashMap<usize, W>>`
 
-### Adjacency matrix
+#### Adjacency matrix, unweighted
 
 - `AdjacencyMatrix`: an adjacency matrix representation of an unweighted directed graph stored as a bit array.
 
-### Edge list
-
-#### Unweighted
+#### Edge list, unweighted
 
 - `Vec<(usize, usize)>`
 - `[(usize, usize)]`
 - `[(usize, usize); V]`
 - `HashSet<(usize, usize)>`
 
-#### Weighted
+#### Edge list, weighted
 
 - `Vec<(usize, usize, W)>`
 - `[(usize, usize, W)]`

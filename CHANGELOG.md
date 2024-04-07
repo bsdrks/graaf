@@ -3,8 +3,6 @@
 ## [x.x.x] - Planned
 
 - Add example to `README`.
-- Add instructions to run benchmarks to `README`.
-- Add instructions to run tests to `README`.
 - Add `bfs::mssp`.
 - Add `bfs::sssp`.
 - Add `dfs::*`.
@@ -13,6 +11,16 @@
 - Implement traits for nested arrays.
 - Return borrowed values in traits.
 - Test implementations of traits with properties in `op::prop`.
+- Add `should_panic` test cases where possible.
+- Add `IsSimple` trait for graphs.
+- Mention for functions whether they are meant for simple graphs.
+- Add topological sorting for DAGs.
+
+## [0.7.1] - Unreleased
+
+### Added
+
+- Add installation instructions to `README`.
 
 ## [0.7.0] - 2024-04-07
 
