@@ -27,6 +27,7 @@
 - Implement `CountAllEdges` for `[Vec<T>]`.
 - Implement `CountAllEdges` for `[HashSet<T>]`.
 - Implement `CountAllEdges` for `[HashMap<K, W>]`.
+- Implement `CountAllVertices` for `[T]`.
 
 ## [0.6.3] - 2024-04-06
 

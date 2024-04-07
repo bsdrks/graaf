@@ -60,6 +60,14 @@ impl<T> CountAllVertices for Vec<T> {
     }
 }
 
+// Slice
+
+impl<T> CountAllVertices for [T] {
+    fn count_all_vertices(&self) -> usize {
+        self.len()
+    }
+}
+
 // Arr
 
 impl<const V: usize, T> CountAllVertices for [T; V] {
@@ -87,6 +95,13 @@ mod tests {
     #[test]
     fn vec() {
         let graph: Vec<Vec<usize>> = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+
+        assert_eq!(graph.count_all_vertices(), 4);
+    }
+
+    #[test]
+    fn slice() {
+        let graph: &[Vec<usize>] = &[vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
         assert_eq!(graph.count_all_vertices(), 4);
     }
