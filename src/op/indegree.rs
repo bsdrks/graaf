@@ -93,6 +93,26 @@ where
     }
 }
 
+// Slice
+
+impl<H> Indegree for [HashSet<usize, H>]
+where
+    H: BuildHasher,
+{
+    fn indegree(&self, t: usize) -> usize {
+        self.iter().filter(|set| set.contains(&t)).count()
+    }
+}
+
+impl<W, H> Indegree for [HashMap<usize, W, H>]
+where
+    H: BuildHasher,
+{
+    fn indegree(&self, t: usize) -> usize {
+        self.iter().filter(|map| map.contains_key(&t)).count()
+    }
+}
+
 // Arr
 
 impl<const V: usize, H> Indegree for [HashSet<usize, H>; V]
@@ -154,6 +174,28 @@ mod tests {
     #[test]
     fn vec_hash_map() {
         let graph: Vec<HashMap<usize, usize>> = vec![
+            HashMap::from([(1, 2), (2, 3)]),
+            HashMap::from([(2, 1)]),
+            HashMap::from([]),
+        ];
+
+        assert_eq!(graph.indegree(0), 0);
+        assert_eq!(graph.indegree(1), 1);
+        assert_eq!(graph.indegree(2), 2);
+    }
+
+    #[test]
+    fn slice_hash_set() {
+        let graph: &[HashSet<usize>] = &[HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
+
+        assert_eq!(graph.indegree(0), 0);
+        assert_eq!(graph.indegree(1), 1);
+        assert_eq!(graph.indegree(2), 2);
+    }
+
+    #[test]
+    fn slice_hash_map() {
+        let graph: &[HashMap<usize, usize>] = &[
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(2, 1)]),
             HashMap::from([]),
