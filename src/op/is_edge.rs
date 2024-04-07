@@ -132,6 +132,26 @@ where
     }
 }
 
+// Slice
+
+impl<H> IsEdge for [HashSet<usize, H>]
+where
+    H: BuildHasher,
+{
+    fn is_edge(&self, s: usize, t: usize) -> bool {
+        self.get(s).map_or(false, |set| set.contains(&t))
+    }
+}
+
+impl<W, H> IsEdge for [HashMap<usize, W, H>]
+where
+    H: BuildHasher,
+{
+    fn is_edge(&self, s: usize, t: usize) -> bool {
+        self.get(s).map_or(false, |map| map.contains_key(&t))
+    }
+}
+
 // Arr
 
 impl<const V: usize, H> IsEdge for [HashSet<usize, H>; V]
@@ -209,6 +229,44 @@ mod tests {
     #[test]
     fn vec_hash_map() {
         let graph = vec![
+            HashMap::from([(1, 1), (2, 1)]),
+            HashMap::from([(0, 1)]),
+            HashMap::from([(0, 1), (1, 1)]),
+        ];
+
+        assert!(!graph.is_edge(0, 0));
+        assert!(graph.is_edge(0, 1));
+        assert!(graph.is_edge(0, 2));
+        assert!(graph.is_edge(1, 0));
+        assert!(!graph.is_edge(1, 1));
+        assert!(!graph.is_edge(1, 2));
+        assert!(graph.is_edge(2, 0));
+        assert!(graph.is_edge(2, 1));
+        assert!(!graph.is_edge(2, 2));
+    }
+
+    #[test]
+    fn slice_hash_set() {
+        let graph: &[HashSet<usize>] = &[
+            HashSet::from([1, 2]),
+            HashSet::from([0]),
+            HashSet::from([0, 1]),
+        ];
+
+        assert!(!graph.is_edge(0, 0));
+        assert!(graph.is_edge(0, 1));
+        assert!(graph.is_edge(0, 2));
+        assert!(graph.is_edge(1, 0));
+        assert!(!graph.is_edge(1, 1));
+        assert!(!graph.is_edge(1, 2));
+        assert!(graph.is_edge(2, 0));
+        assert!(graph.is_edge(2, 1));
+        assert!(!graph.is_edge(2, 2));
+    }
+
+    #[test]
+    fn slice_hash_map() {
+        let graph: &[HashMap<usize, i32>] = &[
             HashMap::from([(1, 1), (2, 1)]),
             HashMap::from([(0, 1)]),
             HashMap::from([(0, 1), (1, 1)]),

@@ -8,7 +8,6 @@
 - Add `dijkstra::mssp`.
 - Add `dijkstra::sssp`.
 
-- Implement `IsEdge` for slices.
 - Implement `IterEdges` for slices.
 - Implement `IterVertices` for slices.
 - Implement `IterWeightedEdges` for slices.
@@ -28,6 +27,8 @@
 - Implement `EdgeWeight` for `[HashMap<usize, W>]`.
 - Implement `Indegree` for `[HashSet<usize>]`.
 - Implement `Indegree` for `[HashMap<usize, W>]`.
+- Implement `IsEdge` for `[HashSet<usize>]`.
+- Implement `IsEdge` for `[HashMap<usize, W>]`.
 
 ## [0.6.3] - 2024-04-06
 
