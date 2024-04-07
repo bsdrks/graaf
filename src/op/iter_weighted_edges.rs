@@ -13,23 +13,23 @@
 //!
 //! let mut iter = graph.iter_weighted_edges(0);
 //!
-//! assert_eq!(iter.next(), Some((&1, &2)));
-//! assert_eq!(iter.next(), Some((&2, &3)));
-//! assert_eq!(iter.next(), Some((&3, &4)));
+//! assert_eq!(iter.next(), Some((1, &2)));
+//! assert_eq!(iter.next(), Some((2, &3)));
+//! assert_eq!(iter.next(), Some((3, &4)));
 //! assert_eq!(iter.next(), None);
 //!
 //! let mut iter = graph.iter_weighted_edges(1);
 //!
-//! assert_eq!(iter.next(), Some((&2, &3)));
-//! assert_eq!(iter.next(), Some((&3, &4)));
-//! assert_eq!(iter.next(), Some((&4, &5)));
+//! assert_eq!(iter.next(), Some((2, &3)));
+//! assert_eq!(iter.next(), Some((3, &4)));
+//! assert_eq!(iter.next(), Some((4, &5)));
 //! assert_eq!(iter.next(), None);
 //!
 //! let mut iter = graph.iter_weighted_edges(2);
 //!
-//! assert_eq!(iter.next(), Some((&3, &4)));
-//! assert_eq!(iter.next(), Some((&4, &5)));
-//! assert_eq!(iter.next(), Some((&5, &6)));
+//! assert_eq!(iter.next(), Some((3, &4)));
+//! assert_eq!(iter.next(), Some((4, &5)));
+//! assert_eq!(iter.next(), Some((5, &6)));
 //! assert_eq!(iter.next(), None);
 //! ```
 
@@ -56,14 +56,11 @@ use {
 /// }
 ///
 /// impl IterWeightedEdges<usize> for Graph {
-///     fn iter_weighted_edges<'a>(
-///         &'a self,
-///         s: usize,
-///     ) -> impl Iterator<Item = (&'a usize, &'a usize)>
+///     fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a usize)>
 ///     where
 ///         usize: 'a,
 ///     {
-///         self.edges[s].iter().map(|(t, w)| (t, w))
+///         self.edges[s].iter().map(|(t, w)| (*t, w))
 ///     }
 /// }
 /// ```
@@ -81,23 +78,23 @@ use {
 ///
 /// let mut iter = graph.iter_weighted_edges(0);
 ///
-/// assert_eq!(iter.next(), Some((&1, &2)));
-/// assert_eq!(iter.next(), Some((&2, &3)));
-/// assert_eq!(iter.next(), Some((&3, &4)));
+/// assert_eq!(iter.next(), Some((1, &2)));
+/// assert_eq!(iter.next(), Some((2, &3)));
+/// assert_eq!(iter.next(), Some((3, &4)));
 /// assert_eq!(iter.next(), None);
 ///
 /// let mut iter = graph.iter_weighted_edges(1);
 ///
-/// assert_eq!(iter.next(), Some((&2, &3)));
-/// assert_eq!(iter.next(), Some((&3, &4)));
-/// assert_eq!(iter.next(), Some((&4, &5)));
+/// assert_eq!(iter.next(), Some((2, &3)));
+/// assert_eq!(iter.next(), Some((3, &4)));
+/// assert_eq!(iter.next(), Some((4, &5)));
 /// assert_eq!(iter.next(), None);
 ///
 /// let mut iter = graph.iter_weighted_edges(2);
 ///
-/// assert_eq!(iter.next(), Some((&3, &4)));
-/// assert_eq!(iter.next(), Some((&4, &5)));
-/// assert_eq!(iter.next(), Some((&5, &6)));
+/// assert_eq!(iter.next(), Some((3, &4)));
+/// assert_eq!(iter.next(), Some((4, &5)));
+/// assert_eq!(iter.next(), Some((5, &6)));
 /// assert_eq!(iter.next(), None);
 /// ```
 pub trait IterWeightedEdges<W> {
@@ -106,7 +103,7 @@ pub trait IterWeightedEdges<W> {
     /// # Arguments
     ///
     /// * `s`: The source vertex.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (&'a usize, &'a W)>
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a;
 }
@@ -120,11 +117,11 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (&'a usize, &'a W)>
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
-        self[s].iter().map(|(t, w)| (t, w))
+        self[s].iter().map(|(t, w)| (*t, w))
     }
 }
 
@@ -136,11 +133,11 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (&'a usize, &'a W)>
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
-        self[s].iter().map(|(t, w)| (t, w))
+        self[s].iter().map(|(t, w)| (*t, w))
     }
 }
 
@@ -152,11 +149,11 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (&'a usize, &'a W)>
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
-        self[s].iter()
+        self[s].iter().map(|(t, w)| (*t, w))
     }
 }
 
@@ -169,11 +166,11 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (&'a usize, &'a W)>
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
-        self[s].iter().map(|(t, w)| (t, w))
+        self[s].iter().map(|(t, w)| (*t, w))
     }
 }
 
@@ -185,11 +182,11 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (&'a usize, &'a W)>
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
-        self[s].iter().map(|(t, w)| (t, w))
+        self[s].iter().map(|(t, w)| (*t, w))
     }
 }
 
@@ -201,11 +198,11 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (&'a usize, &'a W)>
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
-        self[s].iter()
+        self[s].iter().map(|(t, w)| (*t, w))
     }
 }
 
@@ -215,11 +212,11 @@ impl<const V: usize, W> IterWeightedEdges<W> for [Vec<(usize, W)>; V]
 where
     W: Copy,
 {
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (&'a usize, &'a W)>
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
-        self[s].iter().map(|(t, w)| (t, w))
+        self[s].iter().map(|(t, w)| (*t, w))
     }
 }
 
@@ -228,11 +225,11 @@ where
     W: Copy,
     H: BuildHasher,
 {
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (&'a usize, &'a W)>
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
-        self[s].iter().map(|(t, w)| (t, w))
+        self[s].iter().map(|(t, w)| (*t, w))
     }
 }
 
@@ -241,11 +238,11 @@ where
     W: Copy,
     H: BuildHasher,
 {
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (&'a usize, &'a W)>
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
-        self[s].iter()
+        self[s].iter().map(|(t, w)| (*t, w))
     }
 }
 
@@ -259,11 +256,11 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (&'a usize, &'a W)>
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
-        self[&s].iter().map(|(t, w)| (t, w))
+        self[&s].iter().map(|(t, w)| (*t, w))
     }
 }
 
@@ -275,11 +272,11 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (&'a usize, &'a W)>
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
-        self[&s].iter().map(|(t, w)| (t, w))
+        self[&s].iter().map(|(t, w)| (*t, w))
     }
 }
 
@@ -291,11 +288,11 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (&'a usize, &'a W)>
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
-        self[&s].iter()
+        self[&s].iter().map(|(t, w)| (*t, w))
     }
 }
 
@@ -316,9 +313,9 @@ mod tests {
 
         let mut iter = graph.iter_weighted_edges(1);
 
-        assert_eq!(iter.next(), Some((&2, &3)));
-        assert_eq!(iter.next(), Some((&3, &4)));
-        assert_eq!(iter.next(), Some((&4, &5)));
+        assert_eq!(iter.next(), Some((2, &3)));
+        assert_eq!(iter.next(), Some((3, &4)));
+        assert_eq!(iter.next(), Some((4, &5)));
         assert_eq!(iter.next(), None);
     }
 
@@ -366,9 +363,9 @@ mod tests {
 
         let mut iter = graph.iter_weighted_edges(1);
 
-        assert_eq!(iter.next(), Some((&2, &3)));
-        assert_eq!(iter.next(), Some((&3, &4)));
-        assert_eq!(iter.next(), Some((&4, &5)));
+        assert_eq!(iter.next(), Some((2, &3)));
+        assert_eq!(iter.next(), Some((3, &4)));
+        assert_eq!(iter.next(), Some((4, &5)));
         assert_eq!(iter.next(), None);
     }
 
@@ -414,9 +411,9 @@ mod tests {
 
         let mut iter = graph.iter_weighted_edges(1);
 
-        assert_eq!(iter.next(), Some((&2, &3)));
-        assert_eq!(iter.next(), Some((&3, &4)));
-        assert_eq!(iter.next(), Some((&4, &5)));
+        assert_eq!(iter.next(), Some((2, &3)));
+        assert_eq!(iter.next(), Some((3, &4)));
+        assert_eq!(iter.next(), Some((4, &5)));
         assert_eq!(iter.next(), None);
     }
 
@@ -462,9 +459,9 @@ mod tests {
 
         let mut iter = graph.iter_weighted_edges(1);
 
-        assert_eq!(iter.next(), Some((&2, &3)));
-        assert_eq!(iter.next(), Some((&3, &4)));
-        assert_eq!(iter.next(), Some((&4, &5)));
+        assert_eq!(iter.next(), Some((2, &3)));
+        assert_eq!(iter.next(), Some((3, &4)));
+        assert_eq!(iter.next(), Some((4, &5)));
         assert_eq!(iter.next(), None);
     }
 

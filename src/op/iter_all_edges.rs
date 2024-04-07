@@ -8,9 +8,9 @@
 //! let graph = vec![(0, 1), (1, 2), (2, 0)];
 //! let mut iter = graph.iter_all_edges();
 //!
-//! assert_eq!(iter.next(), Some(&(0, 1)));
-//! assert_eq!(iter.next(), Some(&(1, 2)));
-//! assert_eq!(iter.next(), Some(&(2, 0)));
+//! assert_eq!(iter.next(), Some((0, 1)));
+//! assert_eq!(iter.next(), Some((1, 2)));
+//! assert_eq!(iter.next(), Some((2, 0)));
 //! assert_eq!(iter.next(), None);
 //! ```
 
@@ -34,8 +34,8 @@ use {
 /// }
 ///
 /// impl IterAllEdges for Graph {
-///     fn iter_all_edges(&self) -> impl Iterator<Item = &(usize, usize)> {
-///         self.edges.iter()
+///     fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
+///         self.edges.iter().copied()
 ///     }
 /// }
 /// ```
@@ -48,21 +48,21 @@ use {
 /// let graph = vec![(0, 1), (1, 2), (2, 0)];
 /// let mut iter = graph.iter_all_edges();
 ///
-/// assert_eq!(iter.next(), Some(&(0, 1)));
-/// assert_eq!(iter.next(), Some(&(1, 2)));
-/// assert_eq!(iter.next(), Some(&(2, 0)));
+/// assert_eq!(iter.next(), Some((0, 1)));
+/// assert_eq!(iter.next(), Some((1, 2)));
+/// assert_eq!(iter.next(), Some((2, 0)));
 /// assert_eq!(iter.next(), None);
 /// ```
 pub trait IterAllEdges {
     /// Returns an iterator that iterates over all edges in a graph.
-    fn iter_all_edges(&self) -> impl Iterator<Item = &(usize, usize)>;
+    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)>;
 }
 
 // Slice
 
 impl IterAllEdges for [(usize, usize)] {
-    fn iter_all_edges(&self) -> impl Iterator<Item = &(usize, usize)> {
-        self.iter()
+    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
+        self.iter().copied()
     }
 }
 
@@ -72,8 +72,8 @@ impl<H> IterAllEdges for HashSet<(usize, usize), H>
 where
     H: BuildHasher,
 {
-    fn iter_all_edges(&self) -> impl Iterator<Item = &(usize, usize)> {
-        self.iter()
+    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
+        self.iter().copied()
     }
 }
 
@@ -90,9 +90,9 @@ mod tests {
         let graph = vec![(0, 1), (1, 2), (2, 0)];
         let mut iter = graph.iter_all_edges();
 
-        assert_eq!(iter.next(), Some(&(0, 1)));
-        assert_eq!(iter.next(), Some(&(1, 2)));
-        assert_eq!(iter.next(), Some(&(2, 0)));
+        assert_eq!(iter.next(), Some((0, 1)));
+        assert_eq!(iter.next(), Some((1, 2)));
+        assert_eq!(iter.next(), Some((2, 0)));
         assert_eq!(iter.next(), None);
     }
 
@@ -101,9 +101,9 @@ mod tests {
         let graph: &[(usize, usize)] = &[(0, 1), (1, 2), (2, 0)];
         let mut iter = graph.iter_all_edges();
 
-        assert_eq!(iter.next(), Some(&(0, 1)));
-        assert_eq!(iter.next(), Some(&(1, 2)));
-        assert_eq!(iter.next(), Some(&(2, 0)));
+        assert_eq!(iter.next(), Some((0, 1)));
+        assert_eq!(iter.next(), Some((1, 2)));
+        assert_eq!(iter.next(), Some((2, 0)));
         assert_eq!(iter.next(), None);
     }
 
@@ -112,9 +112,9 @@ mod tests {
         let graph = [(0, 1), (1, 2), (2, 0)];
         let mut iter = graph.iter_all_edges();
 
-        assert_eq!(iter.next(), Some(&(0, 1)));
-        assert_eq!(iter.next(), Some(&(1, 2)));
-        assert_eq!(iter.next(), Some(&(2, 0)));
+        assert_eq!(iter.next(), Some((0, 1)));
+        assert_eq!(iter.next(), Some((1, 2)));
+        assert_eq!(iter.next(), Some((2, 0)));
         assert_eq!(iter.next(), None);
     }
 
@@ -123,9 +123,9 @@ mod tests {
         let graph: HashSet<(usize, usize)> = HashSet::from([(0, 1), (1, 2), (2, 0)]);
         let mut iter = graph.iter_all_edges();
 
-        assert_matches!(iter.next(), Some(&(0, 1) | &(1, 2) | &(2, 0)));
-        assert_matches!(iter.next(), Some(&(0, 1) | &(1, 2) | &(2, 0)));
-        assert_matches!(iter.next(), Some(&(0, 1) | &(1, 2) | &(2, 0)));
+        assert_matches!(iter.next(), Some((0, 1) | (1, 2) | (2, 0)));
+        assert_matches!(iter.next(), Some((0, 1) | (1, 2) | (2, 0)));
+        assert_matches!(iter.next(), Some((0, 1) | (1, 2) | (2, 0)));
         assert_eq!(iter.next(), None);
     }
 }

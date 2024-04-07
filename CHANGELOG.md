@@ -16,11 +16,17 @@
 - Mention for functions whether they are meant for simple graphs.
 - Add topological sorting for DAGs.
 
-## [0.7.1] - Unreleased
+## [0.8.0] - Unreleased
 
 ### Added
 
 - Add installation instructions to `README`.
+
+### Changed
+
+- `iter_all_edges` now returns `impl Iterator<Item = (usize, usize)>`.
+- `iter_all_weighted_edges` now returns `impl Iterator<Item = (usize, usize, &'a W)>`.
+- `iter_weighted_edges` now returns `impl Iterator<Item = (usize, &'a W)>`.
 
 ## [0.7.0] - 2024-04-07
 

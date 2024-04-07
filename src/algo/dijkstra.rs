@@ -99,12 +99,12 @@ pub fn min_distances<G, W>(
         for (t, w) in graph.iter_weighted_edges(s) {
             let w = step(acc, *w);
 
-            if w >= dist[*t] {
+            if w >= dist[t] {
                 continue;
             }
 
-            dist[*t] = w;
-            heap.push((Reverse(w), *t));
+            dist[t] = w;
+            heap.push((Reverse(w), t));
         }
     }
 }
@@ -208,13 +208,13 @@ pub fn predecessors<G, W>(
         for (t, w) in graph.iter_weighted_edges(s) {
             let w = step(acc, w);
 
-            if w >= dist[*t] {
+            if w >= dist[t] {
                 continue;
             }
 
-            dist[*t] = w;
-            pred[*t] = Some(s);
-            heap.push((Reverse(w), *t));
+            dist[t] = w;
+            pred[t] = Some(s);
+            heap.push((Reverse(w), t));
         }
     }
 }
