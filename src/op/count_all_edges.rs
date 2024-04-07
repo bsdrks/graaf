@@ -53,44 +53,6 @@ pub trait CountAllEdges {
     fn count_all_edges(&self) -> usize;
 }
 
-// Vec
-
-impl<T> CountAllEdges for Vec<Vec<T>> {
-    /// # Panics
-    ///
-    /// Theoretically, this implementation panics if the number of edges exceeds
-    /// `usize::MAX`.
-    fn count_all_edges(&self) -> usize {
-        self.iter().map(Vec::len).sum()
-    }
-}
-
-impl<T, H> CountAllEdges for Vec<HashSet<T, H>>
-where
-    H: BuildHasher,
-{
-    /// # Panics
-    ///
-    /// Theoretically, this implementation panics if the number of edges exceeds
-    /// `usize::MAX`.
-    fn count_all_edges(&self) -> usize {
-        self.iter().map(HashSet::len).sum()
-    }
-}
-
-impl<K, W, H> CountAllEdges for Vec<HashMap<K, W, H>>
-where
-    H: BuildHasher,
-{
-    /// # Panics
-    ///
-    /// Theoretically, this implementation panics if the number of edges exceeds
-    /// `usize::MAX`.
-    fn count_all_edges(&self) -> usize {
-        self.iter().map(HashMap::len).sum()
-    }
-}
-
 // Slice
 
 impl<T> CountAllEdges for [Vec<T>] {
@@ -117,44 +79,6 @@ where
 }
 
 impl<K, W, H> CountAllEdges for [HashMap<K, W, H>]
-where
-    H: BuildHasher,
-{
-    /// # Panics
-    ///
-    /// Theoretically, this implementation panics if the number of edges exceeds
-    /// `usize::MAX`.
-    fn count_all_edges(&self) -> usize {
-        self.iter().map(HashMap::len).sum()
-    }
-}
-
-// Arr
-
-impl<const V: usize, T> CountAllEdges for [Vec<T>; V] {
-    /// # Panics
-    ///
-    /// Theoretically, this implementation panics if the number of edges exceeds
-    /// `usize::MAX`.
-    fn count_all_edges(&self) -> usize {
-        self.iter().map(Vec::len).sum()
-    }
-}
-
-impl<const V: usize, T, H> CountAllEdges for [HashSet<T, H>; V]
-where
-    H: BuildHasher,
-{
-    /// # Panics
-    ///
-    /// Theoretically, this implementation panics if the number of edges exceeds
-    /// `usize::MAX`.
-    fn count_all_edges(&self) -> usize {
-        self.iter().map(HashSet::len).sum()
-    }
-}
-
-impl<const V: usize, K, W, H> CountAllEdges for [HashMap<K, W, H>; V]
 where
     H: BuildHasher,
 {
@@ -214,6 +138,7 @@ mod tests {
 
     #[test]
     fn vec_vec() {
+        #[allow(clippy::useless_vec)]
         let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
         assert_eq!(graph.count_all_edges(), 10);
@@ -221,6 +146,7 @@ mod tests {
 
     #[test]
     fn vec_hash_set() {
+        #[allow(clippy::useless_vec)]
         let graph = vec![
             HashSet::from([1, 2]),
             HashSet::from([0, 2, 3]),
@@ -233,6 +159,7 @@ mod tests {
 
     #[test]
     fn vec_hash_map() {
+        #[allow(clippy::useless_vec)]
         let graph = vec![
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(0, 4)]),
