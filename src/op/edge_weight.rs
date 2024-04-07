@@ -97,6 +97,17 @@ where
     }
 }
 
+// Slice
+
+impl<W, H> EdgeWeight<W> for [HashMap<usize, W, H>]
+where
+    H: BuildHasher,
+{
+    fn edge_weight(&self, s: usize, t: usize) -> Option<&W> {
+        self.get(s).and_then(|m| m.get(&t))
+    }
+}
+
 // Arr
 
 impl<const V: usize, W, H> EdgeWeight<W> for [HashMap<usize, W, H>; V]
@@ -126,6 +137,21 @@ mod tests {
     #[test]
     fn vec() {
         let graph = vec![
+            HashMap::from([(1, 2), (2, 3)]),
+            HashMap::from([(0, 4)]),
+            HashMap::from([(0, 7), (1, 8)]),
+        ];
+
+        assert_eq!(graph.edge_weight(0, 1), Some(&2));
+        assert_eq!(graph.edge_weight(0, 2), Some(&3));
+        assert_eq!(graph.edge_weight(1, 0), Some(&4));
+        assert_eq!(graph.edge_weight(2, 0), Some(&7));
+        assert_eq!(graph.edge_weight(2, 1), Some(&8));
+    }
+
+    #[test]
+    fn slice() {
+        let graph: &[HashMap<usize, i32>] = &[
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(0, 4)]),
             HashMap::from([(0, 7), (1, 8)]),
