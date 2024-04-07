@@ -63,19 +63,11 @@ pub trait IterVertices {
     fn iter_vertices(&self) -> impl Iterator<Item = usize>;
 }
 
-// Vec
+// Slice
 
-impl<T> IterVertices for Vec<T> {
+impl<T> IterVertices for [T] {
     fn iter_vertices(&self) -> impl Iterator<Item = usize> {
         0..self.len()
-    }
-}
-
-// Arr
-
-impl<T, const V: usize> IterVertices for [T; V] {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..V
     }
 }
 
@@ -111,6 +103,18 @@ mod tests {
     #[test]
     fn vec() {
         let graph: Vec<Vec<usize>> = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let mut iter = graph.iter_vertices();
+
+        assert_eq!(iter.next(), Some(0));
+        assert_eq!(iter.next(), Some(1));
+        assert_eq!(iter.next(), Some(2));
+        assert_eq!(iter.next(), Some(3));
+        assert_eq!(iter.next(), None);
+    }
+
+    #[test]
+    fn slice() {
+        let graph: &[Vec<usize>] = &[vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
         let mut iter = graph.iter_vertices();
 
         assert_eq!(iter.next(), Some(0));
