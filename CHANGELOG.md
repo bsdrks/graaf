@@ -34,8 +34,16 @@
 
 ### Removed
 
+- Remove implementation of `CountAllEdges` for `Vec<Vec<T>>`. Use `&[Vec<T>]`.
+- Remove implementation of `CountAllEdges` for `Vec<HashSet<T>>`. Use `&[HashSet<T>]`.
+- Remove implementation of `CountAllEdges` for `Vec<HashMap<K, W>>`. Use `&[HashMap<K, W>]`.
+- Remove implementation of `CountAllEdges` for `[Vec<T>; V]`. Use `&[Vec<T>]`.
+- Remove implementation of `CountAllEdges` for `[HashSet<T>; V]`. Use `&[HashSet<T>]`.
+- Remove implementation of `CountAllEdges` for `[HashMap<K, W>; V]`. Use `&[HashMap<K, W>]`.
 - Remove implementation of `IterAllEdges` for `Vec<(usize, usize)>`. Use `&[(usize, usize)]`.
 - Remove implementation of `IterAllEdges` for `[(usize, usize); V]`. Use `&[(usize, usize)]`.
+- Remove implementation of `IterVertices` for `Vec<T>`. Use `&[T]`.
+- Remove implementation of `IterVertices` for `[T; V]`. Use `&[T]`.
 - Remove implementation of `IterVertices` for `Vec<T>`. Use `&[T]`.
 - Remove implementation of `IterVertices` for `[T; V]`. Use `&[T]`.
 

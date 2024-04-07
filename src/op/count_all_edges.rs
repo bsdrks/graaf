@@ -58,8 +58,7 @@ pub trait CountAllEdges {
 impl<T> CountAllEdges for [Vec<T>] {
     /// # Panics
     ///
-    /// Theoretically, this implementation panics if the number of edges exceeds
-    /// `usize::MAX`.
+    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.iter().map(Vec::len).sum()
     }
@@ -71,8 +70,7 @@ where
 {
     /// # Panics
     ///
-    /// Theoretically, this implementation panics if the number of edges exceeds
-    /// `usize::MAX`.
+    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.iter().map(HashSet::len).sum()
     }
@@ -84,8 +82,7 @@ where
 {
     /// # Panics
     ///
-    /// Theoretically, this implementation panics if the number of edges exceeds
-    /// `usize::MAX`.
+    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.iter().map(HashMap::len).sum()
     }
@@ -99,8 +96,7 @@ where
 {
     /// # Panics
     ///
-    /// Theoretically, this implementation panics if the number of edges exceeds
-    /// `usize::MAX`.
+    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.values().map(Vec::len).sum()
     }
@@ -112,8 +108,7 @@ where
 {
     /// # Panics
     ///
-    /// Theoretically, this implementation panics if the number of edges exceeds
-    /// `usize::MAX`.
+    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.values().map(HashSet::len).sum()
     }
@@ -125,8 +120,7 @@ where
 {
     /// # Panics
     ///
-    /// Theoretically, this implementation panics if the number of edges exceeds
-    /// `usize::MAX`.
+    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.values().map(HashMap::len).sum()
     }
