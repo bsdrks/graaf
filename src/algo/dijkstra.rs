@@ -14,8 +14,7 @@
 //! // │ 3 │       │ 2 │
 //! // ╰───╯       ╰───╯
 //!
-//! let graph: [Vec<(usize, usize)>; 4] = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
-//!
+//! let graph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
 //! let (pred, dist) = predecessors_single_source(&graph, 0);
 //!
 //! assert_eq!(pred, [None, Some(0), Some(1), None]);
@@ -79,7 +78,7 @@ use {
 /// // │ 3 │       │ 2 │
 /// // ╰───╯       ╰───╯
 ///
-/// let graph: [Vec<(usize, usize)>; 4] = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
+/// let graph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
 /// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
 /// let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 ///
@@ -133,7 +132,7 @@ pub fn min_distances<G, W>(
 /// // │ 3 │       │ 2 │
 /// // ╰───╯       ╰───╯
 ///
-/// let graph: [Vec<(usize, usize)>; 4] = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
+/// let graph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
 ///
 /// assert_eq!(
 ///     min_distances_single_source(&graph, 0),
@@ -185,7 +184,7 @@ where
 /// // │ 3 │       │ 2 │
 /// // ╰───╯       ╰───╯
 ///
-/// let graph: [Vec<(usize, usize)>; 4] = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
+/// let graph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
 /// let mut pred = [None, None, None, None];
 /// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
 /// let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
@@ -242,7 +241,7 @@ pub fn predecessors<G, W>(
 /// // │ 3 │       │ 2 │
 /// // ╰───╯       ╰───╯
 ///
-/// let graph: [Vec<(usize, usize)>; 4] = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
+/// let graph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
 /// let (pred, dist) = predecessors_single_source(&graph, 0);
 ///
 /// assert_eq!(pred, [None, Some(0), Some(1), None]);
@@ -335,7 +334,7 @@ mod test {
         fn graph_0() {
             let mut dist = Vec::new();
             let mut heap = BinaryHeap::new();
-            let () = min_distances(&GRAPH_0, |acc, w| acc + w, &mut dist, &mut heap);
+            min_distances(&GRAPH_0, |acc, w| acc + w, &mut dist, &mut heap);
 
             assert!(dist.is_empty());
         }
@@ -357,7 +356,7 @@ mod test {
             ];
 
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-            let () = min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
+            min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
             assert_eq!(dist, [0, 4, 12, 19, 21, 11, 9, 8, 14]);
         }
@@ -367,7 +366,7 @@ mod test {
             let graph = to_vec(GRAPH_SHORTEST_PATH_1);
             let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-            let () = min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
+            min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
             assert_eq!(dist, [0, 2, 4, usize::MAX]);
         }
@@ -377,7 +376,7 @@ mod test {
             let graph = to_vec(GRAPH_CROSS_COUNTRY);
             let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-            let () = min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
+            min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
             assert_eq!(dist, [0, 1, 3, 10]);
         }
@@ -393,7 +392,7 @@ mod test {
 
             let mut dist = [0, usize::MAX, usize::MAX];
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-            let () = min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
+            min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
             assert_eq!(dist, [0, 1, 1]);
         }
@@ -417,7 +416,7 @@ mod test {
             ];
 
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-            let () = min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
+            min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
             assert_eq!(dist, [0, 1, 2, 1, 2, 3]);
         }
@@ -445,7 +444,7 @@ mod test {
             ];
 
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-            let () = min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
+            min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
             assert_eq!(dist, [0, 0, 1, 0, 0, 0, 1, 0, 0, 1,]);
         }
@@ -606,7 +605,8 @@ mod test {
             let mut pred = Vec::new();
             let mut dist = Vec::new();
             let mut heap = BinaryHeap::new();
-            let () = predecessors(&GRAPH_0, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
+
+            predecessors(&GRAPH_0, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
 
             assert!(pred.is_empty());
             assert!(dist.is_empty());
@@ -630,7 +630,7 @@ mod test {
 
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
-            let () = predecessors(
+            predecessors(
                 &to_vec(GRAPH_1),
                 |acc, w| acc + w,
                 &mut pred,
@@ -662,7 +662,8 @@ mod test {
             let mut pred = [None; 4];
             let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-            let () = predecessors(&graph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
+
+            predecessors(&graph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
 
             assert_eq!(pred, [None, Some(0), Some(1), None]);
             assert_eq!(dist, [0, 2, 4, usize::MAX]);
@@ -674,7 +675,8 @@ mod test {
             let mut pred = [None; 4];
             let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-            let () = predecessors(&graph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
+
+            predecessors(&graph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
 
             assert_eq!(pred, [None, Some(0), Some(0), Some(2)]);
             assert_eq!(dist, [0, 1, 3, 10]);
@@ -692,7 +694,8 @@ mod test {
             let mut pred = [None; 3];
             let mut dist = [0, usize::MAX, usize::MAX];
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-            let () = predecessors(&graph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
+
+            predecessors(&graph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
 
             assert_eq!(pred, [None, Some(0), Some(0)]);
             assert_eq!(dist, [0, 1, 1]);
@@ -719,7 +722,8 @@ mod test {
             ];
 
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-            let () = predecessors(&graph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
+
+            predecessors(&graph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
 
             assert_eq!(pred, [None, Some(0), Some(3), Some(0), Some(3), Some(4)]);
             assert_eq!(dist, [0, 1, 2, 1, 2, 3]);
@@ -750,7 +754,8 @@ mod test {
             ];
 
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-            let () = predecessors(&graph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
+
+            predecessors(&graph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
 
             assert_eq!(
                 pred,

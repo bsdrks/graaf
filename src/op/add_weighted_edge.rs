@@ -5,7 +5,7 @@
 //! ```
 //! use graaf::op::AddWeightedEdge;
 //!
-//! let mut graph: Vec<Vec<(usize, i32)>> = vec![Vec::new(); 3];
+//! let mut graph = vec![Vec::new(); 3];
 //!
 //! graph.add_weighted_edge(0, 1, 2);
 //! graph.add_weighted_edge(0, 2, 1);
@@ -51,7 +51,7 @@ use {
 /// ```
 /// use graaf::op::AddWeightedEdge;
 ///
-/// let mut graph: Vec<Vec<(usize, i32)>> = vec![Vec::new(); 3];
+/// let mut graph = vec![Vec::new(); 3];
 ///
 /// graph.add_weighted_edge(0, 1, 2);
 /// graph.add_weighted_edge(0, 2, 1);

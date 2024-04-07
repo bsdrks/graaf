@@ -29,7 +29,7 @@ mod dijkstra {
 
     #[divan::bench]
     fn vec_vec(bencher: Bencher<'_, '_>) {
-        let graph: [Vec<(usize, usize)>; 4] = [
+        let graph = [
             vec![(1, 1), (2, 3), (3, 14)],
             vec![(0, 2), (2, 4), (3, 22)],
             vec![(0, 3), (1, 10), (3, 7)],
@@ -48,7 +48,7 @@ mod dijkstra {
 
     #[divan::bench]
     fn vec_hash_set(bencher: Bencher<'_, '_>) {
-        let graph: Vec<HashSet<(usize, usize)>> = vec![
+        let graph = vec![
             HashSet::from([(1, 1), (2, 3), (3, 14)]),
             HashSet::from([(0, 2), (2, 4), (3, 22)]),
             HashSet::from([(0, 3), (1, 10), (3, 7)]),
@@ -67,7 +67,7 @@ mod dijkstra {
 
     #[divan::bench]
     fn arr_vec(bencher: Bencher<'_, '_>) {
-        let graph: [Vec<(usize, usize)>; 4] = [
+        let graph = [
             vec![(1, 1), (2, 3), (3, 14)],
             vec![(0, 2), (2, 4), (3, 22)],
             vec![(0, 3), (1, 10), (3, 7)],
@@ -86,7 +86,7 @@ mod dijkstra {
 
     #[divan::bench]
     fn arr_hash_set(bencher: Bencher<'_, '_>) {
-        let graph: [HashSet<(usize, usize)>; 4] = [
+        let graph = [
             HashSet::from([(1, 1), (2, 3), (3, 14)]),
             HashSet::from([(0, 2), (2, 4), (3, 22)]),
             HashSet::from([(0, 3), (1, 10), (3, 7)]),
@@ -105,7 +105,7 @@ mod dijkstra {
 
     #[divan::bench]
     fn hash_map_vec(bencher: Bencher<'_, '_>) {
-        let graph: HashMap<usize, Vec<(usize, usize)>> = HashMap::from([
+        let graph = HashMap::from([
             (0, vec![(1, 1), (2, 3), (3, 14)]),
             (1, vec![(0, 2), (2, 4), (3, 22)]),
             (2, vec![(0, 3), (1, 10), (3, 7)]),
@@ -124,7 +124,7 @@ mod dijkstra {
 
     #[divan::bench]
     fn hash_map_hash_set(bencher: Bencher<'_, '_>) {
-        let graph: HashMap<usize, HashSet<(usize, usize)>> = HashMap::from([
+        let graph = HashMap::from([
             (0, HashSet::from([(1, 1), (2, 3), (3, 14)])),
             (1, HashSet::from([(0, 2), (2, 4), (3, 22)])),
             (2, HashSet::from([(0, 3), (1, 10), (3, 7)])),
@@ -143,7 +143,7 @@ mod dijkstra {
 
     #[divan::bench]
     fn hash_map_hash_map(bencher: Bencher<'_, '_>) {
-        let graph: HashMap<usize, HashMap<usize, usize>> = HashMap::from([
+        let graph = HashMap::from([
             (0, HashMap::from([(1, 1), (2, 3), (3, 14)])),
             (1, HashMap::from([(0, 2), (2, 4), (3, 22)])),
             (2, HashMap::from([(0, 3), (1, 10), (3, 7)])),

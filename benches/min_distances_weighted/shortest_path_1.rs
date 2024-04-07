@@ -29,9 +29,7 @@ mod dijkstra {
 
     #[divan::bench]
     fn vec_vec(bencher: Bencher<'_, '_>) {
-        let graph: [Vec<(usize, usize)>; 4] =
-            [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
-
+        let graph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
         let mut dist = DIST;
         let mut heap = BinaryHeap::from(HEAP);
 
@@ -44,7 +42,7 @@ mod dijkstra {
 
     #[divan::bench]
     fn vec_hash_set(bencher: Bencher<'_, '_>) {
-        let graph: Vec<HashSet<(usize, usize)>> = vec![
+        let graph = vec![
             HashSet::from([(1, 2)]),
             HashSet::from([(2, 2)]),
             HashSet::new(),
@@ -63,9 +61,7 @@ mod dijkstra {
 
     #[divan::bench]
     fn arr_vec(bencher: Bencher<'_, '_>) {
-        let graph: [Vec<(usize, usize)>; 4] =
-            [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
-
+        let graph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
         let mut dist = DIST;
         let mut heap = BinaryHeap::from(HEAP);
 
@@ -78,7 +74,7 @@ mod dijkstra {
 
     #[divan::bench]
     fn arr_hash_set(bencher: Bencher<'_, '_>) {
-        let graph: [HashSet<(usize, usize)>; 4] = [
+        let graph = [
             HashSet::from([(1, 2)]),
             HashSet::from([(2, 2)]),
             HashSet::new(),
@@ -97,7 +93,7 @@ mod dijkstra {
 
     #[divan::bench]
     fn hash_map_vec(bencher: Bencher<'_, '_>) {
-        let graph: HashMap<usize, Vec<(usize, usize)>> = HashMap::from([
+        let graph = HashMap::from([
             (0, vec![(1, 2)]),
             (1, vec![(2, 2)]),
             (2, Vec::new()),
@@ -116,7 +112,7 @@ mod dijkstra {
 
     #[divan::bench]
     fn hash_map_hash_set(bencher: Bencher<'_, '_>) {
-        let graph: HashMap<usize, HashSet<(usize, usize)>> = HashMap::from([
+        let graph = HashMap::from([
             (0, HashSet::from([(1, 2)])),
             (1, HashSet::from([(2, 2)])),
             (2, HashSet::new()),
@@ -135,7 +131,7 @@ mod dijkstra {
 
     #[divan::bench]
     fn hash_map_hash_map(bencher: Bencher<'_, '_>) {
-        let graph: HashMap<usize, HashMap<usize, usize>> = HashMap::from([
+        let graph = HashMap::from([
             (0, HashMap::from([(1, 2)])),
             (1, HashMap::from([(2, 2)])),
             (2, HashMap::new()),

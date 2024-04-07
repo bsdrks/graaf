@@ -7,14 +7,13 @@
 - Add `dfs::*`.
 - Add `dijkstra::mssp`.
 - Add `dijkstra::sssp`.
-
-- Implement `IterEdges` for slices.
 - Implement `IterVertices` for slices.
 - Implement `IterWeightedEdges` for slices.
 - Implement `Outdegree` for slices.
 - Implement `RemoveEdge` for slices.
-- Test implementations of traits with properties in `op::prop`.
+- Implement traits for nested arrays.
 - Return borrowed values in traits.
+- Test implementations of traits with properties in `op::prop`.
 
 ## [0.6.4] - Unreleased
 
@@ -29,6 +28,8 @@
 - Implement `Indegree` for `[HashMap<usize, W>]`.
 - Implement `IsEdge` for `[HashSet<usize>]`.
 - Implement `IsEdge` for `[HashMap<usize, W>]`.
+- Implement `IterEdges` for `[Vec<usize>]`.
+- Implement `IterEdges` for `[HashSet<usize>]`.
 
 ## [0.6.3] - 2024-04-06
 
