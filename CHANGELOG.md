@@ -2,25 +2,33 @@
 
 ## [x.x.x] - Planned
 
-- Add example to `README`.
+- Add Edmonds-Karp algorithm.
+- Add Hopcroft-Karp algorithm.
+- Add Kruksal's algorithm.
+- Add SPFA algorithm.
+- Add `IsSimple` trait or function for graphs.
 - Add `bfs::mssp`.
 - Add `bfs::sssp`.
-- Add `dfs::*`.
 - Add `dijkstra::mssp`.
 - Add `dijkstra::sssp`.
-- Implement traits for nested arrays.
-- Return borrowed values in traits.
-- Test implementations of traits with properties in `op::prop`.
 - Add `should_panic` test cases where possible.
-- Add `IsSimple` trait for graphs.
-- Mention for functions whether they are meant for simple graphs.
+- Add biclique generator.
+- Add binary tree generator.
+- Add bipartite matching algorithm for connected graphs.
+- Add bipartite matching algorithm for disconnected graphs.
+- Add depth-first search.
+- Add linear graph generator.
+- Add star graph generator.
 - Add topological sorting for DAGs.
+- Mention for functions whether they are meant for simple graphs.
+- Test implementations of traits with properties in `op::prop`.
 
 ## [0.8.0] - Unreleased
 
 ### Added
 
 - Add installation instructions to `README`.
+- Add example usage to `README`.
 
 ### Changed
 
