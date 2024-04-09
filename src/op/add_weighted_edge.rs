@@ -560,6 +560,22 @@ mod tests {
     }
 
     #[test]
+    #[should_panic(expected = "s is not in the graph")]
+    fn arr_vec_should_panic_s() {
+        let mut graph = [Vec::new(), Vec::new(), Vec::new()];
+
+        graph.add_weighted_edge(3, 0, 0);
+    }
+
+    #[test]
+    #[should_panic(expected = "t is not in the graph")]
+    fn arr_vec_should_panic_t() {
+        let mut graph = [Vec::new(), Vec::new(), Vec::new()];
+
+        graph.add_weighted_edge(0, 3, 0);
+    }
+
+    #[test]
     fn arr_hash_set() {
         let mut graph = [HashSet::new(), HashSet::new(), HashSet::new()];
 
@@ -616,6 +632,22 @@ mod tests {
     }
 
     #[test]
+    #[should_panic(expected = "s is not in the graph")]
+    fn arr_hash_set_should_panic_s() {
+        let mut graph = [HashSet::new(), HashSet::new(), HashSet::new()];
+
+        graph.add_weighted_edge(3, 0, 0);
+    }
+
+    #[test]
+    #[should_panic(expected = "t is not in the graph")]
+    fn arr_hash_set_should_panic_t() {
+        let mut graph = [HashSet::new(), HashSet::new(), HashSet::new()];
+
+        graph.add_weighted_edge(0, 3, 0);
+    }
+
+    #[test]
     fn arr_hash_map() {
         let mut graph = [HashMap::new(), HashMap::new(), HashMap::new()];
 
@@ -669,6 +701,22 @@ mod tests {
                 HashMap::from([(0, 3)])
             ]
         );
+    }
+
+    #[test]
+    #[should_panic(expected = "s is not in the graph")]
+    fn arr_hash_map_should_panic_s() {
+        let mut graph = [HashMap::new(), HashMap::new(), HashMap::new()];
+
+        graph.add_weighted_edge(3, 0, 0);
+    }
+
+    #[test]
+    #[should_panic(expected = "t is not in the graph")]
+    fn arr_hash_map_should_panic_t() {
+        let mut graph = [HashMap::new(), HashMap::new(), HashMap::new()];
+
+        graph.add_weighted_edge(0, 3, 0);
     }
 
     #[test]
