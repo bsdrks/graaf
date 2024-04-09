@@ -53,7 +53,7 @@ use {
 /// assert_eq!(graph.outdegree(2), 1);
 /// ```
 pub trait Outdegree {
-    /// Returns the outdegree of a vertex.
+    /// Return the outdegree of a vertex.
     ///
     /// # Arguments
     ///

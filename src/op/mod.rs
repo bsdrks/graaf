@@ -5,6 +5,7 @@ pub mod count_all_vertices;
 pub mod edge_weight;
 pub mod indegree;
 pub mod is_edge;
+pub mod is_simple;
 pub mod iter_all_edges;
 pub mod iter_all_weighted_edges;
 pub mod iter_edges;
@@ -22,6 +23,7 @@ pub use {
     edge_weight::EdgeWeight,
     indegree::Indegree,
     is_edge::IsEdge,
+    is_simple::IsSimple,
     iter_all_edges::IterAllEdges,
     iter_all_weighted_edges::IterAllWeightedEdges,
     iter_edges::IterEdges,

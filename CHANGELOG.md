@@ -11,7 +11,6 @@
 - Add `bfs::sssp`.
 - Add `dijkstra::mssp`.
 - Add `dijkstra::sssp`.
-- Add `should_panic` test cases where possible.
 - Add biclique generator.
 - Add binary tree generator.
 - Add bipartite matching algorithm for connected graphs.
