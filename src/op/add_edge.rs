@@ -27,7 +27,9 @@ use {
 /// # How can I implement `AddEdge`?
 ///
 /// Provide an implementation of `add_edge` that adds an edge from `s` to `t` to
-/// the graph.
+/// the graph. Implementations should panic if `s` or `t` is known to be out of
+/// bounds, for example for types with a compile-time constant size that
+/// matches the number of vertices in the graph.
 ///
 /// ```
 /// use graaf::op::AddEdge;
@@ -131,9 +133,11 @@ where
 impl<const V: usize> AddEdge for [Vec<usize>; V] {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph or if the new capacity of the vector
-    /// exceeds `isize::MAX`.
+    /// Panics if `s` or `t` is not in the graph.
     fn add_edge(&mut self, s: usize, t: usize) {
+        assert!(s < V, "s is not in the graph");
+        assert!(t < V, "t is not in the graph");
+
         self[s].push(t);
     }
 }
@@ -146,6 +150,9 @@ where
     ///
     /// Panics if `s` is not in the graph.
     fn add_edge(&mut self, s: usize, t: usize) {
+        assert!(s < V, "s is not in the graph");
+        assert!(t < V, "t is not in the graph");
+
         let _ = self[s].insert(t);
     }
 }
@@ -160,7 +167,7 @@ where
     ///
     /// Panics if `s` is not in the graph.
     fn add_edge(&mut self, s: usize, t: usize) {
-        self.get_mut(&s).unwrap().push(t);
+        self.get_mut(&s).expect("s is not in the graph").push(t);
     }
 }
 
@@ -173,7 +180,7 @@ where
     ///
     /// Panics if `s` is not in the graph.
     fn add_edge(&mut self, s: usize, t: usize) {
-        let _ = self.get_mut(&s).unwrap().insert(t);
+        let _ = self.get_mut(&s).expect("s is not in the graph").insert(t);
     }
 }
 
@@ -201,6 +208,14 @@ mod tests {
         graph.add_edge(2, 1);
 
         assert_eq!(graph, vec![vec![1, 2], vec![2], vec![0, 1]]);
+    }
+
+    #[test]
+    #[should_panic(expected = "index out of bounds: the len is 3 but the index is 3")]
+    fn vec_vec_panic_s() {
+        let mut graph = vec![Vec::new(); 3];
+
+        graph.add_edge(3, 0);
     }
 
     #[test]
@@ -242,6 +257,14 @@ mod tests {
     }
 
     #[test]
+    #[should_panic(expected = "index out of bounds: the len is 3 but the index is 3")]
+    fn vec_hash_set_panic_s() {
+        let mut graph = vec![HashSet::new(); 3];
+
+        graph.add_edge(3, 0);
+    }
+
+    #[test]
     fn slice_vec() {
         let graph: &mut [Vec<usize>] = &mut [Vec::new(), Vec::new(), Vec::new()];
 
@@ -261,6 +284,14 @@ mod tests {
         graph.add_edge(2, 1);
 
         assert_eq!(*graph, [vec![1, 2], vec![2], vec![0, 1]]);
+    }
+
+    #[test]
+    #[should_panic(expected = "index out of bounds: the len is 3 but the index is 3")]
+    fn slice_vec_panic_s() {
+        let graph: &mut [Vec<usize>] = &mut [Vec::new(), Vec::new(), Vec::new()];
+
+        graph.add_edge(3, 0);
     }
 
     #[test]
@@ -299,6 +330,14 @@ mod tests {
     }
 
     #[test]
+    #[should_panic(expected = "index out of bounds: the len is 3 but the index is 3")]
+    fn slice_hash_set_panic_s() {
+        let graph: &mut [HashSet<usize>] = &mut [HashSet::new(), HashSet::new(), HashSet::new()];
+
+        graph.add_edge(3, 0);
+    }
+
+    #[test]
     fn arr_vec() {
         let mut graph = [Vec::new(), Vec::new(), Vec::new()];
 
@@ -318,6 +357,22 @@ mod tests {
         graph.add_edge(2, 1);
 
         assert_eq!(graph, [vec![1, 2], vec![2], vec![0, 1]]);
+    }
+
+    #[test]
+    #[should_panic(expected = "s is not in the graph")]
+    fn arr_vec_panic_s() {
+        let mut graph = [Vec::new(), Vec::new(), Vec::new()];
+
+        graph.add_edge(3, 0);
+    }
+
+    #[test]
+    #[should_panic(expected = "t is not in the graph")]
+    fn arr_vec_panic_t() {
+        let mut graph = [Vec::new(), Vec::new(), Vec::new()];
+
+        graph.add_edge(0, 3);
     }
 
     #[test]
@@ -356,6 +411,22 @@ mod tests {
     }
 
     #[test]
+    #[should_panic(expected = "s is not in the graph")]
+    fn arr_hash_set_panic_s() {
+        let mut graph = [HashSet::new(), HashSet::new(), HashSet::new()];
+
+        graph.add_edge(3, 0);
+    }
+
+    #[test]
+    #[should_panic(expected = "t is not in the graph")]
+    fn arr_hash_set_panic_t() {
+        let mut graph = [HashSet::new(), HashSet::new(), HashSet::new()];
+
+        graph.add_edge(0, 3);
+    }
+
+    #[test]
     fn hash_map_vec() {
         let mut graph = HashMap::from([(0, Vec::new()), (1, Vec::new()), (2, Vec::new())]);
 
@@ -387,6 +458,14 @@ mod tests {
             graph,
             HashMap::from([(0, vec![1, 2]), (1, vec![2]), (2, vec![0, 1])])
         );
+    }
+
+    #[test]
+    #[should_panic(expected = "s is not in the graph")]
+    fn hash_map_vec_panic_s() {
+        let mut graph = HashMap::from([(0, Vec::new()), (1, Vec::new()), (2, Vec::new())]);
+
+        graph.add_edge(3, 0);
     }
 
     #[test]
@@ -441,5 +520,17 @@ mod tests {
                 (2, HashSet::from([0, 1]))
             ])
         );
+    }
+
+    #[test]
+    #[should_panic(expected = "s is not in the graph")]
+    fn hash_map_hash_set_panic_s() {
+        let mut graph = HashMap::from([
+            (0, HashSet::new()),
+            (1, HashSet::new()),
+            (2, HashSet::new()),
+        ]);
+
+        graph.add_edge(3, 0);
     }
 }
