@@ -1,5 +1,7 @@
 //! A trait to determine whether a graph is simple
 //!
+//! A graph is simple if it has no self-loops or parallel edges.
+//!
 //! # Examples
 //!
 //! ```

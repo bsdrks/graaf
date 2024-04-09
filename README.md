@@ -78,6 +78,7 @@ These traits are implemented for various graph representations built from standa
 - [`EdgeWeight`](https://docs.rs/graaf/latest/graaf/op/edge_weight/trait.EdgeWeight.html) gets the weight of an edge.
 - [`Indegree`](https://docs.rs/graaf/latest/graaf/op/indegree/trait.Indegree.html) returns the indegree of a vertex.
 - [`IsEdge`](https://docs.rs/graaf/latest/graaf/op/is_edge/trait.IsEdge.html) returns whether an edge exists.
+- [`IsSimple`](https://docs.rs/graaf/latest/graaf/op/is_simple/trait.IsSimple.html) returns whether a graph is simple.
 - [`IterAllEdges`](https://docs.rs/graaf/latest/graaf/op/iter_all_edges/trait.IterAllEdges.html) iterates over all unweighted edges.
 - [`IterAllWeightedEdges`](https://docs.rs/graaf/latest/graaf/op/iter_all_weighted_edges/trait.IterAllWeightedEdges.html) iterates over all weighted edges.
 - [`IterEdges`](https://docs.rs/graaf/latest/graaf/op/iter_edges/trait.IterEdges.html) iterates over all unweighted edges of a source vertex.
