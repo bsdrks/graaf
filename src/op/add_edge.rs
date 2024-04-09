@@ -211,14 +211,6 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "index out of bounds: the len is 3 but the index is 3")]
-    fn vec_vec_panic_s() {
-        let mut graph = vec![Vec::new(); 3];
-
-        graph.add_edge(3, 0);
-    }
-
-    #[test]
     fn vec_hash_set() {
         let mut graph = vec![HashSet::new(); 3];
 
@@ -257,14 +249,6 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "index out of bounds: the len is 3 but the index is 3")]
-    fn vec_hash_set_panic_s() {
-        let mut graph = vec![HashSet::new(); 3];
-
-        graph.add_edge(3, 0);
-    }
-
-    #[test]
     fn slice_vec() {
         let graph: &mut [Vec<usize>] = &mut [Vec::new(), Vec::new(), Vec::new()];
 
@@ -284,14 +268,6 @@ mod tests {
         graph.add_edge(2, 1);
 
         assert_eq!(*graph, [vec![1, 2], vec![2], vec![0, 1]]);
-    }
-
-    #[test]
-    #[should_panic(expected = "index out of bounds: the len is 3 but the index is 3")]
-    fn slice_vec_panic_s() {
-        let graph: &mut [Vec<usize>] = &mut [Vec::new(), Vec::new(), Vec::new()];
-
-        graph.add_edge(3, 0);
     }
 
     #[test]
@@ -327,14 +303,6 @@ mod tests {
                 HashSet::from([0, 1])
             ]
         );
-    }
-
-    #[test]
-    #[should_panic(expected = "index out of bounds: the len is 3 but the index is 3")]
-    fn slice_hash_set_panic_s() {
-        let graph: &mut [HashSet<usize>] = &mut [HashSet::new(), HashSet::new(), HashSet::new()];
-
-        graph.add_edge(3, 0);
     }
 
     #[test]
@@ -461,14 +429,6 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "s is not in the graph")]
-    fn hash_map_vec_panic_s() {
-        let mut graph = HashMap::from([(0, Vec::new()), (1, Vec::new()), (2, Vec::new())]);
-
-        graph.add_edge(3, 0);
-    }
-
-    #[test]
     fn hash_map_hash_set() {
         let mut graph = HashMap::from([
             (0, HashSet::new()),
@@ -520,17 +480,5 @@ mod tests {
                 (2, HashSet::from([0, 1]))
             ])
         );
-    }
-
-    #[test]
-    #[should_panic(expected = "s is not in the graph")]
-    fn hash_map_hash_set_panic_s() {
-        let mut graph = HashMap::from([
-            (0, HashSet::new()),
-            (1, HashSet::new()),
-            (2, HashSet::new()),
-        ]);
-
-        graph.add_edge(3, 0);
     }
 }

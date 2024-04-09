@@ -30,7 +30,9 @@ use {
 /// # How can I implement `AddWeightedEdge`?
 ///
 /// Provide an implementation of `add_weighted_edge` that adds an edge from `s`
-/// to `t` with weight `w` to the graph.
+/// to `t` with weight `w` to the graph. Implementations should panic if `s` or
+/// `t` is known to be out of bounds, for example for types with a compile-time
+/// constant size that matches the number of vertices in the graph.
 ///
 /// ```
 /// use graaf::op::AddWeightedEdge;
@@ -159,8 +161,11 @@ where
 impl<const V: usize, W> AddWeightedEdge<W> for [Vec<(usize, W)>; V] {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` or `t` is not in the graph.
     fn add_weighted_edge(&mut self, s: usize, t: usize, w: W) {
+        assert!(s < V, "s is not in the graph");
+        assert!(t < V, "t is not in the graph");
+
         self[s].push((t, w));
     }
 }
@@ -172,8 +177,11 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` or `t` is not in the graph.
     fn add_weighted_edge(&mut self, s: usize, t: usize, w: W) {
+        assert!(s < V, "s is not in the graph");
+        assert!(t < V, "t is not in the graph");
+
         let _ = self[s].insert((t, w));
     }
 }
@@ -184,8 +192,11 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` or `t` is not in the graph.
     fn add_weighted_edge(&mut self, s: usize, t: usize, w: W) {
+        assert!(s < V, "s is not in the graph");
+        assert!(t < V, "t is not in the graph");
+
         let _ = self[s].insert(t, w);
     }
 }

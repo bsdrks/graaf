@@ -33,8 +33,13 @@
 ### Changed
 
 - Change `iter_all_edges` returns type to `impl Iterator<Item = (usize, usize)>`.
-- Change `iter_all_weighted_edges` return type to `impl Iterator<Item = (usize, usize, &'a W)>`.
-- Change `iter_weighted_edges` return type to `impl Iterator<Item = (usize, &'a W)>`.
+- Change `iter_all_weighted_edges` return type to `impl Iterator<Item = (usize, usize, &W)>`.
+- Change `iter_weighted_edges` return type to `impl Iterator<Item = (usize, &W)>`.
+- Panic if `AddEdge::add_edge` for `[Vec<usize>; V]` is called with `t` >= `V`.
+- Panic if `AddEdge::add_edge` for `[HashSet<usize>; V]` is called with `t` >= `V`.
+- Panic if `AddEdge::add_weighted_edge` for `[Vec<(usize, W)>; V]` is called with `t` >= `V`.
+- Panic if `AddEdge::add_weighted_edge` for `[HashSet<(usize, W)>; V]` is called with `t` >= `V`.
+- Panic if `AddEdge::add_weighted_edge` for `[HashMap<usize, W>; V]` is called with `t` >= `V`.
 
 ## [0.7.0] - 2024-04-07
 
