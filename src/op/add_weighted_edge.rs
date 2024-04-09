@@ -30,9 +30,7 @@ use {
 /// # How can I implement `AddWeightedEdge`?
 ///
 /// Provide an implementation of `add_weighted_edge` that adds an edge from `s`
-/// to `t` with weight `w` to the graph. Implementations should panic if `s` or
-/// `t` is known to be out of bounds, for example for types with a compile-time
-/// constant size that matches the number of vertices in the graph.
+/// to `t` with weight `w` to the graph.
 ///
 /// ```
 /// use graaf::op::AddWeightedEdge;
@@ -84,42 +82,6 @@ pub trait AddWeightedEdge<W> {
     fn add_weighted_edge(&mut self, s: usize, t: usize, w: W);
 }
 
-// Vec
-
-impl<W> AddWeightedEdge<W> for Vec<Vec<(usize, W)>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
-    fn add_weighted_edge(&mut self, s: usize, t: usize, w: W) {
-        self[s].push((t, w));
-    }
-}
-
-impl<W, H> AddWeightedEdge<W> for Vec<HashSet<(usize, W), H>>
-where
-    H: BuildHasher,
-    W: Eq + Hash,
-{
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
-    fn add_weighted_edge(&mut self, s: usize, t: usize, w: W) {
-        let _ = self[s].insert((t, w));
-    }
-}
-
-impl<W, H> AddWeightedEdge<W> for Vec<HashMap<usize, W, H>>
-where
-    H: BuildHasher,
-{
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
-    fn add_weighted_edge(&mut self, s: usize, t: usize, w: W) {
-        let _ = self[s].insert(t, w);
-    }
-}
-
 // Slice
 
 impl<W> AddWeightedEdge<W> for [Vec<(usize, W)>] {
@@ -152,51 +114,6 @@ where
     ///
     /// Panics if `s` is not in the graph.
     fn add_weighted_edge(&mut self, s: usize, t: usize, w: W) {
-        let _ = self[s].insert(t, w);
-    }
-}
-
-// Arr
-
-impl<const V: usize, W> AddWeightedEdge<W> for [Vec<(usize, W)>; V] {
-    /// # Panics
-    ///
-    /// Panics if `s` or `t` is not in the graph.
-    fn add_weighted_edge(&mut self, s: usize, t: usize, w: W) {
-        assert!(s < V, "s is not in the graph");
-        assert!(t < V, "t is not in the graph");
-
-        self[s].push((t, w));
-    }
-}
-
-impl<const V: usize, W, H> AddWeightedEdge<W> for [HashSet<(usize, W), H>; V]
-where
-    H: BuildHasher,
-    W: Eq + Hash,
-{
-    /// # Panics
-    ///
-    /// Panics if `s` or `t` is not in the graph.
-    fn add_weighted_edge(&mut self, s: usize, t: usize, w: W) {
-        assert!(s < V, "s is not in the graph");
-        assert!(t < V, "t is not in the graph");
-
-        let _ = self[s].insert((t, w));
-    }
-}
-
-impl<const V: usize, W, H> AddWeightedEdge<W> for [HashMap<usize, W, H>; V]
-where
-    H: BuildHasher,
-{
-    /// # Panics
-    ///
-    /// Panics if `s` or `t` is not in the graph.
-    fn add_weighted_edge(&mut self, s: usize, t: usize, w: W) {
-        assert!(s < V, "s is not in the graph");
-        assert!(t < V, "t is not in the graph");
-
         let _ = self[s].insert(t, w);
     }
 }
@@ -560,22 +477,6 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "s is not in the graph")]
-    fn arr_vec_should_panic_s() {
-        let mut graph = [Vec::new(), Vec::new(), Vec::new()];
-
-        graph.add_weighted_edge(3, 0, 0);
-    }
-
-    #[test]
-    #[should_panic(expected = "t is not in the graph")]
-    fn arr_vec_should_panic_t() {
-        let mut graph = [Vec::new(), Vec::new(), Vec::new()];
-
-        graph.add_weighted_edge(0, 3, 0);
-    }
-
-    #[test]
     fn arr_hash_set() {
         let mut graph = [HashSet::new(), HashSet::new(), HashSet::new()];
 
@@ -632,22 +533,6 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "s is not in the graph")]
-    fn arr_hash_set_should_panic_s() {
-        let mut graph = [HashSet::new(), HashSet::new(), HashSet::new()];
-
-        graph.add_weighted_edge(3, 0, 0);
-    }
-
-    #[test]
-    #[should_panic(expected = "t is not in the graph")]
-    fn arr_hash_set_should_panic_t() {
-        let mut graph = [HashSet::new(), HashSet::new(), HashSet::new()];
-
-        graph.add_weighted_edge(0, 3, 0);
-    }
-
-    #[test]
     fn arr_hash_map() {
         let mut graph = [HashMap::new(), HashMap::new(), HashMap::new()];
 
@@ -701,22 +586,6 @@ mod tests {
                 HashMap::from([(0, 3)])
             ]
         );
-    }
-
-    #[test]
-    #[should_panic(expected = "s is not in the graph")]
-    fn arr_hash_map_should_panic_s() {
-        let mut graph = [HashMap::new(), HashMap::new(), HashMap::new()];
-
-        graph.add_weighted_edge(3, 0, 0);
-    }
-
-    #[test]
-    #[should_panic(expected = "t is not in the graph")]
-    fn arr_hash_map_should_panic_t() {
-        let mut graph = [HashMap::new(), HashMap::new(), HashMap::new()];
-
-        graph.add_weighted_edge(0, 3, 0);
     }
 
     #[test]

@@ -30,16 +30,26 @@
 - Add installation instructions to `README`.
 - Add example usage to `README`.
 
+### Removed
+
+- Remove `AddEdge` for:
+  - `Vec<Vec<T>>`
+  - `Vec<HashSet<T>>`
+  - `[Vec<T>; V]`
+  - `[HashSet<T>; V]`
+- Remove `AddWeightedEdge` for:
+  - `Vec<Vec<(usize, W)>>`
+  - `Vec<HashSet<(usize, W)>>`
+  - `Vec<HashMap<usize, W>>`
+  - `[Vec<(usize, W)>; V]`
+  - `[HashSet<(usize, W)>; V]`
+  - `[HashMap<usize, W>; V]`
+
 ### Changed
 
 - Change `iter_all_edges` returns type to `impl Iterator<Item = (usize, usize)>`.
 - Change `iter_all_weighted_edges` return type to `impl Iterator<Item = (usize, usize, &W)>`.
 - Change `iter_weighted_edges` return type to `impl Iterator<Item = (usize, &W)>`.
-- Panic if `AddEdge::add_edge` for `[Vec<usize>; V]` is called with `t` >= `V`.
-- Panic if `AddEdge::add_edge` for `[HashSet<usize>; V]` is called with `t` >= `V`.
-- Panic if `AddEdge::add_weighted_edge` for `[Vec<(usize, W)>; V]` is called with `t` >= `V`.
-- Panic if `AddEdge::add_weighted_edge` for `[HashSet<(usize, W)>; V]` is called with `t` >= `V`.
-- Panic if `AddEdge::add_weighted_edge` for `[HashMap<usize, W>; V]` is called with `t` >= `V`.
 
 ## [0.7.0] - 2024-04-07
 
@@ -74,36 +84,36 @@
 
 ### Removed
 
-- Remove `CountAllEdges` for `Vec<Vec<T>>`. Use `[Vec<T>]`.
-- Remove `CountAllEdges` for `Vec<HashSet<T>>`. Use `[HashSet<T>]`.
-- Remove `CountAllEdges` for `Vec<HashMap<K, W>>`. Use `[HashMap<K, W>]`.
-- Remove `CountAllEdges` for `[Vec<T>; V]`. Use `[Vec<T>]`.
-- Remove `CountAllEdges` for `[HashSet<T>; V]`. Use `[HashSet<T>]`.
-- Remove `CountAllEdges` for `[HashMap<K, W>; V]`. Use `[HashMap<K, W>]`.
-- Remove `Indegree` for `Vec<HashSet<usize>>`. Use `[HashSet<usize>]`.
-- Remove `Indegree` for `Vec<HashMap<usize, W>>`. Use `[HashMap<usize, W>]`.
-- Remove `Indegree` for `[HashSet<usize>; V]`. Use `[HashSet<usize>]`.
-- Remove `Indegree` for `[HashMap<usize, W>; V]`. Use `[HashMap<usize, W>]`.
-- Remove `IsEdge` for `Vec<HashSet<usize>>`. Use `[HashSet<usize>]`.
-- Remove `IsEdge` for `Vec<HashMap<usize, W>>`. Use `[HashMap<usize, W>]`.
-- Remove `IsEdge` for `[HashSet<usize>; V]`. Use `[HashSet<usize>]`.
-- Remove `IsEdge` for `[HashMap<usize, W>; V]`. Use `[HashMap<usize, W>]`.
-- Remove `IterAllEdges` for `Vec<(usize, usize)>`. Use `[(usize, usize)]`.
-- Remove `IterAllEdges` for `[(usize, usize); V]`. Use `[(usize, usize)]`.
-- Remove `IterAllWeightedEdges` for `Vec<(usize, usize, W)>`. Use `[(usize, usize, W)]`.
-- Remove `IterAllWeightedEdges` for `[(usize, usize, W); V]`. Use `[(usize, usize, W)]`.
-- Remove `IterVertices` for `Vec<T>`. Use `[T]`.
-- Remove `IterVertices` for `[T; V]`. Use `[T]`.
-- Remove `Outdegree` for `Vec<Vec<T>>`. Use `[Vec<T>]`.
-- Remove `Outdegree` for `Vec<HashSet<usize>>`. Use `[HashSet<T>]`.
-- Remove `Outdegree` for `Vec<HashMap<usize, W>>`. Use `[HashMap<K, W>]`.
-- Remove `Outdegree` for `[Vec<T>; V]`. Use `[Vec<T>]`.
-- Remove `Outdegree` for `[HashSet<usize>; V]>`. Use `[HashSet<T>]`.
-- Remove `Outdegree` for `[HashMap<usize, W>; V]>`. Use `[HashMap<K, W>]`.
-- Remove `RemoveEdge` for `Vec<HashSet<usize>>`. Use `[HashSet<usize>]`.
-- Remove `RemoveEdge` for `Vec<HashMap<usize, W>>`. Use `[HashMap<usize, W>]`.
-- Remove `RemoveEdge` for `[HashSet<usize>; V]`. Use `[HashSet<usize>]`.
-- Remove `RemoveEdge` for `[HashMap<usize, W>; V]`. Use `[HashMap<usize, W>]`.
+- Remove `CountAllEdges` for `Vec<Vec<T>>`.
+- Remove `CountAllEdges` for `Vec<HashSet<T>>`.
+- Remove `CountAllEdges` for `Vec<HashMap<K, W>>`.
+- Remove `CountAllEdges` for `[Vec<T>; V]`.
+- Remove `CountAllEdges` for `[HashSet<T>; V]`.
+- Remove `CountAllEdges` for `[HashMap<K, W>; V]`.
+- Remove `Indegree` for `Vec<HashSet<usize>>`.
+- Remove `Indegree` for `Vec<HashMap<usize, W>>`.
+- Remove `Indegree` for `[HashSet<usize>; V]`.
+- Remove `Indegree` for `[HashMap<usize, W>; V]`.
+- Remove `IsEdge` for `Vec<HashSet<usize>>`.
+- Remove `IsEdge` for `Vec<HashMap<usize, W>>`.
+- Remove `IsEdge` for `[HashSet<usize>; V]`.
+- Remove `IsEdge` for `[HashMap<usize, W>; V]`.
+- Remove `IterAllEdges` for `Vec<(usize, usize)>`.
+- Remove `IterAllEdges` for `[(usize, usize); V]`.
+- Remove `IterAllWeightedEdges` for `Vec<(usize, usize, W)>`.
+- Remove `IterAllWeightedEdges` for `[(usize, usize, W); V]`.
+- Remove `IterVertices` for `Vec<T>`.
+- Remove `IterVertices` for `[T; V]`.
+- Remove `Outdegree` for `Vec<Vec<T>>`.
+- Remove `Outdegree` for `Vec<HashSet<usize>>`.
+- Remove `Outdegree` for `Vec<HashMap<usize, W>>`.
+- Remove `Outdegree` for `[Vec<T>; V]`.
+- Remove `Outdegree` for `[HashSet<usize>; V]>`.
+- Remove `Outdegree` for `[HashMap<usize, W>; V]>`.
+- Remove `RemoveEdge` for `Vec<HashSet<usize>>`.
+- Remove `RemoveEdge` for `Vec<HashMap<usize, W>>`.
+- Remove `RemoveEdge` for `[HashSet<usize>; V]`.
+- Remove `RemoveEdge` for `[HashMap<usize, W>; V]`.
 
 ## [0.6.3] - 2024-04-06
 

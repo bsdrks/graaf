@@ -27,9 +27,7 @@ use {
 /// # How can I implement `AddEdge`?
 ///
 /// Provide an implementation of `add_edge` that adds an edge from `s` to `t` to
-/// the graph. Implementations should panic if `s` or `t` is known to be out of
-/// bounds, for example for types with a compile-time constant size that
-/// matches the number of vertices in the graph.
+/// the graph.
 ///
 /// ```
 /// use graaf::op::AddEdge;
@@ -80,30 +78,6 @@ pub trait AddEdge {
     fn add_edge(&mut self, s: usize, t: usize);
 }
 
-// Vec
-
-impl AddEdge for Vec<Vec<usize>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph or if the new capacity of the vector
-    /// exceeds `isize::MAX`.
-    fn add_edge(&mut self, s: usize, t: usize) {
-        self[s].push(t);
-    }
-}
-
-impl<H> AddEdge for Vec<HashSet<usize, H>>
-where
-    H: BuildHasher,
-{
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
-    fn add_edge(&mut self, s: usize, t: usize) {
-        let _ = self[s].insert(t);
-    }
-}
-
 // Slice
 
 impl AddEdge for [Vec<usize>] {
@@ -124,35 +98,6 @@ where
     ///
     /// Panics if `s` is not in the graph.
     fn add_edge(&mut self, s: usize, t: usize) {
-        let _ = self[s].insert(t);
-    }
-}
-
-// Arr
-
-impl<const V: usize> AddEdge for [Vec<usize>; V] {
-    /// # Panics
-    ///
-    /// Panics if `s` or `t` is not in the graph.
-    fn add_edge(&mut self, s: usize, t: usize) {
-        assert!(s < V, "s is not in the graph");
-        assert!(t < V, "t is not in the graph");
-
-        self[s].push(t);
-    }
-}
-
-impl<const V: usize, H> AddEdge for [HashSet<usize, H>; V]
-where
-    H: BuildHasher,
-{
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
-    fn add_edge(&mut self, s: usize, t: usize) {
-        assert!(s < V, "s is not in the graph");
-        assert!(t < V, "t is not in the graph");
-
         let _ = self[s].insert(t);
     }
 }
@@ -328,22 +273,6 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "s is not in the graph")]
-    fn arr_vec_panic_s() {
-        let mut graph = [Vec::new(), Vec::new(), Vec::new()];
-
-        graph.add_edge(3, 0);
-    }
-
-    #[test]
-    #[should_panic(expected = "t is not in the graph")]
-    fn arr_vec_panic_t() {
-        let mut graph = [Vec::new(), Vec::new(), Vec::new()];
-
-        graph.add_edge(0, 3);
-    }
-
-    #[test]
     fn arr_hash_set() {
         let mut graph = [HashSet::new(), HashSet::new(), HashSet::new()];
 
@@ -376,22 +305,6 @@ mod tests {
                 HashSet::from([0, 1])
             ]
         );
-    }
-
-    #[test]
-    #[should_panic(expected = "s is not in the graph")]
-    fn arr_hash_set_panic_s() {
-        let mut graph = [HashSet::new(), HashSet::new(), HashSet::new()];
-
-        graph.add_edge(3, 0);
-    }
-
-    #[test]
-    #[should_panic(expected = "t is not in the graph")]
-    fn arr_hash_set_panic_t() {
-        let mut graph = [HashSet::new(), HashSet::new(), HashSet::new()];
-
-        graph.add_edge(0, 3);
     }
 
     #[test]
