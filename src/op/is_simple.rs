@@ -63,6 +63,6 @@
 /// assert!(!graph.is_simple());
 /// ```
 pub trait IsSimple {
-    /// Determines whether the graph is simple.
+    /// Determine whether the graph is simple.
     fn is_simple(&self) -> bool;
 }

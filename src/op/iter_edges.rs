@@ -149,7 +149,7 @@ use {
 /// assert_eq!(iter.next(), None);
 /// ```
 pub trait IterEdges {
-    /// Returns an iterator over the edges of the vertex `s`.
+    /// Return an iterator over the edges of the vertex `s`.
     ///
     /// # Arguments
     ///

@@ -99,7 +99,7 @@ use {
 /// Types that also implement [`crate::op::RemoveEdge`] should ensure that
 /// [`crate::op::prop::remove_edge_is_edge`] holds.
 pub trait IsEdge {
-    /// Checks if there is an edge from `s` to `t`.
+    /// Check if there is an edge from `s` to `t`.
     ///
     /// # Arguments
     ///

@@ -48,7 +48,7 @@ use {
 /// assert_eq!(graph.count_all_vertices(), 4);
 /// ```
 pub trait CountAllVertices {
-    /// Counts all vertices.
+    /// Count all vertices.
     fn count_all_vertices(&self) -> usize;
 }
 

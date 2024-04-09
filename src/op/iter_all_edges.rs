@@ -54,7 +54,7 @@ use {
 /// assert_eq!(iter.next(), None);
 /// ```
 pub trait IterAllEdges {
-    /// Returns an iterator that iterates over all edges in a graph.
+    /// Return an iterator that iterates over all edges in a graph.
     fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)>;
 }
 

@@ -22,6 +22,12 @@
 - Mention for functions whether they are meant for simple graphs.
 - Test implementations of traits with properties in `op::prop`.
 
+## [0.8.1] - Unreleased
+
+### Added
+
+- Add `IsSimple` trait.
+
 ## [0.8.0] - 2024-04-09
 
 ### Added
