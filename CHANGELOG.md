@@ -32,18 +32,16 @@
 
 ### Removed
 
-- Remove `AddEdge` for:
-  - `Vec<Vec<T>>`
-  - `Vec<HashSet<T>>`
-  - `[Vec<T>; V]`
-  - `[HashSet<T>; V]`
-- Remove `AddWeightedEdge` for:
-  - `Vec<Vec<(usize, W)>>`
-  - `Vec<HashSet<(usize, W)>>`
-  - `Vec<HashMap<usize, W>>`
-  - `[Vec<(usize, W)>; V]`
-  - `[HashSet<(usize, W)>; V]`
-  - `[HashMap<usize, W>; V]`
+- Remove `AddEdge` for `Vec<Vec<T>>`.
+- Remove `AddEdge` for `Vec<HashSet<T>>`.
+- Remove `AddEdge` for `[Vec<T>; V]`.
+- Remove `AddEdge` for `[HashSet<T>; V]`.
+- Remove `AddWeightedEdge` for `Vec<Vec<(usize, W)>>`.
+- Remove `AddWeightedEdge` for `Vec<HashSet<(usize, W)>>`.
+- Remove `AddWeightedEdge` for `Vec<HashMap<usize, W>>`.
+- Remove `AddWeightedEdge` for `[Vec<(usize, W)>; V]`.
+- Remove `AddWeightedEdge` for `[HashSet<(usize, W)>; V]`.
+- Remove `AddWeightedEdge` for `[HashMap<usize, W>; V]`.
 
 ### Changed
 
