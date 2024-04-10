@@ -94,7 +94,39 @@ mod tests {
     use super::*;
 
     #[test]
+    fn vec_hash_set() {
+        #[allow(clippy::useless_vec)]
+        let graph = vec![HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
+
+        assert!(graph.is_simple());
+
+        #[allow(clippy::useless_vec)]
+        let graph = vec![
+            HashSet::from([0, 1, 2]),
+            HashSet::from([0, 2]),
+            HashSet::from([0]),
+        ];
+
+        assert!(!graph.is_simple());
+    }
+
+    #[test]
     fn slice_hash_set() {
+        let graph: &[HashSet<usize>] = &[HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
+
+        assert!(graph.is_simple());
+
+        let graph: &[HashSet<usize>] = &[
+            HashSet::from([0, 1, 2]),
+            HashSet::from([0, 2]),
+            HashSet::from([0]),
+        ];
+
+        assert!(!graph.is_simple());
+    }
+
+    #[test]
+    fn arr_hash_set() {
         let graph = [HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
 
         assert!(graph.is_simple());
