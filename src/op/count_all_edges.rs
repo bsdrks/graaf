@@ -53,8 +53,6 @@ pub trait CountAllEdges {
     fn count_all_edges(&self) -> usize;
 }
 
-// Slice
-
 impl<T> CountAllEdges for [Vec<T>] {
     /// # Panics
     ///
@@ -87,8 +85,6 @@ where
         self.iter().map(HashMap::len).sum()
     }
 }
-
-// HashMap
 
 impl<K, T, H> CountAllEdges for HashMap<K, Vec<T>, H>
 where

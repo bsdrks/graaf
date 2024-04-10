@@ -27,6 +27,13 @@
 ### Added
 
 - Add `IsSimple` trait.
+- Implement `IsSimple` for `[HashSet<usize>]`.
+
+### Removed
+
+- Remove `EdgeWeight` for `Vec<HashMap<usize, W>>`.
+- Remove `EdgeWeight` for `[HashMap<usize, W>; V]`.
+- Remove `IterVertices` for `HashSet<T>`.
 
 ## [0.8.0] - 2024-04-09
 

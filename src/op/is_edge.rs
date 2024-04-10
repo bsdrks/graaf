@@ -112,8 +112,6 @@ pub trait IsEdge {
     fn is_edge(&self, s: usize, t: usize) -> bool;
 }
 
-// Slice
-
 impl<H> IsEdge for [HashSet<usize, H>]
 where
     H: BuildHasher,
@@ -132,8 +130,6 @@ where
     }
 }
 
-// HashSet
-
 impl<H> IsEdge for HashSet<(usize, usize), H>
 where
     H: BuildHasher,
@@ -142,8 +138,6 @@ where
         self.contains(&(s, t))
     }
 }
-
-// HashMap
 
 impl<H> IsEdge for HashMap<usize, HashSet<usize, H>, H>
 where

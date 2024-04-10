@@ -17,10 +17,7 @@
 
 use {
     core::hash::BuildHasher,
-    std::collections::{
-        HashMap,
-        HashSet,
-    },
+    std::collections::HashMap,
 };
 
 /// A trait to iterate over all vertices in a graph
@@ -63,26 +60,11 @@ pub trait IterVertices {
     fn iter_vertices(&self) -> impl Iterator<Item = usize>;
 }
 
-// Slice
-
 impl<T> IterVertices for [T] {
     fn iter_vertices(&self) -> impl Iterator<Item = usize> {
         0..self.len()
     }
 }
-
-// HashSet
-
-impl<T, H> IterVertices for HashSet<T, H>
-where
-    H: BuildHasher,
-{
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.len()
-    }
-}
-
-// HashMap
 
 impl<V, S> IterVertices for HashMap<usize, V, S>
 where
@@ -134,18 +116,6 @@ mod tests {
         assert_eq!(iter.next(), Some(1));
         assert_eq!(iter.next(), Some(2));
         assert_eq!(iter.next(), Some(3));
-        assert_eq!(iter.next(), None);
-    }
-
-    #[test]
-    fn hash_set() {
-        let graph = HashSet::from([0, 1, 2, 3]);
-        let mut iter = graph.iter_vertices();
-
-        assert_matches!(iter.next(), Some(0..=3));
-        assert_matches!(iter.next(), Some(0..=3));
-        assert_matches!(iter.next(), Some(0..=3));
-        assert_matches!(iter.next(), Some(0..=3));
         assert_eq!(iter.next(), None);
     }
 

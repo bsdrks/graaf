@@ -63,8 +63,6 @@ pub trait IterAllWeightedEdges<W> {
         W: 'a;
 }
 
-// Slice
-
 impl<W> IterAllWeightedEdges<W> for [(usize, usize, W)] {
     fn iter_all_weighted_edges<'a>(&'a self) -> impl Iterator<Item = (usize, usize, &'a W)>
     where
@@ -73,8 +71,6 @@ impl<W> IterAllWeightedEdges<W> for [(usize, usize, W)] {
         self.iter().map(|(s, t, w)| (*s, *t, w))
     }
 }
-
-// HashSet
 
 impl<W, H> IterAllWeightedEdges<W> for HashSet<(usize, usize, W), H>
 where

@@ -78,8 +78,6 @@ pub trait AddEdge {
     fn add_edge(&mut self, s: usize, t: usize);
 }
 
-// Slice
-
 impl AddEdge for [Vec<usize>] {
     /// # Panics
     ///
@@ -101,8 +99,6 @@ where
         let _ = self[s].insert(t);
     }
 }
-
-// HashMap
 
 impl<H> AddEdge for HashMap<usize, Vec<usize>, H>
 where

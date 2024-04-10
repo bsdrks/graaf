@@ -157,8 +157,6 @@ pub trait IterEdges {
     fn iter_edges(&self, s: usize) -> impl Iterator<Item = usize>;
 }
 
-// Vec
-
 impl IterEdges for Vec<Vec<usize>> {
     /// # Panics
     ///
@@ -179,8 +177,6 @@ where
         self[s].iter().copied()
     }
 }
-
-// Slice
 
 impl IterEdges for [Vec<usize>] {
     /// # Panics
@@ -203,8 +199,6 @@ where
     }
 }
 
-// Arr
-
 impl<const V: usize> IterEdges for [Vec<usize>; V] {
     /// # Panics
     ///
@@ -225,8 +219,6 @@ where
         self[s].iter().copied()
     }
 }
-
-// HashMap
 
 impl<H> IterEdges for HashMap<usize, Vec<usize>, H>
 where

@@ -108,8 +108,6 @@ pub trait IterWeightedEdges<W> {
         W: 'a;
 }
 
-// Vec
-
 impl<W> IterWeightedEdges<W> for Vec<Vec<(usize, W)>>
 where
     W: Copy,
@@ -156,8 +154,6 @@ where
         self[s].iter().map(|(t, w)| (*t, w))
     }
 }
-
-// Slice
 
 impl<W> IterWeightedEdges<W> for [Vec<(usize, W)>]
 where
@@ -206,8 +202,6 @@ where
     }
 }
 
-// Arr
-
 impl<const V: usize, W> IterWeightedEdges<W> for [Vec<(usize, W)>; V]
 where
     W: Copy,
@@ -245,8 +239,6 @@ where
         self[s].iter().map(|(t, w)| (*t, w))
     }
 }
-
-// HashMap
 
 impl<W, H> IterWeightedEdges<W> for HashMap<usize, Vec<(usize, W)>, H>
 where

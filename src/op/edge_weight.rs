@@ -86,19 +86,6 @@ pub trait EdgeWeight<W> {
     fn edge_weight(&self, s: usize, t: usize) -> Option<&W>;
 }
 
-// Vec
-
-impl<W, H> EdgeWeight<W> for Vec<HashMap<usize, W, H>>
-where
-    H: BuildHasher,
-{
-    fn edge_weight(&self, s: usize, t: usize) -> Option<&W> {
-        self.get(s).and_then(|m| m.get(&t))
-    }
-}
-
-// Slice
-
 impl<W, H> EdgeWeight<W> for [HashMap<usize, W, H>]
 where
     H: BuildHasher,
@@ -107,19 +94,6 @@ where
         self.get(s).and_then(|m| m.get(&t))
     }
 }
-
-// Arr
-
-impl<const V: usize, W, H> EdgeWeight<W> for [HashMap<usize, W, H>; V]
-where
-    H: BuildHasher,
-{
-    fn edge_weight(&self, s: usize, t: usize) -> Option<&W> {
-        self.get(s).and_then(|m| m.get(&t))
-    }
-}
-
-// HashMap
 
 impl<W, H> EdgeWeight<W> for HashMap<usize, HashMap<usize, W, H>, H>
 where
@@ -136,6 +110,7 @@ mod tests {
 
     #[test]
     fn vec() {
+        #[allow(clippy::useless_vec)]
         let graph = vec![
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(0, 4)]),

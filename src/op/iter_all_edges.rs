@@ -58,15 +58,11 @@ pub trait IterAllEdges {
     fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)>;
 }
 
-// Slice
-
 impl IterAllEdges for [(usize, usize)] {
     fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
         self.iter().copied()
     }
 }
-
-// HashSet
 
 impl<H> IterAllEdges for HashSet<(usize, usize), H>
 where

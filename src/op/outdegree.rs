@@ -61,8 +61,6 @@ pub trait Outdegree {
     fn outdegree(&self, s: usize) -> usize;
 }
 
-// Slice
-
 impl<T> Outdegree for [Vec<T>] {
     /// # Panics
     ///
@@ -95,8 +93,6 @@ where
         self[s].len()
     }
 }
-
-// HashMap
 
 impl<H> Outdegree for HashMap<usize, Vec<usize>, H>
 where

@@ -51,8 +51,6 @@ mod add_edge {
         let _ = adj;
     }
 
-    // Arr
-
     #[divan::bench(consts = ARGS)]
     fn arr_vec<const V: usize>(bencher: Bencher<'_, '_>) {
         let mut adj = from_fn::<Vec<usize>, V, _>(|_| Vec::new());
@@ -70,8 +68,6 @@ mod add_edge {
 
         let _ = adj;
     }
-
-    // HashMap
 
     #[divan::bench(consts = ARGS)]
     fn hash_map_vec<const V: usize>(bencher: Bencher<'_, '_>) {

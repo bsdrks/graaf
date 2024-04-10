@@ -82,8 +82,6 @@ pub trait AddWeightedEdge<W> {
     fn add_weighted_edge(&mut self, s: usize, t: usize, w: W);
 }
 
-// Slice
-
 impl<W> AddWeightedEdge<W> for [Vec<(usize, W)>] {
     /// # Panics
     ///
@@ -117,8 +115,6 @@ where
         let _ = self[s].insert(t, w);
     }
 }
-
-// HashMap
 
 impl<W, H> AddWeightedEdge<W> for HashMap<usize, Vec<(usize, W)>, H>
 where

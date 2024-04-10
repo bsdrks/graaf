@@ -74,8 +74,6 @@ mod count_all_edges {
         bencher.bench_local(|| adj.count_all_edges());
     }
 
-    // Arr
-
     #[divan::bench(consts = ARGS)]
     fn arr_vec<const V: usize>(bencher: Bencher<'_, '_>) {
         let mut adj = from_fn::<_, V, _>(|_| Vec::new());
@@ -102,8 +100,6 @@ mod count_all_edges {
 
         bencher.bench_local(|| adj.count_all_edges());
     }
-
-    // HashMap
 
     #[divan::bench(args = ARGS)]
     fn hash_map_vec(bencher: Bencher<'_, '_>, v: usize) {

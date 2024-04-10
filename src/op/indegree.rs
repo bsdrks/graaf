@@ -71,8 +71,6 @@ pub trait Indegree {
     fn indegree(&self, t: usize) -> usize;
 }
 
-// Slice
-
 impl<H> Indegree for [HashSet<usize, H>]
 where
     H: BuildHasher,
@@ -90,8 +88,6 @@ where
         self.iter().filter(|map| map.contains_key(&t)).count()
     }
 }
-
-// HashMap
 
 impl<H> Indegree for HashMap<usize, HashSet<usize, H>, H>
 where

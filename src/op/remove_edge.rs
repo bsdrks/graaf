@@ -138,8 +138,6 @@ pub trait RemoveEdge {
     fn remove_edge(&mut self, s: usize, t: usize);
 }
 
-// Slice
-
 impl<H> RemoveEdge for [HashSet<usize, H>]
 where
     H: BuildHasher,
@@ -163,8 +161,6 @@ where
         let _ = self[s].remove(&t);
     }
 }
-
-// HashMap
 
 impl<H> RemoveEdge for HashMap<usize, HashSet<usize, H>, H>
 where

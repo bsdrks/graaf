@@ -10,14 +10,23 @@
 //!     std::collections::HashSet,
 //! };
 //!
-//! let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+//! let graph = [HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
 //!
 //! assert!(graph.is_simple());
 //!
-//! let graph = vec![vec![0, 1, 2], vec![0, 2], vec![0]];
+//! let graph = [
+//!     HashSet::from([0, 1, 2]),
+//!     HashSet::from([0, 2]),
+//!     HashSet::from([0]),
+//! ];
 //!
 //! assert!(!graph.is_simple());
 //! ```
+
+use {
+    core::hash::BuildHasher,
+    std::collections::HashSet,
+};
 
 /// A trait to determine whether a graph is simple
 ///
@@ -54,15 +63,48 @@
 ///     std::collections::HashSet,
 /// };
 ///
-/// let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+/// let graph = [HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
 ///
 /// assert!(graph.is_simple());
 ///
-/// let graph = vec![vec![0, 1, 2], vec![0, 2], vec![0]];
+/// let graph = [
+///     HashSet::from([0, 1, 2]),
+///     HashSet::from([0, 2]),
+///     HashSet::from([0]),
+/// ];
 ///
 /// assert!(!graph.is_simple());
 /// ```
 pub trait IsSimple {
     /// Determine whether the graph is simple.
     fn is_simple(&self) -> bool;
+}
+
+impl<H> IsSimple for [HashSet<usize, H>]
+where
+    H: BuildHasher,
+{
+    fn is_simple(&self) -> bool {
+        self.iter().enumerate().all(|(s, set)| !set.contains(&s))
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn slice_hash_set() {
+        let graph = [HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
+
+        assert!(graph.is_simple());
+
+        let graph = [
+            HashSet::from([0, 1, 2]),
+            HashSet::from([0, 2]),
+            HashSet::from([0]),
+        ];
+
+        assert!(!graph.is_simple());
+    }
 }
