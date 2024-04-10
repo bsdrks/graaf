@@ -25,8 +25,8 @@ jobs:
         run: cargo build --verbose
       - name: Generate documentation
         run: cargo doc --verbose
-      - name: Install cargo-llvm-cov
-        run: cargo install
+      - name: Install grcov
+        run: cargo install grcov
       - name: Run tests
         run: CARGO_INCREMENTAL=0 RUSTFLAGS='-Cinstrument-coverage' LLVM_PROFILE_FILE='coverage/cargo-test-%p-%m.profraw' cargo test
       - name: Generate coverage report
