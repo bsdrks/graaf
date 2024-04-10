@@ -24,6 +24,7 @@
 //! ```
 
 use {
+    super::IterAllEdges,
     core::hash::BuildHasher,
     std::collections::HashSet,
 };
@@ -89,6 +90,21 @@ where
     }
 }
 
+impl IsSimple for [(usize, usize)] {
+    fn is_simple(&self) -> bool {
+        self.iter_all_edges().all(|(s, t)| s != t)
+    }
+}
+
+impl<H> IsSimple for HashSet<(usize, usize), H>
+where
+    H: BuildHasher,
+{
+    fn is_simple(&self) -> bool {
+        self.iter_all_edges().all(|(s, t)| s != t)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -136,6 +152,52 @@ mod tests {
             HashSet::from([0, 2]),
             HashSet::from([0]),
         ];
+
+        assert!(!graph.is_simple());
+    }
+
+    #[test]
+    fn vec_tuple() {
+        #[allow(clippy::useless_vec)]
+        let graph = vec![(1, 2), (2, 0), (0, 1)];
+
+        assert!(graph.is_simple());
+
+        #[allow(clippy::useless_vec)]
+        let graph = vec![(0, 1), (0, 2), (0, 0)];
+
+        assert!(!graph.is_simple());
+    }
+
+    #[test]
+    fn slice_tuple() {
+        let graph: &[(usize, usize)] = &[(1, 2), (2, 0), (0, 1)];
+
+        assert!(graph.is_simple());
+
+        let graph: &[(usize, usize)] = &[(0, 1), (0, 2), (0, 0)];
+
+        assert!(!graph.is_simple());
+    }
+
+    #[test]
+    fn arr_tuple() {
+        let graph = [(1, 2), (2, 0), (0, 1)];
+
+        assert!(graph.is_simple());
+
+        let graph = [(0, 1), (0, 2), (0, 0)];
+
+        assert!(!graph.is_simple());
+    }
+
+    #[test]
+    fn hash_set_tuple() {
+        let graph: HashSet<(usize, usize)> = HashSet::from([(1, 2), (2, 0), (0, 1)]);
+
+        assert!(graph.is_simple());
+
+        let graph: HashSet<(usize, usize)> = HashSet::from([(0, 1), (0, 2), (0, 0)]);
 
         assert!(!graph.is_simple());
     }

@@ -24,7 +24,10 @@
 
 ## [0.8.2] - Unreleased
 
-TBA
+### Added
+
+- Implement `IsSimple` for `[(usize, usize)]`.
+- Implement `IsSimple` for `HashSet<(usize, usize)>`.
 
 ## [0.8.1] - 2024-04-10
 

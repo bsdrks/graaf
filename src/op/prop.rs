@@ -1,5 +1,5 @@
 //! Properties of traits in [`crate::op`].
-use crate::op::{
+use super::{
     AddEdge,
     AddWeightedEdge,
     IsEdge,
