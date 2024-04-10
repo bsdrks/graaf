@@ -22,12 +22,15 @@
 - Mention for functions whether they are meant for simple graphs.
 - Test implementations of traits with properties in `op::prop`.
 
-## [0.8.2] - Unreleased
+## [0.8.2] - 2024-04-10
 
 ### Added
 
-- Implement `IsSimple` for `[(usize, usize)]`.
 - Implement `IsSimple` for `HashSet<(usize, usize)>`.
+- Implement `IsSimple` for `HashSet<(usize, usize, W)>`.
+- Implement `IsSimple` for `[(usize, usize)]`.
+- Implement `IsSimple` for `[(usize, usize, W)]`.
+- Implement `IsSimple` for `[HashSet<usize>]`.
 
 ## [0.8.1] - 2024-04-10
 
@@ -51,16 +54,16 @@
 
 ### Removed
 
-- Remove `AddEdge` for `Vec<Vec<T>>`.
 - Remove `AddEdge` for `Vec<HashSet<T>>`.
-- Remove `AddEdge` for `[Vec<T>; V]`.
+- Remove `AddEdge` for `Vec<Vec<T>>`.
 - Remove `AddEdge` for `[HashSet<T>; V]`.
-- Remove `AddWeightedEdge` for `Vec<Vec<(usize, W)>>`.
-- Remove `AddWeightedEdge` for `Vec<HashSet<(usize, W)>>`.
+- Remove `AddEdge` for `[Vec<T>; V]`.
 - Remove `AddWeightedEdge` for `Vec<HashMap<usize, W>>`.
-- Remove `AddWeightedEdge` for `[Vec<(usize, W)>; V]`.
-- Remove `AddWeightedEdge` for `[HashSet<(usize, W)>; V]`.
+- Remove `AddWeightedEdge` for `Vec<HashSet<(usize, W)>>`.
+- Remove `AddWeightedEdge` for `Vec<Vec<(usize, W)>>`.
 - Remove `AddWeightedEdge` for `[HashMap<usize, W>; V]`.
+- Remove `AddWeightedEdge` for `[HashSet<(usize, W)>; V]`.
+- Remove `AddWeightedEdge` for `[Vec<(usize, W)>; V]`.
 
 ### Changed
 
@@ -72,28 +75,28 @@
 
 ### Added
 
-- Implement `CountAllEdges` for `[Vec<T>]`.
-- Implement `CountAllEdges` for `[HashSet<T>]`.
 - Implement `CountAllEdges` for `[HashMap<K, W>]`.
+- Implement `CountAllEdges` for `[HashSet<T>]`.
+- Implement `CountAllEdges` for `[Vec<T>]`.
 - Implement `CountAllVertices` for `[T]`.
 - Implement `EdgeWeight` for `[HashMap<usize, W>]`.
-- Implement `Indegree` for `[HashSet<usize>]`.
 - Implement `Indegree` for `[HashMap<usize, W>]`.
-- Implement `IsEdge` for `[HashSet<usize>]`.
+- Implement `Indegree` for `[HashSet<usize>]`.
 - Implement `IsEdge` for `[HashMap<usize, W>]`.
-- Implement `IterEdges` for `[Vec<usize>]`.
-- Implement `IterEdges` for `[HashSet<usize>]`.
+- Implement `IsEdge` for `[HashSet<usize>]`.
 - Implement `IterAllEdges` for `[(usize, usize)]`.
 - Implement `IterAllWeightedEdges` for `[(usize, usize, W)]`.
+- Implement `IterEdges` for `[HashSet<usize>]`.
+- Implement `IterEdges` for `[Vec<usize>]`.
 - Implement `IterVertices` for `&[T]`.
-- Implement `IterWeightedEdges` for `[Vec<(usize, W)>]`.
-- Implement `IterWeightedEdges` for `[HashSet<(usize, W)>]`.
 - Implement `IterWeightedEdges` for `[HashMap<usize, W>]`.
-- Implement `Outdegree` for `[Vec<T>]`.
-- Implement `Outdegree` for `[HashSet<T>]`.
+- Implement `IterWeightedEdges` for `[HashSet<(usize, W)>]`.
+- Implement `IterWeightedEdges` for `[Vec<(usize, W)>]`.
 - Implement `Outdegree` for `[HashMap<K, W>]`.
-- Implement `RemoveEdge` for `[HashSet<usize>]`.
+- Implement `Outdegree` for `[HashSet<T>]`.
+- Implement `Outdegree` for `[Vec<T>]`.
 - Implement `RemoveEdge` for `[HashMap<usize, W>]`.
+- Implement `RemoveEdge` for `[HashSet<usize>]`.
 
 ### Changed
 
@@ -101,36 +104,36 @@
 
 ### Removed
 
-- Remove `CountAllEdges` for `Vec<Vec<T>>`.
-- Remove `CountAllEdges` for `Vec<HashSet<T>>`.
 - Remove `CountAllEdges` for `Vec<HashMap<K, W>>`.
-- Remove `CountAllEdges` for `[Vec<T>; V]`.
-- Remove `CountAllEdges` for `[HashSet<T>; V]`.
+- Remove `CountAllEdges` for `Vec<HashSet<T>>`.
+- Remove `CountAllEdges` for `Vec<Vec<T>>`.
 - Remove `CountAllEdges` for `[HashMap<K, W>; V]`.
-- Remove `Indegree` for `Vec<HashSet<usize>>`.
+- Remove `CountAllEdges` for `[HashSet<T>; V]`.
+- Remove `CountAllEdges` for `[Vec<T>; V]`.
 - Remove `Indegree` for `Vec<HashMap<usize, W>>`.
-- Remove `Indegree` for `[HashSet<usize>; V]`.
+- Remove `Indegree` for `Vec<HashSet<usize>>`.
 - Remove `Indegree` for `[HashMap<usize, W>; V]`.
-- Remove `IsEdge` for `Vec<HashSet<usize>>`.
+- Remove `Indegree` for `[HashSet<usize>; V]`.
 - Remove `IsEdge` for `Vec<HashMap<usize, W>>`.
-- Remove `IsEdge` for `[HashSet<usize>; V]`.
+- Remove `IsEdge` for `Vec<HashSet<usize>>`.
 - Remove `IsEdge` for `[HashMap<usize, W>; V]`.
+- Remove `IsEdge` for `[HashSet<usize>; V]`.
 - Remove `IterAllEdges` for `Vec<(usize, usize)>`.
 - Remove `IterAllEdges` for `[(usize, usize); V]`.
 - Remove `IterAllWeightedEdges` for `Vec<(usize, usize, W)>`.
 - Remove `IterAllWeightedEdges` for `[(usize, usize, W); V]`.
 - Remove `IterVertices` for `Vec<T>`.
 - Remove `IterVertices` for `[T; V]`.
-- Remove `Outdegree` for `Vec<Vec<T>>`.
-- Remove `Outdegree` for `Vec<HashSet<usize>>`.
 - Remove `Outdegree` for `Vec<HashMap<usize, W>>`.
-- Remove `Outdegree` for `[Vec<T>; V]`.
-- Remove `Outdegree` for `[HashSet<usize>; V]>`.
+- Remove `Outdegree` for `Vec<HashSet<usize>>`.
+- Remove `Outdegree` for `Vec<Vec<T>>`.
 - Remove `Outdegree` for `[HashMap<usize, W>; V]>`.
-- Remove `RemoveEdge` for `Vec<HashSet<usize>>`.
+- Remove `Outdegree` for `[HashSet<usize>; V]>`.
+- Remove `Outdegree` for `[Vec<T>; V]`.
 - Remove `RemoveEdge` for `Vec<HashMap<usize, W>>`.
-- Remove `RemoveEdge` for `[HashSet<usize>; V]`.
+- Remove `RemoveEdge` for `Vec<HashSet<usize>>`.
 - Remove `RemoveEdge` for `[HashMap<usize, W>; V]`.
+- Remove `RemoveEdge` for `[HashSet<usize>; V]`.
 
 ## [0.6.3] - 2024-04-06
 
@@ -186,7 +189,7 @@
 
 ### Changed
 
-- **BREAKING** Move `ops` to `op`.
+- Move `ops` to `op`.
 - Adapt benchmark code to linting rules.
 - Move doctest trait properties to `op::prop`.
 - Move lints from `lib.rs` to `Cargo.toml`.
@@ -204,8 +207,8 @@
 - Add doctest for `op::iter_all_edges::IterAllEdges`.
 - Add doctest for `op::iter_all_weighted_edges::IterAllWeightedEdges`.
 - Add doctest for `op::iter_edges::IterEdges`.
-- Add doctest for `op::iter_weighted_edges::IterWeightedEdges`.
 - Add doctest for `op::iter_vertices::IterVertices`.
+- Add doctest for `op::iter_weighted_edges::IterWeightedEdges`.
 - Add doctest for `op::outdegree::OutDegree`.
 - Add doctest for `op::remove_edge::RemoveEdge`.
 - Add documentation for `op::add_weighted_edge`.
@@ -274,15 +277,15 @@
 
 ### Changed
 
-- Remove `algo::dijkstra::unweighted`.
 - Move `algo::dijkstra::weighted` to `algo::dijkstra`.
+- Remove `algo::dijkstra::unweighted`.
 
 ## [0.3.3] - 2024-04-02
 
 ### Added
 
-- Add `algo::bfs::min_distances`.
 - Add `algo::bfs::min_distances_single_source`.
+- Add `algo::bfs::min_distances`.
 - Add benchmarks for `algo::bfs::*`
 
 ## [0.3.2] - 2024-04-01
@@ -304,15 +307,15 @@
 ### Added
 
 - Add `algo::dijkstra::unweighted::min_distances_single_source`.
-- Add doctest example for `algo::dijkstra::weighted::min_distances_single_source`.
 - Add doctest example for `algo::dijkstra::unweighted::min_distances_single_source`
 - Add doctest example for `algo::dijkstra::unweighted::min_distances`
+- Add doctest example for `algo::dijkstra::weighted::min_distances_single_source`.
 
 ### Changed
 
-- Move `algo::dijkstra::dijkstra_sssp_weighted` to `algo::dijkstra::weighted::min_distances_single_source`.
-- Move `algo::DijkstraWeighted::dijkstra` to `algo::dijkstra::weighted::min_distances`.
 - Move `algo::DijkstraUnweighted::dijkstra` to `algo::dijkstra::unweighted::min_distances`.
+- Move `algo::DijkstraWeighted::dijkstra` to `algo::dijkstra::weighted::min_distances`.
+- Move `algo::dijkstra::dijkstra_sssp_weighted` to `algo::dijkstra::weighted::min_distances_single_source`.
 
 ### Removed
 
@@ -322,13 +325,13 @@
 
 ### Added
 
-- Add `dijkstra_sssp_weighted`.
 - Add GitHub Action on push to main and PRs on main.
+- Add `dijkstra_sssp_weighted`.
 
 ### Changed
 
-- Test `Dijkstra.Unweighted.dijkstra_sssp_unweighted` for every source vertex.
 - Make `CHANGELOG.md` adhere to [keep a changelog](https://keepachangelog.com/en/1.0.0/).
+- Test `Dijkstra.Unweighted.dijkstra_sssp_unweighted` for every source vertex.
 
 ## [0.2.2] - 2024-03-31
 
@@ -349,8 +352,8 @@
 
 ### Changed
 
-- Export `algo`, `op`, and `repr` modules.
 - Enable selected lints from `restriction` group.
+- Export `algo`, `op`, and `repr` modules.
 - Group lints into groups, restrictions, `rustdoc`, and `rustc` lints.
 - Use `core` and `alloc` imports over `std` where possible.
 

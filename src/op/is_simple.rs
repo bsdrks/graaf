@@ -24,7 +24,10 @@
 //! ```
 
 use {
-    super::IterAllEdges,
+    super::{
+        IterAllEdges,
+        IterAllWeightedEdges,
+    },
     core::hash::BuildHasher,
     std::collections::HashSet,
 };
@@ -96,12 +99,27 @@ impl IsSimple for [(usize, usize)] {
     }
 }
 
+impl<W> IsSimple for [(usize, usize, W)] {
+    fn is_simple(&self) -> bool {
+        self.iter_all_weighted_edges().all(|(s, t, _)| s != t)
+    }
+}
+
 impl<H> IsSimple for HashSet<(usize, usize), H>
 where
     H: BuildHasher,
 {
     fn is_simple(&self) -> bool {
         self.iter_all_edges().all(|(s, t)| s != t)
+    }
+}
+
+impl<W, H> IsSimple for HashSet<(usize, usize, W), H>
+where
+    H: BuildHasher,
+{
+    fn is_simple(&self) -> bool {
+        self.iter_all_weighted_edges().all(|(s, t, _)| s != t)
     }
 }
 
@@ -157,7 +175,7 @@ mod tests {
     }
 
     #[test]
-    fn vec_tuple() {
+    fn vec_tuple_unweighted() {
         #[allow(clippy::useless_vec)]
         let graph = vec![(1, 2), (2, 0), (0, 1)];
 
@@ -170,7 +188,7 @@ mod tests {
     }
 
     #[test]
-    fn slice_tuple() {
+    fn slice_tuple_unweighted() {
         let graph: &[(usize, usize)] = &[(1, 2), (2, 0), (0, 1)];
 
         assert!(graph.is_simple());
@@ -181,7 +199,7 @@ mod tests {
     }
 
     #[test]
-    fn arr_tuple() {
+    fn arr_tuple_unweighted() {
         let graph = [(1, 2), (2, 0), (0, 1)];
 
         assert!(graph.is_simple());
@@ -192,12 +210,60 @@ mod tests {
     }
 
     #[test]
-    fn hash_set_tuple() {
+    fn hash_set_tuple_unweighted() {
         let graph: HashSet<(usize, usize)> = HashSet::from([(1, 2), (2, 0), (0, 1)]);
 
         assert!(graph.is_simple());
 
         let graph: HashSet<(usize, usize)> = HashSet::from([(0, 1), (0, 2), (0, 0)]);
+
+        assert!(!graph.is_simple());
+    }
+
+    #[test]
+    fn vec_tuple_weighted() {
+        #[allow(clippy::useless_vec)]
+        let graph = vec![(1, 2, 1), (2, 0, 1), (0, 1, 1)];
+
+        assert!(graph.is_simple());
+
+        #[allow(clippy::useless_vec)]
+        let graph = vec![(0, 1, 1), (0, 2, 1), (0, 0, 1)];
+
+        assert!(!graph.is_simple());
+    }
+
+    #[test]
+    fn slice_tuple_weighted() {
+        let graph: &[(usize, usize, usize)] = &[(1, 2, 1), (2, 0, 1), (0, 1, 1)];
+
+        assert!(graph.is_simple());
+
+        let graph: &[(usize, usize, usize)] = &[(0, 1, 1), (0, 2, 1), (0, 0, 1)];
+
+        assert!(!graph.is_simple());
+    }
+
+    #[test]
+    fn arr_tuple_weighted() {
+        let graph = [(1, 2, 1), (2, 0, 1), (0, 1, 1)];
+
+        assert!(graph.is_simple());
+
+        let graph = [(0, 1, 1), (0, 2, 1), (0, 0, 1)];
+
+        assert!(!graph.is_simple());
+    }
+
+    #[test]
+    fn hash_set_tuple_weighted() {
+        let graph: HashSet<(usize, usize, usize)> =
+            HashSet::from([(1, 2, 1), (2, 0, 1), (0, 1, 1)]);
+
+        assert!(graph.is_simple());
+
+        let graph: HashSet<(usize, usize, usize)> =
+            HashSet::from([(0, 1, 1), (0, 2, 1), (0, 0, 1)]);
 
         assert!(!graph.is_simple());
     }
