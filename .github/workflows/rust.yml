@@ -30,6 +30,6 @@ jobs:
       - name: Run tests
         run: CARGO_INCREMENTAL=0 RUSTFLAGS='-Cinstrument-coverage' LLVM_PROFILE_FILE='coverage/cargo-test-%p-%m.profraw' cargo test
       - name: Generate coverage report
-        run: grcov . --binary-path ./target/debug/ --source-dir . -t html --branch --ignore-not-existing --ignore "/*" -o ./target/debug/coverage/
+        run: grcov . --binary-path ./target/debug/ -t coveralls -s . --token {{ secrets.COVERALLS_TOKEN }} > coveralls.json
       - name: Coveralls
         uses: coverallsapp/github-action@v2
