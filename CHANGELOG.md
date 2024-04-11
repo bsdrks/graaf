@@ -21,6 +21,12 @@
 - Mention for functions whether they are meant for simple graphs.
 - Test implementations of traits with properties in `op::prop`.
 
+## [0.8.4] - 2024-04-11
+
+### Fixed
+
+- Add missing property `add_weighted_edge_remove_edge`.
+
 ## [0.8.3] - 2024-04-11
 
 ### Added
