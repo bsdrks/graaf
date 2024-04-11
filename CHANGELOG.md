@@ -23,6 +23,8 @@
 
 ## [0.8.3] - 2024-04-11
 
+### Added
+
 - Test `add_edge_is_edge` for implementors of `AddEdge` and `IsEdge`.
 
 ## [0.8.2] - 2024-04-10
