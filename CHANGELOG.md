@@ -21,7 +21,9 @@
 - Mention for functions whether they are meant for simple graphs.
 - Test implementations of traits with properties in `op::prop`.
 
-## [0.8.3] - Unreleased
+## [0.8.3] - 2024-04-11
+
+- Test `add_edge_is_edge` for implementors of `AddEdge` and `IsEdge`.
 
 ## [0.8.2] - 2024-04-10
 
