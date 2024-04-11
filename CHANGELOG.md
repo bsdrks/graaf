@@ -6,7 +6,6 @@
 - Add Hopcroft-Karp algorithm.
 - Add Kruksal's algorithm.
 - Add SPFA algorithm.
-- Add `IsSimple` trait or function for graphs.
 - Add `bfs::mssp`.
 - Add `bfs::sssp`.
 - Add `dijkstra::mssp`.
@@ -21,6 +20,8 @@
 - Add topological sorting for DAGs.
 - Mention for functions whether they are meant for simple graphs.
 - Test implementations of traits with properties in `op::prop`.
+
+## [0.8.3] - Unreleased
 
 ## [0.8.2] - 2024-04-10
 
