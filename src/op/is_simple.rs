@@ -104,7 +104,10 @@ impl IsSimple for [(usize, usize)] {
 
 impl<W> IsSimple for [(usize, usize, W)] {
     fn is_simple(&self) -> bool {
-        self.iter_all_weighted_edges().all(|(s, t, _)| s != t)
+        let mut set = HashSet::new();
+
+        self.iter_all_weighted_edges()
+            .all(|(s, t, _)| s != t && set.insert((s, t)))
     }
 }
 
