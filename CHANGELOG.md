@@ -24,7 +24,7 @@
 
 ## [0.9.0] - 2024-04-12
 
-### Changed
+### Fixed
 
 - `IsSimple` now checks for parallel edges.
 
