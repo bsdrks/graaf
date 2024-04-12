@@ -1,6 +1,6 @@
 # Changelog
 
-## [x.x.x] - Planned
+## Roadmap (provisional)
 
 - Add Edmonds-Karp algorithm.
 - Add Hopcroft-Karp algorithm.
@@ -18,8 +18,13 @@
 - Add linear graph generator.
 - Add star graph generator.
 - Add topological sorting for DAGs.
+- Check parallel edges in `IsSimple`.
 - Mention for functions whether they are meant for simple graphs.
 - Test implementations of traits with properties in `op::prop`.
+
+## [0.8.5] - Unreleased
+
+TBA
 
 ## [0.8.4] - 2024-04-11
 
@@ -42,6 +47,7 @@
 - Implement `IsSimple` for `[(usize, usize)]`.
 - Implement `IsSimple` for `[(usize, usize, W)]`.
 - Implement `IsSimple` for `[HashSet<usize>]`.
+- Implement `IsSimple` for `AdjacencyMatrix`.
 
 ## [0.8.1] - 2024-04-10
 

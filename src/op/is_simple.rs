@@ -135,8 +135,9 @@ mod tests {
         assert!(graph.is_simple());
 
         #[allow(clippy::useless_vec)]
+        #[rustfmt::skip]
         let graph = vec![
-            HashSet::from([0, 1, 2]),
+            HashSet::from([0, 1, 2]), // Self-loop {0, 0}
             HashSet::from([0, 2]),
             HashSet::from([0]),
         ];
@@ -150,8 +151,9 @@ mod tests {
 
         assert!(graph.is_simple());
 
+        #[rustfmt::skip]
         let graph: &[HashSet<usize>] = &[
-            HashSet::from([0, 1, 2]),
+            HashSet::from([0, 1, 2]), // Self-loop {0, 0}
             HashSet::from([0, 2]),
             HashSet::from([0]),
         ];
@@ -165,8 +167,9 @@ mod tests {
 
         assert!(graph.is_simple());
 
+        #[rustfmt::skip]
         let graph = [
-            HashSet::from([0, 1, 2]),
+            HashSet::from([0, 1, 2]), // Self-loop {0, 0}
             HashSet::from([0, 2]),
             HashSet::from([0]),
         ];
@@ -182,7 +185,12 @@ mod tests {
         assert!(graph.is_simple());
 
         #[allow(clippy::useless_vec)]
-        let graph = vec![(0, 1), (0, 2), (0, 0)];
+        #[rustfmt::skip]
+        let graph = vec![
+            (0, 0), // Self-loop {0, 0}
+            (0, 1),
+            (0, 2)
+        ];
 
         assert!(!graph.is_simple());
     }
@@ -193,7 +201,12 @@ mod tests {
 
         assert!(graph.is_simple());
 
-        let graph: &[(usize, usize)] = &[(0, 1), (0, 2), (0, 0)];
+        #[rustfmt::skip]
+        let graph: &[(usize, usize)] = &[
+            (0, 0), // Self-loop {0, 0}
+            (0, 1),
+            (0, 2)
+        ];
 
         assert!(!graph.is_simple());
     }
@@ -204,7 +217,12 @@ mod tests {
 
         assert!(graph.is_simple());
 
-        let graph = [(0, 1), (0, 2), (0, 0)];
+        #[rustfmt::skip]
+        let graph = [
+            (0, 0), // Self-loop {0, 0}
+            (0, 1),
+            (0, 2)
+        ];
 
         assert!(!graph.is_simple());
     }
@@ -215,7 +233,12 @@ mod tests {
 
         assert!(graph.is_simple());
 
-        let graph: HashSet<(usize, usize)> = HashSet::from([(0, 1), (0, 2), (0, 0)]);
+        #[rustfmt::skip]
+        let graph: HashSet<(usize, usize)> = HashSet::from([
+            (0, 0), // Self-loop {0, 0}
+            (0, 1),
+            (0, 2)
+        ]);
 
         assert!(!graph.is_simple());
     }
@@ -228,7 +251,12 @@ mod tests {
         assert!(graph.is_simple());
 
         #[allow(clippy::useless_vec)]
-        let graph = vec![(0, 1, 1), (0, 2, 1), (0, 0, 1)];
+        #[rustfmt::skip]
+        let graph = vec![
+            (0, 0, 1), // Self-loop {0, 0}
+            (0, 1, 1),
+            (0, 2, 1)
+        ];
 
         assert!(!graph.is_simple());
     }
@@ -239,7 +267,12 @@ mod tests {
 
         assert!(graph.is_simple());
 
-        let graph: &[(usize, usize, usize)] = &[(0, 1, 1), (0, 2, 1), (0, 0, 1)];
+        #[rustfmt::skip]
+        let graph: &[(usize, usize, usize)] = &[
+            (0, 0, 1), // Self-loop {0, 0}
+            (0, 1, 1),
+            (0, 2, 1)
+        ];
 
         assert!(!graph.is_simple());
     }
@@ -250,7 +283,12 @@ mod tests {
 
         assert!(graph.is_simple());
 
-        let graph = [(0, 1, 1), (0, 2, 1), (0, 0, 1)];
+        #[rustfmt::skip]
+        let graph = [
+            (0, 0, 1), // Self-loop {0, 0}
+            (0, 1, 1), 
+            (0, 2, 1) 
+        ];
 
         assert!(!graph.is_simple());
     }
@@ -262,8 +300,12 @@ mod tests {
 
         assert!(graph.is_simple());
 
-        let graph: HashSet<(usize, usize, usize)> =
-            HashSet::from([(0, 1, 1), (0, 2, 1), (0, 0, 1)]);
+        #[rustfmt::skip]
+        let graph: HashSet<(usize, usize, usize)> = HashSet::from([
+            (0, 0, 1), // Self-loop {0, 0}
+            (0, 1, 1), 
+            (0, 2, 1) 
+        ]);
 
         assert!(!graph.is_simple());
     }
