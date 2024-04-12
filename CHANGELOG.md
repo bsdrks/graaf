@@ -22,9 +22,11 @@
 - Mention for functions whether they are meant for simple graphs.
 - Test implementations of traits with properties in `op::prop`.
 
-## [0.8.5] - Unreleased
+## [0.9.0] - 2024-04-12
 
-TBA
+### Changed
+
+- `IsSimple` now checks for parallel edges.
 
 ## [0.8.4] - 2024-04-11
 

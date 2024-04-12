@@ -95,7 +95,10 @@ where
 
 impl IsSimple for [(usize, usize)] {
     fn is_simple(&self) -> bool {
-        self.iter_all_edges().all(|(s, t)| s != t)
+        let mut set = HashSet::new();
+
+        self.iter_all_edges()
+            .all(|(s, t)| s != t && set.insert((s, t)))
     }
 }
 
@@ -128,12 +131,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn vec_hash_set() {
+    fn vec_hash_set_simple() {
         #[allow(clippy::useless_vec)]
         let graph = vec![HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
 
         assert!(graph.is_simple());
+    }
 
+    #[test]
+    fn vec_hash_set_self_loop() {
         #[allow(clippy::useless_vec)]
         #[rustfmt::skip]
         let graph = vec![
@@ -146,11 +152,14 @@ mod tests {
     }
 
     #[test]
-    fn slice_hash_set() {
+    fn slice_hash_set_simple() {
         let graph: &[HashSet<usize>] = &[HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
 
         assert!(graph.is_simple());
+    }
 
+    #[test]
+    fn slice_hash_set_self_loop() {
         #[rustfmt::skip]
         let graph: &[HashSet<usize>] = &[
             HashSet::from([0, 1, 2]), // Self-loop {0, 0}
@@ -162,11 +171,14 @@ mod tests {
     }
 
     #[test]
-    fn arr_hash_set() {
+    fn arr_hash_set_simple() {
         let graph = [HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
 
         assert!(graph.is_simple());
+    }
 
+    #[test]
+    fn arr_hash_set_self_loop() {
         #[rustfmt::skip]
         let graph = [
             HashSet::from([0, 1, 2]), // Self-loop {0, 0}
@@ -178,12 +190,15 @@ mod tests {
     }
 
     #[test]
-    fn vec_tuple_unweighted() {
+    fn vec_tuple_unweighted_simple() {
         #[allow(clippy::useless_vec)]
         let graph = vec![(1, 2), (2, 0), (0, 1)];
 
         assert!(graph.is_simple());
+    }
 
+    #[test]
+    fn vec_tuple_unweighted_self_loop() {
         #[allow(clippy::useless_vec)]
         #[rustfmt::skip]
         let graph = vec![
@@ -196,11 +211,27 @@ mod tests {
     }
 
     #[test]
-    fn slice_tuple_unweighted() {
+    fn vec_tuple_unweighted_parallel_edges() {
+        #[allow(clippy::useless_vec)]
+        #[rustfmt::skip]
+        let graph = vec![
+            (0, 1), // Parallel edge {0, 1}
+            (0, 1), // Parallel edge {0, 1}
+            (0, 2)
+        ];
+
+        assert!(!graph.is_simple());
+    }
+
+    #[test]
+    fn slice_tuple_unweighted_simple() {
         let graph: &[(usize, usize)] = &[(1, 2), (2, 0), (0, 1)];
 
         assert!(graph.is_simple());
+    }
 
+    #[test]
+    fn slice_tuple_unweighted_self_loop() {
         #[rustfmt::skip]
         let graph: &[(usize, usize)] = &[
             (0, 0), // Self-loop {0, 0}
@@ -212,11 +243,26 @@ mod tests {
     }
 
     #[test]
-    fn arr_tuple_unweighted() {
+    fn slice_tuple_unweighted_parallel_edges() {
+        #[rustfmt::skip]
+        let graph: &[(usize, usize)] = &[
+            (0, 1), // Parallel edge {0, 1}
+            (0, 1), // Parallel edge {0, 1}
+            (0, 2)
+        ];
+
+        assert!(!graph.is_simple());
+    }
+
+    #[test]
+    fn arr_tuple_unweighted_simple() {
         let graph = [(1, 2), (2, 0), (0, 1)];
 
         assert!(graph.is_simple());
+    }
 
+    #[test]
+    fn arr_tuple_unweighted_self_loop() {
         #[rustfmt::skip]
         let graph = [
             (0, 0), // Self-loop {0, 0}
@@ -228,11 +274,26 @@ mod tests {
     }
 
     #[test]
-    fn hash_set_tuple_unweighted() {
+    fn arr_tuple_unweighted_parallel_edges() {
+        #[rustfmt::skip]
+        let graph = [
+            (0, 1), // Parallel edge {0, 1}
+            (0, 1), // Parallel edge {0, 1}
+            (0, 2)
+        ];
+
+        assert!(!graph.is_simple());
+    }
+
+    #[test]
+    fn hash_set_tuple_unweighted_simple() {
         let graph: HashSet<(usize, usize)> = HashSet::from([(1, 2), (2, 0), (0, 1)]);
 
         assert!(graph.is_simple());
+    }
 
+    #[test]
+    fn hash_set_tuple_unweighted_self_loop() {
         #[rustfmt::skip]
         let graph: HashSet<(usize, usize)> = HashSet::from([
             (0, 0), // Self-loop {0, 0}
@@ -244,12 +305,15 @@ mod tests {
     }
 
     #[test]
-    fn vec_tuple_weighted() {
+    fn vec_tuple_weighted_simple() {
         #[allow(clippy::useless_vec)]
         let graph = vec![(1, 2, 1), (2, 0, 1), (0, 1, 1)];
 
         assert!(graph.is_simple());
+    }
 
+    #[test]
+    fn vec_tuple_weighted_self_loop() {
         #[allow(clippy::useless_vec)]
         #[rustfmt::skip]
         let graph = vec![
@@ -262,11 +326,27 @@ mod tests {
     }
 
     #[test]
-    fn slice_tuple_weighted() {
+    fn vec_tuple_weighted_parallel_edges() {
+        #[allow(clippy::useless_vec)]
+        #[rustfmt::skip]
+        let graph = vec![
+            (0, 1, 1), // Parallel edge {0, 1}
+            (0, 1, 1), // Parallel edge {0, 1}
+            (0, 2, 1)
+        ];
+
+        assert!(!graph.is_simple());
+    }
+
+    #[test]
+    fn slice_tuple_weighted_simple() {
         let graph: &[(usize, usize, usize)] = &[(1, 2, 1), (2, 0, 1), (0, 1, 1)];
 
         assert!(graph.is_simple());
+    }
 
+    #[test]
+    fn slice_tuple_weighted_self_loop() {
         #[rustfmt::skip]
         let graph: &[(usize, usize, usize)] = &[
             (0, 0, 1), // Self-loop {0, 0}
@@ -278,11 +358,26 @@ mod tests {
     }
 
     #[test]
-    fn arr_tuple_weighted() {
+    fn slice_tuple_weighted_parallel_edges() {
+        #[rustfmt::skip]
+        let graph: &[(usize, usize, usize)] = &[
+            (0, 1, 1), // Parallel edge {0, 1}
+            (0, 1, 1), // Parallel edge {0, 1}
+            (0, 2, 1)
+        ];
+
+        assert!(!graph.is_simple());
+    }
+
+    #[test]
+    fn arr_tuple_weighted_simple() {
         let graph = [(1, 2, 1), (2, 0, 1), (0, 1, 1)];
 
         assert!(graph.is_simple());
+    }
 
+    #[test]
+    fn arr_tuple_weighted_self_loop() {
         #[rustfmt::skip]
         let graph = [
             (0, 0, 1), // Self-loop {0, 0}
@@ -294,12 +389,27 @@ mod tests {
     }
 
     #[test]
-    fn hash_set_tuple_weighted() {
+    fn arr_tuple_weighted_parallel_edges() {
+        #[rustfmt::skip]
+        let graph = [
+            (0, 1, 1), // Parallel edge {0, 1}
+            (0, 1, 1), // Parallel edge {0, 1}
+            (0, 2, 1) 
+        ];
+
+        assert!(!graph.is_simple());
+    }
+
+    #[test]
+    fn hash_set_tuple_weighted_simple() {
         let graph: HashSet<(usize, usize, usize)> =
             HashSet::from([(1, 2, 1), (2, 0, 1), (0, 1, 1)]);
 
         assert!(graph.is_simple());
+    }
 
+    #[test]
+    fn hash_set_tuple_weighted_self_loop() {
         #[rustfmt::skip]
         let graph: HashSet<(usize, usize, usize)> = HashSet::from([
             (0, 0, 1), // Self-loop {0, 0}
