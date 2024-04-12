@@ -22,11 +22,23 @@
 - Mention for functions whether they are meant for simple graphs.
 - Test implementations of traits with properties in `op::prop`.
 
+## [0.10.0] - 2024-04-12
+
+### Added
+
+- Implement `IsSimple` for `AdjacencyMatrix`.
+
+### Fixed
+
+- `IsSimple` now checks for parallel edges in `HashSet<(usize, usize, W)>`.
+
 ## [0.9.0] - 2024-04-12
 
 ### Fixed
 
-- `IsSimple` now checks for parallel edges.
+- `IsSimple` now checks for parallel edges in `[(usize, usize)]`.
+- `IsSimple` now checks for parallel edges in `[(usize, usize, W)]`.
+- `IsSimple` now checks for parallel edges in `HashSet<(usize, usize)>`.
 
 ## [0.8.4] - 2024-04-11
 
@@ -49,7 +61,6 @@
 - Implement `IsSimple` for `[(usize, usize)]`.
 - Implement `IsSimple` for `[(usize, usize, W)]`.
 - Implement `IsSimple` for `[HashSet<usize>]`.
-- Implement `IsSimple` for `AdjacencyMatrix`.
 
 ## [0.8.1] - 2024-04-10
 

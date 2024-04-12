@@ -4,6 +4,7 @@ use crate::op::{
     CountAllVertices,
     Indegree,
     IsEdge,
+    IsSimple,
     IterEdges,
     IterVertices,
     Outdegree,
@@ -176,6 +177,15 @@ where
         let i = Self::index(s, t);
 
         self.blocks[i >> 6] & Self::mask(i) != 0
+    }
+}
+
+impl<const V: usize> IsSimple for AdjacencyMatrix<V>
+where
+    [(); blocks!(V)]:,
+{
+    fn is_simple(&self) -> bool {
+        (0..V).all(|s| !self.is_edge(s, s))
     }
 }
 
@@ -383,6 +393,26 @@ mod tests {
         assert!(graph.is_edge(2, 1));
         assert!(!graph.is_edge(3, 0));
         assert!(!graph.is_edge(0, 3));
+    }
+
+    #[test]
+    fn is_simple() {
+        let mut graph = AdjacencyMatrix::<3>::new();
+
+        graph.add_edge(0, 1);
+        graph.add_edge(0, 2);
+        graph.add_edge(2, 1);
+
+        assert!(graph.is_simple());
+    }
+
+    #[test]
+    fn is_simple_self_loop() {
+        let mut graph = AdjacencyMatrix::<3>::new();
+
+        graph.add_edge(0, 0); // Self-loop {0, 0}
+
+        assert!(!graph.is_simple());
     }
 
     #[test]

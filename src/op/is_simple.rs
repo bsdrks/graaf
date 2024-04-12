@@ -125,7 +125,10 @@ where
     H: BuildHasher,
 {
     fn is_simple(&self) -> bool {
-        self.iter_all_weighted_edges().all(|(s, t, _)| s != t)
+        let mut set = HashSet::new();
+
+        self.iter_all_weighted_edges()
+            .all(|(s, t, _)| s != t && set.insert((s, t)))
     }
 }
 
@@ -417,6 +420,18 @@ mod tests {
         let graph: HashSet<(usize, usize, usize)> = HashSet::from([
             (0, 0, 1), // Self-loop {0, 0}
             (0, 1, 1), 
+            (0, 2, 1) 
+        ]);
+
+        assert!(!graph.is_simple());
+    }
+
+    #[test]
+    fn hash_set_tuple_weighted_parallel_edges() {
+        #[rustfmt::skip]
+        let graph: HashSet<(usize, usize, usize)> = HashSet::from([
+            (0, 1, 1), // Parallel edge {0, 1}
+            (0, 1, 2), // Parallel edge {0, 1}
             (0, 2, 1) 
         ]);
 
