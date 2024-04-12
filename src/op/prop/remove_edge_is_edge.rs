@@ -5,6 +5,9 @@ use crate::op::{
     RemoveEdge,
 };
 
+/// An edge removed with [`crate::op::RemoveEdge`] should no longer in the
+/// graph, as reflected by [`crate::op::IsEdge`].
+///
 /// Types that implement [`crate::op::RemoveEdge`] and [`crate::op::IsEdge`]
 /// should ensure that the following property holds for every `graph`, `s`, and
 /// `t` of the given types.

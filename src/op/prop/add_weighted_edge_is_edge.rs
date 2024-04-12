@@ -5,6 +5,9 @@ use crate::op::{
     IsEdge,
 };
 
+/// Adding a weighted edge with [`crate::op::AddWeightedEdge`] should be
+/// reflected by [`crate::op::IsEdge`].
+///
 /// Types that implement [`crate::op::AddWeightedEdge`] and
 /// [`crate::op::IsEdge`] should ensure that the following property holds for
 /// every `graph`, `s`, `t`, and `w` of the given types.

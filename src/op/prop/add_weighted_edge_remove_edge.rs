@@ -5,6 +5,9 @@ use crate::op::{
     RemoveEdge,
 };
 
+/// Adding a weighted edge with [`crate::op::AddWeightedEdge`] and then removing
+/// it with [`crate::op::RemoveEdge`] should keep the graph unchanged.
+///
 /// Types that implement [`crate::op::AddWeightedEdge`] and
 /// [`crate::op::RemoveEdge`] should ensure that the following property holds
 /// for every `graph`, `s`, and `t` of the given types.

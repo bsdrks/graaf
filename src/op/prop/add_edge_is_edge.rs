@@ -5,6 +5,9 @@ use crate::op::{
     IsEdge,
 };
 
+/// Adding an edge with [`crate::op::AddEdge`] should be reflected by
+/// [`crate::op::IsEdge`].
+///
 /// Types that implement [`crate::op::AddEdge`] and [`crate::op::IsEdge`] should
 /// ensure that the following property holds for every `graph`, `s`, and `t` of
 /// the given types.
