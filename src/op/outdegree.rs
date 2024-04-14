@@ -61,6 +61,39 @@ pub trait Outdegree {
     fn outdegree(&self, s: usize) -> usize;
 }
 
+impl<T> Outdegree for Vec<Vec<T>> {
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn outdegree(&self, s: usize) -> usize {
+        self[s].len()
+    }
+}
+
+impl<T, H> Outdegree for Vec<HashSet<T, H>>
+where
+    H: BuildHasher,
+{
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn outdegree(&self, s: usize) -> usize {
+        self[s].len()
+    }
+}
+
+impl<K, V, H> Outdegree for Vec<HashMap<K, V, H>>
+where
+    H: BuildHasher,
+{
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn outdegree(&self, s: usize) -> usize {
+        self[s].len()
+    }
+}
+
 impl<T> Outdegree for [Vec<T>] {
     /// # Panics
     ///
@@ -83,6 +116,39 @@ where
 }
 
 impl<K, V, H> Outdegree for [HashMap<K, V, H>]
+where
+    H: BuildHasher,
+{
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn outdegree(&self, s: usize) -> usize {
+        self[s].len()
+    }
+}
+
+impl<const V: usize, T> Outdegree for [Vec<T>; V] {
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn outdegree(&self, s: usize) -> usize {
+        self[s].len()
+    }
+}
+
+impl<const V: usize, T, H> Outdegree for [HashSet<T, H>; V]
+where
+    H: BuildHasher,
+{
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn outdegree(&self, s: usize) -> usize {
+        self[s].len()
+    }
+}
+
+impl<const V: usize, K, W, H> Outdegree for [HashMap<K, W, H>; V]
 where
     H: BuildHasher,
 {

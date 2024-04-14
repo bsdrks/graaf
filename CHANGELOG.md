@@ -14,13 +14,23 @@
 - Add binary tree generator.
 - Add bipartite matching algorithm for connected graphs.
 - Add bipartite matching algorithm for disconnected graphs.
+- Add complexity analysis to `op` implementations.
 - Add depth-first search.
 - Add linear graph generator.
 - Add star graph generator.
 - Add topological sorting for DAGs.
 - Check parallel edges in `IsSimple`.
 - Mention for functions whether they are meant for simple graphs.
+- Use `bfs` in `README` example.
 - Test implementations of traits with properties in `op::prop`.
+
+## [0.11.0] - 2024-04-14
+
+Added back `op` implementations for `Vec` and arrays to simplify use cases.
+
+### Fixed
+
+- Remove stray `W` type parameter in `add_edge_remove_edge`.
 
 ## [0.10.0] - 2024-04-12
 

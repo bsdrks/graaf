@@ -78,6 +78,28 @@ pub trait AddEdge {
     fn add_edge(&mut self, s: usize, t: usize);
 }
 
+impl AddEdge for Vec<Vec<usize>> {
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph or if the new capacity of the vector
+    /// exceeds `isize::MAX`.
+    fn add_edge(&mut self, s: usize, t: usize) {
+        self[s].push(t);
+    }
+}
+
+impl<H> AddEdge for Vec<HashSet<usize, H>>
+where
+    H: BuildHasher,
+{
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn add_edge(&mut self, s: usize, t: usize) {
+        let _ = self[s].insert(t);
+    }
+}
+
 impl AddEdge for [Vec<usize>] {
     /// # Panics
     ///
@@ -89,6 +111,28 @@ impl AddEdge for [Vec<usize>] {
 }
 
 impl<H> AddEdge for [HashSet<usize, H>]
+where
+    H: BuildHasher,
+{
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn add_edge(&mut self, s: usize, t: usize) {
+        let _ = self[s].insert(t);
+    }
+}
+
+impl<const V: usize> AddEdge for [Vec<usize>; V] {
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph or if the new capacity of the vector
+    /// exceeds `isize::MAX`.
+    fn add_edge(&mut self, s: usize, t: usize) {
+        self[s].push(t);
+    }
+}
+
+impl<H, const V: usize> AddEdge for [HashSet<usize, H>; V]
 where
     H: BuildHasher,
 {

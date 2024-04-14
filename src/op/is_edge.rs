@@ -112,6 +112,15 @@ pub trait IsEdge {
     fn is_edge(&self, s: usize, t: usize) -> bool;
 }
 
+impl<H> IsEdge for Vec<HashSet<usize, H>>
+where
+    H: BuildHasher,
+{
+    fn is_edge(&self, s: usize, t: usize) -> bool {
+        self.get(s).map_or(false, |set| set.contains(&t))
+    }
+}
+
 impl<H> IsEdge for [HashSet<usize, H>]
 where
     H: BuildHasher,
@@ -127,6 +136,15 @@ where
 {
     fn is_edge(&self, s: usize, t: usize) -> bool {
         self.get(s).map_or(false, |map| map.contains_key(&t))
+    }
+}
+
+impl<const V: usize, H> IsEdge for [HashSet<usize, H>; V]
+where
+    H: BuildHasher,
+{
+    fn is_edge(&self, s: usize, t: usize) -> bool {
+        self[s].contains(&t)
     }
 }
 

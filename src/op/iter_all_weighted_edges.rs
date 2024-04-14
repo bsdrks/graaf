@@ -63,7 +63,25 @@ pub trait IterAllWeightedEdges<W> {
         W: 'a;
 }
 
+impl<W> IterAllWeightedEdges<W> for Vec<(usize, usize, W)> {
+    fn iter_all_weighted_edges<'a>(&'a self) -> impl Iterator<Item = (usize, usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self.iter().map(|(s, t, w)| (*s, *t, w))
+    }
+}
+
 impl<W> IterAllWeightedEdges<W> for [(usize, usize, W)] {
+    fn iter_all_weighted_edges<'a>(&'a self) -> impl Iterator<Item = (usize, usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self.iter().map(|(s, t, w)| (*s, *t, w))
+    }
+}
+
+impl<const V: usize, W> IterAllWeightedEdges<W> for [(usize, usize, W); V] {
     fn iter_all_weighted_edges<'a>(&'a self) -> impl Iterator<Item = (usize, usize, &'a W)>
     where
         W: 'a,

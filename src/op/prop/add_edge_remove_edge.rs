@@ -2,6 +2,7 @@
 //! [`crate::op::RemoveEdge`] should keep the graph unchanged.
 use crate::op::{
     AddEdge,
+    IsEdge,
     RemoveEdge,
 };
 
@@ -17,9 +18,9 @@ use crate::op::{
 /// * `graph`: The graph.
 /// * `s`: The source vertex.
 /// * `t`: The target vertex.
-pub fn add_edge_remove_edge<G, W>(graph: &G, s: usize, t: usize) -> bool
+pub fn add_edge_remove_edge<G>(graph: &G, s: usize, t: usize) -> bool
 where
-    G: AddEdge + Clone + PartialEq + RemoveEdge,
+    G: AddEdge + Clone + IsEdge + PartialEq + RemoveEdge,
 {
     let mut clone = graph.clone();
 
@@ -27,4 +28,54 @@ where
     clone.remove_edge(s, t);
 
     *graph == clone
+}
+
+#[cfg(test)]
+mod tests {
+    use {
+        super::*,
+        crate::repr::AdjacencyMatrix,
+        std::{
+            collections::HashSet,
+            hash::RandomState,
+        },
+    };
+
+    #[test]
+    fn vec_hash_set() {
+        #[allow(clippy::useless_vec)]
+        let graph: Vec<HashSet<usize, RandomState>> =
+            vec![HashSet::new(), HashSet::new(), HashSet::new()];
+
+        assert!(add_edge_remove_edge(&graph, 0, 1));
+        assert!(add_edge_remove_edge(&graph, 0, 2));
+        assert!(add_edge_remove_edge(&graph, 1, 0));
+        assert!(add_edge_remove_edge(&graph, 1, 2));
+        assert!(add_edge_remove_edge(&graph, 2, 0));
+        assert!(add_edge_remove_edge(&graph, 2, 1));
+    }
+
+    #[test]
+    fn arr_hash_set() {
+        let graph = [HashSet::new(), HashSet::new(), HashSet::new()];
+
+        assert!(add_edge_remove_edge(&graph, 0, 1));
+        assert!(add_edge_remove_edge(&graph, 0, 2));
+        assert!(add_edge_remove_edge(&graph, 1, 0));
+        assert!(add_edge_remove_edge(&graph, 1, 2));
+        assert!(add_edge_remove_edge(&graph, 2, 0));
+        assert!(add_edge_remove_edge(&graph, 2, 1));
+    }
+
+    #[test]
+    fn adjacency_matrix() {
+        let graph = AdjacencyMatrix::<3>::new();
+
+        assert!(add_edge_remove_edge(&graph, 0, 1));
+        assert!(add_edge_remove_edge(&graph, 0, 2));
+        assert!(add_edge_remove_edge(&graph, 1, 0));
+        assert!(add_edge_remove_edge(&graph, 1, 2));
+        assert!(add_edge_remove_edge(&graph, 2, 0));
+        assert!(add_edge_remove_edge(&graph, 2, 1));
+    }
 }

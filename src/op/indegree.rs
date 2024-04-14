@@ -71,6 +71,24 @@ pub trait Indegree {
     fn indegree(&self, t: usize) -> usize;
 }
 
+impl<H> Indegree for Vec<HashSet<usize, H>>
+where
+    H: BuildHasher,
+{
+    fn indegree(&self, t: usize) -> usize {
+        self.iter().filter(|set| set.contains(&t)).count()
+    }
+}
+
+impl<W, H> Indegree for Vec<HashMap<usize, W, H>>
+where
+    H: BuildHasher,
+{
+    fn indegree(&self, t: usize) -> usize {
+        self.iter().filter(|map| map.contains_key(&t)).count()
+    }
+}
+
 impl<H> Indegree for [HashSet<usize, H>]
 where
     H: BuildHasher,
@@ -81,6 +99,24 @@ where
 }
 
 impl<W, H> Indegree for [HashMap<usize, W, H>]
+where
+    H: BuildHasher,
+{
+    fn indegree(&self, t: usize) -> usize {
+        self.iter().filter(|map| map.contains_key(&t)).count()
+    }
+}
+
+impl<const V: usize, H> Indegree for [HashSet<usize, H>; V]
+where
+    H: BuildHasher,
+{
+    fn indegree(&self, t: usize) -> usize {
+        self.iter().filter(|set| set.contains(&t)).count()
+    }
+}
+
+impl<const V: usize, W, H> Indegree for [HashMap<usize, W, H>; V]
 where
     H: BuildHasher,
 {

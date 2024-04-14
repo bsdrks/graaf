@@ -60,7 +60,19 @@ pub trait IterVertices {
     fn iter_vertices(&self) -> impl Iterator<Item = usize>;
 }
 
+impl<T> IterVertices for Vec<T> {
+    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
+        0..self.len()
+    }
+}
+
 impl<T> IterVertices for [T] {
+    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
+        0..self.len()
+    }
+}
+
+impl<const V: usize, T> IterVertices for [T; V] {
     fn iter_vertices(&self) -> impl Iterator<Item = usize> {
         0..self.len()
     }

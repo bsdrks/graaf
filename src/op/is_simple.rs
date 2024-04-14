@@ -84,6 +84,33 @@ pub trait IsSimple {
     fn is_simple(&self) -> bool;
 }
 
+impl<H> IsSimple for Vec<HashSet<usize, H>>
+where
+    H: BuildHasher,
+{
+    fn is_simple(&self) -> bool {
+        self.iter().enumerate().all(|(s, set)| !set.contains(&s))
+    }
+}
+
+impl IsSimple for Vec<(usize, usize)> {
+    fn is_simple(&self) -> bool {
+        let mut set = HashSet::new();
+
+        self.iter_all_edges()
+            .all(|(s, t)| s != t && set.insert((s, t)))
+    }
+}
+
+impl<W> IsSimple for Vec<(usize, usize, W)> {
+    fn is_simple(&self) -> bool {
+        let mut set = HashSet::new();
+
+        self.iter_all_weighted_edges()
+            .all(|(s, t, _)| s != t && set.insert((s, t)))
+    }
+}
+
 impl<H> IsSimple for [HashSet<usize, H>]
 where
     H: BuildHasher,
@@ -103,6 +130,33 @@ impl IsSimple for [(usize, usize)] {
 }
 
 impl<W> IsSimple for [(usize, usize, W)] {
+    fn is_simple(&self) -> bool {
+        let mut set = HashSet::new();
+
+        self.iter_all_weighted_edges()
+            .all(|(s, t, _)| s != t && set.insert((s, t)))
+    }
+}
+
+impl<const V: usize, H> IsSimple for [HashSet<usize, H>; V]
+where
+    H: BuildHasher,
+{
+    fn is_simple(&self) -> bool {
+        self.iter().enumerate().all(|(s, set)| !set.contains(&s))
+    }
+}
+
+impl<const V: usize> IsSimple for [(usize, usize); V] {
+    fn is_simple(&self) -> bool {
+        let mut set = HashSet::new();
+
+        self.iter_all_edges()
+            .all(|(s, t)| s != t && set.insert((s, t)))
+    }
+}
+
+impl<const V: usize, W> IsSimple for [(usize, usize, W); V] {
     fn is_simple(&self) -> bool {
         let mut set = HashSet::new();
 

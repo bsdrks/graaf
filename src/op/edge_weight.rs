@@ -86,7 +86,25 @@ pub trait EdgeWeight<W> {
     fn edge_weight(&self, s: usize, t: usize) -> Option<&W>;
 }
 
+impl<W, H> EdgeWeight<W> for Vec<HashMap<usize, W, H>>
+where
+    H: BuildHasher,
+{
+    fn edge_weight(&self, s: usize, t: usize) -> Option<&W> {
+        self.get(s).and_then(|m| m.get(&t))
+    }
+}
+
 impl<W, H> EdgeWeight<W> for [HashMap<usize, W, H>]
+where
+    H: BuildHasher,
+{
+    fn edge_weight(&self, s: usize, t: usize) -> Option<&W> {
+        self.get(s).and_then(|m| m.get(&t))
+    }
+}
+
+impl<const V: usize, W, H> EdgeWeight<W> for [HashMap<usize, W, H>; V]
 where
     H: BuildHasher,
 {
