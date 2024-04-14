@@ -28,6 +28,36 @@ In arbitrary order:
 - Test implementations of traits with properties in `op::prop`.
 - Use `bfs` in `README` example.
 
+## [0.13.0] - 2024-04-14
+
+### Added
+
+- Add `CountAllVertices` for `Vec<BTreeMap<usize, W>>`.
+- Add `CountAllVertices` for `Vec<BTreeSet<usize>>`.
+- Add `CountAllVertices` for `Vec<HashMap<usize, W>>`.
+- Add `CountAllVertices` for `Vec<HashSet<usize>>`.
+- Add `CountAllVertices` for `Vec<Vec<(usize, W)>>`.
+- Add `CountAllVertices` for `Vec<Vec<usize>>`.
+- Add `CountAllVertices` for `[BTreeMap<usize, W>; V]`.
+- Add `CountAllVertices` for `[BTreeMap<usize, W>]`.
+- Add `CountAllVertices` for `[BTreeSet<usize>; V]`.
+- Add `CountAllVertices` for `[BTreeSet<usize>]`.
+- Add `CountAllVertices` for `[HashMap<usize, W>; V]`.
+- Add `CountAllVertices` for `[HashMap<usize, W>]`.
+- Add `CountAllVertices` for `[HashSet<usize>; V]`.
+- Add `CountAllVertices` for `[HashSet<usize>]`.
+- Add `CountAllVertices` for `[Vec<(usize, W)>; V]`.
+- Add `CountAllVertices` for `[Vec<(usize, W)>]`.
+- Add `CountAllVertices` for `[Vec<usize>; V]`.
+- Add `CountAllVertices` for `[Vec<usize>]`.
+
+### Removed
+
+- Breaking: Remove `CountAllVertices` for `HashMap<_>`.
+- Breaking: Remove `CountAllVertices` for `Vec<T>`.
+- Breaking: Remove `CountAllVertices` for `[T; V]`.
+- Breaking: Remove `CountAllVertices` for `[T]`.
+
 ## [0.12.1] - 2024-04-14
 
 ### Added

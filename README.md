@@ -16,7 +16,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.12.1"
+graaf = "0.13.0"
 ```
 
 ## Usage
@@ -119,6 +119,15 @@ These traits are implemented for various graph representations built from standa
 - `[HashSet<(usize, W)>]`
 - `[Vec<(usize, W)>; V]`
 - `[Vec<(usize, W)>]`
+- `BTreeMap<usize, BTreeMap<usize, W>>`
+- `BTreeMap<usize, BTreeSet<(usize, W)>>`
+- `BTreeMap<usize, Vec<(usize, W)>>`
+- `Vec<BTreeMap<usize, W>>`
+- `Vec<BTreeSet<(usize, W)>>`
+- `[BTreeMap<usize, W>; V]`
+- `[BTreeMap<usize, W>]`
+- `[BTreeSet<(usize, W)>; V]`
+- `[BTreeSet<(usize, W)>]`
 
 #### Adjacency matrix, unweighted
 

@@ -130,8 +130,7 @@ pub fn min_distances<G, W>(
 /// ```
 pub fn min_distances_single_source<G>(graph: &G, s: usize) -> Vec<usize>
 where
-    for<'a> &'a G: CountAllVertices,
-    G: IterEdges + ?Sized,
+    G: CountAllVertices + IterEdges,
 {
     let mut dist = vec![usize::MAX; graph.count_all_vertices()];
     let mut queue = VecDeque::from(vec![(s, 0)]);
@@ -237,8 +236,7 @@ pub fn predecessors<G, W>(
 /// ```
 pub fn predecessors_single_source<G>(graph: &G, s: usize) -> (Vec<Option<usize>>, Vec<usize>)
 where
-    for<'a> &'a G: CountAllVertices,
-    G: IterEdges + ?Sized,
+    G: CountAllVertices + IterEdges,
 {
     let mut pred = vec![None; graph.count_all_vertices()];
     let mut dist = vec![usize::MAX; graph.count_all_vertices()];

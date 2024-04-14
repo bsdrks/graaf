@@ -9,12 +9,18 @@
 //!
 //! assert_eq!(graph.count_all_vertices(), 4);
 //! ```
+extern crate alloc;
+
 use {
-    core::hash::{
-        BuildHasher,
-        Hash,
+    alloc::collections::{
+        BTreeMap,
+        BTreeSet,
     },
-    std::collections::HashMap,
+    core::hash::BuildHasher,
+    std::collections::{
+        HashMap,
+        HashSet,
+    },
 };
 
 /// A trait to count all vertices in a graph
@@ -52,32 +58,110 @@ pub trait CountAllVertices {
     fn count_all_vertices(&self) -> usize;
 }
 
-impl<T> CountAllVertices for Vec<T> {
-    fn count_all_vertices(&self) -> usize {
-        self.len()
-    }
+macro_rules! impl_by_len {
+    () => {
+        fn count_all_vertices(&self) -> usize {
+            self.len()
+        }
+    };
 }
 
-impl<T> CountAllVertices for &[T] {
-    fn count_all_vertices(&self) -> usize {
-        self.len()
-    }
+macro_rules! impl_by_const {
+    () => {
+        fn count_all_vertices(&self) -> usize {
+            V
+        }
+    };
 }
 
-impl<const V: usize, T> CountAllVertices for [T; V] {
-    fn count_all_vertices(&self) -> usize {
-        V
-    }
+impl CountAllVertices for Vec<Vec<usize>> {
+    impl_by_len!();
 }
 
-impl<K, T, H> CountAllVertices for HashMap<K, T, H>
+impl<W> CountAllVertices for Vec<Vec<(usize, W)>> {
+    impl_by_len!();
+}
+
+impl CountAllVertices for Vec<BTreeSet<usize>> {
+    impl_by_len!();
+}
+
+impl<W> CountAllVertices for Vec<BTreeMap<usize, W>> {
+    impl_by_len!();
+}
+
+impl<H> CountAllVertices for Vec<HashSet<usize, H>>
 where
-    K: Hash + Eq,
     H: BuildHasher,
 {
-    fn count_all_vertices(&self) -> usize {
-        self.len()
-    }
+    impl_by_len!();
+}
+
+impl<W, H> CountAllVertices for Vec<HashMap<usize, W, H>>
+where
+    H: BuildHasher,
+{
+    impl_by_len!();
+}
+
+impl CountAllVertices for [Vec<usize>] {
+    impl_by_len!();
+}
+
+impl<W> CountAllVertices for [Vec<(usize, W)>] {
+    impl_by_len!();
+}
+
+impl CountAllVertices for [BTreeSet<usize>] {
+    impl_by_len!();
+}
+
+impl<H> CountAllVertices for [HashSet<usize, H>]
+where
+    H: BuildHasher,
+{
+    impl_by_len!();
+}
+
+impl<W> CountAllVertices for [BTreeMap<usize, W>] {
+    impl_by_len!();
+}
+
+impl<W, H> CountAllVertices for [HashMap<usize, W, H>]
+where
+    H: BuildHasher,
+{
+    impl_by_len!();
+}
+
+impl<const V: usize> CountAllVertices for [Vec<usize>; V] {
+    impl_by_const!();
+}
+
+impl<const V: usize, W> CountAllVertices for [Vec<(usize, W)>; V] {
+    impl_by_const!();
+}
+
+impl<const V: usize> CountAllVertices for [BTreeSet<usize>; V] {
+    impl_by_const!();
+}
+
+impl<const V: usize, W> CountAllVertices for [BTreeMap<usize, W>; V] {
+    impl_by_const!();
+}
+
+impl<const V: usize, H> CountAllVertices for [HashSet<usize, H>; V]
+where
+    H: BuildHasher,
+{
+    impl_by_const!();
+}
+
+impl<const V: usize, W, H> CountAllVertices for [HashMap<usize, W, H>; V]
+where
+    H: BuildHasher,
+{
+    impl_by_const!();
 }
 
 #[cfg(test)]
@@ -85,32 +169,178 @@ mod tests {
     use super::*;
 
     #[test]
-    fn vec() {
+    fn vec_vec_unweighted() {
         let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
         assert_eq!(graph.count_all_vertices(), 4);
     }
 
     #[test]
-    fn slice() {
+    fn vec_vec_weighted() {
+        let graph = vec![vec![(1, 2), (2, 3)], vec![(0, 4)], vec![(0, 7), (1, 8)]];
+
+        assert_eq!(graph.count_all_vertices(), 3);
+    }
+
+    #[test]
+    fn vec_btree_set() {
+        let graph = vec![
+            BTreeSet::from([1, 2]),
+            BTreeSet::from([0, 2, 3]),
+            BTreeSet::from([0, 1, 3]),
+        ];
+
+        assert_eq!(graph.count_all_vertices(), 3);
+    }
+
+    #[test]
+    fn vec_btree_map() {
+        let graph = vec![
+            BTreeMap::from([(1, 2), (2, 3)]),
+            BTreeMap::from([(0, 4)]),
+            BTreeMap::from([(0, 7), (1, 8)]),
+        ];
+
+        assert_eq!(graph.count_all_vertices(), 3);
+    }
+
+    #[test]
+    fn vec_hash_set() {
+        let graph = vec![
+            HashSet::from([1, 2]),
+            HashSet::from([0, 2, 3]),
+            HashSet::from([0, 1, 3]),
+            HashSet::from([1, 2]),
+        ];
+
+        assert_eq!(graph.count_all_vertices(), 4);
+    }
+
+    #[test]
+    fn vec_hash_map() {
+        let graph = vec![
+            HashMap::from([(1, 2), (2, 3)]),
+            HashMap::from([(0, 4)]),
+            HashMap::from([(0, 7), (1, 8)]),
+        ];
+
+        assert_eq!(graph.count_all_vertices(), 3);
+    }
+
+    #[test]
+    fn slice_vec_unweighted() {
         let graph: &[Vec<usize>] = &[vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
         assert_eq!(graph.count_all_vertices(), 4);
     }
 
     #[test]
-    fn arr() {
-        let graph = [(0, 1), (1, 2), (2, 0)];
+    fn slice_vec_weighted() {
+        let graph: &[Vec<(usize, i32)>] =
+            &[vec![(1, 2), (2, 3)], vec![(0, 4)], vec![(0, 7), (1, 8)]];
 
         assert_eq!(graph.count_all_vertices(), 3);
     }
 
     #[test]
-    fn hash_map() {
-        let mut graph = HashMap::new();
-        let _ = graph.insert(0, vec![1, 2]);
-        let _ = graph.insert(1, vec![0, 2]);
-        let _ = graph.insert(2, vec![0, 1]);
+    fn slice_btree_set() {
+        let graph: &[BTreeSet<usize>] = &[
+            BTreeSet::from([1, 2]),
+            BTreeSet::from([0, 2, 3]),
+            BTreeSet::from([0, 1, 3]),
+        ];
+
+        assert_eq!(graph.count_all_vertices(), 3);
+    }
+
+    #[test]
+    fn slice_btree_map() {
+        let graph: &[BTreeMap<usize, i32>] = &[
+            BTreeMap::from([(1, 2), (2, 3)]),
+            BTreeMap::from([(0, 4)]),
+            BTreeMap::from([(0, 7), (1, 8)]),
+        ];
+
+        assert_eq!(graph.count_all_vertices(), 3);
+    }
+
+    #[test]
+    fn slice_hash_set() {
+        let graph: &[HashSet<usize>] = &[
+            HashSet::from([1, 2]),
+            HashSet::from([0, 2, 3]),
+            HashSet::from([0, 1, 3]),
+            HashSet::from([1, 2]),
+        ];
+
+        assert_eq!(graph.count_all_vertices(), 4);
+    }
+
+    #[test]
+    fn slice_hash_map() {
+        let graph: &[HashMap<usize, i32>] = &[
+            HashMap::from([(1, 2), (2, 3)]),
+            HashMap::from([(0, 4)]),
+            HashMap::from([(0, 7), (1, 8)]),
+        ];
+
+        assert_eq!(graph.count_all_vertices(), 3);
+    }
+
+    #[test]
+    fn arr_vec_unweighted() {
+        let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+
+        assert_eq!(graph.count_all_vertices(), 4);
+    }
+
+    #[test]
+    fn arr_vec_weighted() {
+        let graph = [vec![(1, 2), (2, 3)], vec![(0, 4)], vec![(0, 7), (1, 8)]];
+
+        assert_eq!(graph.count_all_vertices(), 3);
+    }
+
+    #[test]
+    fn arr_btree_set() {
+        let graph = [
+            BTreeSet::from([1, 2]),
+            BTreeSet::from([0, 2, 3]),
+            BTreeSet::from([0, 1, 3]),
+        ];
+
+        assert_eq!(graph.count_all_vertices(), 3);
+    }
+
+    #[test]
+    fn arr_btree_map() {
+        let graph = [
+            BTreeMap::from([(1, 2), (2, 3)]),
+            BTreeMap::from([(0, 4)]),
+            BTreeMap::from([(0, 7), (1, 8)]),
+        ];
+
+        assert_eq!(graph.count_all_vertices(), 3);
+    }
+
+    #[test]
+    fn arr_hash_set() {
+        let graph = [
+            HashSet::from([1, 2]),
+            HashSet::from([0, 2, 3]),
+            HashSet::from([0, 1, 3]),
+        ];
+
+        assert_eq!(graph.count_all_vertices(), 3);
+    }
+
+    #[test]
+    fn arr_hash_map() {
+        let graph = [
+            HashMap::from([(1, 2), (2, 3)]),
+            HashMap::from([(0, 4)]),
+            HashMap::from([(0, 7), (1, 8)]),
+        ];
 
         assert_eq!(graph.count_all_vertices(), 3);
     }

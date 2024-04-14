@@ -286,18 +286,6 @@ mod tests {
     }
 
     #[test]
-    fn vec_hash_set() {
-        let graph = vec![
-            HashSet::from([1, 2]),
-            HashSet::from([0, 2, 3]),
-            HashSet::from([0, 1, 3]),
-            HashSet::from([1, 2]),
-        ];
-
-        assert_eq!(graph.count_all_edges(), 10);
-    }
-
-    #[test]
     fn vec_btree_set() {
         let graph = vec![
             BTreeSet::from([1, 2]),
@@ -310,14 +298,15 @@ mod tests {
     }
 
     #[test]
-    fn vec_hash_map() {
+    fn vec_hash_set() {
         let graph = vec![
-            HashMap::from([(1, 2), (2, 3)]),
-            HashMap::from([(0, 4)]),
-            HashMap::from([(0, 7), (1, 8)]),
+            HashSet::from([1, 2]),
+            HashSet::from([0, 2, 3]),
+            HashSet::from([0, 1, 3]),
+            HashSet::from([1, 2]),
         ];
 
-        assert_eq!(graph.count_all_edges(), 5);
+        assert_eq!(graph.count_all_edges(), 10);
     }
 
     #[test]
@@ -332,20 +321,19 @@ mod tests {
     }
 
     #[test]
-    fn slice_vec() {
-        let graph: &[Vec<usize>] = &[vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+    fn vec_hash_map() {
+        let graph = vec![
+            HashMap::from([(1, 2), (2, 3)]),
+            HashMap::from([(0, 4)]),
+            HashMap::from([(0, 7), (1, 8)]),
+        ];
 
-        assert_eq!(graph.count_all_edges(), 10);
+        assert_eq!(graph.count_all_edges(), 5);
     }
 
     #[test]
-    fn slice_hash_set() {
-        let graph: &[HashSet<usize>] = &[
-            HashSet::from([1, 2]),
-            HashSet::from([0, 2, 3]),
-            HashSet::from([0, 1, 3]),
-            HashSet::from([1, 2]),
-        ];
+    fn slice_vec() {
+        let graph: &[Vec<usize>] = &[vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
         assert_eq!(graph.count_all_edges(), 10);
     }
@@ -363,14 +351,15 @@ mod tests {
     }
 
     #[test]
-    fn slice_hash_map() {
-        let graph: &[HashMap<usize, usize>] = &[
-            HashMap::from([(1, 2), (2, 3)]),
-            HashMap::from([(0, 4)]),
-            HashMap::from([(0, 7), (1, 8)]),
+    fn slice_hash_set() {
+        let graph: &[HashSet<usize>] = &[
+            HashSet::from([1, 2]),
+            HashSet::from([0, 2, 3]),
+            HashSet::from([0, 1, 3]),
+            HashSet::from([1, 2]),
         ];
 
-        assert_eq!(graph.count_all_edges(), 5);
+        assert_eq!(graph.count_all_edges(), 10);
     }
 
     #[test]
@@ -385,20 +374,19 @@ mod tests {
     }
 
     #[test]
-    fn arr_vec() {
-        let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+    fn slice_hash_map() {
+        let graph: &[HashMap<usize, usize>] = &[
+            HashMap::from([(1, 2), (2, 3)]),
+            HashMap::from([(0, 4)]),
+            HashMap::from([(0, 7), (1, 8)]),
+        ];
 
-        assert_eq!(graph.count_all_edges(), 10);
+        assert_eq!(graph.count_all_edges(), 5);
     }
 
     #[test]
-    fn arr_hash_set() {
-        let graph = [
-            HashSet::from([1, 2]),
-            HashSet::from([0, 2, 3]),
-            HashSet::from([0, 1, 3]),
-            HashSet::from([1, 2]),
-        ];
+    fn arr_vec() {
+        let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
         assert_eq!(graph.count_all_edges(), 10);
     }
@@ -416,14 +404,15 @@ mod tests {
     }
 
     #[test]
-    fn arr_hash_map() {
+    fn arr_hash_set() {
         let graph = [
-            HashMap::from([(1, 2), (2, 3)]),
-            HashMap::from([(0, 4)]),
-            HashMap::from([(0, 7), (1, 8)]),
+            HashSet::from([1, 2]),
+            HashSet::from([0, 2, 3]),
+            HashSet::from([0, 1, 3]),
+            HashSet::from([1, 2]),
         ];
 
-        assert_eq!(graph.count_all_edges(), 5);
+        assert_eq!(graph.count_all_edges(), 10);
     }
 
     #[test]
@@ -438,26 +427,19 @@ mod tests {
     }
 
     #[test]
-    fn hash_map_vec() {
-        let graph = HashMap::from([(0, vec![1, 2]), (1, vec![0, 2]), (2, vec![0, 1])]);
+    fn arr_hash_map() {
+        let graph = [
+            HashMap::from([(1, 2), (2, 3)]),
+            HashMap::from([(0, 4)]),
+            HashMap::from([(0, 7), (1, 8)]),
+        ];
 
-        assert_eq!(graph.count_all_edges(), 6);
+        assert_eq!(graph.count_all_edges(), 5);
     }
 
     #[test]
     fn btree_map_vec() {
         let graph = BTreeMap::from([(0, vec![1, 2]), (1, vec![0, 2]), (2, vec![0, 1])]);
-
-        assert_eq!(graph.count_all_edges(), 6);
-    }
-
-    #[test]
-    fn hash_map_hash_set() {
-        let graph = HashMap::from([
-            (0, HashSet::from([1, 2])),
-            (1, HashSet::from([0, 2])),
-            (2, HashSet::from([0, 1])),
-        ]);
 
         assert_eq!(graph.count_all_edges(), 6);
     }
@@ -474,22 +456,40 @@ mod tests {
     }
 
     #[test]
-    fn hash_map_hash_map() {
-        let graph = HashMap::from([
-            (0, HashMap::from([(1, 2), (2, 3)])),
-            (1, HashMap::from([(0, 4)])),
-            (2, HashMap::from([(0, 7), (1, 8)])),
+    fn btree_map_btree_map() {
+        let graph = BTreeMap::from([
+            (0, BTreeMap::from([(1, 2), (2, 3)])),
+            (1, BTreeMap::from([(0, 4)])),
+            (2, BTreeMap::from([(0, 7), (1, 8)])),
         ]);
 
         assert_eq!(graph.count_all_edges(), 5);
     }
 
     #[test]
-    fn btree_map_btree_map() {
-        let graph = BTreeMap::from([
-            (0, BTreeMap::from([(1, 2), (2, 3)])),
-            (1, BTreeMap::from([(0, 4)])),
-            (2, BTreeMap::from([(0, 7), (1, 8)])),
+    fn hash_map_vec() {
+        let graph = HashMap::from([(0, vec![1, 2]), (1, vec![0, 2]), (2, vec![0, 1])]);
+
+        assert_eq!(graph.count_all_edges(), 6);
+    }
+
+    #[test]
+    fn hash_map_hash_set() {
+        let graph = HashMap::from([
+            (0, HashSet::from([1, 2])),
+            (1, HashSet::from([0, 2])),
+            (2, HashSet::from([0, 1])),
+        ]);
+
+        assert_eq!(graph.count_all_edges(), 6);
+    }
+
+    #[test]
+    fn hash_map_hash_map() {
+        let graph = HashMap::from([
+            (0, HashMap::from([(1, 2), (2, 3)])),
+            (1, HashMap::from([(0, 4)])),
+            (2, HashMap::from([(0, 7), (1, 8)])),
         ]);
 
         assert_eq!(graph.count_all_edges(), 5);
