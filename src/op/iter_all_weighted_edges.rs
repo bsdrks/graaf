@@ -111,7 +111,6 @@ mod tests {
 
     #[test]
     fn vec() {
-        #[allow(clippy::useless_vec)]
         let graph = vec![(0, 1, 2), (1, 2, 3), (2, 0, 4)];
         let mut iter = graph.iter_all_weighted_edges();
 

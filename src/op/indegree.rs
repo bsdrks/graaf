@@ -153,7 +153,6 @@ mod tests {
 
     #[test]
     fn vec_hash_set() {
-        #[allow(clippy::useless_vec)]
         let graph = vec![HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
 
         assert_eq!(graph.indegree(0), 0);
@@ -163,7 +162,6 @@ mod tests {
 
     #[test]
     fn vec_hash_map() {
-        #[allow(clippy::useless_vec)]
         let graph = vec![
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(2, 1)]),

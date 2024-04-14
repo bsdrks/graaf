@@ -28,6 +28,26 @@ In arbitrary order:
 - Test implementations of traits with properties in `op::prop`.
 - Use `bfs` in `README` example.
 
+## [0.12.1] - 2024-04-14
+
+### Added
+
+- Implement `CountAllEdges` for `BTreeMap<K, BTreeMap<K, W>>`.
+- Implement `CountAllEdges` for `BTreeMap<K, BTreeSet<T>>`.
+- Implement `CountAllEdges` for `BTreeMap<K, Vec<T>>`.
+- Implement `CountAllEdges` for `Vec<BTreeMap<K, W>>`.
+- Implement `CountAllEdges` for `Vec<BTreeSet<T>>`.
+- Implement `CountAllEdges` for `[BTreeMap<K, W>; V]`.
+- Implement `CountAllEdges` for `[BTreeMap<K, W>]`.
+- Implement `CountAllEdges` for `[BTreeSet<T>; V]`.
+- Implement `CountAllEdges` for `[BTreeSet<T>]`.
+- Implement `IsEdge` for `Vec<HashMap<usize, W>>`.
+- Implement `IsEdge` for `[HashMap<usize, W>; V]`.
+
+### Removed
+
+- Remove `Ord` bound from trait implementations where possible.
+
 ## [0.12.0] - 2024-04-14
 
 ### Added
@@ -130,9 +150,9 @@ Added back `op` implementations for `Vec` and arrays to simplify use cases.
 
 ### Fixed
 
+- `IsSimple` now checks for parallel edges in `HashSet<(usize, usize)>`.
 - `IsSimple` now checks for parallel edges in `[(usize, usize)]`.
 - `IsSimple` now checks for parallel edges in `[(usize, usize, W)]`.
-- `IsSimple` now checks for parallel edges in `HashSet<(usize, usize)>`.
 
 ## [0.8.4] - 2024-04-11
 

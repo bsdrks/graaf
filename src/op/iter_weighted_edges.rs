@@ -296,7 +296,6 @@ mod tests {
 
     #[test]
     fn vec_vec() {
-        #[allow(clippy::useless_vec)]
         let graph = vec![
             vec![(1, 2), (2, 3), (3, 4)],
             vec![(2, 3), (3, 4), (4, 5)],
@@ -313,7 +312,6 @@ mod tests {
 
     #[test]
     fn vec_hash_set() {
-        #[allow(clippy::useless_vec)]
         let graph = vec![
             HashSet::from([(1, 2), (2, 3), (3, 4)]),
             HashSet::from([(2, 3), (3, 4), (4, 5)]),
@@ -330,7 +328,6 @@ mod tests {
 
     #[test]
     fn vec_hash_map() {
-        #[allow(clippy::useless_vec)]
         let graph = vec![
             HashMap::from([(1, 2), (2, 3), (3, 4)]),
             HashMap::from([(2, 3), (3, 4), (4, 5)]),

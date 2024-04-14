@@ -42,7 +42,6 @@ mod test {
 
     #[test]
     fn vec_hash_set() {
-        #[allow(clippy::useless_vec)]
         let graph = &mut vec![
             HashSet::from([1, 2]),
             HashSet::from([0]),

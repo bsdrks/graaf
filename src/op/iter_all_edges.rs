@@ -94,7 +94,6 @@ mod tests {
 
     #[test]
     fn vec() {
-        #[allow(clippy::useless_vec)]
         let graph = vec![(0, 1), (1, 2), (2, 0)];
         let mut iter = graph.iter_all_edges();
 

@@ -121,6 +121,15 @@ where
     }
 }
 
+impl<W, H> IsEdge for Vec<HashMap<usize, W, H>>
+where
+    H: BuildHasher,
+{
+    fn is_edge(&self, s: usize, t: usize) -> bool {
+        self.get(s).map_or(false, |map| map.contains_key(&t))
+    }
+}
+
 impl<H> IsEdge for [HashSet<usize, H>]
 where
     H: BuildHasher,
@@ -145,6 +154,15 @@ where
 {
     fn is_edge(&self, s: usize, t: usize) -> bool {
         self[s].contains(&t)
+    }
+}
+
+impl<const V: usize, W, H> IsEdge for [HashMap<usize, W, H>; V]
+where
+    H: BuildHasher,
+{
+    fn is_edge(&self, s: usize, t: usize) -> bool {
+        self[s].contains_key(&t)
     }
 }
 
@@ -181,7 +199,6 @@ mod tests {
 
     #[test]
     fn vec_hash_set() {
-        #[allow(clippy::useless_vec)]
         let graph = vec![
             HashSet::from([1, 2]),
             HashSet::from([0]),
@@ -201,7 +218,6 @@ mod tests {
 
     #[test]
     fn vec_hash_map() {
-        #[allow(clippy::useless_vec)]
         let graph = vec![
             HashMap::from([(1, 1), (2, 1)]),
             HashMap::from([(0, 1)]),

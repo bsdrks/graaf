@@ -9,8 +9,13 @@
 //!
 //! assert_eq!(graph.count_all_edges(), 10);
 //! ```
+extern crate alloc;
 
 use {
+    alloc::collections::{
+        BTreeMap,
+        BTreeSet,
+    },
     core::hash::BuildHasher,
     std::collections::{
         HashMap,
@@ -62,6 +67,15 @@ impl<T> CountAllEdges for Vec<Vec<T>> {
     }
 }
 
+impl<T> CountAllEdges for Vec<BTreeSet<T>> {
+    /// # Panics
+    ///
+    /// Panics if the number of edges exceeds `usize::MAX`.
+    fn count_all_edges(&self) -> usize {
+        self.iter().map(BTreeSet::len).sum()
+    }
+}
+
 impl<T, H> CountAllEdges for Vec<HashSet<T, H>>
 where
     H: BuildHasher,
@@ -71,6 +85,15 @@ where
     /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.iter().map(HashSet::len).sum()
+    }
+}
+
+impl<K, W> CountAllEdges for Vec<BTreeMap<K, W>> {
+    /// # Panics
+    ///
+    /// Panics if the number of edges exceeds `usize::MAX`.
+    fn count_all_edges(&self) -> usize {
+        self.iter().map(BTreeMap::len).sum()
     }
 }
 
@@ -95,6 +118,15 @@ impl<T> CountAllEdges for [Vec<T>] {
     }
 }
 
+impl<T> CountAllEdges for [BTreeSet<T>] {
+    /// # Panics
+    ///
+    /// Panics if the number of edges exceeds `usize::MAX`.
+    fn count_all_edges(&self) -> usize {
+        self.iter().map(BTreeSet::len).sum()
+    }
+}
+
 impl<T, H> CountAllEdges for [HashSet<T, H>]
 where
     H: BuildHasher,
@@ -104,6 +136,15 @@ where
     /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.iter().map(HashSet::len).sum()
+    }
+}
+
+impl<K, W> CountAllEdges for [BTreeMap<K, W>] {
+    /// # Panics
+    ///
+    /// Panics if the number of edges exceeds `usize::MAX`.
+    fn count_all_edges(&self) -> usize {
+        self.iter().map(BTreeMap::len).sum()
     }
 }
 
@@ -128,6 +169,24 @@ impl<const V: usize, T> CountAllEdges for [Vec<T>; V] {
     }
 }
 
+impl<const V: usize, T> CountAllEdges for [BTreeSet<T>; V] {
+    /// # Panics
+    ///
+    /// Panics if the number of edges exceeds `usize::MAX`.
+    fn count_all_edges(&self) -> usize {
+        self.iter().map(BTreeSet::len).sum()
+    }
+}
+
+impl<const V: usize, K, W> CountAllEdges for [BTreeMap<K, W>; V] {
+    /// # Panics
+    ///
+    /// Panics if the number of edges exceeds `usize::MAX`.
+    fn count_all_edges(&self) -> usize {
+        self.iter().map(BTreeMap::len).sum()
+    }
+}
+
 impl<const V: usize, T, H> CountAllEdges for [HashSet<T, H>; V]
 where
     H: BuildHasher,
@@ -149,6 +208,33 @@ where
     /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.iter().map(HashMap::len).sum()
+    }
+}
+
+impl<K, T> CountAllEdges for BTreeMap<K, Vec<T>> {
+    /// # Panics
+    ///
+    /// Panics if the number of edges exceeds `usize::MAX`.
+    fn count_all_edges(&self) -> usize {
+        self.values().map(Vec::len).sum()
+    }
+}
+
+impl<K, T> CountAllEdges for BTreeMap<K, BTreeSet<T>> {
+    /// # Panics
+    ///
+    /// Panics if the number of edges exceeds `usize::MAX`.
+    fn count_all_edges(&self) -> usize {
+        self.values().map(BTreeSet::len).sum()
+    }
+}
+
+impl<K, W> CountAllEdges for BTreeMap<K, BTreeMap<K, W>> {
+    /// # Panics
+    ///
+    /// Panics if the number of edges exceeds `usize::MAX`.
+    fn count_all_edges(&self) -> usize {
+        self.values().map(BTreeMap::len).sum()
     }
 }
 
@@ -194,7 +280,6 @@ mod tests {
 
     #[test]
     fn vec_vec() {
-        #[allow(clippy::useless_vec)]
         let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
         assert_eq!(graph.count_all_edges(), 10);
@@ -202,7 +287,6 @@ mod tests {
 
     #[test]
     fn vec_hash_set() {
-        #[allow(clippy::useless_vec)]
         let graph = vec![
             HashSet::from([1, 2]),
             HashSet::from([0, 2, 3]),
@@ -214,12 +298,34 @@ mod tests {
     }
 
     #[test]
+    fn vec_btree_set() {
+        let graph = vec![
+            BTreeSet::from([1, 2]),
+            BTreeSet::from([0, 2, 3]),
+            BTreeSet::from([0, 1, 3]),
+            BTreeSet::from([1, 2]),
+        ];
+
+        assert_eq!(graph.count_all_edges(), 10);
+    }
+
+    #[test]
     fn vec_hash_map() {
-        #[allow(clippy::useless_vec)]
         let graph = vec![
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(0, 4)]),
             HashMap::from([(0, 7), (1, 8)]),
+        ];
+
+        assert_eq!(graph.count_all_edges(), 5);
+    }
+
+    #[test]
+    fn vec_btree_map() {
+        let graph = vec![
+            BTreeMap::from([(1, 2), (2, 3)]),
+            BTreeMap::from([(0, 4)]),
+            BTreeMap::from([(0, 7), (1, 8)]),
         ];
 
         assert_eq!(graph.count_all_edges(), 5);
@@ -245,11 +351,34 @@ mod tests {
     }
 
     #[test]
+    fn slice_btree_set() {
+        let graph: &[BTreeSet<usize>] = &[
+            BTreeSet::from([1, 2]),
+            BTreeSet::from([0, 2, 3]),
+            BTreeSet::from([0, 1, 3]),
+            BTreeSet::from([1, 2]),
+        ];
+
+        assert_eq!(graph.count_all_edges(), 10);
+    }
+
+    #[test]
     fn slice_hash_map() {
         let graph: &[HashMap<usize, usize>] = &[
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(0, 4)]),
             HashMap::from([(0, 7), (1, 8)]),
+        ];
+
+        assert_eq!(graph.count_all_edges(), 5);
+    }
+
+    #[test]
+    fn slice_btree_map() {
+        let graph: &[BTreeMap<usize, usize>] = &[
+            BTreeMap::from([(1, 2), (2, 3)]),
+            BTreeMap::from([(0, 4)]),
+            BTreeMap::from([(0, 7), (1, 8)]),
         ];
 
         assert_eq!(graph.count_all_edges(), 5);
@@ -275,6 +404,18 @@ mod tests {
     }
 
     #[test]
+    fn arr_btree_set() {
+        let graph = [
+            BTreeSet::from([1, 2]),
+            BTreeSet::from([0, 2, 3]),
+            BTreeSet::from([0, 1, 3]),
+            BTreeSet::from([1, 2]),
+        ];
+
+        assert_eq!(graph.count_all_edges(), 10);
+    }
+
+    #[test]
     fn arr_hash_map() {
         let graph = [
             HashMap::from([(1, 2), (2, 3)]),
@@ -286,8 +427,26 @@ mod tests {
     }
 
     #[test]
+    fn arr_btree_map() {
+        let graph = [
+            BTreeMap::from([(1, 2), (2, 3)]),
+            BTreeMap::from([(0, 4)]),
+            BTreeMap::from([(0, 7), (1, 8)]),
+        ];
+
+        assert_eq!(graph.count_all_edges(), 5);
+    }
+
+    #[test]
     fn hash_map_vec() {
         let graph = HashMap::from([(0, vec![1, 2]), (1, vec![0, 2]), (2, vec![0, 1])]);
+
+        assert_eq!(graph.count_all_edges(), 6);
+    }
+
+    #[test]
+    fn btree_map_vec() {
+        let graph = BTreeMap::from([(0, vec![1, 2]), (1, vec![0, 2]), (2, vec![0, 1])]);
 
         assert_eq!(graph.count_all_edges(), 6);
     }
@@ -304,11 +463,33 @@ mod tests {
     }
 
     #[test]
+    fn btree_map_btree_set() {
+        let graph = BTreeMap::from([
+            (0, BTreeSet::from([1, 2])),
+            (1, BTreeSet::from([0, 2])),
+            (2, BTreeSet::from([0, 1])),
+        ]);
+
+        assert_eq!(graph.count_all_edges(), 6);
+    }
+
+    #[test]
     fn hash_map_hash_map() {
         let graph = HashMap::from([
             (0, HashMap::from([(1, 2), (2, 3)])),
             (1, HashMap::from([(0, 4)])),
             (2, HashMap::from([(0, 7), (1, 8)])),
+        ]);
+
+        assert_eq!(graph.count_all_edges(), 5);
+    }
+
+    #[test]
+    fn btree_map_btree_map() {
+        let graph = BTreeMap::from([
+            (0, BTreeMap::from([(1, 2), (2, 3)])),
+            (1, BTreeMap::from([(0, 4)])),
+            (2, BTreeMap::from([(0, 7), (1, 8)])),
         ]);
 
         assert_eq!(graph.count_all_edges(), 5);

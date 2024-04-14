@@ -96,7 +96,6 @@ mod tests {
 
     #[test]
     fn vec() {
-        #[allow(clippy::useless_vec)]
         let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
         let mut iter = graph.iter_vertices();
 

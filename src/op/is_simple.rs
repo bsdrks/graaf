@@ -192,7 +192,6 @@ mod tests {
 
     #[test]
     fn vec_hash_set_simple() {
-        #[allow(clippy::useless_vec)]
         let graph = vec![HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
 
         assert!(graph.is_simple());
@@ -200,7 +199,6 @@ mod tests {
 
     #[test]
     fn vec_hash_set_self_loop() {
-        #[allow(clippy::useless_vec)]
         #[rustfmt::skip]
         let graph = vec![
             HashSet::from([0, 1, 2]), // Self-loop {0, 0}
@@ -251,7 +249,6 @@ mod tests {
 
     #[test]
     fn vec_tuple_unweighted_simple() {
-        #[allow(clippy::useless_vec)]
         let graph = vec![(1, 2), (2, 0), (0, 1)];
 
         assert!(graph.is_simple());
@@ -259,7 +256,6 @@ mod tests {
 
     #[test]
     fn vec_tuple_unweighted_self_loop() {
-        #[allow(clippy::useless_vec)]
         #[rustfmt::skip]
         let graph = vec![
             (0, 0), // Self-loop {0, 0}
@@ -272,7 +268,6 @@ mod tests {
 
     #[test]
     fn vec_tuple_unweighted_parallel_edges() {
-        #[allow(clippy::useless_vec)]
         #[rustfmt::skip]
         let graph = vec![
             (0, 1), // Parallel edge {0, 1}
@@ -366,7 +361,6 @@ mod tests {
 
     #[test]
     fn vec_tuple_weighted_simple() {
-        #[allow(clippy::useless_vec)]
         let graph = vec![(1, 2, 1), (2, 0, 1), (0, 1, 1)];
 
         assert!(graph.is_simple());
@@ -374,7 +368,6 @@ mod tests {
 
     #[test]
     fn vec_tuple_weighted_self_loop() {
-        #[allow(clippy::useless_vec)]
         #[rustfmt::skip]
         let graph = vec![
             (0, 0, 1), // Self-loop {0, 0}
@@ -387,7 +380,6 @@ mod tests {
 
     #[test]
     fn vec_tuple_weighted_parallel_edges() {
-        #[allow(clippy::useless_vec)]
         #[rustfmt::skip]
         let graph = vec![
             (0, 1, 1), // Parallel edge {0, 1}

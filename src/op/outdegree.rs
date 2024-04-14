@@ -82,7 +82,7 @@ where
     }
 }
 
-impl<K, V, H> Outdegree for Vec<HashMap<K, V, H>>
+impl<K, W, H> Outdegree for Vec<HashMap<K, W, H>>
 where
     H: BuildHasher,
 {
@@ -115,7 +115,7 @@ where
     }
 }
 
-impl<K, V, H> Outdegree for [HashMap<K, V, H>]
+impl<K, W, H> Outdegree for [HashMap<K, W, H>]
 where
     H: BuildHasher,
 {
@@ -202,7 +202,6 @@ mod tests {
 
     #[test]
     fn vec_vec() {
-        #[allow(clippy::useless_vec)]
         let graph = vec![vec![1, 2], vec![0], vec![1]];
 
         assert_eq!(graph.outdegree(0), 2);
@@ -212,7 +211,6 @@ mod tests {
 
     #[test]
     fn vec_hash_set() {
-        #[allow(clippy::useless_vec)]
         let graph = vec![
             HashSet::from([1, 2]),
             HashSet::from([0]),
@@ -226,7 +224,6 @@ mod tests {
 
     #[test]
     fn vec_hash_map() {
-        #[allow(clippy::useless_vec)]
         let graph = vec![
             HashMap::from([(1, 1), (2, 1)]),
             HashMap::from([(0, 1)]),

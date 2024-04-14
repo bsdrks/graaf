@@ -128,7 +128,6 @@ mod tests {
 
     #[test]
     fn vec() {
-        #[allow(clippy::useless_vec)]
         let graph = vec![
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(0, 4)]),

@@ -93,10 +93,7 @@ impl AddEdge for Vec<Vec<usize>> {
     }
 }
 
-impl<H> AddEdge for Vec<HashSet<usize, H>>
-where
-    H: BuildHasher,
-{
+impl AddEdge for Vec<BTreeSet<usize>> {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
@@ -105,7 +102,10 @@ where
     }
 }
 
-impl AddEdge for Vec<BTreeSet<usize>> {
+impl<H> AddEdge for Vec<HashSet<usize, H>>
+where
+    H: BuildHasher,
+{
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
@@ -124,10 +124,7 @@ impl AddEdge for [Vec<usize>] {
     }
 }
 
-impl<H> AddEdge for [HashSet<usize, H>]
-where
-    H: BuildHasher,
-{
+impl AddEdge for [BTreeSet<usize>] {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
@@ -136,7 +133,10 @@ where
     }
 }
 
-impl AddEdge for [BTreeSet<usize>] {
+impl<H> AddEdge for [HashSet<usize, H>]
+where
+    H: BuildHasher,
+{
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
@@ -155,6 +155,15 @@ impl<const V: usize> AddEdge for [Vec<usize>; V] {
     }
 }
 
+impl<const V: usize> AddEdge for [BTreeSet<usize>; V] {
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn add_edge(&mut self, s: usize, t: usize) {
+        let _ = self[s].insert(t);
+    }
+}
+
 impl<H, const V: usize> AddEdge for [HashSet<usize, H>; V]
 where
     H: BuildHasher,
@@ -167,12 +176,21 @@ where
     }
 }
 
-impl<const V: usize> AddEdge for [BTreeSet<usize>; V] {
+impl AddEdge for BTreeMap<usize, Vec<usize>> {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
     fn add_edge(&mut self, s: usize, t: usize) {
-        let _ = self[s].insert(t);
+        self.get_mut(&s).expect("s is not in the graph").push(t);
+    }
+}
+
+impl AddEdge for BTreeMap<usize, BTreeSet<usize>> {
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn add_edge(&mut self, s: usize, t: usize) {
+        let _ = self.get_mut(&s).expect("s is not in the graph").insert(t);
     }
 }
 
@@ -193,24 +211,6 @@ where
     H: BuildHasher,
     HashSet<usize, H>: Default,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
-    fn add_edge(&mut self, s: usize, t: usize) {
-        let _ = self.get_mut(&s).expect("s is not in the graph").insert(t);
-    }
-}
-
-impl AddEdge for BTreeMap<usize, Vec<usize>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
-    fn add_edge(&mut self, s: usize, t: usize) {
-        self.get_mut(&s).expect("s is not in the graph").push(t);
-    }
-}
-
-impl AddEdge for BTreeMap<usize, BTreeSet<usize>> {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.

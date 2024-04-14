@@ -42,7 +42,6 @@ mod tests {
 
     #[test]
     fn vec_hash_set() {
-        #[allow(clippy::useless_vec)]
         let graph: Vec<HashSet<usize, RandomState>> =
             vec![HashSet::new(), HashSet::new(), HashSet::new()];
 
