@@ -2,7 +2,6 @@
 //! [`crate::op::RemoveEdge`] should keep the graph unchanged.
 use crate::op::{
     AddEdge,
-    IsEdge,
     RemoveEdge,
 };
 
@@ -20,7 +19,7 @@ use crate::op::{
 /// * `t`: The target vertex.
 pub fn add_edge_remove_edge<G>(graph: &G, s: usize, t: usize) -> bool
 where
-    G: AddEdge + Clone + IsEdge + PartialEq + RemoveEdge,
+    G: AddEdge + Clone + PartialEq + RemoveEdge,
 {
     let mut clone = graph.clone();
 
