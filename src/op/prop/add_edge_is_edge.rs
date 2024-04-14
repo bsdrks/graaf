@@ -42,8 +42,6 @@ mod test {
 
     #[test]
     fn vec_hash_set() {
-        type G = [HashSet<usize, RandomState>];
-
         #[allow(clippy::useless_vec)]
         let graph = &mut vec![
             HashSet::from([1, 2]),
@@ -51,79 +49,71 @@ mod test {
             HashSet::from([0, 1]),
         ];
 
-        assert!(add_edge_is_edge::<G>(graph, 0, 1));
-        assert!(add_edge_is_edge::<G>(graph, 0, 2));
-        assert!(add_edge_is_edge::<G>(graph, 1, 0));
-        assert!(add_edge_is_edge::<G>(graph, 1, 2));
-        assert!(add_edge_is_edge::<G>(graph, 2, 0));
-        assert!(add_edge_is_edge::<G>(graph, 2, 1));
+        assert!(add_edge_is_edge(graph, 0, 1));
+        assert!(add_edge_is_edge(graph, 0, 2));
+        assert!(add_edge_is_edge(graph, 1, 0));
+        assert!(add_edge_is_edge(graph, 1, 2));
+        assert!(add_edge_is_edge(graph, 2, 0));
+        assert!(add_edge_is_edge(graph, 2, 1));
     }
 
     #[test]
     fn slice_hash_set() {
-        type G = [HashSet<usize, RandomState>];
-
-        let graph: &mut G = &mut [
+        let graph: &mut [HashSet<usize, RandomState>] = &mut [
             HashSet::from([1, 2]),
             HashSet::from([0]),
             HashSet::from([0, 1]),
         ];
 
-        assert!(add_edge_is_edge::<G>(graph, 0, 1));
-        assert!(add_edge_is_edge::<G>(graph, 0, 2));
-        assert!(add_edge_is_edge::<G>(graph, 1, 0));
-        assert!(add_edge_is_edge::<G>(graph, 1, 2));
-        assert!(add_edge_is_edge::<G>(graph, 2, 0));
-        assert!(add_edge_is_edge::<G>(graph, 2, 1));
+        assert!(add_edge_is_edge(graph, 0, 1));
+        assert!(add_edge_is_edge(graph, 0, 2));
+        assert!(add_edge_is_edge(graph, 1, 0));
+        assert!(add_edge_is_edge(graph, 1, 2));
+        assert!(add_edge_is_edge(graph, 2, 0));
+        assert!(add_edge_is_edge(graph, 2, 1));
     }
 
     #[test]
     fn arr_hash_set() {
-        type G = [HashSet<usize, RandomState>];
-
         let graph = &mut [
             HashSet::from([1, 2]),
             HashSet::from([0]),
             HashSet::from([0, 1]),
         ];
 
-        assert!(add_edge_is_edge::<G>(graph, 0, 1));
-        assert!(add_edge_is_edge::<G>(graph, 0, 2));
-        assert!(add_edge_is_edge::<G>(graph, 1, 0));
-        assert!(add_edge_is_edge::<G>(graph, 1, 2));
-        assert!(add_edge_is_edge::<G>(graph, 2, 0));
-        assert!(add_edge_is_edge::<G>(graph, 2, 1));
+        assert!(add_edge_is_edge(graph, 0, 1));
+        assert!(add_edge_is_edge(graph, 0, 2));
+        assert!(add_edge_is_edge(graph, 1, 0));
+        assert!(add_edge_is_edge(graph, 1, 2));
+        assert!(add_edge_is_edge(graph, 2, 0));
+        assert!(add_edge_is_edge(graph, 2, 1));
     }
 
     #[test]
     fn hash_map_hash_set() {
-        type G = HashMap<usize, HashSet<usize, RandomState>>;
-
-        let graph: &mut G = &mut HashMap::from([
+        let graph = &mut HashMap::from([
             (0, HashSet::from([1, 2])),
             (1, HashSet::from([0])),
             (2, HashSet::from([0, 1])),
         ]);
 
-        assert!(add_edge_is_edge::<G>(graph, 0, 1));
-        assert!(add_edge_is_edge::<G>(graph, 0, 2));
-        assert!(add_edge_is_edge::<G>(graph, 1, 0));
-        assert!(add_edge_is_edge::<G>(graph, 1, 2));
-        assert!(add_edge_is_edge::<G>(graph, 2, 0));
-        assert!(add_edge_is_edge::<G>(graph, 2, 1));
+        assert!(add_edge_is_edge(graph, 0, 1));
+        assert!(add_edge_is_edge(graph, 0, 2));
+        assert!(add_edge_is_edge(graph, 1, 0));
+        assert!(add_edge_is_edge(graph, 1, 2));
+        assert!(add_edge_is_edge(graph, 2, 0));
+        assert!(add_edge_is_edge(graph, 2, 1));
     }
 
     #[test]
     fn adjacency_matrix() {
-        type G = AdjacencyMatrix<3>;
-
         let mut graph = AdjacencyMatrix::<3>::new();
 
-        assert!(add_edge_is_edge::<G>(&mut graph, 0, 1));
-        assert!(add_edge_is_edge::<G>(&mut graph, 0, 2));
-        assert!(add_edge_is_edge::<G>(&mut graph, 1, 0));
-        assert!(add_edge_is_edge::<G>(&mut graph, 1, 2));
-        assert!(add_edge_is_edge::<G>(&mut graph, 2, 0));
-        assert!(add_edge_is_edge::<G>(&mut graph, 2, 1));
+        assert!(add_edge_is_edge(&mut graph, 0, 1));
+        assert!(add_edge_is_edge(&mut graph, 0, 2));
+        assert!(add_edge_is_edge(&mut graph, 1, 0));
+        assert!(add_edge_is_edge(&mut graph, 1, 2));
+        assert!(add_edge_is_edge(&mut graph, 2, 0));
+        assert!(add_edge_is_edge(&mut graph, 2, 1));
     }
 }
