@@ -1,6 +1,8 @@
 # Changelog
 
-## Roadmap (provisional)
+## Provisional roadmap
+
+In arbitrary order:
 
 - Add Edmonds-Karp algorithm.
 - Add Hopcroft-Karp algorithm.
@@ -20,9 +22,29 @@
 - Add star graph generator.
 - Add topological sorting for DAGs.
 - Check parallel edges in `IsSimple`.
+- Implement all `op` traits for types using `BTreeMap`.
+- Implement all `op` traits for types using `BTreeSet`.
 - Mention for functions whether they are meant for simple graphs.
-- Use `bfs` in `README` example.
 - Test implementations of traits with properties in `op::prop`.
+- Use `bfs` in `README` example.
+
+## [0.12.0] - 2024-04-14
+
+### Added
+
+- Implement `AddWeightedEdge` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement `AddWeightedEdge` for `BTreeMap<usize, BTreeSet<(usize, W)>>`.
+- Implement `AddWeightedEdge` for `BTreeMap<usize, Vec<(usize, W)>>`.
+- Implement `AddWeightedEdge` for `Vec<BTreeMap<usize, W>>`.
+- Implement `AddWeightedEdge` for `Vec<BTreeSet<(usize, W)>>`.
+- Implement `AddWeightedEdge` for `[BTreeMap<usize, W>; V]`.
+- Implement `AddWeightedEdge` for `[BTreeMap<usize, W>]`.
+- Implement `AddWeightedEdge` for `[BTreeSet<(usize, W)>; V]`.
+- Implement `AddWeightedEdge` for `[BTreeSet<(usize, W)>]`.
+
+### Changed
+
+- Breaking: `AddWeightedEdge` for `HashMap<_>` now panics if `s` is not in the graph.
 
 ## [0.11.1] - 2024-04-14
 
