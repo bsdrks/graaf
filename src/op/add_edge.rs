@@ -13,8 +13,13 @@
 //!
 //! assert_eq!(graph, vec![vec![1, 2], Vec::new(), vec![0]]);
 //! ```
+extern crate alloc;
 
 use {
+    alloc::collections::{
+        BTreeMap,
+        BTreeSet,
+    },
     core::hash::BuildHasher,
     std::collections::{
         HashMap,
@@ -100,6 +105,15 @@ where
     }
 }
 
+impl AddEdge for Vec<BTreeSet<usize>> {
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn add_edge(&mut self, s: usize, t: usize) {
+        let _ = self[s].insert(t);
+    }
+}
+
 impl AddEdge for [Vec<usize>] {
     /// # Panics
     ///
@@ -114,6 +128,15 @@ impl<H> AddEdge for [HashSet<usize, H>]
 where
     H: BuildHasher,
 {
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn add_edge(&mut self, s: usize, t: usize) {
+        let _ = self[s].insert(t);
+    }
+}
+
+impl AddEdge for [BTreeSet<usize>] {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
@@ -144,6 +167,15 @@ where
     }
 }
 
+impl<const V: usize> AddEdge for [BTreeSet<usize>; V] {
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn add_edge(&mut self, s: usize, t: usize) {
+        let _ = self[s].insert(t);
+    }
+}
+
 impl<H> AddEdge for HashMap<usize, Vec<usize>, H>
 where
     H: BuildHasher,
@@ -161,6 +193,24 @@ where
     H: BuildHasher,
     HashSet<usize, H>: Default,
 {
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn add_edge(&mut self, s: usize, t: usize) {
+        let _ = self.get_mut(&s).expect("s is not in the graph").insert(t);
+    }
+}
+
+impl AddEdge for BTreeMap<usize, Vec<usize>> {
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn add_edge(&mut self, s: usize, t: usize) {
+        self.get_mut(&s).expect("s is not in the graph").push(t);
+    }
+}
+
+impl AddEdge for BTreeMap<usize, BTreeSet<usize>> {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
@@ -234,6 +284,44 @@ mod tests {
     }
 
     #[test]
+    fn vec_btree_set() {
+        let mut graph = vec![BTreeSet::new(); 3];
+
+        graph.add_edge(0, 1);
+
+        assert_eq!(
+            graph,
+            vec![BTreeSet::from([1]), BTreeSet::new(), BTreeSet::new()]
+        );
+
+        graph.add_edge(0, 2);
+
+        assert_eq!(
+            graph,
+            vec![BTreeSet::from([1, 2]), BTreeSet::new(), BTreeSet::new()]
+        );
+
+        graph.add_edge(1, 2);
+
+        assert_eq!(
+            graph,
+            vec![BTreeSet::from([1, 2]), BTreeSet::from([2]), BTreeSet::new()]
+        );
+
+        graph.add_edge(2, 0);
+        graph.add_edge(2, 1);
+
+        assert_eq!(
+            graph,
+            vec![
+                BTreeSet::from([1, 2]),
+                BTreeSet::from([2]),
+                BTreeSet::from([0, 1])
+            ]
+        );
+    }
+
+    #[test]
     fn slice_vec() {
         let graph: &mut [Vec<usize>] = &mut [Vec::new(), Vec::new(), Vec::new()];
 
@@ -291,6 +379,45 @@ mod tests {
     }
 
     #[test]
+    fn slice_btree_set() {
+        let graph: &mut [BTreeSet<usize>] =
+            &mut [BTreeSet::new(), BTreeSet::new(), BTreeSet::new()];
+
+        graph.add_edge(0, 1);
+
+        assert_eq!(
+            *graph,
+            [BTreeSet::from([1]), BTreeSet::new(), BTreeSet::new()]
+        );
+
+        graph.add_edge(0, 2);
+
+        assert_eq!(
+            *graph,
+            [BTreeSet::from([1, 2]), BTreeSet::new(), BTreeSet::new()]
+        );
+
+        graph.add_edge(1, 2);
+
+        assert_eq!(
+            *graph,
+            [BTreeSet::from([1, 2]), BTreeSet::from([2]), BTreeSet::new()]
+        );
+
+        graph.add_edge(2, 0);
+        graph.add_edge(2, 1);
+
+        assert_eq!(
+            *graph,
+            [
+                BTreeSet::from([1, 2]),
+                BTreeSet::from([2]),
+                BTreeSet::from([0, 1])
+            ]
+        );
+    }
+
+    #[test]
     fn arr_vec() {
         let mut graph = [Vec::new(), Vec::new(), Vec::new()];
 
@@ -343,6 +470,44 @@ mod tests {
                 HashSet::from([1, 2]),
                 HashSet::from([2]),
                 HashSet::from([0, 1])
+            ]
+        );
+    }
+
+    #[test]
+    fn arr_btree_set() {
+        let mut graph = [BTreeSet::new(), BTreeSet::new(), BTreeSet::new()];
+
+        graph.add_edge(0, 1);
+
+        assert_eq!(
+            graph,
+            [BTreeSet::from([1]), BTreeSet::new(), BTreeSet::new()]
+        );
+
+        graph.add_edge(0, 2);
+
+        assert_eq!(
+            graph,
+            [BTreeSet::from([1, 2]), BTreeSet::new(), BTreeSet::new()]
+        );
+
+        graph.add_edge(1, 2);
+
+        assert_eq!(
+            graph,
+            [BTreeSet::from([1, 2]), BTreeSet::from([2]), BTreeSet::new()]
+        );
+
+        graph.add_edge(2, 0);
+        graph.add_edge(2, 1);
+
+        assert_eq!(
+            graph,
+            [
+                BTreeSet::from([1, 2]),
+                BTreeSet::from([2]),
+                BTreeSet::from([0, 1])
             ]
         );
     }
@@ -431,6 +596,94 @@ mod tests {
                 (0, HashSet::from([1, 2])),
                 (1, HashSet::from([2])),
                 (2, HashSet::from([0, 1]))
+            ])
+        );
+    }
+
+    #[test]
+    fn btree_map_vec() {
+        let mut graph = BTreeMap::from([(0, Vec::new()), (1, Vec::new()), (2, Vec::new())]);
+
+        graph.add_edge(0, 1);
+
+        assert_eq!(
+            graph,
+            BTreeMap::from([(0, vec![1]), (1, Vec::new()), (2, Vec::new())])
+        );
+
+        graph.add_edge(0, 2);
+
+        assert_eq!(
+            graph,
+            BTreeMap::from([(0, vec![1, 2]), (1, Vec::new()), (2, Vec::new())])
+        );
+
+        graph.add_edge(1, 2);
+
+        assert_eq!(
+            graph,
+            BTreeMap::from([(0, vec![1, 2]), (1, vec![2]), (2, Vec::new())])
+        );
+
+        graph.add_edge(2, 0);
+        graph.add_edge(2, 1);
+
+        assert_eq!(
+            graph,
+            BTreeMap::from([(0, vec![1, 2]), (1, vec![2]), (2, vec![0, 1])])
+        );
+    }
+
+    #[test]
+    fn btree_map_btree_set() {
+        let mut graph = BTreeMap::from([
+            (0, BTreeSet::new()),
+            (1, BTreeSet::new()),
+            (2, BTreeSet::new()),
+        ]);
+
+        graph.add_edge(0, 1);
+
+        assert_eq!(
+            graph,
+            BTreeMap::from([
+                (0, BTreeSet::from([1])),
+                (1, BTreeSet::new()),
+                (2, BTreeSet::new())
+            ])
+        );
+
+        graph.add_edge(0, 2);
+
+        assert_eq!(
+            graph,
+            BTreeMap::from([
+                (0, BTreeSet::from([1, 2])),
+                (1, BTreeSet::new()),
+                (2, BTreeSet::new())
+            ])
+        );
+
+        graph.add_edge(1, 2);
+
+        assert_eq!(
+            graph,
+            BTreeMap::from([
+                (0, BTreeSet::from([1, 2])),
+                (1, BTreeSet::from([2])),
+                (2, BTreeSet::new())
+            ])
+        );
+
+        graph.add_edge(2, 0);
+        graph.add_edge(2, 1);
+
+        assert_eq!(
+            graph,
+            BTreeMap::from([
+                (0, BTreeSet::from([1, 2])),
+                (1, BTreeSet::from([2])),
+                (2, BTreeSet::from([0, 1]))
             ])
         );
     }

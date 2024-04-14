@@ -91,29 +91,34 @@ These traits are implemented for various graph representations built from standa
 
 #### Adjacency list, unweighted
 
-- `Vec<Vec<usize>>`
+- `BTreeMap<usize, BTreeSet<usize>>`
+- `BTreeMap<usize, Vec<usize>>`
+- `HashMap<usize, HashSet<usize>>`
+- `HashMap<usize, Vec<usize>>`
+- `Vec<BTreeSet<usize>>`
 - `Vec<HashSet<usize>>`
-- `[Vec<usize>]`
+- `Vec<Vec<usize>>`
+- `[BTreeSet<usize>; V]`
+- `[BTreeSet<usize>]`
+- `[HashSet<usize>; V]`
 - `[HashSet<usize>]`
 - `[Vec<usize>; V]`
-- `[HashSet<usize>; V]`
-- `HashMap<usize, Vec<usize>>`
-- `HashMap<usize, HashSet<usize>>`
+- `[Vec<usize>]`
 
 #### Adjacency list, weighted
 
-- `Vec<Vec<(usize, W)>>`
-- `Vec<HashSet<(usize, W)>>`
-- `Vec<HashMap<usize, W>>`
-- `[Vec<(usize, W)>]`
-- `[HashSet<(usize, W)>]`
-- `[HashMap<usize, W>]`
-- `[Vec<(usize, W)>; V]`
-- `[HashSet<(usize, W)>; V]`
-- `[HashMap<usize, W>; V]`
-- `HashMap<usize, Vec<(usize, W)>>`
-- `HashMap<usize, HashSet<(usize, W)>>`
 - `HashMap<usize, HashMap<usize, W>>`
+- `HashMap<usize, HashSet<(usize, W)>>`
+- `HashMap<usize, Vec<(usize, W)>>`
+- `Vec<HashMap<usize, W>>`
+- `Vec<HashSet<(usize, W)>>`
+- `Vec<Vec<(usize, W)>>`
+- `[HashMap<usize, W>; V]`
+- `[HashMap<usize, W>]`
+- `[HashSet<(usize, W)>; V]`
+- `[HashSet<(usize, W)>]`
+- `[Vec<(usize, W)>; V]`
+- `[Vec<(usize, W)>]`
 
 #### Adjacency matrix, unweighted
 
@@ -121,14 +126,14 @@ These traits are implemented for various graph representations built from standa
 
 #### Edge list, unweighted
 
-- `Vec<(usize, usize)>`
-- `[(usize, usize)]`
-- `[(usize, usize); V]`
 - `HashSet<(usize, usize)>`
+- `Vec<(usize, usize)>`
+- `[(usize, usize); V]`
+- `[(usize, usize)]`
 
 #### Edge list, weighted
 
-- `Vec<(usize, usize, W)>`
-- `[(usize, usize, W)]`
-- `[(usize, usize, W); V]`
 - `HashSet<(usize, usize, W)>`
+- `Vec<(usize, usize, W)>`
+- `[(usize, usize, W); V]`
+- `[(usize, usize, W)]`

@@ -24,9 +24,71 @@
 - Use `bfs` in `README` example.
 - Test implementations of traits with properties in `op::prop`.
 
+## [0.11.1] - 2024-04-14
+
+### Added
+
+- Implement `AddEdge` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `AddEdge` for `BTreeMap<usize, Vec<usize>>`.
+- Implement `AddEdge` for `Vec<BTreeSet<usize>>`.
+- Implement `AddEdge` for `[BTreeSet<usize>; V]`.
+- Implement `AddEdge` for `[BTreeSet<usize>]`.
+
 ## [0.11.0] - 2024-04-14
 
 Added back `op` implementations for `Vec` and arrays to simplify use cases.
+
+### Added
+
+- Implement `AddEdge` for `Vec<HashSet<usize>>`.
+- Implement `AddEdge` for `Vec<Vec<usizee>>`.
+- Implement `AddEdge` for `[HashSet<usize>; V]`.
+- Implement `AddEdge` for `[Vec<usize>; V]`.
+- Implement `AddWeightedEdge` for `Vec<HashMap<usize, W>>`.
+- Implement `AddWeightedEdge` for `Vec<HashSet<(usize, W)>>`.
+- Implement `AddWeightedEdge` for `Vec<Vec<(usize, W)>>`.
+- Implement `AddWeightedEdge` for `[HashMap<usize, W>; V]`.
+- Implement `AddWeightedEdge` for `[HashSet<(usize, W)>; V]`.
+- Implement `AddWeightedEdge` for `[Vec<(usize, W)>; V]`.
+- Implement `CountAllEdges` for `Vec<HashMap<K, W>>`.
+- Implement `CountAllEdges` for `Vec<HashSet<T>>`.
+- Implement `CountAllEdges` for `Vec<Vec<T>>`.
+- Implement `CountAllEdges` for `[HashMap<K, W>; V]`.
+- Implement `CountAllEdges` for `[HashSet<T>; V]`.
+- Implement `CountAllEdges` for `[Vec<T>; V]`.
+- Implement `EdgeWeight` for `Vec<HashMap<usize, W>>`.
+- Implement `EdgeWeight` for `[HashMap<usize, W>; V]`.
+- Implement `Indegree` for `Vec<HashMap<usize, W>>`.
+- Implement `Indegree` for `Vec<HashSet<usize>>`.
+- Implement `Indegree` for `[HashMap<usize, W>; V]`.
+- Implement `Indegree` for `[HashSet<usize>; V]`.
+- Implement `IsEdge` for `Vec<HashSet<usize>>`.
+- Implement `IsEdge` for `[HashMap<usize, W>; V]`.
+- Implement `IsSimple` for `Vec<(usize, usize)>`.
+- Implement `IsSimple` for `Vec<(usize, usize, W)>`.
+- Implement `IsSimple` for `Vec<HashSet<usize>>`.
+- Implement `IsSimple` for `[(usize, usize); V]`.
+- Implement `IsSimple` for `[(usize, usize, W); V]`.
+- Implement `IsSimple` for `[HashSet<usize>; V]`.
+- Implement `IterAllEdges` for `Vec<(usize, usize)>`.
+- Implement `IterAllEdges` for `[(usize, usize); V]`.
+- Implement `IterAllWeightedEdges` for `Vec<(usize, usize, W)>`.
+- Implement `IterAllWeightedEdges` for `[(usize, usize, W); V]`.
+- Implement `IterVertices` for `Vec<T>`.
+- Implement `IterVertices` for `[T; V]`.
+- Implement `Outdegree` for `Vec<HashMap<K, W>>`.
+- Implement `Outdegree` for `Vec<HashSet<T>>`.
+- Implement `Outdegree` for `Vec<Vec<T>>`.
+- Implement `Outdegree` for `[HashMap<K, W>; V]`.
+- Implement `Outdegree` for `[HashSet<T>; V]`.
+- Implement `Outdegree` for `[Vec<T>; V]`.
+- Implement `RemoveEdge` for `Vec<HashMap<usize, W>>`.
+- Implement `RemoveEdge` for `Vec<HashSet<usize>>`.
+- Implement `RemoveEdge` for `[HashMap<usize, W>; V]`.
+- Implement `RemoveEdge` for `[HashSet<usize>; V]`.
+- Test `add_edge_remove_edge` for `AdjacencyMatrix`.
+- Test `add_edge_remove_edge` for `Vec<HashSet<usize>>`.
+- Test `add_edge_remove_edge` for `[HashSet<usize>; V]`.
 
 ### Fixed
 
