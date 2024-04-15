@@ -16,7 +16,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.13.0"
+graaf = "0.13.1"
 ```
 
 ## Usage
@@ -135,6 +135,7 @@ These traits are implemented for various graph representations built from standa
 
 #### Edge list, unweighted
 
+- `BTreeSet<(usize, usize)>`
 - `HashSet<(usize, usize)>`
 - `Vec<(usize, usize)>`
 - `[(usize, usize); V]`
