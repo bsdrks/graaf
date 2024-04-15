@@ -28,9 +28,26 @@ In arbitrary order:
 - Test implementations of traits with properties in `op::prop`.
 - Use `bfs` in `README` example.
 
+## [0.13.2] - 2024-04-15
+
+Added
+
+- Add `CountAllVertices` for `Vec<BTreeSet<(usize, W)>>`.
+- Add `CountAllVertices` for `Vec<HashSet<(usize, W)>>`.
+- Add `CountAllVertices` for `[BTreeSet<(usize, W)>; V]`.
+- Add `CountAllVertices` for `[BTreeSet<(usize, W)>]`.
+- Add `CountAllVertices` for `[HashSet<(usize, W); V]`.
+- Add `CountAllVertices` for `[HashSet<(usize, W)]`.
+
+Fixed
+
+- Fix `cross_country` benchmark.
+- Fix `shortest_path_1` benchmark.
+- Fix `small_graph_1` benchmark.
+
 ## [0.13.1] - 2024-04-15
 
-### Added
+Added
 
 - Add `IsEdge` for `BTreeMap<usize, BTreeMap<usize, W>>`.
 - Add `IsEdge` for `BTreeMap<usize, BTreeSet<usize>>`.
@@ -44,7 +61,7 @@ In arbitrary order:
 
 ## [0.13.0] - 2024-04-14
 
-### Added
+Added
 
 - Add `CountAllVertices` for `Vec<BTreeMap<usize, W>>`.
 - Add `CountAllVertices` for `Vec<BTreeSet<usize>>`.
@@ -65,7 +82,7 @@ In arbitrary order:
 - Add `CountAllVertices` for `[Vec<usize>; V]`.
 - Add `CountAllVertices` for `[Vec<usize>]`.
 
-### Removed
+Removed
 
 - Breaking: Remove `CountAllVertices` for `HashMap<_>`.
 - Breaking: Remove `CountAllVertices` for `Vec<T>`.
@@ -74,7 +91,7 @@ In arbitrary order:
 
 ## [0.12.1] - 2024-04-14
 
-### Added
+Added
 
 - Implement `CountAllEdges` for `BTreeMap<K, BTreeMap<K, W>>`.
 - Implement `CountAllEdges` for `BTreeMap<K, BTreeSet<T>>`.
@@ -88,13 +105,13 @@ In arbitrary order:
 - Implement `IsEdge` for `Vec<HashMap<usize, W>>`.
 - Implement `IsEdge` for `[HashMap<usize, W>; V]`.
 
-### Removed
+Removed
 
 - Remove `Ord` bound from trait implementations where possible.
 
 ## [0.12.0] - 2024-04-14
 
-### Added
+Added
 
 - Implement `AddWeightedEdge` for `BTreeMap<usize, BTreeMap<usize, W>>`.
 - Implement `AddWeightedEdge` for `BTreeMap<usize, BTreeSet<(usize, W)>>`.
@@ -106,13 +123,13 @@ In arbitrary order:
 - Implement `AddWeightedEdge` for `[BTreeSet<(usize, W)>; V]`.
 - Implement `AddWeightedEdge` for `[BTreeSet<(usize, W)>]`.
 
-### Changed
+Changed
 
 - Breaking: `AddWeightedEdge` for `HashMap<_>` now panics if `s` is not in the graph.
 
 ## [0.11.1] - 2024-04-14
 
-### Added
+Added
 
 - Implement `AddEdge` for `BTreeMap<usize, BTreeSet<usize>>`.
 - Implement `AddEdge` for `BTreeMap<usize, Vec<usize>>`.
@@ -124,7 +141,7 @@ In arbitrary order:
 
 Added back `op` implementations for `Vec` and arrays to simplify use cases.
 
-### Added
+Added
 
 - Implement `AddEdge` for `Vec<HashSet<usize>>`.
 - Implement `AddEdge` for `Vec<Vec<usizee>>`.
@@ -176,23 +193,23 @@ Added back `op` implementations for `Vec` and arrays to simplify use cases.
 - Test `add_edge_remove_edge` for `Vec<HashSet<usize>>`.
 - Test `add_edge_remove_edge` for `[HashSet<usize>; V]`.
 
-### Fixed
+Fixed
 
 - Remove stray `W` type parameter in `add_edge_remove_edge`.
 
 ## [0.10.0] - 2024-04-12
 
-### Added
+Added
 
 - Implement `IsSimple` for `AdjacencyMatrix`.
 
-### Fixed
+Fixed
 
 - `IsSimple` now checks for parallel edges in `HashSet<(usize, usize, W)>`.
 
 ## [0.9.0] - 2024-04-12
 
-### Fixed
+Fixed
 
 - `IsSimple` now checks for parallel edges in `HashSet<(usize, usize)>`.
 - `IsSimple` now checks for parallel edges in `[(usize, usize)]`.
@@ -200,19 +217,19 @@ Added back `op` implementations for `Vec` and arrays to simplify use cases.
 
 ## [0.8.4] - 2024-04-11
 
-### Fixed
+Fixed
 
 - Add missing property `add_weighted_edge_remove_edge`.
 
 ## [0.8.3] - 2024-04-11
 
-### Added
+Added
 
 - Test `add_edge_is_edge` for implementors of `AddEdge` and `IsEdge`.
 
 ## [0.8.2] - 2024-04-10
 
-### Added
+Added
 
 - Implement `IsSimple` for `HashSet<(usize, usize)>`.
 - Implement `IsSimple` for `HashSet<(usize, usize, W)>`.
@@ -222,12 +239,12 @@ Added back `op` implementations for `Vec` and arrays to simplify use cases.
 
 ## [0.8.1] - 2024-04-10
 
-### Added
+Added
 
 - Add `IsSimple` trait.
 - Implement `IsSimple` for `[HashSet<usize>]`.
 
-### Removed
+Removed
 
 - Remove `EdgeWeight` for `Vec<HashMap<usize, W>>`.
 - Remove `EdgeWeight` for `[HashMap<usize, W>; V]`.
@@ -235,12 +252,12 @@ Added back `op` implementations for `Vec` and arrays to simplify use cases.
 
 ## [0.8.0] - 2024-04-09
 
-### Added
+Added
 
 - Add installation instructions to `README`.
 - Add example usage to `README`.
 
-### Removed
+Removed
 
 - Remove `AddEdge` for `Vec<HashSet<T>>`.
 - Remove `AddEdge` for `Vec<Vec<T>>`.
@@ -253,7 +270,7 @@ Added back `op` implementations for `Vec` and arrays to simplify use cases.
 - Remove `AddWeightedEdge` for `[HashSet<(usize, W)>; V]`.
 - Remove `AddWeightedEdge` for `[Vec<(usize, W)>; V]`.
 
-### Changed
+Changed
 
 - Change `iter_all_edges` returns type to `impl Iterator<Item = (usize, usize)>`.
 - Change `iter_all_weighted_edges` return type to `impl Iterator<Item = (usize, usize, &W)>`.
@@ -261,7 +278,7 @@ Added back `op` implementations for `Vec` and arrays to simplify use cases.
 
 ## [0.7.0] - 2024-04-07
 
-### Added
+Added
 
 - Implement `CountAllEdges` for `[HashMap<K, W>]`.
 - Implement `CountAllEdges` for `[HashSet<T>]`.
@@ -286,11 +303,11 @@ Added back `op` implementations for `Vec` and arrays to simplify use cases.
 - Implement `RemoveEdge` for `[HashMap<usize, W>]`.
 - Implement `RemoveEdge` for `[HashSet<usize>]`.
 
-### Changed
+Changed
 
 - Return `(&'a usize, &'a W)` from `iter_weighted_edges`.
 
-### Removed
+Removed
 
 - Remove `CountAllEdges` for `Vec<HashMap<K, W>>`.
 - Remove `CountAllEdges` for `Vec<HashSet<T>>`.
@@ -325,13 +342,13 @@ Added back `op` implementations for `Vec` and arrays to simplify use cases.
 
 ## [0.6.3] - 2024-04-06
 
-### Changed
+Changed
 
 - Fix `README` formatting.
 
 ## [0.6.2] - 2024-04-06
 
-### Added
+Added
 
 - Add more tests to `algo::bfs`.
 - Add more tests to `algo::dijkstra`.
@@ -345,18 +362,18 @@ Added back `op` implementations for `Vec` and arrays to simplify use cases.
 
 ## [0.6.1] - 2024-04-06
 
-### Added
+Added
 
 - Add "algorithms" and "mathematics" to `Cargo.toml` categories.
 - Add "bfs" and "dijkstra" to `Cargo.toml` keywords.
 
-### Removed
+Removed
 
 - Remove redundant `homepage` metadata.
 
 ## [0.6.0] - 2024-04-06
 
-### Added
+Added
 
 - Add `authors` to `README.md`.
 - Add doctest for `AdjacencyMatrix::new`.
@@ -375,7 +392,7 @@ Added back `op` implementations for `Vec` and arrays to simplify use cases.
 - Add implementation documentation for `Outdegree`.
 - Add implementation documentation for `RemoveEdge`.
 
-### Changed
+Changed
 
 - Move `ops` to `op`.
 - Adapt benchmark code to linting rules.
@@ -384,7 +401,7 @@ Added back `op` implementations for `Vec` and arrays to simplify use cases.
 
 ## [0.5.3] - 2024-04-05
 
-### Added
+Added
 
 - Add doctest for `op::add_weighted_edge::AddWeightedEdge`.
 - Add doctest for `op::count_all_edges::CountAllEdges`.
@@ -415,7 +432,7 @@ Added back `op` implementations for `Vec` and arrays to simplify use cases.
 
 ## [0.5.2] - 2024-04-04
 
-### Added
+Added
 
 - Add doctest for `op::add_edge::AddEdge`.
 - Add documentation for `op::add_edge`.
@@ -424,14 +441,14 @@ Added back `op` implementations for `Vec` and arrays to simplify use cases.
 
 ## [0.5.1] - 2024-04-04
 
-### Added
+Added
 
 - Add `bfs::predecessors_single_source`.
 - Add `dijkstra::predecessors_single_source`.
 
 ## [0.5.0] - 2024-04-03
 
-### Added
+Added
 
 - Implement `Indegree` for `HashMap<usize, HashMap<usize, W>>`.
 - Implement `IsEdge` for `HashSet<(usize, usize)>`.
@@ -441,36 +458,36 @@ Added back `op` implementations for `Vec` and arrays to simplify use cases.
 - Implement `Outdegree` for `Vec<HashMap<usize, W>>`.
 - Implement `Outdegree` for `[HashMap<usize, W>; V]`.
 
-### Removed
+Removed
 
 - Remove `VertexWeight` trait.
 
 ## [0.4.2] - 2024-04-03
 
-### Changed
+Changed
 
 - Rename `*::shortest_paths` to `predecessors`.
 
 ## [0.4.1] - 2024-04-03
 
-### Added
+Added
 
 - Add `algo::bfs::shortest_paths`.
 
 ## [0.4.0] - 2024-04-03
 
-### Added
+Added
 
 - Add `algo::dijkstra::shortest_paths`.
 
-### Changed
+Changed
 
 - Move `algo::dijkstra::weighted` to `algo::dijkstra`.
 - Remove `algo::dijkstra::unweighted`.
 
 ## [0.3.3] - 2024-04-02
 
-### Added
+Added
 
 - Add `algo::bfs::min_distances_single_source`.
 - Add `algo::bfs::min_distances`.
@@ -478,7 +495,7 @@ Added back `op` implementations for `Vec` and arrays to simplify use cases.
 
 ## [0.3.2] - 2024-04-01
 
-### Added
+Added
 
 - Add `algo::dijkstra::unweighted::shortest_paths`.
 - Test `algo::dijkstra::unweighted::min_distances` with multiple source vertices.
@@ -486,72 +503,72 @@ Added back `op` implementations for `Vec` and arrays to simplify use cases.
 
 ## [0.3.1] - 2024-04-01
 
-### Changed
+Changed
 
 - Update function names in `README`.
 
 ## [0.3.0] - 2024-04-01
 
-### Added
+Added
 
 - Add `algo::dijkstra::unweighted::min_distances_single_source`.
 - Add doctest example for `algo::dijkstra::unweighted::min_distances_single_source`
 - Add doctest example for `algo::dijkstra::unweighted::min_distances`
 - Add doctest example for `algo::dijkstra::weighted::min_distances_single_source`.
 
-### Changed
+Changed
 
 - Move `algo::DijkstraUnweighted::dijkstra` to `algo::dijkstra::unweighted::min_distances`.
 - Move `algo::DijkstraWeighted::dijkstra` to `algo::dijkstra::weighted::min_distances`.
 - Move `algo::dijkstra::dijkstra_sssp_weighted` to `algo::dijkstra::weighted::min_distances_single_source`.
 
-### Removed
+Removed
 
 - Remove `new` benchmark.
 
 ## [0.2.3] - 2024-03-31
 
-### Added
+Added
 
 - Add GitHub Action on push to main and PRs on main.
 - Add `dijkstra_sssp_weighted`.
 
-### Changed
+Changed
 
 - Make `CHANGELOG.md` adhere to [keep a changelog](https://keepachangelog.com/en/1.0.0/).
 - Test `Dijkstra.Unweighted.dijkstra_sssp_unweighted` for every source vertex.
 
 ## [0.2.2] - 2024-03-31
 
-### Added
+Added
 
 - Add doctest example for `Weighted.dijkstra`.
 
-### Fixed
+Fixed
 
 - Fix trait descriptions in `README.md`.
 
 ## [0.2.1] - 2024-03-31
 
-### Added
+Added
 
 - Add `dijkstra_sssp_unweighted`.
 - Add missing documentation for the public API.
 
-### Changed
+Changed
 
 - Enable selected lints from `restriction` group.
 - Export `algo`, `op`, and `repr` modules.
 - Group lints into groups, restrictions, `rustdoc`, and `rustc` lints.
 - Use `core` and `alloc` imports over `std` where possible.
 
-### Fixed
+Fixed
 
 - Make descriptions more consistent.
 
 ## [0.2.0] - 2024-03-30
 
-### Changed
+Changed
 
 - Rename `Indegree.in_degree` to `Indegree.indegree`.
 - Rename `Outdegree.out_degree` to `Outdegree.outdegree`.

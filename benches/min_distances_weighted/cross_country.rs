@@ -21,10 +21,7 @@ mod dijkstra {
         alloc::collections::BinaryHeap,
         divan::Bencher,
         graaf::algo::dijkstra::min_distances,
-        std::collections::{
-            HashMap,
-            HashSet,
-        },
+        std::collections::HashSet,
     };
 
     #[divan::bench]
@@ -92,63 +89,6 @@ mod dijkstra {
             HashSet::from([(0, 3), (1, 10), (3, 7)]),
             HashSet::from([(0, 13), (1, 8), (2, 2)]),
         ];
-
-        let mut dist = DIST;
-        let mut heap = BinaryHeap::from(HEAP);
-
-        bencher.bench_local(|| {
-            min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
-
-            dist
-        });
-    }
-
-    #[divan::bench]
-    fn hash_map_vec(bencher: Bencher<'_, '_>) {
-        let graph = HashMap::from([
-            (0, vec![(1, 1), (2, 3), (3, 14)]),
-            (1, vec![(0, 2), (2, 4), (3, 22)]),
-            (2, vec![(0, 3), (1, 10), (3, 7)]),
-            (3, vec![(0, 13), (1, 8), (2, 2)]),
-        ]);
-
-        let mut dist = DIST;
-        let mut heap = BinaryHeap::from(HEAP);
-
-        bencher.bench_local(|| {
-            min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
-
-            dist
-        });
-    }
-
-    #[divan::bench]
-    fn hash_map_hash_set(bencher: Bencher<'_, '_>) {
-        let graph = HashMap::from([
-            (0, HashSet::from([(1, 1), (2, 3), (3, 14)])),
-            (1, HashSet::from([(0, 2), (2, 4), (3, 22)])),
-            (2, HashSet::from([(0, 3), (1, 10), (3, 7)])),
-            (3, HashSet::from([(0, 13), (1, 8), (2, 2)])),
-        ]);
-
-        let mut dist = DIST;
-        let mut heap = BinaryHeap::from(HEAP);
-
-        bencher.bench_local(|| {
-            min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
-
-            dist
-        });
-    }
-
-    #[divan::bench]
-    fn hash_map_hash_map(bencher: Bencher<'_, '_>) {
-        let graph = HashMap::from([
-            (0, HashMap::from([(1, 1), (2, 3), (3, 14)])),
-            (1, HashMap::from([(0, 2), (2, 4), (3, 22)])),
-            (2, HashMap::from([(0, 3), (1, 10), (3, 7)])),
-            (3, HashMap::from([(0, 13), (1, 8), (2, 2)])),
-        ]);
 
         let mut dist = DIST;
         let mut heap = BinaryHeap::from(HEAP);

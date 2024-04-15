@@ -21,10 +21,7 @@ mod dijkstra {
         alloc::collections::BinaryHeap,
         divan::Bencher,
         graaf::algo::dijkstra::min_distances,
-        std::collections::{
-            HashMap,
-            HashSet,
-        },
+        std::collections::HashSet,
     };
 
     #[divan::bench]
@@ -80,63 +77,6 @@ mod dijkstra {
             HashSet::new(),
             HashSet::from([(0, 2)]),
         ];
-
-        let mut dist = DIST;
-        let mut heap = BinaryHeap::from(HEAP);
-
-        bencher.bench_local(|| {
-            min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
-
-            dist
-        });
-    }
-
-    #[divan::bench]
-    fn hash_map_vec(bencher: Bencher<'_, '_>) {
-        let graph: HashMap<usize, Vec<(usize, _)>> = HashMap::from([
-            (0, vec![(1, 2)]),
-            (1, vec![(2, 2)]),
-            (2, Vec::new()),
-            (3, vec![(0, 2)]),
-        ]);
-
-        let mut dist = DIST;
-        let mut heap = BinaryHeap::from(HEAP);
-
-        bencher.bench_local(|| {
-            min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
-
-            dist
-        });
-    }
-
-    #[divan::bench]
-    fn hash_map_hash_set(bencher: Bencher<'_, '_>) {
-        let graph = HashMap::from([
-            (0, HashSet::from([(1, 2)])),
-            (1, HashSet::from([(2, 2)])),
-            (2, HashSet::new()),
-            (3, HashSet::from([(0, 2)])),
-        ]);
-
-        let mut dist = DIST;
-        let mut heap = BinaryHeap::from(HEAP);
-
-        bencher.bench_local(|| {
-            min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
-
-            dist
-        });
-    }
-
-    #[divan::bench]
-    fn hash_map_hash_map(bencher: Bencher<'_, '_>) {
-        let graph = HashMap::from([
-            (0, HashMap::from([(1, 2)])),
-            (1, HashMap::from([(2, 2)])),
-            (2, HashMap::new()),
-            (3, HashMap::from([(0, 2)])),
-        ]);
 
         let mut dist = DIST;
         let mut heap = BinaryHeap::from(HEAP);
