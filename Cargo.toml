@@ -1,6 +1,6 @@
 [package]
 name = "graaf"
-version = "0.13.3"
+version = "0.14.0"
 edition = "2021"
 authors = ["Bas Dirks <bas.dirks@protonmail.com>"]
 categories = ["algorithms", "data-structures", "mathematics"]
@@ -28,22 +28,22 @@ harness = false
 
 [[bench]]
 name = "cross_country"
-path = "benches/min_distances_weighted/cross_country.rs"
+path = "benches/distances_weighted/cross_country.rs"
 harness = false
 
 [[bench]]
 name = "shortest_path_1"
-path = "benches/min_distances_weighted/shortest_path_1.rs"
+path = "benches/distances_weighted/shortest_path_1.rs"
 harness = false
 
 [[bench]]
 name = "small_graph_1"
-path = "benches/min_distances_weighted/small_graph_1.rs"
+path = "benches/distances_weighted/small_graph_1.rs"
 harness = false
 
 [[bench]]
-name = "min_distances_unweighted_graph_1"
-path = "benches/min_distances_unweighted/graph_1.rs"
+name = "distances_unweighted_graph_1"
+path = "benches/distances_unweighted/graph_1.rs"
 harness = false
 
 [lints.clippy]

@@ -58,7 +58,7 @@ use {
 ///
 /// ```
 /// use {
-///     graaf::algo::bfs::min_distances,
+///     graaf::algo::bfs::distances,
 ///     std::collections::VecDeque,
 /// };
 ///
@@ -74,11 +74,11 @@ use {
 /// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
 /// let mut queue = VecDeque::from(vec![(0, 0)]);
 ///
-/// min_distances(&graph, |w| w + 1, &mut dist, &mut queue);
+/// distances(&graph, |w| w + 1, &mut dist, &mut queue);
 ///
 /// assert_eq!(dist, [0, 1, 2, usize::MAX]);
 /// ```
-pub fn min_distances<G, W>(
+pub fn distances<G, W>(
     graph: &G,
     step: fn(W) -> W,
     dist: &mut [W],
@@ -111,7 +111,7 @@ pub fn min_distances<G, W>(
 /// # Examples
 ///
 /// ```
-/// use graaf::algo::bfs::min_distances_single_source;
+/// use graaf::algo::bfs::distances_single_source;
 ///
 /// // ╭───╮       ╭───╮
 /// // │ 0 │   →   │ 1 │
@@ -123,12 +123,9 @@ pub fn min_distances<G, W>(
 ///
 /// let graph = [vec![1], vec![2], Vec::new(), vec![0]];
 ///
-/// assert_eq!(
-///     min_distances_single_source(&graph, 0),
-///     [0, 1, 2, usize::MAX]
-/// );
+/// assert_eq!(distances_single_source(&graph, 0), [0, 1, 2, usize::MAX]);
 /// ```
-pub fn min_distances_single_source<G>(graph: &G, s: usize) -> Vec<usize>
+pub fn distances_single_source<G>(graph: &G, s: usize) -> Vec<usize>
 where
     G: CountAllVertices + IterEdges,
 {
@@ -137,7 +134,7 @@ where
 
     dist[s] = 0;
 
-    min_distances(graph, |w| w + 1, &mut dist, &mut queue);
+    distances(graph, |w| w + 1, &mut dist, &mut queue);
 
     dist
 }
@@ -277,7 +274,7 @@ mod test {
         graph.iter().map(|v| v.to_vec()).collect()
     }
 
-    mod min_distances {
+    mod distances {
         use super::*;
 
         #[test]
@@ -286,7 +283,7 @@ mod test {
             let mut dist = Vec::new();
             let mut queue = VecDeque::new();
 
-            min_distances(&graph, |w: usize| w + 1, &mut dist, &mut queue);
+            distances(&graph, |w: usize| w + 1, &mut dist, &mut queue);
 
             assert!(dist.is_empty());
         }
@@ -297,7 +294,7 @@ mod test {
             let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
             let mut queue = VecDeque::from([(0, 0)]);
 
-            min_distances(&graph, |w| w + 1, &mut dist, &mut queue);
+            distances(&graph, |w| w + 1, &mut dist, &mut queue);
 
             assert_eq!(dist, [0, 1, 2, usize::MAX]);
         }
@@ -308,7 +305,7 @@ mod test {
             let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
             let mut queue = VecDeque::from([(0, 0)]);
 
-            min_distances(&graph, |w| w + 1, &mut dist, &mut queue);
+            distances(&graph, |w| w + 1, &mut dist, &mut queue);
 
             assert_eq!(dist, [0, 1, 1, 2]);
         }
@@ -329,20 +326,20 @@ mod test {
             ];
 
             let mut queue = VecDeque::from([(0, 0)]);
-            min_distances(&graph, |w| w + 1, &mut dist, &mut queue);
+            distances(&graph, |w| w + 1, &mut dist, &mut queue);
 
             assert_eq!(dist, [0, 1, 2, 1, 2, 3, 3, 2]);
         }
     }
 
-    mod min_distances_single_source {
+    mod distances_single_source {
         use super::*;
 
         #[test]
         #[should_panic(expected = "index out of bounds: the len is 0 but the index is 0")]
         fn graph_0() {
             let graph = to_vec(&GRAPH_0);
-            let _ = min_distances_single_source(&graph, 0);
+            let _ = distances_single_source(&graph, 0);
         }
 
         #[test]
@@ -360,7 +357,7 @@ mod test {
             let graph = to_vec(&GRAPH_1);
 
             for (i, &d) in EXPECTED.iter().enumerate() {
-                assert_eq!(min_distances_single_source(&graph, i), d);
+                assert_eq!(distances_single_source(&graph, i), d);
             }
         }
 
@@ -377,7 +374,7 @@ mod test {
             let graph = to_vec(&GRAPH_2);
 
             for (i, &d) in EXPECTED.iter().enumerate() {
-                assert_eq!(min_distances_single_source(&graph, i), d);
+                assert_eq!(distances_single_source(&graph, i), d);
             }
         }
 
@@ -398,7 +395,7 @@ mod test {
             let graph = to_vec(&GRAPH_3);
 
             for (i, &d) in EXPECTED.iter().enumerate() {
-                assert_eq!(min_distances_single_source(&graph, i), d);
+                assert_eq!(distances_single_source(&graph, i), d);
             }
         }
     }

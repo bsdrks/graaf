@@ -28,6 +28,15 @@ In arbitrary order:
 - Test implementations of traits with properties in `op::prop`.
 - Use `bfs` in `README` example.
 
+## [0.14.0] - 2024-04-15
+
+Changed
+
+- Breaking: Rename `bfs::min_distances` to `bfs::distances`.
+- Breaking: Rename `bfs::min_distances_single_source` to `bfs::distances_single_source`.
+- Breaking: Rename `dijkstra::min_distances` to `dijkstra::distances`.
+- Breaking: Rename `dijkstra::min_distances_single_source` to `dijkstra::distances_single_source`.
+
 ## [0.13.3] - 2024-04-15
 
 Added

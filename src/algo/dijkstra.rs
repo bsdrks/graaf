@@ -66,7 +66,7 @@ use {
 /// use {
 ///     alloc::collections::BinaryHeap,
 ///     core::cmp::Reverse,
-///     graaf::algo::dijkstra::min_distances,
+///     graaf::algo::dijkstra::distances,
 /// };
 ///
 /// // ╭───╮       ╭───╮
@@ -82,11 +82,11 @@ use {
 /// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
 /// let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 ///
-/// min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
+/// distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 ///
 /// assert_eq!(dist, [0, 2, 4, usize::MAX]);
 /// ```
-pub fn min_distances<G, W>(
+pub fn distances<G, W>(
     graph: &G,
     step: fn(W, W) -> W,
     dist: &mut [W],
@@ -121,7 +121,7 @@ pub fn min_distances<G, W>(
 /// # Examples
 ///
 /// ```
-/// use graaf::algo::dijkstra::min_distances_single_source;
+/// use graaf::algo::dijkstra::distances_single_source;
 ///
 /// // ╭───╮       ╭───╮
 /// // │ 0 │  2 →  │ 1 │
@@ -134,12 +134,9 @@ pub fn min_distances<G, W>(
 ///
 /// let graph: [Vec<(usize, usize)>; 4] = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
 ///
-/// assert_eq!(
-///     min_distances_single_source(&graph, 0),
-///     [0, 2, 4, usize::MAX]
-/// );
+/// assert_eq!(distances_single_source(&graph, 0), [0, 2, 4, usize::MAX]);
 /// ```
-pub fn min_distances_single_source<G>(graph: &G, s: usize) -> Vec<usize>
+pub fn distances_single_source<G>(graph: &G, s: usize) -> Vec<usize>
 where
     G: CountAllVertices + IterWeightedEdges<usize>,
 {
@@ -148,7 +145,7 @@ where
 
     dist[s] = 0;
 
-    min_distances(graph, |acc, w| acc + w, &mut dist, &mut heap);
+    distances(graph, |acc, w| acc + w, &mut dist, &mut heap);
 
     dist
 }
@@ -324,7 +321,7 @@ mod test {
         graph.iter().map(|v| v.to_vec()).collect()
     }
 
-    mod min_distances {
+    mod distances {
         use {
             super::*,
             crate::op::AddWeightedEdge,
@@ -336,7 +333,7 @@ mod test {
             let mut dist = Vec::new();
             let mut heap = BinaryHeap::new();
 
-            min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
+            distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
             assert!(dist.is_empty());
         }
@@ -359,7 +356,7 @@ mod test {
 
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
-            min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
+            distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
             assert_eq!(dist, [0, 4, 12, 19, 21, 11, 9, 8, 14]);
         }
@@ -370,7 +367,7 @@ mod test {
             let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
-            min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
+            distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
             assert_eq!(dist, [0, 2, 4, usize::MAX]);
         }
@@ -381,7 +378,7 @@ mod test {
             let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
-            min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
+            distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
             assert_eq!(dist, [0, 1, 3, 10]);
         }
@@ -398,7 +395,7 @@ mod test {
             let mut dist = [0, usize::MAX, usize::MAX];
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
-            min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
+            distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
             assert_eq!(dist, [0, 1, 1]);
         }
@@ -423,7 +420,7 @@ mod test {
 
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
-            min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
+            distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
             assert_eq!(dist, [0, 1, 2, 1, 2, 3]);
         }
@@ -452,13 +449,13 @@ mod test {
 
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
-            min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
+            distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
             assert_eq!(dist, [0, 0, 1, 0, 0, 0, 1, 0, 0, 1,]);
         }
     }
 
-    mod min_distances_single_source {
+    mod distances_single_source {
         use {
             super::*,
             crate::op::AddWeightedEdge,
@@ -468,7 +465,7 @@ mod test {
         #[should_panic(expected = "index out of bounds: the len is 0 but the index is 0")]
         fn graph_0() {
             let graph = to_vec(&GRAPH_0);
-            let _ = min_distances_single_source(&graph, 0);
+            let _ = distances_single_source(&graph, 0);
         }
 
         #[test]
@@ -489,7 +486,7 @@ mod test {
             let graph = to_vec(&GRAPH_1);
 
             for (i, &d) in EXPECTED.iter().enumerate() {
-                assert_eq!(min_distances_single_source(&graph, i), d);
+                assert_eq!(distances_single_source(&graph, i), d);
             }
         }
 
@@ -508,7 +505,7 @@ mod test {
             let graph = to_vec(&GRAPH_SHORTEST_PATH_1);
 
             for (i, &d) in EXPECTED.iter().enumerate() {
-                assert_eq!(min_distances_single_source(&graph, i), d);
+                assert_eq!(distances_single_source(&graph, i), d);
             }
         }
 
@@ -525,7 +522,7 @@ mod test {
             let graph = to_vec(&GRAPH_CROSS_COUNTRY);
 
             for (i, &d) in EXPECTED.iter().enumerate() {
-                assert_eq!(min_distances_single_source(&graph, i), d);
+                assert_eq!(distances_single_source(&graph, i), d);
             }
         }
 
@@ -546,7 +543,7 @@ mod test {
             }
 
             for (s, dist) in EXPECTED.iter().enumerate() {
-                assert_eq!(min_distances_single_source(&graph, s), dist);
+                assert_eq!(distances_single_source(&graph, s), dist);
             }
         }
 
@@ -570,7 +567,7 @@ mod test {
             }
 
             for (s, dist) in EXPECTED.iter().enumerate() {
-                assert_eq!(min_distances_single_source(&graph, s), dist);
+                assert_eq!(distances_single_source(&graph, s), dist);
             }
         }
 
@@ -598,7 +595,7 @@ mod test {
             }
 
             for (s, dist) in EXPECTED.iter().enumerate() {
-                assert_eq!(min_distances_single_source(&graph, s), dist);
+                assert_eq!(distances_single_source(&graph, s), dist);
             }
         }
     }

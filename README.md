@@ -16,7 +16,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.13.3"
+graaf = "0.14.0"
 ```
 
 ## Usage
@@ -55,15 +55,15 @@ assert_eq!(adj.outdegree(3), 0);
 
 #### Breadth-first search: [`bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs/index.html)
 
-- [`min_distances_single_source`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.min_distances_single_source.html)
-- [`min_distances`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.min_distances.html)
+- [`distances_single_source`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.distances_single_source.html)
+- [`distances`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.distances.html)
 - [`predecessors_single_source`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.predecessors_single_source.html)
 - [`predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.predecessors.html)
 
 #### Dijkstra's algorithm: [`dijkstra`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/index.html)
 
-- [`min_distances_single_source`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.min_distances_single_source.html)
-- [`min_distances`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.min_distances.html)
+- [`distances_single_source`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.distances_single_source.html)
+- [`distances`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.distances.html)
 - [`predecessors_single_source`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.predecessors_single_source.html)
 - [`predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.predecessors.html)
 
