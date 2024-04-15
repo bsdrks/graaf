@@ -28,6 +28,20 @@ In arbitrary order:
 - Test implementations of traits with properties in `op::prop`.
 - Use `bfs` in `README` example.
 
+## [0.13.1] - 2024-04-15
+
+### Added
+
+- Add `IsEdge` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Add `IsEdge` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Add `IsEdge` for `BTreeSet<(usize, usize)>`.
+- Add `IsEdge` for `Vec<BTreeMap<usize, W>>`.
+- Add `IsEdge` for `Vec<BTreeSet<usize>>`.
+- Add `IsEdge` for `[BTreeMap<usize, W>; V]`.
+- Add `IsEdge` for `[BTreeMap<usize, W>]`.
+- Add `IsEdge` for `[BTreeSet<usize>; V]`.
+- Add `IsEdge` for `[BTreeSet<usize>]`.
+
 ## [0.13.0] - 2024-04-14
 
 ### Added

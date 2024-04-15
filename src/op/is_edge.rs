@@ -24,8 +24,13 @@
 //! assert!(graph.is_edge(2, 1));
 //! assert!(!graph.is_edge(2, 2));
 //! ```
+extern crate alloc;
 
 use {
+    alloc::collections::{
+        BTreeMap,
+        BTreeSet,
+    },
     core::hash::BuildHasher,
     std::collections::{
         HashMap,
@@ -112,12 +117,24 @@ pub trait IsEdge {
     fn is_edge(&self, s: usize, t: usize) -> bool;
 }
 
+impl IsEdge for Vec<BTreeSet<usize>> {
+    fn is_edge(&self, s: usize, t: usize) -> bool {
+        self.get(s).map_or(false, |set| set.contains(&t))
+    }
+}
+
 impl<H> IsEdge for Vec<HashSet<usize, H>>
 where
     H: BuildHasher,
 {
     fn is_edge(&self, s: usize, t: usize) -> bool {
         self.get(s).map_or(false, |set| set.contains(&t))
+    }
+}
+
+impl<W> IsEdge for Vec<BTreeMap<usize, W>> {
+    fn is_edge(&self, s: usize, t: usize) -> bool {
+        self.get(s).map_or(false, |map| map.contains_key(&t))
     }
 }
 
@@ -130,12 +147,27 @@ where
     }
 }
 
+impl IsEdge for [BTreeSet<usize>] {
+    fn is_edge(&self, s: usize, t: usize) -> bool {
+        self.get(s).map_or(false, |set| set.contains(&t))
+    }
+}
+
 impl<H> IsEdge for [HashSet<usize, H>]
 where
     H: BuildHasher,
 {
     fn is_edge(&self, s: usize, t: usize) -> bool {
         self.get(s).map_or(false, |set| set.contains(&t))
+    }
+}
+
+impl<W> IsEdge for [BTreeMap<usize, W>]
+where
+    W: Ord,
+{
+    fn is_edge(&self, s: usize, t: usize) -> bool {
+        self.get(s).map_or(false, |map| map.contains_key(&t))
     }
 }
 
@@ -148,12 +180,27 @@ where
     }
 }
 
+impl<const V: usize> IsEdge for [BTreeSet<usize>; V] {
+    fn is_edge(&self, s: usize, t: usize) -> bool {
+        self[s].contains(&t)
+    }
+}
+
 impl<const V: usize, H> IsEdge for [HashSet<usize, H>; V]
 where
     H: BuildHasher,
 {
     fn is_edge(&self, s: usize, t: usize) -> bool {
         self[s].contains(&t)
+    }
+}
+
+impl<const V: usize, W> IsEdge for [BTreeMap<usize, W>; V]
+where
+    W: Ord,
+{
+    fn is_edge(&self, s: usize, t: usize) -> bool {
+        self[s].contains_key(&t)
     }
 }
 
@@ -166,6 +213,12 @@ where
     }
 }
 
+impl IsEdge for BTreeSet<(usize, usize)> {
+    fn is_edge(&self, s: usize, t: usize) -> bool {
+        self.contains(&(s, t))
+    }
+}
+
 impl<H> IsEdge for HashSet<(usize, usize), H>
 where
     H: BuildHasher,
@@ -175,12 +228,24 @@ where
     }
 }
 
+impl IsEdge for BTreeMap<usize, BTreeSet<usize>> {
+    fn is_edge(&self, s: usize, t: usize) -> bool {
+        self.get(&s).map_or(false, |set| set.contains(&t))
+    }
+}
+
 impl<H> IsEdge for HashMap<usize, HashSet<usize, H>, H>
 where
     H: BuildHasher,
 {
     fn is_edge(&self, s: usize, t: usize) -> bool {
         self.get(&s).map_or(false, |set| set.contains(&t))
+    }
+}
+
+impl<W> IsEdge for BTreeMap<usize, BTreeMap<usize, W>> {
+    fn is_edge(&self, s: usize, t: usize) -> bool {
+        self.get(&s).map_or(false, |map| map.contains_key(&t))
     }
 }
 
@@ -198,11 +263,49 @@ mod tests {
     use super::*;
 
     #[test]
+    fn vec_btree_set() {
+        let graph = vec![
+            BTreeSet::from([1, 2]),
+            BTreeSet::from([0]),
+            BTreeSet::from([0, 1]),
+        ];
+
+        assert!(!graph.is_edge(0, 0));
+        assert!(graph.is_edge(0, 1));
+        assert!(graph.is_edge(0, 2));
+        assert!(graph.is_edge(1, 0));
+        assert!(!graph.is_edge(1, 1));
+        assert!(!graph.is_edge(1, 2));
+        assert!(graph.is_edge(2, 0));
+        assert!(graph.is_edge(2, 1));
+        assert!(!graph.is_edge(2, 2));
+    }
+
+    #[test]
     fn vec_hash_set() {
         let graph = vec![
             HashSet::from([1, 2]),
             HashSet::from([0]),
             HashSet::from([0, 1]),
+        ];
+
+        assert!(!graph.is_edge(0, 0));
+        assert!(graph.is_edge(0, 1));
+        assert!(graph.is_edge(0, 2));
+        assert!(graph.is_edge(1, 0));
+        assert!(!graph.is_edge(1, 1));
+        assert!(!graph.is_edge(1, 2));
+        assert!(graph.is_edge(2, 0));
+        assert!(graph.is_edge(2, 1));
+        assert!(!graph.is_edge(2, 2));
+    }
+
+    #[test]
+    fn vec_btree_map() {
+        let graph = vec![
+            BTreeMap::from([(1, 1), (2, 1)]),
+            BTreeMap::from([(0, 1)]),
+            BTreeMap::from([(0, 1), (1, 1)]),
         ];
 
         assert!(!graph.is_edge(0, 0));
@@ -236,11 +339,49 @@ mod tests {
     }
 
     #[test]
+    fn slice_btree_set() {
+        let graph: &[BTreeSet<usize>] = &[
+            BTreeSet::from([1, 2]),
+            BTreeSet::from([0]),
+            BTreeSet::from([0, 1]),
+        ];
+
+        assert!(!graph.is_edge(0, 0));
+        assert!(graph.is_edge(0, 1));
+        assert!(graph.is_edge(0, 2));
+        assert!(graph.is_edge(1, 0));
+        assert!(!graph.is_edge(1, 1));
+        assert!(!graph.is_edge(1, 2));
+        assert!(graph.is_edge(2, 0));
+        assert!(graph.is_edge(2, 1));
+        assert!(!graph.is_edge(2, 2));
+    }
+
+    #[test]
     fn slice_hash_set() {
         let graph: &[HashSet<usize>] = &[
             HashSet::from([1, 2]),
             HashSet::from([0]),
             HashSet::from([0, 1]),
+        ];
+
+        assert!(!graph.is_edge(0, 0));
+        assert!(graph.is_edge(0, 1));
+        assert!(graph.is_edge(0, 2));
+        assert!(graph.is_edge(1, 0));
+        assert!(!graph.is_edge(1, 1));
+        assert!(!graph.is_edge(1, 2));
+        assert!(graph.is_edge(2, 0));
+        assert!(graph.is_edge(2, 1));
+        assert!(!graph.is_edge(2, 2));
+    }
+
+    #[test]
+    fn slice_btree_map() {
+        let graph: &[BTreeMap<usize, i32>] = &[
+            BTreeMap::from([(1, 1), (2, 1)]),
+            BTreeMap::from([(0, 1)]),
+            BTreeMap::from([(0, 1), (1, 1)]),
         ];
 
         assert!(!graph.is_edge(0, 0));
@@ -274,11 +415,49 @@ mod tests {
     }
 
     #[test]
+    fn arr_btree_set() {
+        let graph = [
+            BTreeSet::from([1, 2]),
+            BTreeSet::from([0]),
+            BTreeSet::from([0, 1]),
+        ];
+
+        assert!(!graph.is_edge(0, 0));
+        assert!(graph.is_edge(0, 1));
+        assert!(graph.is_edge(0, 2));
+        assert!(graph.is_edge(1, 0));
+        assert!(!graph.is_edge(1, 1));
+        assert!(!graph.is_edge(1, 2));
+        assert!(graph.is_edge(2, 0));
+        assert!(graph.is_edge(2, 1));
+        assert!(!graph.is_edge(2, 2));
+    }
+
+    #[test]
     fn arr_hash_set() {
         let graph = [
             HashSet::from([1, 2]),
             HashSet::from([0]),
             HashSet::from([0, 1]),
+        ];
+
+        assert!(!graph.is_edge(0, 0));
+        assert!(graph.is_edge(0, 1));
+        assert!(graph.is_edge(0, 2));
+        assert!(graph.is_edge(1, 0));
+        assert!(!graph.is_edge(1, 1));
+        assert!(!graph.is_edge(1, 2));
+        assert!(graph.is_edge(2, 0));
+        assert!(graph.is_edge(2, 1));
+        assert!(!graph.is_edge(2, 2));
+    }
+
+    #[test]
+    fn arr_btree_map() {
+        let graph = [
+            BTreeMap::from([(1, 1), (2, 1)]),
+            BTreeMap::from([(0, 1)]),
+            BTreeMap::from([(0, 1), (1, 1)]),
         ];
 
         assert!(!graph.is_edge(0, 0));
@@ -312,8 +491,42 @@ mod tests {
     }
 
     #[test]
+    fn btree_set() {
+        let graph = BTreeSet::from([(0, 1), (0, 2), (1, 0), (2, 0), (2, 1)]);
+
+        assert!(!graph.is_edge(0, 0));
+        assert!(graph.is_edge(0, 1));
+        assert!(graph.is_edge(0, 2));
+        assert!(graph.is_edge(1, 0));
+        assert!(!graph.is_edge(1, 1));
+        assert!(!graph.is_edge(1, 2));
+        assert!(graph.is_edge(2, 0));
+        assert!(graph.is_edge(2, 1));
+        assert!(!graph.is_edge(2, 2));
+    }
+
+    #[test]
     fn hash_set() {
         let graph = HashSet::from([(0, 1), (0, 2), (1, 0), (2, 0), (2, 1)]);
+
+        assert!(!graph.is_edge(0, 0));
+        assert!(graph.is_edge(0, 1));
+        assert!(graph.is_edge(0, 2));
+        assert!(graph.is_edge(1, 0));
+        assert!(!graph.is_edge(1, 1));
+        assert!(!graph.is_edge(1, 2));
+        assert!(graph.is_edge(2, 0));
+        assert!(graph.is_edge(2, 1));
+        assert!(!graph.is_edge(2, 2));
+    }
+
+    #[test]
+    fn btree_map_btree_set() {
+        let graph = BTreeMap::from([
+            (0, BTreeSet::from([1, 2])),
+            (1, BTreeSet::from([0])),
+            (2, BTreeSet::from([0, 1])),
+        ]);
 
         assert!(!graph.is_edge(0, 0));
         assert!(graph.is_edge(0, 1));
@@ -332,6 +545,25 @@ mod tests {
             (0, HashSet::from([1, 2])),
             (1, HashSet::from([0])),
             (2, HashSet::from([0, 1])),
+        ]);
+
+        assert!(!graph.is_edge(0, 0));
+        assert!(graph.is_edge(0, 1));
+        assert!(graph.is_edge(0, 2));
+        assert!(graph.is_edge(1, 0));
+        assert!(!graph.is_edge(1, 1));
+        assert!(!graph.is_edge(1, 2));
+        assert!(graph.is_edge(2, 0));
+        assert!(graph.is_edge(2, 1));
+        assert!(!graph.is_edge(2, 2));
+    }
+
+    #[test]
+    fn btree_map_btree_map() {
+        let graph = BTreeMap::from([
+            (0, BTreeMap::from([(1, 1), (2, 1)])),
+            (1, BTreeMap::from([(0, 1)])),
+            (2, BTreeMap::from([(0, 1), (1, 1)])),
         ]);
 
         assert!(!graph.is_edge(0, 0));
