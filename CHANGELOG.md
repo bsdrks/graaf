@@ -28,6 +28,12 @@ In arbitrary order:
 - Test implementations of traits with properties in `op::prop`.
 - Use `bfs` in `README` example.
 
+## [0.13.3] - 2024-04-15
+
+Added
+
+- Add logo to `README`.
+
 ## [0.13.2] - 2024-04-15
 
 Added
