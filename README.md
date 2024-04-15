@@ -89,6 +89,10 @@ These traits are implemented for various graph representations built from standa
 
 ### Representations: [`repr`](https://docs.rs/graaf/latest/graaf/repr/index.html)
 
+#### Adjacency matrix, unweighted
+
+- [`AdjacencyMatrix`](https://docs.rs/graaf/latest/graaf/repr/adjacency_matrix/index.html): an adjacency matrix representation of an unweighted directed graph stored as a bit array.
+
 #### Adjacency list, unweighted
 
 - `BTreeMap<usize, BTreeSet<usize>>`
@@ -107,31 +111,27 @@ These traits are implemented for various graph representations built from standa
 
 #### Adjacency list, weighted
 
+- `BTreeMap<usize, BTreeMap<usize, W>>`
+- `BTreeMap<usize, BTreeSet<(usize, W)>>`
+- `BTreeMap<usize, Vec<(usize, W)>>`
 - `HashMap<usize, HashMap<usize, W>>`
 - `HashMap<usize, HashSet<(usize, W)>>`
 - `HashMap<usize, Vec<(usize, W)>>`
+- `Vec<BTreeMap<usize, W>>`
+- `Vec<BTreeSet<(usize, W)>>`
 - `Vec<HashMap<usize, W>>`
 - `Vec<HashSet<(usize, W)>>`
 - `Vec<Vec<(usize, W)>>`
+- `[BTreeMap<usize, W>; V]`
+- `[BTreeMap<usize, W>]`
+- `[BTreeSet<(usize, W)>; V]`
+- `[BTreeSet<(usize, W)>]`
 - `[HashMap<usize, W>; V]`
 - `[HashMap<usize, W>]`
 - `[HashSet<(usize, W)>; V]`
 - `[HashSet<(usize, W)>]`
 - `[Vec<(usize, W)>; V]`
 - `[Vec<(usize, W)>]`
-- `BTreeMap<usize, BTreeMap<usize, W>>`
-- `BTreeMap<usize, BTreeSet<(usize, W)>>`
-- `BTreeMap<usize, Vec<(usize, W)>>`
-- `Vec<BTreeMap<usize, W>>`
-- `Vec<BTreeSet<(usize, W)>>`
-- `[BTreeMap<usize, W>; V]`
-- `[BTreeMap<usize, W>]`
-- `[BTreeSet<(usize, W)>; V]`
-- `[BTreeSet<(usize, W)>]`
-
-#### Adjacency matrix, unweighted
-
-- [`AdjacencyMatrix`](https://docs.rs/graaf/latest/graaf/repr/adjacency_matrix/index.html): an adjacency matrix representation of an unweighted directed graph stored as a bit array.
 
 #### Edge list, unweighted
 
