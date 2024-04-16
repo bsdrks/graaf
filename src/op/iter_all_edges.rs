@@ -78,16 +78,16 @@ impl<const V: usize> IterAllEdges for [(usize, usize); V] {
     }
 }
 
-impl<H> IterAllEdges for HashSet<(usize, usize), H>
-where
-    H: BuildHasher,
-{
+impl IterAllEdges for BTreeSet<(usize, usize)> {
     fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
         self.iter().copied()
     }
 }
 
-impl IterAllEdges for BTreeSet<(usize, usize)> {
+impl<H> IterAllEdges for HashSet<(usize, usize), H>
+where
+    H: BuildHasher,
+{
     fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
         self.iter().copied()
     }

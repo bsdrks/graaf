@@ -59,8 +59,13 @@
 //! assert_matches!(iter.next(), Some(1 | 2));
 //! assert_eq!(iter.next(), None);
 //! ```
+extern crate alloc;
 
 use {
+    alloc::collections::{
+        BTreeMap,
+        BTreeSet,
+    },
     core::hash::BuildHasher,
     std::collections::{
         HashMap,
@@ -166,6 +171,15 @@ impl IterEdges for Vec<Vec<usize>> {
     }
 }
 
+impl IterEdges for Vec<BTreeSet<usize>> {
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn iter_edges(&self, s: usize) -> impl Iterator<Item = usize> {
+        self[s].iter().copied()
+    }
+}
+
 impl<H> IterEdges for Vec<HashSet<usize, H>>
 where
     H: BuildHasher,
@@ -179,6 +193,15 @@ where
 }
 
 impl IterEdges for [Vec<usize>] {
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn iter_edges(&self, s: usize) -> impl Iterator<Item = usize> {
+        self[s].iter().copied()
+    }
+}
+
+impl IterEdges for [BTreeSet<usize>] {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
@@ -208,6 +231,15 @@ impl<const V: usize> IterEdges for [Vec<usize>; V] {
     }
 }
 
+impl<const V: usize> IterEdges for [BTreeSet<usize>; V] {
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn iter_edges(&self, s: usize) -> impl Iterator<Item = usize> {
+        self[s].iter().copied()
+    }
+}
+
 impl<const V: usize, H> IterEdges for [HashSet<usize, H>; V]
 where
     H: BuildHasher,
@@ -220,10 +252,28 @@ where
     }
 }
 
+impl IterEdges for BTreeMap<usize, Vec<usize>> {
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn iter_edges(&self, s: usize) -> impl Iterator<Item = usize> {
+        self[&s].iter().copied()
+    }
+}
+
 impl<H> IterEdges for HashMap<usize, Vec<usize>, H>
 where
     H: BuildHasher,
 {
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn iter_edges(&self, s: usize) -> impl Iterator<Item = usize> {
+        self[&s].iter().copied()
+    }
+}
+
+impl IterEdges for BTreeMap<usize, BTreeSet<usize>> {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
@@ -319,6 +369,18 @@ mod tests {
     }
 
     #[test]
+    fn vec_btree_set() {
+        let graph = vec![
+            BTreeSet::from([1, 2]),
+            BTreeSet::from([0, 2, 3]),
+            BTreeSet::from([0, 1, 3]),
+            BTreeSet::from([1, 2]),
+        ];
+
+        test_stable!(graph);
+    }
+
+    #[test]
     fn vec_hash_set() {
         let graph = vec![
             HashSet::from([1, 2]),
@@ -333,6 +395,18 @@ mod tests {
     #[test]
     fn slice_vec() {
         let graph: &[Vec<usize>] = &[vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+
+        test_stable!(graph);
+    }
+
+    #[test]
+    fn slice_btree_set() {
+        let graph: &[BTreeSet<usize>] = &[
+            BTreeSet::from([1, 2]),
+            BTreeSet::from([0, 2, 3]),
+            BTreeSet::from([0, 1, 3]),
+            BTreeSet::from([1, 2]),
+        ];
 
         test_stable!(graph);
     }
@@ -357,6 +431,18 @@ mod tests {
     }
 
     #[test]
+    fn arr_btree_set() {
+        let graph = [
+            BTreeSet::from([1, 2]),
+            BTreeSet::from([0, 2, 3]),
+            BTreeSet::from([0, 1, 3]),
+            BTreeSet::from([1, 2]),
+        ];
+
+        test_stable!(graph);
+    }
+
+    #[test]
     fn arr_hash_set() {
         let graph = [
             HashSet::from([1, 2]),
@@ -369,12 +455,36 @@ mod tests {
     }
 
     #[test]
+    fn btree_map_vec() {
+        let graph = BTreeMap::from([
+            (0, vec![1, 2]),
+            (1, vec![0, 2, 3]),
+            (2, vec![0, 1, 3]),
+            (3, vec![1, 2]),
+        ]);
+
+        test_stable!(graph);
+    }
+
+    #[test]
     fn hash_map_vec() {
         let graph = HashMap::from([
             (0, vec![1, 2]),
             (1, vec![0, 2, 3]),
             (2, vec![0, 1, 3]),
             (3, vec![1, 2]),
+        ]);
+
+        test_stable!(graph);
+    }
+
+    #[test]
+    fn btree_map_btree_set() {
+        let graph = BTreeMap::from([
+            (0, BTreeSet::from([1, 2])),
+            (1, BTreeSet::from([0, 2, 3])),
+            (2, BTreeSet::from([0, 1, 3])),
+            (3, BTreeSet::from([1, 2])),
         ]);
 
         test_stable!(graph);

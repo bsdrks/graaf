@@ -20,7 +20,7 @@ mod dijkstra {
         },
         alloc::collections::BinaryHeap,
         divan::Bencher,
-        graaf::algo::dijkstra::min_distances,
+        graaf::algo::dijkstra::distances,
         std::collections::HashSet,
     };
 
@@ -37,7 +37,7 @@ mod dijkstra {
         let mut heap = BinaryHeap::from(HEAP);
 
         bencher.bench_local(|| {
-            min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
+            distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
             dist
         });
@@ -56,7 +56,7 @@ mod dijkstra {
         let mut heap = BinaryHeap::from(HEAP);
 
         bencher.bench_local(|| {
-            min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
+            distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
             dist
         });
@@ -75,7 +75,7 @@ mod dijkstra {
         let mut heap = BinaryHeap::from(HEAP);
 
         bencher.bench_local(|| {
-            min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
+            distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
             dist
         });
@@ -94,7 +94,7 @@ mod dijkstra {
         let mut heap = BinaryHeap::from(HEAP);
 
         bencher.bench_local(|| {
-            min_distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
+            distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
             dist
         });

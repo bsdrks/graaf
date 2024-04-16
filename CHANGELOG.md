@@ -28,6 +28,20 @@ In arbitrary order:
 - Test implementations of traits with properties in `op::prop`.
 - Use `bfs` in `README` example.
 
+## [0.14.2] - 2024-04-16
+
+Added
+
+- Add `IterEdges` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Add `IterEdges` for `BTreeMap<usize, Vec<usize>>`.
+- Add `IterEdges` for `Vec<BTreeSet<usize>>`.
+- Add `IterEdges` for `[BTreeSet<usize>; V]`.
+- Add `IterEdges` for `[BTreeSet<usize>]`.
+
+Fixes
+
+- Fix benchmark imports.
+
 ## [0.14.1] - 2024-04-16
 
 Added
