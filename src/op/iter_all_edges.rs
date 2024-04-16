@@ -13,8 +13,10 @@
 //! assert_eq!(iter.next(), Some((2, 0)));
 //! assert_eq!(iter.next(), None);
 //! ```
+extern crate alloc;
 
 use {
+    alloc::collections::BTreeSet,
     core::hash::BuildHasher,
     std::collections::HashSet,
 };
@@ -80,6 +82,12 @@ impl<H> IterAllEdges for HashSet<(usize, usize), H>
 where
     H: BuildHasher,
 {
+    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
+        self.iter().copied()
+    }
+}
+
+impl IterAllEdges for BTreeSet<(usize, usize)> {
     fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
         self.iter().copied()
     }

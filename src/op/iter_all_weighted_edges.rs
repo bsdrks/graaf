@@ -13,8 +13,10 @@
 //! assert_eq!(iter.next(), Some((2, 0, &4)));
 //! assert_eq!(iter.next(), None);
 //! ```
+extern crate alloc;
 
 use {
+    alloc::collections::BTreeSet,
     core::hash::BuildHasher,
     std::collections::HashSet,
 };
@@ -82,6 +84,15 @@ impl<W> IterAllWeightedEdges<W> for [(usize, usize, W)] {
 }
 
 impl<const V: usize, W> IterAllWeightedEdges<W> for [(usize, usize, W); V] {
+    fn iter_all_weighted_edges<'a>(&'a self) -> impl Iterator<Item = (usize, usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self.iter().map(|(s, t, w)| (*s, *t, w))
+    }
+}
+
+impl<W> IterAllWeightedEdges<W> for BTreeSet<(usize, usize, W)> {
     fn iter_all_weighted_edges<'a>(&'a self) -> impl Iterator<Item = (usize, usize, &'a W)>
     where
         W: 'a,

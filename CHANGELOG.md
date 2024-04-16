@@ -28,6 +28,18 @@ In arbitrary order:
 - Test implementations of traits with properties in `op::prop`.
 - Use `bfs` in `README` example.
 
+## [0.14.1] - 2024-04-16
+
+Added
+
+- Add `IsSimple` for `Vec<BTreeSet<usize>>`.
+- Add `IsSimple` for `[BTreeSet<usize>]`.
+- Add `IsSimple` for `[BTreeSet<usize>; V]`.
+- Add `IsSimple` for `BTreeSet<(usize, usize)>`.
+- Add `IsSimple` for `BTreeSet<(usize, usize, W)>`.
+- Add `IterAllEdges` for `BTreeSet<(usize, usize)>`.
+- Add `IterAllWeightedEdges` for `BTreeSet<(usize, usize, W)>`.
+
 ## [0.14.0] - 2024-04-15
 
 Changed

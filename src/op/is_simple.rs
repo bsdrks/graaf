@@ -22,12 +22,14 @@
 //!
 //! assert!(!graph.is_simple());
 //! ```
+extern crate alloc;
 
 use {
     super::{
         IterAllEdges,
         IterAllWeightedEdges,
     },
+    alloc::collections::BTreeSet,
     core::hash::BuildHasher,
     std::collections::HashSet,
 };
@@ -93,6 +95,12 @@ where
     }
 }
 
+impl IsSimple for Vec<BTreeSet<usize>> {
+    fn is_simple(&self) -> bool {
+        self.iter().enumerate().all(|(s, set)| !set.contains(&s))
+    }
+}
+
 impl IsSimple for Vec<(usize, usize)> {
     fn is_simple(&self) -> bool {
         let mut set = HashSet::new();
@@ -115,6 +123,12 @@ impl<H> IsSimple for [HashSet<usize, H>]
 where
     H: BuildHasher,
 {
+    fn is_simple(&self) -> bool {
+        self.iter().enumerate().all(|(s, set)| !set.contains(&s))
+    }
+}
+
+impl IsSimple for [BTreeSet<usize>] {
     fn is_simple(&self) -> bool {
         self.iter().enumerate().all(|(s, set)| !set.contains(&s))
     }
@@ -147,6 +161,12 @@ where
     }
 }
 
+impl IsSimple for [BTreeSet<usize>; 3] {
+    fn is_simple(&self) -> bool {
+        self.iter().enumerate().all(|(s, set)| !set.contains(&s))
+    }
+}
+
 impl<const V: usize> IsSimple for [(usize, usize); V] {
     fn is_simple(&self) -> bool {
         let mut set = HashSet::new();
@@ -165,12 +185,27 @@ impl<const V: usize, W> IsSimple for [(usize, usize, W); V] {
     }
 }
 
+impl IsSimple for BTreeSet<(usize, usize)> {
+    fn is_simple(&self) -> bool {
+        self.iter_all_edges().all(|(s, t)| s != t)
+    }
+}
+
 impl<H> IsSimple for HashSet<(usize, usize), H>
 where
     H: BuildHasher,
 {
     fn is_simple(&self) -> bool {
         self.iter_all_edges().all(|(s, t)| s != t)
+    }
+}
+
+impl<W> IsSimple for BTreeSet<(usize, usize, W)> {
+    fn is_simple(&self) -> bool {
+        let mut set = HashSet::new();
+
+        self.iter_all_weighted_edges()
+            .all(|(s, t, _)| s != t && set.insert((s, t)))
     }
 }
 
@@ -191,10 +226,29 @@ mod tests {
     use super::*;
 
     #[test]
+    fn vec_btree_set_simple() {
+        let graph = vec![BTreeSet::from([1, 2]), BTreeSet::from([2]), BTreeSet::new()];
+
+        assert!(graph.is_simple());
+    }
+
+    #[test]
     fn vec_hash_set_simple() {
         let graph = vec![HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
 
         assert!(graph.is_simple());
+    }
+
+    #[test]
+    fn vec_btree_set_self_loop() {
+        #[rustfmt::skip]
+        let graph = vec![
+            BTreeSet::from([0, 1, 2]), // Self-loop {0, 0}
+            BTreeSet::from([0, 2]),
+            BTreeSet::from([0]),
+        ];
+
+        assert!(!graph.is_simple());
     }
 
     #[test]
@@ -210,10 +264,30 @@ mod tests {
     }
 
     #[test]
+    fn slice_btree_set_simple() {
+        let graph: &[BTreeSet<usize>] =
+            &[BTreeSet::from([1, 2]), BTreeSet::from([2]), BTreeSet::new()];
+
+        assert!(graph.is_simple());
+    }
+
+    #[test]
     fn slice_hash_set_simple() {
         let graph: &[HashSet<usize>] = &[HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
 
         assert!(graph.is_simple());
+    }
+
+    #[test]
+    fn slice_btree_set_self_loop() {
+        #[rustfmt::skip]
+        let graph: &[BTreeSet<usize>] = &[
+            BTreeSet::from([0, 1, 2]), // Self-loop {0, 0}
+            BTreeSet::from([0, 2]),
+            BTreeSet::from([0]),
+        ];
+
+        assert!(!graph.is_simple());
     }
 
     #[test]
@@ -229,10 +303,29 @@ mod tests {
     }
 
     #[test]
+    fn arr_btree_set_simple() {
+        let graph = [BTreeSet::from([1, 2]), BTreeSet::from([2]), BTreeSet::new()];
+
+        assert!(graph.is_simple());
+    }
+
+    #[test]
     fn arr_hash_set_simple() {
         let graph = [HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
 
         assert!(graph.is_simple());
+    }
+
+    #[test]
+    fn arr_btree_set_self_loop() {
+        #[rustfmt::skip]
+        let graph = [
+            BTreeSet::from([0, 1, 2]), // Self-loop {0, 0}
+            BTreeSet::from([0, 2]),
+            BTreeSet::from([0]),
+        ];
+
+        assert!(!graph.is_simple());
     }
 
     #[test]
@@ -341,10 +434,29 @@ mod tests {
     }
 
     #[test]
+    fn btree_set_tuple_unweighted_simple() {
+        let graph: BTreeSet<(usize, usize)> = BTreeSet::from([(1, 2), (2, 0), (0, 1)]);
+
+        assert!(graph.is_simple());
+    }
+
+    #[test]
     fn hash_set_tuple_unweighted_simple() {
         let graph: HashSet<(usize, usize)> = HashSet::from([(1, 2), (2, 0), (0, 1)]);
 
         assert!(graph.is_simple());
+    }
+
+    #[test]
+    fn btree_set_tuple_unweighted_self_loop() {
+        #[rustfmt::skip]
+        let graph: BTreeSet<(usize, usize)> = BTreeSet::from([
+            (0, 0), // Self-loop {0, 0}
+            (0, 1),
+            (0, 2)
+        ]);
+
+        assert!(!graph.is_simple());
     }
 
     #[test]
@@ -453,6 +565,14 @@ mod tests {
     }
 
     #[test]
+    fn btree_set_tuple_weighted_simple() {
+        let graph: BTreeSet<(usize, usize, usize)> =
+            BTreeSet::from([(1, 2, 1), (2, 0, 1), (0, 1, 1)]);
+
+        assert!(graph.is_simple());
+    }
+
+    #[test]
     fn hash_set_tuple_weighted_simple() {
         let graph: HashSet<(usize, usize, usize)> =
             HashSet::from([(1, 2, 1), (2, 0, 1), (0, 1, 1)]);
@@ -461,11 +581,35 @@ mod tests {
     }
 
     #[test]
+    fn btree_set_tuple_weighted_self_loop() {
+        #[rustfmt::skip]
+        let graph: BTreeSet<(usize, usize, usize)> = BTreeSet::from([
+            (0, 0, 1), // Self-loop {0, 0}
+            (0, 1, 1), 
+            (0, 2, 1) 
+        ]);
+
+        assert!(!graph.is_simple());
+    }
+
+    #[test]
     fn hash_set_tuple_weighted_self_loop() {
         #[rustfmt::skip]
         let graph: HashSet<(usize, usize, usize)> = HashSet::from([
             (0, 0, 1), // Self-loop {0, 0}
             (0, 1, 1), 
+            (0, 2, 1) 
+        ]);
+
+        assert!(!graph.is_simple());
+    }
+
+    #[test]
+    fn btree_set_tuple_weighted_parallel_edges() {
+        #[rustfmt::skip]
+        let graph: BTreeSet<(usize, usize, usize)> = BTreeSet::from([
+            (0, 1, 1), // Parallel edge {0, 1}
+            (0, 1, 2), // Parallel edge {0, 1}
             (0, 2, 1) 
         ]);
 
