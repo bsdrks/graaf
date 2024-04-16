@@ -15,11 +15,6 @@
 //! assert_eq!(iter.next(), None);
 //! ```
 
-use {
-    core::hash::BuildHasher,
-    std::collections::HashMap,
-};
-
 /// A trait to iterate over all vertices in a graph
 ///
 /// # How can I implement `IterVertices`?
@@ -78,21 +73,9 @@ impl<const V: usize, T> IterVertices for [T; V] {
     }
 }
 
-impl<V, S> IterVertices for HashMap<usize, V, S>
-where
-    S: BuildHasher,
-{
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        self.keys().copied()
-    }
-}
-
 #[cfg(test)]
 mod tests {
-    use {
-        super::*,
-        std::assert_matches::assert_matches,
-    };
+    use super::*;
 
     #[test]
     fn vec() {
@@ -127,24 +110,6 @@ mod tests {
         assert_eq!(iter.next(), Some(1));
         assert_eq!(iter.next(), Some(2));
         assert_eq!(iter.next(), Some(3));
-        assert_eq!(iter.next(), None);
-    }
-
-    #[test]
-    fn hash_map() {
-        let graph = HashMap::from([
-            (0, vec![1, 2]),
-            (1, vec![0, 2, 3]),
-            (2, vec![0, 1, 3]),
-            (3, vec![1, 2]),
-        ]);
-
-        let mut iter = graph.iter_vertices();
-
-        assert_matches!(iter.next(), Some(0..=3));
-        assert_matches!(iter.next(), Some(0..=3));
-        assert_matches!(iter.next(), Some(0..=3));
-        assert_matches!(iter.next(), Some(0..=3));
         assert_eq!(iter.next(), None);
     }
 }

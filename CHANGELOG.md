@@ -28,6 +28,12 @@ In arbitrary order:
 - Test implementations of traits with properties in `op::prop`.
 - Use `bfs` in `README` example.
 
+## [0.15.0] - 2024-04-16
+
+Removed
+
+- Breaking: Remove `IterVertices` for `HashMap<_>`.
+
 ## [0.14.2] - 2024-04-16
 
 Added
