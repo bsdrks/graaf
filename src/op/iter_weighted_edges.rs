@@ -32,8 +32,13 @@
 //! assert_eq!(iter.next(), Some((5, &6)));
 //! assert_eq!(iter.next(), None);
 //! ```
+extern crate alloc;
 
 use {
+    alloc::collections::{
+        BTreeMap,
+        BTreeSet,
+    },
     core::hash::BuildHasher,
     std::collections::{
         HashMap,
@@ -123,10 +128,40 @@ where
     }
 }
 
+impl<W> IterWeightedEdges<W> for Vec<BTreeSet<(usize, W)>>
+where
+    W: Copy,
+{
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self[s].iter().map(|(t, w)| (*t, w))
+    }
+}
+
 impl<W, H> IterWeightedEdges<W> for Vec<HashSet<(usize, W), H>>
 where
     W: Copy,
     H: BuildHasher,
+{
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self[s].iter().map(|(t, w)| (*t, w))
+    }
+}
+
+impl<W> IterWeightedEdges<W> for Vec<BTreeMap<usize, W>>
+where
+    W: Copy,
 {
     /// # Panics
     ///
@@ -170,10 +205,40 @@ where
     }
 }
 
+impl<W> IterWeightedEdges<W> for [BTreeSet<(usize, W)>]
+where
+    W: Copy,
+{
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self[s].iter().map(|(t, w)| (*t, w))
+    }
+}
+
 impl<W, H> IterWeightedEdges<W> for [HashSet<(usize, W), H>]
 where
     W: Copy,
     H: BuildHasher,
+{
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self[s].iter().map(|(t, w)| (*t, w))
+    }
+}
+
+impl<W> IterWeightedEdges<W> for [BTreeMap<usize, W>]
+where
+    W: Copy,
 {
     /// # Panics
     ///
@@ -214,10 +279,34 @@ where
     }
 }
 
+impl<const V: usize, W> IterWeightedEdges<W> for [BTreeSet<(usize, W)>; V]
+where
+    W: Copy,
+{
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self[s].iter().map(|(t, w)| (*t, w))
+    }
+}
+
 impl<const V: usize, W, H> IterWeightedEdges<W> for [HashSet<(usize, W), H>; V]
 where
     W: Copy,
     H: BuildHasher,
+{
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self[s].iter().map(|(t, w)| (*t, w))
+    }
+}
+
+impl<const V: usize, W> IterWeightedEdges<W> for [BTreeMap<usize, W>; V]
+where
+    W: Copy,
 {
     fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
@@ -240,6 +329,21 @@ where
     }
 }
 
+impl<W> IterWeightedEdges<W> for BTreeMap<usize, Vec<(usize, W)>>
+where
+    W: Copy,
+{
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self[&s].iter().map(|(t, w)| (*t, w))
+    }
+}
+
 impl<W, H> IterWeightedEdges<W> for HashMap<usize, Vec<(usize, W)>, H>
 where
     H: BuildHasher,
@@ -256,9 +360,39 @@ where
     }
 }
 
+impl<W> IterWeightedEdges<W> for BTreeMap<usize, BTreeSet<(usize, W)>>
+where
+    W: Copy,
+{
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self[&s].iter().map(|(t, w)| (*t, w))
+    }
+}
+
 impl<W, H> IterWeightedEdges<W> for HashMap<usize, HashSet<(usize, W), H>, H>
 where
     H: BuildHasher,
+    W: Copy,
+{
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self[&s].iter().map(|(t, w)| (*t, w))
+    }
+}
+
+impl<W> IterWeightedEdges<W> for BTreeMap<usize, BTreeMap<usize, W>>
+where
     W: Copy,
 {
     /// # Panics
@@ -290,9 +424,32 @@ where
 
 #[cfg(test)]
 mod tests {
-    use std::assert_matches::assert_matches;
+    use {
+        super::*,
+        std::assert_matches::assert_matches,
+    };
 
-    use super::*;
+    macro_rules! test_unstable {
+        ($graph:expr) => {
+            let mut iter = $graph.iter_weighted_edges(1);
+
+            assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
+            assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
+            assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
+            assert_eq!(iter.next(), None);
+        };
+    }
+
+    macro_rules! test_stable {
+        ($graph:expr) => {
+            let mut iter = $graph.iter_weighted_edges(1);
+
+            assert_eq!(iter.next(), Some((2, &3)));
+            assert_eq!(iter.next(), Some((3, &4)));
+            assert_eq!(iter.next(), Some((4, &5)));
+            assert_eq!(iter.next(), None);
+        };
+    }
 
     #[test]
     fn vec_vec() {
@@ -302,12 +459,18 @@ mod tests {
             vec![(3, 4), (4, 5), (5, 6)],
         ];
 
-        let mut iter = graph.iter_weighted_edges(1);
+        test_stable!(graph);
+    }
 
-        assert_eq!(iter.next(), Some((2, &3)));
-        assert_eq!(iter.next(), Some((3, &4)));
-        assert_eq!(iter.next(), Some((4, &5)));
-        assert_eq!(iter.next(), None);
+    #[test]
+    fn vec_btree_set() {
+        let graph = vec![
+            BTreeSet::from([(1, 2), (2, 3), (3, 4)]),
+            BTreeSet::from([(2, 3), (3, 4), (4, 5)]),
+            BTreeSet::from([(3, 4), (4, 5), (5, 6)]),
+        ];
+
+        test_unstable!(graph);
     }
 
     #[test]
@@ -318,12 +481,18 @@ mod tests {
             HashSet::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        let mut iter = graph.iter_weighted_edges(1);
+        test_unstable!(graph);
+    }
 
-        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
-        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
-        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
-        assert_eq!(iter.next(), None);
+    #[test]
+    fn vec_btree_map() {
+        let graph = vec![
+            BTreeMap::from([(1, 2), (2, 3), (3, 4)]),
+            BTreeMap::from([(2, 3), (3, 4), (4, 5)]),
+            BTreeMap::from([(3, 4), (4, 5), (5, 6)]),
+        ];
+
+        test_unstable!(graph);
     }
 
     #[test]
@@ -334,12 +503,7 @@ mod tests {
             HashMap::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        let mut iter = graph.iter_weighted_edges(1);
-
-        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
-        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
-        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
-        assert_eq!(iter.next(), None);
+        test_unstable!(graph);
     }
 
     #[test]
@@ -350,12 +514,18 @@ mod tests {
             vec![(3, 4), (4, 5), (5, 6)],
         ];
 
-        let mut iter = graph.iter_weighted_edges(1);
+        test_stable!(graph);
+    }
 
-        assert_eq!(iter.next(), Some((2, &3)));
-        assert_eq!(iter.next(), Some((3, &4)));
-        assert_eq!(iter.next(), Some((4, &5)));
-        assert_eq!(iter.next(), None);
+    #[test]
+    fn slice_btree_set() {
+        let graph: &[BTreeSet<(usize, i32)>] = &[
+            BTreeSet::from([(1, 2), (2, 3), (3, 4)]),
+            BTreeSet::from([(2, 3), (3, 4), (4, 5)]),
+            BTreeSet::from([(3, 4), (4, 5), (5, 6)]),
+        ];
+
+        test_unstable!(graph);
     }
 
     #[test]
@@ -366,12 +536,18 @@ mod tests {
             HashSet::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        let mut iter = graph.iter_weighted_edges(1);
+        test_unstable!(graph);
+    }
 
-        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
-        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
-        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
-        assert_eq!(iter.next(), None);
+    #[test]
+    fn slice_btree_map() {
+        let graph: &[BTreeMap<usize, i32>] = &[
+            BTreeMap::from([(1, 2), (2, 3), (3, 4)]),
+            BTreeMap::from([(2, 3), (3, 4), (4, 5)]),
+            BTreeMap::from([(3, 4), (4, 5), (5, 6)]),
+        ];
+
+        test_unstable!(graph);
     }
 
     #[test]
@@ -382,12 +558,7 @@ mod tests {
             HashMap::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        let mut iter = graph.iter_weighted_edges(1);
-
-        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
-        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
-        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
-        assert_eq!(iter.next(), None);
+        test_unstable!(graph);
     }
 
     #[test]
@@ -398,12 +569,18 @@ mod tests {
             vec![(3, 4), (4, 5), (5, 6)],
         ];
 
-        let mut iter = graph.iter_weighted_edges(1);
+        test_stable!(graph);
+    }
 
-        assert_eq!(iter.next(), Some((2, &3)));
-        assert_eq!(iter.next(), Some((3, &4)));
-        assert_eq!(iter.next(), Some((4, &5)));
-        assert_eq!(iter.next(), None);
+    #[test]
+    fn arr_btree_set() {
+        let graph = [
+            BTreeSet::from([(1, 2), (2, 3), (3, 4)]),
+            BTreeSet::from([(2, 3), (3, 4), (4, 5)]),
+            BTreeSet::from([(3, 4), (4, 5), (5, 6)]),
+        ];
+
+        test_unstable!(graph);
     }
 
     #[test]
@@ -414,12 +591,18 @@ mod tests {
             HashSet::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        let mut iter = graph.iter_weighted_edges(1);
+        test_unstable!(graph);
+    }
 
-        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
-        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
-        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
-        assert_eq!(iter.next(), None);
+    #[test]
+    fn arr_btree_map() {
+        let graph = [
+            BTreeMap::from([(1, 2), (2, 3), (3, 4)]),
+            BTreeMap::from([(2, 3), (3, 4), (4, 5)]),
+            BTreeMap::from([(3, 4), (4, 5), (5, 6)]),
+        ];
+
+        test_unstable!(graph);
     }
 
     #[test]
@@ -430,12 +613,18 @@ mod tests {
             HashMap::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        let mut iter = graph.iter_weighted_edges(1);
+        test_unstable!(graph);
+    }
 
-        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
-        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
-        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
-        assert_eq!(iter.next(), None);
+    #[test]
+    fn btree_map_vec() {
+        let graph = BTreeMap::from([
+            (0, vec![(1, 2), (2, 3), (3, 4)]),
+            (1, vec![(2, 3), (3, 4), (4, 5)]),
+            (2, vec![(3, 4), (4, 5), (5, 6)]),
+        ]);
+
+        test_stable!(graph);
     }
 
     #[test]
@@ -446,12 +635,18 @@ mod tests {
             (2, vec![(3, 4), (4, 5), (5, 6)]),
         ]);
 
-        let mut iter = graph.iter_weighted_edges(1);
+        test_stable!(graph);
+    }
 
-        assert_eq!(iter.next(), Some((2, &3)));
-        assert_eq!(iter.next(), Some((3, &4)));
-        assert_eq!(iter.next(), Some((4, &5)));
-        assert_eq!(iter.next(), None);
+    #[test]
+    fn btree_map_btree_set() {
+        let graph = BTreeMap::from([
+            (0, BTreeSet::from([(1, 2), (2, 3), (3, 4)])),
+            (1, BTreeSet::from([(2, 3), (3, 4), (4, 5)])),
+            (2, BTreeSet::from([(3, 4), (4, 5), (5, 6)])),
+        ]);
+
+        test_unstable!(graph);
     }
 
     #[test]
@@ -462,12 +657,18 @@ mod tests {
             (2, HashSet::from([(3, 4), (4, 5), (5, 6)])),
         ]);
 
-        let mut iter = graph.iter_weighted_edges(1);
+        test_unstable!(graph);
+    }
 
-        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
-        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
-        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
-        assert_eq!(iter.next(), None);
+    #[test]
+    fn btree_map_btree_map() {
+        let graph = BTreeMap::from([
+            (0, BTreeMap::from([(1, 2), (2, 3), (3, 4)])),
+            (1, BTreeMap::from([(2, 3), (3, 4), (4, 5)])),
+            (2, BTreeMap::from([(3, 4), (4, 5), (5, 6)])),
+        ]);
+
+        test_unstable!(graph);
     }
 
     #[test]
@@ -478,11 +679,6 @@ mod tests {
             (2, HashMap::from([(3, 4), (4, 5), (5, 6)])),
         ]);
 
-        let mut iter = graph.iter_weighted_edges(1);
-
-        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
-        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
-        assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
-        assert_eq!(iter.next(), None);
+        test_unstable!(graph);
     }
 }
