@@ -28,6 +28,50 @@ In arbitrary order:
 - Test implementations of traits with properties in `op::prop`.
 - Use `bfs` in `README` example.
 
+## [0.16.0] - 2024-04-17
+
+Added
+
+- Add `Outdegree` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Add `Outdegree` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Add `Outdegree` for `BTreeMap<usize, Vec<usize>>`.
+- Add `Outdegree` for `Vec<BTreeMap<usize, W>>`.
+- Add `Outdegree` for `Vec<BTreeSet<(usize, W)>>`.
+- Add `Outdegree` for `Vec<BTreeSet<usize>>`.
+- Add `Outdegree` for `Vec<HashMap<usize, W>>`.
+- Add `Outdegree` for `Vec<HashSet<(usize, W)>>`.
+- Add `Outdegree` for `Vec<HashSet<usize>>`.
+- Add `Outdegree` for `Vec<Vec<(usize, W)>>`.
+- Add `Outdegree` for `Vec<Vec<usize>>`.
+- Add `Outdegree` for `[BTreeMap<usize, W>; V]`.
+- Add `Outdegree` for `[BTreeMap<usize, W>]`.
+- Add `Outdegree` for `[BTreeSet<(usize, W)>; V]`.
+- Add `Outdegree` for `[BTreeSet<(usize, W)>]`.
+- Add `Outdegree` for `[BTreeSet<usize>; V]`.
+- Add `Outdegree` for `[BTreeSet<usize>]`.
+- Add `Outdegree` for `[HashMap<usize, W>; V]`.
+- Add `Outdegree` for `[HashMap<usize, W>]`.
+- Add `Outdegree` for `[HashSet<(usize, W)>; V]`.
+- Add `Outdegree` for `[HashSet<(usize, W)>]`.
+- Add `Outdegree` for `[HashSet<usize>]; V`.
+- Add `Outdegree` for `[HashSet<usize>]`.
+- Add `Outdegree` for `[Vec<(usize, W)>; V]`.
+- Add `Outdegree` for `[Vec<(usize, W)>]`.
+- Add `Outdegree` for `[Vec<usize>; V]`.
+- Add `Outdegree` for `[Vec<usize>]`.
+
+Changed
+
+- Breaking: Remove `Outdegree` for `Vec<HashMap<K, W>>`.
+- Breaking: Remove `Outdegree` for `Vec<HashSet<T>>`.
+- Breaking: Remove `Outdegree` for `Vec<Vec<T>>`.
+- Breaking: Remove `Outdegree` for `[HashMap<K, W>; V]`.
+- Breaking: Remove `Outdegree` for `[HashMap<K, W>]`.
+- Breaking: Remove `Outdegree` for `[HashSet<T>; V]`.
+- Breaking: Remove `Outdegree` for `[HashSet<T>]`.
+- Breaking: Remove `Outdegree` for `[Vec<T>; V]`.
+- Breaking: Remove `Outdegree` for `[Vec<T>]`.
+
 ## [0.15.1] - 2024-04-17
 
 Added
