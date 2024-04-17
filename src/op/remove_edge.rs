@@ -14,21 +14,21 @@
 //!     HashSet::from([1]),
 //! ];
 //!
-//! graph.remove_edge(0, 1);
+//! assert!(graph.remove_edge(0, 1));
 //!
 //! assert_eq!(
 //!     graph,
 //!     vec![HashSet::from([2]), HashSet::from([0]), HashSet::from([1])]
 //! );
 //!
-//! graph.remove_edge(0, 2);
+//! assert!(graph.remove_edge(0, 2));
 //!
 //! assert_eq!(
 //!     graph,
 //!     vec![HashSet::new(), HashSet::from([0]), HashSet::from([1])]
 //! );
 //!
-//! graph.remove_edge(1, 0);
+//! assert!(graph.remove_edge(1, 0));
 //!
 //! assert_eq!(
 //!     graph,
@@ -39,8 +39,13 @@
 //!
 //! assert_eq!(graph, vec![HashSet::new(), HashSet::new(), HashSet::new()]);
 //! ```
+extern crate alloc;
 
 use {
+    alloc::collections::{
+        BTreeMap,
+        BTreeSet,
+    },
     core::hash::BuildHasher,
     std::collections::{
         HashMap,
@@ -86,21 +91,21 @@ use {
 ///     HashSet::from([1]),
 /// ];
 ///
-/// graph.remove_edge(0, 1);
+/// assert!(graph.remove_edge(0, 1));
 ///
 /// assert_eq!(
 ///     graph,
 ///     vec![HashSet::from([2]), HashSet::from([0]), HashSet::from([1])]
 /// );
 ///
-/// graph.remove_edge(0, 2);
+/// assert!(graph.remove_edge(0, 2));
 ///
 /// assert_eq!(
 ///     graph,
 ///     vec![HashSet::new(), HashSet::from([0]), HashSet::from([1])]
 /// );
 ///
-/// graph.remove_edge(1, 0);
+/// assert!(graph.remove_edge(1, 0));
 ///
 /// assert_eq!(
 ///     graph,
@@ -129,13 +134,22 @@ use {
 /// Types that also implement [`crate::op::IsEdge`] should ensure that
 /// [`crate::op::prop::remove_edge_is_edge`] holds.
 pub trait RemoveEdge {
-    /// Remove the edge from `s` to `t`.
+    /// Remove the edge from `s` to `t`. Returns whether the edge was removed.
     ///
     /// # Arguments
     ///
     /// * `s`: The source vertex.
     /// * `t`: The target vertex.
-    fn remove_edge(&mut self, s: usize, t: usize);
+    fn remove_edge(&mut self, s: usize, t: usize) -> bool;
+}
+
+impl RemoveEdge for Vec<BTreeSet<usize>> {
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+        self[s].remove(&t)
+    }
 }
 
 impl<H> RemoveEdge for Vec<HashSet<usize, H>>
@@ -145,8 +159,17 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn remove_edge(&mut self, s: usize, t: usize) {
-        let _ = self[s].remove(&t);
+    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+        self[s].remove(&t)
+    }
+}
+
+impl<W> RemoveEdge for Vec<BTreeMap<usize, W>> {
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+        self[s].remove(&t).is_some()
     }
 }
 
@@ -157,8 +180,17 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn remove_edge(&mut self, s: usize, t: usize) {
-        let _ = self[s].remove(&t);
+    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+        self[s].remove(&t).is_some()
+    }
+}
+
+impl RemoveEdge for [BTreeSet<usize>] {
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+        self[s].remove(&t)
     }
 }
 
@@ -169,8 +201,17 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn remove_edge(&mut self, s: usize, t: usize) {
-        let _ = self[s].remove(&t);
+    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+        self[s].remove(&t)
+    }
+}
+
+impl<W> RemoveEdge for [BTreeMap<usize, W>] {
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+        self[s].remove(&t).is_some()
     }
 }
 
@@ -181,8 +222,17 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn remove_edge(&mut self, s: usize, t: usize) {
-        let _ = self[s].remove(&t);
+    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+        self[s].remove(&t).is_some()
+    }
+}
+
+impl<const V: usize> RemoveEdge for [BTreeSet<usize>; V] {
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+        self[s].remove(&t)
     }
 }
 
@@ -193,8 +243,17 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn remove_edge(&mut self, s: usize, t: usize) {
-        let _ = self[s].remove(&t);
+    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+        self[s].remove(&t)
+    }
+}
+
+impl<const V: usize, W> RemoveEdge for [BTreeMap<usize, W>; V] {
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+        self[s].remove(&t).is_some()
     }
 }
 
@@ -205,8 +264,17 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn remove_edge(&mut self, s: usize, t: usize) {
-        let _ = self[s].remove(&t);
+    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+        self[s].remove(&t).is_some()
+    }
+}
+
+impl RemoveEdge for BTreeMap<usize, BTreeSet<usize>> {
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+        self.get_mut(&s).unwrap().remove(&t)
     }
 }
 
@@ -217,8 +285,17 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn remove_edge(&mut self, s: usize, t: usize) {
-        let _ = self.get_mut(&s).unwrap().remove(&t);
+    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+        self.get_mut(&s).unwrap().remove(&t)
+    }
+}
+
+impl<W> RemoveEdge for BTreeMap<usize, BTreeMap<usize, W>> {
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+        self.get_mut(&s).unwrap().remove(&t).is_some()
     }
 }
 
@@ -229,14 +306,375 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn remove_edge(&mut self, s: usize, t: usize) {
-        let _ = self.get_mut(&s).unwrap().remove(&t);
+    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+        self.get_mut(&s).unwrap().remove(&t).is_some()
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn vec_btree_set() {
+        let mut graph = vec![
+            BTreeSet::from([1, 2]),
+            BTreeSet::from([0]),
+            BTreeSet::from([1]),
+        ];
+
+        assert_eq!(
+            graph,
+            vec![
+                BTreeSet::from([1, 2]),
+                BTreeSet::from([0]),
+                BTreeSet::from([1])
+            ]
+        );
+
+        assert!(graph.remove_edge(0, 1));
+
+        assert_eq!(
+            graph,
+            vec![
+                BTreeSet::from([2]),
+                BTreeSet::from([0]),
+                BTreeSet::from([1])
+            ]
+        );
+
+        assert!(graph.remove_edge(0, 2));
+
+        assert_eq!(
+            graph,
+            vec![BTreeSet::new(), BTreeSet::from([0]), BTreeSet::from([1])]
+        );
+
+        assert!(graph.remove_edge(1, 0));
+
+        assert_eq!(
+            graph,
+            vec![BTreeSet::new(), BTreeSet::new(), BTreeSet::from([1])]
+        );
+    }
+
+    #[test]
+    fn vec_btree_map() {
+        let mut graph = vec![
+            BTreeMap::from([(1, 1), (2, 1)]),
+            BTreeMap::from([(0, 1)]),
+            BTreeMap::from([(1, 1)]),
+        ];
+
+        assert_eq!(
+            graph,
+            vec![
+                BTreeMap::from([(1, 1), (2, 1)]),
+                BTreeMap::from([(0, 1)]),
+                BTreeMap::from([(1, 1)])
+            ]
+        );
+
+        assert!(graph.remove_edge(0, 1));
+
+        assert_eq!(
+            graph,
+            vec![
+                BTreeMap::from([(2, 1)]),
+                BTreeMap::from([(0, 1)]),
+                BTreeMap::from([(1, 1)])
+            ]
+        );
+
+        assert!(graph.remove_edge(0, 2));
+
+        assert_eq!(
+            graph,
+            vec![
+                BTreeMap::new(),
+                BTreeMap::from([(0, 1)]),
+                BTreeMap::from([(1, 1)])
+            ]
+        );
+
+        assert!(graph.remove_edge(1, 0));
+
+        assert_eq!(
+            graph,
+            vec![BTreeMap::new(), BTreeMap::new(), BTreeMap::from([(1, 1)])]
+        );
+    }
+
+    #[test]
+    fn slice_btree_set() {
+        let graph: &mut [BTreeSet<usize>] =
+            &mut [BTreeSet::from([1, 2]), BTreeSet::from([2]), BTreeSet::new()];
+
+        assert_eq!(
+            graph,
+            &[BTreeSet::from([1, 2]), BTreeSet::from([2]), BTreeSet::new()]
+        );
+
+        assert!(graph.remove_edge(0, 1));
+
+        assert_eq!(
+            graph,
+            vec![BTreeSet::from([2]), BTreeSet::from([2]), BTreeSet::new()]
+        );
+
+        assert!(graph.remove_edge(0, 2));
+
+        assert_eq!(
+            graph,
+            vec![BTreeSet::new(), BTreeSet::from([2]), BTreeSet::new()]
+        );
+
+        assert!(graph.remove_edge(1, 2));
+
+        assert_eq!(
+            graph,
+            vec![BTreeSet::new(), BTreeSet::new(), BTreeSet::new()]
+        );
+    }
+
+    #[test]
+    fn slice_btree_map() {
+        let graph: &mut [BTreeMap<usize, i32>] = &mut [
+            BTreeMap::from([(1, 1), (2, 1)]),
+            BTreeMap::from([(0, 1)]),
+            BTreeMap::from([(1, 1)]),
+        ];
+
+        assert_eq!(
+            graph,
+            &[
+                BTreeMap::from([(1, 1), (2, 1)]),
+                BTreeMap::from([(0, 1)]),
+                BTreeMap::from([(1, 1)])
+            ]
+        );
+
+        assert!(graph.remove_edge(0, 1));
+
+        assert_eq!(
+            graph,
+            vec![
+                BTreeMap::from([(2, 1)]),
+                BTreeMap::from([(0, 1)]),
+                BTreeMap::from([(1, 1)])
+            ]
+        );
+
+        assert!(graph.remove_edge(0, 2));
+
+        assert_eq!(
+            graph,
+            vec![
+                BTreeMap::new(),
+                BTreeMap::from([(0, 1)]),
+                BTreeMap::from([(1, 1)])
+            ]
+        );
+
+        assert!(graph.remove_edge(1, 0));
+
+        assert_eq!(
+            graph,
+            vec![BTreeMap::new(), BTreeMap::new(), BTreeMap::from([(1, 1)])]
+        );
+    }
+
+    #[test]
+    fn arr_btree_set() {
+        let mut graph = [
+            BTreeSet::from([1, 2]),
+            BTreeSet::from([0]),
+            BTreeSet::from([1]),
+        ];
+
+        assert_eq!(
+            graph,
+            [
+                BTreeSet::from([1, 2]),
+                BTreeSet::from([0]),
+                BTreeSet::from([1])
+            ]
+        );
+
+        assert!(graph.remove_edge(0, 1));
+
+        assert_eq!(
+            graph,
+            [
+                BTreeSet::from([2]),
+                BTreeSet::from([0]),
+                BTreeSet::from([1])
+            ]
+        );
+
+        assert!(graph.remove_edge(0, 2));
+
+        assert_eq!(
+            graph,
+            [BTreeSet::new(), BTreeSet::from([0]), BTreeSet::from([1])]
+        );
+
+        assert!(graph.remove_edge(1, 0));
+
+        assert_eq!(
+            graph,
+            [BTreeSet::new(), BTreeSet::new(), BTreeSet::from([1])]
+        );
+    }
+
+    #[test]
+    fn arr_btree_map() {
+        let mut graph = [
+            BTreeMap::from([(1, 1), (2, 1)]),
+            BTreeMap::from([(0, 1)]),
+            BTreeMap::from([(1, 1)]),
+        ];
+
+        assert_eq!(
+            graph,
+            [
+                BTreeMap::from([(1, 1), (2, 1)]),
+                BTreeMap::from([(0, 1)]),
+                BTreeMap::from([(1, 1)])
+            ]
+        );
+
+        assert!(graph.remove_edge(0, 1));
+
+        assert_eq!(
+            graph,
+            [
+                BTreeMap::from([(2, 1)]),
+                BTreeMap::from([(0, 1)]),
+                BTreeMap::from([(1, 1)])
+            ]
+        );
+
+        assert!(graph.remove_edge(0, 2));
+
+        assert_eq!(
+            graph,
+            [
+                BTreeMap::new(),
+                BTreeMap::from([(0, 1)]),
+                BTreeMap::from([(1, 1)])
+            ]
+        );
+
+        assert!(graph.remove_edge(1, 0));
+
+        assert_eq!(
+            graph,
+            [BTreeMap::new(), BTreeMap::new(), BTreeMap::from([(1, 1)])]
+        );
+    }
+
+    #[test]
+    fn btree_map_btree_set() {
+        let mut graph = BTreeMap::from([
+            (0, BTreeSet::from([1, 2])),
+            (1, BTreeSet::from([0])),
+            (2, BTreeSet::from([1])),
+        ]);
+
+        assert_eq!(
+            graph,
+            BTreeMap::from([
+                (0, BTreeSet::from([1, 2])),
+                (1, BTreeSet::from([0])),
+                (2, BTreeSet::from([1]))
+            ])
+        );
+
+        assert!(graph.remove_edge(0, 1));
+
+        assert_eq!(
+            graph,
+            BTreeMap::from([
+                (0, BTreeSet::from([2])),
+                (1, BTreeSet::from([0])),
+                (2, BTreeSet::from([1]))
+            ])
+        );
+
+        assert!(graph.remove_edge(0, 2));
+
+        assert_eq!(
+            graph,
+            BTreeMap::from([
+                (0, BTreeSet::new()),
+                (1, BTreeSet::from([0])),
+                (2, BTreeSet::from([1]))
+            ])
+        );
+
+        assert!(graph.remove_edge(1, 0));
+
+        assert_eq!(
+            graph,
+            BTreeMap::from([
+                (0, BTreeSet::new()),
+                (1, BTreeSet::new()),
+                (2, BTreeSet::from([1]))
+            ])
+        );
+    }
+
+    #[test]
+    fn btree_map_btree_map() {
+        let mut graph = BTreeMap::from([
+            (0, BTreeMap::from([(1, 1), (2, 1)])),
+            (1, BTreeMap::from([(0, 1)])),
+            (2, BTreeMap::from([(1, 1)])),
+        ]);
+
+        assert_eq!(
+            graph,
+            BTreeMap::from([
+                (0, BTreeMap::from([(1, 1), (2, 1)])),
+                (1, BTreeMap::from([(0, 1)])),
+                (2, BTreeMap::from([(1, 1)]))
+            ])
+        );
+
+        assert!(graph.remove_edge(0, 1));
+
+        assert_eq!(
+            graph,
+            BTreeMap::from([
+                (0, BTreeMap::from([(2, 1)])),
+                (1, BTreeMap::from([(0, 1)])),
+                (2, BTreeMap::from([(1, 1)]))
+            ])
+        );
+
+        assert!(graph.remove_edge(0, 2));
+
+        assert_eq!(
+            graph,
+            BTreeMap::from([
+                (0, BTreeMap::new()),
+                (1, BTreeMap::from([(0, 1)])),
+                (2, BTreeMap::from([(1, 1)]))
+            ])
+        );
+
+        assert!(graph.remove_edge(1, 0));
+
+        assert_eq!(
+            graph,
+            BTreeMap::from([
+                (0, BTreeMap::new()),
+                (1, BTreeMap::new()),
+                (2, BTreeMap::from([(1, 1)]))
+            ])
+        );
+    }
 
     #[test]
     fn vec_hash_set() {
@@ -255,21 +693,21 @@ mod tests {
             ]
         );
 
-        graph.remove_edge(0, 1);
+        assert!(graph.remove_edge(0, 1));
 
         assert_eq!(
             graph,
             vec![HashSet::from([2]), HashSet::from([0]), HashSet::from([1])]
         );
 
-        graph.remove_edge(0, 2);
+        assert!(graph.remove_edge(0, 2));
 
         assert_eq!(
             graph,
             vec![HashSet::new(), HashSet::from([0]), HashSet::from([1])]
         );
 
-        graph.remove_edge(1, 0);
+        assert!(graph.remove_edge(1, 0));
 
         assert_eq!(
             graph,
@@ -294,7 +732,7 @@ mod tests {
             ]
         );
 
-        graph.remove_edge(0, 1);
+        assert!(graph.remove_edge(0, 1));
 
         assert_eq!(
             graph,
@@ -305,7 +743,7 @@ mod tests {
             ]
         );
 
-        graph.remove_edge(0, 2);
+        assert!(graph.remove_edge(0, 2));
 
         assert_eq!(
             graph,
@@ -316,7 +754,7 @@ mod tests {
             ]
         );
 
-        graph.remove_edge(1, 0);
+        assert!(graph.remove_edge(1, 0));
 
         assert_eq!(
             graph,
@@ -334,26 +772,23 @@ mod tests {
             &[HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()]
         );
 
-        graph.remove_edge(0, 1);
+        assert!(graph.remove_edge(0, 1));
 
         assert_eq!(
             graph,
             vec![HashSet::from([2]), HashSet::from([2]), HashSet::new()]
         );
 
-        graph.remove_edge(0, 2);
+        assert!(graph.remove_edge(0, 2));
 
         assert_eq!(
             graph,
             vec![HashSet::new(), HashSet::from([2]), HashSet::new()]
         );
 
-        graph.remove_edge(1, 0);
+        assert!(graph.remove_edge(1, 2));
 
-        assert_eq!(
-            graph,
-            vec![HashSet::new(), HashSet::from([2]), HashSet::new()]
-        );
+        assert_eq!(graph, vec![HashSet::new(), HashSet::new(), HashSet::new()]);
     }
 
     #[test]
@@ -373,7 +808,7 @@ mod tests {
             ]
         );
 
-        graph.remove_edge(0, 1);
+        assert!(graph.remove_edge(0, 1));
 
         assert_eq!(
             graph,
@@ -384,7 +819,7 @@ mod tests {
             ]
         );
 
-        graph.remove_edge(0, 2);
+        assert!(graph.remove_edge(0, 2));
 
         assert_eq!(
             graph,
@@ -395,7 +830,7 @@ mod tests {
             ]
         );
 
-        graph.remove_edge(1, 0);
+        assert!(graph.remove_edge(1, 0));
 
         assert_eq!(
             graph,
@@ -420,21 +855,21 @@ mod tests {
             ]
         );
 
-        graph.remove_edge(0, 1);
+        assert!(graph.remove_edge(0, 1));
 
         assert_eq!(
             graph,
             [HashSet::from([2]), HashSet::from([0]), HashSet::from([1])]
         );
 
-        graph.remove_edge(0, 2);
+        assert!(graph.remove_edge(0, 2));
 
         assert_eq!(
             graph,
             [HashSet::new(), HashSet::from([0]), HashSet::from([1])]
         );
 
-        graph.remove_edge(1, 0);
+        assert!(graph.remove_edge(1, 0));
 
         assert_eq!(graph, [HashSet::new(), HashSet::new(), HashSet::from([1])]);
     }
@@ -456,7 +891,7 @@ mod tests {
             ]
         );
 
-        graph.remove_edge(0, 1);
+        assert!(graph.remove_edge(0, 1));
 
         assert_eq!(
             graph,
@@ -467,7 +902,7 @@ mod tests {
             ]
         );
 
-        graph.remove_edge(0, 2);
+        assert!(graph.remove_edge(0, 2));
 
         assert_eq!(
             graph,
@@ -478,7 +913,7 @@ mod tests {
             ]
         );
 
-        graph.remove_edge(1, 0);
+        assert!(graph.remove_edge(1, 0));
 
         assert_eq!(
             graph,
@@ -503,7 +938,7 @@ mod tests {
             ])
         );
 
-        graph.remove_edge(0, 1);
+        assert!(graph.remove_edge(0, 1));
 
         assert_eq!(
             graph,
@@ -514,7 +949,7 @@ mod tests {
             ])
         );
 
-        graph.remove_edge(0, 2);
+        assert!(graph.remove_edge(0, 2));
 
         assert_eq!(
             graph,
@@ -525,7 +960,7 @@ mod tests {
             ])
         );
 
-        graph.remove_edge(1, 0);
+        assert!(graph.remove_edge(1, 0));
 
         assert_eq!(
             graph,
@@ -554,7 +989,7 @@ mod tests {
             ])
         );
 
-        graph.remove_edge(0, 1);
+        assert!(graph.remove_edge(0, 1));
 
         assert_eq!(
             graph,
@@ -565,7 +1000,7 @@ mod tests {
             ])
         );
 
-        graph.remove_edge(0, 2);
+        assert!(graph.remove_edge(0, 2));
 
         assert_eq!(
             graph,
@@ -576,7 +1011,7 @@ mod tests {
             ])
         );
 
-        graph.remove_edge(1, 0);
+        assert!(graph.remove_edge(1, 0));
 
         assert_eq!(
             graph,

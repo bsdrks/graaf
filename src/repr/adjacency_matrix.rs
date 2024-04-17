@@ -233,13 +233,16 @@ where
     /// # Panics
     ///
     /// Panics if `s >= V` or `t >= V`.
-    fn remove_edge(&mut self, s: usize, t: usize) {
+    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
         assert!(s < V, "s is not in the graph");
         assert!(t < V, "t is not in the graph");
 
+        let is_edge = self.is_edge(s, t);
         let i = Self::index(s, t);
 
         self.blocks[i >> 6] &= !Self::mask(i);
+
+        is_edge
     }
 }
 
@@ -470,16 +473,6 @@ mod tests {
     fn remove_edge() {
         let mut graph = AdjacencyMatrix::<3>::new();
 
-        assert!(!graph.is_edge(0, 0));
-        assert!(!graph.is_edge(0, 1));
-        assert!(!graph.is_edge(0, 2));
-        assert!(!graph.is_edge(1, 0));
-        assert!(!graph.is_edge(1, 1));
-        assert!(!graph.is_edge(1, 2));
-        assert!(!graph.is_edge(2, 0));
-        assert!(!graph.is_edge(2, 1));
-        assert!(!graph.is_edge(2, 2));
-
         graph.add_edge(0, 1);
         graph.add_edge(0, 2);
         graph.add_edge(1, 0);
@@ -495,20 +488,14 @@ mod tests {
         assert!(graph.is_edge(2, 1));
         assert!(!graph.is_edge(2, 2));
 
-        graph.remove_edge(0, 1);
+        assert!(graph.remove_edge(0, 1));
+        assert!(graph.remove_edge(0, 2));
+        assert!(graph.remove_edge(1, 0));
+        assert!(graph.remove_edge(2, 1));
 
         assert!(!graph.is_edge(0, 1));
-
-        graph.remove_edge(0, 2);
-
         assert!(!graph.is_edge(0, 2));
-
-        graph.remove_edge(1, 0);
-
         assert!(!graph.is_edge(1, 0));
-
-        graph.remove_edge(2, 1);
-
         assert!(!graph.is_edge(2, 1));
     }
 
@@ -517,7 +504,7 @@ mod tests {
     fn remove_edge_s_gte_v() {
         let mut graph = AdjacencyMatrix::<3>::new();
 
-        graph.remove_edge(3, 0);
+        let _ = graph.remove_edge(3, 0);
     }
 
     #[test]
@@ -525,6 +512,6 @@ mod tests {
     fn remove_edge_t_gte_v() {
         let mut graph = AdjacencyMatrix::<3>::new();
 
-        graph.remove_edge(0, 3);
+        let _ = graph.remove_edge(0, 3);
     }
 }

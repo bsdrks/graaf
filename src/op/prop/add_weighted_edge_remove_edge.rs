@@ -25,7 +25,8 @@ where
     let mut clone = graph.clone();
 
     clone.add_weighted_edge(s, t, w);
-    clone.remove_edge(s, t);
+
+    let _ = clone.remove_edge(s, t);
 
     *graph == clone
 }

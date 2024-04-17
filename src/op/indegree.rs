@@ -165,7 +165,7 @@ mod tests {
         let graph = vec![
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(2, 1)]),
-            HashMap::from([]),
+            HashMap::new(),
         ];
 
         assert_eq!(graph.indegree(0), 0);
@@ -187,7 +187,7 @@ mod tests {
         let graph: &[HashMap<usize, usize>] = &[
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(2, 1)]),
-            HashMap::from([]),
+            HashMap::new(),
         ];
 
         assert_eq!(graph.indegree(0), 0);
@@ -209,7 +209,7 @@ mod tests {
         let graph = [
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(2, 1)]),
-            HashMap::from([]),
+            HashMap::new(),
         ];
 
         assert_eq!(graph.indegree(0), 0);

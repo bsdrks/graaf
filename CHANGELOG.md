@@ -28,6 +28,23 @@ In arbitrary order:
 - Test implementations of traits with properties in `op::prop`.
 - Use `bfs` in `README` example.
 
+## [0.16.1] - 2024-04-17
+
+Added
+
+- Add `RemoveEdge` for `Vec<BTreeSet<usize>>`.
+- Add `RemoveEdge` for `Vec<BTreeMap<usize, W>>`.
+- Add `RemoveEdge` for `[BTreeSet<usize>; V]`.
+- Add `RemoveEdge` for `[BTreeSet<usize>]`.
+- Add `RemoveEdge` for `[BTreeMap<usize, W>; V]`.
+- Add `RemoveEdge` for `[BTreeMap<usize, W>]`.
+- Add `RemoveEdge` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Add `RemoveEdge` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+
+Changed
+
+- `RemoveEdge::remove_edge` now returns a `bool` indicating whether the edge was removed.
+
 ## [0.16.0] - 2024-04-17
 
 Added

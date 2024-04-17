@@ -21,7 +21,7 @@ pub fn remove_edge_is_edge<G, W>(graph: &mut G, s: usize, t: usize) -> bool
 where
     G: IsEdge + RemoveEdge,
 {
-    graph.remove_edge(s, t);
+    let _ = graph.remove_edge(s, t);
 
     !graph.is_edge(s, t)
 }
