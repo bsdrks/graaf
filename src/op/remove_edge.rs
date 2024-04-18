@@ -71,8 +71,8 @@ use {
 /// }
 ///
 /// impl RemoveEdge for Graph {
-///     fn remove_edge(&mut self, s: usize, t: usize) {
-///         let _ = self.edges[s].remove(&t);
+///     fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+///         self.edges[s].remove(&t)
 ///     }
 /// }
 /// ```
