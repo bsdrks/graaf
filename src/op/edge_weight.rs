@@ -126,6 +126,16 @@ where
 mod tests {
     use super::*;
 
+    macro_rules! test_edge_weight {
+        ($graph:expr) => {
+            assert_eq!($graph.edge_weight(0, 1), Some(&2));
+            assert_eq!($graph.edge_weight(0, 2), Some(&3));
+            assert_eq!($graph.edge_weight(1, 0), Some(&4));
+            assert_eq!($graph.edge_weight(2, 0), Some(&7));
+            assert_eq!($graph.edge_weight(2, 1), Some(&8));
+        };
+    }
+
     #[test]
     fn vec() {
         let graph = vec![
@@ -134,11 +144,7 @@ mod tests {
             HashMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.edge_weight(0, 1), Some(&2));
-        assert_eq!(graph.edge_weight(0, 2), Some(&3));
-        assert_eq!(graph.edge_weight(1, 0), Some(&4));
-        assert_eq!(graph.edge_weight(2, 0), Some(&7));
-        assert_eq!(graph.edge_weight(2, 1), Some(&8));
+        test_edge_weight!(graph);
     }
 
     #[test]
@@ -149,11 +155,7 @@ mod tests {
             HashMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.edge_weight(0, 1), Some(&2));
-        assert_eq!(graph.edge_weight(0, 2), Some(&3));
-        assert_eq!(graph.edge_weight(1, 0), Some(&4));
-        assert_eq!(graph.edge_weight(2, 0), Some(&7));
-        assert_eq!(graph.edge_weight(2, 1), Some(&8));
+        test_edge_weight!(graph);
     }
 
     #[test]
@@ -164,11 +166,7 @@ mod tests {
             HashMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.edge_weight(0, 1), Some(&2));
-        assert_eq!(graph.edge_weight(0, 2), Some(&3));
-        assert_eq!(graph.edge_weight(1, 0), Some(&4));
-        assert_eq!(graph.edge_weight(2, 0), Some(&7));
-        assert_eq!(graph.edge_weight(2, 1), Some(&8));
+        test_edge_weight!(graph);
     }
 
     #[test]
@@ -178,10 +176,6 @@ mod tests {
         let _ = graph.insert(1, HashMap::from([(0, 4)]));
         let _ = graph.insert(2, HashMap::from([(0, 7), (1, 8)]));
 
-        assert_eq!(graph.edge_weight(0, 1), Some(&2));
-        assert_eq!(graph.edge_weight(0, 2), Some(&3));
-        assert_eq!(graph.edge_weight(1, 0), Some(&4));
-        assert_eq!(graph.edge_weight(2, 0), Some(&7));
-        assert_eq!(graph.edge_weight(2, 1), Some(&8));
+        test_edge_weight!(graph);
     }
 }

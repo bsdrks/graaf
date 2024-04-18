@@ -22,24 +22,69 @@ In arbitrary order:
 - Add star graph generator.
 - Add topological sorting for DAGs.
 - Check parallel edges in `IsSimple`.
-- Implement all `op` traits for types using `BTreeMap`.
-- Implement all `op` traits for types using `BTreeSet`.
 - Mention for functions whether they are meant for simple graphs.
 - Test implementations of traits with properties in `op::prop`.
 - Use `bfs` in `README` example.
+
+## [0.17.0] - 2024-04-18
+
+Added
+
+- Add `Indegree` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Add `Indegree` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Add `Indegree` for `Vec<BTreeMap<usize, W>>`.
+- Add `Indegree` for `Vec<BTreeSet<usize>>`.
+- Add `Indegree` for `[BTreeMap<usize, W>; V]`.
+- Add `Indegree` for `[BTreeMap<usize, W>]`.
+- Add `Indegree` for `[BTreeSet<usize>; V]`.
+- Add `Indegree` for `[BTreeSet<usize>]`.
+- Add `IterVertices` for `Vec<BTreeMap<usize, W>>`.
+- Add `IterVertices` for `Vec<BTreeSet<(usize, W)>>`.
+- Add `IterVertices` for `Vec<BTreeSet<usize>>`.
+- Add `IterVertices` for `Vec<HashMap<usize, W>>`.
+- Add `IterVertices` for `Vec<HashSet<(usize, W)>>`.
+- Add `IterVertices` for `Vec<HashSet<usize>>`.
+- Add `IterVertices` for `Vec<Vec<(usize, W)>>`.
+- Add `IterVertices` for `Vec<Vec<usize>>`.
+- Add `IterVertices` for `[BTreeMap<usize, W>; V]`.
+- Add `IterVertices` for `[BTreeMap<usize, W>]`.
+- Add `IterVertices` for `[BTreeSet<(usize, W); V]`.
+- Add `IterVertices` for `[BTreeSet<(usize, W)]`.
+- Add `IterVertices` for `[BTreeSet<usize>; V]`.
+- Add `IterVertices` for `[BTreeSet<usize>]`.
+- Add `IterVertices` for `[HashMap<usize, W>; V]`.
+- Add `IterVertices` for `[HashMap<usize, W>]`.
+- Add `IterVertices` for `[HashSet<(usize, W); V]`.
+- Add `IterVertices` for `[HashSet<(usize, W)]`.
+- Add `IterVertices` for `[HashSet<usize>; V]`.
+- Add `IterVertices` for `[HashSet<usize>]`.
+- Add `IterVertices` for `[Vec<(usize, W)>; V]`.
+- Add `IterVertices` for `[Vec<(usize, W)>]`.
+- Add `IterVertices` for `[Vec<usize>; V]`.
+- Add `IterVertices` for `[Vec<usize>]`.
+
+Removed
+
+- Breaking: Remove `IterVertices` for `Vec<T>`.
+- Breaking: Remove `IterVertices` for `[T]`.
+- Breaking: Remove `IterVertices` for `[T; V]`.
+
+Fixed
+
+- Remove unused parameter `W` from `remove_edge_is_edge`.
 
 ## [0.16.1] - 2024-04-17
 
 Added
 
-- Add `RemoveEdge` for `Vec<BTreeSet<usize>>`.
+- Add `RemoveEdge` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Add `RemoveEdge` for `BTreeMap<usize, BTreeSet<usize>>`.
 - Add `RemoveEdge` for `Vec<BTreeMap<usize, W>>`.
-- Add `RemoveEdge` for `[BTreeSet<usize>; V]`.
-- Add `RemoveEdge` for `[BTreeSet<usize>]`.
+- Add `RemoveEdge` for `Vec<BTreeSet<usize>>`.
 - Add `RemoveEdge` for `[BTreeMap<usize, W>; V]`.
 - Add `RemoveEdge` for `[BTreeMap<usize, W>]`.
-- Add `RemoveEdge` for `BTreeMap<usize, BTreeSet<usize>>`.
-- Add `RemoveEdge` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Add `RemoveEdge` for `[BTreeSet<usize>; V]`.
+- Add `RemoveEdge` for `[BTreeSet<usize>]`.
 
 Changed
 

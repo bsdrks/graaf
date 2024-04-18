@@ -17,11 +17,37 @@ use crate::op::{
 /// * `graph`: The graph.
 /// * `s`: The source vertex.
 /// * `t`: The target vertex.
-pub fn remove_edge_is_edge<G, W>(graph: &mut G, s: usize, t: usize) -> bool
+pub fn remove_edge_is_edge<G>(graph: &mut G, s: usize, t: usize) -> bool
 where
     G: IsEdge + RemoveEdge,
 {
     let _ = graph.remove_edge(s, t);
 
     !graph.is_edge(s, t)
+}
+
+#[cfg(test)]
+mod tests {
+    use {
+        super::*,
+        std::collections::HashSet,
+    };
+
+    macro_rules! test_remove_edge_is_edge {
+        ($graph:expr) => {
+            assert!(remove_edge_is_edge($graph, 0, 1));
+            assert!(remove_edge_is_edge($graph, 0, 2));
+            assert!(remove_edge_is_edge($graph, 1, 0));
+            assert!(remove_edge_is_edge($graph, 1, 2));
+            assert!(remove_edge_is_edge($graph, 2, 0));
+            assert!(remove_edge_is_edge($graph, 2, 1));
+        };
+    }
+
+    #[test]
+    fn vec_hash_set() {
+        let graph: &mut Vec<HashSet<usize>> = &mut vec![HashSet::new(); 3];
+
+        test_remove_edge_is_edge!(graph);
+    }
 }

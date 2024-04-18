@@ -262,6 +262,20 @@ where
 mod tests {
     use super::*;
 
+    macro_rules! test_is_edge {
+        ($graph:expr) => {
+            assert!(!$graph.is_edge(0, 0));
+            assert!($graph.is_edge(0, 1));
+            assert!($graph.is_edge(0, 2));
+            assert!($graph.is_edge(1, 0));
+            assert!(!$graph.is_edge(1, 1));
+            assert!(!$graph.is_edge(1, 2));
+            assert!($graph.is_edge(2, 0));
+            assert!($graph.is_edge(2, 1));
+            assert!(!$graph.is_edge(2, 2));
+        };
+    }
+
     #[test]
     fn vec_btree_set() {
         let graph = vec![
@@ -270,15 +284,7 @@ mod tests {
             BTreeSet::from([0, 1]),
         ];
 
-        assert!(!graph.is_edge(0, 0));
-        assert!(graph.is_edge(0, 1));
-        assert!(graph.is_edge(0, 2));
-        assert!(graph.is_edge(1, 0));
-        assert!(!graph.is_edge(1, 1));
-        assert!(!graph.is_edge(1, 2));
-        assert!(graph.is_edge(2, 0));
-        assert!(graph.is_edge(2, 1));
-        assert!(!graph.is_edge(2, 2));
+        test_is_edge!(graph);
     }
 
     #[test]
@@ -289,15 +295,7 @@ mod tests {
             HashSet::from([0, 1]),
         ];
 
-        assert!(!graph.is_edge(0, 0));
-        assert!(graph.is_edge(0, 1));
-        assert!(graph.is_edge(0, 2));
-        assert!(graph.is_edge(1, 0));
-        assert!(!graph.is_edge(1, 1));
-        assert!(!graph.is_edge(1, 2));
-        assert!(graph.is_edge(2, 0));
-        assert!(graph.is_edge(2, 1));
-        assert!(!graph.is_edge(2, 2));
+        test_is_edge!(graph);
     }
 
     #[test]
@@ -308,15 +306,7 @@ mod tests {
             BTreeMap::from([(0, 1), (1, 1)]),
         ];
 
-        assert!(!graph.is_edge(0, 0));
-        assert!(graph.is_edge(0, 1));
-        assert!(graph.is_edge(0, 2));
-        assert!(graph.is_edge(1, 0));
-        assert!(!graph.is_edge(1, 1));
-        assert!(!graph.is_edge(1, 2));
-        assert!(graph.is_edge(2, 0));
-        assert!(graph.is_edge(2, 1));
-        assert!(!graph.is_edge(2, 2));
+        test_is_edge!(graph);
     }
 
     #[test]
@@ -327,15 +317,7 @@ mod tests {
             HashMap::from([(0, 1), (1, 1)]),
         ];
 
-        assert!(!graph.is_edge(0, 0));
-        assert!(graph.is_edge(0, 1));
-        assert!(graph.is_edge(0, 2));
-        assert!(graph.is_edge(1, 0));
-        assert!(!graph.is_edge(1, 1));
-        assert!(!graph.is_edge(1, 2));
-        assert!(graph.is_edge(2, 0));
-        assert!(graph.is_edge(2, 1));
-        assert!(!graph.is_edge(2, 2));
+        test_is_edge!(graph);
     }
 
     #[test]
@@ -346,15 +328,7 @@ mod tests {
             BTreeSet::from([0, 1]),
         ];
 
-        assert!(!graph.is_edge(0, 0));
-        assert!(graph.is_edge(0, 1));
-        assert!(graph.is_edge(0, 2));
-        assert!(graph.is_edge(1, 0));
-        assert!(!graph.is_edge(1, 1));
-        assert!(!graph.is_edge(1, 2));
-        assert!(graph.is_edge(2, 0));
-        assert!(graph.is_edge(2, 1));
-        assert!(!graph.is_edge(2, 2));
+        test_is_edge!(graph);
     }
 
     #[test]
@@ -365,15 +339,7 @@ mod tests {
             HashSet::from([0, 1]),
         ];
 
-        assert!(!graph.is_edge(0, 0));
-        assert!(graph.is_edge(0, 1));
-        assert!(graph.is_edge(0, 2));
-        assert!(graph.is_edge(1, 0));
-        assert!(!graph.is_edge(1, 1));
-        assert!(!graph.is_edge(1, 2));
-        assert!(graph.is_edge(2, 0));
-        assert!(graph.is_edge(2, 1));
-        assert!(!graph.is_edge(2, 2));
+        test_is_edge!(graph);
     }
 
     #[test]
@@ -384,15 +350,7 @@ mod tests {
             BTreeMap::from([(0, 1), (1, 1)]),
         ];
 
-        assert!(!graph.is_edge(0, 0));
-        assert!(graph.is_edge(0, 1));
-        assert!(graph.is_edge(0, 2));
-        assert!(graph.is_edge(1, 0));
-        assert!(!graph.is_edge(1, 1));
-        assert!(!graph.is_edge(1, 2));
-        assert!(graph.is_edge(2, 0));
-        assert!(graph.is_edge(2, 1));
-        assert!(!graph.is_edge(2, 2));
+        test_is_edge!(graph);
     }
 
     #[test]
@@ -403,15 +361,7 @@ mod tests {
             HashMap::from([(0, 1), (1, 1)]),
         ];
 
-        assert!(!graph.is_edge(0, 0));
-        assert!(graph.is_edge(0, 1));
-        assert!(graph.is_edge(0, 2));
-        assert!(graph.is_edge(1, 0));
-        assert!(!graph.is_edge(1, 1));
-        assert!(!graph.is_edge(1, 2));
-        assert!(graph.is_edge(2, 0));
-        assert!(graph.is_edge(2, 1));
-        assert!(!graph.is_edge(2, 2));
+        test_is_edge!(graph);
     }
 
     #[test]
@@ -422,15 +372,7 @@ mod tests {
             BTreeSet::from([0, 1]),
         ];
 
-        assert!(!graph.is_edge(0, 0));
-        assert!(graph.is_edge(0, 1));
-        assert!(graph.is_edge(0, 2));
-        assert!(graph.is_edge(1, 0));
-        assert!(!graph.is_edge(1, 1));
-        assert!(!graph.is_edge(1, 2));
-        assert!(graph.is_edge(2, 0));
-        assert!(graph.is_edge(2, 1));
-        assert!(!graph.is_edge(2, 2));
+        test_is_edge!(graph);
     }
 
     #[test]
@@ -441,15 +383,7 @@ mod tests {
             HashSet::from([0, 1]),
         ];
 
-        assert!(!graph.is_edge(0, 0));
-        assert!(graph.is_edge(0, 1));
-        assert!(graph.is_edge(0, 2));
-        assert!(graph.is_edge(1, 0));
-        assert!(!graph.is_edge(1, 1));
-        assert!(!graph.is_edge(1, 2));
-        assert!(graph.is_edge(2, 0));
-        assert!(graph.is_edge(2, 1));
-        assert!(!graph.is_edge(2, 2));
+        test_is_edge!(graph);
     }
 
     #[test]
@@ -460,15 +394,7 @@ mod tests {
             BTreeMap::from([(0, 1), (1, 1)]),
         ];
 
-        assert!(!graph.is_edge(0, 0));
-        assert!(graph.is_edge(0, 1));
-        assert!(graph.is_edge(0, 2));
-        assert!(graph.is_edge(1, 0));
-        assert!(!graph.is_edge(1, 1));
-        assert!(!graph.is_edge(1, 2));
-        assert!(graph.is_edge(2, 0));
-        assert!(graph.is_edge(2, 1));
-        assert!(!graph.is_edge(2, 2));
+        test_is_edge!(graph);
     }
 
     #[test]
@@ -479,45 +405,21 @@ mod tests {
             HashMap::from([(0, 1), (1, 1)]),
         ];
 
-        assert!(!graph.is_edge(0, 0));
-        assert!(graph.is_edge(0, 1));
-        assert!(graph.is_edge(0, 2));
-        assert!(graph.is_edge(1, 0));
-        assert!(!graph.is_edge(1, 1));
-        assert!(!graph.is_edge(1, 2));
-        assert!(graph.is_edge(2, 0));
-        assert!(graph.is_edge(2, 1));
-        assert!(!graph.is_edge(2, 2));
+        test_is_edge!(graph);
     }
 
     #[test]
     fn btree_set() {
         let graph = BTreeSet::from([(0, 1), (0, 2), (1, 0), (2, 0), (2, 1)]);
 
-        assert!(!graph.is_edge(0, 0));
-        assert!(graph.is_edge(0, 1));
-        assert!(graph.is_edge(0, 2));
-        assert!(graph.is_edge(1, 0));
-        assert!(!graph.is_edge(1, 1));
-        assert!(!graph.is_edge(1, 2));
-        assert!(graph.is_edge(2, 0));
-        assert!(graph.is_edge(2, 1));
-        assert!(!graph.is_edge(2, 2));
+        test_is_edge!(graph);
     }
 
     #[test]
     fn hash_set() {
         let graph = HashSet::from([(0, 1), (0, 2), (1, 0), (2, 0), (2, 1)]);
 
-        assert!(!graph.is_edge(0, 0));
-        assert!(graph.is_edge(0, 1));
-        assert!(graph.is_edge(0, 2));
-        assert!(graph.is_edge(1, 0));
-        assert!(!graph.is_edge(1, 1));
-        assert!(!graph.is_edge(1, 2));
-        assert!(graph.is_edge(2, 0));
-        assert!(graph.is_edge(2, 1));
-        assert!(!graph.is_edge(2, 2));
+        test_is_edge!(graph);
     }
 
     #[test]
@@ -528,15 +430,7 @@ mod tests {
             (2, BTreeSet::from([0, 1])),
         ]);
 
-        assert!(!graph.is_edge(0, 0));
-        assert!(graph.is_edge(0, 1));
-        assert!(graph.is_edge(0, 2));
-        assert!(graph.is_edge(1, 0));
-        assert!(!graph.is_edge(1, 1));
-        assert!(!graph.is_edge(1, 2));
-        assert!(graph.is_edge(2, 0));
-        assert!(graph.is_edge(2, 1));
-        assert!(!graph.is_edge(2, 2));
+        test_is_edge!(graph);
     }
 
     #[test]
@@ -547,15 +441,7 @@ mod tests {
             (2, HashSet::from([0, 1])),
         ]);
 
-        assert!(!graph.is_edge(0, 0));
-        assert!(graph.is_edge(0, 1));
-        assert!(graph.is_edge(0, 2));
-        assert!(graph.is_edge(1, 0));
-        assert!(!graph.is_edge(1, 1));
-        assert!(!graph.is_edge(1, 2));
-        assert!(graph.is_edge(2, 0));
-        assert!(graph.is_edge(2, 1));
-        assert!(!graph.is_edge(2, 2));
+        test_is_edge!(graph);
     }
 
     #[test]
@@ -566,15 +452,7 @@ mod tests {
             (2, BTreeMap::from([(0, 1), (1, 1)])),
         ]);
 
-        assert!(!graph.is_edge(0, 0));
-        assert!(graph.is_edge(0, 1));
-        assert!(graph.is_edge(0, 2));
-        assert!(graph.is_edge(1, 0));
-        assert!(!graph.is_edge(1, 1));
-        assert!(!graph.is_edge(1, 2));
-        assert!(graph.is_edge(2, 0));
-        assert!(graph.is_edge(2, 1));
-        assert!(!graph.is_edge(2, 2));
+        test_is_edge!(graph);
     }
 
     #[test]
@@ -585,14 +463,6 @@ mod tests {
             (2, HashMap::from([(0, 1), (1, 1)])),
         ]);
 
-        assert!(!graph.is_edge(0, 0));
-        assert!(graph.is_edge(0, 1));
-        assert!(graph.is_edge(0, 2));
-        assert!(graph.is_edge(1, 0));
-        assert!(!graph.is_edge(1, 1));
-        assert!(!graph.is_edge(1, 2));
-        assert!(graph.is_edge(2, 0));
-        assert!(graph.is_edge(2, 1));
-        assert!(!graph.is_edge(2, 2));
+        test_is_edge!(graph);
     }
 }

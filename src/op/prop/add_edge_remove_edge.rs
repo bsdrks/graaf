@@ -41,40 +41,36 @@ mod tests {
         },
     };
 
+    macro_rules! test_add_edge_remove_edge {
+        ($graph:expr) => {
+            assert!(add_edge_remove_edge($graph, 0, 1));
+            assert!(add_edge_remove_edge($graph, 0, 2));
+            assert!(add_edge_remove_edge($graph, 1, 0));
+            assert!(add_edge_remove_edge($graph, 1, 2));
+            assert!(add_edge_remove_edge($graph, 2, 0));
+            assert!(add_edge_remove_edge($graph, 2, 1));
+        };
+    }
+
     #[test]
     fn vec_hash_set() {
         let graph: Vec<HashSet<usize, RandomState>> =
             vec![HashSet::new(), HashSet::new(), HashSet::new()];
 
-        assert!(add_edge_remove_edge(&graph, 0, 1));
-        assert!(add_edge_remove_edge(&graph, 0, 2));
-        assert!(add_edge_remove_edge(&graph, 1, 0));
-        assert!(add_edge_remove_edge(&graph, 1, 2));
-        assert!(add_edge_remove_edge(&graph, 2, 0));
-        assert!(add_edge_remove_edge(&graph, 2, 1));
+        test_add_edge_remove_edge!(&graph);
     }
 
     #[test]
     fn arr_hash_set() {
         let graph = [HashSet::new(), HashSet::new(), HashSet::new()];
 
-        assert!(add_edge_remove_edge(&graph, 0, 1));
-        assert!(add_edge_remove_edge(&graph, 0, 2));
-        assert!(add_edge_remove_edge(&graph, 1, 0));
-        assert!(add_edge_remove_edge(&graph, 1, 2));
-        assert!(add_edge_remove_edge(&graph, 2, 0));
-        assert!(add_edge_remove_edge(&graph, 2, 1));
+        test_add_edge_remove_edge!(&graph);
     }
 
     #[test]
     fn adjacency_matrix() {
         let graph = AdjacencyMatrix::<3>::new();
 
-        assert!(add_edge_remove_edge(&graph, 0, 1));
-        assert!(add_edge_remove_edge(&graph, 0, 2));
-        assert!(add_edge_remove_edge(&graph, 1, 0));
-        assert!(add_edge_remove_edge(&graph, 1, 2));
-        assert!(add_edge_remove_edge(&graph, 2, 0));
-        assert!(add_edge_remove_edge(&graph, 2, 1));
+        test_add_edge_remove_edge!(&graph);
     }
 }

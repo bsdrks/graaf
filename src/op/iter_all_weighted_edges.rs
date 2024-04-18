@@ -120,37 +120,47 @@ mod tests {
         std::assert_matches::assert_matches,
     };
 
+    macro_rules! test_iter_all_weighted_edges_stable {
+        ($graph:expr) => {
+            let mut iter = $graph.iter_all_weighted_edges();
+
+            assert_eq!(iter.next(), Some((0, 1, &2)));
+            assert_eq!(iter.next(), Some((1, 2, &3)));
+            assert_eq!(iter.next(), Some((2, 0, &4)));
+            assert_eq!(iter.next(), None);
+        };
+    }
+
+    macro_rules! test_iter_all_weighted_edges_unstable {
+        ($graph:expr) => {
+            let mut iter = $graph.iter_all_weighted_edges();
+
+            assert_matches!(iter.next(), Some((0, 1, &2) | (1, 2, &3) | (2, 0, &4)));
+            assert_matches!(iter.next(), Some((0, 1, &2) | (1, 2, &3) | (2, 0, &4)));
+            assert_matches!(iter.next(), Some((0, 1, &2) | (1, 2, &3) | (2, 0, &4)));
+            assert_eq!(iter.next(), None);
+        };
+    }
+
     #[test]
     fn vec() {
         let graph = vec![(0, 1, 2), (1, 2, 3), (2, 0, 4)];
-        let mut iter = graph.iter_all_weighted_edges();
 
-        assert_eq!(iter.next(), Some((0, 1, &2)));
-        assert_eq!(iter.next(), Some((1, 2, &3)));
-        assert_eq!(iter.next(), Some((2, 0, &4)));
-        assert_eq!(iter.next(), None);
+        test_iter_all_weighted_edges_stable!(graph);
     }
 
     #[test]
     fn slice() {
         let graph: &[(usize, usize, usize)] = &[(0, 1, 2), (1, 2, 3), (2, 0, 4)];
-        let mut iter = graph.iter_all_weighted_edges();
 
-        assert_eq!(iter.next(), Some((0, 1, &2)));
-        assert_eq!(iter.next(), Some((1, 2, &3)));
-        assert_eq!(iter.next(), Some((2, 0, &4)));
-        assert_eq!(iter.next(), None);
+        test_iter_all_weighted_edges_stable!(graph);
     }
 
     #[test]
     fn arr() {
         let graph = [(0, 1, 2), (1, 2, 3), (2, 0, 4)];
-        let mut iter = graph.iter_all_weighted_edges();
 
-        assert_eq!(iter.next(), Some((0, 1, &2)));
-        assert_eq!(iter.next(), Some((1, 2, &3)));
-        assert_eq!(iter.next(), Some((2, 0, &4)));
-        assert_eq!(iter.next(), None);
+        test_iter_all_weighted_edges_stable!(graph);
     }
 
     #[test]
@@ -158,11 +168,6 @@ mod tests {
         let graph: HashSet<(usize, usize, usize)> =
             HashSet::from([(0, 1, 2), (1, 2, 3), (2, 0, 4)]);
 
-        let mut iter = graph.iter_all_weighted_edges();
-
-        assert_matches!(iter.next(), Some((0, 1, &2) | (1, 2, &3) | (2, 0, &4)));
-        assert_matches!(iter.next(), Some((0, 1, &2) | (1, 2, &3) | (2, 0, &4)));
-        assert_matches!(iter.next(), Some((0, 1, &2) | (1, 2, &3) | (2, 0, &4)));
-        assert_matches!(iter.next(), None);
+        test_iter_all_weighted_edges_unstable!(graph);
     }
 }

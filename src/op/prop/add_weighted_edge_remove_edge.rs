@@ -30,3 +30,29 @@ where
 
     *graph == clone
 }
+
+#[cfg(test)]
+mod tests {
+    use {
+        super::*,
+        std::collections::HashMap,
+    };
+
+    macro_rules! test_add_weighted_edge_remove_edge {
+        ($graph:expr) => {
+            assert!(add_weighted_edge_remove_edge($graph, 0, 1, 1));
+            assert!(add_weighted_edge_remove_edge($graph, 0, 2, 2));
+            assert!(add_weighted_edge_remove_edge($graph, 1, 0, 3));
+            assert!(add_weighted_edge_remove_edge($graph, 1, 2, 4));
+            assert!(add_weighted_edge_remove_edge($graph, 2, 0, 5));
+            assert!(add_weighted_edge_remove_edge($graph, 2, 1, 6));
+        };
+    }
+
+    #[test]
+    fn vec_hash_map() {
+        let graph: Vec<HashMap<usize, i32>> = vec![HashMap::new(), HashMap::new(), HashMap::new()];
+
+        test_add_weighted_edge_remove_edge!(&graph);
+    }
+}

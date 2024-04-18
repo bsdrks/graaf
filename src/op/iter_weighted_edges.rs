@@ -429,7 +429,7 @@ mod tests {
         std::assert_matches::assert_matches,
     };
 
-    macro_rules! test_unstable {
+    macro_rules! test_iter_weighted_edges_unstable {
         ($graph:expr) => {
             let mut iter = $graph.iter_weighted_edges(1);
 
@@ -440,7 +440,7 @@ mod tests {
         };
     }
 
-    macro_rules! test_stable {
+    macro_rules! test_iter_weighted_edges_stable {
         ($graph:expr) => {
             let mut iter = $graph.iter_weighted_edges(1);
 
@@ -459,7 +459,7 @@ mod tests {
             vec![(3, 4), (4, 5), (5, 6)],
         ];
 
-        test_stable!(graph);
+        test_iter_weighted_edges_stable!(graph);
     }
 
     #[test]
@@ -470,7 +470,7 @@ mod tests {
             BTreeSet::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_unstable!(graph);
+        test_iter_weighted_edges_unstable!(graph);
     }
 
     #[test]
@@ -481,7 +481,7 @@ mod tests {
             HashSet::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_unstable!(graph);
+        test_iter_weighted_edges_unstable!(graph);
     }
 
     #[test]
@@ -492,7 +492,7 @@ mod tests {
             BTreeMap::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_unstable!(graph);
+        test_iter_weighted_edges_unstable!(graph);
     }
 
     #[test]
@@ -503,7 +503,7 @@ mod tests {
             HashMap::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_unstable!(graph);
+        test_iter_weighted_edges_unstable!(graph);
     }
 
     #[test]
@@ -514,7 +514,7 @@ mod tests {
             vec![(3, 4), (4, 5), (5, 6)],
         ];
 
-        test_stable!(graph);
+        test_iter_weighted_edges_stable!(graph);
     }
 
     #[test]
@@ -525,7 +525,7 @@ mod tests {
             BTreeSet::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_unstable!(graph);
+        test_iter_weighted_edges_unstable!(graph);
     }
 
     #[test]
@@ -536,7 +536,7 @@ mod tests {
             HashSet::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_unstable!(graph);
+        test_iter_weighted_edges_unstable!(graph);
     }
 
     #[test]
@@ -547,7 +547,7 @@ mod tests {
             BTreeMap::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_unstable!(graph);
+        test_iter_weighted_edges_unstable!(graph);
     }
 
     #[test]
@@ -558,7 +558,7 @@ mod tests {
             HashMap::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_unstable!(graph);
+        test_iter_weighted_edges_unstable!(graph);
     }
 
     #[test]
@@ -569,7 +569,7 @@ mod tests {
             vec![(3, 4), (4, 5), (5, 6)],
         ];
 
-        test_stable!(graph);
+        test_iter_weighted_edges_stable!(graph);
     }
 
     #[test]
@@ -580,7 +580,7 @@ mod tests {
             BTreeSet::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_unstable!(graph);
+        test_iter_weighted_edges_unstable!(graph);
     }
 
     #[test]
@@ -591,7 +591,7 @@ mod tests {
             HashSet::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_unstable!(graph);
+        test_iter_weighted_edges_unstable!(graph);
     }
 
     #[test]
@@ -602,7 +602,7 @@ mod tests {
             BTreeMap::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_unstable!(graph);
+        test_iter_weighted_edges_unstable!(graph);
     }
 
     #[test]
@@ -613,7 +613,7 @@ mod tests {
             HashMap::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_unstable!(graph);
+        test_iter_weighted_edges_unstable!(graph);
     }
 
     #[test]
@@ -624,7 +624,7 @@ mod tests {
             (2, vec![(3, 4), (4, 5), (5, 6)]),
         ]);
 
-        test_stable!(graph);
+        test_iter_weighted_edges_stable!(graph);
     }
 
     #[test]
@@ -635,7 +635,7 @@ mod tests {
             (2, vec![(3, 4), (4, 5), (5, 6)]),
         ]);
 
-        test_stable!(graph);
+        test_iter_weighted_edges_stable!(graph);
     }
 
     #[test]
@@ -646,7 +646,7 @@ mod tests {
             (2, BTreeSet::from([(3, 4), (4, 5), (5, 6)])),
         ]);
 
-        test_unstable!(graph);
+        test_iter_weighted_edges_unstable!(graph);
     }
 
     #[test]
@@ -657,7 +657,7 @@ mod tests {
             (2, HashSet::from([(3, 4), (4, 5), (5, 6)])),
         ]);
 
-        test_unstable!(graph);
+        test_iter_weighted_edges_unstable!(graph);
     }
 
     #[test]
@@ -668,7 +668,7 @@ mod tests {
             (2, BTreeMap::from([(3, 4), (4, 5), (5, 6)])),
         ]);
 
-        test_unstable!(graph);
+        test_iter_weighted_edges_unstable!(graph);
     }
 
     #[test]
@@ -679,6 +679,6 @@ mod tests {
             (2, HashMap::from([(3, 4), (4, 5), (5, 6)])),
         ]);
 
-        test_unstable!(graph);
+        test_iter_weighted_edges_unstable!(graph);
     }
 }

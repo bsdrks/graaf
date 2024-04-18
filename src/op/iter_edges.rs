@@ -301,7 +301,7 @@ mod tests {
         std::assert_matches::assert_matches,
     };
 
-    macro_rules! test_stable {
+    macro_rules! test_iter_edges_stable {
         ($graph:expr) => {
             let mut iter = $graph.iter_edges(0);
 
@@ -331,7 +331,7 @@ mod tests {
         };
     }
 
-    macro_rules! test_unstable {
+    macro_rules! test_iter_edges_unstable {
         ($graph:expr) => {
             let mut iter = $graph.iter_edges(0);
 
@@ -365,7 +365,7 @@ mod tests {
     fn vec_vec() {
         let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        test_stable!(graph);
+        test_iter_edges_stable!(graph);
     }
 
     #[test]
@@ -377,7 +377,7 @@ mod tests {
             BTreeSet::from([1, 2]),
         ];
 
-        test_stable!(graph);
+        test_iter_edges_stable!(graph);
     }
 
     #[test]
@@ -389,14 +389,14 @@ mod tests {
             HashSet::from([1, 2]),
         ];
 
-        test_unstable!(graph);
+        test_iter_edges_unstable!(graph);
     }
 
     #[test]
     fn slice_vec() {
         let graph: &[Vec<usize>] = &[vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        test_stable!(graph);
+        test_iter_edges_stable!(graph);
     }
 
     #[test]
@@ -408,7 +408,7 @@ mod tests {
             BTreeSet::from([1, 2]),
         ];
 
-        test_stable!(graph);
+        test_iter_edges_stable!(graph);
     }
 
     #[test]
@@ -420,14 +420,14 @@ mod tests {
             HashSet::from([1, 2]),
         ];
 
-        test_unstable!(graph);
+        test_iter_edges_unstable!(graph);
     }
 
     #[test]
     fn arr_vec() {
         let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        test_stable!(graph);
+        test_iter_edges_stable!(graph);
     }
 
     #[test]
@@ -439,7 +439,7 @@ mod tests {
             BTreeSet::from([1, 2]),
         ];
 
-        test_stable!(graph);
+        test_iter_edges_stable!(graph);
     }
 
     #[test]
@@ -451,7 +451,7 @@ mod tests {
             HashSet::from([1, 2]),
         ];
 
-        test_unstable!(graph);
+        test_iter_edges_unstable!(graph);
     }
 
     #[test]
@@ -463,7 +463,7 @@ mod tests {
             (3, vec![1, 2]),
         ]);
 
-        test_stable!(graph);
+        test_iter_edges_stable!(graph);
     }
 
     #[test]
@@ -475,7 +475,7 @@ mod tests {
             (3, vec![1, 2]),
         ]);
 
-        test_stable!(graph);
+        test_iter_edges_stable!(graph);
     }
 
     #[test]
@@ -487,7 +487,7 @@ mod tests {
             (3, BTreeSet::from([1, 2])),
         ]);
 
-        test_stable!(graph);
+        test_iter_edges_stable!(graph);
     }
 
     #[test]
@@ -499,6 +499,6 @@ mod tests {
             (3, HashSet::from([1, 2])),
         ]);
 
-        test_unstable!(graph);
+        test_iter_edges_unstable!(graph);
     }
 }

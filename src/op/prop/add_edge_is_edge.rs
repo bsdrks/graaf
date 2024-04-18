@@ -27,7 +27,7 @@ where
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     use {
         super::*,
         crate::repr::AdjacencyMatrix,
@@ -40,79 +40,54 @@ mod test {
         },
     };
 
+    macro_rules! test_add_edge_is_edge {
+        ($graph:expr) => {
+            assert!(add_edge_is_edge($graph, 0, 1));
+            assert!(add_edge_is_edge($graph, 0, 2));
+            assert!(add_edge_is_edge($graph, 1, 0));
+            assert!(add_edge_is_edge($graph, 1, 2));
+            assert!(add_edge_is_edge($graph, 2, 0));
+            assert!(add_edge_is_edge($graph, 2, 1));
+        };
+    }
+
     #[test]
     fn vec_hash_set() {
-        let graph = &mut vec![
-            HashSet::from([1, 2]),
-            HashSet::from([0]),
-            HashSet::from([0, 1]),
-        ];
+        let graph = &mut vec![HashSet::new(), HashSet::new(), HashSet::new()];
 
-        assert!(add_edge_is_edge(graph, 0, 1));
-        assert!(add_edge_is_edge(graph, 0, 2));
-        assert!(add_edge_is_edge(graph, 1, 0));
-        assert!(add_edge_is_edge(graph, 1, 2));
-        assert!(add_edge_is_edge(graph, 2, 0));
-        assert!(add_edge_is_edge(graph, 2, 1));
+        test_add_edge_is_edge!(graph);
     }
 
     #[test]
     fn slice_hash_set() {
-        let graph: &mut [HashSet<usize, RandomState>] = &mut [
-            HashSet::from([1, 2]),
-            HashSet::from([0]),
-            HashSet::from([0, 1]),
-        ];
+        let graph: &mut [HashSet<usize, RandomState>] =
+            &mut [HashSet::new(), HashSet::new(), HashSet::new()];
 
-        assert!(add_edge_is_edge(graph, 0, 1));
-        assert!(add_edge_is_edge(graph, 0, 2));
-        assert!(add_edge_is_edge(graph, 1, 0));
-        assert!(add_edge_is_edge(graph, 1, 2));
-        assert!(add_edge_is_edge(graph, 2, 0));
-        assert!(add_edge_is_edge(graph, 2, 1));
+        test_add_edge_is_edge!(graph);
     }
 
     #[test]
     fn arr_hash_set() {
-        let graph = &mut [
-            HashSet::from([1, 2]),
-            HashSet::from([0]),
-            HashSet::from([0, 1]),
-        ];
+        let graph = &mut [HashSet::new(), HashSet::new(), HashSet::new()];
 
-        assert!(add_edge_is_edge(graph, 0, 1));
-        assert!(add_edge_is_edge(graph, 0, 2));
-        assert!(add_edge_is_edge(graph, 1, 0));
-        assert!(add_edge_is_edge(graph, 1, 2));
-        assert!(add_edge_is_edge(graph, 2, 0));
-        assert!(add_edge_is_edge(graph, 2, 1));
+        test_add_edge_is_edge!(graph);
     }
 
     #[test]
     fn hash_map_hash_set() {
         let graph = &mut HashMap::from([
-            (0, HashSet::from([1, 2])),
-            (1, HashSet::from([0])),
-            (2, HashSet::from([0, 1])),
+            (0, HashSet::new()),
+            (1, HashSet::new()),
+            (2, HashSet::new()),
         ]);
 
-        assert!(add_edge_is_edge(graph, 0, 1));
-        assert!(add_edge_is_edge(graph, 0, 2));
-        assert!(add_edge_is_edge(graph, 1, 0));
-        assert!(add_edge_is_edge(graph, 1, 2));
-        assert!(add_edge_is_edge(graph, 2, 0));
-        assert!(add_edge_is_edge(graph, 2, 1));
+        test_add_edge_is_edge!(graph);
     }
 
     #[test]
     fn adjacency_matrix() {
-        let mut graph = AdjacencyMatrix::<3>::new();
+        let graph = &mut AdjacencyMatrix::<3>::new();
 
-        assert!(add_edge_is_edge(&mut graph, 0, 1));
-        assert!(add_edge_is_edge(&mut graph, 0, 2));
-        assert!(add_edge_is_edge(&mut graph, 1, 0));
-        assert!(add_edge_is_edge(&mut graph, 1, 2));
-        assert!(add_edge_is_edge(&mut graph, 2, 0));
-        assert!(add_edge_is_edge(&mut graph, 2, 1));
+        test_add_edge_is_edge!(graph);
     }
 }

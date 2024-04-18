@@ -100,47 +100,53 @@ mod tests {
         std::assert_matches::assert_matches,
     };
 
+    macro_rules! test_iter_all_edges_stable {
+        ($graph:expr) => {
+            let mut iter = $graph.iter_all_edges();
+
+            assert_eq!(iter.next(), Some((0, 1)));
+            assert_eq!(iter.next(), Some((1, 2)));
+            assert_eq!(iter.next(), Some((2, 0)));
+            assert_eq!(iter.next(), None);
+        };
+    }
+
+    macro_rules! test_iter_all_edges_unstable {
+        ($graph:expr) => {
+            let mut iter = $graph.iter_all_edges();
+
+            assert_matches!(iter.next(), Some((0, 1) | (1, 2) | (2, 0)));
+            assert_matches!(iter.next(), Some((0, 1) | (1, 2) | (2, 0)));
+            assert_matches!(iter.next(), Some((0, 1) | (1, 2) | (2, 0)));
+            assert_eq!(iter.next(), None);
+        };
+    }
+
     #[test]
     fn vec() {
         let graph = vec![(0, 1), (1, 2), (2, 0)];
-        let mut iter = graph.iter_all_edges();
 
-        assert_eq!(iter.next(), Some((0, 1)));
-        assert_eq!(iter.next(), Some((1, 2)));
-        assert_eq!(iter.next(), Some((2, 0)));
-        assert_eq!(iter.next(), None);
+        test_iter_all_edges_stable!(graph);
     }
 
     #[test]
     fn slice() {
         let graph: &[(usize, usize)] = &[(0, 1), (1, 2), (2, 0)];
-        let mut iter = graph.iter_all_edges();
 
-        assert_eq!(iter.next(), Some((0, 1)));
-        assert_eq!(iter.next(), Some((1, 2)));
-        assert_eq!(iter.next(), Some((2, 0)));
-        assert_eq!(iter.next(), None);
+        test_iter_all_edges_stable!(graph);
     }
 
     #[test]
     fn arr() {
         let graph = [(0, 1), (1, 2), (2, 0)];
-        let mut iter = graph.iter_all_edges();
 
-        assert_eq!(iter.next(), Some((0, 1)));
-        assert_eq!(iter.next(), Some((1, 2)));
-        assert_eq!(iter.next(), Some((2, 0)));
-        assert_eq!(iter.next(), None);
+        test_iter_all_edges_stable!(graph);
     }
 
     #[test]
     fn hash_set() {
         let graph: HashSet<(usize, usize)> = HashSet::from([(0, 1), (1, 2), (2, 0)]);
-        let mut iter = graph.iter_all_edges();
 
-        assert_matches!(iter.next(), Some((0, 1) | (1, 2) | (2, 0)));
-        assert_matches!(iter.next(), Some((0, 1) | (1, 2) | (2, 0)));
-        assert_matches!(iter.next(), Some((0, 1) | (1, 2) | (2, 0)));
-        assert_eq!(iter.next(), None);
+        test_iter_all_edges_unstable!(graph);
     }
 }

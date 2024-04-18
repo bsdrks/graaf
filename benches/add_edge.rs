@@ -17,8 +17,6 @@ macro_rules! bench_local_add_edge_complete_graph {
     };
 }
 
-// Vec
-
 #[divan::bench_group(min_time = 1)]
 mod add_edge {
     use {
