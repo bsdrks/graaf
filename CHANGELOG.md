@@ -16,15 +16,16 @@ In arbitrary order:
 - Add binary tree generator.
 - Add bipartite matching algorithm for connected graphs.
 - Add bipartite matching algorithm for disconnected graphs.
-- Add complexity analysis to `op` implementations.
 - Add depth-first search.
 - Add linear graph generator.
 - Add star graph generator.
 - Add topological sorting for DAGs.
-- Check parallel edges in `IsSimple`.
-- Mention for functions whether they are meant for simple graphs.
-- Test implementations of traits with properties in `op::prop`.
-- Use `bfs` in `README` example.
+
+## [0.17.2] - 2024-04-19
+
+### Added
+
+- Add `predecessor::search`.
 
 ## [0.17.1] - 2024-04-19
 

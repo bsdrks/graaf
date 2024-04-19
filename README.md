@@ -8,7 +8,7 @@ Functions and types for working with graphs
 2. count
 3. dig
 
-This crate is in alpha, and the API will change.
+This crate is in alpha, and the API will change. See the [changelog](https://github.com/bsdrks/graaf/blob/main/CHANGELOG.md#provisional-roadmap) for a provisional roadmap.
 
 ## Installation
 
@@ -16,7 +16,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.17.1"
+graaf = "0.17.2"
 ```
 
 ## Usage
@@ -51,23 +51,13 @@ assert_eq!(adj.outdegree(3), 0);
 
 ## Features
 
-### Algorithms: [`algo`](https://docs.rs/graaf/latest/graaf/algo/index.html)
+### Algorithms
 
-#### Breadth-first search: [`bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs/index.html)
+- [`bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs/index.html): breadth-first search.
+- [`dijkstra`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/index.html): Dijkstra's algorithm
+- [`predecessor`](https://docs.rs/graaf/latest/graaf/algo/predecessor/index.html): predecessor search
 
-- [`distances_single_source`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.distances_single_source.html)
-- [`distances`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.distances.html)
-- [`predecessors_single_source`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.predecessors_single_source.html)
-- [`predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.predecessors.html)
-
-#### Dijkstra's algorithm: [`dijkstra`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/index.html)
-
-- [`distances_single_source`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.distances_single_source.html)
-- [`distances`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.distances.html)
-- [`predecessors_single_source`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.predecessors_single_source.html)
-- [`predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.predecessors.html)
-
-### Operations: [`op`](https://docs.rs/graaf/latest/graaf/op/index.html)
+### Operations
 
 Graph operations are modeled as traits. These traits are implemented for various graph representations built from standard library containers.
 
@@ -87,8 +77,8 @@ Graph operations are modeled as traits. These traits are implemented for various
 - [`Outdegree`](https://docs.rs/graaf/latest/graaf/op/outdegree/trait.Outdegree.html) returns the outdegree of a vertex.
 - [`RemoveEdge`](https://docs.rs/graaf/latest/graaf/op/remove_edge/trait.RemoveEdge.html) removes an edge.
 
-### Custom representations: [`repr`](https://docs.rs/graaf/latest/graaf/repr/index.html)
+### Representations
 
-Beyond representations built from standard library collections, Graaf offers the following custom representations:
+Beyond graph representations built from standard library collections, Graaf offers the following representations:
 
-- [`AdjacencyMatrix`](https://docs.rs/graaf/latest/graaf/repr/adjacency_matrix/index.html): an adjacency matrix representation of an unweighted directed graph stored as a bit array.
+- [`AdjacencyMatrix`](https://docs.rs/graaf/latest/graaf/repr/adjacency_matrix/index.html): an adjacency matrix representation of unweighted directed graphs, stored as a bit array.

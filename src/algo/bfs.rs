@@ -1,5 +1,9 @@
 //! Breadth-first search
 //!
+//! This implementation uses distances instead of a set or boolean array to
+//! check if a vertex has been visited because we already calculate these
+//! distances during traversal.
+//!
 //! # Examples
 //!
 //! ```
