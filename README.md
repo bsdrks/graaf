@@ -53,13 +53,15 @@ assert_eq!(adj.outdegree(3), 0);
 
 ### Algorithms
 
+Common graph algorithms:
+
 - [`bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs/index.html): breadth-first search.
 - [`dijkstra`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/index.html): Dijkstra's algorithm
 - [`predecessor`](https://docs.rs/graaf/latest/graaf/algo/predecessor/index.html): predecessor search
 
 ### Operations
 
-Graph operations are modeled as traits. These traits are implemented for various graph representations built from standard library containers.
+Graph operation traits and implementations:
 
 - [`AddEdge`](https://docs.rs/graaf/latest/graaf/op/add_edge/trait.AddEdge.html) adds an unweighted edge.
 - [`AddWeightedEdge`](https://docs.rs/graaf/latest/graaf/op/add_weighted_edge/trait.AddWeightedEdge.html) adds a weighted edge.
@@ -79,6 +81,6 @@ Graph operations are modeled as traits. These traits are implemented for various
 
 ### Representations
 
-Beyond graph representations built from standard library collections, Graaf offers the following representations:
+Custom graph representations:
 
 - [`AdjacencyMatrix`](https://docs.rs/graaf/latest/graaf/repr/adjacency_matrix/index.html): an adjacency matrix representation of unweighted directed graphs, stored as a bit array.
