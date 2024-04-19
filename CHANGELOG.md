@@ -26,6 +26,12 @@ In arbitrary order:
 - Test implementations of traits with properties in `op::prop`.
 - Use `bfs` in `README` example.
 
+## [0.17.1] - 2024-04-19
+
+### Changed
+
+- Move list of standard library graph respresentations from `README` to `op/mod.rs`.
+
 ## [0.17.0] - 2024-04-18
 
 Added
