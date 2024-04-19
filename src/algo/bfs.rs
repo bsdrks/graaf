@@ -49,7 +49,7 @@ use {
     alloc::collections::VecDeque,
 };
 
-/// Calculate all minimum distances from the source vertices.
+/// Calculate all distances from the source vertices.
 ///
 /// # Arguments
 ///
@@ -105,7 +105,7 @@ pub fn distances<G, W>(
     }
 }
 
-/// Calculate all minimum distances from a single source vertex.
+/// Calculate all distances from a single source vertex.
 ///
 /// # Arguments
 ///
@@ -143,8 +143,7 @@ where
     dist
 }
 
-/// Calculate the predecessor tree and minimum distances from the source
-/// vertices.
+/// Calculate the predecessor tree and distances from the source vertices.
 ///
 /// # Arguments
 ///
@@ -208,8 +207,7 @@ pub fn predecessors<G, W>(
     }
 }
 
-/// Calculate the predecessor tree and minimum distances from a single source
-/// vertex.
+/// Calculate the predecessor tree and distances from a single source vertex.
 ///
 /// # Arguments
 ///

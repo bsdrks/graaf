@@ -1,5 +1,5 @@
-//! Benchmark different algorithms for finding the minimum distances from
-//! a single source to all other vertices in a graph.
+//! Benchmark different algorithms for finding the distances from single source
+//! to all other vertices in a graph.
 use {
     divan::Bencher,
     graaf::algo::{

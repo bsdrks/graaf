@@ -47,9 +47,9 @@ use {
     core::cmp::Reverse,
 };
 
-/// Calculate the minimum distances from the source vertices to all vertices in
-/// a weighted directed graph. Use [`predecessors`] if you also need
-/// the predecessor tree.
+/// Calculate the distances from the source vertices to all vertices in a
+/// weighted directed graph. Use [`predecessors`] if you also need the
+/// predecessor tree.
 ///
 /// # Arguments
 ///
@@ -109,9 +109,9 @@ pub fn distances<G, W>(
     }
 }
 
-/// Calculate the minimum distances from the source vertex to all vertices in a
-/// weighted directed graph. Use [`predecessors_single_source`] if you also need
-/// the predecessor tree.
+/// Calculate the distances from the source vertex to all vertices in a weighted
+/// directed graph. Use [`predecessors_single_source`] if you also need the
+/// predecessor tree.
 ///
 /// # Arguments
 ///
