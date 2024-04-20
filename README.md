@@ -16,7 +16,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.17.2"
+graaf = "0.18.0"
 ```
 
 ## Usage
@@ -31,25 +31,22 @@ use graaf::{
     repr::AdjacencyMatrix,
 };
 
-let mut adj = AdjacencyMatrix::<4>::new();
+let mut graph = AdjacencyMatrix::<3>::new();
 
 adj.add_edge(0, 1);
 adj.add_edge(0, 2);
-adj.add_edge(1, 3);
-adj.add_edge(2, 3);
+adj.add_edge(1, 2);
 
 assert_eq!(adj.indegree(0), 0);
 assert_eq!(adj.indegree(1), 1);
-assert_eq!(adj.indegree(2), 1);
-assert_eq!(adj.indegree(3), 2);
+assert_eq!(adj.indegree(2), 2);
 
 assert_eq!(adj.outdegree(0), 2);
 assert_eq!(adj.outdegree(1), 1);
-assert_eq!(adj.outdegree(2), 1);
-assert_eq!(adj.outdegree(3), 0);
+assert_eq!(adj.outdegree(2), 0);
 ```
 
-## Features
+## Overview
 
 ### Algorithms
 
@@ -79,8 +76,13 @@ Graph operation traits and implementations:
 - [`Outdegree`](https://docs.rs/graaf/latest/graaf/op/outdegree/trait.Outdegree.html) returns the outdegree of a vertex.
 - [`RemoveEdge`](https://docs.rs/graaf/latest/graaf/op/remove_edge/trait.RemoveEdge.html) removes an edge.
 
-### Representations
+### Features
 
-Custom graph representations:
+#### [`AdjacencyMatrix`](https://docs.rs/graaf/latest/graaf/repr/adjacency_matrix/index.html)
 
-- [`AdjacencyMatrix`](https://docs.rs/graaf/latest/graaf/repr/adjacency_matrix/index.html): an adjacency matrix representation of unweighted directed graphs, stored as a bit array.
+An adjacency matrix representation of unweighted directed graphs, stored as a bit array. This feature is enabled by default. To opt out, remove the `adjacency_matrix` feature from your `Cargo.toml`:
+
+```toml
+[dependencies]
+graaf = { version = "0.18.0", features = [] }
+```

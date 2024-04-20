@@ -21,6 +21,12 @@ In arbitrary order:
 - Add star graph generator.
 - Add topological sorting for DAGs.
 
+## [0.18.0] - 2024-04-20
+
+### Changed
+
+- Breaking: `repr::AdjacenyMatrix` is now a feature.
+
 ## [0.17.2] - 2024-04-19
 
 ### Added
