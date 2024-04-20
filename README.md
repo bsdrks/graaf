@@ -33,17 +33,17 @@ use graaf::{
 
 let mut graph = AdjacencyMatrix::<3>::new();
 
-adj.add_edge(0, 1);
-adj.add_edge(0, 2);
-adj.add_edge(1, 2);
+graph.add_edge(0, 1);
+graph.add_edge(0, 2);
+graph.add_edge(1, 2);
 
-assert_eq!(adj.indegree(0), 0);
-assert_eq!(adj.indegree(1), 1);
-assert_eq!(adj.indegree(2), 2);
+assert_eq!(graph.indegree(0), 0);
+assert_eq!(graph.indegree(1), 1);
+assert_eq!(graph.indegree(2), 2);
 
-assert_eq!(adj.outdegree(0), 2);
-assert_eq!(adj.outdegree(1), 1);
-assert_eq!(adj.outdegree(2), 0);
+assert_eq!(graph.outdegree(0), 2);
+assert_eq!(graph.outdegree(1), 1);
+assert_eq!(graph.outdegree(2), 0);
 ```
 
 ## Overview
