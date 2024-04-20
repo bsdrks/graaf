@@ -16,7 +16,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.18.0"
+graaf = "0.19.0"
 ```
 
 ## Usage
@@ -84,5 +84,5 @@ An adjacency matrix representation of unweighted digraphs, stored as a bit array
 
 ```toml
 [dependencies]
-graaf = { version = "0.18.0", features = [] }
+graaf = { version = "0.19.0", features = [] }
 ```

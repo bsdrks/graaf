@@ -22,7 +22,7 @@ In arbitrary order:
 - Add topological sorting for DAGs.
 - Split up GHA workflow into multiple jobs.
 
-## [0.19.0] - unreleased
+## [0.19.0] - 2024-04-20
 
 ### Changed
 
