@@ -1,9 +1,9 @@
 //! Breadth-first search
 //!
-//! Use [`distances_single_source`] if you:
+//! Use [`single_source_distances`] if you:
 //! - need the distances from a single source vertex to all other vertices.
 //!
-//! Use [`predecessors_single_source`] if you:
+//! Use [`single_source_predecessors`] if you:
 //! - need the predecessor tree for the shortest paths from a single source
 //!   vertex to all other vertices.
 //!
@@ -20,7 +20,15 @@
 //! - have predefined distances for any non-source vertices,
 //! - want to use your own step function.
 //!
-//! This implementation uses distances instead of a set or boolean array to
+//! Use [`shortest_path`] if you:
+//! - need the shortest path,
+//! - have multiple source vertices,
+//! - have predefined starting distances,
+//! - have predefined distances for any non-source vertices,
+//! - want to use your own step function,
+//! - want to use your own target predicate.
+//!
+//! The implementations uses distances instead of a set or boolean array to
 //! check if a vertex has been visited because we already calculate these
 //! distances during traversal.
 //!
@@ -31,8 +39,8 @@
 //!
 //! ```
 //! use graaf::algo::bfs::{
-//!     distances_single_source,
-//!     predecessors_single_source,
+//!     single_source_distances,
+//!     single_source_predecessors,
 //! };
 //!
 //! // ╭───╮       ╭───╮
@@ -44,26 +52,26 @@
 //! // ╰───╯       ╰───╯
 //!
 //! let graph = [vec![1], vec![2], Vec::new(), vec![0]];
-//! let dist = distances_single_source(&graph, 0);
-//! let pred = predecessors_single_source(&graph, 0);
+//! let dist = single_source_distances(&graph, 0);
+//! let pred = single_source_predecessors(&graph, 0);
 //!
 //! assert_eq!(pred, [None, Some(0), Some(1), None]);
 //! assert_eq!(dist, [0, 1, 2, usize::MAX]);
 //!
-//! let dist = distances_single_source(&graph, 1);
-//! let pred = predecessors_single_source(&graph, 1);
+//! let dist = single_source_distances(&graph, 1);
+//! let pred = single_source_predecessors(&graph, 1);
 //!
 //! assert_eq!(pred, [None, None, Some(1), None]);
 //! assert_eq!(dist, [usize::MAX, 0, 1, usize::MAX]);
 //!
-//! let dist = distances_single_source(&graph, 2);
-//! let pred = predecessors_single_source(&graph, 2);
+//! let dist = single_source_distances(&graph, 2);
+//! let pred = single_source_predecessors(&graph, 2);
 //!
 //! assert_eq!(pred, [None, None, None, None]);
 //! assert_eq!(dist, [usize::MAX, usize::MAX, 0, usize::MAX]);
 //!
-//! let dist = distances_single_source(&graph, 3);
-//! let pred = predecessors_single_source(&graph, 3);
+//! let dist = single_source_distances(&graph, 3);
+//! let pred = single_source_predecessors(&graph, 3);
 //!
 //! assert_eq!(pred, [Some(3), Some(0), Some(1), None]);
 //! assert_eq!(dist, [1, 2, 3, 0]);
@@ -72,9 +80,12 @@
 extern crate alloc;
 
 use {
-    crate::op::{
-        CountAllVertices,
-        IterEdges,
+    crate::{
+        algo::predecessor,
+        op::{
+            CountAllVertices,
+            IterEdges,
+        },
     },
     alloc::collections::VecDeque,
 };
@@ -86,7 +97,7 @@ use {
 /// * `graph`: The graph.
 /// * `step`: The function to calculate the new weight.
 /// * `dist`: The distances from the source vertices.
-/// * `queue`: The vertices to visit.
+/// * `queue`: The source vertices.
 ///
 /// # Examples
 ///
@@ -145,7 +156,7 @@ pub fn distances<G, W>(
 /// # Examples
 ///
 /// ```
-/// use graaf::algo::bfs::distances_single_source;
+/// use graaf::algo::bfs::single_source_distances;
 ///
 /// // ╭───╮       ╭───╮
 /// // │ 0 │   →   │ 1 │
@@ -157,9 +168,9 @@ pub fn distances<G, W>(
 ///
 /// let graph = [vec![1], vec![2], Vec::new(), vec![0]];
 ///
-/// assert_eq!(distances_single_source(&graph, 0), [0, 1, 2, usize::MAX]);
+/// assert_eq!(single_source_distances(&graph, 0), [0, 1, 2, usize::MAX]);
 /// ```
-pub fn distances_single_source<G>(graph: &G, s: usize) -> Vec<usize>
+pub fn single_source_distances<G>(graph: &G, s: usize) -> Vec<usize>
 where
     G: CountAllVertices + IterEdges,
 {
@@ -181,7 +192,7 @@ where
 /// * `step`: The function that calculates the accumulated weight.
 /// * `pred`: The predecessors on the shortest paths from the source vertices.
 /// * `dist`: The distances from the source vertices.
-/// * `queue`: The vertices to visit.
+/// * `queue`: The source vertices.
 ///
 /// # Examples
 ///
@@ -248,7 +259,7 @@ pub fn predecessors<G, W>(
 /// # Examples
 ///
 /// ```
-/// use graaf::algo::bfs::predecessors_single_source;
+/// use graaf::algo::bfs::single_source_predecessors;
 ///
 /// // ╭───╮       ╭───╮
 /// // │ 0 │   →   │ 1 │
@@ -259,11 +270,11 @@ pub fn predecessors<G, W>(
 /// // ╰───╯       ╰───╯
 ///
 /// let graph = [vec![1], vec![2], Vec::new(), vec![0]];
-/// let pred = predecessors_single_source(&graph, 0);
+/// let pred = single_source_predecessors(&graph, 0);
 ///
 /// assert_eq!(pred, [None, Some(0), Some(1), None]);
 /// ```
-pub fn predecessors_single_source<G>(graph: &G, s: usize) -> Vec<Option<usize>>
+pub fn single_source_predecessors<G>(graph: &G, s: usize) -> Vec<Option<usize>>
 where
     G: CountAllVertices + IterEdges,
 {
@@ -276,6 +287,84 @@ where
     predecessors(graph, |w| w + 1, &mut pred, &mut dist, &mut queue);
 
     pred
+}
+
+/// Calculate the shortest path from the source vertex to the target vertex.
+///
+/// # Arguments
+///
+/// * `graph`: The graph.
+/// * `step`: The function that calculates the accumulated weight.
+/// * `is_target`: The function that checks if the vertex is the target vertex.
+/// * `pred`: The predecessors on the shortest paths from the source vertices.
+/// * `dist`: The distances from the source vertices.
+/// * `source`: The source vertices.
+///
+/// # Examples
+///
+/// ```
+/// use {
+///     graaf::algo::bfs::shortest_path,
+///     std::collections::VecDeque,
+/// };
+///
+/// // ╭───╮       ╭───╮
+/// // │ 0 │   →   │ 1 │
+/// // ╰───╯       ╰───╯
+/// //   ↑           ↓
+/// // ╭───╮       ╭───╮
+/// // │ 3 │       │ 2 │
+/// // ╰───╯       ╰───╯
+///
+/// let graph = [vec![1], vec![2], Vec::new(), vec![0]];
+/// let mut pred = [None, None, None, None];
+/// let mut dist = [usize::MAX, usize::MAX, usize::MAX, 0];
+/// let mut queue = VecDeque::from([(3, 0)]);
+///
+/// let path = shortest_path(
+///     &graph,
+///     |w| w + 1,
+///     |t| t == 2,
+///     &mut pred,
+///     &mut dist,
+///     &mut queue,
+/// );
+///
+/// assert_eq!(path, Some(vec![3, 0, 1, 2]));
+/// ```
+pub fn shortest_path<G>(
+    graph: &G,
+    step: fn(usize) -> usize,
+    is_target: fn(usize) -> bool,
+    pred: &mut [Option<usize>],
+    dist: &mut [usize],
+    queue: &mut VecDeque<(usize, usize)>,
+) -> Option<Vec<usize>>
+where
+    G: IterEdges,
+{
+    while let Some((s, w)) = queue.pop_front() {
+        let w = step(w);
+
+        for t in graph.iter_edges(s) {
+            if w >= dist[t] {
+                continue;
+            }
+
+            dist[t] = w;
+            pred[t] = Some(s);
+            queue.push_back((t, w));
+
+            if is_target(t) {
+                return predecessor::search_by(pred, t, |_, b| b.is_none()).map(|mut path| {
+                    path.reverse();
+                    path
+                });
+            }
+        }
+    }
+
+    None
 }
 
 #[cfg(test)]
@@ -365,11 +454,11 @@ mod tests {
     #[should_panic(expected = "index out of bounds: the len is 0 but the index is 0")]
     fn graph_0() {
         let graph = to_vec(&GRAPH_0);
-        let _ = distances_single_source(&graph, 0);
+        let _ = single_source_distances(&graph, 0);
     }
 
     #[test]
-    fn distances_single_source_graph_1() {
+    fn single_source_distances_graph_1() {
         const M: usize = usize::MAX;
 
         #[rustfmt::skip]
@@ -383,12 +472,12 @@ mod tests {
         let graph = to_vec(&GRAPH_1);
 
         for (i, &d) in EXPECTED.iter().enumerate() {
-            assert_eq!(distances_single_source(&graph, i), d);
+            assert_eq!(single_source_distances(&graph, i), d);
         }
     }
 
     #[test]
-    fn distances_single_source_graph_2() {
+    fn single_source_distances_graph_2() {
         #[rustfmt::skip]
         const EXPECTED: [[usize; 4]; 4] = [
             [0, 1, 1, 2],
@@ -400,12 +489,12 @@ mod tests {
         let graph = to_vec(&GRAPH_2);
 
         for (i, &d) in EXPECTED.iter().enumerate() {
-            assert_eq!(distances_single_source(&graph, i), d);
+            assert_eq!(single_source_distances(&graph, i), d);
         }
     }
 
     #[test]
-    fn distances_single_source_graph_3() {
+    fn single_source_distances_graph_3() {
         #[rustfmt::skip]
         const EXPECTED: [[usize; 8]; 8] = [
             [0, 1, 2, 1, 2, 3, 3, 2],
@@ -421,7 +510,7 @@ mod tests {
         let graph = to_vec(&GRAPH_3);
 
         for (i, &d) in EXPECTED.iter().enumerate() {
-            assert_eq!(distances_single_source(&graph, i), d);
+            assert_eq!(single_source_distances(&graph, i), d);
         }
     }
 
@@ -503,31 +592,31 @@ mod tests {
 
     #[test]
     #[should_panic(expected = "index out of bounds: the len is 0 but the index is 0")]
-    fn predecessors_single_source_graph_0() {
+    fn single_source_predecessors_graph_0() {
         let graph = to_vec(&GRAPH_0);
-        let _ = predecessors_single_source(&graph, 0);
+        let _ = single_source_predecessors(&graph, 0);
     }
 
     #[test]
-    fn predecessors_single_source_graph_1() {
+    fn single_source_predecessors_graph_1() {
         let graph = to_vec(&GRAPH_1);
-        let pred = predecessors_single_source(&graph, 0);
+        let pred = single_source_predecessors(&graph, 0);
 
         assert_eq!(pred, [None, Some(0), Some(1), None]);
     }
 
     #[test]
-    fn predecessors_single_source_graph_2() {
+    fn single_source_predecessors_graph_2() {
         let graph = to_vec(&GRAPH_2);
-        let pred = predecessors_single_source(&graph, 0);
+        let pred = single_source_predecessors(&graph, 0);
 
         assert_eq!(pred, [None, Some(0), Some(0), Some(1)]);
     }
 
     #[test]
-    fn predecessors_single_source_graph_3() {
+    fn single_source_predecessors_graph_3() {
         let graph = to_vec(&GRAPH_3);
-        let pred = predecessors_single_source(&graph, 0);
+        let pred = single_source_predecessors(&graph, 0);
 
         assert_eq!(
             pred,
@@ -542,5 +631,60 @@ mod tests {
                 Some(3)
             ]
         );
+    }
+
+    #[test]
+    fn shortest_path_graph_0() {
+        let graph = to_vec(&GRAPH_0);
+        let pred = &mut Vec::new();
+        let dist = &mut Vec::new();
+        let queue = &mut VecDeque::new();
+        let path = shortest_path(&graph, |w: usize| w + 1, |t| t == 0, pred, dist, queue);
+
+        assert!(path.is_none());
+    }
+
+    #[test]
+    fn shortest_path_graph_1() {
+        let graph = to_vec(&GRAPH_1);
+        let pred = &mut [None, None, None, None];
+        let dist = &mut [0, usize::MAX, usize::MAX, usize::MAX];
+        let queue = &mut VecDeque::from([(0, 0)]);
+        let path = shortest_path(&graph, |w| w + 1, |t| t == 1, pred, dist, queue);
+
+        assert_eq!(path, Some(vec![0, 1]));
+    }
+
+    #[test]
+    fn shortest_path_graph_2() {
+        let graph = to_vec(&GRAPH_2);
+        let pred = &mut [None, None, None, None];
+        let dist = &mut [0, usize::MAX, usize::MAX, usize::MAX];
+        let queue = &mut VecDeque::from([(0, 0)]);
+        let path = shortest_path(&graph, |w| w + 1, |t| t == 2, pred, dist, queue);
+
+        assert_eq!(path, Some(vec![0, 2]));
+    }
+
+    #[test]
+    fn shortest_path_graph_3() {
+        let graph = to_vec(&GRAPH_3);
+        let pred = &mut [None, None, None, None, None, None, None, None];
+
+        let dist = &mut [
+            0,
+            usize::MAX,
+            usize::MAX,
+            usize::MAX,
+            usize::MAX,
+            usize::MAX,
+            usize::MAX,
+            usize::MAX,
+        ];
+
+        let queue = &mut VecDeque::from([(0, 0)]);
+        let path = shortest_path(&graph, |w| w + 1, |t| t == 2, pred, dist, queue);
+
+        assert_eq!(path, Some(vec![0, 1, 2]));
     }
 }

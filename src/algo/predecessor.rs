@@ -5,7 +5,8 @@
 
 use std::collections::HashSet;
 
-/// Trace a path in a predecessor tree.
+/// Search a predecessor tree for a path from a source vertex to a target
+/// vertex.
 ///
 /// # Arguments
 ///
@@ -29,11 +30,65 @@ use std::collections::HashSet;
 /// assert_eq!(search(&pred, 0, 3), Some(vec![0, 1, 2, 3]));
 /// ```
 #[must_use]
-pub fn search(pred: &[Option<usize>], mut s: usize, t: usize) -> Option<Vec<usize>> {
+pub fn search(pred: &[Option<usize>], s: usize, t: usize) -> Option<Vec<usize>> {
+    search_by(pred, s, |&v, _| v == t)
+}
+
+/// Search a predecessor tree for a path from a source vertex to a target vertex
+/// that satisfies a predicate.
+///
+/// # Arguments
+///
+/// * `pred`: The predecessor tree.
+/// * `s`: The source vertex of the path.
+/// * `is_target`: A predicate that determines whether a vertex is the target.
+///
+/// # Examples
+///
+/// ```
+/// use graaf::algo::predecessor::search_by;
+///
+/// let pred = [
+///     Some(1), // 0 -> 1
+///     Some(2), // 1 -> 2
+///     Some(3), // 2 -> 3
+///     None,    // 3 -> x
+/// ];
+///
+/// // 0 -> 1 -> 2
+/// assert_eq!(search_by(&pred, 0, |&v, _| v > 1), Some(vec![0, 1, 2]));
+/// ```
+///
+/// ```
+/// use graaf::algo::predecessor::search_by;
+///
+/// let pred = [
+///     Some(1), // 0 -> 1
+///     Some(2), // 1 -> 2
+///     Some(3), // 2 -> 3
+///     None,    // 3 -> x
+///     Some(0), // 4 -> 0
+/// ];
+///
+/// // 0 -> 1 -> 2 -> 3
+/// assert_eq!(
+///     search_by(&pred, 0, |_, u| u.is_none()),
+///     Some(vec![0, 1, 2, 3])
+/// );
+/// ```
+#[must_use]
+pub fn search_by<F>(pred: &[Option<usize>], mut s: usize, is_target: F) -> Option<Vec<usize>>
+where
+    F: Fn(&usize, &Option<usize>) -> bool,
+{
     let mut visited = HashSet::new();
     let mut path = vec![s];
 
     while let Some(&u) = pred.get(s) {
+        if is_target(&s, &u) {
+            return Some(path);
+        }
+
         if let Some(v) = u {
             if !visited.insert(v) {
                 break;
@@ -41,10 +96,6 @@ pub fn search(pred: &[Option<usize>], mut s: usize, t: usize) -> Option<Vec<usiz
 
             if v != s {
                 path.push(v);
-            }
-
-            if v == t {
-                return Some(path);
             }
 
             s = v;
@@ -61,31 +112,31 @@ mod tests {
     use super::*;
 
     #[test]
-    fn trace_empty_s_ne_t() {
+    fn search_empty_s_ne_t() {
         assert_eq!(search(&[], 0, 1), None);
     }
 
     #[test]
-    fn trace_empty_s_eq_t() {
+    fn search_empty_s_eq_t() {
         assert_eq!(search(&[], 0, 0), None);
     }
 
     #[test]
-    fn trace_singleton_s_ne_t() {
+    fn search_singleton_s_ne_t() {
         let pred = [Some(0)];
 
         assert_eq!(search(&pred, 0, 1), None);
     }
 
     #[test]
-    fn trace_singleton_s_eq_t() {
+    fn search_singleton_s_eq_t() {
         let pred = [Some(0)];
 
         assert_eq!(search(&pred, 0, 0), Some(vec![0]));
     }
 
     #[test]
-    fn trace_no_path() {
+    fn search_no_path() {
         let pred = [
             Some(1), // 0 -> 1
             Some(2), // 1 -> 2
@@ -98,7 +149,7 @@ mod tests {
     }
 
     #[test]
-    fn trace_cycle() {
+    fn search_cycle() {
         let pred = [
             Some(1), // 0 -> 1
             Some(2), // 1 -> 2
@@ -111,7 +162,7 @@ mod tests {
     }
 
     #[test]
-    fn trace_path_s_eq_t() {
+    fn search_path_s_eq_t() {
         let pred = [
             Some(1), // 0 -> 1
             Some(2), // 1 -> 2
@@ -120,11 +171,11 @@ mod tests {
         ];
 
         // 0 -> 1 -> 2 -> 0
-        assert_eq!(search(&pred, 0, 0), Some(vec![0, 1, 2, 0]));
+        assert_eq!(search(&pred, 0, 0), Some(vec![0]));
     }
 
     #[test]
-    fn trace_path_s_ne_t() {
+    fn search_path_s_ne_t() {
         let pred = [
             Some(1), // 0 -> 1
             Some(2), // 1 -> 2
@@ -134,5 +185,81 @@ mod tests {
 
         // 0 -> 1 -> 2 -> 3
         assert_eq!(search(&pred, 0, 3), Some(vec![0, 1, 2, 3]));
+    }
+
+    #[test]
+    fn search_by_empty_s_ne_t() {
+        assert_eq!(search_by(&[], 0, |&t, _| t == 1), None);
+    }
+
+    #[test]
+    fn search_by_empty_s_eq_t() {
+        assert_eq!(search_by(&[], 0, |&t, _| t == 0), None);
+    }
+
+    #[test]
+    fn search_by_singleton_s_ne_t() {
+        let pred = [Some(0)];
+
+        assert_eq!(search_by(&pred, 0, |&t, _| t == 1), None);
+    }
+
+    #[test]
+    fn search_by_singleton_s_eq_t() {
+        let pred = [Some(0)];
+
+        assert_eq!(search_by(&pred, 0, |&t, _| t == 0), Some(vec![0]));
+    }
+
+    #[test]
+    fn search_by_no_path() {
+        let pred = [
+            Some(1), // 0 -> 1
+            Some(2), // 1 -> 2
+            None,    // 2 -> x
+            None,    // 3 -> x
+        ];
+
+        // 0 -> 1 -> 2 -> x
+        assert_eq!(search_by(&pred, 0, |&t, _| t == 3), None);
+    }
+
+    #[test]
+    fn search_by_cycle() {
+        let pred = [
+            Some(1), // 0 -> 1
+            Some(2), // 1 -> 2
+            Some(0), // 2 -> 1
+            None,    // 3 -> x
+        ];
+
+        // 0 -> 1 -> 2 -> 1 -> ... -> x
+        assert_eq!(search_by(&pred, 0, |&t, _| t == 3), None);
+    }
+
+    #[test]
+    fn search_by_path_s_eq_t() {
+        let pred = [
+            Some(1), // 0 -> 1
+            Some(2), // 1 -> 2
+            Some(0), // 2 -> 0
+            None,    // 3 -> x
+        ];
+
+        // 0 -> 1 -> 2 -> 0
+        assert_eq!(search_by(&pred, 0, |&t, _| t == 0), Some(vec![0]));
+    }
+
+    #[test]
+    fn search_by_path_s_ne_t() {
+        let pred = [
+            Some(1), // 0 -> 1
+            Some(2), // 1 -> 2
+            Some(3), // 2 -> 3
+            None,    // 3 -> x
+        ];
+
+        // 0 -> 1 -> 2 -> 3
+        assert_eq!(search_by(&pred, 0, |&t, _| t == 3), Some(vec![0, 1, 2, 3]));
     }
 }

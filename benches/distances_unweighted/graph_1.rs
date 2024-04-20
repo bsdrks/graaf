@@ -26,7 +26,7 @@ fn dijkstra(bencher: Bencher<'_, '_>) {
     ];
 
     bencher.bench(|| {
-        let _ = dijkstra::distances_single_source(&graph, 0);
+        let _ = dijkstra::single_source_distances(&graph, 0);
     });
 }
 
@@ -44,6 +44,6 @@ fn bfs(bencher: Bencher<'_, '_>) {
     ];
 
     bencher.bench(|| {
-        let _ = bfs::distances_single_source(&graph, 0);
+        let _ = bfs::single_source_distances(&graph, 0);
     });
 }

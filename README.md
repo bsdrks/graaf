@@ -16,7 +16,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.19.0"
+graaf = "0.20.0"
 ```
 
 ## Usage
@@ -52,7 +52,7 @@ assert_eq!(graph.outdegree(2), 0);
 
 Common graph algorithms:
 
-- [`bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs/index.html): breadth-first search.
+- [`bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs/index.html): breadth-first search
 - [`dijkstra`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/index.html): Dijkstra's algorithm
 - [`predecessor`](https://docs.rs/graaf/latest/graaf/algo/predecessor/index.html): predecessor search
 
@@ -78,11 +78,9 @@ Graph operation traits and implementations:
 
 ### Features
 
-#### [`AdjacencyMatrix`](https://docs.rs/graaf/latest/graaf/repr/adjacency_matrix/index.html)
-
-An adjacency matrix representation of unweighted digraphs, stored as a bit array. This feature is enabled by default. To opt out, remove the `adjacency_matrix` feature from your `Cargo.toml`:
+[`AdjacencyMatrix`](https://docs.rs/graaf/latest/graaf/repr/adjacency_matrix/index.html) provides nn adjacency matrix representation for unweighted digraphs, stored as a bit array. This feature is enabled by default. To opt out, omit the `adjacency_matrix` feature in your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = { version = "0.19.0", features = [] }
+graaf = { version = "0.20.0", features = [] }
 ```

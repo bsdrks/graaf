@@ -1,9 +1,9 @@
 //! Dijkstra's algorithm with binary-heap
 //!
-//! Use [`distances_single_source`] if you:
+//! Use [`single_source_distances`] if you:
 //! - need the distances from a single source vertex to all other vertices.
 //!
-//! Use [`predecessors_single_source`] if you:
+//! Use [`single_source_predecessors`] if you:
 //! - need the predecessor tree for the shortest paths from a single source
 //!   vertex to all other vertices.
 //!
@@ -27,8 +27,8 @@
 //!
 //! ```
 //! use graaf::algo::dijkstra::{
-//!     distances_single_source,
-//!     predecessors_single_source,
+//!     single_source_distances,
+//!     single_source_predecessors,
 //! };
 //!
 //! // ╭───╮       ╭───╮
@@ -41,26 +41,26 @@
 //! // ╰───╯       ╰───╯
 //!
 //! let graph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
-//! let dist = distances_single_source(&graph, 0);
-//! let pred = predecessors_single_source(&graph, 0);
+//! let dist = single_source_distances(&graph, 0);
+//! let pred = single_source_predecessors(&graph, 0);
 //!
 //! assert_eq!(pred, [None, Some(0), Some(1), None]);
 //! assert_eq!(dist, [0, 2, 4, usize::MAX]);
 //!
-//! let dist = distances_single_source(&graph, 1);
-//! let pred = predecessors_single_source(&graph, 1);
+//! let dist = single_source_distances(&graph, 1);
+//! let pred = single_source_predecessors(&graph, 1);
 //!
 //! assert_eq!(pred, [None, None, Some(1), None]);
 //! assert_eq!(dist, [usize::MAX, 0, 2, usize::MAX]);
 //!
-//! let dist = distances_single_source(&graph, 2);
-//! let pred = predecessors_single_source(&graph, 2);
+//! let dist = single_source_distances(&graph, 2);
+//! let pred = single_source_predecessors(&graph, 2);
 //!
 //! assert_eq!(pred, [None, None, None, None]);
 //! assert_eq!(dist, [usize::MAX, usize::MAX, 0, usize::MAX]);
 //!
-//! let dist = distances_single_source(&graph, 3);
-//! let pred = predecessors_single_source(&graph, 3);
+//! let dist = single_source_distances(&graph, 3);
+//! let pred = single_source_predecessors(&graph, 3);
 //!
 //! assert_eq!(pred, [Some(3), Some(0), Some(1), None]);
 //! assert_eq!(dist, [2, 4, 6, 0]);
@@ -86,7 +86,7 @@ use {
 /// * `graph`: The graph.
 /// * `step`: The function that calculates the accumulated weight.
 /// * `dist`: The distances from the source vertices.
-/// * `heap`: The vertices to visit.
+/// * `heap`: The source vertices.
 ///
 /// # Examples
 ///
@@ -149,7 +149,7 @@ pub fn distances<G, W>(
 /// # Examples
 ///
 /// ```
-/// use graaf::algo::dijkstra::distances_single_source;
+/// use graaf::algo::dijkstra::single_source_distances;
 ///
 /// // ╭───╮       ╭───╮
 /// // │ 0 │  2 →  │ 1 │
@@ -162,9 +162,9 @@ pub fn distances<G, W>(
 ///
 /// let graph: [Vec<(usize, usize)>; 4] = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
 ///
-/// assert_eq!(distances_single_source(&graph, 0), [0, 2, 4, usize::MAX]);
+/// assert_eq!(single_source_distances(&graph, 0), [0, 2, 4, usize::MAX]);
 /// ```
-pub fn distances_single_source<G>(graph: &G, s: usize) -> Vec<usize>
+pub fn single_source_distances<G>(graph: &G, s: usize) -> Vec<usize>
 where
     G: CountAllVertices + IterWeightedEdges<usize>,
 {
@@ -187,7 +187,7 @@ where
 /// * `step`: The function that calculates the accumulated weight.
 /// * `pred`: The predecessors on the shortest paths from the source vertices.
 /// * `dist`: The distances from the source vertices.
-/// * `heap`: The vertices to visit.
+/// * `heap`: The source vertices.
 ///
 /// # Examples
 ///
@@ -255,7 +255,7 @@ pub fn predecessors<G, W>(
 /// # Examples
 ///
 /// ```
-/// use graaf::algo::dijkstra::predecessors_single_source;
+/// use graaf::algo::dijkstra::single_source_predecessors;
 ///
 /// // ╭───╮       ╭───╮
 /// // │ 0 │  2 →  │ 1 │
@@ -267,11 +267,11 @@ pub fn predecessors<G, W>(
 /// // ╰───╯       ╰───╯
 ///
 /// let graph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
-/// let pred = predecessors_single_source(&graph, 0);
+/// let pred = single_source_predecessors(&graph, 0);
 ///
 /// assert_eq!(pred, [None, Some(0), Some(1), None]);
 /// ```
-pub fn predecessors_single_source<G>(graph: &G, s: usize) -> Vec<Option<usize>>
+pub fn single_source_predecessors<G>(graph: &G, s: usize) -> Vec<Option<usize>>
 where
     G: CountAllVertices + IterWeightedEdges<usize>,
 {
@@ -480,13 +480,13 @@ mod tests {
 
     #[test]
     #[should_panic(expected = "index out of bounds: the len is 0 but the index is 0")]
-    fn distances_single_source_graph_0() {
+    fn single_source_distances_graph_0() {
         let graph = to_vec(&GRAPH_0);
-        let _ = distances_single_source(&graph, 0);
+        let _ = single_source_distances(&graph, 0);
     }
 
     #[test]
-    fn distances_single_source_graph_1() {
+    fn single_source_distances_graph_1() {
         #[rustfmt::skip]
         const EXPECTED: [[usize; 9]; 9] = [
             [ 0,  4, 12, 19, 21, 11,  9,  8, 14],
@@ -503,12 +503,12 @@ mod tests {
         let graph = to_vec(&GRAPH_1);
 
         for (i, &d) in EXPECTED.iter().enumerate() {
-            assert_eq!(distances_single_source(&graph, i), d);
+            assert_eq!(single_source_distances(&graph, i), d);
         }
     }
 
     #[test]
-    fn distances_single_source_shortest_path_1() {
+    fn single_source_distances_shortest_path_1() {
         const M: usize = usize::MAX;
 
         #[rustfmt::skip]
@@ -522,12 +522,12 @@ mod tests {
         let graph = to_vec(&GRAPH_SHORTEST_PATH_1);
 
         for (i, &d) in EXPECTED.iter().enumerate() {
-            assert_eq!(distances_single_source(&graph, i), d);
+            assert_eq!(single_source_distances(&graph, i), d);
         }
     }
 
     #[test]
-    fn distances_single_source_cross_country() {
+    fn single_source_distances_cross_country() {
         #[rustfmt::skip]
         const EXPECTED: [[usize; 4]; 4] = [
             [ 0,  1,  3, 10],
@@ -539,12 +539,12 @@ mod tests {
         let graph = to_vec(&GRAPH_CROSS_COUNTRY);
 
         for (i, &d) in EXPECTED.iter().enumerate() {
-            assert_eq!(distances_single_source(&graph, i), d);
+            assert_eq!(single_source_distances(&graph, i), d);
         }
     }
 
     #[test]
-    fn distances_single_source_bryr_1() {
+    fn single_source_distances_bryr_1() {
         #[rustfmt::skip]
         const EXPECTED: [[usize; 3]; 3] = [
             [0, 1, 1],
@@ -560,12 +560,12 @@ mod tests {
         }
 
         for (s, dist) in EXPECTED.iter().enumerate() {
-            assert_eq!(distances_single_source(&graph, s), dist);
+            assert_eq!(single_source_distances(&graph, s), dist);
         }
     }
 
     #[test]
-    fn distances_single_source_bryr_2() {
+    fn single_source_distances_bryr_2() {
         #[rustfmt::skip]
         const EXPECTED: [[usize; 6]; 6] = [
             [0, 1, 2, 1, 2, 3],
@@ -584,12 +584,12 @@ mod tests {
         }
 
         for (s, dist) in EXPECTED.iter().enumerate() {
-            assert_eq!(distances_single_source(&graph, s), dist);
+            assert_eq!(single_source_distances(&graph, s), dist);
         }
     }
 
     #[test]
-    fn distances_single_source_bryr_3() {
+    fn single_source_distances_bryr_3() {
         #[rustfmt::skip]
         const EXPECTED: [[usize; 10]; 10] = [
             [0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
@@ -612,7 +612,7 @@ mod tests {
         }
 
         for (s, dist) in EXPECTED.iter().enumerate() {
-            assert_eq!(distances_single_source(&graph, s), dist);
+            assert_eq!(single_source_distances(&graph, s), dist);
         }
     }
 
@@ -790,13 +790,13 @@ mod tests {
 
     #[test]
     #[should_panic(expected = "index out of bounds: the len is 0 but the index is 0")]
-    fn predecessors_single_source_graph_0() {
+    fn single_source_predecessors_graph_0() {
         let graph = to_vec(&GRAPH_0);
-        let _ = predecessors_single_source(&graph, 0);
+        let _ = single_source_predecessors(&graph, 0);
     }
 
     #[test]
-    fn predecessors_single_source_graph_1() {
+    fn single_source_predecessors_graph_1() {
         #[rustfmt::skip]
         const EXPECTED: [[Option<usize>; 9]; 9] = [
             [None,    Some(0), Some(1), Some(2), Some(5), Some(6), Some(7), Some(0), Some(2)],
@@ -813,14 +813,14 @@ mod tests {
         let graph = to_vec(&GRAPH_1);
 
         for (i, expected) in EXPECTED.iter().enumerate() {
-            let pred = predecessors_single_source(&graph, i);
+            let pred = single_source_predecessors(&graph, i);
 
             assert_eq!(pred, expected);
         }
     }
 
     #[test]
-    fn predecessors_single_source_graph_shortest_path_1() {
+    fn single_source_predecessors_graph_shortest_path_1() {
         #[rustfmt::skip]
         const EXPECTED: [[Option<usize>; 4]; 4] = [
             [None,    Some(0), Some(1), None],
@@ -832,14 +832,14 @@ mod tests {
         let graph = to_vec(&GRAPH_SHORTEST_PATH_1);
 
         for (i, expected) in EXPECTED.iter().enumerate() {
-            let pred = predecessors_single_source(&graph, i);
+            let pred = single_source_predecessors(&graph, i);
 
             assert_eq!(pred, expected);
         }
     }
 
     #[test]
-    fn predecessors_single_source_graph_cross_country() {
+    fn single_source_predecessors_graph_cross_country() {
         #[rustfmt::skip]
         const EXPECTED: [[Option<usize>; 4]; 4] = [
             [None,    Some(0), Some(0), Some(2)],
@@ -851,14 +851,14 @@ mod tests {
         let graph = to_vec(&GRAPH_CROSS_COUNTRY);
 
         for (i, expected) in EXPECTED.iter().enumerate() {
-            let pred = predecessors_single_source(&graph, i);
+            let pred = single_source_predecessors(&graph, i);
 
             assert_eq!(pred, expected);
         }
     }
 
     #[test]
-    fn predecessors_single_source_graph_bryr_1() {
+    fn single_source_predecessors_graph_bryr_1() {
         #[rustfmt::skip]
         const EXPECTED: [[Option<usize>; 3]; 3] = [
             [None,    Some(0), Some(0)],
@@ -874,14 +874,14 @@ mod tests {
         }
 
         for (i, expected) in EXPECTED.iter().enumerate() {
-            let pred = predecessors_single_source(&graph, i);
+            let pred = single_source_predecessors(&graph, i);
 
             assert_eq!(pred, expected);
         }
     }
 
     #[test]
-    fn predecessors_single_source_graph_bryr_2() {
+    fn single_source_predecessors_graph_bryr_2() {
         #[rustfmt::skip]
         const EXPECTED: [[Option<usize>; 6]; 6] = [
             [None,    Some(0), Some(3), Some(0), Some(3), Some(4)],
@@ -900,14 +900,14 @@ mod tests {
         }
 
         for (i, expected) in EXPECTED.iter().enumerate() {
-            let pred = predecessors_single_source(&graph, i);
+            let pred = single_source_predecessors(&graph, i);
 
             assert_eq!(pred, expected);
         }
     }
 
     #[test]
-    fn predecessors_single_source_graph_bryr_3() {
+    fn single_source_predecessors_graph_bryr_3() {
         #[rustfmt::skip]
         const EXPECTED: [[Option<usize>; 10]; 10] = [
             [None,    Some(7), Some(9), Some(0), Some(3), Some(3), Some(5), Some(3), Some(5), Some(1)],
@@ -930,7 +930,7 @@ mod tests {
         }
 
         for (i, expected) in EXPECTED.iter().enumerate() {
-            let pred = predecessors_single_source(&graph, i);
+            let pred = single_source_predecessors(&graph, i);
 
             assert_eq!(pred, expected);
         }

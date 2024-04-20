@@ -8,7 +8,6 @@ In arbitrary order:
 - Add Hopcroft-Karp algorithm.
 - Add Kruksal's algorithm.
 - Add SPFA algorithm.
-- Add `bfs::mssp`.
 - Add `bfs::sssp`.
 - Add `dijkstra::mssp`.
 - Add `dijkstra::sssp`.
@@ -21,6 +20,26 @@ In arbitrary order:
 - Add star graph generator.
 - Add topological sorting for DAGs.
 - Split up GHA workflow into multiple jobs.
+
+## [0.21.0] - 2024-04-21
+
+Added
+
+- Add `predecessor::search_by`.
+- Add `bfs::shortest_path`.
+
+Changed
+
+- Breaking: `predecessor::search` now returns a singleton path if the target is the source.
+
+## [0.20.0] - 2024-04-20
+
+Changed
+
+- Breaking: Rename `bfs::distances_single_source` to `bfs::single_source_distances`.
+- Breaking: Rename `bfs::predecessors_single_source` to `bfs::single_source_predecessors`.
+- Breaking: Rename `dijkstra::distances_single_source` to `dijkstra::single_source_distances`.
+- Breaking: Rename `dijkstra::predecessors_single_source` to `dijkstra::single_source_predecessors`.
 
 ## [0.19.0] - 2024-04-20
 
