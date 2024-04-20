@@ -80,7 +80,7 @@ Graph operation traits and implementations:
 
 #### [`AdjacencyMatrix`](https://docs.rs/graaf/latest/graaf/repr/adjacency_matrix/index.html)
 
-An adjacency matrix representation of unweighted directed graphs, stored as a bit array. This feature is enabled by default. To opt out, remove the `adjacency_matrix` feature from your `Cargo.toml`:
+An adjacency matrix representation of unweighted digraphs, stored as a bit array. This feature is enabled by default. To opt out, remove the `adjacency_matrix` feature from your `Cargo.toml`:
 
 ```toml
 [dependencies]

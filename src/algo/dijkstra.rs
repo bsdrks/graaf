@@ -48,8 +48,8 @@ use {
 };
 
 /// Calculate the distances from the source vertices to all vertices in a
-/// weighted directed graph. Use [`predecessors`] if you also need the
-/// predecessor tree.
+/// weighted digraph. Use [`predecessors`] if you also need the predecessor
+/// tree.
 ///
 /// # Arguments
 ///
@@ -110,8 +110,8 @@ pub fn distances<G, W>(
 }
 
 /// Calculate the distances from the source vertex to all vertices in a weighted
-/// directed graph. Use [`predecessors_single_source`] if you also need the
-/// predecessor tree.
+/// digraph. Use [`predecessors_single_source`] if you also need the predecessor
+/// tree.
 ///
 /// # Arguments
 ///
@@ -151,7 +151,7 @@ where
 }
 
 /// Calculate the predecessor tree and distances of the shortest paths from the
-/// source vertices to all vertices in a weighted directed graph.
+/// source vertices to all vertices in a weighted digraph.
 ///
 /// # Arguments
 ///
@@ -217,7 +217,7 @@ pub fn predecessors<G, W>(
 }
 
 /// Calculate the predecessor tree and distances of the shortest paths from the
-/// source vertex to all vertices in a weighted directed graph.
+/// source vertex to all vertices in a weighted digraph.
 ///
 /// # Arguments
 ///
