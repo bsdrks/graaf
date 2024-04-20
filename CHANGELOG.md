@@ -24,26 +24,26 @@ In arbitrary order:
 
 ## [0.19.0] - 2024-04-20
 
-### Changed
+Changed
 
 - Breaking: `bfs::predecessors_single_source` now only returns the predecessor tree.
 - Breaking: `dijkstra::predecessors_single_source` now only returns the predecessor tree.
 
 ## [0.18.0] - 2024-04-20
 
-### Changed
+Changed
 
 - Breaking: `repr::AdjacenyMatrix` is now a feature.
 
 ## [0.17.2] - 2024-04-19
 
-### Added
+Added
 
 - Add `predecessor::search`.
 
 ## [0.17.1] - 2024-04-19
 
-### Changed
+Changed
 
 - Move list of standard library graph respresentations from `README` to `op/mod.rs`.
 
