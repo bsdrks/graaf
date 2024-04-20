@@ -78,7 +78,7 @@ Graph operation traits and implementations:
 
 ### Features
 
-[`AdjacencyMatrix`](https://docs.rs/graaf/latest/graaf/repr/adjacency_matrix/index.html) provides nn adjacency matrix representation for unweighted digraphs, stored as a bit array. This feature is enabled by default. To opt out, omit the `adjacency_matrix` feature in your `Cargo.toml`:
+[`AdjacencyMatrix`](https://docs.rs/graaf/latest/graaf/repr/adjacency_matrix/index.html) provides an adjacency matrix representation for unweighted digraphs, stored as a bit array. This feature is enabled by default. To opt out, omit the `adjacency_matrix` feature in your `Cargo.toml`:
 
 ```toml
 [dependencies]
