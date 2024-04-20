@@ -1,7 +1,7 @@
 //! Predecessor trees
 //!
 //! Predecessor trees are produced by many graph algorithms, e.g., those defined
-//! in [`graaf::algo::bfs`] and [`graaf::algo::dijkstra`].
+//! in [`crate::algo::bfs`] and [`crate::algo::dijkstra`].
 
 use std::collections::HashSet;
 
