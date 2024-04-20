@@ -20,6 +20,14 @@ In arbitrary order:
 - Add linear graph generator.
 - Add star graph generator.
 - Add topological sorting for DAGs.
+- Split up GHA workflow into multiple jobs.
+
+## [0.19.0] - unreleased
+
+### Changed
+
+- Breaking: `bfs::predecessors_single_source` now only returns the predecessor tree.
+- Breaking: `dijkstra::predecessors_single_source` now only returns the predecessor tree.
 
 ## [0.18.0] - 2024-04-20
 
