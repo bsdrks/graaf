@@ -1,9 +1,6 @@
 //! Adding a weighted edge with [`crate::op::AddWeightedEdge`] and then removing
 //! it with [`crate::op::RemoveEdge`] should keep the graph unchanged.
-use crate::op::{
-    AddWeightedEdge,
-    RemoveEdge,
-};
+use crate::op::{AddWeightedEdge, RemoveEdge};
 
 /// Adding a weighted edge with [`crate::op::AddWeightedEdge`] and then removing
 /// it with [`crate::op::RemoveEdge`] should keep the graph unchanged.
@@ -33,10 +30,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use {
-        super::*,
-        std::collections::HashMap,
-    };
+    use {super::*, std::collections::HashMap};
 
     macro_rules! test_add_weighted_edge_remove_edge {
         ($graph:expr) => {

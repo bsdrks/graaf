@@ -1,6 +1,6 @@
 [package]
 name = "graaf"
-version = "0.20.2"
+version = "0.21.0"
 edition = "2021"
 authors = ["Bas Dirks <bas.dirks@protonmail.com>"]
 categories = ["algorithms", "data-structures", "mathematics"]
@@ -19,8 +19,8 @@ repository = "https://github.com/bsdrks/graaf"
 divan = "0.1.14"
 
 [features]
-default = ["adjacency_matrix"]
-adjacency_matrix = []
+adjacency_matrix = ["nightly"]
+nightly = []
 
 [[bench]]
 name = "add_edge"
@@ -49,40 +49,3 @@ harness = false
 name = "distances_unweighted_graph_1"
 path = "benches/distances_unweighted/graph_1.rs"
 harness = false
-
-[lints.clippy]
-all = { level = "deny", priority = -1 }
-cargo = { level = "deny", priority = -1 }
-nursery = { level = "deny", priority = -1 }
-pedantic = { level = "deny", priority = -1 }
-alloc_instead_of_core = "deny"
-get_unwrap = "deny"
-if_then_some_else_none = "deny"
-impl_trait_in_params = "deny"
-missing_assert_message = "deny"
-multiple_inherent_impl = "deny"
-panic_in_result_fn = "deny"
-redundant_type_annotations = "deny"
-rest_pat_in_fully_bound_structs = "deny"
-self_named_module_files = "deny"
-std_instead_of_alloc = "deny"
-std_instead_of_core = "deny"
-unnecessary_self_imports = "deny"
-unneeded_field_pattern = "deny"
-unseparated_literal_suffix = "deny"
-unwrap_in_result = "deny"
-
-[lints.rust]
-rust_2018_idioms = { level = "deny", priority = -1 }
-missing_copy_implementations = "deny"
-missing_debug_implementations = "deny"
-missing_docs = "deny"
-trivial_casts = "deny"
-trivial_numeric_casts = "deny"
-unused_extern_crates = "deny"
-unused_import_braces = "deny"
-unused_results = "deny"
-variant_size_differences = "deny"
-
-[lints.rustdoc]
-missing_crate_level_docs = "deny"

@@ -16,18 +16,9 @@
 extern crate alloc;
 
 use {
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
-    core::hash::{
-        BuildHasher,
-        Hash,
-    },
-    std::collections::{
-        HashMap,
-        HashSet,
-    },
+    alloc::collections::{BTreeMap, BTreeSet},
+    core::hash::{BuildHasher, Hash},
+    std::collections::{HashMap, HashSet},
 };
 
 /// A trait to add an edge to a weighted graph
@@ -324,10 +315,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use {
-        super::*,
-        core::iter::once,
-    };
+    use {super::*, core::iter::once};
 
     #[test]
     fn vec_vec() {

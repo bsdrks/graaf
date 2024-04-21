@@ -15,11 +15,7 @@
 //! ```
 extern crate alloc;
 
-use {
-    alloc::collections::BTreeSet,
-    core::hash::BuildHasher,
-    std::collections::HashSet,
-};
+use {alloc::collections::BTreeSet, core::hash::BuildHasher, std::collections::HashSet};
 
 /// A trait to iterate over all weighted edges in a graph
 ///
@@ -115,10 +111,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use {
-        super::*,
-        std::assert_matches::assert_matches,
-    };
+    use super::*;
 
     macro_rules! test_iter_all_weighted_edges_stable {
         ($graph:expr) => {
@@ -135,9 +128,21 @@ mod tests {
         ($graph:expr) => {
             let mut iter = $graph.iter_all_weighted_edges();
 
-            assert_matches!(iter.next(), Some((0, 1, &2) | (1, 2, &3) | (2, 0, &4)));
-            assert_matches!(iter.next(), Some((0, 1, &2) | (1, 2, &3) | (2, 0, &4)));
-            assert_matches!(iter.next(), Some((0, 1, &2) | (1, 2, &3) | (2, 0, &4)));
+            assert!(matches!(
+                iter.next(),
+                Some((0, 1, &2) | (1, 2, &3) | (2, 0, &4))
+            ));
+
+            assert!(matches!(
+                iter.next(),
+                Some((0, 1, &2) | (1, 2, &3) | (2, 0, &4))
+            ));
+
+            assert!(matches!(
+                iter.next(),
+                Some((0, 1, &2) | (1, 2, &3) | (2, 0, &4))
+            ));
+
             assert_eq!(iter.next(), None);
         };
     }

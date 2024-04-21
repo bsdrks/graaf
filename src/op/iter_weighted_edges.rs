@@ -35,15 +35,9 @@
 extern crate alloc;
 
 use {
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
+    alloc::collections::{BTreeMap, BTreeSet},
     core::hash::BuildHasher,
-    std::collections::{
-        HashMap,
-        HashSet,
-    },
+    std::collections::{HashMap, HashSet},
 };
 
 /// A trait to iterate over all weighted edges with a given source vertex
@@ -424,18 +418,15 @@ where
 
 #[cfg(test)]
 mod tests {
-    use {
-        super::*,
-        std::assert_matches::assert_matches,
-    };
+    use super::*;
 
     macro_rules! test_iter_weighted_edges_unstable {
         ($graph:expr) => {
             let mut iter = $graph.iter_weighted_edges(1);
 
-            assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
-            assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
-            assert_matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5)));
+            assert!(matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5))));
+            assert!(matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5))));
+            assert!(matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5))));
             assert_eq!(iter.next(), None);
         };
     }

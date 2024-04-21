@@ -17,15 +17,9 @@
 extern crate alloc;
 
 use {
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
+    alloc::collections::{BTreeMap, BTreeSet},
     core::hash::BuildHasher,
-    std::collections::{
-        HashMap,
-        HashSet,
-    },
+    std::collections::{HashMap, HashSet},
 };
 
 /// A trait to get the indegree of a given vertex

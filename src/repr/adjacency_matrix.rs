@@ -1,14 +1,6 @@
 use crate::op::{
-    AddEdge,
-    CountAllEdges,
-    CountAllVertices,
-    Indegree,
-    IsEdge,
-    IsSimple,
-    IterEdges,
-    IterVertices,
-    Outdegree,
-    RemoveEdge,
+    AddEdge, CountAllEdges, CountAllVertices, Indegree, IsEdge, IsSimple, IterEdges, IterVertices,
+    Outdegree, RemoveEdge,
 };
 
 macro_rules! blocks {

@@ -36,14 +36,9 @@
 //! The order of the edges is not guaranteed for, e.g., `Vec<HashSet<_>>`:
 //!
 //! ```
-//! #![feature(assert_matches)]
-//!
 //! use {
 //!     graaf::op::IterEdges,
-//!     std::{
-//!         assert_matches::assert_matches,
-//!         collections::HashSet,
-//!     },
+//!     std::collections::HashSet,
 //! };
 //!
 //! let graph = vec![
@@ -55,22 +50,16 @@
 //!
 //! let mut iter = graph.iter_edges(0);
 //!
-//! assert_matches!(iter.next(), Some(1 | 2));
-//! assert_matches!(iter.next(), Some(1 | 2));
+//! assert!(matches!(iter.next(), Some(1 | 2)));
+//! assert!(matches!(iter.next(), Some(1 | 2)));
 //! assert_eq!(iter.next(), None);
 //! ```
 extern crate alloc;
 
 use {
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
+    alloc::collections::{BTreeMap, BTreeSet},
     core::hash::BuildHasher,
-    std::collections::{
-        HashMap,
-        HashSet,
-    },
+    std::collections::{HashMap, HashSet},
 };
 
 /// A trait to iterate over all unweighted edges with a given source vertex
@@ -130,14 +119,9 @@ use {
 /// The order of the edges is not guaranteed for, e.g., `Vec<HashSet<_>>`:
 ///
 /// ```
-/// #![feature(assert_matches)]
-///
 /// use {
 ///     graaf::op::IterEdges,
-///     std::{
-///         assert_matches::assert_matches,
-///         collections::HashSet,
-///     },
+///     std::collections::HashSet,
 /// };
 ///
 /// let graph = vec![
@@ -149,8 +133,8 @@ use {
 ///
 /// let mut iter = graph.iter_edges(0);
 ///
-/// assert_matches!(iter.next(), Some(1 | 2));
-/// assert_matches!(iter.next(), Some(1 | 2));
+/// assert!(matches!(iter.next(), Some(1 | 2)));
+/// assert!(matches!(iter.next(), Some(1 | 2)));
 /// assert_eq!(iter.next(), None);
 /// ```
 pub trait IterEdges {
@@ -296,10 +280,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use {
-        super::*,
-        std::assert_matches::assert_matches,
-    };
+    use super::*;
 
     macro_rules! test_iter_edges_stable {
         ($graph:expr) => {
@@ -335,28 +316,28 @@ mod tests {
         ($graph:expr) => {
             let mut iter = $graph.iter_edges(0);
 
-            assert_matches!(iter.next(), Some(1 | 2));
-            assert_matches!(iter.next(), Some(1 | 2));
+            assert!(matches!(iter.next(), Some(1 | 2)));
+            assert!(matches!(iter.next(), Some(1 | 2)));
             assert_eq!(iter.next(), None);
 
             let mut iter = $graph.iter_edges(1);
 
-            assert_matches!(iter.next(), Some(0 | 2 | 3));
-            assert_matches!(iter.next(), Some(0 | 2 | 3));
-            assert_matches!(iter.next(), Some(0 | 2 | 3));
+            assert!(matches!(iter.next(), Some(0 | 2 | 3)));
+            assert!(matches!(iter.next(), Some(0 | 2 | 3)));
+            assert!(matches!(iter.next(), Some(0 | 2 | 3)));
             assert_eq!(iter.next(), None);
 
             let mut iter = $graph.iter_edges(2);
 
-            assert_matches!(iter.next(), Some(0 | 1 | 3));
-            assert_matches!(iter.next(), Some(0 | 1 | 3));
-            assert_matches!(iter.next(), Some(0 | 1 | 3));
+            assert!(matches!(iter.next(), Some(0 | 1 | 3)));
+            assert!(matches!(iter.next(), Some(0 | 1 | 3)));
+            assert!(matches!(iter.next(), Some(0 | 1 | 3)));
             assert_eq!(iter.next(), None);
 
             let mut iter = $graph.iter_edges(3);
 
-            assert_matches!(iter.next(), Some(1 | 2));
-            assert_matches!(iter.next(), Some(1 | 2));
+            assert!(matches!(iter.next(), Some(1 | 2)));
+            assert!(matches!(iter.next(), Some(1 | 2)));
             assert_eq!(iter.next(), None);
         };
     }

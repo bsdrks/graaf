@@ -1,9 +1,6 @@
 //! An edge removed with [`crate::op::RemoveEdge`] should no longer in the
 //! graph, as reflected by [`crate::op::IsEdge`].
-use crate::op::{
-    IsEdge,
-    RemoveEdge,
-};
+use crate::op::{IsEdge, RemoveEdge};
 
 /// An edge removed with [`crate::op::RemoveEdge`] should no longer in the
 /// graph, as reflected by [`crate::op::IsEdge`].
@@ -28,10 +25,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use {
-        super::*,
-        std::collections::HashSet,
-    };
+    use {super::*, std::collections::HashSet};
 
     macro_rules! test_remove_edge_is_edge {
         ($graph:expr) => {

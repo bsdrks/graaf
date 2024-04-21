@@ -2,10 +2,7 @@
 //! to all other vertices in a graph.
 use {
     divan::Bencher,
-    graaf::algo::{
-        bfs,
-        dijkstra,
-    },
+    graaf::algo::{bfs, dijkstra},
 };
 
 fn main() {

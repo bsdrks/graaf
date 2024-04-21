@@ -82,10 +82,7 @@ extern crate alloc;
 use {
     crate::{
         algo::predecessor,
-        op::{
-            CountAllVertices,
-            IterEdges,
-        },
+        op::{CountAllVertices, IterEdges},
     },
     alloc::collections::VecDeque,
 };

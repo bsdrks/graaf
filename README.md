@@ -16,7 +16,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.20.2"
+graaf = "0.21.0"
 ```
 
 ## Usage
@@ -28,10 +28,10 @@ use graaf::{
         Indegree,
         Outdegree,
     },
-    repr::AdjacencyMatrix,
+    std::collections::HashSet,
 };
 
-let mut graph = AdjacencyMatrix::<3>::new();
+let mut graph = [HashSet::new(), HashSet::new(), HashSet::new()];
 
 graph.add_edge(0, 1);
 graph.add_edge(0, 2);
@@ -78,9 +78,12 @@ Graph operation traits and implementations:
 
 ### Features
 
-[`AdjacencyMatrix`](https://docs.rs/graaf/latest/graaf/repr/adjacency_matrix/index.html) provides an adjacency matrix representation for unweighted digraphs, stored as a bit array. This feature is enabled by default. To opt out, omit the `adjacency_matrix` feature in your `Cargo.toml`:
+- `nightly`: required for the `adjacency_matrix` feature.
+- `adjacency_matrix`: an adjacency matrix representation stored as a bit array.
+
+To enable the `adjacency_matrix` feature, add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = { version = "0.20.2", features = [] }
+graaf = { version = "0.21.0", features = ["adjacency_matrix", "nightly"] }
 ```

@@ -1,9 +1,6 @@
 //! Adding an edge with [`crate::op::AddEdge`] should be reflected by
 //! [`crate::op::IsEdge`].
-use crate::op::{
-    AddEdge,
-    IsEdge,
-};
+use crate::op::{AddEdge, IsEdge};
 
 /// Adding an edge with [`crate::op::AddEdge`] should be reflected by
 /// [`crate::op::IsEdge`].
@@ -30,12 +27,8 @@ where
 mod tests {
     use {
         super::*,
-        crate::repr::AdjacencyMatrix,
         std::{
-            collections::{
-                HashMap,
-                HashSet,
-            },
+            collections::{HashMap, HashSet},
             hash::RandomState,
         },
     };
@@ -84,8 +77,11 @@ mod tests {
         test_add_edge_is_edge!(graph);
     }
 
+    #[cfg(feature = "adjacency_matrix")]
     #[test]
     fn adjacency_matrix() {
+        use crate::repr::AdjacencyMatrix;
+
         let graph = &mut AdjacencyMatrix::<3>::new();
 
         test_add_edge_is_edge!(graph);

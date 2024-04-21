@@ -25,10 +25,7 @@
 extern crate alloc;
 
 use {
-    super::{
-        IterAllEdges,
-        IterAllWeightedEdges,
-    },
+    super::{IterAllEdges, IterAllWeightedEdges},
     alloc::collections::BTreeSet,
     core::hash::BuildHasher,
     std::collections::HashSet,
