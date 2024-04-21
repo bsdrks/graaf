@@ -14,7 +14,7 @@
 //! - want to use your own step function.
 //!
 //! Use [`predecessors`] if you:
-//! - need the predecessor tree *and* distances,
+//! - need the predecessor tree and distances,
 //! - have multiple source vertices,
 //! - have predefined starting distances,
 //! - have predefined distances for any non-source vertices,

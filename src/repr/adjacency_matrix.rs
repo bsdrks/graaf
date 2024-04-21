@@ -19,7 +19,7 @@ macro_rules! blocks {
 
 /// An adjacency matrix representation of an unweighted digraph stored as a bit
 /// array
-#[derive(Clone, Debug, Eq, PartialEq, PartialOrd)]
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct AdjacencyMatrix<const V: usize>
 where
     [(); blocks!(V)]:,
