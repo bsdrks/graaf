@@ -21,7 +21,14 @@ In arbitrary order:
 - Add topological sorting for DAGs.
 - Split up GHA workflow into multiple jobs.
 
-## [0.21.0] - 2024-04-21
+## [0.20.1] - 2024-04-21
+
+Changed
+
+- Derive `Hash` for `AdjacencyMatrix`.
+- Derive `Ord` for `AdjacencyMatrix`.
+
+## [0.20.0] - 2024-04-20
 
 Added
 
@@ -30,16 +37,11 @@ Added
 
 Changed
 
-- Breaking: `predecessor::search` now returns a singleton path if the target is the source.
-
-## [0.20.0] - 2024-04-20
-
-Changed
-
 - Breaking: Rename `bfs::distances_single_source` to `bfs::single_source_distances`.
 - Breaking: Rename `bfs::predecessors_single_source` to `bfs::single_source_predecessors`.
 - Breaking: Rename `dijkstra::distances_single_source` to `dijkstra::single_source_distances`.
 - Breaking: Rename `dijkstra::predecessors_single_source` to `dijkstra::single_source_predecessors`.
+- Breaking: `predecessor::search` now returns a singleton path if the target is the source.
 
 ## [0.19.0] - 2024-04-20
 
