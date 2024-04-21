@@ -69,30 +69,24 @@
 #![cfg_attr(feature = "nightly", allow(incomplete_features))]
 #![cfg_attr(feature = "nightly", feature(generic_const_exprs))]
 
-/// Graph algorithms
 pub mod algo;
-
-/// Operations on graphs
 pub mod op;
-
-/// Types that represent graphs
 pub mod repr;
 
-#[cfg(feature = "adjacency-matrix")]
 #[cfg(test)]
 mod tests {
-    use crate::{
-        op::{
+    use {
+        crate::op::{
             AddEdge,
             Indegree,
             Outdegree,
         },
-        repr::AdjacencyMatrix,
+        std::collections::HashSet,
     };
 
     #[test]
     fn example() {
-        let mut graph = AdjacencyMatrix::<3>::new();
+        let mut graph = [HashSet::new(), HashSet::new(), HashSet::new()];
 
         graph.add_edge(0, 1);
         graph.add_edge(0, 2);

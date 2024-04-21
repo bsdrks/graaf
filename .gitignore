@@ -1,4 +1,5 @@
-/target
-coverage
 *.profraw
 .vscode
+/target
+Cargo.lock
+coverage
