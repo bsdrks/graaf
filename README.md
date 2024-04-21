@@ -16,7 +16,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.20.1"
+graaf = "0.20.2"
 ```
 
 ## Usage
@@ -82,5 +82,5 @@ Graph operation traits and implementations:
 
 ```toml
 [dependencies]
-graaf = { version = "0.20.1", features = [] }
+graaf = { version = "0.20.2", features = [] }
 ```

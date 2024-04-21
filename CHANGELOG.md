@@ -21,6 +21,12 @@ In arbitrary order:
 - Add topological sorting for DAGs.
 - Split up GHA workflow into multiple jobs.
 
+## [0.20.2] - 2024-04-21
+
+Added
+
+- Add `pre-commit` configuration.
+
 ## [0.20.1] - 2024-04-21
 
 Changed
