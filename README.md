@@ -16,7 +16,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.21.0"
+graaf = "0.22.0"
 ```
 
 ## Usage
@@ -79,11 +79,11 @@ Graph operation traits and implementations:
 ### Features
 
 - `nightly`: required for the `adjacency_matrix` feature.
-- `adjacency_matrix`: an adjacency matrix representation stored as a bit array.
+- `adjacency_matrix`: a representation fit for dense graphs, enabled by default.
 
-To enable the `adjacency_matrix` feature, add the following to your `Cargo.toml`:
+To disable these features, add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = { version = "0.21.0", features = ["adjacency_matrix", "nightly"] }
+graaf = { version = "0.22.0", default-features = false }
 ```

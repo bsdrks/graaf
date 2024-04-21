@@ -21,6 +21,12 @@ In arbitrary order:
 - Add topological sorting for DAGs.
 - Split up GHA workflow into multiple jobs.
 
+## [0.22.0] - 2024-04-21
+
+Changed
+
+- Breaking: Disable `adjacency_matrix` by default to support stable Rust.
+
 ## [0.21.0] - 2024-04-21
 
 Added
@@ -30,7 +36,7 @@ Added
 Changed
 
 - Breaking: Make the `adjacency_matrix` depend on the `nightly` feature.
-- Breaking: Disable `adjacency_matrix` by default.
+- Breaking: Enable `adjacency_matrix` by default.
 - Replace `assert_matches!(...)` with `assert!(matches!(...))`.
 
 ## [0.20.2] - 2024-04-21
