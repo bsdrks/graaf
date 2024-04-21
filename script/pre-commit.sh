@@ -11,13 +11,13 @@ cargo_toml=$(cat Cargo.toml)
 
 if [[ $cargo_toml =~ $CARGO_TOML_VERSION_REGEX ]]; then
     # This is our source of truth for the crate version. 
-    VERSION_CARGO_TOML=${BASH_REMATCH[1]}
+    VERSION=${BASH_REMATCH[1]}
 else
     echo "Version not found in Cargo.toml"
     exit 1
 fi
 
-echo "Version in Cargo.toml: $VERSION_CARGO_TOML"
+echo "Version in Cargo.toml: $VERSION"
 
 # Version check: README.md
 
@@ -29,13 +29,13 @@ readme=$(cat README.md)
 while IFS= read -r line || [[ -n $line ]]; do
     if [[ $line =~ $DEPENDENCY_SIMPLE_VERSION_REGEX ]]; then
         DEPENDENCY_VERSION=${BASH_REMATCH[1]}
-        if [[ $DEPENDENCY_VERSION != $VERSION_CARGO_TOML ]]; then
+        if [[ $DEPENDENCY_VERSION != $VERSION ]]; then
             echo "Dependency version mismatch: $DEPENDENCY_VERSION"
             exit 1
         fi
     elif [[ $line =~ $DEPENDENCY_OBJECT_VERSION_REGEX ]]; then
         DEPENDENCY_VERSION=${BASH_REMATCH[1]}
-        if [[ $DEPENDENCY_VERSION != $VERSION_CARGO_TOML ]]; then
+        if [[ $DEPENDENCY_VERSION != $VERSION ]]; then
             echo "Dependency version mismatch: $DEPENDENCY_VERSION"
             exit 1
         fi
@@ -46,16 +46,16 @@ echo "README.md versions match Cargo.toml"
 
 # Version check: CHANGELOG.md
 
-CHANGELOG_VERSION_REGEX="## \[$VERSION_CARGO_TOML\]"
+CHANGELOG_VERSION_REGEX="## \[$VERSION\]"
 
 changelog=$(cat CHANGELOG.md)
 
 if [[ ! $changelog =~ $CHANGELOG_VERSION_REGEX ]]; then
-    echo "No changelog entry for version $VERSION_CARGO_TOML"
+    echo "No changelog entry for version $VERSION"
     exit 1
 fi
 
-echo "Changelog entry found for version $VERSION_CARGO_TOML"
+echo "Changelog entry found for version $VERSION"
 
 # Reset build artifacts
 
