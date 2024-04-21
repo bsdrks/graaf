@@ -1,6 +1,9 @@
 //! Adding a weighted edge with [`crate::op::AddWeightedEdge`] should be
 //! reflected by [`crate::op::IsEdge`].
-use crate::op::{AddWeightedEdge, IsEdge};
+use crate::op::{
+    AddWeightedEdge,
+    IsEdge,
+};
 
 /// Adding a weighted edge with [`crate::op::AddWeightedEdge`] should be
 /// reflected by [`crate::op::IsEdge`].
@@ -26,7 +29,10 @@ where
 
 #[cfg(test)]
 mod tests {
-    use {super::*, std::collections::HashMap};
+    use {
+        super::*,
+        std::collections::HashMap,
+    };
 
     macro_rules! add_weighted_edge_is_edge {
         ($graph:expr) => {

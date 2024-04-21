@@ -15,7 +15,11 @@
 //! ```
 extern crate alloc;
 
-use {alloc::collections::BTreeSet, core::hash::BuildHasher, std::collections::HashSet};
+use {
+    alloc::collections::BTreeSet,
+    core::hash::BuildHasher,
+    std::collections::HashSet,
+};
 
 /// A trait to iterate over all unweighted edges in a graph
 ///

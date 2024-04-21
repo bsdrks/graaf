@@ -1,6 +1,9 @@
 //! Adding an edge with [`crate::op::AddEdge`] should be reflected by
 //! [`crate::op::IsEdge`].
-use crate::op::{AddEdge, IsEdge};
+use crate::op::{
+    AddEdge,
+    IsEdge,
+};
 
 /// Adding an edge with [`crate::op::AddEdge`] should be reflected by
 /// [`crate::op::IsEdge`].
@@ -28,7 +31,10 @@ mod tests {
     use {
         super::*,
         std::{
-            collections::{HashMap, HashSet},
+            collections::{
+                HashMap,
+                HashSet,
+            },
             hash::RandomState,
         },
     };

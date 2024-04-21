@@ -25,7 +25,10 @@ mod dijkstra {
     extern crate alloc;
 
     use {
-        super::{DIST, HEAP},
+        super::{
+            DIST,
+            HEAP,
+        },
         alloc::collections::BinaryHeap,
         divan::Bencher,
         graaf::algo::dijkstra::distances,

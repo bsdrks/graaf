@@ -1,6 +1,9 @@
 //! Adding an edge with [`crate::op::AddEdge`] and then removing it with
 //! [`crate::op::RemoveEdge`] should keep the graph unchanged.
-use crate::op::{AddEdge, RemoveEdge};
+use crate::op::{
+    AddEdge,
+    RemoveEdge,
+};
 
 /// Adding an edge with [`crate::op::AddEdge`] and then removing it with
 /// [`crate::op::RemoveEdge`] should keep the graph unchanged.
@@ -31,7 +34,10 @@ where
 mod tests {
     use {
         super::*,
-        std::{collections::HashSet, hash::RandomState},
+        std::{
+            collections::HashSet,
+            hash::RandomState,
+        },
     };
 
     macro_rules! test_add_edge_remove_edge {

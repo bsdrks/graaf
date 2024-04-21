@@ -69,7 +69,10 @@
 extern crate alloc;
 
 use {
-    crate::op::{CountAllVertices, IterWeightedEdges},
+    crate::op::{
+        CountAllVertices,
+        IterWeightedEdges,
+    },
     alloc::collections::BinaryHeap,
     core::cmp::Reverse,
 };
@@ -286,7 +289,10 @@ where
 
 #[cfg(test)]
 mod tests {
-    use {super::*, crate::op::AddWeightedEdge};
+    use {
+        super::*,
+        crate::op::AddWeightedEdge,
+    };
 
     const GRAPH_0: [&[(usize, usize)]; 0] = [];
 

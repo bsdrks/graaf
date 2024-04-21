@@ -24,7 +24,10 @@
 //! assert_eq!(graph.edge_weight(2, 2), None);
 //! ```
 
-use {core::hash::BuildHasher, std::collections::HashMap};
+use {
+    core::hash::BuildHasher,
+    std::collections::HashMap,
+};
 
 /// A trait to get the weight of a given edge
 ///

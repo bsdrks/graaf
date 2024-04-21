@@ -23,7 +23,10 @@ mod add_edge {
         core::array::from_fn,
         divan::Bencher,
         graaf::op::AddEdge,
-        std::collections::{HashMap, HashSet},
+        std::collections::{
+            HashMap,
+            HashSet,
+        },
     };
 
     const ARGS: [usize; 3] = [10, 100, 1000];

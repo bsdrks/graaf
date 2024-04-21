@@ -32,11 +32,21 @@ mod count_all_edges {
     extern crate alloc;
 
     use {
-        alloc::collections::{BTreeMap, BTreeSet},
+        alloc::collections::{
+            BTreeMap,
+            BTreeSet,
+        },
         core::array::from_fn,
         divan::Bencher,
-        graaf::op::{AddEdge, AddWeightedEdge, CountAllEdges},
-        std::collections::{HashMap, HashSet},
+        graaf::op::{
+            AddEdge,
+            AddWeightedEdge,
+            CountAllEdges,
+        },
+        std::collections::{
+            HashMap,
+            HashSet,
+        },
     };
 
     const ARGS: [usize; 3] = [10, 100, 1000];
