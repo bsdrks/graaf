@@ -78,8 +78,8 @@ Graph operation traits and implementations:
 
 ### Features
 
-- `nightly`: required for the `adjacency_matrix` feature.
-- `adjacency_matrix`: a representation fit for dense graphs, enabled by default.
+- `adjacency_matrix`: a representation for dense graphs, enabled by default.
+- `nightly`: required for `adjacency_matrix`.
 
 To disable these features, add the following to your `Cargo.toml`:
 
