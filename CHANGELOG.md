@@ -21,6 +21,14 @@ In arbitrary order:
 - Add topological sorting for DAGs.
 - Split up GHA workflow into multiple jobs.
 
+## [0.22.1] - 2024-04-21
+
+Changed
+
+- Move module documentation into modules.
+- Use `HashSet` instead of `AdjacencyMatrix` in `lib` test.
+- Add `Cargo.toml` to `.gitignore`.
+
 ## [0.22.0] - 2024-04-21
 
 Changed
