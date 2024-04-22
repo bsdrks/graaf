@@ -123,13 +123,10 @@ use {
 ///
 /// assert_eq!(dist, [0, 1, 2, usize::MAX]);
 /// ```
-pub fn distances<G, W>(
-    graph: &G,
-    step: fn(W) -> W,
-    dist: &mut [W],
-    queue: &mut VecDeque<(usize, W)>,
-) where
-    G: IterEdges + ?Sized,
+pub fn distances<G, S, W>(graph: &G, step: S, dist: &mut [W], queue: &mut VecDeque<(usize, W)>)
+where
+    G: IterEdges,
+    S: Fn(W) -> W,
     W: Copy + Ord,
 {
     while let Some((s, w)) = queue.pop_front() {
@@ -223,14 +220,15 @@ where
 /// assert_eq!(pred, [None, Some(0), Some(1), None]);
 /// assert_eq!(dist, [0, 1, 2, usize::MAX]);
 /// ```
-pub fn predecessors<G, W>(
+pub fn predecessors<G, S, W>(
     graph: &G,
-    step: fn(W) -> W,
+    step: S,
     pred: &mut [Option<usize>],
     dist: &mut [W],
     queue: &mut VecDeque<(usize, W)>,
 ) where
-    G: IterEdges + ?Sized,
+    G: IterEdges,
+    S: Fn(W) -> W,
     W: Copy + Ord,
 {
     while let Some((s, w)) = queue.pop_front() {
@@ -332,16 +330,18 @@ where
 ///
 /// assert_eq!(path, Some(vec![3, 0, 1, 2]));
 /// ```
-pub fn shortest_path<G>(
+pub fn shortest_path<G, S, T>(
     graph: &G,
-    step: fn(usize) -> usize,
-    is_target: fn(usize) -> bool,
+    step: S,
+    is_target: T,
     pred: &mut [Option<usize>],
     dist: &mut [usize],
     queue: &mut VecDeque<(usize, usize)>,
 ) -> Option<Vec<usize>>
 where
     G: IterEdges,
+    S: Fn(usize) -> usize,
+    T: Fn(usize) -> bool,
 {
     while let Some((s, w)) = queue.pop_front() {
         let w = step(w);
@@ -365,6 +365,53 @@ where
     }
 
     None
+}
+
+/// Calculate the shortest path from a single source vertex to a single target
+/// vertex.
+///
+/// # Arguments
+///
+/// * `graph`: The graph.
+/// * `s`: The source vertex.
+/// * `t`: The target vertex.
+///
+/// # Examples
+///
+/// ```
+/// use graaf::algo::bfs::single_pair_shortest_path;
+///
+/// // ╭───╮       ╭───╮
+/// // │ 0 │   →   │ 1 │
+/// // ╰───╯       ╰───╯
+/// //   ↑           ↓
+/// // ╭───╮       ╭───╮
+/// // │ 3 │       │ 2 │
+/// // ╰───╯       ╰───╯
+///
+/// let graph = [vec![1], vec![2], Vec::new(), vec![0]];
+/// let path = single_pair_shortest_path(&graph, 3, 2);
+///
+/// assert_eq!(path, Some(vec![3, 0, 1, 2]));
+/// ```
+pub fn single_pair_shortest_path<G>(graph: &G, s: usize, t: usize) -> Option<Vec<usize>>
+where
+    G: CountAllVertices + IterEdges,
+{
+    let mut pred = vec![None; graph.count_all_vertices()];
+    let mut dist = vec![usize::MAX; graph.count_all_vertices()];
+    let mut queue = VecDeque::from(vec![(s, 0)]);
+
+    dist[s] = 0;
+
+    shortest_path(
+        graph,
+        |w| w + 1,
+        |v| v == t,
+        &mut pred,
+        &mut dist,
+        &mut queue,
+    )
 }
 
 #[cfg(test)]

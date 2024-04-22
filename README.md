@@ -16,34 +16,50 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.22.1"
+graaf = "0.23.0"
 ```
 
 ## Usage
 
 ```rust
-use graaf::{
-    op::{
-        AddEdge,
-        Indegree,
-        Outdegree,
+use {
+    graaf::{
+        algo::bfs::single_pair_shortest_path,
+        op::{
+            AddEdge,
+            Indegree,
+        },
     },
     std::collections::HashSet,
 };
 
-let mut graph = [HashSet::new(), HashSet::new(), HashSet::new()];
+let mut graph = [
+    HashSet::new(), 
+    HashSet::new(), 
+    HashSet::new(), 
+    HashSet::new()
+];
 
+// ╭───╮       ╭───╮
+// │ 0 │   →   │ 1 │
+// ╰───╯       ╰───╯
+//   ↑           ↓
+// ╭───╮       ╭───╮
+// │ 3 │       │ 2 │
+// ╰───╯       ╰───╯
+
+graph.add_edge(3, 0);
 graph.add_edge(0, 1);
-graph.add_edge(0, 2);
 graph.add_edge(1, 2);
 
-assert_eq!(graph.indegree(0), 0);
+assert_eq!(graph.indegree(0), 1);
 assert_eq!(graph.indegree(1), 1);
-assert_eq!(graph.indegree(2), 2);
+assert_eq!(graph.indegree(2), 1);
+assert_eq!(graph.indegree(3), 0);
 
-assert_eq!(graph.outdegree(0), 2);
-assert_eq!(graph.outdegree(1), 1);
-assert_eq!(graph.outdegree(2), 0);
+let path = single_pair_shortest_path(&graph, 3, 2);
+
+assert_eq!(path, Some(vec![3, 0, 1, 2]));
 ```
 
 ## Overview
@@ -85,5 +101,5 @@ To disable these features, add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = { version = "0.22.1", default-features = false }
+graaf = { version = "0.23.0", default-features = false }
 ```

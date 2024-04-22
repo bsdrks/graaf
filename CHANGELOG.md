@@ -8,7 +8,6 @@ In arbitrary order:
 - Add Hopcroft-Karp algorithm.
 - Add Kruksal's algorithm.
 - Add SPFA algorithm.
-- Add `bfs::sssp`.
 - Add `dijkstra::mssp`.
 - Add `dijkstra::sssp`.
 - Add biclique generator.
@@ -20,6 +19,24 @@ In arbitrary order:
 - Add star graph generator.
 - Add topological sorting for DAGs.
 - Split up GHA workflow into multiple jobs.
+
+## [0.23.0] - 2024-04-22
+
+Added
+
+- Add `bfs::single_pair_shortest_path`.
+
+Changed
+
+- Breaking: remove `?Sized` bound from `graph` in `bfs::distances`.
+- Breaking: remove `?Sized` bound from `graph` in `bfs::predecessors`.
+- Change `is_target` to `impl Fn(W) -> bool` in `bfs::shortest_path`.
+- Change `step` type to `impl Fn(W) -> W` in `bfs::distances`.
+- Change `step` type to `impl Fn(W) -> W` in `bfs::predecessors`.
+- Change `step` type to `impl Fn(W) -> W` in `bfs::shortest_path`.
+- Change `step` type to `impl Fn(W) -> W` in `dijkstra::distances`.
+- Change `step` type to `impl Fn(W) -> W` in `dijkstra::predecessors`.
+- Update `README.md` example to use `bfs::single_pair_shortest_path`.
 
 ## [0.22.1] - 2024-04-21
 

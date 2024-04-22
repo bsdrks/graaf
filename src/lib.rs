@@ -6,27 +6,43 @@
 //!
 //! ```
 //! use {
-//!     graaf::op::{
-//!         AddEdge,
-//!         Indegree,
-//!         Outdegree,
+//!     crate::{
+//!         algo::bfs::single_pair_shortest_path,
+//!         op::{
+//!             AddEdge,
+//!             Indegree,
+//!         },
 //!     },
 //!     std::collections::HashSet,
 //! };
 //!
-//! let mut graph = [HashSet::new(), HashSet::new(), HashSet::new()];
+//! let mut graph = [
+//!     HashSet::new(),
+//!     HashSet::new(),
+//!     HashSet::new(),
+//!     HashSet::new(),
+//! ];
 //!
+//! // ╭───╮       ╭───╮
+//! // │ 0 │   →   │ 1 │
+//! // ╰───╯       ╰───╯
+//! //   ↑           ↓
+//! // ╭───╮       ╭───╮
+//! // │ 3 │       │ 2 │
+//! // ╰───╯       ╰───╯
+//!
+//! graph.add_edge(3, 0);
 //! graph.add_edge(0, 1);
-//! graph.add_edge(0, 2);
 //! graph.add_edge(1, 2);
 //!
-//! assert_eq!(graph.indegree(0), 0);
+//! assert_eq!(graph.indegree(0), 1);
 //! assert_eq!(graph.indegree(1), 1);
-//! assert_eq!(graph.indegree(2), 2);
+//! assert_eq!(graph.indegree(2), 1);
+//! assert_eq!(graph.indegree(3), 0);
 //!
-//! assert_eq!(graph.outdegree(0), 2);
-//! assert_eq!(graph.outdegree(1), 1);
-//! assert_eq!(graph.outdegree(2), 0);
+//! let path = single_pair_shortest_path(&graph, 3, 2);
+//!
+//! assert_eq!(path, Some(vec![3, 0, 1, 2]));
 //! ```
 
 // Clippy lint groups
@@ -75,29 +91,45 @@ pub mod repr;
 
 #[cfg(test)]
 mod tests {
-    use {
-        crate::op::{
-            AddEdge,
-            Indegree,
-            Outdegree,
-        },
-        std::collections::HashSet,
-    };
-
     #[test]
     fn example() {
-        let mut graph = [HashSet::new(), HashSet::new(), HashSet::new()];
+        use {
+            crate::{
+                algo::bfs::single_pair_shortest_path,
+                op::{
+                    AddEdge,
+                    Indegree,
+                },
+            },
+            std::collections::HashSet,
+        };
 
+        let mut graph = [
+            HashSet::new(),
+            HashSet::new(),
+            HashSet::new(),
+            HashSet::new(),
+        ];
+
+        // ╭───╮       ╭───╮
+        // │ 0 │   →   │ 1 │
+        // ╰───╯       ╰───╯
+        //   ↑           ↓
+        // ╭───╮       ╭───╮
+        // │ 3 │       │ 2 │
+        // ╰───╯       ╰───╯
+
+        graph.add_edge(3, 0);
         graph.add_edge(0, 1);
-        graph.add_edge(0, 2);
         graph.add_edge(1, 2);
 
-        assert_eq!(graph.indegree(0), 0);
+        assert_eq!(graph.indegree(0), 1);
         assert_eq!(graph.indegree(1), 1);
-        assert_eq!(graph.indegree(2), 2);
+        assert_eq!(graph.indegree(2), 1);
+        assert_eq!(graph.indegree(3), 0);
 
-        assert_eq!(graph.outdegree(0), 2);
-        assert_eq!(graph.outdegree(1), 1);
-        assert_eq!(graph.outdegree(2), 0);
+        let path = single_pair_shortest_path(&graph, 3, 2);
+
+        assert_eq!(path, Some(vec![3, 0, 1, 2]));
     }
 }

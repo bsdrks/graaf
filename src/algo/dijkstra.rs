@@ -116,18 +116,19 @@ use {
 ///
 /// assert_eq!(dist, [0, 2, 4, usize::MAX]);
 /// ```
-pub fn distances<G, W>(
+pub fn distances<G, S, W>(
     graph: &G,
-    step: fn(W, W) -> W,
+    step: S,
     dist: &mut [W],
     heap: &mut BinaryHeap<(Reverse<W>, usize)>,
 ) where
     G: CountAllVertices + IterWeightedEdges<W>,
+    S: Fn(W, &W) -> W,
     W: Copy + Ord,
 {
     while let Some((Reverse(acc), s)) = heap.pop() {
         for (t, w) in graph.iter_weighted_edges(s) {
-            let w = step(acc, *w);
+            let w = step(acc, w);
 
             if w >= dist[t] {
                 continue;
@@ -219,14 +220,15 @@ where
 /// assert_eq!(pred, [None, Some(0), Some(1), None]);
 /// assert_eq!(dist, [0, 2, 4, usize::MAX]);
 /// ```
-pub fn predecessors<G, W>(
+pub fn predecessors<G, S, W>(
     graph: &G,
-    step: fn(W, &W) -> W,
+    step: S,
     pred: &mut [Option<usize>],
     dist: &mut [W],
     heap: &mut BinaryHeap<(Reverse<W>, usize)>,
 ) where
     G: CountAllVertices + IterWeightedEdges<W>,
+    S: Fn(W, &W) -> W,
     W: Copy + Ord,
 {
     while let Some((Reverse(acc), s)) = heap.pop() {
