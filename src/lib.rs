@@ -6,7 +6,7 @@
 //!
 //! ```
 //! use {
-//!     crate::{
+//!     graaf::{
 //!         algo::bfs::single_pair_shortest_path,
 //!         op::{
 //!             AddEdge,
@@ -16,7 +16,7 @@
 //!     std::collections::HashSet,
 //! };
 //!
-//! let mut graph = [
+//! let mut graph: [HashSet<usize>; 4] = [
 //!     HashSet::new(),
 //!     HashSet::new(),
 //!     HashSet::new(),
