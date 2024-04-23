@@ -16,7 +16,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.23.1"
+graaf = "0.24.0"
 ```
 
 ## Usage
@@ -92,6 +92,12 @@ Graph operation traits and implementations:
 - [`Outdegree`](https://docs.rs/graaf/latest/graaf/op/outdegree/trait.Outdegree.html) returns the outdegree of a vertex.
 - [`RemoveEdge`](https://docs.rs/graaf/latest/graaf/op/remove_edge/trait.RemoveEdge.html) removes an edge.
 
+### Generators
+
+Generators for common graph types:
+
+- [`Linear`](https://docs.rs/graaf/latest/graaf/gen/linear/trait.Linear.html): a linear graph, also known as a path graph.
+
 ### Features
 
 - `adjacency_matrix`: a representation for dense graphs, enabled by default.
@@ -101,5 +107,5 @@ To disable these features, add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = { version = "0.23.1", default-features = false }
+graaf = { version = "0.24.0", default-features = false }
 ```

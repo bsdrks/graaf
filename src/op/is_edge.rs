@@ -182,7 +182,7 @@ where
 
 impl<const V: usize> IsEdge for [BTreeSet<usize>; V] {
     fn is_edge(&self, s: usize, t: usize) -> bool {
-        self[s].contains(&t)
+        self.get(s).map_or(false, |set| set.contains(&t))
     }
 }
 
@@ -191,7 +191,7 @@ where
     H: BuildHasher,
 {
     fn is_edge(&self, s: usize, t: usize) -> bool {
-        self[s].contains(&t)
+        self.get(s).map_or(false, |set| set.contains(&t))
     }
 }
 
@@ -200,7 +200,7 @@ where
     W: Ord,
 {
     fn is_edge(&self, s: usize, t: usize) -> bool {
-        self[s].contains_key(&t)
+        self.get(s).map_or(false, |map| map.contains_key(&t))
     }
 }
 
@@ -209,7 +209,7 @@ where
     H: BuildHasher,
 {
     fn is_edge(&self, s: usize, t: usize) -> bool {
-        self[s].contains_key(&t)
+        self.get(s).map_or(false, |map| map.contains_key(&t))
     }
 }
 

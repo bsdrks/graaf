@@ -15,12 +15,24 @@ In arbitrary order:
 - Add bipartite matching algorithm for connected graphs.
 - Add bipartite matching algorithm for disconnected graphs.
 - Add depth-first search.
-- Add linear graph generator.
 - Add star graph generator.
 - Add topological sorting for DAGs.
 - Optimize performance of `bfs::*`.
 - Optimize performance of `dijkstra::*`.
 - Split up GHA workflow into multiple jobs.
+
+## [0.24.0] - 2024-04-23
+
+Added
+
+- Add `gen::Linear`, a generator for linear graphs.
+
+Changed
+
+- `IsEdge` for `[BTreeMap<usize, W>]` no longer panics if `s` is not in the graph.
+- `IsEdge` for `[BTreeSet<usize>]` no longer panics if `s` is not in the graph.
+- `IsEdge` for `[HashMap<usize, W>]` no longer panics if `s` is not in the graph.
+- `IsEdge` for `[HashSet<usize>]` no longer panics if `s` is not in the graph.
 
 ## [0.23.1] - 2024-04-23
 

@@ -86,6 +86,7 @@
 #![cfg_attr(feature = "nightly", feature(generic_const_exprs))]
 
 pub mod algo;
+pub mod gen;
 pub mod op;
 pub mod repr;
 
