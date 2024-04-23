@@ -16,7 +16,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.24.0"
+graaf = "0.24.1"
 ```
 
 ## Usage
@@ -100,12 +100,12 @@ Generators for common graph types:
 
 ### Features
 
-- `adjacency_matrix`: a representation for dense graphs, enabled by default.
+- `adjacency_matrix`: a representation for dense graphs.
 - `nightly`: required for `adjacency_matrix`.
 
 To disable these features, add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = { version = "0.24.0", default-features = false }
+graaf = { version = "0.24.1", default-features = false }
 ```

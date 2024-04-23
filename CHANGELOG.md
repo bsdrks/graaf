@@ -21,6 +21,12 @@ In arbitrary order:
 - Optimize performance of `dijkstra::*`.
 - Split up GHA workflow into multiple jobs.
 
+## [0.24.1] - 2024-04-23
+
+Added
+
+- Add doctest for `gen::Linear`.
+
 ## [0.24.0] - 2024-04-23
 
 Added

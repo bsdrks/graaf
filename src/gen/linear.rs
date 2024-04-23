@@ -19,6 +19,34 @@
 //! ```
 
 /// A trait to generate linear graphs
+///
+/// # How can I implement `Linear`?
+///
+/// Provide an implementation of `linear` that generates a linear graph with `v`
+/// vertices for your type.
+///
+/// ```
+/// use {
+///     graaf::gen::Linear,
+///     std::collections::HashSet,
+/// };
+///
+/// struct Graph {
+///     edges: HashSet<(usize, usize)>,
+/// }
+///
+/// impl Linear for Graph {
+///     fn linear(v: usize) -> Self {
+///         Graph {
+///             edges: (0..v - 1).map(|s| (s, s + 1)).collect(),
+///         }
+///     }
+/// }
+///
+/// let graph = Graph::linear(3);
+///
+/// assert_eq!(graph.edges, HashSet::from([(0, 1), (1, 2)]));
+/// ```
 pub trait Linear {
     /// Generate a linear graph.
     ///
