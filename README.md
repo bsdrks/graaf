@@ -16,7 +16,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.23.0"
+graaf = "0.23.1"
 ```
 
 ## Usage
@@ -101,5 +101,5 @@ To disable these features, add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = { version = "0.23.0", default-features = false }
+graaf = { version = "0.23.1", default-features = false }
 ```

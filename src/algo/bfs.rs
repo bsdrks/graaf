@@ -7,6 +7,10 @@
 //! - need the predecessor tree for the shortest paths from a single source
 //!   vertex to all other vertices.
 //!
+//! Use [`single_pair_shortest_path`] if you:
+//! - need the shortest path from a single source vertex to a single target
+//!   vertex.
+//!
 //! Use [`distances`] if you:
 //! - need the distances from multiple source vertices to all other vertices,
 //! - have predefined starting distances,
@@ -298,6 +302,10 @@ where
 /// * `dist`: The distances from the source vertices.
 /// * `source`: The source vertices.
 ///
+/// # Panics
+///
+/// Panics if a source vertex or a subsequent vertex is out of bounds.
+///
 /// # Examples
 ///
 /// ```
@@ -375,6 +383,10 @@ where
 /// * `graph`: The graph.
 /// * `s`: The source vertex.
 /// * `t`: The target vertex.
+///
+/// # Panics
+///
+/// Panics if `s`, `t`, or an intermediate vertex is out of bounds.
 ///
 /// # Examples
 ///
@@ -733,5 +745,138 @@ mod tests {
         let path = shortest_path(&graph, |w| w + 1, |t| t == 2, pred, dist, queue);
 
         assert_eq!(path, Some(vec![0, 1, 2]));
+    }
+
+    #[should_panic(expected = "index out of bounds: the len is 0 but the index is 0")]
+    #[test]
+    fn single_pair_shortest_path_graph_0() {
+        let graph = to_vec(&GRAPH_0);
+        let _ = single_pair_shortest_path(&graph, 0, 0);
+    }
+
+    #[test]
+    fn single_pair_shortest_path_graph_1() {
+        let graph = to_vec(&GRAPH_1);
+
+        for (s, t, p) in &[
+            (0, 0, None),
+            (0, 1, Some(vec![0, 1])),
+            (0, 2, Some(vec![0, 1, 2])),
+            (0, 3, None),
+            (1, 0, None),
+            (1, 1, None),
+            (1, 2, Some(vec![1, 2])),
+            (1, 3, None),
+            (2, 0, None),
+            (2, 1, None),
+            (2, 2, None),
+            (2, 3, None),
+            (3, 0, Some(vec![3, 0])),
+            (3, 1, Some(vec![3, 0, 1])),
+            (3, 2, Some(vec![3, 0, 1, 2])),
+            (3, 3, None),
+        ] {
+            assert_eq!(single_pair_shortest_path(&graph, *s, *t), *p);
+        }
+    }
+
+    #[test]
+    fn single_pair_shortest_path_graph_2() {
+        let graph = to_vec(&GRAPH_2);
+
+        for (s, t, p) in &[
+            (0, 0, None),
+            (0, 1, Some(vec![0, 1])),
+            (0, 2, Some(vec![0, 2])),
+            (0, 3, Some(vec![0, 1, 3])),
+            (1, 0, Some(vec![1, 0])),
+            (1, 1, None),
+            (1, 2, Some(vec![1, 2])),
+            (1, 3, Some(vec![1, 3])),
+            (2, 0, Some(vec![2, 0])),
+            (2, 1, Some(vec![2, 1])),
+            (2, 2, None),
+            (2, 3, Some(vec![2, 3])),
+            (3, 0, Some(vec![3, 1, 0])),
+            (3, 1, Some(vec![3, 1])),
+            (3, 2, Some(vec![3, 2])),
+            (3, 3, None),
+        ] {
+            assert_eq!(single_pair_shortest_path(&graph, *s, *t), *p);
+        }
+    }
+
+    #[test]
+    fn single_pair_shortest_path_graph_3() {
+        let graph = to_vec(&GRAPH_3);
+
+        for (s, t, p) in &[
+            (0, 0, None),
+            (0, 1, Some(vec![0, 1])),
+            (0, 2, Some(vec![0, 1, 2])),
+            (0, 3, Some(vec![0, 3])),
+            (0, 4, Some(vec![0, 3, 4])),
+            (0, 5, Some(vec![0, 3, 4, 5])),
+            (0, 6, Some(vec![0, 3, 4, 6])),
+            (0, 7, Some(vec![0, 3, 7])),
+            (1, 0, Some(vec![1, 0])),
+            (1, 1, None),
+            (1, 2, Some(vec![1, 2])),
+            (1, 3, Some(vec![1, 0, 3])),
+            (1, 4, Some(vec![1, 0, 3, 4])),
+            (1, 5, Some(vec![1, 0, 3, 4, 5])),
+            (1, 6, Some(vec![1, 0, 3, 4, 6])),
+            (1, 7, Some(vec![1, 0, 3, 7])),
+            (2, 0, Some(vec![2, 1, 0])),
+            (2, 1, Some(vec![2, 1])),
+            (2, 2, None),
+            (2, 3, Some(vec![2, 1, 0, 3])),
+            (2, 4, Some(vec![2, 1, 0, 3, 4])),
+            (2, 5, Some(vec![2, 1, 0, 3, 4, 5])),
+            (2, 6, Some(vec![2, 1, 0, 3, 4, 6])),
+            (2, 7, Some(vec![2, 1, 0, 3, 7])),
+            (3, 0, Some(vec![3, 0])),
+            (3, 1, Some(vec![3, 0, 1])),
+            (3, 2, Some(vec![3, 0, 1, 2])),
+            (3, 3, None),
+            (3, 4, Some(vec![3, 4])),
+            (3, 5, Some(vec![3, 4, 5])),
+            (3, 6, Some(vec![3, 4, 6])),
+            (3, 7, Some(vec![3, 7])),
+            (4, 0, Some(vec![4, 3, 0])),
+            (4, 1, Some(vec![4, 3, 0, 1])),
+            (4, 2, Some(vec![4, 3, 0, 1, 2])),
+            (4, 3, Some(vec![4, 3])),
+            (4, 4, None),
+            (4, 5, Some(vec![4, 5])),
+            (4, 6, Some(vec![4, 6])),
+            (4, 7, Some(vec![4, 7])),
+            (5, 0, Some(vec![5, 4, 3, 0])),
+            (5, 1, Some(vec![5, 4, 3, 0, 1])),
+            (5, 2, Some(vec![5, 4, 3, 0, 1, 2])),
+            (5, 3, Some(vec![5, 4, 3])),
+            (5, 4, Some(vec![5, 4])),
+            (5, 5, None),
+            (5, 6, Some(vec![5, 6])),
+            (5, 7, Some(vec![5, 4, 7])),
+            (6, 0, Some(vec![6, 4, 3, 0])),
+            (6, 1, Some(vec![6, 4, 3, 0, 1])),
+            (6, 2, Some(vec![6, 4, 3, 0, 1, 2])),
+            (6, 3, Some(vec![6, 4, 3])),
+            (6, 4, Some(vec![6, 4])),
+            (6, 5, Some(vec![6, 5])),
+            (6, 6, None),
+            (6, 7, Some(vec![6, 7])),
+            (7, 0, Some(vec![7, 3, 0])),
+            (7, 1, Some(vec![7, 3, 0, 1])),
+            (7, 2, Some(vec![7, 3, 0, 1, 2])),
+            (7, 3, Some(vec![7, 3])),
+            (7, 4, Some(vec![7, 4])),
+            (7, 5, Some(vec![7, 4, 5])),
+            (7, 6, Some(vec![7, 6])),
+            (7, 7, None),
+        ] {
+            assert_eq!(single_pair_shortest_path(&graph, *s, *t), *p);
+        }
     }
 }

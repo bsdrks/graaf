@@ -18,7 +18,16 @@ In arbitrary order:
 - Add linear graph generator.
 - Add star graph generator.
 - Add topological sorting for DAGs.
+- Optimize performance of `bfs::*`.
+- Optimize performance of `dijkstra::*`.
 - Split up GHA workflow into multiple jobs.
+
+## [0.23.1] - 2024-04-23
+
+Added
+
+- Add more tests for `bfs::single_pair_shortest_path`.
+- Mention `bfs::single_pair_shortest_path` in the module documentation of `bfs`.
 
 ## [0.23.0] - 2024-04-22
 
