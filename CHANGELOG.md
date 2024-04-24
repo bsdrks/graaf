@@ -21,7 +21,18 @@ In arbitrary order:
 - Optimize performance of `dijkstra::*`.
 - Split up GHA workflow into multiple jobs.
 
-## [0.24.1] - 2024-04-23
+## [0.25.0] - 2024-04-24
+
+Added
+
+- Implement `Linear` for `BTreeSet<usize>`.
+- Implement `Linear` for `HashSet<usize>`.
+
+Changed
+
+- Fix `Linear::linear`.
+
+## [0.24.1] - 2024-04-24
 
 Added
 
@@ -148,38 +159,38 @@ Changed
 
 Added
 
-- Add `Indegree` for `BTreeMap<usize, BTreeMap<usize, W>>`.
-- Add `Indegree` for `BTreeMap<usize, BTreeSet<usize>>`.
-- Add `Indegree` for `Vec<BTreeMap<usize, W>>`.
-- Add `Indegree` for `Vec<BTreeSet<usize>>`.
-- Add `Indegree` for `[BTreeMap<usize, W>; V]`.
-- Add `Indegree` for `[BTreeMap<usize, W>]`.
-- Add `Indegree` for `[BTreeSet<usize>; V]`.
-- Add `Indegree` for `[BTreeSet<usize>]`.
-- Add `IterVertices` for `Vec<BTreeMap<usize, W>>`.
-- Add `IterVertices` for `Vec<BTreeSet<(usize, W)>>`.
-- Add `IterVertices` for `Vec<BTreeSet<usize>>`.
-- Add `IterVertices` for `Vec<HashMap<usize, W>>`.
-- Add `IterVertices` for `Vec<HashSet<(usize, W)>>`.
-- Add `IterVertices` for `Vec<HashSet<usize>>`.
-- Add `IterVertices` for `Vec<Vec<(usize, W)>>`.
-- Add `IterVertices` for `Vec<Vec<usize>>`.
-- Add `IterVertices` for `[BTreeMap<usize, W>; V]`.
-- Add `IterVertices` for `[BTreeMap<usize, W>]`.
-- Add `IterVertices` for `[BTreeSet<(usize, W); V]`.
-- Add `IterVertices` for `[BTreeSet<(usize, W)]`.
-- Add `IterVertices` for `[BTreeSet<usize>; V]`.
-- Add `IterVertices` for `[BTreeSet<usize>]`.
-- Add `IterVertices` for `[HashMap<usize, W>; V]`.
-- Add `IterVertices` for `[HashMap<usize, W>]`.
-- Add `IterVertices` for `[HashSet<(usize, W); V]`.
-- Add `IterVertices` for `[HashSet<(usize, W)]`.
-- Add `IterVertices` for `[HashSet<usize>; V]`.
-- Add `IterVertices` for `[HashSet<usize>]`.
-- Add `IterVertices` for `[Vec<(usize, W)>; V]`.
-- Add `IterVertices` for `[Vec<(usize, W)>]`.
-- Add `IterVertices` for `[Vec<usize>; V]`.
-- Add `IterVertices` for `[Vec<usize>]`.
+- Implement `Indegree` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement `Indegree` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `Indegree` for `Vec<BTreeMap<usize, W>>`.
+- Implement `Indegree` for `Vec<BTreeSet<usize>>`.
+- Implement `Indegree` for `[BTreeMap<usize, W>; V]`.
+- Implement `Indegree` for `[BTreeMap<usize, W>]`.
+- Implement `Indegree` for `[BTreeSet<usize>; V]`.
+- Implement `Indegree` for `[BTreeSet<usize>]`.
+- Implement `IterVertices` for `Vec<BTreeMap<usize, W>>`.
+- Implement `IterVertices` for `Vec<BTreeSet<(usize, W)>>`.
+- Implement `IterVertices` for `Vec<BTreeSet<usize>>`.
+- Implement `IterVertices` for `Vec<HashMap<usize, W>>`.
+- Implement `IterVertices` for `Vec<HashSet<(usize, W)>>`.
+- Implement `IterVertices` for `Vec<HashSet<usize>>`.
+- Implement `IterVertices` for `Vec<Vec<(usize, W)>>`.
+- Implement `IterVertices` for `Vec<Vec<usize>>`.
+- Implement `IterVertices` for `[BTreeMap<usize, W>; V]`.
+- Implement `IterVertices` for `[BTreeMap<usize, W>]`.
+- Implement `IterVertices` for `[BTreeSet<(usize, W); V]`.
+- Implement `IterVertices` for `[BTreeSet<(usize, W)]`.
+- Implement `IterVertices` for `[BTreeSet<usize>; V]`.
+- Implement `IterVertices` for `[BTreeSet<usize>]`.
+- Implement `IterVertices` for `[HashMap<usize, W>; V]`.
+- Implement `IterVertices` for `[HashMap<usize, W>]`.
+- Implement `IterVertices` for `[HashSet<(usize, W); V]`.
+- Implement `IterVertices` for `[HashSet<(usize, W)]`.
+- Implement `IterVertices` for `[HashSet<usize>; V]`.
+- Implement `IterVertices` for `[HashSet<usize>]`.
+- Implement `IterVertices` for `[Vec<(usize, W)>; V]`.
+- Implement `IterVertices` for `[Vec<(usize, W)>]`.
+- Implement `IterVertices` for `[Vec<usize>; V]`.
+- Implement `IterVertices` for `[Vec<usize>]`.
 
 Removed
 
@@ -195,14 +206,14 @@ Fixed
 
 Added
 
-- Add `RemoveEdge` for `BTreeMap<usize, BTreeMap<usize, W>>`.
-- Add `RemoveEdge` for `BTreeMap<usize, BTreeSet<usize>>`.
-- Add `RemoveEdge` for `Vec<BTreeMap<usize, W>>`.
-- Add `RemoveEdge` for `Vec<BTreeSet<usize>>`.
-- Add `RemoveEdge` for `[BTreeMap<usize, W>; V]`.
-- Add `RemoveEdge` for `[BTreeMap<usize, W>]`.
-- Add `RemoveEdge` for `[BTreeSet<usize>; V]`.
-- Add `RemoveEdge` for `[BTreeSet<usize>]`.
+- Implement `RemoveEdge` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement `RemoveEdge` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `RemoveEdge` for `Vec<BTreeMap<usize, W>>`.
+- Implement `RemoveEdge` for `Vec<BTreeSet<usize>>`.
+- Implement `RemoveEdge` for `[BTreeMap<usize, W>; V]`.
+- Implement `RemoveEdge` for `[BTreeMap<usize, W>]`.
+- Implement `RemoveEdge` for `[BTreeSet<usize>; V]`.
+- Implement `RemoveEdge` for `[BTreeSet<usize>]`.
 
 Changed
 
@@ -212,33 +223,33 @@ Changed
 
 Added
 
-- Add `Outdegree` for `BTreeMap<usize, BTreeMap<usize, W>>`.
-- Add `Outdegree` for `BTreeMap<usize, BTreeSet<usize>>`.
-- Add `Outdegree` for `BTreeMap<usize, Vec<usize>>`.
-- Add `Outdegree` for `Vec<BTreeMap<usize, W>>`.
-- Add `Outdegree` for `Vec<BTreeSet<(usize, W)>>`.
-- Add `Outdegree` for `Vec<BTreeSet<usize>>`.
-- Add `Outdegree` for `Vec<HashMap<usize, W>>`.
-- Add `Outdegree` for `Vec<HashSet<(usize, W)>>`.
-- Add `Outdegree` for `Vec<HashSet<usize>>`.
-- Add `Outdegree` for `Vec<Vec<(usize, W)>>`.
-- Add `Outdegree` for `Vec<Vec<usize>>`.
-- Add `Outdegree` for `[BTreeMap<usize, W>; V]`.
-- Add `Outdegree` for `[BTreeMap<usize, W>]`.
-- Add `Outdegree` for `[BTreeSet<(usize, W)>; V]`.
-- Add `Outdegree` for `[BTreeSet<(usize, W)>]`.
-- Add `Outdegree` for `[BTreeSet<usize>; V]`.
-- Add `Outdegree` for `[BTreeSet<usize>]`.
-- Add `Outdegree` for `[HashMap<usize, W>; V]`.
-- Add `Outdegree` for `[HashMap<usize, W>]`.
-- Add `Outdegree` for `[HashSet<(usize, W)>; V]`.
-- Add `Outdegree` for `[HashSet<(usize, W)>]`.
-- Add `Outdegree` for `[HashSet<usize>]; V`.
-- Add `Outdegree` for `[HashSet<usize>]`.
-- Add `Outdegree` for `[Vec<(usize, W)>; V]`.
-- Add `Outdegree` for `[Vec<(usize, W)>]`.
-- Add `Outdegree` for `[Vec<usize>; V]`.
-- Add `Outdegree` for `[Vec<usize>]`.
+- Implement `Outdegree` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement `Outdegree` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `Outdegree` for `BTreeMap<usize, Vec<usize>>`.
+- Implement `Outdegree` for `Vec<BTreeMap<usize, W>>`.
+- Implement `Outdegree` for `Vec<BTreeSet<(usize, W)>>`.
+- Implement `Outdegree` for `Vec<BTreeSet<usize>>`.
+- Implement `Outdegree` for `Vec<HashMap<usize, W>>`.
+- Implement `Outdegree` for `Vec<HashSet<(usize, W)>>`.
+- Implement `Outdegree` for `Vec<HashSet<usize>>`.
+- Implement `Outdegree` for `Vec<Vec<(usize, W)>>`.
+- Implement `Outdegree` for `Vec<Vec<usize>>`.
+- Implement `Outdegree` for `[BTreeMap<usize, W>; V]`.
+- Implement `Outdegree` for `[BTreeMap<usize, W>]`.
+- Implement `Outdegree` for `[BTreeSet<(usize, W)>; V]`.
+- Implement `Outdegree` for `[BTreeSet<(usize, W)>]`.
+- Implement `Outdegree` for `[BTreeSet<usize>; V]`.
+- Implement `Outdegree` for `[BTreeSet<usize>]`.
+- Implement `Outdegree` for `[HashMap<usize, W>; V]`.
+- Implement `Outdegree` for `[HashMap<usize, W>]`.
+- Implement `Outdegree` for `[HashSet<(usize, W)>; V]`.
+- Implement `Outdegree` for `[HashSet<(usize, W)>]`.
+- Implement `Outdegree` for `[HashSet<usize>]; V`.
+- Implement `Outdegree` for `[HashSet<usize>]`.
+- Implement `Outdegree` for `[Vec<(usize, W)>; V]`.
+- Implement `Outdegree` for `[Vec<(usize, W)>]`.
+- Implement `Outdegree` for `[Vec<usize>; V]`.
+- Implement `Outdegree` for `[Vec<usize>]`.
 
 Changed
 
@@ -256,15 +267,15 @@ Changed
 
 Added
 
-- Add `IterWeightedEdges` for `Vec<BTreeMap<usize, W>>`.
-- Add `IterWeightedEdges` for `Vec<BTreeSet<(usize, W)>>`.
-- Add `IterWeightedEdges` for `[BTreeMap<usize, W>; V]`.
-- Add `IterWeightedEdges` for `[BTreeMap<usize, W>]`.
-- Add `IterWeightedEdges` for `[BTreeSet<(usize, W)>; V]`.
-- Add `IterWeightedEdges` for `[BTreeSet<(usize, W)>]`.
-- Add `IterWeightedEdges` for `BTreeMap<usize, Vec<(usize, W)>>`.
-- Add `IterWeightedEdges` for `BTreeMap<usize, BTreeSet<(usize, W)>>`.
-- Add `IterWeightedEdges` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement `IterWeightedEdges` for `Vec<BTreeMap<usize, W>>`.
+- Implement `IterWeightedEdges` for `Vec<BTreeSet<(usize, W)>>`.
+- Implement `IterWeightedEdges` for `[BTreeMap<usize, W>; V]`.
+- Implement `IterWeightedEdges` for `[BTreeMap<usize, W>]`.
+- Implement `IterWeightedEdges` for `[BTreeSet<(usize, W)>; V]`.
+- Implement `IterWeightedEdges` for `[BTreeSet<(usize, W)>]`.
+- Implement `IterWeightedEdges` for `BTreeMap<usize, Vec<(usize, W)>>`.
+- Implement `IterWeightedEdges` for `BTreeMap<usize, BTreeSet<(usize, W)>>`.
+- Implement `IterWeightedEdges` for `BTreeMap<usize, BTreeMap<usize, W>>`.
 
 ## [0.15.0] - 2024-04-16
 
@@ -276,11 +287,11 @@ Removed
 
 Added
 
-- Add `IterEdges` for `BTreeMap<usize, BTreeSet<usize>>`.
-- Add `IterEdges` for `BTreeMap<usize, Vec<usize>>`.
-- Add `IterEdges` for `Vec<BTreeSet<usize>>`.
-- Add `IterEdges` for `[BTreeSet<usize>; V]`.
-- Add `IterEdges` for `[BTreeSet<usize>]`.
+- Implement `IterEdges` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `IterEdges` for `BTreeMap<usize, Vec<usize>>`.
+- Implement `IterEdges` for `Vec<BTreeSet<usize>>`.
+- Implement `IterEdges` for `[BTreeSet<usize>; V]`.
+- Implement `IterEdges` for `[BTreeSet<usize>]`.
 
 Fixes
 
@@ -290,13 +301,13 @@ Fixes
 
 Added
 
-- Add `IsSimple` for `Vec<BTreeSet<usize>>`.
-- Add `IsSimple` for `[BTreeSet<usize>]`.
-- Add `IsSimple` for `[BTreeSet<usize>; V]`.
-- Add `IsSimple` for `BTreeSet<(usize, usize)>`.
-- Add `IsSimple` for `BTreeSet<(usize, usize, W)>`.
-- Add `IterAllEdges` for `BTreeSet<(usize, usize)>`.
-- Add `IterAllWeightedEdges` for `BTreeSet<(usize, usize, W)>`.
+- Implement `IsSimple` for `Vec<BTreeSet<usize>>`.
+- Implement `IsSimple` for `[BTreeSet<usize>]`.
+- Implement `IsSimple` for `[BTreeSet<usize>; V]`.
+- Implement `IsSimple` for `BTreeSet<(usize, usize)>`.
+- Implement `IsSimple` for `BTreeSet<(usize, usize, W)>`.
+- Implement `IterAllEdges` for `BTreeSet<(usize, usize)>`.
+- Implement `IterAllWeightedEdges` for `BTreeSet<(usize, usize, W)>`.
 
 ## [0.14.0] - 2024-04-15
 
@@ -317,12 +328,12 @@ Added
 
 Added
 
-- Add `CountAllVertices` for `Vec<BTreeSet<(usize, W)>>`.
-- Add `CountAllVertices` for `Vec<HashSet<(usize, W)>>`.
-- Add `CountAllVertices` for `[BTreeSet<(usize, W)>; V]`.
-- Add `CountAllVertices` for `[BTreeSet<(usize, W)>]`.
-- Add `CountAllVertices` for `[HashSet<(usize, W); V]`.
-- Add `CountAllVertices` for `[HashSet<(usize, W)]`.
+- Implement `CountAllVertices` for `Vec<BTreeSet<(usize, W)>>`.
+- Implement `CountAllVertices` for `Vec<HashSet<(usize, W)>>`.
+- Implement `CountAllVertices` for `[BTreeSet<(usize, W)>; V]`.
+- Implement `CountAllVertices` for `[BTreeSet<(usize, W)>]`.
+- Implement `CountAllVertices` for `[HashSet<(usize, W); V]`.
+- Implement `CountAllVertices` for `[HashSet<(usize, W)]`.
 
 Fixed
 
@@ -334,38 +345,38 @@ Fixed
 
 Added
 
-- Add `IsEdge` for `BTreeMap<usize, BTreeMap<usize, W>>`.
-- Add `IsEdge` for `BTreeMap<usize, BTreeSet<usize>>`.
-- Add `IsEdge` for `BTreeSet<(usize, usize)>`.
-- Add `IsEdge` for `Vec<BTreeMap<usize, W>>`.
-- Add `IsEdge` for `Vec<BTreeSet<usize>>`.
-- Add `IsEdge` for `[BTreeMap<usize, W>; V]`.
-- Add `IsEdge` for `[BTreeMap<usize, W>]`.
-- Add `IsEdge` for `[BTreeSet<usize>; V]`.
-- Add `IsEdge` for `[BTreeSet<usize>]`.
+- Implement `IsEdge` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement `IsEdge` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `IsEdge` for `BTreeSet<(usize, usize)>`.
+- Implement `IsEdge` for `Vec<BTreeMap<usize, W>>`.
+- Implement `IsEdge` for `Vec<BTreeSet<usize>>`.
+- Implement `IsEdge` for `[BTreeMap<usize, W>; V]`.
+- Implement `IsEdge` for `[BTreeMap<usize, W>]`.
+- Implement `IsEdge` for `[BTreeSet<usize>; V]`.
+- Implement `IsEdge` for `[BTreeSet<usize>]`.
 
 ## [0.13.0] - 2024-04-14
 
 Added
 
-- Add `CountAllVertices` for `Vec<BTreeMap<usize, W>>`.
-- Add `CountAllVertices` for `Vec<BTreeSet<usize>>`.
-- Add `CountAllVertices` for `Vec<HashMap<usize, W>>`.
-- Add `CountAllVertices` for `Vec<HashSet<usize>>`.
-- Add `CountAllVertices` for `Vec<Vec<(usize, W)>>`.
-- Add `CountAllVertices` for `Vec<Vec<usize>>`.
-- Add `CountAllVertices` for `[BTreeMap<usize, W>; V]`.
-- Add `CountAllVertices` for `[BTreeMap<usize, W>]`.
-- Add `CountAllVertices` for `[BTreeSet<usize>; V]`.
-- Add `CountAllVertices` for `[BTreeSet<usize>]`.
-- Add `CountAllVertices` for `[HashMap<usize, W>; V]`.
-- Add `CountAllVertices` for `[HashMap<usize, W>]`.
-- Add `CountAllVertices` for `[HashSet<usize>; V]`.
-- Add `CountAllVertices` for `[HashSet<usize>]`.
-- Add `CountAllVertices` for `[Vec<(usize, W)>; V]`.
-- Add `CountAllVertices` for `[Vec<(usize, W)>]`.
-- Add `CountAllVertices` for `[Vec<usize>; V]`.
-- Add `CountAllVertices` for `[Vec<usize>]`.
+- Implement `CountAllVertices` for `Vec<BTreeMap<usize, W>>`.
+- Implement `CountAllVertices` for `Vec<BTreeSet<usize>>`.
+- Implement `CountAllVertices` for `Vec<HashMap<usize, W>>`.
+- Implement `CountAllVertices` for `Vec<HashSet<usize>>`.
+- Implement `CountAllVertices` for `Vec<Vec<(usize, W)>>`.
+- Implement `CountAllVertices` for `Vec<Vec<usize>>`.
+- Implement `CountAllVertices` for `[BTreeMap<usize, W>; V]`.
+- Implement `CountAllVertices` for `[BTreeMap<usize, W>]`.
+- Implement `CountAllVertices` for `[BTreeSet<usize>; V]`.
+- Implement `CountAllVertices` for `[BTreeSet<usize>]`.
+- Implement `CountAllVertices` for `[HashMap<usize, W>; V]`.
+- Implement `CountAllVertices` for `[HashMap<usize, W>]`.
+- Implement `CountAllVertices` for `[HashSet<usize>; V]`.
+- Implement `CountAllVertices` for `[HashSet<usize>]`.
+- Implement `CountAllVertices` for `[Vec<(usize, W)>; V]`.
+- Implement `CountAllVertices` for `[Vec<(usize, W)>]`.
+- Implement `CountAllVertices` for `[Vec<usize>; V]`.
+- Implement `CountAllVertices` for `[Vec<usize>]`.
 
 Removed
 

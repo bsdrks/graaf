@@ -12,11 +12,21 @@
 //! assert_eq!(Vec::<Vec<usize>>::linear(1), vec![Vec::new()]);
 //!
 //! // 0 → 1
-//! assert_eq!(Vec::<Vec<usize>>::linear(2), vec![vec![0, 1]]);
+//! assert_eq!(Vec::<Vec<usize>>::linear(2), vec![vec![1], Vec::new()]);
 //!
 //! // 0 → 1 → 2
-//! assert_eq!(Vec::<Vec<usize>>::linear(3), vec![vec![0, 1], vec![1, 2]]);
+//! assert_eq!(
+//!     Vec::<Vec<usize>>::linear(3),
+//!     vec![vec![1], vec![2], Vec::new()]
+//! );
 //! ```
+extern crate alloc;
+
+use {
+    alloc::collections::BTreeSet,
+    core::hash::BuildHasher,
+    std::collections::HashSet,
+};
 
 /// A trait to generate linear graphs
 ///
@@ -58,11 +68,61 @@ pub trait Linear {
 
 impl Linear for Vec<Vec<usize>> {
     fn linear(v: usize) -> Self {
-        match v {
-            0 => Self::new(),
-            1 => vec![Vec::new()],
-            _ => (0..v - 1).map(|s| vec![s, s + 1]).collect(),
+        if v == 0 {
+            return Self::new();
         }
+
+        let mut graph = Self::with_capacity(v);
+
+        for i in 0..v - 1 {
+            graph.push(vec![i + 1]);
+        }
+
+        graph.push(Vec::new());
+
+        graph
+    }
+}
+
+impl Linear for Vec<BTreeSet<usize>> {
+    fn linear(v: usize) -> Self {
+        if v == 0 {
+            return Self::with_capacity(0);
+        }
+
+        let mut graph = Self::with_capacity(v);
+
+        for i in 0..v - 1 {
+            graph.push(BTreeSet::from([i + 1]));
+        }
+
+        graph.push(BTreeSet::new());
+
+        graph
+    }
+}
+
+impl<H> Linear for Vec<HashSet<usize, H>>
+where
+    H: BuildHasher + Default,
+{
+    fn linear(v: usize) -> Self {
+        if v == 0 {
+            return Self::with_capacity(0);
+        }
+
+        let mut graph = Self::with_capacity(v);
+
+        for s in 0..v.saturating_sub(1) {
+            let mut out = HashSet::with_hasher(H::default());
+            let _ = out.insert(s + 1);
+
+            graph.push(out);
+        }
+
+        graph.push(HashSet::with_hasher(H::default()));
+
+        graph
     }
 }
 
@@ -78,14 +138,52 @@ mod tests {
             // 0
             vec![Vec::new()],
             // 0 → 1
-            vec![vec![0, 1]],
+            vec![vec![1], Vec::new()],
             // 0 → 1 → 2
-            vec![vec![0, 1], vec![1, 2]],
+            vec![vec![1], vec![2], Vec::new()],
         ]
         .iter()
         .enumerate()
         {
             assert_eq!(&Vec::<Vec<usize>>::linear(v), g);
+        }
+    }
+
+    #[test]
+    fn vec_btree_set() {
+        for (v, g) in [
+            //
+            Vec::new(),
+            // 0
+            vec![BTreeSet::new()],
+            // 0 → 1
+            vec![BTreeSet::from([1]), BTreeSet::new()],
+            // 0 → 1 → 2
+            vec![BTreeSet::from([1]), BTreeSet::from([2]), BTreeSet::new()],
+        ]
+        .iter()
+        .enumerate()
+        {
+            assert_eq!(&Vec::<BTreeSet<usize>>::linear(v), g);
+        }
+    }
+
+    #[test]
+    fn vec_hash_set() {
+        for (v, g) in [
+            //
+            Vec::new(),
+            // 0
+            vec![HashSet::new()],
+            // 0 → 1
+            vec![HashSet::from([1]), HashSet::new()],
+            // 0 → 1 → 2
+            vec![HashSet::from([1]), HashSet::from([2]), HashSet::new()],
+        ]
+        .iter()
+        .enumerate()
+        {
+            assert_eq!(&Vec::<HashSet<usize>>::linear(v), g);
         }
     }
 }
