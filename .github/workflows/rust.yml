@@ -30,9 +30,9 @@ jobs:
         with:
           toolchain: nightly
           override: true
-          components: fmt
+          components: rustfmt
       - name: Check formatting
-        run: cargo rustfmt --check --verbose
+        run: cargo fmt --check --verbose
 
   doc:
     runs-on: ubuntu-latest
