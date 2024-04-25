@@ -21,6 +21,12 @@ In arbitrary order:
 - Optimize performance of `dijkstra::*`.
 - Split up GHA workflow into multiple jobs.
 
+## [0.25.1] - 2024-04-25
+
+Changed
+
+- Replace `saturating_sub` with `-` in `gen::linear`.
+
 ## [0.25.0] - 2024-04-24
 
 Added

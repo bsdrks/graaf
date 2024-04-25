@@ -1,4 +1,4 @@
-//! A trait to generate linear graphs
+//! A trait to generate linear graphs, also known as path graphs
 //!
 //! # Examples
 //!
@@ -28,7 +28,7 @@ use {
     std::collections::HashSet,
 };
 
-/// A trait to generate linear graphs
+/// A trait to generate linear graphs, also known as path graphs
 ///
 /// # How can I implement `Linear`?
 ///
@@ -58,7 +58,7 @@ use {
 /// assert_eq!(graph.edges, HashSet::from([(0, 1), (1, 2)]));
 /// ```
 pub trait Linear {
-    /// Generate a linear graph.
+    /// Generate a linear graph, also known as a path graph.
     ///
     /// # Arguments
     ///
@@ -113,7 +113,7 @@ where
 
         let mut graph = Self::with_capacity(v);
 
-        for s in 0..v.saturating_sub(1) {
+        for s in 0..v - 1 {
             let mut out = HashSet::with_hasher(H::default());
             let _ = out.insert(s + 1);
 

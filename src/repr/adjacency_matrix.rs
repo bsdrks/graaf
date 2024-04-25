@@ -1,3 +1,8 @@
+//! An adjacency matrix representation of an unweighted digraph
+//!
+//! The matrix is stored as a bit array, and is suited for dense graphs with a
+//! small number of vertices.
+
 use crate::op::{
     AddEdge,
     CountAllEdges,
@@ -17,8 +22,7 @@ macro_rules! blocks {
     };
 }
 
-/// An adjacency matrix representation of an unweighted digraph stored as a bit
-/// array
+/// An adjacency matrix representation of an unweighted digraph
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct AdjacencyMatrix<const V: usize>
 where

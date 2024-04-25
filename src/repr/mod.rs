@@ -1,7 +1,5 @@
-//! Types that represent graphs
+//! Custom graph representations
 
-/// An adjacency matrix representation of an unweighted digraph stored as a bit
-/// array
 #[cfg(feature = "adjacency_matrix")]
 pub mod adjacency_matrix;
 
