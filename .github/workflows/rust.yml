@@ -6,7 +6,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
+  clippy:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,15 +16,48 @@ jobs:
         with:
           toolchain: nightly
           override: true
-          components: rustfmt, clippy, llvm-tools-preview
+          components: clippy
       - name: Run clippy
-        run: cargo clippy --verbose
+        run: cargo clippy --all-targets --verbose
+
+  fmt:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install nightly toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
+          components: fmt
       - name: Check formatting
         run: cargo fmt --check --verbose
-      - name: Build
-        run: cargo build --verbose
+
+  doc:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install nightly toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
       - name: Generate documentation
         run: cargo doc --verbose
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install nightly toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
+          components: llvm-tools-preview
       - name: Install grcov
         run: cargo install grcov
       - name: Run tests
@@ -33,3 +66,31 @@ jobs:
         run: grcov . --binary-path ./target/debug/ -t coveralls -s . --ignore '../*' --ignore "/*" --token ${{ secrets.COVERALLS_TOKEN }} > coveralls.json
       - name: Coveralls
         uses: coverallsapp/github-action@v2
+
+  build-nightly:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install nightly toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
+
+      - name: Build
+        run: cargo build --verbose
+
+  build-stable:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Build
+        run: cargo build --verbose
