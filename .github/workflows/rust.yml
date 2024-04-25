@@ -32,7 +32,7 @@ jobs:
           override: true
           components: fmt
       - name: Check formatting
-        run: cargo fmt --check --verbose
+        run: cargo rustfmt --check --verbose
 
   doc:
     runs-on: ubuntu-latest
