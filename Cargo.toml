@@ -1,6 +1,6 @@
 [package]
 name = "graaf"
-version = "0.25.2"
+version = "0.26.0"
 edition = "2021"
 authors = ["Bas Dirks <bas.dirks@protonmail.com>"]
 categories = ["algorithms", "data-structures", "mathematics"]
@@ -20,8 +20,7 @@ divan = "0.1.14"
 
 [features]
 default = ["adjacency_matrix"]
-adjacency_matrix = ["nightly"]
-nightly = []
+adjacency_matrix = []
 
 [[bench]]
 name = "add_edge"

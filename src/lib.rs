@@ -82,8 +82,8 @@
 )]
 // Rustdoc lints
 #![deny(rustdoc::all)]
-#![cfg_attr(feature = "nightly", allow(incomplete_features))]
-#![cfg_attr(feature = "nightly", feature(generic_const_exprs))]
+#![cfg_attr(feature = "adjacency_matrix", allow(incomplete_features))]
+#![cfg_attr(feature = "adjacency_matrix", feature(generic_const_exprs))]
 
 pub mod algo;
 pub mod gen;

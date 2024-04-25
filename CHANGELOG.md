@@ -20,6 +20,13 @@ In arbitrary order:
 - Optimize performance of `bfs::*`.
 - Optimize performance of `dijkstra::*`.
 
+## [0.26.0] - 2024-04-25
+
+Changed
+
+- Breaking: Remove `nightly` feature, as it is only needed for `adjacency_matrix`.
+- Simplify `README`.
+
 ## [0.25.2] - 2024-04-25
 
 Changed
