@@ -4,6 +4,7 @@ on: [push, pull_request]
 
 env:
   CARGO_TERM_COLOR: always
+  CARGO_INCREMENTAL: 0
 
 jobs:
   clippy:
@@ -43,7 +44,7 @@ jobs:
         with:
           components: llvm-tools-preview
       - run: cargo install grcov
-      - run: CARGO_INCREMENTAL=0 RUSTFLAGS='-Cinstrument-coverage' LLVM_PROFILE_FILE='coverage/cargo-test-%p-%m.profraw' cargo test
+      - run: RUSTFLAGS='-Cinstrument-coverage' LLVM_PROFILE_FILE='coverage/cargo-test-%p-%m.profraw' cargo test
       - run: grcov . --binary-path ./target/debug/ -t coveralls -s . --ignore '../*' --ignore "/*" --token ${{ secrets.COVERALLS_TOKEN }} > coveralls.json
       - uses: coverallsapp/github-action@v2
 

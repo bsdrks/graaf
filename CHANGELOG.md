@@ -19,6 +19,11 @@ In arbitrary order:
 - Add topological sorting for DAGs.
 - Optimize performance of `bfs::*`.
 - Optimize performance of `dijkstra::*`.
+
+## [0.25.2] - 2024-04-25
+
+Changed
+
 - Split up GHA workflow into multiple jobs.
 
 ## [0.25.1] - 2024-04-25
