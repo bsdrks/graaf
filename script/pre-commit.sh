@@ -65,7 +65,7 @@ rm -rf ./coverage
 # Static analysis
 
 cargo fmt --check --all
-cargo doc
+cargo doc --all-features
 cargo clippy --all-targets
 
 # Test
@@ -73,6 +73,7 @@ cargo clippy --all-targets
 CARGO_INCREMENTAL=0 RUSTFLAGS='-Cinstrument-coverage' LLVM_PROFILE_FILE='coverage/cargo-test-%p-%m.profraw' cargo test
 
 # Test coverage
+
 total_coverage=$(grcov . --binary-path ./target/debug/ -t markdown -s . --ignore '../*' --ignore '/*' | tail -n 1)
 
 if [[ "$total_coverage" != *'100.00%'* ]]; then

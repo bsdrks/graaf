@@ -4,32 +4,62 @@ on: [push, pull_request]
 
 env:
   CARGO_TERM_COLOR: always
+  CARGO_INCREMENTAL: 0
 
 jobs:
-  build:
+  clippy:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
-      - name: Install nightly toolchain
-        uses: actions-rs/toolchain@v1
+      - uses: dtolnay/rust-toolchain@nightly
         with:
-          toolchain: nightly
-          override: true
-          components: rustfmt, clippy, llvm-tools-preview
-      - name: Run clippy
-        run: cargo clippy --verbose
-      - name: Check formatting
-        run: cargo fmt --check --verbose
-      - name: Build
-        run: cargo build --verbose
-      - name: Generate documentation
-        run: cargo doc --verbose
-      - name: Install grcov
-        run: cargo install grcov
-      - name: Run tests
-        run: CARGO_INCREMENTAL=0 RUSTFLAGS='-Cinstrument-coverage' LLVM_PROFILE_FILE='coverage/cargo-test-%p-%m.profraw' cargo test
-      - name: Generate coverage report
-        run: grcov . --binary-path ./target/debug/ -t coveralls -s . --ignore '../*' --ignore "/*" --token ${{ secrets.COVERALLS_TOKEN }} > coveralls.json
-      - name: Coveralls
-        uses: coverallsapp/github-action@v2
+          components: clippy
+      - run: cargo clippy --all-targets --verbose
+
+  fmt:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@nightly
+        with:
+          components: rustfmt
+      - run: cargo fmt --check --verbose
+
+  doc:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@nightly
+      - run: cargo doc --verbose
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@nightly
+        with:
+          components: llvm-tools-preview
+      - run: cargo install grcov
+      - run: RUSTFLAGS='-Cinstrument-coverage' LLVM_PROFILE_FILE='coverage/cargo-test-%p-%m.profraw' cargo test
+      - run: grcov . --binary-path ./target/debug/ -t coveralls -s . --ignore '../*' --ignore "/*" --token ${{ secrets.COVERALLS_TOKEN }} > coveralls.json
+      - uses: coverallsapp/github-action@v2
+
+  build-nightly:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@nightly
+      - run: cargo build --all-features --verbose
+
+  build-stable:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo build --no-default-features --verbose
