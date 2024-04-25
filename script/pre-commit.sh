@@ -64,7 +64,7 @@ rm -rf ./coverage
 
 # Static analysis
 
-cargo fmt --all
+cargo fmt --check --all
 cargo doc
 cargo clippy --all-targets
 
