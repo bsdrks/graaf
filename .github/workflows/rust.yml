@@ -93,4 +93,4 @@ jobs:
           override: true
 
       - name: Build
-        run: cargo build --verbose
+        run: cargo build --no-default-features --verbose
