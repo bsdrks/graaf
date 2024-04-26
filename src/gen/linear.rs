@@ -22,9 +22,12 @@
 //!     vec![vec![1], vec![2], Vec::new()]
 //! );
 //! ```
+extern crate alloc;
+
 use {
-    super::Empty,
-    crate::op::AddEdge,
+    alloc::collections::BTreeSet,
+    core::hash::BuildHasher,
+    std::collections::HashSet,
 };
 
 /// A trait to generate linear graphs
@@ -65,19 +68,52 @@ pub trait Linear {
     fn linear(v: usize) -> Self;
 }
 
-impl<G> Linear for G
+impl Linear for Vec<Vec<usize>> {
+    fn linear(v: usize) -> Self {
+        if v == 0 {
+            return Self::new();
+        }
+
+        let mut graph = vec![Vec::new(); v];
+
+        for (s, vec) in graph.iter_mut().enumerate().take(v - 1) {
+            vec.push(s + 1);
+        }
+
+        graph
+    }
+}
+
+impl Linear for Vec<BTreeSet<usize>> {
+    fn linear(v: usize) -> Self {
+        if v == 0 {
+            return Self::new();
+        }
+
+        let mut graph = vec![BTreeSet::new(); v];
+
+        for (s, set) in graph.iter_mut().enumerate().take(v - 1) {
+            let _ = set.insert(s + 1);
+        }
+
+        graph
+    }
+}
+
+impl<H> Linear for Vec<HashSet<usize, H>>
 where
-    G: AddEdge + Empty,
+    H: BuildHasher + Default,
+    HashSet<usize, H>: Clone,
 {
     fn linear(v: usize) -> Self {
-        let mut graph = G::empty(v);
+        if v == 0 {
+            return Self::new();
+        }
 
-        for s in 0..v {
-            let t = s + 1;
+        let mut graph = vec![HashSet::with_hasher(H::default()); v];
 
-            if t < v {
-                graph.add_edge(s, t);
-            }
+        for (s, set) in graph.iter_mut().enumerate().take(v - 1) {
+            let _ = set.insert(s + 1);
         }
 
         graph
@@ -86,13 +122,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    extern crate alloc;
-
-    use {
-        super::*,
-        alloc::collections::BTreeSet,
-        std::collections::HashSet,
-    };
+    use super::*;
 
     #[test]
     fn vec_vec() {

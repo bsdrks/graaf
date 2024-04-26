@@ -17,8 +17,19 @@ In arbitrary order:
 - Add depth-first search.
 - Add star graph generator.
 - Add topological sorting for DAGs.
+- Check first changelog entry version number on pre-commit.
 - Optimize performance of `bfs::*`.
 - Optimize performance of `dijkstra::*`.
+
+## [0.27.0] - 2024-04-26
+
+Added
+
+- Add `op::Target`, a trait to get the target vertex of an adjacency list edge.
+
+Removed
+
+- Breaking: Remove `gen::Empty`.
 
 ## [0.26.1] - 2024-04-26
 

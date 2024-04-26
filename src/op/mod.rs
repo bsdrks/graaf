@@ -87,6 +87,7 @@ pub mod iter_weighted_edges;
 pub mod outdegree;
 pub mod prop;
 pub mod remove_edge;
+pub mod target;
 
 pub use {
     add_edge::AddEdge,
@@ -104,4 +105,5 @@ pub use {
     iter_weighted_edges::IterWeightedEdges,
     outdegree::Outdegree,
     remove_edge::RemoveEdge,
+    target::Target,
 };
