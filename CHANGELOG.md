@@ -10,6 +10,7 @@ In arbitrary order:
 - Add SPFA algorithm.
 - Add `dijkstra::mssp`.
 - Add `dijkstra::sssp`.
+- Add benches to CI.
 - Add biclique generator.
 - Add binary tree generator.
 - Add bipartite matching algorithm for connected graphs.
@@ -17,11 +18,15 @@ In arbitrary order:
 - Add depth-first search.
 - Add star graph generator.
 - Add topological sorting for DAGs.
-- Add benches to CI.
-- Use pre-built version of `grcov` in CI.
-- Check first changelog entry version number on pre-commit.
 - Optimize performance of `bfs::*`.
 - Optimize performance of `dijkstra::*`.
+- Use pre-built version of `grcov` in CI.
+
+## [0.27.1] - 2024-04-26
+
+Changed
+
+- Check top changelog entry version number on pre-commit.
 
 ## [0.27.0] - 2024-04-26
 

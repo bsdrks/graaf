@@ -14,7 +14,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.27.0"
+graaf = "0.27.1"
 ```
 
 ## Usage
@@ -64,9 +64,9 @@ assert_eq!(path, Some(vec![3, 0, 1, 2]));
 
 `adjacency_matrix`
 
-This feature enables [`AdjacencyMatrix`](https://docs.rs/graaf/latest/graaf/repr/adjacency_matrix/struct.AdjacencyMatrix.html), a representation for dense graphs. The implementation requires nightly Rust. To opt out, change the `[dependencies]` entry for `graaf` in your `Cargo.toml`:
+This feature enables [`AdjacencyMatrix`](https://docs.rs/graaf/latest/graaf/repr/adjacency_matrix/struct.AdjacencyMatrix.html), which requires nightly Rust. To disable, change the `[dependencies]` entry for `graaf` in your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = { version = "0.27.0", default-features = false }
+graaf = { version = "0.27.1", default-features = false }
 ```
