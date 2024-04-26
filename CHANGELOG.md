@@ -17,6 +17,8 @@ In arbitrary order:
 - Add depth-first search.
 - Add star graph generator.
 - Add topological sorting for DAGs.
+- Add benches to CI.
+- Use pre-built version of `grcov` in CI.
 - Check first changelog entry version number on pre-commit.
 - Optimize performance of `bfs::*`.
 - Optimize performance of `dijkstra::*`.
