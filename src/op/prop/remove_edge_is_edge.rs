@@ -1,16 +1,16 @@
-//! An edge removed with [`crate::op::RemoveEdge`] should no longer in the
-//! graph, as reflected by [`crate::op::IsEdge`].
+//! An edge removed with [`RemoveEdge`](crate::op::RemoveEdge) should no longer
+//! in the graph, as reflected by [`IsEdge`](crate::op::IsEdge).
 use crate::op::{
     IsEdge,
     RemoveEdge,
 };
 
-/// An edge removed with [`crate::op::RemoveEdge`] should no longer in the
-/// graph, as reflected by [`crate::op::IsEdge`].
+/// An edge removed with [`RemoveEdge`](crate::op::RemoveEdge) should no longer
+/// in the graph, as reflected by [`IsEdge`](crate::op::IsEdge).
 ///
-/// Types that implement [`crate::op::RemoveEdge`] and [`crate::op::IsEdge`]
-/// should ensure that the following property holds for every `graph`, `s`, and
-/// `t` of the given types.
+/// Types that implement [`RemoveEdge`](crate::op::RemoveEdge)and
+/// [`IsEdge`](crate::op::IsEdge) should ensure that the property holds for
+/// every `graph`, `s`, and `t` of the given types.
 ///
 /// # Arguments
 ///

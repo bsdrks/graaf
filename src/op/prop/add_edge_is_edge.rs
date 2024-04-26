@@ -1,16 +1,16 @@
-//! Adding an edge with [`crate::op::AddEdge`] should be reflected by
-//! [`crate::op::IsEdge`].
+//! Adding an edge with [`AddEdge`](crate::op::AddEdge) should be reflected by
+//! [`IsEdge`](crate::op::IsEdge).
 use crate::op::{
     AddEdge,
     IsEdge,
 };
 
-/// Adding an edge with [`crate::op::AddEdge`] should be reflected by
-/// [`crate::op::IsEdge`].
+/// Adding an edge with [`AddEdge`](crate::op::AddEdge) should be reflected
+/// by [`IsEdge`](crate::op::IsEdge).
 ///
-/// Types that implement [`crate::op::AddEdge`] and [`crate::op::IsEdge`] should
-/// ensure that the following property holds for every `graph`, `s`, and `t` of
-/// the given types.
+/// Types that implement [`AddEdge`](crate::op::AddEdge) and
+/// [`IsEdge`](crate::op::IsEdge) should ensure that this property holds for
+/// every `graph`, `s`, and `t` of the given types.
 ///
 /// # Arguments
 ///

@@ -1,15 +1,15 @@
-//! Adding a weighted edge with [`crate::op::AddWeightedEdge`] should be
-//! reflected by [`crate::op::IsEdge`].
+//! Adding a weighted edge with [`AddWeightedEdge`](crate::op::AddWeightedEdge)
+//! should be reflected by [`IsEdge`](crate::op::IsEdge).
 use crate::op::{
     AddWeightedEdge,
     IsEdge,
 };
 
-/// Adding a weighted edge with [`crate::op::AddWeightedEdge`] should be
-/// reflected by [`crate::op::IsEdge`].
+/// Adding a weighted edge with [`AddWeightedEdge`](crate::op::AddWeightedEdge)
+/// should be reflected by [`IsEdge`](crate::op::IsEdge).
 ///
-/// Types that implement [`crate::op::AddWeightedEdge`] and
-/// [`crate::op::IsEdge`] should ensure that the following property holds for
+/// Types that implement [`AddWeightedEdge`](crate::op::AddWeightedEdge) and
+/// [`IsEdge`](crate::op::IsEdge) should ensure that the property holds for
 /// every `graph`, `s`, `t`, and `w` of the given types.
 ///
 /// # Arguments

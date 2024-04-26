@@ -1,15 +1,17 @@
-//! Adding a weighted edge with [`crate::op::AddWeightedEdge`] and then removing
-//! it with [`crate::op::RemoveEdge`] should keep the graph unchanged.
+//! Adding a weighted edge with [`AddWeightedEdge`](crate::op::AddWeightedEdge)
+//! and then removing it with [`RemoveEdge`](crate::op::RemoveEdge) should keep
+//! the graph unchanged.
 use crate::op::{
     AddWeightedEdge,
     RemoveEdge,
 };
 
-/// Adding a weighted edge with [`crate::op::AddWeightedEdge`] and then removing
-/// it with [`crate::op::RemoveEdge`] should keep the graph unchanged.
+/// Adding a weighted edge with [`AddWeightedEdge`](crate::op::AddWeightedEdge)
+/// and then removing it with [`RemoveEdge`](crate::op::RemoveEdge) should keep
+/// the graph unchanged.
 ///
-/// Types that implement [`crate::op::AddWeightedEdge`] and
-/// [`crate::op::RemoveEdge`] should ensure that the following property holds
+/// Types that implement [`AddWeightedEdge`](crate::op::AddWeightedEdge) and
+/// [`RemoveEdge`](crate::op::RemoveEdge) should ensure that the property holds
 /// for every `graph`, `s`, and `t` of the given types.
 ///
 /// # Arguments

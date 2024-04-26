@@ -20,6 +20,20 @@ In arbitrary order:
 - Optimize performance of `bfs::*`.
 - Optimize performance of `dijkstra::*`.
 
+## [0.26.1] - 2024-04-26
+
+Added
+
+- Add `gen::Empty`, a generator for empty graphs.
+- Implement `Linear` for `G: AddEdge + Empty`.
+- Implement `Empty` for `Vec<T: Clone + Default + IntoIterator<Item = usize>>`.
+
+Changed
+
+- Replace `Linear for Vec<BTreeSet<usize>>` with `Linear for G: AddEdge + Empty`.
+- Replace `Linear for Vec<HashSet<usize>>` with `Linear for G: AddEdge + Empty`.
+- Replace `Linear for Vec<Vec<usize>>` with `Linear for G: AddEdge + Empty`.
+
 ## [0.26.0] - 2024-04-25
 
 Changed

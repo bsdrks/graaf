@@ -3,9 +3,11 @@
 //! These operations are modeled as traits that can be implemented by types
 //! that represent graphs. The traits are implemented for combinations of
 //! foreign types like [`array`], [`slice`], [`Vec`],
-//! [`std::collections::BTreeMap`], [`std::collections::BTreeSet`],
-//! [`std::collections::HashMap`], [`std::collections::HashSet`] when the
-//! implementation has a close-to-optimal complexity.
+//! [`BTreeMap`](std::collections::BTreeMap),
+//! [`BTreeSet`](std::collections::BTreeSet),
+//! [`HashMap`](std::collections::HashMap), and
+//! [`HashSet`](std::collections::HashSet) when the implementation has a
+//! close-to-optimal complexity.
 //!
 //! ## Supported types
 //!

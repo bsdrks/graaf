@@ -1,16 +1,16 @@
-//! Adding an edge with [`crate::op::AddEdge`] and then removing it with
-//! [`crate::op::RemoveEdge`] should keep the graph unchanged.
+//! Adding an edge with [`AddEdge`](crate::op::AddEdge) and then removing it
+//! with [`RemoveEdge`](crate::op::RemoveEdge) should keep the graph unchanged.
 use crate::op::{
     AddEdge,
     RemoveEdge,
 };
 
-/// Adding an edge with [`crate::op::AddEdge`] and then removing it with
-/// [`crate::op::RemoveEdge`] should keep the graph unchanged.
+/// Adding an edge with [`AddEdge`](crate::op::AddEdge) and then removing it
+/// with [`RemoveEdge`](crate::op::RemoveEdge) should keep the graph unchanged.
 ///
-/// Types that implement [`crate::op::AddEdge`] and [`crate::op::RemoveEdge`]
-/// should ensure that the following property holds for every `graph`, `s`, and
-/// `t` of the given types.
+/// Types that implement [`AddEdge`](crate::op::AddEdge) and
+/// [`RemoveEdge`](crate::op::RemoveEdge) should ensure that the property holds
+/// for every `graph`, `s`, and `t` of the given types.
 ///
 /// # Arguments
 ///

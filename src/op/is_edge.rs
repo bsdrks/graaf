@@ -91,18 +91,21 @@ use {
 ///
 /// ## `IsEdge` and `AddEdge`
 ///
-/// Types that also implement [`crate::op::AddEdge`] should ensure that
-/// [`crate::op::prop::add_edge_is_edge`] holds.
+/// Types that also implement [`AddEdge`](crate::op::AddEdge) should ensure that
+/// [`add_edge_is_edge`](crate::op::prop::add_edge_is_edge) holds.
 ///
 /// ## `IsEdge` and `AddWeightedEdge`
 ///
-/// Types that also implement [`crate::op::AddWeightedEdge`] should ensure that
-/// [`crate::op::prop::add_weighted_edge_is_edge`] holds.
+/// Types that also implement [`AddWeightedEdge`](crate::op::AddWeightedEdge)
+/// should ensure that
+/// [`add_weighted_edge_is_edge`](crate::op::prop::add_weighted_edge_is_edge)
+/// holds.
 ///
 /// ## `IsEdge` and `RemoveEdge`
 ///
-/// Types that also implement [`crate::op::RemoveEdge`] should ensure that
-/// [`crate::op::prop::remove_edge_is_edge`] holds.
+/// Types that also implement [`RemoveEdge`](crate::op::RemoveEdge) should
+/// ensure that [`remove_edge_is_edge`](crate::op::prop::remove_edge_is_edge)
+/// holds.
 pub trait IsEdge {
     /// Check if there is an edge from `s` to `t`.
     ///

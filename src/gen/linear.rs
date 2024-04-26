@@ -1,4 +1,6 @@
-//! A trait to generate linear graphs, also known as path graphs
+//! A trait to generate linear graphs
+//!
+//! Linear graphs are also known as path graphs.
 //!
 //! # Examples
 //!
@@ -20,20 +22,17 @@
 //!     vec![vec![1], vec![2], Vec::new()]
 //! );
 //! ```
-extern crate alloc;
-
 use {
-    alloc::collections::BTreeSet,
-    core::hash::BuildHasher,
-    std::collections::HashSet,
+    super::Empty,
+    crate::op::AddEdge,
 };
 
-/// A trait to generate linear graphs, also known as path graphs
+/// A trait to generate linear graphs
 ///
 /// # How can I implement `Linear`?
 ///
 /// Provide an implementation of `linear` that generates a linear graph with `v`
-/// vertices for your type.
+/// vertices.
 ///
 /// ```
 /// use {
@@ -66,61 +65,20 @@ pub trait Linear {
     fn linear(v: usize) -> Self;
 }
 
-impl Linear for Vec<Vec<usize>> {
-    fn linear(v: usize) -> Self {
-        if v == 0 {
-            return Self::new();
-        }
-
-        let mut graph = Self::with_capacity(v);
-
-        for i in 0..v - 1 {
-            graph.push(vec![i + 1]);
-        }
-
-        graph.push(Vec::new());
-
-        graph
-    }
-}
-
-impl Linear for Vec<BTreeSet<usize>> {
-    fn linear(v: usize) -> Self {
-        if v == 0 {
-            return Self::with_capacity(0);
-        }
-
-        let mut graph = Self::with_capacity(v);
-
-        for i in 0..v - 1 {
-            graph.push(BTreeSet::from([i + 1]));
-        }
-
-        graph.push(BTreeSet::new());
-
-        graph
-    }
-}
-
-impl<H> Linear for Vec<HashSet<usize, H>>
+impl<G> Linear for G
 where
-    H: BuildHasher + Default,
+    G: AddEdge + Empty,
 {
     fn linear(v: usize) -> Self {
-        if v == 0 {
-            return Self::with_capacity(0);
+        let mut graph = G::empty(v);
+
+        for s in 0..v {
+            let t = s + 1;
+
+            if t < v {
+                graph.add_edge(s, t);
+            }
         }
-
-        let mut graph = Self::with_capacity(v);
-
-        for s in 0..v - 1 {
-            let mut out = HashSet::with_hasher(H::default());
-            let _ = out.insert(s + 1);
-
-            graph.push(out);
-        }
-
-        graph.push(HashSet::with_hasher(H::default()));
 
         graph
     }
@@ -128,7 +86,13 @@ where
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    extern crate alloc;
+
+    use {
+        super::*,
+        alloc::collections::BTreeSet,
+        std::collections::HashSet,
+    };
 
     #[test]
     fn vec_vec() {
