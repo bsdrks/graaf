@@ -20,6 +20,12 @@ In arbitrary order:
 - Optimize performance of `dijkstra::*`.
 - Use pre-built version of `grcov` in CI.
 
+## [0.28.1] - 2024-04-27
+
+Added
+
+- Add `gen::Cycle` generator.
+
 ## [0.28.0] - 2024-04-27
 
 Added

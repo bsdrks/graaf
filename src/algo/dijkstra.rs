@@ -1,6 +1,6 @@
 //! Dijkstra's algorithm with binary-heap
 //!
-//! Dijkstra's algorithm is used to find the shortest path in a weighted graph.
+//! Dijkstra's algorithm[^citation] finds the shortest path in a weighted graph.
 //! Use [`bfs`](crate::algo::bfs) for unweighted graphs.
 //!
 //! Use [`single_source_distances`] if you:
@@ -75,6 +75,8 @@
 //! assert_eq!(pred, [Some(3), Some(0), Some(1), None]);
 //! assert_eq!(dist, [2, 4, 6, 0]);
 //! ```
+//!
+//! [^citation]: Dijkstra, E.W. A note on two problems in connexion with graphs. Numer. Math. 1, 269–271 (1959)
 
 extern crate alloc;
 
@@ -89,8 +91,7 @@ use {
 };
 
 /// Calculate the distances from the source vertices to all vertices in a
-/// weighted digraph. Use [`predecessors`] if you also need the predecessor
-/// tree.
+/// weighted digraph.
 ///
 /// # Arguments
 ///

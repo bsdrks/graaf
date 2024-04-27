@@ -14,7 +14,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.28.0"
+graaf = "0.28.1"
 ```
 
 ## Usage
@@ -68,5 +68,5 @@ This feature enables [`AdjacencyMatrix`](https://docs.rs/graaf/latest/graaf/repr
 
 ```toml
 [dependencies]
-graaf = { version = "0.28.0", default-features = false }
+graaf = { version = "0.28.1", default-features = false }
 ```
