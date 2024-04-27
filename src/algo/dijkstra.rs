@@ -125,8 +125,8 @@ use {
 /// // ╰───╯     ╰───╯
 ///
 /// let graph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
-/// let dist = &mut [0, usize::MAX, usize::MAX, usize::MAX];
-/// let heap = &mut BinaryHeap::from([(Reverse(0), 0)]);
+/// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
+/// let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 ///
 /// distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 ///
