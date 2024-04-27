@@ -32,6 +32,7 @@
 //! assert_eq!(iter.next(), Some((5, &6)));
 //! assert_eq!(iter.next(), None);
 //! ```
+
 extern crate alloc;
 
 use {

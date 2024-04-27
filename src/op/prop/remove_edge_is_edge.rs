@@ -1,5 +1,6 @@
 //! An edge removed with [`RemoveEdge`](crate::op::RemoveEdge) should no longer
 //! in the graph, as reflected by [`IsEdge`](crate::op::IsEdge).
+
 use crate::op::{
     IsEdge,
     RemoveEdge,

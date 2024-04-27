@@ -1,4 +1,5 @@
 //! Properties of traits in [`op`](crate::op).
+
 mod add_edge_is_edge;
 mod add_edge_remove_edge;
 mod add_weighted_edge_is_edge;

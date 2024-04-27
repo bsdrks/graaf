@@ -9,6 +9,7 @@
 //!
 //! assert_eq!(graph.count_all_edges(), 10);
 //! ```
+
 extern crate alloc;
 
 use {

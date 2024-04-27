@@ -14,6 +14,7 @@
 //! assert_eq!(iter.next(), Some(3));
 //! assert_eq!(iter.next(), None);
 //! ```
+
 extern crate alloc;
 
 use {

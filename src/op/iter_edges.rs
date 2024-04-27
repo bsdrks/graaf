@@ -54,6 +54,7 @@
 //! assert!(matches!(iter.next(), Some(1 | 2)));
 //! assert_eq!(iter.next(), None);
 //! ```
+
 extern crate alloc;
 
 use {

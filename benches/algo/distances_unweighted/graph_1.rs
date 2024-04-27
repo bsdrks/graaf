@@ -1,5 +1,6 @@
-//! Benchmark different algorithms for finding the distances from single source
-//! to all other vertices in a graph.
+//! Benchmark different algorithms for finding the distances from a single
+//! source vertex to all vertices in a graph.
+
 use {
     divan::Bencher,
     graaf::algo::{
@@ -12,7 +13,7 @@ fn main() {
     divan::main();
 }
 
-#[divan::bench(min_time = 1)]
+#[divan::bench]
 fn dijkstra(bencher: Bencher<'_, '_>) {
     let graph = vec![
         vec![(1, 1), (3, 1)],
@@ -30,7 +31,7 @@ fn dijkstra(bencher: Bencher<'_, '_>) {
     });
 }
 
-#[divan::bench(min_time = 1)]
+#[divan::bench]
 fn bfs(bencher: Bencher<'_, '_>) {
     let graph = vec![
         vec![1, 3],

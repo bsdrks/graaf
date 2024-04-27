@@ -9,6 +9,7 @@
 //!
 //! assert_eq!(graph.count_all_vertices(), 4);
 //! ```
+
 extern crate alloc;
 
 use {

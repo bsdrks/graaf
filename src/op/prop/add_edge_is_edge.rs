@@ -1,5 +1,6 @@
 //! Adding an edge with [`AddEdge`](crate::op::AddEdge) should be reflected by
 //! [`IsEdge`](crate::op::IsEdge).
+
 use crate::op::{
     AddEdge,
     IsEdge,

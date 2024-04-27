@@ -14,6 +14,7 @@
 //! assert_eq!(graph.indegree(1), 1);
 //! assert_eq!(graph.indegree(2), 2);
 //! ```
+
 extern crate alloc;
 
 use {

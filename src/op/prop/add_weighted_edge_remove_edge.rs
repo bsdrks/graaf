@@ -1,6 +1,7 @@
 //! Adding a weighted edge with [`AddWeightedEdge`](crate::op::AddWeightedEdge)
 //! and then removing it with [`RemoveEdge`](crate::op::RemoveEdge) should keep
 //! the graph unchanged.
+
 use crate::op::{
     AddWeightedEdge,
     RemoveEdge,

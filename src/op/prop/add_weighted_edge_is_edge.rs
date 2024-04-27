@@ -1,5 +1,6 @@
 //! Adding a weighted edge with [`AddWeightedEdge`](crate::op::AddWeightedEdge)
 //! should be reflected by [`IsEdge`](crate::op::IsEdge).
+
 use crate::op::{
     AddWeightedEdge,
     IsEdge,

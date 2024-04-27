@@ -24,6 +24,7 @@
 //! assert!(graph.is_edge(2, 1));
 //! assert!(!graph.is_edge(2, 2));
 //! ```
+
 extern crate alloc;
 
 use {

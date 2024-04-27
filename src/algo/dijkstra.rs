@@ -1,5 +1,8 @@
 //! Dijkstra's algorithm with binary-heap
 //!
+//! Dijkstra's algorithm is used to find the shortest path in a weighted graph.
+//! Use [`bfs`](crate::algo::bfs) for unweighted graphs.
+//!
 //! Use [`single_source_distances`] if you:
 //! - need the distances from a single source vertex to all other vertices.
 //!
@@ -20,6 +23,14 @@
 //! - have predefined distances for any non-source vertices,
 //! - want to use your own step function.
 //!
+//! Use [`shortest_path`] if you:
+//! - need the shortest path, the predecessor tree, and distances,
+//! - have multiple source vertices,
+//! - have predefined starting distances,
+//! - have predefined distances for non-source vertices,
+//! - want to use your own step function,
+//! - want to use your own target predicate.
+//!
 //! # Examples
 //!
 //! This is for illustrative purposes only; use [`predecessors`] if you need the
@@ -31,14 +42,13 @@
 //!     single_source_predecessors,
 //! };
 //!
-//! // ╭───╮       ╭───╮
-//! // │ 0 │  2 →  │ 1 │
-//! // ╰───╯       ╰───╯
-//! //   ↑           2
-//! //   2           ↓
-//! // ╭───╮       ╭───╮
-//! // │ 3 │       │ 2 │
-//! // ╰───╯       ╰───╯
+//! // ╭───╮     ╭───╮
+//! // │ 0 │ 2 → │ 1 │
+//! // ╰───╯     ╰───╯
+//! //  ↑ 2       ↓ 2
+//! // ╭───╮     ╭───╮
+//! // │ 3 │     │ 2 │
+//! // ╰───╯     ╰───╯
 //!
 //! let graph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
 //! let dist = single_source_distances(&graph, 0);
@@ -69,6 +79,7 @@
 extern crate alloc;
 
 use {
+    super::predecessor,
     crate::op::{
         CountAllVertices,
         IterWeightedEdges,
@@ -88,6 +99,12 @@ use {
 /// * `dist`: The distances from the source vertices.
 /// * `heap`: The source vertices.
 ///
+/// # Panics
+///
+/// * Panics if `step` panics.
+/// * Panics if a source or successor vertex is not in `dist`.
+/// * Panics if a source or successor vertex is not in `heap`.
+///
 /// # Examples
 ///
 /// ```
@@ -99,18 +116,17 @@ use {
 ///     graaf::algo::dijkstra::distances,
 /// };
 ///
-/// // ╭───╮       ╭───╮
-/// // │ 0 │  2 →  │ 1 │
-/// // ╰───╯       ╰───╯
-/// //   ↑           2
-/// //   2           ↓
-/// // ╭───╮       ╭───╮
-/// // │ 3 │       │ 2 │
-/// // ╰───╯       ╰───╯
+/// // ╭───╮     ╭───╮
+/// // │ 0 │ 2 → │ 1 │
+/// // ╰───╯     ╰───╯
+/// //  ↑ 2       ↓ 2
+/// // ╭───╮     ╭───╮
+/// // │ 3 │     │ 2 │
+/// // ╰───╯     ╰───╯
 ///
 /// let graph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
-/// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
-/// let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+/// let dist = &mut [0, usize::MAX, usize::MAX, usize::MAX];
+/// let heap = &mut BinaryHeap::from([(Reverse(0), 0)]);
 ///
 /// distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 ///
@@ -147,19 +163,22 @@ pub fn distances<G, S, W>(
 /// * `graph`: The graph.
 /// * `s`: The source vertex.
 ///
+/// # Panics
+///
+/// Panics if `s` is out of bounds.
+///
 /// # Examples
 ///
 /// ```
 /// use graaf::algo::dijkstra::single_source_distances;
 ///
-/// // ╭───╮       ╭───╮
-/// // │ 0 │  2 →  │ 1 │
-/// // ╰───╯       ╰───╯
-/// //   ↑           2
-/// //   2           ↓
-/// // ╭───╮       ╭───╮
-/// // │ 3 │       │ 2 │
-/// // ╰───╯       ╰───╯
+/// // ╭───╮     ╭───╮
+/// // │ 0 │ 2 → │ 1 │
+/// // ╰───╯     ╰───╯
+/// //  ↑ 2       ↓ 2
+/// // ╭───╮     ╭───╮
+/// // │ 3 │     │ 2 │
+/// // ╰───╯     ╰───╯
 ///
 /// let graph: [Vec<(usize, usize)>; 4] = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
 ///
@@ -190,6 +209,13 @@ where
 /// * `dist`: The distances from the source vertices.
 /// * `heap`: The source vertices.
 ///
+/// # Panics
+///
+/// * Panics if `step` panics.
+/// * Panics if a source or successor vertex is not in `dist`.
+/// * Panics if a source or successor vertex is not in `heap`.
+/// * Panics if a source or successor vertex is not in `pred`.
+///
 /// # Examples
 ///
 /// ```
@@ -201,14 +227,13 @@ where
 ///     graaf::algo::dijkstra::predecessors,
 /// };
 ///
-/// // ╭───╮       ╭───╮
-/// // │ 0 │  2 →  │ 1 │
-/// // ╰───╯       ╰───╯
-/// //   ↑           2
-/// //   2           ↓
-/// // ╭───╮       ╭───╮
-/// // │ 3 │       │ 2 │
-/// // ╰───╯       ╰───╯
+/// // ╭───╮     ╭───╮
+/// // │ 0 │ 2 → │ 1 │
+/// // ╰───╯     ╰───╯
+/// //  ↑ 2       ↓ 2
+/// // ╭───╮     ╭───╮
+/// // │ 3 │     │ 2 │
+/// // ╰───╯     ╰───╯
 ///
 /// let graph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
 /// let mut pred = [None, None, None, None];
@@ -254,19 +279,22 @@ pub fn predecessors<G, S, W>(
 /// * `graph`: The graph.
 /// * `s`: The source vertex.
 ///
+/// # Panics
+///
+/// Panics if `s` is out of bounds.
+///
 /// # Examples
 ///
 /// ```
 /// use graaf::algo::dijkstra::single_source_predecessors;
 ///
-/// // ╭───╮       ╭───╮
-/// // │ 0 │  2 →  │ 1 │
-/// // ╰───╯       ╰───╯
-/// //   ↑           2
-/// //   2           ↓
-/// // ╭───╮       ╭───╮
-/// // │ 3 │       │ 2 │
-/// // ╰───╯       ╰───╯
+/// // ╭───╮     ╭───╮
+/// // │ 0 │ 2 → │ 1 │
+/// // ╰───╯     ╰───╯
+/// //  ↑ 2       ↓ 2
+/// // ╭───╮     ╭───╮
+/// // │ 3 │     │ 2 │
+/// // ╰───╯     ╰───╯
 ///
 /// let graph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
 /// let pred = single_source_predecessors(&graph, 0);
@@ -287,6 +315,108 @@ where
     predecessors(graph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
 
     pred
+}
+
+/// Calculate the shortest path from the source vertex to a target vertex.
+///
+/// In a weighted digraph, the shortest path is the path with the smallest
+/// sum of weights. There can be multiple shortest paths in a graph, but this
+/// function only returns one.
+///
+/// Use [`bfs`](crate::algo::bfs::shortest_path) if your graph is unweighted.
+///
+/// # Arguments
+///
+/// * `graph`: The graph.
+/// * `step`: The function that calculates the accumulated weight.
+/// * `is_target`: The function that determines if the vertex is a target.
+/// * `pred`: The predecessors on the shortest paths from the source vertices.
+/// * `dist`: The distances from the source vertices.
+/// * `heap`: The source vertices and their initial distances.
+///
+/// # Panics
+///
+/// * Panics if `step` panics.
+/// * Panics if `is_target` panics.
+/// * Panics if a source or successor vertex is not in `dist`.
+/// * Panics if a source or successor vertex is not in `heap`.
+/// * Panics if a source or successor vertex is not in `pred`.
+///
+/// # Examples
+///
+/// ```
+/// extern crate alloc;
+///
+/// use {
+///     alloc::collections::BinaryHeap,
+///     core::cmp::Reverse,
+///     graaf::algo::dijkstra::shortest_path,
+/// };
+///
+/// // ╭───╮     ╭───╮
+/// // │ 0 │ 2 → │ 1 │
+/// // ╰───╯     ╰───╯
+/// //  ↑ 2       ↓ 2
+/// // ╭───╮     ╭───╮
+/// // │ 3 │     │ 2 │
+/// // ╰───╯     ╰───╯
+///
+/// let graph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
+/// let mut pred = [None, None, None, None];
+/// let mut dist = [usize::MAX, usize::MAX, usize::MAX, 0];
+/// let mut heap = BinaryHeap::from([(Reverse(0), 3)]);
+///
+/// let path = shortest_path(
+///     &graph,
+///     |acc, w| acc + w,
+///     |v, _| v == 2,
+///     &mut pred,
+///     &mut dist,
+///     &mut heap,
+/// );
+///
+/// assert_eq!(pred, [Some(3), Some(0), Some(1), None]);
+/// assert_eq!(dist, [2, 4, 6, 0]);
+/// assert_eq!(path, Some(vec![3, 0, 1, 2]));
+/// ```
+pub fn shortest_path<G, S, T, W>(
+    graph: &G,
+    step: S,
+    is_target: T,
+    pred: &mut [Option<usize>],
+    dist: &mut [W],
+    heap: &mut BinaryHeap<(Reverse<W>, usize)>,
+) -> Option<Vec<usize>>
+where
+    G: CountAllVertices + IterWeightedEdges<W>,
+    S: Fn(W, &W) -> W,
+    T: Fn(usize, &W) -> bool,
+    W: Copy + Ord,
+{
+    while let Some((Reverse(acc), s)) = heap.pop() {
+        for (t, w) in graph.iter_weighted_edges(s) {
+            let w = step(acc, w);
+
+            if w >= dist[t] {
+                continue;
+            }
+
+            dist[t] = w;
+            pred[t] = Some(s);
+
+            if is_target(t, &w) {
+                return predecessor::search_by(pred, t, |_, u| u.is_none()).map(|mut path| {
+                    path.reverse();
+
+                    path
+                });
+            }
+
+            heap.push((Reverse(w), t));
+        }
+    }
+
+    None
 }
 
 #[cfg(test)]
@@ -936,5 +1066,238 @@ mod tests {
 
             assert_eq!(pred, expected);
         }
+    }
+
+    #[test]
+    fn shortest_path_graph_0() {
+        let graph = to_vec(&GRAPH_0);
+        let mut pred = Vec::new();
+        let mut dist = Vec::new();
+        let mut heap = BinaryHeap::new();
+
+        let path = shortest_path(
+            &graph,
+            |acc, w| acc + w,
+            |_, _| false,
+            &mut pred,
+            &mut dist,
+            &mut heap,
+        );
+
+        assert!(pred.is_empty());
+        assert!(dist.is_empty());
+        assert!(path.is_none());
+    }
+
+    #[test]
+    fn shortest_path_graph_1() {
+        let graph = to_vec(&GRAPH_1);
+        let mut pred = [None; 9];
+
+        let mut dist = [
+            0,
+            usize::MAX,
+            usize::MAX,
+            usize::MAX,
+            usize::MAX,
+            usize::MAX,
+            usize::MAX,
+            usize::MAX,
+            usize::MAX,
+        ];
+
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        let path = shortest_path(
+            &graph,
+            |acc, w| acc + w,
+            |v, _| v == 8,
+            &mut pred,
+            &mut dist,
+            &mut heap,
+        );
+
+        assert_eq!(
+            pred,
+            [
+                None,
+                Some(0),
+                Some(1),
+                None,
+                None,
+                None,
+                Some(7),
+                Some(0),
+                Some(7)
+            ]
+        );
+
+        assert_eq!(
+            dist,
+            [0, 4, 12, usize::MAX, usize::MAX, usize::MAX, 9, 8, 15]
+        );
+
+        assert_eq!(path, Some(vec![0, 7, 8]));
+    }
+
+    #[test]
+    fn shortest_path_shortest_path_1() {
+        let graph = to_vec(&GRAPH_SHORTEST_PATH_1);
+        let mut pred = [None; 4];
+        let mut dist = [usize::MAX, usize::MAX, usize::MAX, 0];
+        let mut heap = BinaryHeap::from([(Reverse(0), 3)]);
+
+        let path = shortest_path(
+            &graph,
+            |acc, w| acc + w,
+            |v, _| v == 2,
+            &mut pred,
+            &mut dist,
+            &mut heap,
+        );
+
+        assert_eq!(pred, [Some(3), Some(0), Some(1), None]);
+        assert_eq!(dist, [2, 4, 6, 0]);
+        assert_eq!(path, Some(vec![3, 0, 1, 2]));
+    }
+
+    #[test]
+    fn shortest_path_cross_country() {
+        let graph = to_vec(&GRAPH_CROSS_COUNTRY);
+        let mut pred = [None; 4];
+        let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        let path = shortest_path(
+            &graph,
+            |acc, w| acc + w,
+            |v, _| v == 2,
+            &mut pred,
+            &mut dist,
+            &mut heap,
+        );
+
+        assert_eq!(path, Some(vec![0, 2]));
+        assert_eq!(pred, [None, Some(0), Some(0), None]);
+        assert_eq!(dist, [0, 1, 3, usize::MAX]);
+    }
+
+    #[test]
+    fn shortest_path_bryr_1() {
+        let mut graph = vec![Vec::new(); 3];
+
+        for (s, t, w) in EDGES_BRYR_1 {
+            graph.add_weighted_edge(s, t, w);
+            graph.add_weighted_edge(t, s, w);
+        }
+
+        let mut pred = [None; 3];
+        let mut dist = [0, usize::MAX, usize::MAX];
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        let path = shortest_path(
+            &graph,
+            |acc, w| acc + w,
+            |v, _| v == 2,
+            &mut pred,
+            &mut dist,
+            &mut heap,
+        );
+
+        assert_eq!(path, Some(vec![0, 2]));
+        assert_eq!(pred, [None, None, Some(0)]);
+        assert_eq!(dist, [0, usize::MAX, 1]);
+    }
+
+    #[test]
+    fn shortest_path_bryr_2() {
+        let mut graph = vec![Vec::new(); 6];
+
+        for (s, t, w) in EDGES_BRYR_2 {
+            graph.add_weighted_edge(s, t, w);
+            graph.add_weighted_edge(t, s, w);
+        }
+
+        let mut pred = [None; 6];
+
+        let mut dist = [
+            0,
+            usize::MAX,
+            usize::MAX,
+            usize::MAX,
+            usize::MAX,
+            usize::MAX,
+        ];
+
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        let path = shortest_path(
+            &graph,
+            |acc, w| acc + w,
+            |v, _| v == 5,
+            &mut pred,
+            &mut dist,
+            &mut heap,
+        );
+
+        assert_eq!(path, Some(vec![0, 3, 4, 5]));
+        assert_eq!(pred, [None, Some(0), Some(3), Some(0), Some(3), Some(4)]);
+        assert_eq!(dist, [0, 1, 2, 1, 2, 3]);
+    }
+
+    #[test]
+    fn shortest_path_bryr_3() {
+        let mut graph = vec![Vec::new(); 10];
+
+        for (s, t, w) in EDGES_BRYR_3 {
+            graph.add_weighted_edge(s, t, w);
+            graph.add_weighted_edge(t, s, w);
+        }
+
+        let mut pred = [None; 10];
+
+        let mut dist = [
+            0,
+            usize::MAX,
+            usize::MAX,
+            usize::MAX,
+            usize::MAX,
+            usize::MAX,
+            usize::MAX,
+            usize::MAX,
+            usize::MAX,
+            usize::MAX,
+        ];
+
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        let path = shortest_path(
+            &graph,
+            |acc, w| acc + w,
+            |v, _| v == 9,
+            &mut pred,
+            &mut dist,
+            &mut heap,
+        );
+
+        assert_eq!(path, Some(vec![0, 3, 7, 1, 9]));
+
+        assert_eq!(
+            pred,
+            [
+                None,
+                Some(7),
+                None,
+                Some(0),
+                Some(3),
+                Some(3),
+                Some(5),
+                Some(3),
+                Some(5),
+                Some(1)
+            ],
+        );
+
+        assert_eq!(dist, [0, 0, usize::MAX, 0, 0, 0, 1, 0, 0, 1]);
     }
 }

@@ -17,7 +17,7 @@ else
     exit 1
 fi
 
-echo "✅︎ Version in \`Cargo.toml\`: $VERSION"
+echo "✓ Version in \`Cargo.toml\`: $VERSION"
 
 # Version check: README.md
 
@@ -29,12 +29,14 @@ readme=$(cat README.md)
 while IFS= read -r line || [[ -n $line ]]; do
     if [[ $line =~ $DEPENDENCY_SIMPLE_VERSION_REGEX ]]; then
         DEPENDENCY_VERSION=${BASH_REMATCH[1]}
+
         if [[ $DEPENDENCY_VERSION != $VERSION ]]; then
             echo "Error: expected dependency example version $VERSION, found $DEPENDENCY_VERSION"
             exit 1
         fi
     elif [[ $line =~ $DEPENDENCY_OBJECT_VERSION_REGEX ]]; then
         DEPENDENCY_VERSION=${BASH_REMATCH[1]}
+
         if [[ $DEPENDENCY_VERSION != $VERSION ]]; then
             echo "Error: expected dependency example version $VERSION, found $DEPENDENCY_VERSION"
             exit 1
@@ -42,7 +44,7 @@ while IFS= read -r line || [[ -n $line ]]; do
     fi
 done <<< "$readme"
 
-echo "✅︎ Version in \`README.md\`: $VERSION"
+echo "✓ Version in \`README.md\`: $VERSION"
 
 # Version check: CHANGELOG.md
 
@@ -62,7 +64,7 @@ else
     exit 1
 fi
 
-echo "✅︎ Version in latest changelog entry: $VERSION"
+echo "︎✓ Version in latest changelog entry: $VERSION"
 
 # Static analysis
 

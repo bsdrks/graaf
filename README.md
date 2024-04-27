@@ -14,7 +14,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.27.1"
+graaf = "0.28.0"
 ```
 
 ## Usage
@@ -38,13 +38,13 @@ let mut graph = [
     HashSet::new()
 ];
 
-// ╭───╮       ╭───╮
-// │ 0 │   →   │ 1 │
-// ╰───╯       ╰───╯
-//   ↑           ↓
-// ╭───╮       ╭───╮
-// │ 3 │       │ 2 │
-// ╰───╯       ╰───╯
+// ╭───╮     ╭───╮
+// │ 0 │  →  │ 1 │
+// ╰───╯     ╰───╯
+//   ↑         ↓
+// ╭───╮     ╭───╮
+// │ 3 │     │ 2 │
+// ╰───╯     ╰───╯
 
 graph.add_edge(3, 0);
 graph.add_edge(0, 1);
@@ -68,5 +68,5 @@ This feature enables [`AdjacencyMatrix`](https://docs.rs/graaf/latest/graaf/repr
 
 ```toml
 [dependencies]
-graaf = { version = "0.27.1", default-features = false }
+graaf = { version = "0.28.0", default-features = false }
 ```

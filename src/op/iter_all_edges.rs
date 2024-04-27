@@ -13,6 +13,7 @@
 //! assert_eq!(iter.next(), Some((2, 0)));
 //! assert_eq!(iter.next(), None);
 //! ```
+
 extern crate alloc;
 
 use {

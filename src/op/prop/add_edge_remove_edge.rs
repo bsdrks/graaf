@@ -1,5 +1,6 @@
 //! Adding an edge with [`AddEdge`](crate::op::AddEdge) and then removing it
 //! with [`RemoveEdge`](crate::op::RemoveEdge) should keep the graph unchanged.
+
 use crate::op::{
     AddEdge,
     RemoveEdge,

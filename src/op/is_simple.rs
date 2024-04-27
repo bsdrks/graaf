@@ -22,6 +22,7 @@
 //!
 //! assert!(!graph.is_simple());
 //! ```
+
 extern crate alloc;
 
 use {

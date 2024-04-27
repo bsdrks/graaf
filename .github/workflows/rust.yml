@@ -48,6 +48,14 @@ jobs:
       - run: grcov . --binary-path ./target/debug/ -t coveralls -s . --ignore '../*' --ignore "/*" --token ${{ secrets.COVERALLS_TOKEN }} > coveralls.json
       - uses: coverallsapp/github-action@v2
 
+  bench:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@nightly
+      - run: cargo bench --verbose
+
   build-nightly:
     runs-on: ubuntu-latest
 

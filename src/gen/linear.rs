@@ -22,6 +22,7 @@
 //!     vec![vec![1], vec![2], Vec::new()]
 //! );
 //! ```
+
 extern crate alloc;
 
 use {

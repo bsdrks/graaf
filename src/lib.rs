@@ -23,13 +23,13 @@
 //!     HashSet::new(),
 //! ];
 //!
-//! // ╭───╮       ╭───╮
-//! // │ 0 │   →   │ 1 │
-//! // ╰───╯       ╰───╯
-//! //   ↑           ↓
-//! // ╭───╮       ╭───╮
-//! // │ 3 │       │ 2 │
-//! // ╰───╯       ╰───╯
+//! // ╭───╮     ╭───╮
+//! // │ 0 │  →  │ 1 │
+//! // ╰───╯     ╰───╯
+//! //   ↑         ↓
+//! // ╭───╮     ╭───╮
+//! // │ 3 │     │ 2 │
+//! // ╰───╯     ╰───╯
 //!
 //! graph.add_edge(3, 0);
 //! graph.add_edge(0, 1);
@@ -47,7 +47,7 @@
 
 // Clippy lint groups
 #![deny(clippy::all, clippy::cargo, clippy::pedantic, clippy::nursery)]
-// Clippy lints
+// Clippy restriction lints
 #![deny(
     clippy::alloc_instead_of_core,
     clippy::get_unwrap,
@@ -112,13 +112,13 @@ mod tests {
             HashSet::new(),
         ];
 
-        // ╭───╮       ╭───╮
-        // │ 0 │   →   │ 1 │
-        // ╰───╯       ╰───╯
-        //   ↑           ↓
-        // ╭───╮       ╭───╮
-        // │ 3 │       │ 2 │
-        // ╰───╯       ╰───╯
+        // ╭───╮     ╭───╮
+        // │ 0 │  →  │ 1 │
+        // ╰───╯     ╰───╯
+        //   ↑         ↓
+        // ╭───╮     ╭───╮
+        // │ 3 │     │ 2 │
+        // ╰───╯     ╰───╯
 
         graph.add_edge(3, 0);
         graph.add_edge(0, 1);

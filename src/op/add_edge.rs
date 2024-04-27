@@ -13,6 +13,7 @@
 //!
 //! assert_eq!(graph, vec![vec![1, 2], Vec::new(), vec![0]]);
 //! ```
+
 extern crate alloc;
 
 use {

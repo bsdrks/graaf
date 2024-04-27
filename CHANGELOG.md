@@ -8,9 +8,7 @@ In arbitrary order:
 - Add Hopcroft-Karp algorithm.
 - Add Kruksal's algorithm.
 - Add SPFA algorithm.
-- Add `dijkstra::mssp`.
 - Add `dijkstra::sssp`.
-- Add benches to CI.
 - Add biclique generator.
 - Add binary tree generator.
 - Add bipartite matching algorithm for connected graphs.
@@ -21,6 +19,27 @@ In arbitrary order:
 - Optimize performance of `bfs::*`.
 - Optimize performance of `dijkstra::*`.
 - Use pre-built version of `grcov` in CI.
+
+## [0.28.0] - 2024-04-27
+
+Added
+
+- Add `algo::dijkstra::shortest_path`.
+- Add `bench` job to GHA workflow.
+- Bench `add_edge` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Bench `add_edge` for `BTreeMap<usize, Vec<usize>>`.
+- Bench `add_edge` for `Vec<BTreeSet<usize>>`.
+- Bench `add_edge` for `[BTreeSet<usize>; V]`.
+- Bench `count_all_edges` for `Vec<BTreeMap<usize, usize>>`.
+
+Changed
+
+- Breaking: Return `bfs::shortest_path` when target is found before pushing the target to the queue.
+- Compress textual diagrams.
+- Cross-link `bfs` and `dijkstra` in module documentation.
+- Document reasons for panic in `bfs` and `dijkstra`.
+- Link to `op` in the `repr` module documentation.
+- Remove `min_time` from benches.
 
 ## [0.27.1] - 2024-04-26
 

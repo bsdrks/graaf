@@ -39,6 +39,7 @@
 //!
 //! assert_eq!(graph, vec![HashSet::new(), HashSet::new(), HashSet::new()]);
 //! ```
+
 extern crate alloc;
 
 use {
