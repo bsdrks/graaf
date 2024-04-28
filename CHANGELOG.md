@@ -16,9 +16,16 @@ In arbitrary order:
 - Add depth-first search.
 - Add star graph generator.
 - Add topological sorting for DAGs.
+- Explain how to use `prop` properties.
 - Optimize performance of `bfs::*`.
 - Optimize performance of `dijkstra::*`.
 - Use pre-built version of `grcov` in CI.
+
+## [0.30.0] - 2024-04-28
+
+Removed
+
+- Breaking: Remove `prop::remove_edge_is_edge`.
 
 ## [0.29.1] - 2024-04-28
 

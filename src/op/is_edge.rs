@@ -101,12 +101,6 @@ use {
 /// should ensure that
 /// [`add_weighted_edge_is_edge`](crate::prop::add_weighted_edge_is_edge)
 /// holds.
-///
-/// ## `IsEdge` and `RemoveEdge`
-///
-/// Types that also implement [`RemoveEdge`](crate::op::RemoveEdge) should
-/// ensure that [`remove_edge_is_edge`](crate::prop::remove_edge_is_edge)
-/// holds.
 pub trait IsEdge {
     /// Check if there is an edge from `s` to `t`.
     ///
