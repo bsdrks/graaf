@@ -36,26 +36,59 @@ where
 
 #[cfg(test)]
 mod tests {
+    extern crate alloc;
+
     use {
         super::*,
+        crate::prop::strategy::binop_vertices,
+        alloc::collections::BTreeMap,
+        proptest::prelude::*,
         std::collections::HashMap,
     };
 
-    macro_rules! test_add_weighted_edge_remove_edge {
-        ($graph:expr) => {
-            assert!(add_weighted_edge_remove_edge($graph, 0, 1, 1));
-            assert!(add_weighted_edge_remove_edge($graph, 0, 2, 2));
-            assert!(add_weighted_edge_remove_edge($graph, 1, 0, 3));
-            assert!(add_weighted_edge_remove_edge($graph, 1, 2, 4));
-            assert!(add_weighted_edge_remove_edge($graph, 2, 0, 5));
-            assert!(add_weighted_edge_remove_edge($graph, 2, 1, 6));
-        };
+    proptest! {
+        #[test]
+        fn vec_btree_map((v, s, t) in binop_vertices(10_000), w in -10_000..10_000_i32) {
+            let graph = vec![BTreeMap::new(); v];
+
+            assert!(add_weighted_edge_remove_edge(&graph, s, t, w));
+        }
+
+        #[test]
+        fn vec_hash_map((v, s, t) in binop_vertices(10_000), w in -10_000..10_000_i32) {
+            let graph = vec![HashMap::new(); v];
+
+            assert!(add_weighted_edge_remove_edge(&graph, s, t, w));
+        }
     }
 
     #[test]
-    fn vec_hash_map() {
-        let graph: Vec<HashMap<usize, i32>> = vec![HashMap::new(), HashMap::new(), HashMap::new()];
+    fn arr_btree_map() {
+        let graph = [BTreeMap::new(), BTreeMap::new(), BTreeMap::new()];
 
-        test_add_weighted_edge_remove_edge!(&graph);
+        assert!(add_weighted_edge_remove_edge(&graph, 0, 0, 0));
+        assert!(add_weighted_edge_remove_edge(&graph, 0, 1, 0));
+        assert!(add_weighted_edge_remove_edge(&graph, 0, 2, 0));
+        assert!(add_weighted_edge_remove_edge(&graph, 1, 0, 0));
+        assert!(add_weighted_edge_remove_edge(&graph, 1, 1, 0));
+        assert!(add_weighted_edge_remove_edge(&graph, 1, 2, 0));
+        assert!(add_weighted_edge_remove_edge(&graph, 2, 0, 0));
+        assert!(add_weighted_edge_remove_edge(&graph, 2, 1, 0));
+        assert!(add_weighted_edge_remove_edge(&graph, 2, 2, 0));
+    }
+
+    #[test]
+    fn arr_hash_map() {
+        let graph = [HashMap::new(), HashMap::new(), HashMap::new()];
+
+        assert!(add_weighted_edge_remove_edge(&graph, 0, 0, 0));
+        assert!(add_weighted_edge_remove_edge(&graph, 0, 1, 0));
+        assert!(add_weighted_edge_remove_edge(&graph, 0, 2, 0));
+        assert!(add_weighted_edge_remove_edge(&graph, 1, 0, 0));
+        assert!(add_weighted_edge_remove_edge(&graph, 1, 1, 0));
+        assert!(add_weighted_edge_remove_edge(&graph, 1, 2, 0));
+        assert!(add_weighted_edge_remove_edge(&graph, 2, 0, 0));
+        assert!(add_weighted_edge_remove_edge(&graph, 2, 1, 0));
+        assert!(add_weighted_edge_remove_edge(&graph, 2, 2, 0));
     }
 }

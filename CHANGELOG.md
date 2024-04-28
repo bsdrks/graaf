@@ -20,6 +20,41 @@ In arbitrary order:
 - Optimize performance of `dijkstra::*`.
 - Use pre-built version of `grcov` in CI.
 
+## [0.29.1] - 2024-04-28
+
+Added
+
+- Add `add_weighted_edge_is_edge` property test `btree_map_btree_set`.
+- Add `add_weighted_edge_is_edge` property test `hash_map_hash_set`.
+- Add `add_weighted_edge_is_edge` property test `slice_btree_set`.
+- Add `add_weighted_edge_is_edge` property test `slice_hash_set`.
+- Add `add_weighted_edge_is_edge` property test `vec_btree_map`.
+- Add `add_weighted_edge_is_edge` property test `vec_hash_map`.
+- Add `add_weighted_edge_is_edge` unit test `arr_btree_map`.
+- Add `add_weighted_edge_is_edge` unit test `arr_hash_map`.
+- Add `add_weighted_edge_remove_edge` property test `btree_map_btree_map`.
+- Add `add_weighted_edge_remove_edge` property test `hash_map_hash_map`.
+- Add `add_weighted_edge_remove_edge` property test `slice_btree_map`.
+- Add `add_weighted_edge_remove_edge` property test `slice_hash_map`.
+- Add `add_weighted_edge_remove_edge` property test `vec_btree_map`.
+- Add `add_weighted_edge_remove_edge` property test `vec_hash_map`.
+- Add `add_weighted_edge_remove_edge` unit test `arr_btree_map`.
+- Add `add_weighted_edge_remove_edge` unit test `arr_hash_map`.
+
+Changed
+
+- Loosen bound on `G` in `add_weighted_edge_is_edge` to `?Sized`.
+
+Fixed
+
+- Fix `prop::strategy::binop_vertices` when `v` is zero.
+
+Removed
+
+- Remove `add_weighted_edge_is_edge` unit test `vec_hash_map`.
+- Remove `add_weighted_edge_remove_edge` unit test `vec_hash_map`.
+- Rename `prop::strategy::v_s_t` to `prop::strategy::binop_vertices`.
+
 ## [0.29.0] - 2024-04-28
 
 Added

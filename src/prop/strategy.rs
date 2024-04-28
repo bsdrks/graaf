@@ -16,8 +16,13 @@ use proptest::{
 /// # Arguments
 ///
 /// * `max`: The maximum number of vertices in the graph.
-pub fn v_s_t(max: usize) -> impl Strategy<Value = (usize, usize, usize)> {
+pub fn binop_vertices(max: usize) -> impl Strategy<Value = (usize, usize, usize)> {
     prop::num::usize::ANY
         .prop_map(move |v| v % max)
-        .prop_flat_map(|v| (Just(v), 0..v, 0..v))
+        .prop_flat_map(|v| {
+            let s = prop::num::usize::ANY.prop_map(move |s| s % v.saturating_sub(1));
+            let t = prop::num::usize::ANY.prop_map(move |t| t % v.saturating_sub(1));
+
+            (Just(v), s, t)
+        })
 }

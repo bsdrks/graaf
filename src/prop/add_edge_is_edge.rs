@@ -33,7 +33,7 @@ mod tests {
 
     use {
         super::*,
-        crate::prop::strategy::v_s_t,
+        crate::prop::strategy::binop_vertices,
         alloc::collections::{
             BTreeMap,
             BTreeSet,
@@ -47,37 +47,35 @@ mod tests {
 
     proptest! {
         #[test]
-        fn vec_btree_set((v, s, t) in v_s_t(10_000)) {
+        fn vec_btree_set((v, s, t) in binop_vertices(10_000)) {
             let mut graph = vec![BTreeSet::new(); v];
 
             assert!(add_edge_is_edge(&mut graph, s, t));
         }
 
         #[test]
-        fn vec_hash_set((v, s, t) in v_s_t(10_000)) {
+        fn vec_hash_set((v, s, t) in binop_vertices(10_000)) {
             let mut graph = vec![HashSet::new(); v];
 
             assert!(add_edge_is_edge(&mut graph, s, t));
         }
 
         #[test]
-        fn slice_btree_set((v, s, t) in v_s_t(10_000)) {
-            let mut graph = vec![BTreeSet::new(); v];
-            let graph: &mut [BTreeSet::<usize>] = graph.as_mut_slice();
+        fn slice_btree_set((v, s, t) in binop_vertices(10_000)) {
+            let graph = &mut vec![BTreeSet::new(); v][..];
 
             assert!(add_edge_is_edge(graph, s, t));
         }
 
         #[test]
-        fn slice_hash_set((v, s, t) in v_s_t(10_000)) {
-            let mut graph = vec![HashSet::new(); v];
-            let graph: &mut [HashSet::<usize>] = graph.as_mut_slice();
+        fn slice_hash_set((v, s, t) in binop_vertices(10_000)) {
+            let graph = &mut vec![HashSet::new(); v][..];
 
             assert!(add_edge_is_edge(graph, s, t));
         }
 
         #[test]
-        fn btree_map_btree_set((v, s, t) in v_s_t(10_000)) {
+        fn btree_map_btree_set((v, s, t) in binop_vertices(10_000)) {
             let mut graph = (0..v)
                 .map(|v| (v, BTreeSet::new()))
                 .collect::<BTreeMap<_, _>>();
@@ -86,7 +84,7 @@ mod tests {
         }
 
         #[test]
-        fn hash_map_hash_set((v, s, t) in v_s_t(10_000)) {
+        fn hash_map_hash_set((v, s, t) in binop_vertices(10_000)) {
             let mut graph = (0..v)
                 .map(|v| (v, HashSet::new()))
                 .collect::<HashMap<_, _>>();

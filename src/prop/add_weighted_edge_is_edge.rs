@@ -21,7 +21,7 @@ use crate::op::{
 /// * `w`: The weight of the edge.
 pub fn add_weighted_edge_is_edge<G, W>(graph: &mut G, s: usize, t: usize, w: W) -> bool
 where
-    G: AddWeightedEdge<W> + IsEdge,
+    G: AddWeightedEdge<W> + IsEdge + ?Sized,
 {
     graph.add_weighted_edge(s, t, w);
 
@@ -30,26 +30,91 @@ where
 
 #[cfg(test)]
 mod tests {
+    extern crate alloc;
+
     use {
         super::*,
+        crate::prop::strategy::binop_vertices,
+        alloc::collections::BTreeMap,
+        proptest::prelude::*,
         std::collections::HashMap,
     };
 
-    macro_rules! add_weighted_edge_is_edge {
-        ($graph:expr) => {
-            assert!(add_weighted_edge_is_edge($graph, 0, 1, 1));
-            assert!(add_weighted_edge_is_edge($graph, 0, 2, 2));
-            assert!(add_weighted_edge_is_edge($graph, 1, 0, 3));
-            assert!(add_weighted_edge_is_edge($graph, 1, 2, 4));
-            assert!(add_weighted_edge_is_edge($graph, 2, 0, 5));
-            assert!(add_weighted_edge_is_edge($graph, 2, 1, 6));
-        };
+    proptest! {
+        #[test]
+        fn vec_btree_map((v, s, t) in binop_vertices(10_000), w in -10_000..10_000_i32) {
+            let mut graph = vec![BTreeMap::new(); v];
+
+            assert!(add_weighted_edge_is_edge(&mut graph, s, t, w));
+        }
+
+        #[test]
+        fn vec_hash_map((v, s, t) in binop_vertices(10_000), w in -10_000..10_000_i32) {
+            let graph: &mut Vec<HashMap<usize, i32>> = &mut vec![HashMap::new(); v];
+
+            assert!(add_weighted_edge_is_edge(graph, s, t, w));
+        }
+
+        #[test]
+        fn slice_btree_map((v, s, t) in binop_vertices(10_000), w in -10_000..10_000_i32) {
+            let graph = &mut vec![BTreeMap::new(); v][..];
+
+            assert!(add_weighted_edge_is_edge(graph, s, t, w));
+        }
+
+        #[test]
+        fn slice_hash_map((v, s, t) in binop_vertices(10_000), w in -10_000..10_000_i32) {
+            let graph = &mut vec![HashMap::new(); v][..];
+
+            assert!(add_weighted_edge_is_edge(graph, s, t, w));
+        }
+
+        #[test]
+        fn btree_map_btree_map((v, s, t) in binop_vertices(10_000), w in -10_000..10_000_i32) {
+            let mut graph = (0..v)
+                .map(|v| (v, BTreeMap::new()))
+                .collect::<BTreeMap<_, _>>();
+
+            assert!(add_weighted_edge_is_edge(&mut graph, s, t, w));
+        }
+
+        #[test]
+        fn hash_map_hash_map((v, s, t) in binop_vertices(10_000), w in -10_000..10_000_i32) {
+            let mut graph = (0..v)
+                .map(|v| (v, HashMap::new()))
+                .collect::<HashMap<_, _>>();
+
+            assert!(add_weighted_edge_is_edge(&mut graph, s, t, w));
+        }
     }
 
     #[test]
-    fn vec_hash_map() {
-        let graph: &mut Vec<HashMap<usize, i32>> = &mut vec![HashMap::new(); 3];
+    fn arr_btree_map() {
+        let mut graph = [BTreeMap::new(), BTreeMap::new(), BTreeMap::new()];
 
-        add_weighted_edge_is_edge!(graph);
+        assert!(add_weighted_edge_is_edge(&mut graph, 0, 0, 0));
+        assert!(add_weighted_edge_is_edge(&mut graph, 0, 1, 0));
+        assert!(add_weighted_edge_is_edge(&mut graph, 0, 2, 0));
+        assert!(add_weighted_edge_is_edge(&mut graph, 1, 0, 0));
+        assert!(add_weighted_edge_is_edge(&mut graph, 1, 1, 0));
+        assert!(add_weighted_edge_is_edge(&mut graph, 1, 2, 0));
+        assert!(add_weighted_edge_is_edge(&mut graph, 2, 0, 0));
+        assert!(add_weighted_edge_is_edge(&mut graph, 2, 1, 0));
+        assert!(add_weighted_edge_is_edge(&mut graph, 2, 2, 0));
+    }
+
+    #[test]
+    fn arr_hash_map() {
+        let mut graph = [HashMap::new(), HashMap::new(), HashMap::new()];
+
+        assert!(add_weighted_edge_is_edge(&mut graph, 0, 0, 0));
+        assert!(add_weighted_edge_is_edge(&mut graph, 0, 1, 0));
+        assert!(add_weighted_edge_is_edge(&mut graph, 0, 2, 0));
+        assert!(add_weighted_edge_is_edge(&mut graph, 1, 0, 0));
+        assert!(add_weighted_edge_is_edge(&mut graph, 1, 1, 0));
+        assert!(add_weighted_edge_is_edge(&mut graph, 1, 2, 0));
+        assert!(add_weighted_edge_is_edge(&mut graph, 2, 0, 0));
+        assert!(add_weighted_edge_is_edge(&mut graph, 2, 1, 0));
+        assert!(add_weighted_edge_is_edge(&mut graph, 2, 2, 0));
     }
 }
