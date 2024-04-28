@@ -32,8 +32,8 @@ use {
 ///
 /// # How can I implement `AddEdge`?
 ///
-/// Provide an implementation of `add_edge` that adds an edge from `s` to `t` to
-/// the graph.
+/// Provide an implementation of `add_edge` that adds an unweighted edge from
+/// `s` to `t` to the graph.
 ///
 /// ```
 /// use graaf::op::AddEdge;

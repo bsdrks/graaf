@@ -20,6 +20,21 @@ In arbitrary order:
 - Optimize performance of `dijkstra::*`.
 - Use pre-built version of `grcov` in CI.
 
+## [0.28.2] - 2024-04-28
+
+Added
+
+- Add `gen::LinearConst` generator.
+- Implement `LinearConst` for `[BTreeSet<usize>; V]`.
+- Implement `LinearConst` for `[HashSet<usize>; V]`.
+- Implement `LinearConst` for `[Vec<usize>; V]`.
+- Implement `Linear` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `Linear` for `BTreeMap<usize, Vec<usize>>`.
+
+Fixed
+
+- Fix comments in `gen::Linear` test function bodies.
+
 ## [0.28.1] - 2024-04-27
 
 Added
@@ -58,6 +73,12 @@ Changed
 Added
 
 - Add `op::Target`, a trait to get the target vertex of an adjacency list edge.
+
+Changed
+
+- Replace `Linear for G: AddEdge + Empty` with `Linear for Vec<BTreeSet<usize>>`.
+- Replace `Linear for G: AddEdge + Empty` with `Linear for Vec<HashSet<usize>>`.
+- Replace `Linear for G: AddEdge + Empty` with `Linear for Vec<Vec<usize>>`.
 
 Removed
 
@@ -103,7 +124,7 @@ Added
 - Implement `Linear` for `BTreeSet<usize>`.
 - Implement `Linear` for `HashSet<usize>`.
 
-Changed
+Fixed
 
 - Fix `Linear::linear`.
 
@@ -713,7 +734,7 @@ Removed
 
 ## [0.6.3] - 2024-04-06
 
-Changed
+Fix
 
 - Fix `README` formatting.
 

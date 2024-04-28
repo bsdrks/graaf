@@ -1,6 +1,7 @@
-//! A trait to generate linear graphs
+//! A trait to generate linear graphs for variable-sized graphs
 //!
-//! Linear graphs are also known as path graphs.
+//! Linear graphs are also known as path graphs. For const-sized graphs, see the
+//! [`LinearConst`](crate::gen::LinearConst) trait.
 //!
 //! # Examples
 //!
@@ -26,12 +27,15 @@
 extern crate alloc;
 
 use {
-    alloc::collections::BTreeSet,
+    alloc::collections::{
+        BTreeMap,
+        BTreeSet,
+    },
     core::hash::BuildHasher,
     std::collections::HashSet,
 };
 
-/// A trait to generate linear graphs
+/// A trait to generate linear graphs for variable-sized graphs
 ///
 /// # How can I implement `Linear`?
 ///
@@ -61,7 +65,7 @@ use {
 /// assert_eq!(graph.edges, HashSet::from([(0, 1), (1, 2)]));
 /// ```
 pub trait Linear {
-    /// Generate a linear graph, also known as a path graph.
+    /// Generate a linear graph.
     ///
     /// # Arguments
     ///
@@ -116,6 +120,42 @@ where
         for (s, set) in graph.iter_mut().enumerate().take(v - 1) {
             let _ = set.insert(s + 1);
         }
+
+        graph
+    }
+}
+
+impl Linear for BTreeMap<usize, Vec<usize>> {
+    fn linear(v: usize) -> Self {
+        if v == 0 {
+            return Self::new();
+        }
+
+        let mut graph = Self::new();
+
+        for s in 0..v - 1 {
+            let _ = graph.insert(s, vec![s + 1]);
+        }
+
+        let _ = graph.insert(v - 1, Vec::new());
+
+        graph
+    }
+}
+
+impl Linear for BTreeMap<usize, BTreeSet<usize>> {
+    fn linear(v: usize) -> Self {
+        if v == 0 {
+            return Self::new();
+        }
+
+        let mut graph = Self::new();
+
+        for s in 0..v - 1 {
+            let _ = graph.insert(s, BTreeSet::from([s + 1]));
+        }
+
+        let _ = graph.insert(v - 1, BTreeSet::new());
 
         graph
     }
@@ -179,6 +219,48 @@ mod tests {
         .enumerate()
         {
             assert_eq!(&Vec::<HashSet<usize>>::linear(v), g);
+        }
+    }
+
+    #[test]
+    fn btree_map_vec() {
+        for (v, g) in [
+            //
+            BTreeMap::new(),
+            // 0
+            BTreeMap::from([(0, Vec::new())]),
+            // 0 → 1
+            BTreeMap::from([(0, vec![1]), (1, Vec::new())]),
+            // 0 → 1 → 2
+            BTreeMap::from([(0, vec![1]), (1, vec![2]), (2, Vec::new())]),
+        ]
+        .iter()
+        .enumerate()
+        {
+            assert_eq!(&BTreeMap::<usize, Vec<usize>>::linear(v), g);
+        }
+    }
+
+    #[test]
+    fn btree_map_btree_set() {
+        for (v, g) in [
+            //
+            BTreeMap::new(),
+            // 0
+            BTreeMap::from([(0, BTreeSet::new())]),
+            // 0 → 1
+            BTreeMap::from([(0, BTreeSet::from([1])), (1, BTreeSet::new())]),
+            // 0 → 1 → 2
+            BTreeMap::from([
+                (0, BTreeSet::from([1])),
+                (1, BTreeSet::from([2])),
+                (2, BTreeSet::new()),
+            ]),
+        ]
+        .iter()
+        .enumerate()
+        {
+            assert_eq!(&BTreeMap::<usize, BTreeSet<usize>>::linear(v), g);
         }
     }
 }
