@@ -68,13 +68,13 @@ use {
 /// ## `AddEdge` and `RemoveEdge`
 ///
 /// Types that also implement [`RemoveEdge`](crate::op::RemoveEdge) should
-/// ensure that [`add_edge_remove_edge`](crate::op::prop::add_edge_remove_edge)
+/// ensure that [`add_edge_remove_edge`](crate::prop::add_edge_remove_edge)
 /// holds.
 ///
 /// ## `AddEdge` and `IsEdge`
 ///
 /// Types that also implement [`IsEdge`](crate::op::IsEdge) should ensure that
-/// [`add_edge_is_edge`](crate::op::prop::add_edge_is_edge) holds.
+/// [`add_edge_is_edge`](crate::prop::add_edge_is_edge) holds.
 pub trait AddEdge {
     /// Add an edge from `s` to `t`.
     ///

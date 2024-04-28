@@ -72,12 +72,12 @@ use {
 ///
 /// Types that also implement [`RemoveEdge`](crate::op::RemoveEdge) should
 /// ensure that
-/// [`add_weighted_edge_remove_edge`](crate::op::prop::add_weighted_edge_remove_edge) holds.
+/// [`add_weighted_edge_remove_edge`](crate::prop::add_weighted_edge_remove_edge) holds.
 ///
 /// ## `AddWeightedEdge` and `IsEdge`
 ///
 /// Types that also implement [`IsEdge`](crate::op::IsEdge) should ensure that
-/// [`add_weighted_edge_is_edge`](crate::op::prop::add_weighted_edge_is_edge)
+/// [`add_weighted_edge_is_edge`](crate::prop::add_weighted_edge_is_edge)
 /// holds.
 pub trait AddWeightedEdge<W> {
     /// Add an edge from `s` to `t` with weight `w`.

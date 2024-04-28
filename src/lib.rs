@@ -88,6 +88,7 @@
 pub mod algo;
 pub mod gen;
 pub mod op;
+pub mod prop;
 pub mod repr;
 
 #[cfg(test)]

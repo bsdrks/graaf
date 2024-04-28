@@ -20,6 +20,34 @@ In arbitrary order:
 - Optimize performance of `dijkstra::*`.
 - Use pre-built version of `grcov` in CI.
 
+## [0.29.0] - 2024-04-28
+
+Added
+
+- Add `add_edge_is_edge` property test `btree_map_btree_set`.
+- Add `add_edge_is_edge` property test `hash_map_hash_set`.
+- Add `add_edge_is_edge` property test `slice_btree_set`.
+- Add `add_edge_is_edge` property test `slice_hash_set`.
+- Add `add_edge_is_edge` property test `vec_btree_set`.
+- Add `add_edge_is_edge` property test `vec_hash_set`.
+- Add `add_edge_is_edge` unit test `arr_btree_set`.
+- Add `add_edge_remove_edge` property test `vec_btree_set`.
+- Add `add_edge_remove_edge` property test `vec_hash_set`.
+- Add `add_edge_remove_edge` unit test `arr_btree_set`.
+- Add `prop::strategy::v_s_t` to order, source, and target.
+- Add `proptest` as a dev-dependency.
+
+Changed
+
+- Breaking: Move `op::prop` to `prop`.
+
+Removed
+
+- Remove `add_edge_is_edge` unit test `hash_map_hash_set`.
+- Remove `add_edge_is_edge` unit test `hash_map_hash_set`.
+- Remove `add_edge_is_edge` unit test `vec_hash_set`.
+- Remove `add_edge_remove_edge` unit test `vec_hash_set`.
+
 ## [0.28.2] - 2024-04-28
 
 Added

@@ -85,7 +85,6 @@ pub mod iter_edges;
 pub mod iter_vertices;
 pub mod iter_weighted_edges;
 pub mod outdegree;
-pub mod prop;
 pub mod remove_edge;
 pub mod target;
 
