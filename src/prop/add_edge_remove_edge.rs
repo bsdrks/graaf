@@ -45,14 +45,14 @@ mod tests {
 
     proptest! {
         #[test]
-        fn vec_btree_set((v, s, t) in binop_vertices(10_000)) {
+        fn vec_btree_set((v, s, t) in binop_vertices(1, 10_000)) {
             let graph = vec![HashSet::new(); v];
 
             assert!(add_edge_remove_edge(&graph, s, t));
         }
 
         #[test]
-        fn vec_hash_set((v, s, t) in binop_vertices(10_000)) {
+        fn vec_hash_set((v, s, t) in binop_vertices(1, 10_000)) {
             let graph = vec![HashSet::new(); v];
 
             assert!(add_edge_remove_edge(&graph, s, t));

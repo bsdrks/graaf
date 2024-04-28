@@ -21,6 +21,12 @@ In arbitrary order:
 - Optimize performance of `dijkstra::*`.
 - Use pre-built version of `grcov` in CI.
 
+## [0.30.1] - 2024-04-28
+
+Fixed
+
+- Fix `prop::strategy::binop_vertices` when `v` is zero inside `flat_map`.
+
 ## [0.30.0] - 2024-04-28
 
 Removed

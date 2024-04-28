@@ -48,14 +48,14 @@ mod tests {
 
     proptest! {
         #[test]
-        fn vec_btree_map((v, s, t) in binop_vertices(10_000), w in -10_000..10_000_i32) {
+        fn vec_btree_map((v, s, t) in binop_vertices(1, 10_000), w in -10_000..10_000_i32) {
             let graph = vec![BTreeMap::new(); v];
 
             assert!(add_weighted_edge_remove_edge(&graph, s, t, w));
         }
 
         #[test]
-        fn vec_hash_map((v, s, t) in binop_vertices(10_000), w in -10_000..10_000_i32) {
+        fn vec_hash_map((v, s, t) in binop_vertices(1, 10_000), w in -10_000..10_000_i32) {
             let graph = vec![HashMap::new(); v];
 
             assert!(add_weighted_edge_remove_edge(&graph, s, t, w));
