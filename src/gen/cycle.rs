@@ -135,11 +135,11 @@ mod tests {
         for (v, g) in [
             //
             Vec::new(),
-            // 0
+            // 0 → 0
             vec![vec![0]],
-            // 0 → 1
+            // 0 → 1 → 0
             vec![vec![1], vec![0]],
-            // 0 → 1 → 2
+            // 0 → 1 → 2 → 0
             vec![vec![1], vec![2], vec![0]],
         ]
         .iter()
@@ -154,11 +154,11 @@ mod tests {
         for (v, g) in [
             //
             Vec::new(),
-            // 0
+            // 0 → 0
             vec![BTreeSet::from([0])],
-            // 0 → 1
+            // 0 → 1 → 0
             vec![BTreeSet::from([1]), BTreeSet::from([0])],
-            // 0 → 1 → 2
+            // 0 → 1 → 2 → 0
             vec![
                 BTreeSet::from([1]),
                 BTreeSet::from([2]),
@@ -177,11 +177,11 @@ mod tests {
         for (v, g) in [
             //
             Vec::new(),
-            // 0
+            // 0 → 0
             vec![HashSet::from([0])],
-            // 0 → 1
+            // 0 → 1 → 0
             vec![HashSet::from([1]), HashSet::from([0])],
-            // 0 → 1 → 2
+            // 0 → 1 → 2 → 0
             vec![HashSet::from([1]), HashSet::from([2]), HashSet::from([0])],
         ]
         .iter()
