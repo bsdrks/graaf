@@ -128,7 +128,78 @@ where
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use {
+        super::*,
+        crate::op::{
+            CountAllVertices,
+            Indegree,
+            IterVertices,
+            Outdegree,
+        },
+        proptest::prelude::*,
+    };
+
+    proptest! {
+        #[test]
+        fn count_all_vertices_vec_vec(v in 0..100_usize) {
+            assert_eq!(Vec::<Vec<usize>>::cycle(v).count_all_vertices(), v);
+        }
+
+        #[test]
+        fn count_all_vertices_vec_btree_set(v in 0..100_usize) {
+            assert_eq!(Vec::<BTreeSet<usize>>::cycle(v).count_all_vertices(), v);
+        }
+
+        #[test]
+        fn count_all_vertices_vec_hash_set(v in 0..100_usize) {
+            assert_eq!(Vec::<HashSet<usize>>::cycle(v).count_all_vertices(), v);
+        }
+
+        #[test]
+        fn indegree_vec_btree_set(v in 0..100_usize) {
+            let graph = Vec::<BTreeSet<usize>>::cycle(v);
+
+            for s in graph.iter_vertices() {
+                assert_eq!(graph.indegree(s), 1);
+            }
+        }
+
+        #[test]
+        fn indegree_vec_hash_set(v in 0..100_usize) {
+            let graph = Vec::<HashSet<usize>>::cycle(v);
+
+            for s in graph.iter_vertices() {
+                assert_eq!(graph.indegree(s), 1);
+            }
+        }
+
+        #[test]
+        fn outdegree_vec_vec(v in 0..100_usize) {
+            let graph = Vec::<Vec<usize>>::cycle(v);
+
+            for s in graph.iter_vertices() {
+                assert_eq!(graph.outdegree(s), 1);
+            }
+        }
+
+        #[test]
+        fn outdegree_vec_btree_set(v in 0..100_usize) {
+            let graph = Vec::<BTreeSet<usize>>::cycle(v);
+
+            for s in graph.iter_vertices() {
+                assert_eq!(graph.outdegree(s), 1);
+            }
+        }
+
+        #[test]
+        fn outdegree_vec_hash_set(v in 0..100_usize) {
+            let graph = Vec::<HashSet<usize>>::cycle(v);
+
+            for s in graph.iter_vertices() {
+                assert_eq!(graph.outdegree(s), 1);
+            }
+        }
+    }
 
     #[test]
     fn vec_vec() {

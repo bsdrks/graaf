@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.30.4] - 2024-04-29
+
+Added
+
+- Add `gen::Cycle` property test `count_all_vertices_vec_vec`.
+- Add `gen::Cycle` property test `count_all_vertices_vec_btree_set`.
+- Add `gen::Cycle` property test `count_all_vertices_vec_hash_set`.
+- Add `gen::Cycle` property test `indegree_vec_btree_set`.
+- Add `gen::Cycle` property test `indegree_vec_hash_set`.
+- Add `gen::Cycle` property test `outdegree_vec_vec`.
+- Add `gen::Cycle` property test `outdegree_vec_btree_set`.
+- Add `gen::Cycle` property test `outdegree_vec_hash_set`.
+
 ## [0.30.3] - 2024-04-29
 
 Changed

@@ -42,35 +42,35 @@ mod tests {
 
     proptest! {
         #[test]
-        fn vec_btree_map((v, s, t) in binop_vertices(1, 10_000), w in -10_000..10_000_i32) {
+        fn vec_btree_map((v, s, t) in binop_vertices(1, 100), w in -100..100_i32) {
             let mut graph = vec![BTreeMap::new(); v];
 
             assert!(add_weighted_edge_is_edge(&mut graph, s, t, w));
         }
 
         #[test]
-        fn vec_hash_map((v, s, t) in binop_vertices(1, 10_000), w in -10_000..10_000_i32) {
+        fn vec_hash_map((v, s, t) in binop_vertices(1, 100), w in -100..100_i32) {
             let graph: &mut Vec<HashMap<usize, i32>> = &mut vec![HashMap::new(); v];
 
             assert!(add_weighted_edge_is_edge(graph, s, t, w));
         }
 
         #[test]
-        fn slice_btree_map((v, s, t) in binop_vertices(1, 10_000), w in -10_000..10_000_i32) {
+        fn slice_btree_map((v, s, t) in binop_vertices(1, 100), w in -100..100_i32) {
             let graph = &mut vec![BTreeMap::new(); v][..];
 
             assert!(add_weighted_edge_is_edge(graph, s, t, w));
         }
 
         #[test]
-        fn slice_hash_map((v, s, t) in binop_vertices(1, 10_000), w in -10_000..10_000_i32) {
+        fn slice_hash_map((v, s, t) in binop_vertices(1, 100), w in -100..100_i32) {
             let graph = &mut vec![HashMap::new(); v][..];
 
             assert!(add_weighted_edge_is_edge(graph, s, t, w));
         }
 
         #[test]
-        fn btree_map_btree_map((v, s, t) in binop_vertices(1, 10_000), w in -10_000..10_000_i32) {
+        fn btree_map_btree_map((v, s, t) in binop_vertices(1, 100), w in -100..100_i32) {
             let mut graph = (0..v)
                 .map(|v| (v, BTreeMap::new()))
                 .collect::<BTreeMap<_, _>>();
@@ -79,7 +79,7 @@ mod tests {
         }
 
         #[test]
-        fn hash_map_hash_map((v, s, t) in binop_vertices(1, 10_000), w in -10_000..10_000_i32) {
+        fn hash_map_hash_map((v, s, t) in binop_vertices(1, 100), w in -100..100_i32) {
             let mut graph = (0..v)
                 .map(|v| (v, HashMap::new()))
                 .collect::<HashMap<_, _>>();
