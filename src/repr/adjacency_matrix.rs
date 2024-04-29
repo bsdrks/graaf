@@ -2,6 +2,29 @@
 //!
 //! The matrix is stored as a bit array, and is suited for dense graphs with a
 //! small number of vertices.
+//!
+//! # Examples
+//!
+//! ```
+//! use graaf::{
+//!     op::{
+//!         AddEdge,
+//!         IsSimple,
+//!     },
+//!     repr::AdjacencyMatrix,
+//! };
+//!
+//! let mut graph = AdjacencyMatrix::<3>::new();
+//!
+//! graph.add_edge(0, 1);
+//!
+//! assert!(graph.is_simple());
+//!
+//! graph.add_edge(1, 1);
+//!
+//! // Loops are not allowed in simple graphs.
+//! assert!(!graph.is_simple());
+//! ```
 
 use crate::op::{
     AddEdge,

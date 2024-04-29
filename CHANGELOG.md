@@ -1,25 +1,11 @@
 # Changelog
 
-## Provisional roadmap
+## [0.30.2] - 2024-04-29
 
-In arbitrary order:
+Changed
 
-- Add Edmonds-Karp algorithm.
-- Add Hopcroft-Karp algorithm.
-- Add Kruksal's algorithm.
-- Add SPFA algorithm.
-- Add `dijkstra::sssp`.
-- Add biclique generator.
-- Add binary tree generator.
-- Add bipartite matching algorithm for connected graphs.
-- Add bipartite matching algorithm for disconnected graphs.
-- Add depth-first search.
-- Add star graph generator.
-- Add topological sorting for DAGs.
-- Explain how to use `prop` properties.
-- Optimize performance of `bfs::*`.
-- Optimize performance of `dijkstra::*`.
-- Use pre-built version of `grcov` in CI.
+- Add more extensive examples to `README`.
+- Simplify `strategy::binop_vertices` implementation.
 
 ## [0.30.1] - 2024-04-28
 

@@ -440,6 +440,21 @@ where
 /// let path = single_pair_shortest_path(&graph, 3, 2);
 ///
 /// assert_eq!(path, Some(vec![3, 0, 1, 2]));
+///
+/// // ╭───╮     ╭───╮
+/// // │ 0 │  ←  │ 1 │
+/// // ╰───╯     ╰───╯
+/// //   ↑         ↑
+/// // ╭───╮     ╭───╮
+/// // │ 3 │  →  │ 2 │
+/// // ╰───╯     ╰───╯
+///
+/// let graph = [Vec::new(), vec![0], vec![1], vec![0, 2]];
+///
+/// assert_eq!(single_pair_shortest_path(&graph, 3, 0), Some(vec![3, 0]));
+/// assert_eq!(single_pair_shortest_path(&graph, 3, 1), Some(vec![3, 2, 1]));
+/// assert_eq!(single_pair_shortest_path(&graph, 3, 2), Some(vec![3, 2]));
+/// assert_eq!(single_pair_shortest_path(&graph, 0, 3), None);
 /// ```
 pub fn single_pair_shortest_path<G>(graph: &G, s: usize, t: usize) -> Option<Vec<usize>>
 where

@@ -9,11 +9,44 @@
 //! [`HashSet`](std::collections::HashSet) when the implementation has a
 //! close-to-optimal complexity.
 //!
-//! ## Supported types
+//! # Examples
 //!
-//! ### Adjacency list
+//! ```
+//! extern crate alloc;
 //!
-//! #### Unweighted
+//! use {
+//!     alloc::collections::BTreeSet,
+//!     graaf::op::{
+//!         AddEdge,
+//!         Indegree,
+//!         Outdegree,
+//!         RemoveEdge,
+//!     },
+//! };
+//!
+//! let mut graph = vec![BTreeSet::new(); 3];
+//!
+//! // 1 ← 0 → 2
+//!
+//! graph.add_edge(0, 1);
+//! graph.add_edge(0, 2);
+//!
+//! assert_eq!(graph.outdegree(0), 2);
+//! assert_eq!(graph.indegree(1), 1);
+//! assert_eq!(graph.indegree(2), 1);
+//!
+//! graph.remove_edge(0, 1);
+//!
+//! assert_eq!(graph.outdegree(0), 1);
+//! assert_eq!(graph.indegree(1), 0);
+//! assert_eq!(graph.indegree(2), 1);
+//! ```
+//!
+//! # Supported types
+//!
+//! ## Adjacency list
+//!
+//! ### Unweighted
 //!
 //! - `BTreeMap<usize, BTreeSet<usize>>`
 //! - `BTreeMap<usize, Vec<usize>>`
@@ -29,7 +62,7 @@
 //! - `[Vec<usize>; V]`
 //! - `[Vec<usize>]`
 //!
-//! #### Weighted
+//! ### Weighted
 //!
 //! - `BTreeMap<usize, BTreeMap<usize, W>>`
 //! - `BTreeMap<usize, BTreeSet<(usize, W)>>`
@@ -53,9 +86,9 @@
 //! - `[Vec<(usize, W)>; V]`
 //! - `[Vec<(usize, W)>]`
 //!
-//! ### Edge list
+//! ## Edge list
 //!
-//! #### Unweighted
+//! ### Unweighted
 //!
 //! - `BTreeSet<(usize, usize)>`
 //! - `HashSet<(usize, usize)>`
@@ -63,7 +96,7 @@
 //! - `[(usize, usize); V]`
 //! - `[(usize, usize)]`
 //!
-//! #### Weighted
+//! ### Weighted
 //!
 //! - `BTreeSet<(usize, usize, W)>`
 //! - `HashSet<(usize, usize, W)>`
