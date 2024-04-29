@@ -24,7 +24,10 @@
 //! assert_eq!(graph.edge_weight(2, 2), None);
 //! ```
 
+extern crate alloc;
+
 use {
+    alloc::collections::BTreeMap,
     core::hash::BuildHasher,
     std::collections::HashMap,
 };
@@ -86,10 +89,22 @@ pub trait EdgeWeight<W> {
     fn edge_weight(&self, s: usize, t: usize) -> Option<&W>;
 }
 
+impl<W> EdgeWeight<W> for Vec<BTreeMap<usize, W>> {
+    fn edge_weight(&self, s: usize, t: usize) -> Option<&W> {
+        self.get(s).and_then(|m| m.get(&t))
+    }
+}
+
 impl<W, H> EdgeWeight<W> for Vec<HashMap<usize, W, H>>
 where
     H: BuildHasher,
 {
+    fn edge_weight(&self, s: usize, t: usize) -> Option<&W> {
+        self.get(s).and_then(|m| m.get(&t))
+    }
+}
+
+impl<W> EdgeWeight<W> for [BTreeMap<usize, W>] {
     fn edge_weight(&self, s: usize, t: usize) -> Option<&W> {
         self.get(s).and_then(|m| m.get(&t))
     }
@@ -104,12 +119,24 @@ where
     }
 }
 
+impl<const V: usize, W> EdgeWeight<W> for [BTreeMap<usize, W>; V] {
+    fn edge_weight(&self, s: usize, t: usize) -> Option<&W> {
+        self.get(s).and_then(|m| m.get(&t))
+    }
+}
+
 impl<const V: usize, W, H> EdgeWeight<W> for [HashMap<usize, W, H>; V]
 where
     H: BuildHasher,
 {
     fn edge_weight(&self, s: usize, t: usize) -> Option<&W> {
         self.get(s).and_then(|m| m.get(&t))
+    }
+}
+
+impl<W> EdgeWeight<W> for BTreeMap<usize, BTreeMap<usize, W>> {
+    fn edge_weight(&self, s: usize, t: usize) -> Option<&W> {
+        self.get(&s).and_then(|m| m.get(&t))
     }
 }
 
@@ -137,7 +164,18 @@ mod tests {
     }
 
     #[test]
-    fn vec() {
+    fn vec_btree_map() {
+        let graph = vec![
+            BTreeMap::from([(1, 2), (2, 3)]),
+            BTreeMap::from([(0, 4)]),
+            BTreeMap::from([(0, 7), (1, 8)]),
+        ];
+
+        test_edge_weight!(graph);
+    }
+
+    #[test]
+    fn vec_hash_map() {
         let graph = vec![
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(0, 4)]),
@@ -148,7 +186,18 @@ mod tests {
     }
 
     #[test]
-    fn slice() {
+    fn slice_btree_map() {
+        let graph: &[BTreeMap<usize, i32>] = &[
+            BTreeMap::from([(1, 2), (2, 3)]),
+            BTreeMap::from([(0, 4)]),
+            BTreeMap::from([(0, 7), (1, 8)]),
+        ];
+
+        test_edge_weight!(graph);
+    }
+
+    #[test]
+    fn slice_hash_map() {
         let graph: &[HashMap<usize, i32>] = &[
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(0, 4)]),
@@ -159,7 +208,18 @@ mod tests {
     }
 
     #[test]
-    fn arr() {
+    fn arr_btree_map() {
+        let graph = [
+            BTreeMap::from([(1, 2), (2, 3)]),
+            BTreeMap::from([(0, 4)]),
+            BTreeMap::from([(0, 7), (1, 8)]),
+        ];
+
+        test_edge_weight!(graph);
+    }
+
+    #[test]
+    fn arr_hash_map() {
         let graph = [
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(0, 4)]),
@@ -170,7 +230,16 @@ mod tests {
     }
 
     #[test]
-    fn hash_map() {
+    fn btree_map_btree_map() {
+        let mut graph = BTreeMap::new();
+        let _ = graph.insert(0, BTreeMap::from([(1, 2), (2, 3)]));
+        let _ = graph.insert(1, BTreeMap::from([(0, 4)]));
+        let _ = graph.insert(2, BTreeMap::from([(0, 7), (1, 8)]));
+
+        test_edge_weight!(graph);
+    }
+    #[test]
+    fn hash_map_hash_map() {
         let mut graph = HashMap::new();
         let _ = graph.insert(0, HashMap::from([(1, 2), (2, 3)]));
         let _ = graph.insert(1, HashMap::from([(0, 4)]));

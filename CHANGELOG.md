@@ -1,5 +1,58 @@
 # Changelog
 
+## [0.30.5] - 2024-04-29
+
+Added
+
+- Add `gen::Cycle` property test `count_all_edges_btree_map_btree_set`.
+- Add `gen::Cycle` property test `count_all_edges_btree_map_vec`.
+- Add `gen::Cycle` property test `count_all_edges_hash_map_hash_set`.
+- Add `gen::Cycle` property test `count_all_edges_hash_map_vec`.
+- Add `gen::Cycle` property test `count_all_edges_vec_btree_set`.
+- Add `gen::Cycle` property test `count_all_edges_vec_hash_set`.
+- Add `gen::Cycle` property test `count_all_edges_vec_vec`.
+- Add `gen::Cycle` property test `indegree_btree_map_btree_set`.
+- Add `gen::Cycle` property test `indegree_hash_map_hash_set`.
+- Add `gen::Cycle` property test `outdegree_btree_map_btree_set`.
+- Add `gen::Cycle` property test `outdegree_btree_map_vec`.
+- Add `gen::Cycle` property test `outdegree_hash_map_hash_set`.
+- Add `gen::Cycle` property test `outdegree_hash_map_vec`.
+- Add `gen::Cycle` unit test `btree_map_btree_set`.
+- Add `gen::Cycle` unit test `btree_map_vec`.
+- Add `gen::Cycle` unit test `hash_map_hash_set`.
+- Add `gen::Cycle` unit test `hash_map_vec`.
+- Add `gen::Linear` property test `count_all_edges_btree_map_btree_set`.
+- Add `gen::Linear` property test `count_all_edges_btree_map_vec`.
+- Add `gen::Linear` property test `count_all_edges_hash_map_hash_set`.
+- Add `gen::Linear` property test `count_all_edges_hash_map_vec`.
+- Add `gen::Linear` property test `count_all_edges_vec_btree_set`.
+- Add `gen::Linear` property test `count_all_edges_vec_hash_set`.
+- Add `gen::Linear` property test `count_all_edges_vec_vec`.
+- Add `gen::Linear` property test `count_all_vertices_vec_btree_set`.
+- Add `gen::Linear` property test `count_all_vertices_vec_hash_set`.
+- Add `gen::Linear` property test `count_all_vertices_vec_vec`.
+- Add `gen::Linear` property test `indegree_btree_map_btree_set`.
+- Add `gen::Linear` property test `indegree_hash_map_hash_set`.
+- Add `gen::Linear` property test `indegree_vec_btree_set`.
+- Add `gen::Linear` property test `indegree_vec_hash_set`.
+- Add `gen::Linear` property test `outdegree_btree_map_btree_set`.
+- Add `gen::Linear` property test `outdegree_btree_map_vec`.
+- Add `gen::Linear` property test `outdegree_hash_map_hash_set`.
+- Add `gen::Linear` property test `outdegree_hash_map_vec`.
+- Add `gen::Linear` property test `outdegree_vec_btree_set`.
+- Add `gen::Linear` property test `outdegree_vec_hash_set`.
+- Add `gen::Linear` property test `outdegree_vec_vec`.
+- Implement `Cycle` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `Cycle` for `BTreeMap<usize, Vec<usize>>`.
+- Implement `Cycle` for `HashMap<usize, HashSet<usize>>`.
+- Implement `Cycle` for `HashMap<usize, Vec<usize>>`.
+- Implement `EdgeWeight` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement `EdgeWeight` for `Vec<BTreeMap<usize, W>>`.
+- Implement `EdgeWeight` for `[BTreeMap<usize, W>; V]`.
+- Implement `EdgeWeight` for `[BTreeMap<usize, W>]`.
+- Implement `Linear` for `HashMap<usize, HashSet<usize>>`.
+- Implement `Linear` for `HashMap<usize, Vec<usize>>`.
+
 ## [0.30.4] - 2024-04-29
 
 Added
