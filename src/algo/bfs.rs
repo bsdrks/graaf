@@ -426,7 +426,7 @@ where
 /// # Examples
 ///
 /// ```
-/// use graaf::algo::bfs::single_pair_shortest_path;
+/// use graaf::algo::bfs::single_pair_shortest_path as spsp;
 ///
 /// // ╭───╮     ╭───╮
 /// // │ 0 │  →  │ 1 │
@@ -437,7 +437,7 @@ where
 /// // ╰───╯     ╰───╯
 ///
 /// let graph = [vec![1], vec![2], Vec::new(), vec![0]];
-/// let path = single_pair_shortest_path(&graph, 3, 2);
+/// let path = spsp(&graph, 3, 2);
 ///
 /// assert_eq!(path, Some(vec![3, 0, 1, 2]));
 ///
@@ -451,10 +451,10 @@ where
 ///
 /// let graph = [Vec::new(), vec![0], vec![1], vec![0, 2]];
 ///
-/// assert_eq!(single_pair_shortest_path(&graph, 3, 0), Some(vec![3, 0]));
-/// assert_eq!(single_pair_shortest_path(&graph, 3, 1), Some(vec![3, 2, 1]));
-/// assert_eq!(single_pair_shortest_path(&graph, 3, 2), Some(vec![3, 2]));
-/// assert_eq!(single_pair_shortest_path(&graph, 0, 3), None);
+/// assert_eq!(spsp(&graph, 3, 0), Some(vec![3, 0]));
+/// assert_eq!(spsp(&graph, 3, 1), Some(vec![3, 2, 1]));
+/// assert_eq!(spsp(&graph, 3, 2), Some(vec![3, 2]));
+/// assert_eq!(spsp(&graph, 0, 3), None);
 /// ```
 pub fn single_pair_shortest_path<G>(graph: &G, s: usize, t: usize) -> Option<Vec<usize>>
 where

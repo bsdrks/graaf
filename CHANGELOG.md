@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.30.3] - 2024-04-29
+
+Changed
+
+- Clean up examples in `README`.
+
 ## [0.30.2] - 2024-04-29
 
 Changed

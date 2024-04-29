@@ -8,14 +8,14 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.30.2"
+graaf = "0.30.3"
 ```
 
 To use stable Rust, disable the `adjacency_matrix` feature:
 
 ```toml
 [dependencies]
-graaf = { version = "0.30.2", default-features = false }
+graaf = { version = "0.30.3", default-features = false }
 ```
 
 ## Overview
@@ -58,20 +58,14 @@ assert_eq!(graph.indegree(2), 1);
 Search, traverse, and analyze graphs built from the types that implement the operation traits.
 
 ```rust
-use graaf::algo::bfs::single_pair_shortest_path;
-
-//   0   ←   1  
-//              
-//   ↑       ↑
-//              
-//   3   →   2  
+use graaf::algo::bfs::single_pair_shortest_path as spsp;
 
 let graph = [Vec::new(), vec![0], vec![1], vec![0, 2]];
 
-assert_eq!(single_pair_shortest_path(&graph, 3, 0), Some(vec![3, 0]));
-assert_eq!(single_pair_shortest_path(&graph, 3, 1), Some(vec![3, 2, 1]));
-assert_eq!(single_pair_shortest_path(&graph, 3, 2), Some(vec![3, 2]));
-assert_eq!(single_pair_shortest_path(&graph, 0, 3), None);
+assert_eq!(spsp(&graph, 3, 0), Some(vec![3, 0]));
+assert_eq!(spsp(&graph, 3, 1), Some(vec![3, 2, 1]));
+assert_eq!(spsp(&graph, 3, 2), Some(vec![3, 2]));
+assert_eq!(spsp(&graph, 0, 3), None);
 ```
 
 ### Representations
@@ -95,7 +89,6 @@ assert!(graph.is_simple());
 
 graph.add_edge(1, 1);
 
-// Loops are not allowed in simple graphs.
 assert!(!graph.is_simple());
 ```
 
