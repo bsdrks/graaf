@@ -79,7 +79,7 @@ use {
 ///
 /// assert_eq!(
 ///     graph.edges,
-///     [HashSet::from([1]), HashSet::from([2]), HashSet::new()]
+///     [HashSet::from([1]), HashSet::from([2]), HashSet::from([0])]
 /// );
 /// ```
 pub trait CycleConst {
