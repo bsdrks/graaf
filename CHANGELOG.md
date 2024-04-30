@@ -5,6 +5,14 @@
 - Add `algo::dijkstra::single_pair_shortest_path`.
 - Implement `From` and `Into` for `AdjacencyMatrix`.
 
+## [0.30.7] - 2024-04-30
+
+Added
+
+- Implement `CycleConst` for `[BTreeSet<usize>; V]`.
+- Implement `CycleConst` for `[HashSet<usize>; V]`.
+- Implement `CycleConst` for `[Vec<usize>; V]`.
+
 ## [0.30.6] - 2024-04-30
 
 Changed

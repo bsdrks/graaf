@@ -39,7 +39,7 @@ use {
 ///
 /// # How can I implement `LinearConst`?
 ///
-/// Provide an implementation of `linear` that generates a linear graph
+/// Provide an implementation of `linear` that generates a linear graph.
 ///
 /// ```
 /// use {
