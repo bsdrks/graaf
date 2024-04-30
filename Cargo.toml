@@ -1,6 +1,6 @@
 [package]
 name = "graaf"
-version = "0.30.5"
+version = "0.30.6"
 edition = "2021"
 authors = ["Bas Dirks <bas.dirks@protonmail.com>"]
 categories = ["algorithms", "data-structures", "mathematics"]
@@ -18,6 +18,9 @@ repository = "https://github.com/bsdrks/graaf"
 [dev-dependencies]
 divan = "0.1.14"
 proptest = "1.4.0"
+
+[profile.test.package.proptest]
+opt-level = 3
 
 [features]
 default = ["adjacency_matrix"]

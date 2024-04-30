@@ -1,5 +1,16 @@
 # Changelog
 
+## Provisional roadmap
+
+- Add `algo::dijkstra::single_pair_shortest_path`.
+- Implement `From` and `Into` for `AdjacencyMatrix`.
+
+## [0.30.6] - 2024-04-30
+
+Changed
+
+- Set `opt-level` to `3` for `proptest`.
+
 ## [0.30.5] - 2024-04-29
 
 Added
