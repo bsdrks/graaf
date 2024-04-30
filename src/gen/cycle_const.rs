@@ -1,7 +1,7 @@
 //! A trait to generate cycle graphs for const-sized graphs
 //!
-//! Cycle graphs are also known as circular graphs. For variable-sized graphs,
-//! see the [`Cycle`](crate::gen::Cycle) trait.
+//! Cycle graphs are also known as circular graphs. To generate variable-sized
+//! cycle graphs, see the [`Cycle`](crate::gen::Cycle) trait.
 //!
 //! # Examples
 //!

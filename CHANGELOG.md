@@ -5,6 +5,12 @@
 - Add `algo::dijkstra::single_pair_shortest_path`.
 - Implement `From` and `Into` for `AdjacencyMatrix`.
 
+## [0.30.8] - 2024-04-30
+
+Changed
+
+- Link to `CycleConst` from the `Cycle` documentation.
+
 ## [0.30.7] - 2024-04-30
 
 Added
