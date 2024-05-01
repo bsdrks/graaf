@@ -10,6 +10,10 @@
 //! - need the predecessor tree for the shortest paths from a single source
 //!   vertex to all other vertices.
 //!
+//! Use [`single_pair_shortest_path`] if you:
+//! - need the shortest path from a single source vertex to a single target
+//!   vertex.
+//!
 //! Use [`distances`] if you:
 //! - need the distances from multiple source vertices to all other vertices,
 //! - have predefined starting distances,
@@ -395,6 +399,14 @@ where
     W: Copy + Ord,
 {
     while let Some((Reverse(acc), s)) = heap.pop() {
+        if is_target(s, &acc) {
+            return predecessor::search_by(pred, s, |_, u| u.is_none()).map(|mut path| {
+                path.reverse();
+
+                path
+            });
+        }
+
         for (t, w) in graph.iter_weighted_edges(s) {
             let w = step(acc, w);
 
@@ -404,20 +416,73 @@ where
 
             dist[t] = w;
             pred[t] = Some(s);
-
-            if is_target(t, &w) {
-                return predecessor::search_by(pred, t, |_, u| u.is_none()).map(|mut path| {
-                    path.reverse();
-
-                    path
-                });
-            }
-
             heap.push((Reverse(w), t));
         }
     }
 
     None
+}
+
+/// Calculate the shortest path from a single source vertex to a single target
+/// vertex.
+///
+/// In a weighted digraph, the shortest path is the path with the smallest
+/// sum of weights. There can be multiple shortest paths in a graph, but this
+/// function only returns one.
+///
+/// # Arguments
+///
+/// * `graph`: The graph.
+/// * `s`: The source vertex.
+/// * `t`: The target vertex.
+///
+/// # Panics
+///
+/// Panics if `s`, `t`, or an intermediate vertex is out of bounds.
+///
+/// # Examples
+///
+/// ```
+/// use graaf::algo::dijkstra::single_pair_shortest_path as spsp;
+///
+/// // ╭───╮     ╭───╮
+/// // │ 0 │ 2 → │ 1 │
+/// // ╰───╯     ╰───╯
+/// //  ↑ 2       ↓ 2
+/// // ╭───╮     ╭───╮
+/// // │ 3 │     │ 2 │
+/// // ╰───╯     ╰───╯
+///
+/// let graph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
+/// let path = spsp(&graph, 3, 2);
+///
+/// assert_eq!(path, Some(vec![3, 0, 1, 2]));
+///
+/// // ╭───╮     ╭───╮
+/// // │ 0 │ ← 1 │ 1 │
+/// // ╰───╯     ╰───╯
+/// //  ↑ 4       ↑ 1
+/// // ╭───╮     ╭───╮
+/// // │ 3 │ 1 → │ 2 │
+/// // ╰───╯     ╰───╯
+///
+/// let graph = [Vec::new(), vec![(0, 1)], vec![(1, 1)], vec![(0, 4), (2, 1)]];
+/// let path = spsp(&graph, 3, 0);
+///
+/// assert_eq!(path, Some(vec![3, 2, 1, 0]));
+/// ```
+pub fn single_pair_shortest_path<G>(graph: &G, s: usize, t: usize) -> Option<Vec<usize>>
+where
+    G: CountAllVertices + IterWeightedEdges<usize>,
+{
+    let v = graph.count_all_vertices();
+    let pred = &mut vec![None; v];
+    let dist = &mut vec![usize::MAX; v];
+    let heap = &mut BinaryHeap::from([(Reverse(0), s)]);
+
+    dist[s] = 0;
+
+    shortest_path(graph, |acc, w| acc + w, |v, _| v == t, pred, dist, heap)
 }
 
 #[cfg(test)]
@@ -1124,21 +1189,17 @@ mod tests {
                 None,
                 Some(0),
                 Some(1),
-                None,
-                None,
-                None,
+                Some(2),
+                Some(5),
+                Some(6),
                 Some(7),
                 Some(0),
-                Some(7)
+                Some(2)
             ]
         );
 
-        assert_eq!(
-            dist,
-            [0, 4, 12, usize::MAX, usize::MAX, usize::MAX, 9, 8, 15]
-        );
-
-        assert_eq!(path, Some(vec![0, 7, 8]));
+        assert_eq!(dist, [0, 4, 12, 19, 21, 11, 9, 8, 14]);
+        assert_eq!(path, Some(vec![0, 1, 2, 8]));
     }
 
     #[test]
@@ -1179,8 +1240,8 @@ mod tests {
         );
 
         assert_eq!(path, Some(vec![0, 2]));
-        assert_eq!(pred, [None, Some(0), Some(0), None]);
-        assert_eq!(dist, [0, 1, 3, usize::MAX]);
+        assert_eq!(pred, [None, Some(0), Some(0), Some(0)]);
+        assert_eq!(dist, [0, 1, 3, 14]);
     }
 
     #[test]
@@ -1206,8 +1267,8 @@ mod tests {
         );
 
         assert_eq!(path, Some(vec![0, 2]));
-        assert_eq!(pred, [None, None, Some(0)]);
-        assert_eq!(dist, [0, usize::MAX, 1]);
+        assert_eq!(pred, [None, Some(0), Some(0)]);
+        assert_eq!(dist, [0, 1, 1]);
     }
 
     #[test]
@@ -1300,5 +1361,78 @@ mod tests {
         );
 
         assert_eq!(dist, [0, 0, usize::MAX, 0, 0, 0, 1, 0, 0, 1]);
+    }
+
+    #[test]
+    #[should_panic(expected = "index out of bounds: the len is 0 but the index is 0")]
+    fn single_pair_shortest_path_graph_0() {
+        let graph = to_vec(&GRAPH_0);
+        let _ = single_pair_shortest_path(&graph, 0, 0);
+    }
+
+    #[test]
+    fn single_pair_shortest_path_graph_1() {
+        let graph = to_vec(&GRAPH_1);
+        let path = single_pair_shortest_path(&graph, 0, 8);
+
+        assert_eq!(path, Some(vec![0, 1, 2, 8]));
+    }
+
+    #[test]
+    fn single_pair_shortest_path_shortest_path_1() {
+        let graph = to_vec(&GRAPH_SHORTEST_PATH_1);
+        let path = single_pair_shortest_path(&graph, 0, 2);
+
+        assert_eq!(path, Some(vec![0, 1, 2]));
+    }
+
+    #[test]
+    fn single_pair_shortest_path_cross_country() {
+        let graph = to_vec(&GRAPH_CROSS_COUNTRY);
+        let path = single_pair_shortest_path(&graph, 0, 2);
+
+        assert_eq!(path, Some(vec![0, 2]));
+    }
+
+    #[test]
+    fn single_pair_shortest_path_bryr_1() {
+        let mut graph = vec![Vec::new(); 3];
+
+        for (s, t, w) in EDGES_BRYR_1 {
+            graph.add_weighted_edge(s, t, w);
+            graph.add_weighted_edge(t, s, w);
+        }
+
+        let path = single_pair_shortest_path(&graph, 0, 2);
+
+        assert_eq!(path, Some(vec![0, 2]));
+    }
+
+    #[test]
+    fn single_pair_shortest_path_bryr_2() {
+        let mut graph = vec![Vec::new(); 6];
+
+        for (s, t, w) in EDGES_BRYR_2 {
+            graph.add_weighted_edge(s, t, w);
+            graph.add_weighted_edge(t, s, w);
+        }
+
+        let path = single_pair_shortest_path(&graph, 0, 5);
+
+        assert_eq!(path, Some(vec![0, 3, 4, 5]));
+    }
+
+    #[test]
+    fn single_pair_shortest_path_bryr_3() {
+        let mut graph = vec![Vec::new(); 10];
+
+        for (s, t, w) in EDGES_BRYR_3 {
+            graph.add_weighted_edge(s, t, w);
+            graph.add_weighted_edge(t, s, w);
+        }
+
+        let path = single_pair_shortest_path(&graph, 0, 9);
+
+        assert_eq!(path, Some(vec![0, 3, 7, 1, 9]));
     }
 }

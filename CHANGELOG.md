@@ -5,6 +5,16 @@
 - Add `algo::dijkstra::single_pair_shortest_path`.
 - Implement `From` and `Into` for `AdjacencyMatrix`.
 
+## [0.31.0] - 2024-05-01
+
+Added
+
+- Add `dijkstra::single_pair_shortest_path`.
+
+Fixed
+
+- Fix `dijkstra::shortest_path`.
+
 ## [0.30.9] - 2024-05-01
 
 Added
