@@ -144,9 +144,18 @@ where
     }
 }
 
+impl<const V: usize> CycleConst for [(usize, usize); V] {
+    fn cycle() -> Self {
+        from_fn(|i| (i, (i + 1) % V))
+    }
+}
+
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use {
+        super::*,
+        crate::op::IsSimple,
+    };
 
     #[test]
     fn arr_vec() {
@@ -207,5 +216,65 @@ mod tests {
             <[HashSet::<usize>; 3]>::cycle(),
             [HashSet::from([1]), HashSet::from([2]), HashSet::from([0])]
         );
+    }
+
+    #[test]
+    fn arr_tuple() {
+        //
+        assert!(<[(_, _); 0]>::cycle().is_empty());
+
+        // 0 → 0
+        assert_eq!(<[(_, _); 1]>::cycle(), [(0, 0)]);
+
+        // 0 → 1 → 0
+        assert_eq!(<[(_, _); 2]>::cycle(), [(0, 1), (1, 0)]);
+
+        // 0 → 1 → 2 → 0
+        assert_eq!(<[(_, _); 3]>::cycle(), [(0, 1), (1, 2), (2, 0)]);
+    }
+
+    #[test]
+    fn is_simple_arr_btree_set() {
+        assert!(<[BTreeSet<usize>; 0]>::cycle().is_simple());
+
+        // 0 → 0
+        assert!(!<[BTreeSet<usize>; 1]>::cycle().is_simple());
+
+        // 0 → ... → 0
+        assert!(<[BTreeSet<usize>; 2]>::cycle().is_simple());
+        assert!(<[BTreeSet<usize>; 3]>::cycle().is_simple());
+        assert!(<[BTreeSet<usize>; 4]>::cycle().is_simple());
+        assert!(<[BTreeSet<usize>; 5]>::cycle().is_simple());
+        assert!(<[BTreeSet<usize>; 6]>::cycle().is_simple());
+    }
+
+    #[test]
+    fn is_simple_arr_hash_set() {
+        assert!(<[HashSet<usize>; 0]>::cycle().is_simple());
+
+        // 0 → 0
+        assert!(!<[HashSet<usize>; 1]>::cycle().is_simple());
+
+        // 0 → ... → 0
+        assert!(<[HashSet<usize>; 2]>::cycle().is_simple());
+        assert!(<[HashSet<usize>; 3]>::cycle().is_simple());
+        assert!(<[HashSet<usize>; 4]>::cycle().is_simple());
+        assert!(<[HashSet<usize>; 5]>::cycle().is_simple());
+        assert!(<[HashSet<usize>; 6]>::cycle().is_simple());
+    }
+
+    #[test]
+    fn is_simple_arr_tuple() {
+        assert!(<[(_, _); 0]>::cycle().is_simple());
+
+        // 0 → 0
+        assert!(!<[(_, _); 1]>::cycle().is_simple());
+
+        // 0 → ... → 0
+        assert!(<[(_, _); 2]>::cycle().is_simple());
+        assert!(<[(_, _); 3]>::cycle().is_simple());
+        assert!(<[(_, _); 4]>::cycle().is_simple());
+        assert!(<[(_, _); 5]>::cycle().is_simple());
+        assert!(<[(_, _); 6]>::cycle().is_simple());
     }
 }

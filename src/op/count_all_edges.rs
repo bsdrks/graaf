@@ -275,6 +275,66 @@ where
     }
 }
 
+impl CountAllEdges for Vec<(usize, usize)> {
+    /// # Panics
+    ///
+    /// Panics if the number of edges exceeds `usize::MAX`.
+    fn count_all_edges(&self) -> usize {
+        self.len()
+    }
+}
+
+impl<W> CountAllEdges for Vec<(usize, usize, W)> {
+    /// # Panics
+    ///
+    /// Panics if the number of edges exceeds `usize::MAX`.
+    fn count_all_edges(&self) -> usize {
+        self.len()
+    }
+}
+
+impl CountAllEdges for BTreeSet<(usize, usize)> {
+    /// # Panics
+    ///
+    /// Panics if the number of edges exceeds `usize::MAX`.
+    fn count_all_edges(&self) -> usize {
+        self.len()
+    }
+}
+
+impl<W> CountAllEdges for BTreeSet<(usize, usize, W)> {
+    /// # Panics
+    ///
+    /// Panics if the number of edges exceeds `usize::MAX`.
+    fn count_all_edges(&self) -> usize {
+        self.len()
+    }
+}
+
+impl<H> CountAllEdges for HashSet<(usize, usize), H>
+where
+    H: BuildHasher,
+{
+    /// # Panics
+    ///
+    /// Panics if the number of edges exceeds `usize::MAX`.
+    fn count_all_edges(&self) -> usize {
+        self.len()
+    }
+}
+
+impl<W, H> CountAllEdges for HashSet<(usize, usize, W), H>
+where
+    H: BuildHasher,
+{
+    /// # Panics
+    ///
+    /// Panics if the number of edges exceeds `usize::MAX`.
+    fn count_all_edges(&self) -> usize {
+        self.len()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -494,5 +554,47 @@ mod tests {
         ]);
 
         assert_eq!(graph.count_all_edges(), 5);
+    }
+
+    #[test]
+    fn vec_tuple_unweighted() {
+        let graph = vec![(0, 1), (1, 2), (2, 0)];
+
+        assert_eq!(graph.count_all_edges(), 3);
+    }
+
+    #[test]
+    fn vec_tuple_weighted() {
+        let graph = vec![(0, 1, 2), (1, 2, 3), (2, 0, 4)];
+
+        assert_eq!(graph.count_all_edges(), 3);
+    }
+
+    #[test]
+    fn btree_set_tuple_unweighted() {
+        let graph = BTreeSet::from([(0, 1), (1, 2), (2, 0)]);
+
+        assert_eq!(graph.count_all_edges(), 3);
+    }
+
+    #[test]
+    fn btree_set_tuple_weighted() {
+        let graph = BTreeSet::from([(0, 1, 2), (1, 2, 3), (2, 0, 4)]);
+
+        assert_eq!(graph.count_all_edges(), 3);
+    }
+
+    #[test]
+    fn hash_set_tuple_unweighted() {
+        let graph = HashSet::from([(0, 1), (1, 2), (2, 0)]);
+
+        assert_eq!(graph.count_all_edges(), 3);
+    }
+
+    #[test]
+    fn hash_set_tuple_weighted() {
+        let graph = HashSet::from([(0, 1, 2), (1, 2, 3), (2, 0, 4)]);
+
+        assert_eq!(graph.count_all_edges(), 3);
     }
 }

@@ -217,6 +217,7 @@ mod tests {
             CountAllEdges,
             CountAllVertices,
             Indegree,
+            IsSimple,
             Outdegree,
         },
         proptest::prelude::*,
@@ -315,6 +316,16 @@ mod tests {
             for s in 1..v {
                 assert_eq!(graph.indegree(s), 1);
             }
+        }
+
+        #[test]
+        fn is_simple_vec_btree_set(v in 0..100_usize) {
+            assert!(Vec::<BTreeSet<usize>>::linear(v).is_simple());
+        }
+
+        #[test]
+        fn is_simple_vec_hash_set(v in 0..100_usize) {
+            assert!(Vec::<HashSet<usize>>::linear(v).is_simple());
         }
 
         #[test]

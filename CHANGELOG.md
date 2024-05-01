@@ -5,6 +5,56 @@
 - Add `algo::dijkstra::single_pair_shortest_path`.
 - Implement `From` and `Into` for `AdjacencyMatrix`.
 
+## [0.30.9] - 2024-05-01
+
+Added
+
+- Add `CountAllEdges` unit test `btree_set_tuple_unweighted`.
+- Add `CountAllEdges` unit test `btree_set_tuple_weighted`.
+- Add `CountAllEdges` unit test `hash_set_tuple_unweighted`.
+- Add `CountAllEdges` unit test `hash_set_tuple_weighted`.
+- Add `CountAllEdges` unit test `vec_tuple_unweighted`.
+- Add `CountAllEdges` unit test `vec_tuple_weighted`.
+- Add `CycleConst` unit test `arr_tuple`.
+- Add `CycleConst` unit test `is_simple_arr_btree_set`.
+- Add `CycleConst` unit test `is_simple_arr_hash_set`.
+- Add `CycleConst` unit test `is_simple_arr_tuple`.
+- Add `Cycle` property test `count_all_edges_btree_set_tuple`.
+- Add `Cycle` property test `count_all_edges_hash_set_tuple`.
+- Add `Cycle` property test `count_all_edges_vec_tuple`.
+- Add `Cycle` property test `is_simple_btree_set_tuple`.
+- Add `Cycle` property test `is_simple_hash_set_tuple`.
+- Add `Cycle` property test `is_simple_vec_btree_set`.
+- Add `Cycle` property test `is_simple_vec_hash_set`.
+- Add `Cycle` property test `is_simple_vec_tuple`.
+- Add `Cycle` unit test `btree_set_tuple`.
+- Add `Cycle` unit test `hash_set_tuple`.
+- Add `Cycle` unit test `is_simple_btree_set_tuple_0`.
+- Add `Cycle` unit test `is_simple_btree_set_tuple_1`.
+- Add `Cycle` unit test `is_simple_hash_set_tuple_0`.
+- Add `Cycle` unit test `is_simple_hash_set_tuple_1`.
+- Add `Cycle` unit test `is_simple_vec_btree_set_0`.
+- Add `Cycle` unit test `is_simple_vec_btree_set_1`.
+- Add `Cycle` unit test `is_simple_vec_hash_set_0`.
+- Add `Cycle` unit test `is_simple_vec_hash_set_1`.
+- Add `Cycle` unit test `is_simple_vec_tuple_0`.
+- Add `Cycle` unit test `is_simple_vec_tuple_1`.
+- Add `Cycle` unit test `vec_tuple`.
+- Add `LinearConst` unit test `is_simple_arr_btree_set`.
+- Add `LinearConst` unit test `is_simple_arr_hash_set`.
+- Add `Linear` property test `is_simple_vec_btree_set`.
+- Add `Linear` property test `is_simple_vec_hash_set`.
+- Implement `CountAllEdges` for `BTreeSet<(usize, usize)>`.
+- Implement `CountAllEdges` for `BTreeSet<(usize, usize, W)>`.
+- Implement `CountAllEdges` for `HashSet<(usize, usize)>`.
+- Implement `CountAllEdges` for `HashSet<(usize, usize, W)>`.
+- Implement `CountAllEdges` for `Vec<(usize, usize)>`.
+- Implement `CountAllEdges` for `Vec<(usize, usize, W)>`.
+- Implement `CycleConst` for `[(usize, usize); V]`.
+- Implement `Cycle` for `BTreeSet<(usize, usize)>`.
+- Implement `Cycle` for `HashSet<(usize, usize)>`.
+- Implement `Cycle` for `Vec<(usize, usize)>`.
+
 ## [0.30.8] - 2024-04-30
 
 Changed

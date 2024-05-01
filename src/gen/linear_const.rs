@@ -141,7 +141,10 @@ where
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use {
+        super::*,
+        crate::op::IsSimple,
+    };
 
     #[test]
     fn arr_vec() {
@@ -201,5 +204,25 @@ mod tests {
             <[HashSet::<usize>; 3]>::linear(),
             [HashSet::from([1]), HashSet::from([2]), HashSet::new()]
         );
+    }
+
+    #[test]
+    fn is_simple_arr_btree_set() {
+        assert!(<[BTreeSet::<usize>; 0]>::linear().is_simple());
+        assert!(<[BTreeSet::<usize>; 1]>::linear().is_simple());
+        assert!(<[BTreeSet::<usize>; 2]>::linear().is_simple());
+        assert!(<[BTreeSet::<usize>; 3]>::linear().is_simple());
+        assert!(<[BTreeSet::<usize>; 4]>::linear().is_simple());
+        assert!(<[BTreeSet::<usize>; 5]>::linear().is_simple());
+    }
+
+    #[test]
+    fn is_simple_arr_hash_set() {
+        assert!(<[HashSet::<usize>; 0]>::linear().is_simple());
+        assert!(<[HashSet::<usize>; 1]>::linear().is_simple());
+        assert!(<[HashSet::<usize>; 2]>::linear().is_simple());
+        assert!(<[HashSet::<usize>; 3]>::linear().is_simple());
+        assert!(<[HashSet::<usize>; 4]>::linear().is_simple());
+        assert!(<[HashSet::<usize>; 5]>::linear().is_simple());
     }
 }

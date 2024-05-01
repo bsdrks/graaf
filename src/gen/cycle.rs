@@ -215,6 +215,39 @@ where
     }
 }
 
+impl Cycle for Vec<(usize, usize)> {
+    fn cycle(v: usize) -> Self {
+        if v == 0 {
+            return Self::new();
+        }
+
+        (0..v).map(|s| (s, (s + 1) % v)).collect()
+    }
+}
+
+impl Cycle for BTreeSet<(usize, usize)> {
+    fn cycle(v: usize) -> Self {
+        if v == 0 {
+            return Self::new();
+        }
+
+        (0..v).map(|s| (s, (s + 1) % v)).collect()
+    }
+}
+
+impl<H> Cycle for HashSet<(usize, usize), H>
+where
+    H: BuildHasher + Default,
+{
+    fn cycle(v: usize) -> Self {
+        if v == 0 {
+            return Self::with_hasher(H::default());
+        }
+
+        (0..v).map(|s| (s, (s + 1) % v)).collect()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use {
@@ -223,6 +256,7 @@ mod tests {
             CountAllEdges,
             CountAllVertices,
             Indegree,
+            IsSimple,
             Outdegree,
         },
         proptest::prelude::*,
@@ -262,6 +296,21 @@ mod tests {
         #[test]
         fn count_all_edges_hash_map_hash_set(v in 0..100_usize) {
             assert_eq!(HashMap::<usize, HashSet<usize>>::cycle(v).count_all_edges(), v);
+        }
+
+        #[test]
+        fn count_all_edges_vec_tuple(v in 0..100_usize) {
+            assert_eq!(Vec::<(usize, usize)>::cycle(v).count_all_edges(), v);
+        }
+
+        #[test]
+        fn count_all_edges_btree_set_tuple(v in 0..100_usize) {
+            assert_eq!(BTreeSet::<(usize, usize)>::cycle(v).count_all_edges(), v);
+        }
+
+        #[test]
+        fn count_all_edges_hash_set_tuple(v in 0..100_usize) {
+            assert_eq!(HashSet::<(usize, usize)>::cycle(v).count_all_edges(), v);
         }
 
         #[test]
@@ -313,6 +362,31 @@ mod tests {
             for s in 0..v {
                 assert_eq!(graph.indegree(s), 1);
             }
+        }
+
+        #[test]
+        fn is_simple_vec_btree_set(v in 2..100_usize) {
+            assert!(Vec::<BTreeSet<usize>>::cycle(v).is_simple());
+        }
+
+        #[test]
+        fn is_simple_vec_hash_set(v in 2..100_usize) {
+            assert!(Vec::<HashSet<usize>>::cycle(v).is_simple());
+        }
+
+        #[test]
+        fn is_simple_vec_tuple(v in 2..100_usize) {
+            assert!(Vec::<(usize, usize)>::cycle(v).is_simple());
+        }
+
+        #[test]
+        fn is_simple_btree_set_tuple(v in 2..100_usize) {
+            assert!(BTreeSet::<(usize, usize)>::cycle(v).is_simple());
+        }
+
+        #[test]
+        fn is_simple_hash_set_tuple(v in 2..100_usize) {
+            assert!(HashSet::<(usize, usize)>::cycle(v).is_simple());
         }
 
         #[test]
@@ -522,5 +596,119 @@ mod tests {
         {
             assert_eq!(&HashMap::<usize, HashSet<usize>>::cycle(v), g);
         }
+    }
+
+    #[test]
+    fn vec_tuple() {
+        for (v, g) in [
+            //
+            Vec::new(),
+            // 0 → 0
+            vec![(0, 0)],
+            // 0 → 1 → 0
+            vec![(0, 1), (1, 0)],
+            // 0 → 1 → 2 → 0
+            vec![(0, 1), (1, 2), (2, 0)],
+        ]
+        .iter()
+        .enumerate()
+        {
+            assert_eq!(&Vec::<(usize, usize)>::cycle(v), g);
+        }
+    }
+
+    #[test]
+    fn btree_set_tuple() {
+        for (v, g) in [
+            //
+            BTreeSet::new(),
+            // 0 → 0
+            BTreeSet::from([(0, 0)]),
+            // 0 → 1 → 0
+            BTreeSet::from([(0, 1), (1, 0)]),
+            // 0 → 1 → 2 → 0
+            BTreeSet::from([(0, 1), (1, 2), (2, 0)]),
+        ]
+        .iter()
+        .enumerate()
+        {
+            assert_eq!(&BTreeSet::<(usize, usize)>::cycle(v), g);
+        }
+    }
+
+    #[test]
+    fn hash_set_tuple() {
+        for (v, g) in [
+            //
+            HashSet::new(),
+            // 0 → 0
+            HashSet::from([(0, 0)]),
+            // 0 → 1 → 0
+            HashSet::from([(0, 1), (1, 0)]),
+            // 0 → 1 → 2 → 0
+            HashSet::from([(0, 1), (1, 2), (2, 0)]),
+        ]
+        .iter()
+        .enumerate()
+        {
+            assert_eq!(&HashSet::<(usize, usize)>::cycle(v), g);
+        }
+    }
+
+    #[test]
+    fn is_simple_vec_btree_set_0() {
+        assert!(Vec::<BTreeSet<usize>>::cycle(0).is_simple());
+    }
+
+    #[test]
+    fn is_simple_vec_hash_set_0() {
+        assert!(Vec::<HashSet<usize>>::cycle(0).is_simple());
+    }
+
+    #[test]
+    fn is_simple_vec_tuple_0() {
+        assert!(Vec::<(usize, usize)>::cycle(0).is_simple());
+    }
+
+    #[test]
+    fn is_simple_btree_set_tuple_0() {
+        // 0 → 0
+        assert!(BTreeSet::<(usize, usize)>::cycle(0).is_simple());
+    }
+
+    #[test]
+    fn is_simple_hash_set_tuple_0() {
+        // 0 → 0
+        assert!(HashSet::<(usize, usize)>::cycle(0).is_simple());
+    }
+
+    #[test]
+    fn is_simple_vec_btree_set_1() {
+        // 0 → 0
+        assert!(!Vec::<BTreeSet<usize>>::cycle(1).is_simple());
+    }
+
+    #[test]
+    fn is_simple_vec_hash_set_1() {
+        // 0 → 0
+        assert!(!Vec::<HashSet<usize>>::cycle(1).is_simple());
+    }
+
+    #[test]
+    fn is_simple_vec_tuple_1() {
+        // 0 → 0
+        assert!(!Vec::<(usize, usize)>::cycle(1).is_simple());
+    }
+
+    #[test]
+    fn is_simple_btree_set_tuple_1() {
+        // 0 → 0
+        assert!(!BTreeSet::<(usize, usize)>::cycle(1).is_simple());
+    }
+
+    #[test]
+    fn is_simple_hash_set_tuple_1() {
+        // 0 → 0
+        assert!(!HashSet::<(usize, usize)>::cycle(1).is_simple());
     }
 }
