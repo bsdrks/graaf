@@ -4,6 +4,17 @@
 
 - Add `algo::dijkstra::single_pair_shortest_path`.
 - Implement `From` and `Into` for `AdjacencyMatrix`.
+- Implement `bfs::shortest_paths`.
+- Implement `bfs::single_pair_shortest_paths`.
+- Implement `dijkstra::shortest_paths`.
+- Implement `dijkstra::single_pair_shortest_paths`.
+
+## [0.32.2] - 2024-05-02
+
+Changed
+
+- Add diagram to `README` `bfs::single_pair_shortest_path` example.
+- Standardize links in documentation to conform to [RFC-1574](https://rust-lang.github.io/rfcs/1574-more-api-documentation-conventions.html#appendix-a-full-conventions-text).
 
 ## [0.32.1] - 2024-05-02
 

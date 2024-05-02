@@ -8,14 +8,14 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.32.1"
+graaf = "0.32.2"
 ```
 
 To use stable Rust, disable the `adjacency_matrix` feature:
 
 ```toml
 [dependencies]
-graaf = { version = "0.32.1", default-features = false }
+graaf = { version = "0.32.2", default-features = false }
 ```
 
 ## Overview
@@ -59,6 +59,10 @@ Search, traverse, and analyze graphs built from the types that implement the ope
 
 ```rust
 use graaf::algo::bfs::single_pair_shortest_path as spsp;
+
+// 0  ←  1
+// ↑     ↑
+// 3  →  2
 
 let graph = [Vec::new(), vec![0], vec![1], vec![0, 2]];
 
@@ -112,4 +116,7 @@ assert_eq!(graph, vec![
 
 ## License
 
-Licensed under either Apache License, Version 2.0 or MIT license at your option.
+Licensed under either [Apache License, Version 2.0] or [MIT license] at your option.
+
+[Apache License, Version 2.0]: LICENSE-APACHE
+[MIT license]: LICENSE-MIT
