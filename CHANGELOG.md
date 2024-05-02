@@ -5,6 +5,12 @@
 - Add `algo::dijkstra::single_pair_shortest_path`.
 - Implement `From` and `Into` for `AdjacencyMatrix`.
 
+## [0.32.0] - 2024-05-02
+
+Changed
+
+- Add MIT license.
+
 ## [0.31.0] - 2024-05-01
 
 Added

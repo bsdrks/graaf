@@ -8,14 +8,14 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.31.0"
+graaf = "0.32.0"
 ```
 
 To use stable Rust, disable the `adjacency_matrix` feature:
 
 ```toml
 [dependencies]
-graaf = { version = "0.31.0", default-features = false }
+graaf = { version = "0.32.0", default-features = false }
 ```
 
 ## Overview
@@ -109,3 +109,7 @@ assert_eq!(graph, vec![
     vec![4, 0],
 ]);
 ```
+
+## License
+
+Licensed under either of Apache License, Version 2.0 or MIT license at your option.
