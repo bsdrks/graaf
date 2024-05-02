@@ -58,7 +58,7 @@ impl<const V: usize> AdjacencyMatrix<V>
 where
     [(); blocks!(V)]:,
 {
-    /// Create a new adjacency matrix.
+    /// Creates a new adjacency matrix.
     ///
     /// # Examples
     ///
@@ -91,7 +91,7 @@ where
         s * V + t
     }
 
-    /// Toggle the edge from `s` to `t`.
+    /// Toggles the edge from `s` to `t`.
     ///
     /// # Arguments
     ///

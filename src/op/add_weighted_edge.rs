@@ -80,7 +80,7 @@ use {
 /// [`add_weighted_edge_is_edge`](crate::prop::add_weighted_edge_is_edge)
 /// holds.
 pub trait AddWeightedEdge<W> {
-    /// Add an edge from `s` to `t` with weight `w`.
+    /// Adds an edge from `s` to `t` with weight `w`.
     ///
     /// # Arguments
     ///

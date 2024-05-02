@@ -5,6 +5,12 @@
 - Add `algo::dijkstra::single_pair_shortest_path`.
 - Implement `From` and `Into` for `AdjacencyMatrix`.
 
+## [0.32.1] - 2024-05-02
+
+Changed
+
+- Standardize documentation summary sentences to conform to [RFC-1574](https://rust-lang.github.io/rfcs/1574-more-api-documentation-conventions.html#appendix-a-full-conventions-text).
+
 ## [0.32.0] - 2024-05-02
 
 Changed

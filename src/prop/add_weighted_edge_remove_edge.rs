@@ -7,9 +7,9 @@ use crate::op::{
     RemoveEdge,
 };
 
-/// Adding a weighted edge with [`AddWeightedEdge`](crate::op::AddWeightedEdge)
-/// and then removing it with [`RemoveEdge`](crate::op::RemoveEdge) should keep
-/// the graph unchanged.
+/// Returns where adding a weighted edge with
+/// [`AddWeightedEdge`](crate::op::AddWeightedEdge) and then removing it with
+/// [`RemoveEdge`](crate::op::RemoveEdge) keeps the graph unchanged.
 ///
 /// Types that implement [`AddWeightedEdge`](crate::op::AddWeightedEdge) and
 /// [`RemoveEdge`](crate::op::RemoveEdge) should ensure that the property holds

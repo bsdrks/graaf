@@ -65,7 +65,7 @@ use {
 /// assert_eq!(iter.next(), None);
 /// ```
 pub trait IterVertices {
-    /// Return an iterator over the vertices.
+    /// Returns an iterator over the vertices.
     fn iter_vertices(&self) -> impl Iterator<Item = usize>;
 }
 

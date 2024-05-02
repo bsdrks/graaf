@@ -6,8 +6,9 @@ use crate::op::{
     RemoveEdge,
 };
 
-/// Adding an edge with [`AddEdge`](crate::op::AddEdge) and then removing it
-/// with [`RemoveEdge`](crate::op::RemoveEdge) should keep the graph unchanged.
+/// Returns whether adding an edge with [`AddEdge`](crate::op::AddEdge) and then
+/// removing it with [`RemoveEdge`](crate::op::RemoveEdge) keeps the graph
+/// unchanged.
 ///
 /// Types that implement [`AddEdge`](crate::op::AddEdge) and
 /// [`RemoveEdge`](crate::op::RemoveEdge) should ensure that the property holds

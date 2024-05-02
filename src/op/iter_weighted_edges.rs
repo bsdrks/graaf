@@ -104,7 +104,7 @@ use {
 /// assert_eq!(iter.next(), None);
 /// ```
 pub trait IterWeightedEdges<W> {
-    /// Return an iterator over the edges of the vertex `s`.
+    /// Returns an iterator over the edges of the vertex `s`.
     ///
     /// # Arguments
     ///

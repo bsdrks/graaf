@@ -69,7 +69,7 @@ use {
 /// assert_eq!(graph.indegree(2), 2);
 /// ```
 pub trait Indegree {
-    /// Return the indegree of a vertex.
+    /// Returns the indegree of a vertex.
     ///
     /// # Arguments
     ///

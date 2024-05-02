@@ -28,8 +28,8 @@ use {
 ///
 /// # How can I implement `CountAllVertices`?
 ///
-/// Provide an implementation of `count_all_vertices` that returns the number of
-/// vertices in the graph.
+/// Provides an implementation of `count_all_vertices` that returns the number
+/// of vertices in the graph.
 ///
 /// ```
 /// use graaf::op::CountAllVertices;

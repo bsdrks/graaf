@@ -68,7 +68,7 @@ use {
 /// assert_eq!(graph.edges, HashSet::from([(0, 1), (1, 2)]));
 /// ```
 pub trait Linear {
-    /// Generate a linear graph.
+    /// Generates a linear graph.
     ///
     /// # Arguments
     ///

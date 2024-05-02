@@ -5,7 +5,7 @@
 
 use std::collections::HashSet;
 
-/// Search a predecessor tree for a path from a source vertex to a target
+/// Searches a predecessor tree for a path from a source vertex to a target
 /// vertex.
 ///
 /// # Arguments
@@ -34,8 +34,8 @@ pub fn search(pred: &[Option<usize>], s: usize, t: usize) -> Option<Vec<usize>> 
     search_by(pred, s, |&v, _| v == t)
 }
 
-/// Search a predecessor tree for a path from a source vertex to a target vertex
-/// that satisfies a predicate.
+/// Searches a predecessor tree for a path from a source vertex to a target
+/// vertex that satisfies a predicate.
 ///
 /// # Arguments
 ///

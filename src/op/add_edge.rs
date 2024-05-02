@@ -76,7 +76,7 @@ use {
 /// Types that also implement [`IsEdge`](crate::op::IsEdge) should ensure that
 /// [`add_edge_is_edge`](crate::prop::add_edge_is_edge) holds.
 pub trait AddEdge {
-    /// Add an edge from `s` to `t`.
+    /// Adds an edge from `s` to `t`.
     ///
     /// # Arguments
     ///

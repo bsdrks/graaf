@@ -98,7 +98,7 @@ use {
     alloc::collections::VecDeque,
 };
 
-/// Calculate all distances from the source vertices.
+/// Calculates all distances from the source vertices.
 ///
 /// # Arguments
 ///
@@ -157,7 +157,7 @@ where
     }
 }
 
-/// Calculate all distances from a single source vertex.
+/// Calculates all distances from a single source vertex.
 ///
 /// # Arguments
 ///
@@ -199,7 +199,7 @@ where
     dist
 }
 
-/// Calculate the predecessor tree and distances from the source vertices.
+/// Calculates the predecessor tree and distances from the source vertices.
 ///
 /// # Arguments
 ///
@@ -271,7 +271,7 @@ pub fn predecessors<G, S, W>(
     }
 }
 
-/// Calculate the predecessor tree for the shortest paths from a single source
+/// Calculates the predecessor tree for the shortest paths from a single source
 /// vertex.
 ///
 /// # Arguments
@@ -316,7 +316,7 @@ where
     pred
 }
 
-/// Calculate the shortest path from the source vertex to a target vertex.
+/// Calculates the shortest path from the source vertex to a target vertex.
 ///
 /// # Arguments
 ///
@@ -406,7 +406,7 @@ where
     None
 }
 
-/// Calculate the shortest path from a single source vertex to a single target
+/// Calculates the shortest path from a single source vertex to a single target
 /// vertex.
 ///
 /// In an unweighted graph, the shortest path is the path with the fewest edges.

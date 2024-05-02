@@ -102,7 +102,7 @@ use {
 /// [`add_weighted_edge_is_edge`](crate::prop::add_weighted_edge_is_edge)
 /// holds.
 pub trait IsEdge {
-    /// Check if there is an edge from `s` to `t`.
+    /// Returns whether there is an edge from `s` to `t`.
     ///
     /// # Arguments
     ///

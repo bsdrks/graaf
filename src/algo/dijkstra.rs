@@ -94,7 +94,7 @@ use {
     core::cmp::Reverse,
 };
 
-/// Calculate the distances from the source vertices to all vertices in a
+/// Calculates the distances from the source vertices to all vertices in a
 /// weighted digraph.
 ///
 /// # Arguments
@@ -161,7 +161,7 @@ pub fn distances<G, S, W>(
     }
 }
 
-/// Calculate all distances from a single source vertex in a weighted digraph.
+/// Calculates all distances from a single source vertex in a weighted digraph.
 ///
 /// # Arguments
 ///
@@ -203,7 +203,7 @@ where
     dist
 }
 
-/// Calculate the predecessor tree and distances of the shortest paths from the
+/// Calculates the predecessor tree and distances of the shortest paths from the
 /// source vertices to all vertices in a weighted digraph.
 ///
 /// # Arguments
@@ -276,7 +276,7 @@ pub fn predecessors<G, S, W>(
     }
 }
 
-/// Calculate the predecessor tree for the shortest paths from a single source
+/// Calculates the predecessor tree for the shortest paths from a single source
 /// vertex in a weighted digraph.
 ///
 /// # Arguments
@@ -322,7 +322,7 @@ where
     pred
 }
 
-/// Calculate the shortest path from the source vertex to a target vertex.
+/// Calculates the shortest path from the source vertex to a target vertex.
 ///
 /// In a weighted digraph, the shortest path is the path with the smallest
 /// sum of weights. There can be multiple shortest paths in a graph, but this
@@ -423,7 +423,7 @@ where
     None
 }
 
-/// Calculate the shortest path from a single source vertex to a single target
+/// Calculates the shortest path from a single source vertex to a single target
 /// vertex.
 ///
 /// In a weighted digraph, the shortest path is the path with the smallest

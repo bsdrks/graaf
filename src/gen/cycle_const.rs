@@ -83,7 +83,7 @@ use {
 /// );
 /// ```
 pub trait CycleConst {
-    /// Generate a cycle graph.
+    /// Generates a cycle graph.
     fn cycle() -> Self;
 }
 

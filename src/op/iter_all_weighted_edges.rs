@@ -60,7 +60,7 @@ use {
 /// assert_eq!(iter.next(), None);
 /// ```
 pub trait IterAllWeightedEdges<W> {
-    /// Return an iterator that iterates over all weighted edges in a graph.
+    /// Returns an iterator over all weighted edges in a graph.
     fn iter_all_weighted_edges<'a>(&'a self) -> impl Iterator<Item = (usize, usize, &'a W)>
     where
         W: 'a;

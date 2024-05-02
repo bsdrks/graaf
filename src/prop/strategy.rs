@@ -10,7 +10,7 @@ use proptest::{
     },
 };
 
-/// Generate a triple `(v, s, t)` where `v` is the number of vertices in a
+/// Generates a triple `(v, s, t)` where `v` is the number of vertices in a
 /// graph and `s` and `t` are vertices in the graph.
 ///
 /// # Arguments

@@ -84,7 +84,7 @@ use {
 /// );
 /// ```
 pub trait LinearConst {
-    /// Generate a linear graph.
+    /// Generates a linear graph.
     fn linear() -> Self;
 }
 

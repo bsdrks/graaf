@@ -132,7 +132,7 @@ use {
 /// [`add_weighted_edge_remove_edge`](crate::prop::add_weighted_edge_remove_edge)
 /// holds.
 pub trait RemoveEdge {
-    /// Remove the edge from `s` to `t`. Returns whether the edge was removed.
+    /// Removes the edge from `s` to `t`. Returns whether the edge was removed.
     ///
     /// # Arguments
     ///

@@ -6,8 +6,8 @@ use crate::op::{
     IsEdge,
 };
 
-/// Adding an edge with [`AddEdge`](crate::op::AddEdge) should be reflected
-/// by [`IsEdge`](crate::op::IsEdge).
+/// Returns whether adding an edge with [`AddEdge`](crate::op::AddEdge) is
+/// reflected by [`IsEdge`](crate::op::IsEdge).
 ///
 /// Types that implement [`AddEdge`](crate::op::AddEdge) and
 /// [`IsEdge`](crate::op::IsEdge) should ensure that this property holds for

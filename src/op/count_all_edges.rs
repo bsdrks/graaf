@@ -55,7 +55,7 @@ use {
 /// assert_eq!(graph.count_all_edges(), 10);
 /// ```
 pub trait CountAllEdges {
-    /// Count all edges.
+    /// Counts all edges.
     fn count_all_edges(&self) -> usize;
 }
 

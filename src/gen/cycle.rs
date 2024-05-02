@@ -67,7 +67,7 @@ use {
 /// assert_eq!(graph.edges, HashSet::from([(0, 1), (1, 2), (2, 0)]));
 /// ```
 pub trait Cycle {
-    /// Generate a cycle graph.
+    /// Generates a cycle graph.
     ///
     /// # Arguments
     ///

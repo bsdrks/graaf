@@ -80,7 +80,7 @@ use {
 /// assert_eq!(graph.edge_weight(2, 2), None);
 /// ```
 pub trait EdgeWeight<W> {
-    /// Get the weight of the edge from `s` to `t`.
+    /// Returns the weight of the edge from `s` to `t`.
     ///
     /// # Arguments
     ///

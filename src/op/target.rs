@@ -22,7 +22,7 @@
 /// assert_eq!((3, -2).target(), 3);
 /// ```
 pub trait Target {
-    /// Get the target vertex
+    /// Returns the target vertex.
     fn target(&self) -> usize;
 }
 
