@@ -1,7 +1,7 @@
 //! Dijkstra's algorithm with binary-heap
 //!
 //! Dijkstra's algorithm[^citation] finds the shortest path in a weighted graph.
-//! Use [`bfs`](crate::algo::bfs) for unweighted graphs.
+//! Use [`bfs`] for unweighted graphs.
 //!
 //! Use [`single_source_distances`] if you:
 //! - need the distances from a single source vertex to all other vertices.
@@ -80,6 +80,7 @@
 //! assert_eq!(dist, [2, 4, 6, 0]);
 //! ```
 //!
+//! [`bfs`]: crate::algo::bfs
 //! [^citation]: Dijkstra, E.W. A note on two problems in connexion with graphs. Numer. Math. 1, 269–271 (1959)
 
 extern crate alloc;
@@ -327,8 +328,6 @@ where
 /// In a weighted digraph, the shortest path is the path with the smallest
 /// sum of weights. There can be multiple shortest paths in a graph, but this
 /// function only returns one.
-///
-/// Use [`bfs`](crate::algo::bfs::shortest_path) if your graph is unweighted.
 ///
 /// # Arguments
 ///

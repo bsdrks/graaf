@@ -1,8 +1,8 @@
 //! Breadth-first search
 //!
-//! Breadth-first search (BFS) is a graph traversal algorithm that visits
+//! Breadth-first search is a graph traversal algorithm that visits
 //! vertices of an unweighted graph in order of their distance from the source
-//! vertex. Use [`dijkstra`](crate::algo::dijkstra) for weighted graphs.
+//! vertex. Use [`dijkstra`] for weighted graphs.
 //!
 //! Use [`single_source_distances`] if you:
 //! - need the distances from a single source vertex to all other vertices.
@@ -84,6 +84,8 @@
 //! assert_eq!(pred, [Some(3), Some(0), Some(1), None]);
 //! assert_eq!(dist, [1, 2, 3, 0]);
 //! ```
+//!
+//! [`dijkstra`]: crate::algo::dijkstra
 
 extern crate alloc;
 

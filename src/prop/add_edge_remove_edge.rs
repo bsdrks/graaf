@@ -1,24 +1,28 @@
-//! Adding an edge with [`AddEdge`](crate::op::AddEdge) and then removing it
-//! with [`RemoveEdge`](crate::op::RemoveEdge) should keep the graph unchanged.
+//! Adding an edge with [`AddEdge`] and then removing it with [`RemoveEdge`]
+//! should keep the graph unchanged.
+//!
+//! [`AddEdge`]: crate::op::AddEdge
+//! [`RemoveEdge`]: crate::op::RemoveEdge
 
 use crate::op::{
     AddEdge,
     RemoveEdge,
 };
 
-/// Returns whether adding an edge with [`AddEdge`](crate::op::AddEdge) and then
-/// removing it with [`RemoveEdge`](crate::op::RemoveEdge) keeps the graph
-/// unchanged.
+/// Returns whether adding an edge with [`AddEdge`] and then removing it with
+/// [`RemoveEdge`] keeps the graph unchanged.
 ///
-/// Types that implement [`AddEdge`](crate::op::AddEdge) and
-/// [`RemoveEdge`](crate::op::RemoveEdge) should ensure that the property holds
-/// for every `graph`, `s`, and `t` of the given types.
+/// Types that implement [`AddEdge`] and [`RemoveEdge`] should ensure that the
+/// property holds for every `graph`, `s`, and `t` of the given types.
 ///
 /// # Arguments
 ///
 /// * `graph`: The graph.
 /// * `s`: The source vertex.
 /// * `t`: The target vertex.
+///
+/// [`AddEdge`]: crate::op::AddEdge
+/// [`RemoveEdge`]: crate::op::RemoveEdge
 pub fn add_edge_remove_edge<G>(graph: &G, s: usize, t: usize) -> bool
 where
     G: AddEdge + Clone + PartialEq + RemoveEdge,

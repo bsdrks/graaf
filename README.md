@@ -22,7 +22,7 @@ graaf = { version = "0.32.1", default-features = false }
 
 ### Operations
 
-Build and query graphs made with standard collections, or implement the operation traits for your own types.
+Build and query graphs made with standard collections, or implement the operation traits for your types.
 
 ```rust
 use {
@@ -112,4 +112,4 @@ assert_eq!(graph, vec![
 
 ## License
 
-Licensed under either of Apache License, Version 2.0 or MIT license at your option.
+Licensed under either Apache License, Version 2.0 or MIT license at your option.

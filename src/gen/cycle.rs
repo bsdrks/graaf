@@ -1,7 +1,7 @@
 //! A trait to generate cycle graphs for variable-sized graphs
 //!
 //! Cycle graphs are also known as circular graphs. To generate const-sized
-//! cycle graphs, see [`CycleConst`](crate::gen::CycleConst).
+//! cycle graphs, see [`CycleConst`].
 //!
 //! # Examples
 //!
@@ -20,6 +20,8 @@
 //! // 0 → 1 → 2 → 0
 //! assert_eq!(Vec::<Vec<usize>>::cycle(3), vec![vec![1], vec![2], vec![0]]);
 //! ```
+//!
+//! [`CycleConst`]: crate::gen::CycleConst
 
 extern crate alloc;
 

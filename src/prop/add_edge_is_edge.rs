@@ -1,23 +1,26 @@
-//! Adding an edge with [`AddEdge`](crate::op::AddEdge) should be reflected by
-//! [`IsEdge`](crate::op::IsEdge).
+//! Adding an edge with [`AddEdge`] should be reflected by [`IsEdge`].
+//!
+//! [`AddEdge`]: crate::op::AddEdge
+//! [`IsEdge`]: crate::op::IsEdge
 
 use crate::op::{
     AddEdge,
     IsEdge,
 };
 
-/// Returns whether adding an edge with [`AddEdge`](crate::op::AddEdge) is
-/// reflected by [`IsEdge`](crate::op::IsEdge).
+/// Returns whether adding an edge with [`AddEdge`] is reflected by [`IsEdge`].
 ///
-/// Types that implement [`AddEdge`](crate::op::AddEdge) and
-/// [`IsEdge`](crate::op::IsEdge) should ensure that this property holds for
-/// every `graph`, `s`, and `t` of the given types.
+/// Types that implement [`AddEdge`] and [`IsEdge`] should ensure that this
+/// property holds for every `graph`, `s`, and `t` of the given types.
 ///
 /// # Arguments
 ///
 /// * `graph`: The graph.
 /// * `s`: The source vertex.
 /// * `t`: The target vertex.
+///
+/// [`AddEdge`]: crate::op::AddEdge
+/// [`IsEdge`]: crate::op::IsEdge
 pub fn add_edge_is_edge<G>(graph: &mut G, s: usize, t: usize) -> bool
 where
     G: AddEdge + IsEdge + ?Sized,

@@ -1,19 +1,19 @@
-//! Adding a weighted edge with [`AddWeightedEdge`](crate::op::AddWeightedEdge)
-//! and then removing it with [`RemoveEdge`](crate::op::RemoveEdge) should keep
-//! the graph unchanged.
+//! Adding a weighted edge with [`AddWeightedEdge`] and then removing it with
+//! [`RemoveEdge`] should keep the graph unchanged.
+//!
+//! [`AddWeightedEdge`]: crate::op::AddWeightedEdge
+//! [`RemoveEdge`]: crate::op::RemoveEdge
 
 use crate::op::{
     AddWeightedEdge,
     RemoveEdge,
 };
 
-/// Returns where adding a weighted edge with
-/// [`AddWeightedEdge`](crate::op::AddWeightedEdge) and then removing it with
-/// [`RemoveEdge`](crate::op::RemoveEdge) keeps the graph unchanged.
+/// Returns where adding a weighted edge with [`AddWeightedEdge`] and then
+/// removing it with [`RemoveEdge`] keeps the graph unchanged.
 ///
-/// Types that implement [`AddWeightedEdge`](crate::op::AddWeightedEdge) and
-/// [`RemoveEdge`](crate::op::RemoveEdge) should ensure that the property holds
-/// for every `graph`, `s`, and `t` of the given types.
+/// Types that implement [`AddWeightedEdge`] and [`RemoveEdge`] should ensure
+/// that the property holds for every `graph`, `s`, and `t` of the given types.
 ///
 /// # Arguments
 ///
@@ -21,6 +21,9 @@ use crate::op::{
 /// * `s`: The source vertex.
 /// * `t`: The target vertex.
 /// * `w`: The weight of the edge.
+///
+/// [`AddWeightedEdge`]: crate::op::AddWeightedEdge
+/// [`RemoveEdge`]: crate::op::RemoveEdge
 pub fn add_weighted_edge_remove_edge<G, W>(graph: &G, s: usize, t: usize, w: W) -> bool
 where
     G: AddWeightedEdge<W> + Clone + PartialEq + RemoveEdge,

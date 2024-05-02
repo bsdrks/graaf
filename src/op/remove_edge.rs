@@ -122,15 +122,18 @@ use {
 ///
 /// ## `RemoveEdge` and `AddEdge`
 ///
-/// Types that also implement [`AddEdge`](crate::op::AddEdge) should ensure that
-/// [`add_edge_remove_edge`](crate::prop::add_edge_remove_edge) holds.
+/// Types that also implement [`AddEdge`] should ensure that
+/// [`add_edge_remove_edge`] holds.
 ///
 /// ## `RemoveEdge` and `AddWeightedEdge`
 ///
-/// Types that also implement [`AddWeightedEdge`](crate::op::AddWeightedEdge)
-/// should ensure that
-/// [`add_weighted_edge_remove_edge`](crate::prop::add_weighted_edge_remove_edge)
-/// holds.
+/// Types that also implement [`AddWeightedEdge`] should ensure that
+/// [`add_weighted_edge_remove_edge`] holds.
+///
+/// [`AddEdge`]: crate::op::AddEdge
+/// [`AddWeightedEdge`]: crate::op::AddWeightedEdge
+/// [`add_edge_remove_edge`]: crate::prop::add_edge_remove_edge
+/// [`add_weighted_edge_remove_edge`]: crate::prop::add_weighted_edge_remove_edge
 pub trait RemoveEdge {
     /// Removes the edge from `s` to `t`. Returns whether the edge was removed.
     ///

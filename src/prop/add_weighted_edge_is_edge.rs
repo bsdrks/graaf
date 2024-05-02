@@ -1,18 +1,19 @@
-//! Adding a weighted edge with [`AddWeightedEdge`](crate::op::AddWeightedEdge)
-//! should be reflected by [`IsEdge`](crate::op::IsEdge).
+//! Adding a weighted edge with [`AddWeightedEdge`] should be reflected by
+//! [`IsEdge`].
+//!
+//! [`AddWeightedEdge`]: crate::op::AddWeightedEdge
+//! [`IsEdge`]: crate::op::IsEdge
 
 use crate::op::{
     AddWeightedEdge,
     IsEdge,
 };
 
-/// Returns whether adding a weighted edge with
-/// [`AddWeightedEdge`](crate::op::AddWeightedEdge) is reflected by
-/// [`IsEdge`](crate::op::IsEdge).
+/// Returns whether adding a weighted edge with [`AddWeightedEdge`] is reflected
+/// by [`IsEdge`].
 ///
-/// Types that implement [`AddWeightedEdge`](crate::op::AddWeightedEdge) and
-/// [`IsEdge`](crate::op::IsEdge) should ensure that the property holds for
-/// every `graph`, `s`, `t`, and `w` of the given types.
+/// Types that implement [`AddWeightedEdge`] and [`IsEdge`] should ensure that
+/// the property holds for every `graph`, `s`, `t`, and `w` of the given types.
 ///
 /// # Arguments
 ///
@@ -20,6 +21,9 @@ use crate::op::{
 /// * `s`: The source vertex.
 /// * `t`: The target vertex.
 /// * `w`: The weight of the edge.
+///
+/// [`AddWeightedEdge`]: crate::op::AddWeightedEdge
+/// [`IsEdge`]: crate::op::IsEdge
 pub fn add_weighted_edge_is_edge<G, W>(graph: &mut G, s: usize, t: usize, w: W) -> bool
 where
     G: AddWeightedEdge<W> + IsEdge + ?Sized,

@@ -2,11 +2,8 @@
 //!
 //! These operations are modeled as traits that can be implemented by types
 //! that represent graphs. The traits are implemented for combinations of
-//! standard types like [`array`], [`slice`], [`Vec`],
-//! [`BTreeMap`](std::collections::BTreeMap),
-//! [`BTreeSet`](std::collections::BTreeSet),
-//! [`HashMap`](std::collections::HashMap), and
-//! [`HashSet`](std::collections::HashSet) when the implementation has a
+//! standard types like [`array`], [`slice`], [`Vec`], [`BTreeMap`],
+//! [`BTreeSet`], [`HashMap`], and [`HashSet`] when the implementation has a
 //! close-to-optimal complexity.
 //!
 //! # Examples
@@ -103,6 +100,14 @@
 //! - `Vec<(usize, usize, W)>`
 //! - `[(usize, usize, W); V]`
 //! - `[(usize, usize, W)]`
+//!
+//! [`BTreeMap`]: std::collections::BTreeMap
+//! [`BTreeSet`]: std::collections::BTreeSet
+//! [`HashMap`]: std::collections::HashMap
+//! [`HashSet`]: std::collections::HashSet
+//! [`Vec`]: std::vec::Vec
+//! [`array`]: https://doc.rust-lang.org/std/primitive.array.html
+//! [`slice`]: https://doc.rust-lang.org/std/primitive.slice.html
 
 pub mod add_edge;
 pub mod add_weighted_edge;

@@ -1,7 +1,7 @@
 //! A trait to generate linear graphs for variable-sized graphs
 //!
 //! Linear graphs are also known as path graphs. To generate const-sized linear
-//! graphs, see the [`LinearConst`](crate::gen::LinearConst) trait.
+//! graphs, see [`LinearConst`].
 //!
 //! # Examples
 //!
@@ -23,6 +23,8 @@
 //!     vec![vec![1], vec![2], Vec::new()]
 //! );
 //! ```
+//!
+//! [`LinearConst`]: crate::gen::LinearConst
 
 extern crate alloc;
 
