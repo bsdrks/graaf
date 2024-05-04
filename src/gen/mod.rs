@@ -12,18 +12,18 @@
 //! };
 //!
 //! assert_eq!(
-//!     <[Vec::<usize>; 4]>::cycle(),
-//!     [vec![1], vec![2], vec![3], vec![0]]
+//!     Vec::<Vec<usize>>::cycle(4),
+//!     vec![vec![1], vec![2], vec![3], vec![0]]
 //! );
 //!
 //! assert_eq!(
-//!     <[Vec::<usize>; 4]>::linear(),
-//!     [vec![1], vec![2], vec![3], Vec::new()]
+//!     Vec::<Vec<usize>>::linear(4),
+//!     vec![vec![1], vec![2], vec![3], Vec::new()]
 //! );
 //!
 //! assert_eq!(
-//!     <[Vec::<usize>; 5]>::star(),
-//!     [vec![1, 2, 3, 4], vec![0], vec![0], vec![0], vec![0]]
+//!     Vec::<Vec<usize>>::star(5),
+//!     vec![vec![1, 2, 3, 4], vec![0], vec![0], vec![0], vec![0]]
 //! );
 //! ```
 
