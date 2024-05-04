@@ -1,4 +1,4 @@
-//! A trait to generate linear graphs for variable-sized graphs
+//! A trait to generate variable-sized linear graphs
 //!
 //! Linear graphs are also known as path graphs. To generate const-sized linear
 //! graphs, see [`LinearConst`].

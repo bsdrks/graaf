@@ -458,6 +458,7 @@ where
 /// assert_eq!(spsp(&graph, 3, 2), Some(vec![3, 2]));
 /// assert_eq!(spsp(&graph, 0, 3), None);
 /// ```
+#[doc(alias = "spsp")]
 pub fn single_pair_shortest_path<G>(graph: &G, s: usize, t: usize) -> Option<Vec<usize>>
 where
     G: CountAllVertices + IterEdges,

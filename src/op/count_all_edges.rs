@@ -1,4 +1,4 @@
-//! A trait to count all edges in a graph
+//! A trait to count all edges in a directed graph
 //!
 //! # Examples
 //!
@@ -24,7 +24,7 @@ use {
     },
 };
 
-/// A trait to count all edges in a graph
+/// A trait to count all edges in a directed graph
 ///
 /// # How can I implement `CountAllEdges`?
 ///

@@ -1,4 +1,4 @@
-//! A trait to generate cycle graphs for variable-sized graphs
+//! A trait to generate variable-sized cycle graphs
 //!
 //! Cycle graphs are also known as circular graphs. To generate const-sized
 //! cycle graphs, see [`CycleConst`].
@@ -37,7 +37,7 @@ use {
     },
 };
 
-/// A trait to generate cycle graphs
+/// A trait to generate variable-size cycle graphs
 ///
 /// # How can I implement `Cycle`?
 ///

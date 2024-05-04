@@ -9,6 +9,52 @@
 - Implement `dijkstra::shortest_paths`.
 - Implement `dijkstra::single_pair_shortest_paths`.
 
+## [0.32.3] - 2024-05-04
+
+Added
+
+- Add `gen::Star` property test `count_all_edges_btree_map_btree_set`.
+- Add `gen::Star` property test `count_all_edges_btree_map_vec`.
+- Add `gen::Star` property test `count_all_edges_hash_map_hash_set`.
+- Add `gen::Star` property test `count_all_edges_hash_map_vec`.
+- Add `gen::Star` property test `count_all_edges_vec_btree_set`.
+- Add `gen::Star` property test `count_all_edges_vec_hash_set`.
+- Add `gen::Star` property test `count_all_edges_vec_vec`.
+- Add `gen::Star` property test `count_all_vertices_vec_btree_set`.
+- Add `gen::Star` property test `count_all_vertices_vec_hash_set`.
+- Add `gen::Star` property test `count_all_vertices_vec_vec`.
+- Add `gen::Star` property test `indegree_btree_map_btree_set`.
+- Add `gen::Star` property test `indegree_hash_map_hash_set`.
+- Add `gen::Star` property test `indegree_vec_btree_set`.
+- Add `gen::Star` property test `indegree_vec_hash_set`.
+- Add `gen::Star` property test `is_simple_vec_btree_set`.
+- Add `gen::Star` property test `is_simple_vec_hash_set`.
+- Add `gen::Star` property test `is_simple_vec_vec`.
+- Add `gen::Star` property test `outdegree_btree_map_btree_set`.
+- Add `gen::Star` property test `outdegree_btree_map_vec`.
+- Add `gen::Star` property test `outdegree_hash_map_hash_set`.
+- Add `gen::Star` property test `outdegree_hash_map_vec`.
+- Add `gen::Star` property test `outdegree_vec_btree_set`.
+- Add `gen::Star` property test `outdegree_vec_hash_set`.
+- Add `gen::Star` property test `outdegree_vec_vec`.
+- Add `gen::Star` unit test `btree_map_btree_set`.
+- Add `gen::Star` unit test `btree_map_vec`.
+- Add `gen::Star` unit test `hash_map_hash_set`.
+- Add `gen::Star` unit test `hash_map_vec`.
+- Add `gen::Star` unit test `vec_btree_set`.
+- Add `gen::Star` unit test `vec_hash_set`.
+- Add `gen::Star` unit test `vec_vec`.
+- Add documentation alias for `bfs::single_pair_shortest_path`.
+- Add documentation alias for `dijkstra::single_pair_shortest_path`.
+- Add generator `gen::Star` for star graphs.
+- Implement `gen::Star` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `gen::Star` for `BTreeMap<usize, Vec<usize>>`.
+- Implement `gen::Star` for `HashMap<usize, HashSet<usize>>`.
+- Implement `gen::Star` for `HashMap<usize, Vec<usize>>`.
+- Implement `gen::Star` for `Vec<BTreeSet<usize>>`.
+- Implement `gen::Star` for `Vec<HashSet<usize>>`.
+- Implement `gen::Star` for `Vec<Vec<usize>>`.
+
 ## [0.32.2] - 2024-05-02
 
 Changed

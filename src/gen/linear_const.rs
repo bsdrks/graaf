@@ -1,4 +1,4 @@
-//! A trait to generate linear graphs for const-sized graphs
+//! A trait to generate const-sized linear graphs
 //!
 //! Linear graphs are also known as path graphs. To generate variable-sized
 //! linear graphs, see [`Linear`].
@@ -37,7 +37,7 @@ use {
     std::collections::HashSet,
 };
 
-/// A trait to generate linear graphs for const-sized graphs
+/// A trait to generate const-sized linear graphs
 ///
 /// # How can I implement `LinearConst`?
 ///

@@ -1,4 +1,4 @@
-//! A trait to generate cycle graphs for const-sized graphs
+//! A trait to generate const-sized cycle graphs
 //!
 //! Cycle graphs are also known as circular graphs. To generate variable-sized
 //! cycle graphs, see [`Cycle`].
@@ -34,7 +34,7 @@ use {
     std::collections::HashSet,
 };
 
-/// A trait to generate cycle graphs for const-sized graphs
+/// A trait to generate const-sized cycle graphs
 ///
 /// # How can I implement `CycleConst`?
 ///
