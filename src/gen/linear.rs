@@ -1,7 +1,7 @@
-//! A trait to generate variable-sized linear graphs
+//! A trait to generate variable-sized linear digraphs
 //!
 //! Linear graphs are also known as path graphs. To generate const-sized linear
-//! graphs, see [`LinearConst`].
+//! digraphs, see [`LinearConst`].
 //!
 //! # Examples
 //!
@@ -40,12 +40,12 @@ use {
     },
 };
 
-/// A trait to generate linear graphs for variable-sized graphs
+/// A trait to generate variable-sized linear digraphs
 ///
 /// # How can I implement `Linear`?
 ///
-/// Provide an implementation of `linear` that generates a linear graph with `v`
-/// vertices.
+/// Provide an implementation of `linear` that generates a linear digraph with
+/// `v` vertices.
 ///
 /// ```
 /// use {
@@ -70,7 +70,7 @@ use {
 /// assert_eq!(graph.edges, HashSet::from([(0, 1), (1, 2)]));
 /// ```
 pub trait Linear {
-    /// Generates a linear graph.
+    /// Generates a linear digraph.
     ///
     /// # Arguments
     ///

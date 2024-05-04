@@ -9,7 +9,7 @@
 //! use graaf::gen::Cycle;
 //!
 //! //
-//! assert_eq!(Vec::<Vec<usize>>::cycle(0), Vec::<Vec<usize>>::new());
+//! assert!(Vec::<Vec<usize>>::cycle(0).is_empty());
 //!
 //! // 0 → 0
 //! assert_eq!(Vec::<Vec<usize>>::cycle(1), vec![vec![0]]);

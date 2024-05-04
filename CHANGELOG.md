@@ -10,6 +10,21 @@
 - Implement `dijkstra::single_pair_shortest_paths`.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+- Split `op` into symmetric and asymmetric.
+
+## [0.33.1] - 2024-05-04
+
+Added
+
+- Add `gen::StarConst` generator.
+- Add `gen::StarConst` unit test `arr_btree_set`.
+- Add `gen::StarConst` unit test `arr_hash_set`.
+- Add `gen::StarConst` unit test `arr_vec`.
+- Add `gen::StarConst` unit test `is_simple_arr_btree_set`.
+- Add `gen::StarConst` unit test `is_simple_arr_hash_set`.
+- Implement `StarConst` for `[BTreeSet<usize>; V]`.
+- Implement `StarConst` for `[HashSet<usize>; V]`.
+- Implement `StarConst` for `[Vec<usize>; V]`.
 
 ## [0.33.0] - 2024-05-04
 
@@ -30,7 +45,7 @@ Added
 
 Changed
 
-- Breaking: Return an empty edge list for the single vertex case in `gen::Star`.
+- Breaking: Return an empty edge list for the one vertex in `gen::Star::star(1)`.
 
 ## [0.32.3] - 2024-05-04
 

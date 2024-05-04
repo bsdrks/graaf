@@ -1,7 +1,7 @@
-//! A trait to generate const-sized linear graphs
+//! A trait to generate const-sized linear digraphs
 //!
 //! Linear graphs are also known as path graphs. To generate variable-sized
-//! linear graphs, see [`Linear`].
+//! linear digraphs, see [`Linear`].
 //!
 //! # Examples
 //!
@@ -37,11 +37,11 @@ use {
     std::collections::HashSet,
 };
 
-/// A trait to generate const-sized linear graphs
+/// A trait to generate const-sized linear digraphs
 ///
 /// # How can I implement `LinearConst`?
 ///
-/// Provide an implementation of `linear` that generates a linear graph.
+/// Provide an implementation of `linear` that generates a linear digraph.
 ///
 /// ```
 /// use {
@@ -86,7 +86,7 @@ use {
 /// );
 /// ```
 pub trait LinearConst {
-    /// Generates a linear graph.
+    /// Generates a linear digraph.
     fn linear() -> Self;
 }
 

@@ -1,11 +1,11 @@
-//! A trait to generate variable-sized star graphs
+//! A trait to generate undirected variable-sized star graphs
 //!
 //! # Examples
 //!
 //! ```
 //! use graaf::gen::Star;
 //!
-//! assert_eq!(Vec::<Vec<usize>>::star(0), Vec::<Vec<usize>>::new());
+//! assert!(Vec::<Vec<usize>>::star(0).is_empty());
 //! assert_eq!(Vec::<Vec<usize>>::star(1), vec![Vec::new()]);
 //! assert_eq!(Vec::<Vec<usize>>::star(2), vec![vec![1], vec![0]]);
 //!
@@ -34,7 +34,7 @@ use {
     },
 };
 
-/// A trait to generate variable-sized star graphs
+/// A trait to generate undirected variable-sized star graphs
 ///
 /// # How can I implement `Star`?
 ///
@@ -81,7 +81,7 @@ use {
 /// );
 /// ```
 pub trait Star {
-    /// Generates a variable-sized star graph.
+    /// Generates a star graph.
     ///
     /// # Arguments
     ///
