@@ -8,6 +8,8 @@
 - Implement `bfs::single_pair_shortest_paths`.
 - Implement `dijkstra::shortest_paths`.
 - Implement `dijkstra::single_pair_shortest_paths`.
+- Release via GitHub Actions.
+- Speed up GHA workflow.
 
 ## [0.33.0] - 2024-05-04
 
