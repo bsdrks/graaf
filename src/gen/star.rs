@@ -150,6 +150,10 @@ impl Star for BTreeMap<usize, Vec<usize>> {
             return Self::new();
         }
 
+        if v == 1 {
+            return Self::from([(0, Vec::new())]);
+        }
+
         let mut graph = Self::new();
 
         for s in 1..v {
@@ -165,6 +169,10 @@ impl Star for BTreeMap<usize, BTreeSet<usize>> {
     fn star(v: usize) -> Self {
         if v == 0 {
             return Self::new();
+        }
+
+        if v == 1 {
+            return Self::from([(0, BTreeSet::new())]);
         }
 
         let mut graph = Self::new();
@@ -190,6 +198,12 @@ where
 
         let mut graph = Self::with_hasher(H::default());
 
+        if v == 1 {
+            let _ = graph.insert(0, Vec::new());
+
+            return graph;
+        }
+
         for s in 1..v {
             graph.entry(0).or_insert_with(Vec::new).push(s);
             graph.entry(s).or_insert_with(Vec::new).push(0);
@@ -210,6 +224,12 @@ where
         }
 
         let mut graph = Self::with_hasher(H::default());
+
+        if v == 1 {
+            let _ = graph.insert(0, HashSet::with_hasher(H::default()));
+
+            return graph;
+        }
 
         for s in 1..v {
             let _ = graph
@@ -502,7 +522,7 @@ mod tests {
     fn btree_map_vec() {
         for (v, g) in [
             BTreeMap::new(),
-            BTreeMap::new(),
+            BTreeMap::from([(0, Vec::new())]),
             BTreeMap::from([(0, vec![1]), (1, vec![0])]),
             BTreeMap::from([(0, vec![1, 2]), (1, vec![0]), (2, vec![0])]),
         ]
@@ -517,7 +537,7 @@ mod tests {
     fn btree_map_btree_set() {
         for (v, g) in [
             BTreeMap::new(),
-            BTreeMap::new(),
+            BTreeMap::from([(0, BTreeSet::new())]),
             BTreeMap::from([(0, BTreeSet::from([1])), (1, BTreeSet::from([0]))]),
             BTreeMap::from([
                 (0, BTreeSet::from([1, 2])),
@@ -536,7 +556,7 @@ mod tests {
     fn hash_map_vec() {
         for (v, g) in [
             HashMap::new(),
-            HashMap::new(),
+            HashMap::from([(0, Vec::new())]),
             HashMap::from([(0, vec![1]), (1, vec![0])]),
             HashMap::from([(0, vec![1, 2]), (1, vec![0]), (2, vec![0])]),
         ]
@@ -551,7 +571,7 @@ mod tests {
     fn hash_map_hash_set() {
         for (v, g) in [
             HashMap::new(),
-            HashMap::new(),
+            HashMap::from([(0, HashSet::new())]),
             HashMap::from([(0, HashSet::from([1])), (1, HashSet::from([0]))]),
             HashMap::from([
                 (0, HashSet::from([1, 2])),
@@ -564,5 +584,60 @@ mod tests {
         {
             assert_eq!(&HashMap::<usize, HashSet<usize>>::star(v), g);
         }
+    }
+
+    #[test]
+    fn indegree_vec_btree_set_1() {
+        assert_eq!(Vec::<BTreeSet<usize>>::star(1).indegree(0), 0);
+    }
+
+    #[test]
+    fn indegree_vec_hash_set_1() {
+        assert_eq!(Vec::<HashSet<usize>>::star(1).indegree(0), 0);
+    }
+
+    #[test]
+    fn indegree_btree_map_btree_set_1() {
+        assert_eq!(BTreeMap::<usize, BTreeSet<usize>>::star(1).indegree(0), 0);
+    }
+
+    #[test]
+    fn indegree_hash_map_hash_set_1() {
+        assert_eq!(HashMap::<usize, HashSet<usize>>::star(1).indegree(0), 0);
+    }
+
+    #[test]
+    fn outdegree_vec_vec_1() {
+        assert_eq!(Vec::<Vec<usize>>::star(1).outdegree(0), 0);
+    }
+
+    #[test]
+    fn outdegree_vec_btree_set_1() {
+        assert_eq!(Vec::<BTreeSet<usize>>::star(1).outdegree(0), 0);
+    }
+
+    #[test]
+    fn outdegree_vec_hash_set_1() {
+        assert_eq!(Vec::<HashSet<usize>>::star(1).outdegree(0), 0);
+    }
+
+    #[test]
+    fn outdegree_btree_map_vec_1() {
+        assert_eq!(BTreeMap::<usize, Vec<usize>>::star(1).outdegree(0), 0);
+    }
+
+    #[test]
+    fn outdegree_btree_map_btree_set_1() {
+        assert_eq!(BTreeMap::<usize, BTreeSet<usize>>::star(1).outdegree(0), 0);
+    }
+
+    #[test]
+    fn outdegree_hash_map_vec_1() {
+        assert_eq!(HashMap::<usize, Vec<usize>>::star(1).outdegree(0), 0);
+    }
+
+    #[test]
+    fn outdegree_hash_map_hash_set_1() {
+        assert_eq!(HashMap::<usize, HashSet<usize>>::star(1).outdegree(0), 0);
     }
 }

@@ -9,6 +9,27 @@
 - Implement `dijkstra::shortest_paths`.
 - Implement `dijkstra::single_pair_shortest_paths`.
 
+## [0.33.0] - 2024-05-04
+
+Added
+
+- Add `gen::Star` property test `indegree_btree_map_btree_set_1`.
+- Add `gen::Star` property test `indegree_hash_map_hash_set_1`.
+- Add `gen::Star` property test `indegree_vec_btree_set_1`.
+- Add `gen::Star` property test `indegree_vec_hash_set_1`.
+- Add `gen::Star` property test `outdegree_btree_map_btree_set_1`.
+- Add `gen::Star` property test `outdegree_btree_map_vec_1`.
+- Add `gen::Star` property test `outdegree_hash_map_hash_set_1`.
+- Add `gen::Star` property test `outdegree_hash_map_vec_1`.
+- Add `gen::Star` property test `outdegree_vec_btree_set_1`.
+- Add `gen::Star` property test `outdegree_vec_hash_set_1`.
+- Add `gen::Star` property test `outdegree_vec_vec_1`.
+- Link to `CHANGELOG.md` from `README.md`.
+
+Changed
+
+- Breaking: Return an empty edge list for the single vertex case in `gen::Star`.
+
 ## [0.32.3] - 2024-05-04
 
 Added
