@@ -45,6 +45,7 @@ use {
 ///     std::collections::HashSet,
 /// };
 ///
+/// #[derive(Debug, PartialEq)]
 /// struct Graph {
 ///     edges: HashSet<(usize, usize)>,
 /// }
