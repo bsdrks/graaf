@@ -2,11 +2,6 @@
 
 ## Provisional roadmap
 
-- Add `Complete` generator.
-- Add `DeBruijn` generator.
-- Add `ImaseItoh` generator.
-- Add `Kautz` generator.
-- Add `Paley` generator.
 - Add `Path` generator.
 - Add `algo::dijkstra::single_pair_shortest_path`.
 - Add `bfs::shortest_paths`.
@@ -23,6 +18,25 @@
 - Implement `From` and `Into` for `AdjacencyMatrix`.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.35.1] - 2024-05-05
+
+Added
+
+- Add `gen::Empty` generator.
+- Add `publish` script.
+- Add documentation alias "circular" for `gen::cyle_const`.
+- Add documentation alias "circular" for `gen::cyle`.
+
+Changed
+
+- Simplify implementations of `Complete::complete`.
+- Simplify implementations of `CompleteConst::complete_const`.
+
+Removed
+
+- Remove `pre-commit.sh`.
+- Remove `setup-pre-commit.sh`.
 
 ## [0.35.0] - 2024-05-05
 

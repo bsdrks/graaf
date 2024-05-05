@@ -31,15 +31,28 @@
 //!     ]
 //! );
 //! ```
+//!
+//! ```
+//! extern crate alloc;
+//!
+//! use {
+//!     alloc::collections::BTreeSet,
+//!     graaf::gen::Empty,
+//! };
+//!
+//! assert_eq!(Vec::<BTreeSet<usize>>::empty(3), vec![BTreeSet::new(); 3]);
+//! ```
 
 pub mod complete;
 pub mod complete_const;
 pub mod cycle;
 pub mod cycle_const;
+pub mod empty;
 
 pub use {
     complete::Complete,
     complete_const::CompleteConst,
     cycle::Cycle,
     cycle_const::CycleConst,
+    empty::Empty,
 };

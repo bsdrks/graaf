@@ -64,10 +64,6 @@ use {
 ///     fn complete() -> Self {
 ///         let mut edges = from_fn(|_| HashSet::with_hasher(H::default()));
 ///
-///         if V == 0 {
-///             return Graph { edges };
-///         }
-///
 ///         for (s, set) in edges.iter_mut().enumerate() {
 ///             for t in 0..V {
 ///                 if s != t {
@@ -101,10 +97,6 @@ impl<const V: usize> CompleteConst for [Vec<usize>; V] {
     fn complete() -> Self {
         let mut graph: [Vec<usize>; V] = from_fn(|_| Vec::new());
 
-        if V == 0 {
-            return graph;
-        }
-
         for (s, vec) in graph.iter_mut().enumerate().take(V) {
             for t in 0..V {
                 if s != t {
@@ -120,10 +112,6 @@ impl<const V: usize> CompleteConst for [Vec<usize>; V] {
 impl<const V: usize> CompleteConst for [BTreeSet<usize>; V] {
     fn complete() -> Self {
         let mut graph: [BTreeSet<usize>; V] = from_fn(|_| BTreeSet::new());
-
-        if V == 0 {
-            return graph;
-        }
 
         for (s, set) in graph.iter_mut().enumerate().take(V) {
             for t in 0..V {
@@ -143,10 +131,6 @@ where
 {
     fn complete() -> Self {
         let mut graph: [HashSet<usize, H>; V] = from_fn(|_| HashSet::with_hasher(H::default()));
-
-        if V == 0 {
-            return graph;
-        }
 
         for (s, set) in graph.iter_mut().enumerate().take(V) {
             for t in 0..V {

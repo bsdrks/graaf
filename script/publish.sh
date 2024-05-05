@@ -81,6 +81,12 @@ CARGO_INCREMENTAL=0 RUSTFLAGS='-Cinstrument-coverage' LLVM_PROFILE_FILE='coverag
 total_coverage=$(grcov . --binary-path ./target/debug/ -t markdown -s . --ignore '../*' --ignore '/*' | tail -n 1)
 
 if [[ "$total_coverage" != *'100.00%'* ]]; then
-    echo 'Coverage is not 100%'
+    echo 'Coverage is not 100.00%'
     exit 1
+else
+    echo '✓ Coverage is 100.00%'
 fi
+
+# Publish
+
+cargo publish

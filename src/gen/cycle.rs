@@ -1,3 +1,4 @@
+#![doc(alias = "circular")]
 //! A trait to generate variable-sized directed cycle graphs
 //!
 //! Cycle graphs are also known as circular graphs. To generate const-sized
