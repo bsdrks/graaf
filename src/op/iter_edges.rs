@@ -1,4 +1,5 @@
-//! A trait to iterate over all unweighted edges with a given source vertex
+//! A trait to iterate over all edges with a given source vertex in an
+//! unweighted directed graph
 //!
 //! # Examples
 //!
@@ -69,12 +70,13 @@ use {
     },
 };
 
-/// A trait to iterate over all unweighted edges with a given source vertex
+/// A trait to iterate over all edges with a given source vertex in an
+/// unweighted directed graph
 ///
 /// # How can I implement `IterEdges`?
 ///
 /// Provide an implementation of `iter_edges` that returns an iterator over all
-/// edges of the source vertex.
+/// edges with a given source vertex.
 ///
 /// ```
 /// use graaf::op::IterEdges;
@@ -145,7 +147,7 @@ use {
 /// assert_eq!(iter.next(), None);
 /// ```
 pub trait IterEdges {
-    /// Returns an iterator over the edges of the vertex `s`.
+    /// Returns an iterator over all edges with a given source vertex.
     ///
     /// # Arguments
     ///

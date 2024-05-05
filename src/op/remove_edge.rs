@@ -1,4 +1,4 @@
-//! A trait to remove an edge from a graph
+//! A trait to remove an edge from a directed graph
 //!
 //! # Examples
 //!
@@ -54,12 +54,12 @@ use {
     },
 };
 
-/// A trait to remove an edge from a graph
+/// A trait to remove an edge from a directed graph
 ///
 /// # How can I implement `RemoveEdge`?
 ///
 /// Provide an implementation of `remove_edge` that removes the edge from `s` to
-/// `t`.
+/// `t` from a directed graph. Return whether the edge was removed.
 ///
 /// ```
 /// use {
@@ -135,7 +135,8 @@ use {
 /// [`add_edge_remove_edge`]: crate::prop::add_edge_remove_edge
 /// [`add_weighted_edge_remove_edge`]: crate::prop::add_weighted_edge_remove_edge
 pub trait RemoveEdge {
-    /// Removes the edge from `s` to `t`. Returns whether the edge was removed.
+    /// Removes the edge from `s` to `t` from a graph. Returns whether the
+    /// edge was removed.
     ///
     /// # Arguments
     ///

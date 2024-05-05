@@ -1,12 +1,12 @@
 [package]
 name = "graaf"
-version = "0.33.1"
+version = "0.34.0"
 edition = "2021"
 authors = ["Bas Dirks <bas.dirks@protonmail.com>"]
 categories = ["algorithms", "data-structures", "mathematics"]
 description = "Functions and types for working with graphs"
 documentation = "https://docs.rs/graaf"
-keywords = ["bfs", "dijkstra", "graph"]
+keywords = ["bfs", "digraph", "dijkstra", "graph"]
 license = "MIT OR Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/bsdrks/graaf"

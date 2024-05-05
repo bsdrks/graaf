@@ -1,4 +1,4 @@
-//! A trait to get the outdegree of a given vertex
+//! A trait to get the outdegree of a given vertex in a directed graph
 //!
 //! # Examples
 //!
@@ -26,7 +26,7 @@ use {
     },
 };
 
-/// A trait to get the outdegree of a given vertex
+/// A trait to get the outdegree of a given vertex in a directed graph
 ///
 /// # How can I implement `Outdegree`?
 ///

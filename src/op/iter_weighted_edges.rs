@@ -1,4 +1,5 @@
-//! A trait to iterate over all weighted edges with a given source vertex
+//! A trait to iterate over all edges with a given source vertex in a weighted
+//! directed graph
 //!
 //! # Examples
 //!
@@ -47,7 +48,8 @@ use {
     },
 };
 
-/// A trait to iterate over all weighted edges with a given source vertex
+/// A trait to iterate over all edges with a given source vertex in a weighted
+/// directed graph
 ///
 /// # How can I implement `IterWeightedEdges`?
 ///
@@ -104,7 +106,7 @@ use {
 /// assert_eq!(iter.next(), None);
 /// ```
 pub trait IterWeightedEdges<W> {
-    /// Returns an iterator over the edges of the vertex `s`.
+    /// Returns an iterator over the edges with the source vertex `s`.
     ///
     /// # Arguments
     ///

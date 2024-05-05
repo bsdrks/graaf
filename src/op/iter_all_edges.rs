@@ -1,4 +1,4 @@
-//! A trait to iterate over all unweighted edges in a graph
+//! A trait to iterate over all edges in an unweighted directed graph
 //!
 //! # Examples
 //!
@@ -22,12 +22,12 @@ use {
     std::collections::HashSet,
 };
 
-/// A trait to iterate over all unweighted edges in a graph
+/// A trait to iterate over all edges in an unweighted directed graph
 ///
 /// # How can I implement `IterAllEdges`?
 ///
 /// Provide an implementation of `iter_all_edges` that returns an iterator over
-/// all edges in the graph.
+/// all edges in a graph.
 ///
 /// ```
 /// use graaf::op::IterAllEdges;

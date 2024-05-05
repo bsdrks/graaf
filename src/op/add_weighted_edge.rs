@@ -1,4 +1,4 @@
-//! A trait to add a weighted edge to a graph
+//! A trait to add an edge to a directed weighted graph
 //!
 //! # Examples
 //!
@@ -31,12 +31,12 @@ use {
     },
 };
 
-/// A trait to add an edge to a weighted graph
+/// A trait to add an edge to a weighted directed graph
 ///
 /// # How can I implement `AddWeightedEdge`?
 ///
 /// Provide an implementation of `add_weighted_edge` that adds an edge from `s`
-/// to `t` with weight `w` to the graph.
+/// to `t` to the graph with weight `w`.
 ///
 /// ```
 /// use graaf::op::AddWeightedEdge;

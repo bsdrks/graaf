@@ -1,6 +1,6 @@
 # ![Graaf!](/logo.png "Graaf") &emsp; [![Build status](https://github.com/bsdrks/graaf/actions/workflows/rust.yml/badge.svg)](https://github.com/bsdrks/graaf/actions) [![Crates.io](https://img.shields.io/crates/v/graaf.svg)](https://crates.io/crates/graaf) [![API reference](https://docs.rs/graaf/badge.svg)](https://docs.rs/graaf) [![Coverage Status](https://coveralls.io/repos/github/bsdrks/graaf/badge.svg?branch=main)](https://coveralls.io/github/bsdrks/graaf?branch=main)
 
-Graph algorithms, operations, generators, and representations.
+Algorithms, operations, generators, and representations for directed graphs
 
 ## Installation
 
@@ -8,14 +8,14 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.33.1"
+graaf = "0.34.0"
 ```
 
-To use stable Rust, disable the `adjacency_matrix` feature:
+To use stable Rust, turn off the `adjacency_matrix` feature:
 
 ```toml
 [dependencies]
-graaf = { version = "0.33.1", default-features = false }
+graaf = { version = "0.34.0", default-features = false }
 ```
 
 ## Overview
@@ -120,7 +120,7 @@ See [CHANGELOG.md](https://github.com/bsdrks/graaf/blob/main/CHANGELOG.md).
 
 ## License
 
-Licensed under either the [Apache License, Version 2.0] or the [MIT license] at your option.
+Licensed under either the [Apache License, Version 2.0], or the [MIT license] at your option.
 
 [Apache License, Version 2.0]: LICENSE-APACHE
 [MIT license]: LICENSE-MIT

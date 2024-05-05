@@ -1,4 +1,4 @@
-//! A trait to check if an edge exists between two vertices
+//! A trait to check if an edge exists from one vertex to another
 //!
 //! # Examples
 //!
@@ -39,7 +39,7 @@ use {
     },
 };
 
-/// A trait to check if an edge exists between two vertices
+/// A trait to check if an edge exists from one vertex to another
 ///
 /// # How can I implement `IsEdge`?
 ///

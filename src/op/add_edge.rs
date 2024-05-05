@@ -1,4 +1,4 @@
-//! A trait to add an edge to an unweighted graph
+//! A trait to add an edge to a unweighted directed graph
 //!
 //! # Examples
 //!
@@ -28,7 +28,7 @@ use {
     },
 };
 
-/// A trait to add an edge to an unweighted graph
+/// A trait to add an edge to a unweighted directed graph
 ///
 /// # How can I implement `AddEdge`?
 ///

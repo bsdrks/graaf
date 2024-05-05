@@ -1,4 +1,4 @@
-//! A trait to iterate over all weighted edges in a graph
+//! A trait to iterate over all edges in a weighted directed graph
 //!
 //! # Examples
 //!
@@ -22,12 +22,12 @@ use {
     std::collections::HashSet,
 };
 
-/// A trait to iterate over all weighted edges in a graph
+/// A trait to iterate over all edges in a weighted directed graph
 ///
 /// # How can I implement `IterAllWeightedEdges`?
 ///
 /// Provide an implementation of `iter_all_weighted_edges` that returns an
-/// iterator over all weighted edges in the graph.
+/// iterator over all edges in a graph.
 ///
 /// ```
 /// use graaf::op::IterAllWeightedEdges;
@@ -60,7 +60,7 @@ use {
 /// assert_eq!(iter.next(), None);
 /// ```
 pub trait IterAllWeightedEdges<W> {
-    /// Returns an iterator over all weighted edges in a graph.
+    /// Returns an iterator over all edges in a graph.
     fn iter_all_weighted_edges<'a>(&'a self) -> impl Iterator<Item = (usize, usize, &'a W)>
     where
         W: 'a;

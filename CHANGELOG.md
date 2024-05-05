@@ -10,7 +10,20 @@
 - Implement `dijkstra::single_pair_shortest_paths`.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
-- Split `op` into symmetric and asymmetric.
+
+## [0.34.0] - 2024-05-05
+
+Changed
+
+- Emphasize the focus on directed graphs in the documentation.
+
+Removed
+
+- Remove `gen::Star`.
+- Remove `gen::StarConst`.
+- Remove `gen::Linear`
+- Remove `gen::LinearConst`.
+- Remove `op::Target`.
 
 ## [0.33.1] - 2024-05-04
 
