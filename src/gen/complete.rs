@@ -87,10 +87,6 @@ pub trait Complete {
 
 impl Complete for Vec<Vec<usize>> {
     fn complete(v: usize) -> Self {
-        if v == 0 {
-            return Self::new();
-        }
-
         (0..v)
             .map(|s| (0..v).filter(|&t| s != t).collect())
             .collect()
@@ -99,10 +95,6 @@ impl Complete for Vec<Vec<usize>> {
 
 impl Complete for Vec<BTreeSet<usize>> {
     fn complete(v: usize) -> Self {
-        if v == 0 {
-            return Self::new();
-        }
-
         (0..v)
             .map(|s| (0..v).filter(|&t| s != t).collect())
             .collect()
@@ -115,10 +107,6 @@ where
     HashSet<usize, H>: Clone,
 {
     fn complete(v: usize) -> Self {
-        if v == 0 {
-            return Self::new();
-        }
-
         (0..v)
             .map(|s| (0..v).filter(|&t| s != t).collect())
             .collect()
@@ -127,10 +115,6 @@ where
 
 impl Complete for BTreeMap<usize, Vec<usize>> {
     fn complete(v: usize) -> Self {
-        if v == 0 {
-            return Self::new();
-        }
-
         (0..v)
             .map(|s| (s, (0..v).filter(|&t| s != t).collect()))
             .collect()
@@ -139,10 +123,6 @@ impl Complete for BTreeMap<usize, Vec<usize>> {
 
 impl Complete for BTreeMap<usize, BTreeSet<usize>> {
     fn complete(v: usize) -> Self {
-        if v == 0 {
-            return Self::new();
-        }
-
         (0..v)
             .map(|s| (s, (0..v).filter(|&t| s != t).collect()))
             .collect()
@@ -154,10 +134,6 @@ where
     H: BuildHasher + Default,
 {
     fn complete(v: usize) -> Self {
-        if v == 0 {
-            return Self::with_hasher(H::default());
-        }
-
         (0..v)
             .map(|s| (s, (0..v).filter(|&t| s != t).collect()))
             .collect()
@@ -169,10 +145,6 @@ where
     H: BuildHasher + Default,
 {
     fn complete(v: usize) -> Self {
-        if v == 0 {
-            return Self::with_hasher(H::default());
-        }
-
         (0..v)
             .map(|s| (s, (0..v).filter(|&t| s != t).collect()))
             .collect()
@@ -181,10 +153,6 @@ where
 
 impl Complete for Vec<(usize, usize)> {
     fn complete(v: usize) -> Self {
-        if v == 0 {
-            return Self::new();
-        }
-
         (0..v)
             .flat_map(|s| (0..v).filter(move |&t| s != t).map(move |t| (s, t)))
             .collect()
@@ -193,10 +161,6 @@ impl Complete for Vec<(usize, usize)> {
 
 impl Complete for BTreeSet<(usize, usize)> {
     fn complete(v: usize) -> Self {
-        if v == 0 {
-            return Self::new();
-        }
-
         (0..v)
             .flat_map(|s| (0..v).filter(move |&t| s != t).map(move |t| (s, t)))
             .collect()
@@ -208,10 +172,6 @@ where
     H: BuildHasher + Default,
 {
     fn complete(v: usize) -> Self {
-        if v == 0 {
-            return Self::with_hasher(H::default());
-        }
-
         (0..v)
             .flat_map(|s| (0..v).filter(move |&t| s != t).map(move |t| (s, t)))
             .collect()
