@@ -588,4 +588,115 @@ mod tests {
             assert_eq!(&HashSet::<(usize, usize)>::complete(v), g);
         }
     }
+
+    #[test]
+    fn count_all_edges_vec_vec_0() {
+        assert_eq!(Vec::<Vec<usize>>::complete(0).count_all_edges(), 0);
+    }
+
+    #[test]
+    fn count_all_edges_vec_btree_set_0() {
+        assert_eq!(Vec::<BTreeSet<usize>>::complete(0).count_all_edges(), 0);
+    }
+
+    #[test]
+    fn count_all_edges_vec_hash_set_0() {
+        assert_eq!(Vec::<HashSet<usize>>::complete(0).count_all_edges(), 0);
+    }
+
+    #[test]
+    fn count_all_edges_btree_map_vec_0() {
+        assert_eq!(
+            BTreeMap::<usize, Vec<usize>>::complete(0).count_all_edges(),
+            0
+        );
+    }
+
+    #[test]
+    fn count_all_edges_btree_map_btree_set_0() {
+        assert_eq!(
+            BTreeMap::<usize, BTreeSet<usize>>::complete(0).count_all_edges(),
+            0
+        );
+    }
+
+    #[test]
+    fn count_all_edges_hash_map_vec_0() {
+        assert_eq!(
+            HashMap::<usize, Vec<usize>>::complete(0).count_all_edges(),
+            0
+        );
+    }
+
+    #[test]
+    fn count_all_edges_hash_map_hash_set_0() {
+        assert_eq!(
+            HashMap::<usize, HashSet<usize>>::complete(0).count_all_edges(),
+            0
+        );
+    }
+
+    #[test]
+    fn indegree_vec_btree_set_0() {
+        assert_eq!(Vec::<BTreeSet<usize>>::complete(0).indegree(0), 0);
+    }
+
+    #[test]
+    fn indegree_vec_hash_set_0() {
+        assert_eq!(Vec::<HashSet<usize>>::complete(0).indegree(0), 0);
+    }
+
+    #[test]
+    fn indegree_btree_map_btree_set_0() {
+        assert_eq!(
+            BTreeMap::<usize, BTreeSet<usize>>::complete(0).indegree(0),
+            0
+        );
+    }
+
+    #[test]
+    fn indegree_hash_map_hash_set_0() {
+        assert_eq!(HashMap::<usize, HashSet<usize>>::complete(0).indegree(0), 0);
+    }
+
+    #[test]
+    fn outdegree_vec_vec_0() {
+        assert_eq!(Vec::<Vec<usize>>::complete(0).outdegree(0), 0);
+    }
+
+    #[test]
+    fn outdegree_vec_btree_set_0() {
+        assert_eq!(Vec::<BTreeSet<usize>>::complete(0).outdegree(0), 0);
+    }
+
+    #[test]
+    fn outdegree_vec_hash_set_0() {
+        assert_eq!(Vec::<HashSet<usize>>::complete(0).outdegree(0), 0);
+    }
+
+    #[test]
+    fn outdegree_btree_map_vec_0() {
+        assert_eq!(BTreeMap::<usize, Vec<usize>>::complete(0).outdegree(0), 0);
+    }
+
+    #[test]
+    fn outdegree_btree_map_btree_set_0() {
+        assert_eq!(
+            BTreeMap::<usize, BTreeSet<usize>>::complete(0).outdegree(0),
+            0
+        );
+    }
+
+    #[test]
+    fn outdegree_hash_map_vec_0() {
+        assert_eq!(HashMap::<usize, Vec<usize>>::complete(0).outdegree(0), 0);
+    }
+
+    #[test]
+    fn outdegree_hash_map_hash_set_0() {
+        assert_eq!(
+            HashMap::<usize, HashSet<usize>>::complete(0).outdegree(0),
+            0
+        );
+    }
 }

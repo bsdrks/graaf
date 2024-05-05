@@ -164,7 +164,12 @@ where
 mod tests {
     use {
         super::*,
-        crate::op::IsSimple,
+        crate::op::{
+            CountAllEdges,
+            CountAllVertices,
+            Indegree,
+            IsSimple,
+        },
     };
 
     #[test]
@@ -220,6 +225,102 @@ mod tests {
     }
 
     #[test]
+    fn count_all_edges_arr_vec() {
+        assert_eq!(<[Vec<usize>; 0]>::complete().count_all_edges(), 0);
+        assert_eq!(<[Vec<usize>; 1]>::complete().count_all_edges(), 0);
+        assert_eq!(<[Vec<usize>; 2]>::complete().count_all_edges(), 2);
+        assert_eq!(<[Vec<usize>; 3]>::complete().count_all_edges(), 6);
+        assert_eq!(<[Vec<usize>; 4]>::complete().count_all_edges(), 12);
+        assert_eq!(<[Vec<usize>; 5]>::complete().count_all_edges(), 20);
+    }
+
+    #[test]
+    fn count_all_edges_arr_btree_set() {
+        assert_eq!(<[BTreeSet<usize>; 0]>::complete().count_all_edges(), 0);
+        assert_eq!(<[BTreeSet<usize>; 1]>::complete().count_all_edges(), 0);
+        assert_eq!(<[BTreeSet<usize>; 2]>::complete().count_all_edges(), 2);
+        assert_eq!(<[BTreeSet<usize>; 3]>::complete().count_all_edges(), 6);
+        assert_eq!(<[BTreeSet<usize>; 4]>::complete().count_all_edges(), 12);
+        assert_eq!(<[BTreeSet<usize>; 5]>::complete().count_all_edges(), 20);
+    }
+
+    #[test]
+    fn count_all_edges_arr_hash_set() {
+        assert_eq!(<[HashSet<usize>; 0]>::complete().count_all_edges(), 0);
+        assert_eq!(<[HashSet<usize>; 1]>::complete().count_all_edges(), 0);
+        assert_eq!(<[HashSet<usize>; 2]>::complete().count_all_edges(), 2);
+        assert_eq!(<[HashSet<usize>; 3]>::complete().count_all_edges(), 6);
+        assert_eq!(<[HashSet<usize>; 4]>::complete().count_all_edges(), 12);
+        assert_eq!(<[HashSet<usize>; 5]>::complete().count_all_edges(), 20);
+    }
+
+    #[test]
+    fn count_all_vertices_arr_vec() {
+        assert_eq!(<[Vec<usize>; 0]>::complete().count_all_vertices(), 0);
+        assert_eq!(<[Vec<usize>; 1]>::complete().count_all_vertices(), 1);
+        assert_eq!(<[Vec<usize>; 2]>::complete().count_all_vertices(), 2);
+        assert_eq!(<[Vec<usize>; 3]>::complete().count_all_vertices(), 3);
+        assert_eq!(<[Vec<usize>; 4]>::complete().count_all_vertices(), 4);
+        assert_eq!(<[Vec<usize>; 5]>::complete().count_all_vertices(), 5);
+    }
+
+    #[test]
+    fn count_all_vertices_arr_btree_set() {
+        assert_eq!(<[BTreeSet<usize>; 0]>::complete().count_all_vertices(), 0);
+        assert_eq!(<[BTreeSet<usize>; 1]>::complete().count_all_vertices(), 1);
+        assert_eq!(<[BTreeSet<usize>; 2]>::complete().count_all_vertices(), 2);
+        assert_eq!(<[BTreeSet<usize>; 3]>::complete().count_all_vertices(), 3);
+        assert_eq!(<[BTreeSet<usize>; 4]>::complete().count_all_vertices(), 4);
+        assert_eq!(<[BTreeSet<usize>; 5]>::complete().count_all_vertices(), 5);
+    }
+
+    #[test]
+    fn count_all_vertices_arr_hash_set() {
+        assert_eq!(<[HashSet<usize>; 0]>::complete().count_all_vertices(), 0);
+        assert_eq!(<[HashSet<usize>; 1]>::complete().count_all_vertices(), 1);
+        assert_eq!(<[HashSet<usize>; 2]>::complete().count_all_vertices(), 2);
+        assert_eq!(<[HashSet<usize>; 3]>::complete().count_all_vertices(), 3);
+        assert_eq!(<[HashSet<usize>; 4]>::complete().count_all_vertices(), 4);
+        assert_eq!(<[HashSet<usize>; 5]>::complete().count_all_vertices(), 5);
+    }
+
+    #[test]
+    fn indegree_arr_btree_set() {
+        let graph = <[BTreeSet<usize>; 1]>::complete();
+
+        assert_eq!(graph.indegree(0), 0);
+
+        let graph = <[BTreeSet<usize>; 2]>::complete();
+
+        assert_eq!(graph.indegree(0), 1);
+        assert_eq!(graph.indegree(1), 1);
+
+        let graph = <[BTreeSet<usize>; 3]>::complete();
+
+        assert_eq!(graph.indegree(0), 2);
+        assert_eq!(graph.indegree(1), 2);
+        assert_eq!(graph.indegree(2), 2);
+    }
+
+    #[test]
+    fn indegree_arr_hash_set() {
+        let graph = <[HashSet<usize>; 1]>::complete();
+
+        assert_eq!(graph.indegree(0), 0);
+
+        let graph = <[HashSet<usize>; 2]>::complete();
+
+        assert_eq!(graph.indegree(0), 1);
+        assert_eq!(graph.indegree(1), 1);
+
+        let graph = <[HashSet<usize>; 3]>::complete();
+
+        assert_eq!(graph.indegree(0), 2);
+        assert_eq!(graph.indegree(1), 2);
+        assert_eq!(graph.indegree(2), 2);
+    }
+
+    #[test]
     fn is_simple_arr_btree_set() {
         assert!(<[BTreeSet<usize>; 0]>::complete().is_simple());
         assert!(<[BTreeSet<usize>; 1]>::complete().is_simple());
@@ -239,5 +340,59 @@ mod tests {
         assert!(<[HashSet<usize>; 4]>::complete().is_simple());
         assert!(<[HashSet<usize>; 5]>::complete().is_simple());
         assert!(<[HashSet<usize>; 6]>::complete().is_simple());
+    }
+
+    #[test]
+    fn outdegree_arr_vec() {
+        let graph = <[Vec<usize>; 1]>::complete();
+
+        assert_eq!(graph[0].len(), 0);
+
+        let graph = <[Vec<usize>; 2]>::complete();
+
+        assert_eq!(graph[0].len(), 1);
+        assert_eq!(graph[1].len(), 1);
+
+        let graph = <[Vec<usize>; 3]>::complete();
+
+        assert_eq!(graph[0].len(), 2);
+        assert_eq!(graph[1].len(), 2);
+        assert_eq!(graph[2].len(), 2);
+    }
+
+    #[test]
+    fn outdegree_arr_btree_set() {
+        let graph = <[BTreeSet<usize>; 1]>::complete();
+
+        assert_eq!(graph[0].len(), 0);
+
+        let graph = <[BTreeSet<usize>; 2]>::complete();
+
+        assert_eq!(graph[0].len(), 1);
+        assert_eq!(graph[1].len(), 1);
+
+        let graph = <[BTreeSet<usize>; 3]>::complete();
+
+        assert_eq!(graph[0].len(), 2);
+        assert_eq!(graph[1].len(), 2);
+        assert_eq!(graph[2].len(), 2);
+    }
+
+    #[test]
+    fn outdegree_arr_hash_set() {
+        let graph = <[HashSet<usize>; 1]>::complete();
+
+        assert_eq!(graph[0].len(), 0);
+
+        let graph = <[HashSet<usize>; 2]>::complete();
+
+        assert_eq!(graph[0].len(), 1);
+        assert_eq!(graph[1].len(), 1);
+
+        let graph = <[HashSet<usize>; 3]>::complete();
+
+        assert_eq!(graph[0].len(), 2);
+        assert_eq!(graph[1].len(), 2);
+        assert_eq!(graph[2].len(), 2);
     }
 }

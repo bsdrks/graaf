@@ -31,7 +31,8 @@ use {
 /// # How can I implement `Outdegree`?
 ///
 /// Provide an implementation of `outdegree` that returns the outdegree of the
-/// target vertex.
+/// target vertex. The implementation should not panic if the vertex is not in
+/// the graph.
 ///
 /// ```
 /// use graaf::op::Outdegree;
@@ -42,7 +43,7 @@ use {
 ///
 /// impl Outdegree for Graph {
 ///     fn outdegree(&self, s: usize) -> usize {
-///         self.edges[s].len()
+///         self.edges.get(s).map_or(0, |v| v.len())
 ///     }
 /// }
 /// ```
@@ -57,6 +58,7 @@ use {
 /// assert_eq!(graph.outdegree(0), 2);
 /// assert_eq!(graph.outdegree(1), 1);
 /// assert_eq!(graph.outdegree(2), 1);
+/// assert_eq!(graph.outdegree(3), 0);
 /// ```
 pub trait Outdegree {
     /// Returns the outdegree of a vertex.
@@ -68,65 +70,44 @@ pub trait Outdegree {
 }
 
 impl Outdegree for Vec<Vec<usize>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[s].len()
+        self.get(s).map_or(0, Vec::len)
     }
 }
 
 impl<W> Outdegree for Vec<Vec<(usize, W)>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[s].len()
+        self.get(s).map_or(0, Vec::len)
     }
 }
 
 impl Outdegree for Vec<BTreeSet<usize>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[s].len()
+        self.get(s).map_or(0, BTreeSet::len)
     }
 }
 
 impl<W> Outdegree for Vec<BTreeSet<(usize, W)>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[s].len()
+        self.get(s).map_or(0, BTreeSet::len)
     }
 }
 
 impl<H> Outdegree for Vec<HashSet<usize, H>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[s].len()
+        self.get(s).map_or(0, HashSet::len)
     }
 }
 
 impl<W, H> Outdegree for Vec<HashSet<(usize, W), H>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[s].len()
+        self.get(s).map_or(0, HashSet::len)
     }
 }
 
 impl<W> Outdegree for Vec<BTreeMap<usize, W>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[s].len()
+        self.get(s).map_or(0, BTreeMap::len)
     }
 }
 
@@ -134,74 +115,50 @@ impl<W, H> Outdegree for Vec<HashMap<usize, W, H>>
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[s].len()
+        self.get(s).map_or(0, HashMap::len)
     }
 }
 
 impl Outdegree for [Vec<usize>] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[s].len()
+        self.get(s).map_or(0, Vec::len)
     }
 }
 
 impl<W> Outdegree for [Vec<(usize, W)>] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[s].len()
+        self.get(s).map_or(0, Vec::len)
     }
 }
 
 impl Outdegree for [BTreeSet<usize>] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[s].len()
+        self.get(s).map_or(0, BTreeSet::len)
     }
 }
 
 impl<W> Outdegree for [BTreeSet<(usize, W)>] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[s].len()
+        self.get(s).map_or(0, BTreeSet::len)
     }
 }
 
 impl<H> Outdegree for [HashSet<usize, H>] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[s].len()
+        self.get(s).map_or(0, HashSet::len)
     }
 }
 
 impl<W, H> Outdegree for [HashSet<(usize, W), H>] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[s].len()
+        self.get(s).map_or(0, HashSet::len)
     }
 }
 
 impl<W> Outdegree for [BTreeMap<usize, W>] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[s].len()
+        self.get(s).map_or(0, BTreeMap::len)
     }
 }
 
@@ -209,74 +166,50 @@ impl<W, H> Outdegree for [HashMap<usize, W, H>]
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[s].len()
+        self.get(s).map_or(0, HashMap::len)
     }
 }
 
 impl<const V: usize> Outdegree for [Vec<usize>; V] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[s].len()
+        self.get(s).map_or(0, Vec::len)
     }
 }
 
 impl<const V: usize, W> Outdegree for [Vec<(usize, W)>; V] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[s].len()
+        self.get(s).map_or(0, Vec::len)
     }
 }
 
 impl<const V: usize> Outdegree for [BTreeSet<usize>; V] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[s].len()
+        self.get(s).map_or(0, BTreeSet::len)
     }
 }
 
 impl<const V: usize, W> Outdegree for [BTreeSet<(usize, W)>; V] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[s].len()
+        self.get(s).map_or(0, BTreeSet::len)
     }
 }
 
 impl<const V: usize, H> Outdegree for [HashSet<usize, H>; V] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[s].len()
+        self.get(s).map_or(0, HashSet::len)
     }
 }
 
 impl<const V: usize, W, H> Outdegree for [HashSet<(usize, W), H>; V] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[s].len()
+        self.get(s).map_or(0, HashSet::len)
     }
 }
 
 impl<const V: usize, W> Outdegree for [BTreeMap<usize, W>; V] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[s].len()
+        self.get(s).map_or(0, BTreeMap::len)
     }
 }
 
@@ -284,20 +217,14 @@ impl<const V: usize, W, H> Outdegree for [HashMap<usize, W, H>; V]
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[s].len()
+        self.get(s).map_or(0, HashMap::len)
     }
 }
 
 impl Outdegree for BTreeMap<usize, Vec<usize>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[&s].len()
+        self.get(&s).map_or(0, Vec::len)
     }
 }
 
@@ -305,20 +232,14 @@ impl<H> Outdegree for HashMap<usize, Vec<usize>, H>
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[&s].len()
+        self.get(&s).map_or(0, Vec::len)
     }
 }
 
 impl Outdegree for BTreeMap<usize, BTreeSet<usize>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[&s].len()
+        self.get(&s).map_or(0, BTreeSet::len)
     }
 }
 
@@ -326,20 +247,14 @@ impl<H> Outdegree for HashMap<usize, HashSet<usize, H>, H>
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[&s].len()
+        self.get(&s).map_or(0, HashSet::len)
     }
 }
 
 impl<W> Outdegree for BTreeMap<usize, BTreeMap<usize, W>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[&s].len()
+        self.get(&s).map_or(0, BTreeMap::len)
     }
 }
 
@@ -347,11 +262,8 @@ impl<W, H> Outdegree for HashMap<usize, HashMap<usize, W, H>, H>
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn outdegree(&self, s: usize) -> usize {
-        self[&s].len()
+        self.get(&s).map_or(0, HashMap::len)
     }
 }
 
@@ -364,6 +276,7 @@ mod tests {
             assert_eq!($graph.outdegree(0), 2);
             assert_eq!($graph.outdegree(1), 1);
             assert_eq!($graph.outdegree(2), 1);
+            assert_eq!($graph.outdegree(3), 0);
         };
     }
 

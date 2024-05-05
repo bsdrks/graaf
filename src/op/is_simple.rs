@@ -87,16 +87,16 @@ pub trait IsSimple {
     fn is_simple(&self) -> bool;
 }
 
-impl<H> IsSimple for Vec<HashSet<usize, H>>
-where
-    H: BuildHasher,
-{
+impl IsSimple for Vec<BTreeSet<usize>> {
     fn is_simple(&self) -> bool {
         self.iter().enumerate().all(|(s, set)| !set.contains(&s))
     }
 }
 
-impl IsSimple for Vec<BTreeSet<usize>> {
+impl<H> IsSimple for Vec<HashSet<usize, H>>
+where
+    H: BuildHasher,
+{
     fn is_simple(&self) -> bool {
         self.iter().enumerate().all(|(s, set)| !set.contains(&s))
     }
@@ -120,16 +120,16 @@ impl<W> IsSimple for Vec<(usize, usize, W)> {
     }
 }
 
-impl<H> IsSimple for [HashSet<usize, H>]
-where
-    H: BuildHasher,
-{
+impl IsSimple for [BTreeSet<usize>] {
     fn is_simple(&self) -> bool {
         self.iter().enumerate().all(|(s, set)| !set.contains(&s))
     }
 }
 
-impl IsSimple for [BTreeSet<usize>] {
+impl<H> IsSimple for [HashSet<usize, H>]
+where
+    H: BuildHasher,
+{
     fn is_simple(&self) -> bool {
         self.iter().enumerate().all(|(s, set)| !set.contains(&s))
     }
@@ -162,7 +162,7 @@ where
     }
 }
 
-impl IsSimple for [BTreeSet<usize>; 3] {
+impl<const V: usize> IsSimple for [BTreeSet<usize>; V] {
     fn is_simple(&self) -> bool {
         self.iter().enumerate().all(|(s, set)| !set.contains(&s))
     }

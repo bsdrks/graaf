@@ -24,6 +24,49 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.35.0] - 2024-05-05
+
+Added
+
+- Add `CompleteConst` unit test `arr_btree_set`.
+- Add `CompleteConst` unit test `arr_hash_set`.
+- Add `CompleteConst` unit test `arr_vec`.
+- Add `CompleteConst` unit test `count_all_edges_arr_btree_set`.
+- Add `CompleteConst` unit test `count_all_edges_arr_hash_set`.
+- Add `CompleteConst` unit test `count_all_edges_arr_vec`.
+- Add `CompleteConst` unit test `count_all_vertices_arr_btree_set`.
+- Add `CompleteConst` unit test `count_all_vertices_arr_hash_set`.
+- Add `CompleteConst` unit test `count_all_vertices_arr_vec`.
+- Add `CompleteConst` unit test `indegree_arr_btree_set`.
+- Add `CompleteConst` unit test `indegree_arr_hash_set`.
+- Add `CompleteConst` unit test `is_simple_arr_btree_set`.
+- Add `CompleteConst` unit test `is_simple_arr_hash_set`.
+- Add `CompleteConst` unit test `outdegree_arr_btree_set`.
+- Add `CompleteConst` unit test `outdegree_arr_hash_set`.
+- Add `CompleteConst` unit test `outdegree_arr_vec`.
+- Add `Complete` unit test `count_all_edges_btree_map_btree_set_0`.
+- Add `Complete` unit test `count_all_edges_btree_map_vec_0`.
+- Add `Complete` unit test `count_all_edges_hash_map_hash_set_0`.
+- Add `Complete` unit test `count_all_edges_hash_map_vec_0`.
+- Add `Complete` unit test `count_all_edges_vec_btree_set_0`.
+- Add `Complete` unit test `count_all_edges_vec_hash_set_0`.
+- Add `Complete` unit test `count_all_edges_vec_vec_0`.
+- Add `Complete` unit test `indegree_btree_map_btree_set_0`.
+- Add `Complete` unit test `indegree_hash_map_hash_set_0`.
+- Add `Complete` unit test `indegree_vec_btree_set_0`.
+- Add `Complete` unit test `indegree_vec_hash_set_0`.
+- Add `Complete` unit test `outdegree_btree_map_btree_set_0`.
+- Add `Complete` unit test `outdegree_btree_map_vec_0`.
+- Add `Complete` unit test `outdegree_hash_map_hash_set_0`.
+- Add `Complete` unit test `outdegree_hash_map_vec_0`.
+- Add `Complete` unit test `outdegree_vec_btree_set_0`.
+- Add `Complete` unit test `outdegree_vec_hash_set_0`.
+- Add `Complete` unit test `outdegree_vec_vec_0`.
+
+Changed
+
+- Breaking: `Outdegree::outdegree` no longer panics if `s` is not in the graph.
+
 ## [0.34.1] - 2024-05-05
 
 Added
