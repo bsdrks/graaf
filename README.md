@@ -8,14 +8,14 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.34.0"
+graaf = "0.34.1"
 ```
 
 To use stable Rust, turn off the `adjacency_matrix` feature:
 
 ```toml
 [dependencies]
-graaf = { version = "0.34.0", default-features = false }
+graaf = { version = "0.34.1", default-features = false }
 ```
 
 ## Overview
@@ -120,7 +120,7 @@ See [CHANGELOG.md](https://github.com/bsdrks/graaf/blob/main/CHANGELOG.md).
 
 ## License
 
-Licensed under either the [Apache License, Version 2.0], or the [MIT license] at your option.
+Licensed under either the [Apache License, Version 2.0] or the [MIT license] at your option.
 
 [Apache License, Version 2.0]: LICENSE-APACHE
 [MIT license]: LICENSE-MIT

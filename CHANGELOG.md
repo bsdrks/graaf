@@ -2,16 +2,34 @@
 
 ## Provisional roadmap
 
+- Add `Complete` generator.
+- Add `DeBruijn` generator.
+- Add `ImaseItoh` generator.
+- Add `Kautz` generator.
+- Add `Paley` generator.
+- Add `Path` generator.
 - Add `algo::dijkstra::single_pair_shortest_path`.
-- Implement `From` and `Into` for `AdjacencyMatrix`.
 - Add `bfs::shortest_paths`.
 - Add `bfs::single_pair_shortest_paths`.
 - Add `dijkstra::shortest_paths`.
 - Add `dijkstra::single_pair_shortest_paths`.
-- Add `Path` generator.
-- Add `Complete` generator.
+- Add `op::center`.
+- Add `op::diameter`.
+- Add `op::eccentricity`.
+- Add `op::periphery`.
+- Add `op::radius`.
+- Benchmark against popular Rust graph libraries.
+- Benchmark against popular graph libraries in other languages.
+- Implement `From` and `Into` for `AdjacencyMatrix`.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.34.1] - 2024-05-05
+
+Added
+
+- Add the `gen::Complete` generator.
+- Add the `gen::CompleteConst` generator.
 
 ## [0.34.0] - 2024-05-05
 
@@ -401,18 +419,18 @@ Added
 
 Changed
 
-- Breaking: Return `bfs::shortest_path` when target is found before pushing the target to the queue.
+- Breaking: Return `bfs::shortest_path` when it finds the target before pushing the target to the queue.
 - Compress textual diagrams.
 - Cross-link `bfs` and `dijkstra` in module documentation.
 - Document reasons for panic in `bfs` and `dijkstra`.
-- Link to `op` in the `repr` module documentation.
+- Link to `op` in the documentation of `repr`.
 - Remove `min_time` from benches.
 
 ## [0.27.1] - 2024-04-26
 
 Changed
 
-- Check top changelog entry version number on pre-commit.
+- Check the top changelog entry version number on pre-commit.
 
 ## [0.27.0] - 2024-04-26
 
@@ -448,7 +466,7 @@ Changed
 
 Changed
 
-- Breaking: Remove `nightly` feature, as it is only needed for `adjacency_matrix`.
+- Breaking: Remove the `nightly` feature, as only `adjacency_matrix` depends on it.
 - Simplify `README`.
 
 ## [0.25.2] - 2024-04-25
@@ -478,7 +496,7 @@ Fixed
 
 Added
 
-- Add doctest for `gen::Linear`.
+- Add a doctest for `gen::Linear`.
 
 ## [0.24.0] - 2024-04-23
 
@@ -508,8 +526,8 @@ Added
 
 Changed
 
-- Breaking: remove `?Sized` bound from `graph` in `bfs::distances`.
-- Breaking: remove `?Sized` bound from `graph` in `bfs::predecessors`.
+- Breaking: Remove `?Sized` bound from `graph` in `bfs::distances`.
+- Breaking: Remove `?Sized` bound from `graph` in `bfs::predecessors`.
 - Change `is_target` to `impl Fn(W) -> bool` in `bfs::shortest_path`.
 - Change `step` type to `impl Fn(W) -> W` in `bfs::distances`.
 - Change `step` type to `impl Fn(W) -> W` in `bfs::predecessors`.
@@ -523,7 +541,7 @@ Changed
 Changed
 
 - Move module documentation into modules.
-- Use `HashSet` instead of `AdjacencyMatrix` in `lib` test.
+- Use `HashSet` instead of `AdjacencyMatrix` in the `lib` test.
 - Add `Cargo.toml` to `.gitignore`.
 
 ## [0.22.0] - 2024-04-21
@@ -536,7 +554,7 @@ Changed
 
 Added
 
-- Add `nightly` feature.
+- Add a `nightly` feature.
 
 Changed
 
@@ -570,7 +588,7 @@ Changed
 - Breaking: Rename `bfs::predecessors_single_source` to `bfs::single_source_predecessors`.
 - Breaking: Rename `dijkstra::distances_single_source` to `dijkstra::single_source_distances`.
 - Breaking: Rename `dijkstra::predecessors_single_source` to `dijkstra::single_source_predecessors`.
-- Breaking: `predecessor::search` now returns a singleton path if the target is the source.
+- Breaking: `predecessor::search` returns a singleton path if the target is the source.
 
 ## [0.19.0] - 2024-04-20
 
@@ -595,7 +613,7 @@ Added
 
 Changed
 
-- Move list of standard library graph respresentations from `README` to `op/mod.rs`.
+- Move the list of standard library graph representations from `README` to `op/mod.rs`.
 
 ## [0.17.0] - 2024-04-18
 
@@ -659,7 +677,7 @@ Added
 
 Changed
 
-- `RemoveEdge::remove_edge` now returns a `bool` indicating whether the edge was removed.
+- `RemoveEdge::remove_edge` now returns a `bool` indicating whether it removed the edge.
 
 ## [0.16.0] - 2024-04-17
 
@@ -1010,7 +1028,7 @@ Removed
 
 Changed
 
-- Change `iter_all_edges` returns type to `impl Iterator<Item = (usize, usize)>`.
+- Change `iter_all_edges` return type to `impl Iterator<Item = (usize, usize)>`.
 - Change `iter_all_weighted_edges` return type to `impl Iterator<Item = (usize, usize, &W)>`.
 - Change `iter_weighted_edges` return type to `impl Iterator<Item = (usize, &W)>`.
 
@@ -1114,8 +1132,8 @@ Removed
 Added
 
 - Add `authors` to `README.md`.
-- Add doctest for `AdjacencyMatrix::new`.
-- Add doctest for `AdjacencyMatrix::toggle`.
+- Add a doctest for `AdjacencyMatrix::new`.
+- Add a doctest for `AdjacencyMatrix::toggle`.
 - Add implementation documentation for `AddEdge`.
 - Add implementation documentation for `AddWeightedEdge`.
 - Add implementation documentation for `CountAllEdges`.
@@ -1134,26 +1152,26 @@ Changed
 
 - Move `ops` to `op`.
 - Adapt benchmark code to linting rules.
-- Move doctest trait properties to `op::prop`.
-- Move lints from `lib.rs` to `Cargo.toml`.
+- Move the doctest trait properties to `op::prop`.
+- Move the lints from `lib.rs` to `Cargo.toml`.
 
 ## [0.5.3] - 2024-04-05
 
 Added
 
-- Add doctest for `op::add_weighted_edge::AddWeightedEdge`.
-- Add doctest for `op::count_all_edges::CountAllEdges`.
-- Add doctest for `op::count_all_vertices::CountAllVertices`.
-- Add doctest for `op::edge_weight::EdgeWeight`.
-- Add doctest for `op::indegree::Indegree`.
-- Add doctest for `op::is_edge::IsEdge`.
-- Add doctest for `op::iter_all_edges::IterAllEdges`.
-- Add doctest for `op::iter_all_weighted_edges::IterAllWeightedEdges`.
-- Add doctest for `op::iter_edges::IterEdges`.
-- Add doctest for `op::iter_vertices::IterVertices`.
-- Add doctest for `op::iter_weighted_edges::IterWeightedEdges`.
-- Add doctest for `op::outdegree::OutDegree`.
-- Add doctest for `op::remove_edge::RemoveEdge`.
+- Add a doctest for `op::add_weighted_edge::AddWeightedEdge`.
+- Add a doctest for `op::count_all_edges::CountAllEdges`.
+- Add a doctest for `op::count_all_vertices::CountAllVertices`.
+- Add a doctest for `op::edge_weight::EdgeWeight`.
+- Add a doctest for `op::indegree::Indegree`.
+- Add a doctest for `op::is_edge::IsEdge`.
+- Add a doctest for `op::iter_all_edges::IterAllEdges`.
+- Add a doctest for `op::iter_all_weighted_edges::IterAllWeightedEdges`.
+- Add a doctest for `op::iter_edges::IterEdges`.
+- Add a doctest for `op::iter_vertices::IterVertices`.
+- Add a doctest for `op::iter_weighted_edges::IterWeightedEdges`.
+- Add a doctest for `op::outdegree::OutDegree`.
+- Add a doctest for `op::remove_edge::RemoveEdge`.
 - Add documentation for `op::add_weighted_edge`.
 - Add documentation for `op::count_all_edges`.
 - Add documentation for `op::count_all_vertices`.
@@ -1198,7 +1216,7 @@ Added
 
 Removed
 
-- Remove `VertexWeight` trait.
+- Remove the `VertexWeight` trait.
 
 ## [0.4.2] - 2024-04-03
 
@@ -1250,9 +1268,9 @@ Changed
 Added
 
 - Add `algo::dijkstra::unweighted::min_distances_single_source`.
-- Add doctest example for `algo::dijkstra::unweighted::min_distances_single_source`
-- Add doctest example for `algo::dijkstra::unweighted::min_distances`
-- Add doctest example for `algo::dijkstra::weighted::min_distances_single_source`.
+- Add a doctest example for `algo::dijkstra::unweighted::min_distances_single_source`
+- Add a doctest example for `algo::dijkstra::unweighted::min_distances`
+- Add a doctest example for `algo::dijkstra::weighted::min_distances_single_source`.
 
 Changed
 
@@ -1295,7 +1313,7 @@ Added
 
 Changed
 
-- Enable selected lints from `restriction` group.
+- Enable selected lints from the `restriction` group.
 - Export `algo`, `op`, and `repr` modules.
 - Group lints into groups, restrictions, `rustdoc`, and `rustc` lints.
 - Use `core` and `alloc` imports over `std` where possible.

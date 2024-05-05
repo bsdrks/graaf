@@ -1,4 +1,4 @@
-//! A trait to generate const-sized cycle graphs
+//! A trait to generate const-sized directed cycle graphs
 //!
 //! Cycle graphs are also known as circular graphs. To generate variable-sized
 //! cycle graphs, see [`Cycle`].
@@ -8,7 +8,6 @@
 //! ```
 //! use graaf::gen::CycleConst;
 //!
-//! //
 //! assert!(<[Vec::<usize>; 0]>::cycle().is_empty());
 //!
 //! // 0 → 0
@@ -34,7 +33,7 @@ use {
     std::collections::HashSet,
 };
 
-/// A trait to generate const-sized cycle graphs
+/// A trait to generate const-sized directed cycle graphs
 ///
 /// # How can I implement `CycleConst`?
 ///
@@ -162,7 +161,6 @@ mod tests {
 
     #[test]
     fn arr_vec() {
-        //
         assert!(<[Vec::<usize>; 0]>::cycle().is_empty());
 
         // 0 → 0
@@ -177,7 +175,6 @@ mod tests {
 
     #[test]
     fn arr_btree_set() {
-        //
         assert!(<[BTreeSet::<usize>; 0]>::cycle().is_empty());
 
         // 0 → 0
@@ -202,7 +199,6 @@ mod tests {
 
     #[test]
     fn arr_hash_set() {
-        //
         assert!(<[HashSet::<usize>; 0]>::cycle().is_empty());
 
         // 0 → 0
@@ -223,7 +219,6 @@ mod tests {
 
     #[test]
     fn arr_tuple() {
-        //
         assert!(<[(_, _); 0]>::cycle().is_empty());
 
         // 0 → 0

@@ -1,4 +1,4 @@
-//! A trait to generate variable-sized cycle graphs
+//! A trait to generate variable-sized directed cycle graphs
 //!
 //! Cycle graphs are also known as circular graphs. To generate const-sized
 //! cycle graphs, see [`CycleConst`].
@@ -8,7 +8,6 @@
 //! ```
 //! use graaf::gen::Cycle;
 //!
-//! //
 //! assert!(Vec::<Vec<usize>>::cycle(0).is_empty());
 //!
 //! // 0 → 0
@@ -37,7 +36,7 @@ use {
     },
 };
 
-/// A trait to generate variable-size cycle graphs
+/// A trait to generate variable-size directed cycle graphs
 ///
 /// # How can I implement `Cycle`?
 ///
@@ -459,7 +458,6 @@ mod tests {
     #[test]
     fn vec_vec() {
         for (v, g) in [
-            //
             Vec::new(),
             // 0 → 0
             vec![vec![0]],
@@ -478,7 +476,6 @@ mod tests {
     #[test]
     fn vec_btree_set() {
         for (v, g) in [
-            //
             Vec::new(),
             // 0 → 0
             vec![BTreeSet::from([0])],
@@ -501,7 +498,6 @@ mod tests {
     #[test]
     fn vec_hash_set() {
         for (v, g) in [
-            //
             Vec::new(),
             // 0 → 0
             vec![HashSet::from([0])],
@@ -520,7 +516,6 @@ mod tests {
     #[test]
     fn btree_map_vec() {
         for (v, g) in [
-            //
             BTreeMap::new(),
             // 0 → 0
             BTreeMap::from([(0, vec![0])]),
@@ -539,7 +534,6 @@ mod tests {
     #[test]
     fn btree_map_btree_set() {
         for (v, g) in [
-            //
             BTreeMap::new(),
             // 0 → 0
             BTreeMap::from([(0, BTreeSet::from([0]))]),
@@ -562,7 +556,6 @@ mod tests {
     #[test]
     fn hash_map_vec() {
         for (v, g) in [
-            //
             HashMap::new(),
             // 0 → 0
             HashMap::from([(0, vec![0])]),
@@ -581,7 +574,6 @@ mod tests {
     #[test]
     fn hash_map_hash_set() {
         for (v, g) in [
-            //
             HashMap::new(),
             // 0 → 0
             HashMap::from([(0, HashSet::from([0]))]),
@@ -604,7 +596,6 @@ mod tests {
     #[test]
     fn vec_tuple() {
         for (v, g) in [
-            //
             Vec::new(),
             // 0 → 0
             vec![(0, 0)],
@@ -623,7 +614,6 @@ mod tests {
     #[test]
     fn btree_set_tuple() {
         for (v, g) in [
-            //
             BTreeSet::new(),
             // 0 → 0
             BTreeSet::from([(0, 0)]),
@@ -642,7 +632,6 @@ mod tests {
     #[test]
     fn hash_set_tuple() {
         for (v, g) in [
-            //
             HashSet::new(),
             // 0 → 0
             HashSet::from([(0, 0)]),
