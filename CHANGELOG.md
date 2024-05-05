@@ -4,14 +4,21 @@
 
 - Add `algo::dijkstra::single_pair_shortest_path`.
 - Implement `From` and `Into` for `AdjacencyMatrix`.
-- Implement `bfs::shortest_paths`.
-- Implement `bfs::single_pair_shortest_paths`.
-- Implement `dijkstra::shortest_paths`.
-- Implement `dijkstra::single_pair_shortest_paths`.
+- Add `bfs::shortest_paths`.
+- Add `bfs::single_pair_shortest_paths`.
+- Add `dijkstra::shortest_paths`.
+- Add `dijkstra::single_pair_shortest_paths`.
+- Add `Path` generator.
+- Add `Complete` generator.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
 ## [0.34.0] - 2024-05-05
+
+Added
+
+- Add documentation alias "circular" for `gen::Cycle`.
+- Add documentation alias "circular" for `gen::CycleConst`.
 
 Changed
 

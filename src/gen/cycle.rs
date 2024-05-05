@@ -68,6 +68,7 @@ use {
 ///
 /// assert_eq!(graph.edges, HashSet::from([(0, 1), (1, 2), (2, 0)]));
 /// ```
+#[doc(alias = "circular")]
 pub trait Cycle {
     /// Generates a cycle graph.
     ///
