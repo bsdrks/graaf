@@ -19,6 +19,12 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.35.2] - 2024-05-05
+
+Added
+
+- Add `gen::EmptyConst` generator.
+
 ## [0.35.1] - 2024-05-05
 
 Added

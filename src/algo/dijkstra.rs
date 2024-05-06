@@ -673,7 +673,7 @@ mod tests {
 
         distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
 
-        assert_eq!(dist, [0, 0, 1, 0, 0, 0, 1, 0, 0, 1,]);
+        assert_eq!(dist, [0, 0, 1, 0, 0, 0, 1, 0, 0, 1]);
     }
 
     #[test]

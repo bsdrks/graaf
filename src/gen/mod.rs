@@ -48,6 +48,7 @@ pub mod complete_const;
 pub mod cycle;
 pub mod cycle_const;
 pub mod empty;
+pub mod empty_const;
 
 pub use {
     complete::Complete,
@@ -55,4 +56,5 @@ pub use {
     cycle::Cycle,
     cycle_const::CycleConst,
     empty::Empty,
+    empty_const::EmptyConst,
 };

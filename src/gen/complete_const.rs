@@ -35,7 +35,8 @@ use {
 ///
 /// # How can I implement `CompleteConst`?
 ///
-/// Provide an implementation of `complete` that generates a complete graph.
+/// Provide an implementation of `complete` that generates a complete graph with
+/// `V` vertices.
 ///
 /// ```
 /// use {

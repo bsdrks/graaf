@@ -38,7 +38,8 @@ use {
 ///
 /// # How can I implement `CycleConst`?
 ///
-/// Provide an implementation of `cycle` that generates a cycle graph.
+/// Provide an implementation of `cycle` that generates a cycle graph with `V`
+/// vertices.
 ///
 /// ```
 /// use {

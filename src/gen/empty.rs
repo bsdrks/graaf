@@ -1,7 +1,8 @@
 #![doc(alias = "edgeless")]
 //! A trait to generate empty variable-sized directed graphs
 //!
-//! Empty graphs are also known as edgeless graphs.
+//! Empty graphs are also known as edgeless graphs. To generate empty
+//! const-sized directed graphs, see [`EmptyConst`].
 //!
 //! # Examples
 //!
@@ -17,6 +18,8 @@
 //!     vec![Vec::new(), Vec::new(), Vec::new()]
 //! );
 //! ```
+//!
+//! [`EmptyConst`]: crate::gen::EmptyConst
 
 extern crate alloc;
 
@@ -32,7 +35,7 @@ use {
     },
 };
 
-/// A trait to generate variable-sized empty directed graphs
+/// A trait to generate empty variable-sized directed graphs
 ///
 /// # How can I implement `Empty`?
 ///
