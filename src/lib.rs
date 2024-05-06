@@ -2,47 +2,95 @@
 //!
 //! Functions and types for working with graphs
 //!
-//! ## Examples
+//! ## Operations
 //!
-//! ```
+//! ```rust
 //! use {
 //!     graaf::{
-//!         algo::bfs::single_pair_shortest_path,
+//!         gen::EmptyConst,
 //!         op::{
 //!             AddEdge,
 //!             Indegree,
+//!             Outdegree,
+//!             RemoveEdge,
 //!         },
 //!     },
-//!     std::collections::HashSet,
+//!     std::collections::BTreeSet,
 //! };
 //!
-//! let mut graph: [HashSet<usize>; 4] = [
-//!     HashSet::new(),
-//!     HashSet::new(),
-//!     HashSet::new(),
-//!     HashSet::new(),
-//! ];
+//! let mut graph = <[BTreeSet<usize>; 3]>::empty();
 //!
-//! // ╭───╮     ╭───╮
-//! // │ 0 │  →  │ 1 │
-//! // ╰───╯     ╰───╯
-//! //   ↑         ↓
-//! // ╭───╮     ╭───╮
-//! // │ 3 │     │ 2 │
-//! // ╰───╯     ╰───╯
+//! // 1 ← 0 → 2
 //!
-//! graph.add_edge(3, 0);
 //! graph.add_edge(0, 1);
-//! graph.add_edge(1, 2);
+//! graph.add_edge(0, 2);
 //!
-//! assert_eq!(graph.indegree(0), 1);
+//! assert_eq!(graph.outdegree(0), 2);
 //! assert_eq!(graph.indegree(1), 1);
 //! assert_eq!(graph.indegree(2), 1);
-//! assert_eq!(graph.indegree(3), 0);
 //!
-//! let path = single_pair_shortest_path(&graph, 3, 2);
+//! graph.remove_edge(0, 1);
 //!
-//! assert_eq!(path, Some(vec![3, 0, 1, 2]));
+//! assert_eq!(graph.outdegree(0), 1);
+//! assert_eq!(graph.indegree(1), 0);
+//! assert_eq!(graph.indegree(2), 1);
+//! ```
+//!
+//! ## Algorithms
+//!
+//! Search, traverse, and analyze graphs built from the types that implement the
+//! operation traits.
+//!
+//! ```rust
+//! use graaf::algo::bfs::single_pair_shortest_path as spsp;
+//!
+//! // 0  ←  1
+//! // ↑     ↑
+//! // 3  →  2
+//!
+//! let graph = [Vec::new(), vec![0], vec![1], vec![0, 2]];
+//!
+//! assert_eq!(spsp(&graph, 3, 0), Some(vec![3, 0]));
+//! assert_eq!(spsp(&graph, 3, 1), Some(vec![3, 2, 1]));
+//! assert_eq!(spsp(&graph, 3, 2), Some(vec![3, 2]));
+//! assert_eq!(spsp(&graph, 0, 3), None);
+//! ```
+//!
+//! ## Representations
+//!
+//! Use custom graph representations. An adjacency matrix representation is
+//! available with the `adjacency_matrix` feature.
+//!
+//! ```rust
+//! use graaf::{
+//!     op::{
+//!         AddEdge,
+//!         IsSimple,
+//!     },
+//!     repr::AdjacencyMatrix,
+//! };
+//!
+//! let mut graph = AdjacencyMatrix::<3>::new();
+//!
+//! graph.add_edge(0, 1);
+//!
+//! assert!(graph.is_simple());
+//!
+//! graph.add_edge(1, 1);
+//!
+//! assert!(!graph.is_simple());
+//! ```
+//!
+//! ## Generators
+//!
+//! Generate parameterized graphs.
+//!
+//! ```rust
+//! use graaf::gen::Cycle;
+//!
+//! let graph = Vec::<Vec<usize>>::cycle(5);
+//!
+//! assert_eq!(graph, vec![vec![1], vec![2], vec![3], vec![4], vec![0]]);
 //! ```
 
 // Clippy lint groups

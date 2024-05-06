@@ -8,34 +8,35 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.35.2"
+graaf = "0.35.3"
 ```
 
 To use stable Rust, turn off the `adjacency_matrix` feature:
 
 ```toml
 [dependencies]
-graaf = { version = "0.35.2", default-features = false }
+graaf = { version = "0.35.3", default-features = false }
 ```
 
 ## Overview
 
 ### Operations
 
-Build and query graphs made with standard collections, or implement the operation traits for your types.
-
 ```rust
 use {
-    graaf::op::{
-        AddEdge,
-        Indegree,
-        Outdegree,
-        RemoveEdge,
+    graaf::{
+        gen::EmptyConst,
+        op::{
+            AddEdge,
+            Indegree,
+            Outdegree,
+            RemoveEdge,
+        },
     },
     std::collections::BTreeSet,
 };
 
-let mut graph = vec![BTreeSet::new(); 3];
+let mut graph = <[BTreeSet<usize>; 3]>::empty();
 
 // 1 ← 0 → 2
 
@@ -55,7 +56,8 @@ assert_eq!(graph.indegree(2), 1);
 
 ### Algorithms
 
-Search, traverse, and analyze graphs built from the types that implement the operation traits.
+Search, traverse, and analyze graphs built from the types that implement the
+operation traits.
 
 ```rust
 use graaf::algo::bfs::single_pair_shortest_path as spsp;
@@ -74,7 +76,8 @@ assert_eq!(spsp(&graph, 0, 3), None);
 
 ### Representations
 
-Use custom graph representations. An adjacency matrix representation is available with the `adjacency_matrix` feature.
+Use custom graph representations. An adjacency matrix representation is
+available with the `adjacency_matrix` feature.
 
 ```rust
 use graaf::{
@@ -103,15 +106,9 @@ Generate parameterized graphs.
 ```rust
 use graaf::gen::Cycle;
 
-let graph = Vec<Vec<usize>>::cycle(5);
+let graph = Vec::<Vec<usize>>::cycle(5);
 
-assert_eq!(graph, vec![
-    vec![0, 1],
-    vec![1, 2],
-    vec![2, 3],
-    vec![3, 4],
-    vec![4, 0],
-]);
+assert_eq!(graph, vec![vec![1], vec![2], vec![3], vec![4], vec![0]]);
 ```
 
 ## Changelog
