@@ -19,6 +19,21 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.35.5] - 2024-05-07
+
+Changed
+
+- Clean up `Complete` property tests.
+- Clean up `Cycle` property tests.
+- Clean up `Empty` property tests.
+- Simplify `CompleteConst::complete` implementations with `Empty`.
+- Simplify `Cycle::cycle` implementations with `Empty`.
+- Simplify `CycleConst::cycle` implementations with `Empty`.
+
+Fixed
+
+- Fix `CompleteConst` `outdegree` unit tests.
+
 ## [0.35.4] - 2024-05-07
 
 Added

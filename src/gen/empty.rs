@@ -298,411 +298,343 @@ mod tests {
         proptest::prelude::*,
     };
 
+    fn prop_count_all_edges<T: CountAllEdges + Empty>(v: usize) {
+        assert_eq!(T::empty(v).count_all_edges(), 0);
+    }
+
+    fn prop_count_all_vertices<T: CountAllVertices + Empty>(v: usize) {
+        assert_eq!(T::empty(v).count_all_vertices(), v);
+    }
+
+    fn prop_indegree<T: Indegree + Empty>(v: usize) {
+        let graph = T::empty(v);
+
+        for s in 0..v {
+            assert_eq!(graph.indegree(s), 0);
+        }
+    }
+
+    fn prop_is_simple<T: IsSimple + Empty>(v: usize) {
+        assert!(T::empty(v).is_simple());
+    }
+
+    fn prop_outdegree<T: Outdegree + Empty>(v: usize) {
+        let graph = T::empty(v);
+
+        for s in 0..v {
+            assert_eq!(graph.outdegree(s), 0);
+        }
+    }
+
     proptest! {
         #[test]
         fn count_all_edges_vec_vec_unweighted(v in 0..100_usize) {
-            assert_eq!(Vec::<Vec<usize>>::empty(v).count_all_edges(), 0);
+            prop_count_all_edges::<Vec<Vec<usize>>>(v);
         }
 
         #[test]
         fn count_all_edges_vec_btree_set_unweighted(v in 0..100_usize) {
-            assert_eq!(Vec::<BTreeSet<usize>>::empty(v).count_all_edges(), 0);
+            prop_count_all_edges::<Vec<BTreeSet<usize>>>(v);
         }
 
         #[test]
         fn count_all_edges_vec_hash_set_unweighted(v in 0..100_usize) {
-            assert_eq!(Vec::<HashSet<usize>>::empty(v).count_all_edges(), 0);
+            prop_count_all_edges::<Vec<HashSet<usize>>>(v);
         }
 
         #[test]
         fn count_all_edges_btree_map_vec_unweighted(v in 0..100_usize) {
-            assert_eq!(BTreeMap::<usize, Vec<usize>>::empty(v).count_all_edges(), 0);
+            prop_count_all_edges::<BTreeMap<usize, Vec<usize>>>(v);
         }
 
         #[test]
         fn count_all_edges_btree_map_btree_set_unweighted(v in 0..100_usize) {
-            assert_eq!(BTreeMap::<usize, BTreeSet<usize>>::empty(v).count_all_edges(), 0);
+            prop_count_all_edges::<BTreeMap<usize, BTreeSet<usize>>>(v);
         }
 
         #[test]
         fn count_all_edges_hash_map_vec_unweighted(v in 0..100_usize) {
-            assert_eq!(HashMap::<usize, Vec<usize>>::empty(v).count_all_edges(), 0);
+            prop_count_all_edges::<HashMap<usize, Vec<usize>>>(v);
         }
 
         #[test]
         fn count_all_edges_hash_map_hash_set_unweighted(v in 0..100_usize) {
-            assert_eq!(HashMap::<usize, HashSet<usize>>::empty(v).count_all_edges(), 0);
+            prop_count_all_edges::<HashMap<usize, HashSet<usize>>>(v);
         }
 
         #[test]
         fn count_all_edges_vec_tuple_unweighted(v in 0..100_usize) {
-            assert_eq!(Vec::<(usize, usize)>::empty(v).count_all_edges(), 0);
+            prop_count_all_edges::<Vec<(usize, usize)>>(v);
         }
 
         #[test]
         fn count_all_edges_btree_set_tuple_unweighted(v in 0..100_usize) {
-            assert_eq!(BTreeSet::<(usize, usize)>::empty(v).count_all_edges(), 0);
+            prop_count_all_edges::<BTreeSet<(usize, usize)>>(v);
         }
 
         #[test]
         fn count_all_edges_hash_set_tuple_unweighted(v in 0..100_usize) {
-            assert_eq!(HashSet::<(usize, usize)>::empty(v).count_all_edges(), 0);
+            prop_count_all_edges::<HashSet<(usize, usize)>>(v);
         }
 
         #[test]
         fn count_all_edges_vec_vec_weighted(v in 0..100_usize) {
-            assert_eq!(Vec::<Vec<(usize, usize)>>::empty(v).count_all_edges(), 0);
+            prop_count_all_edges::<Vec<Vec<(usize, usize)>>>(v);
         }
 
         #[test]
         fn count_all_edges_vec_btree_set_weighted(v in 0..100_usize) {
-            assert_eq!(Vec::<BTreeSet<(usize, usize)>>::empty(v).count_all_edges(), 0);
+            prop_count_all_edges::<Vec<BTreeSet<(usize, usize)>>>(v);
         }
 
         #[test]
         fn count_all_edges_vec_hash_set_weighted(v in 0..100_usize) {
-            assert_eq!(Vec::<HashSet<(usize, usize)>>::empty(v).count_all_edges(), 0);
+            prop_count_all_edges::<Vec<HashSet<(usize, usize)>>>(v);
         }
 
         #[test]
         fn count_all_edges_vec_btree_map_weighted(v in 0..100_usize) {
-            assert_eq!(Vec::<BTreeMap<usize, usize>>::empty(v).count_all_edges(), 0);
+            prop_count_all_edges::<Vec<BTreeMap<usize, usize>>>(v);
         }
 
         #[test]
         fn count_all_edges_vec_hash_map_weighted(v in 0..100_usize) {
-            assert_eq!(Vec::<HashMap<usize, usize>>::empty(v).count_all_edges(), 0);
+            prop_count_all_edges::<Vec<HashMap<usize, usize>>>(v);
         }
 
         #[test]
         fn count_all_edges_btree_map_vec_weighted(v in 0..100_usize) {
-            assert_eq!(BTreeMap::<usize, Vec<(usize, usize)>>::empty(v).count_all_edges(), 0);
+            prop_count_all_edges::<BTreeMap<usize, Vec<(usize, usize)>>>(v);
         }
 
         #[test]
         fn count_all_edges_btree_map_btree_set_weighted(v in 0..100_usize) {
-            assert_eq!(BTreeMap::<usize, BTreeSet<(usize, usize)>>::empty(v).count_all_edges(), 0);
+            prop_count_all_edges::<BTreeMap<usize, BTreeSet<(usize, usize)>>>(v);
         }
 
         #[test]
         fn count_all_edges_btree_map_btree_map(v in 0..100_usize) {
-            assert_eq!(BTreeMap::<usize, BTreeMap<usize, usize>>::empty(v).count_all_edges(), 0);
+            prop_count_all_edges::<BTreeMap<usize, BTreeMap<usize, usize>>>(v);
         }
 
         #[test]
         fn count_all_edges_hash_map_vec_weighted(v in 0..100_usize) {
-            assert_eq!(HashMap::<usize, Vec<(usize, usize)>>::empty(v).count_all_edges(), 0);
+            prop_count_all_edges::<HashMap<usize, Vec<(usize, usize)>>>(v);
         }
 
         #[test]
         fn count_all_edges_hash_map_hash_set_weighted(v in 0..100_usize) {
-            assert_eq!(HashMap::<usize, HashSet<(usize, usize)>>::empty(v).count_all_edges(), 0);
+            prop_count_all_edges::<HashMap<usize, HashSet<(usize, usize)>>>(v);
         }
 
         #[test]
         fn count_all_edges_hash_map_hash_map(v in 0..100_usize) {
-            assert_eq!(HashMap::<usize, HashMap<usize, usize>>::empty(v).count_all_edges(), 0);
+            prop_count_all_edges::<HashMap<usize, HashMap<usize, usize>>>(v);
         }
 
         #[test]
         fn count_all_edges_vec_tuple_weighted(v in 0..100_usize) {
-            assert_eq!(Vec::<(usize, usize, usize)>::empty(v).count_all_edges(), 0);
+            prop_count_all_edges::<Vec<(usize, usize, usize)>>(v);
         }
 
         #[test]
         fn count_all_edges_btree_set_tuple_weighted(v in 0..100_usize) {
-            assert_eq!(BTreeSet::<(usize, usize, usize)>::empty(v).count_all_edges(), 0);
+            prop_count_all_edges::<BTreeSet<(usize, usize, usize)>>(v);
         }
 
         #[test]
         fn count_all_edges_hash_set_tuple_weighted(v in 0..100_usize) {
-            assert_eq!(HashSet::<(usize, usize, usize)>::empty(v).count_all_edges(), 0);
+            prop_count_all_edges::<HashSet<(usize, usize, usize)>>(v);
         }
 
         #[test]
         fn count_all_vertices_vec_vec_unweighted(v in 0..100_usize) {
-            assert_eq!(Vec::<Vec<usize>>::empty(v).count_all_vertices(), v);
+            prop_count_all_vertices::<Vec<Vec<usize>>>(v);
         }
 
         #[test]
         fn count_all_vertices_vec_btree_set_unweighted(v in 0..100_usize) {
-            assert_eq!(Vec::<BTreeSet<usize>>::empty(v).count_all_vertices(), v);
+            prop_count_all_vertices::<Vec<BTreeSet<usize>>>(v);
         }
 
         #[test]
         fn count_all_vertices_vec_hash_set_unweighted(v in 0..100_usize) {
-            assert_eq!(Vec::<HashSet<usize>>::empty(v).count_all_vertices(), v);
+            prop_count_all_vertices::<Vec<HashSet<usize>>>(v);
         }
 
         #[test]
         fn count_all_vertices_vec_vec_weighted(v in 0..100_usize) {
-            assert_eq!(Vec::<Vec<(usize, usize)>>::empty(v).count_all_vertices(), v);
+            prop_count_all_vertices::<Vec<Vec<(usize, usize)>>>(v);
         }
 
         #[test]
         fn count_all_vertices_vec_btree_set_weighted(v in 0..100_usize) {
-            assert_eq!(Vec::<BTreeSet<(usize, usize)>>::empty(v).count_all_vertices(), v);
+            prop_count_all_vertices::<Vec<BTreeSet<(usize, usize)>>>(v);
         }
 
         #[test]
         fn count_all_vertices_vec_hash_set_weighted(v in 0..100_usize) {
-            assert_eq!(Vec::<HashSet<(usize, usize)>>::empty(v).count_all_vertices(), v);
+            prop_count_all_vertices::<Vec<HashSet<(usize, usize)>>>(v);
         }
 
         #[test]
         fn indegree_vec_btree_set_unweighted(v in 1..100_usize) {
-            let graph = Vec::<BTreeSet<usize>>::empty(v);
-
-            for s in 0..v {
-                assert_eq!(graph.indegree(s), 0);
-            }
+            prop_indegree::<Vec<BTreeSet<usize>>>(v);
         }
 
         #[test]
         fn indegree_vec_hash_set_unweighted(v in 1..100_usize) {
-            let graph = Vec::<HashSet<usize>>::empty(v);
-
-            for s in 0..v {
-                assert_eq!(graph.indegree(s), 0);
-            }
+            prop_indegree::<Vec<HashSet<usize>>>(v);
         }
 
         #[test]
         fn indegree_btree_map_btree_set_unweighted(v in 1..100_usize) {
-            let graph = BTreeMap::<usize, BTreeSet<usize>>::empty(v);
-
-            for s in 0..v {
-                assert_eq!(graph.indegree(s), 0);
-            }
+            prop_indegree::<BTreeMap<usize, BTreeSet<usize>>>(v);
         }
 
         #[test]
         fn indegree_hash_map_hash_set_unweighted(v in 1..100_usize) {
-            let graph = HashMap::<usize, HashSet<usize>>::empty(v);
-
-            for s in 0..v {
-                assert_eq!(graph.indegree(s), 0);
-            }
+            prop_indegree::<HashMap<usize, HashSet<usize>>>(v);
         }
 
         #[test]
         fn indegree_vec_btree_map_weighted(v in 1..100_usize) {
-            let graph = Vec::<BTreeMap<usize, usize>>::empty(v);
-
-            for s in 0..v {
-                assert_eq!(graph.indegree(s), 0);
-            }
+            prop_indegree::<Vec<BTreeMap<usize, usize>>>(v);
         }
 
         #[test]
         fn indegree_vec_hash_map_weighted(v in 1..100_usize) {
-            let graph = Vec::<HashMap<usize, usize>>::empty(v);
-
-            for s in 0..v {
-                assert_eq!(graph.indegree(s), 0);
-            }
+            prop_indegree::<Vec<HashMap<usize, usize>>>(v);
         }
 
         #[test]
         fn indegree_btree_map_btree_set(v in 1..100_usize) {
-            let graph = BTreeMap::<usize, BTreeSet<usize>>::empty(v);
-
-            for s in 0..v {
-                assert_eq!(graph.indegree(s), 0);
-            }
+            prop_indegree::<BTreeMap<usize, BTreeSet<usize>>>(v);
         }
 
         #[test]
         fn indegree_hash_map_hash_set(v in 1..100_usize) {
-            let graph = HashMap::<usize, HashSet<usize>>::empty(v);
-
-            for s in 0..v {
-                assert_eq!(graph.indegree(s), 0);
-            }
+            prop_indegree::<HashMap<usize, HashSet<usize>>>(v);
         }
 
         #[test]
         fn indegree_btree_map_btree_map(v in 1..100_usize) {
-            let graph = BTreeMap::<usize, BTreeMap<usize, usize>>::empty(v);
-
-            for s in 0..v {
-                assert_eq!(graph.indegree(s), 0);
-            }
+            prop_indegree::<BTreeMap<usize, BTreeMap<usize, usize>>>(v);
         }
 
         #[test]
         fn indegree_hash_map_hash_map(v in 1..100_usize) {
-            let graph = HashMap::<usize, HashMap<usize, usize>>::empty(v);
-
-            for s in 0..v {
-                assert_eq!(graph.indegree(s), 0);
-            }
+            prop_indegree::<HashMap<usize, HashMap<usize, usize>>>(v);
         }
 
         #[test]
         fn is_simple_vec_btree_set_unweighted(v in 0..100_usize) {
-            assert!(Vec::<BTreeSet<usize>>::empty(v).is_simple());
+            prop_is_simple::<Vec<BTreeSet<usize>>>(v);
         }
 
         #[test]
         fn is_simple_vec_hash_set_unweighted(v in 0..100_usize) {
-            assert!(Vec::<HashSet<usize>>::empty(v).is_simple());
+            prop_is_simple::<Vec<HashSet<usize>>>(v);
         }
 
         #[test]
         fn is_simple_vec_tuple_unweighted(v in 0..100_usize) {
-            assert!(Vec::<(usize, usize)>::empty(v).is_simple());
+            prop_is_simple::<Vec<(usize, usize)>>(v);
         }
 
         #[test]
         fn is_simple_btree_set_tuple_unweighted(v in 0..100_usize) {
-            assert!(BTreeSet::<(usize, usize)>::empty(v).is_simple());
+            prop_is_simple::<BTreeSet<(usize, usize)>>(v);
         }
 
         #[test]
         fn is_simple_hash_set_tuple_unweighted(v in 0..100_usize) {
-            assert!(HashSet::<(usize, usize)>::empty(v).is_simple());
+            prop_is_simple::<HashSet<(usize, usize)>>(v);
         }
 
         #[test]
         fn is_simple_vec_tuple_weighted(v in 0..100_usize) {
-            assert!(Vec::<(usize, usize, usize)>::empty(v).is_simple());
+            prop_is_simple::<Vec<(usize, usize, usize)>>(v);
         }
 
         #[test]
         fn is_simple_btree_set_tuple_weighted(v in 0..100_usize) {
-            assert!(BTreeSet::<(usize, usize, usize)>::empty(v).is_simple());
+            prop_is_simple::<BTreeSet<(usize, usize, usize)>>(v);
         }
 
         #[test]
         fn is_simple_hash_set_tuple_weighted(v in 0..100_usize) {
-            assert!(HashSet::<(usize, usize, usize)>::empty(v).is_simple());
+            prop_is_simple::<HashSet<(usize, usize, usize)>>(v);
         }
 
         #[test]
         fn outdegree_vec_vec_unweighted(v in 1..100_usize) {
-            let graph = Vec::<Vec<usize>>::empty(v);
-
-            for s in 0..v {
-                assert_eq!(graph.outdegree(s), 0);
-            }
+            prop_outdegree::<Vec<Vec<usize>>>(v);
         }
 
         #[test]
         fn outdegree_vec_btree_set_unweighted(v in 1..100_usize) {
-            let graph = Vec::<BTreeSet<usize>>::empty(v);
-
-            for s in 0..v {
-                assert_eq!(graph.outdegree(s), 0);
-            }
+            prop_outdegree::<Vec<BTreeSet<usize>>>(v);
         }
 
         #[test]
         fn outdegree_vec_hash_set_unweighted(v in 1..100_usize) {
-            let graph = Vec::<HashSet<usize>>::empty(v);
-
-            for s in 0..v {
-                assert_eq!(graph.outdegree(s), 0);
-            }
+            prop_outdegree::<Vec<HashSet<usize>>>(v);
         }
 
         #[test]
         fn outdegree_btree_map_vec_unweighted(v in 1..100_usize) {
-            let graph = BTreeMap::<usize, Vec<usize>>::empty(v);
-
-            for s in 0..v {
-                assert_eq!(graph.outdegree(s), 0);
-            }
+            prop_outdegree::<BTreeMap<usize, Vec<usize>>>(v);
         }
 
         #[test]
         fn outdegree_btree_map_btree_set_unweighted(v in 1..100_usize) {
-            let graph = BTreeMap::<usize, BTreeSet<usize>>::empty(v);
-
-            for s in 0..v {
-                assert_eq!(graph.outdegree(s), 0);
-            }
+            prop_outdegree::<BTreeMap<usize, BTreeSet<usize>>>(v);
         }
 
         #[test]
         fn outdegree_hash_map_vec_unweighted(v in 1..100_usize) {
-            let graph = HashMap::<usize, Vec<usize>>::empty(v);
-
-            for s in 0..v {
-                assert_eq!(graph.outdegree(s), 0);
-            }
+            prop_outdegree::<HashMap<usize, Vec<usize>>>(v);
         }
 
         #[test]
         fn outdegree_hash_map_hash_set_unweighted(v in 1..100_usize) {
-            let graph = HashMap::<usize, HashSet<usize>>::empty(v);
-
-            for s in 0..v {
-                assert_eq!(graph.outdegree(s), 0);
-            }
+            prop_outdegree::<HashMap<usize, HashSet<usize>>>(v);
         }
 
         #[test]
         fn outdegree_vec_vec_weighted(v in 1..100_usize) {
-            let graph = Vec::<Vec<(usize, usize)>>::empty(v);
-
-            for s in 0..v {
-                assert_eq!(graph.outdegree(s), 0);
-            }
+            prop_outdegree::<Vec<Vec<(usize, usize)>>>(v);
         }
 
         #[test]
         fn outdegree_vec_btree_set_weighted(v in 1..100_usize) {
-            let graph = Vec::<BTreeSet<(usize, usize)>>::empty(v);
-
-            for s in 0..v {
-                assert_eq!(graph.outdegree(s), 0);
-            }
+            prop_outdegree::<Vec<BTreeSet<(usize, usize)>>>(v);
         }
 
         #[test]
         fn outdegree_vec_hash_set_weighted(v in 1..100_usize) {
-            let graph = Vec::<HashSet<(usize, usize)>>::empty(v);
-
-            for s in 0..v {
-                assert_eq!(graph.outdegree(s), 0);
-            }
+            prop_outdegree::<Vec<HashSet<(usize, usize)>>>(v);
         }
 
         #[test]
         fn outdegree_vec_btree_map_weighted(v in 1..100_usize) {
-            let graph = Vec::<BTreeMap<usize, usize>>::empty(v);
-
-            for s in 0..v {
-                assert_eq!(graph.outdegree(s), 0);
-            }
+            prop_outdegree::<Vec<BTreeMap<usize, usize>>>(v);
         }
 
         #[test]
         fn outdegree_vec_hash_map_weighted(v in 1..100_usize) {
-            let graph = Vec::<HashMap<usize, usize>>::empty(v);
-
-            for s in 0..v {
-                assert_eq!(graph.outdegree(s), 0);
-            }
+            prop_outdegree::<Vec<HashMap<usize, usize>>>(v);
         }
 
         #[test]
         fn outdegree_btree_map_btree_map(v in 1..100_usize) {
-            let graph = BTreeMap::<usize, BTreeMap<usize, usize>>::empty(v);
-
-            for s in 0..v {
-                assert_eq!(graph.outdegree(s), 0);
-            }
+            prop_outdegree::<BTreeMap<usize, BTreeMap<usize, usize>>>(v);
         }
 
         #[test]
         fn outdegree_hash_map_hash_map(v in 1..100_usize) {
-            let graph = HashMap::<usize, HashMap<usize, usize>>::empty(v);
-
-            for s in 0..v {
-                assert_eq!(graph.outdegree(s), 0);
-            }
+            prop_outdegree::<HashMap<usize, HashMap<usize, usize>>>(v);
         }
     }
 

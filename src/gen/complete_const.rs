@@ -25,10 +25,7 @@ extern crate alloc;
 use {
     super::EmptyConst,
     alloc::collections::BTreeSet,
-    core::{
-        array::from_fn,
-        hash::BuildHasher,
-    },
+    core::hash::BuildHasher,
     std::collections::HashSet,
 };
 
@@ -41,11 +38,11 @@ use {
 ///
 /// ```
 /// use {
-///     core::{
-///         array::from_fn,
-///         hash::BuildHasher,
+///     core::hash::BuildHasher,
+///     graaf::gen::{
+///         CompleteConst,
+///         EmptyConst,
 ///     },
-///     graaf::gen::CompleteConst,
 ///     std::collections::{
 ///         hash_map::RandomState,
 ///         HashSet,
@@ -64,7 +61,7 @@ use {
 ///     H: BuildHasher + Default,
 /// {
 ///     fn complete() -> Self {
-///         let mut edges = from_fn(|_| HashSet::with_hasher(H::default()));
+///         let mut edges = <[HashSet<usize, H>; V]>::empty();
 ///
 ///         for (s, set) in edges.iter_mut().enumerate() {
 ///             for t in 0..V {
@@ -113,7 +110,7 @@ impl<const V: usize> CompleteConst for [Vec<usize>; V] {
 
 impl<const V: usize> CompleteConst for [BTreeSet<usize>; V] {
     fn complete() -> Self {
-        let mut graph: [BTreeSet<usize>; V] = from_fn(|_| BTreeSet::new());
+        let mut graph = Self::empty();
 
         for (s, set) in graph.iter_mut().enumerate().take(V) {
             for t in 0..V {
@@ -132,7 +129,7 @@ where
     H: BuildHasher + Default,
 {
     fn complete() -> Self {
-        let mut graph: [HashSet<usize, H>; V] = from_fn(|_| HashSet::with_hasher(H::default()));
+        let mut graph = Self::empty();
 
         for (s, set) in graph.iter_mut().enumerate().take(V) {
             for t in 0..V {
@@ -155,6 +152,7 @@ mod tests {
             CountAllVertices,
             Indegree,
             IsSimple,
+            Outdegree,
         },
     };
 
@@ -332,53 +330,53 @@ mod tests {
     fn outdegree_arr_vec() {
         let graph = <[Vec<usize>; 1]>::complete();
 
-        assert_eq!(graph[0].len(), 0);
+        assert_eq!(graph.outdegree(0), 0);
 
         let graph = <[Vec<usize>; 2]>::complete();
 
-        assert_eq!(graph[0].len(), 1);
-        assert_eq!(graph[1].len(), 1);
+        assert_eq!(graph.outdegree(0), 1);
+        assert_eq!(graph.outdegree(1), 1);
 
         let graph = <[Vec<usize>; 3]>::complete();
 
-        assert_eq!(graph[0].len(), 2);
-        assert_eq!(graph[1].len(), 2);
-        assert_eq!(graph[2].len(), 2);
+        assert_eq!(graph.outdegree(0), 2);
+        assert_eq!(graph.outdegree(1), 2);
+        assert_eq!(graph.outdegree(2), 2);
     }
 
     #[test]
     fn outdegree_arr_btree_set() {
         let graph = <[BTreeSet<usize>; 1]>::complete();
 
-        assert_eq!(graph[0].len(), 0);
+        assert_eq!(graph.outdegree(0), 0);
 
         let graph = <[BTreeSet<usize>; 2]>::complete();
 
-        assert_eq!(graph[0].len(), 1);
-        assert_eq!(graph[1].len(), 1);
+        assert_eq!(graph.outdegree(0), 1);
+        assert_eq!(graph.outdegree(1), 1);
 
         let graph = <[BTreeSet<usize>; 3]>::complete();
 
-        assert_eq!(graph[0].len(), 2);
-        assert_eq!(graph[1].len(), 2);
-        assert_eq!(graph[2].len(), 2);
+        assert_eq!(graph.outdegree(0), 2);
+        assert_eq!(graph.outdegree(1), 2);
+        assert_eq!(graph.outdegree(2), 2);
     }
 
     #[test]
     fn outdegree_arr_hash_set() {
         let graph = <[HashSet<usize>; 1]>::complete();
 
-        assert_eq!(graph[0].len(), 0);
+        assert_eq!(graph.outdegree(0), 0);
 
         let graph = <[HashSet<usize>; 2]>::complete();
 
-        assert_eq!(graph[0].len(), 1);
-        assert_eq!(graph[1].len(), 1);
+        assert_eq!(graph.outdegree(0), 1);
+        assert_eq!(graph.outdegree(1), 1);
 
         let graph = <[HashSet<usize>; 3]>::complete();
 
-        assert_eq!(graph[0].len(), 2);
-        assert_eq!(graph[1].len(), 2);
-        assert_eq!(graph[2].len(), 2);
+        assert_eq!(graph.outdegree(0), 2);
+        assert_eq!(graph.outdegree(1), 2);
+        assert_eq!(graph.outdegree(2), 2);
     }
 }

@@ -26,6 +26,7 @@
 extern crate alloc;
 
 use {
+    crate::gen::EmptyConst,
     alloc::collections::BTreeSet,
     core::{
         array::from_fn,
@@ -93,7 +94,7 @@ pub trait CycleConst {
 
 impl<const V: usize> CycleConst for [Vec<usize>; V] {
     fn cycle() -> Self {
-        let mut graph: [Vec<usize>; V] = from_fn(|_| Vec::new());
+        let mut graph = Self::empty();
 
         if V == 0 {
             return graph;
@@ -111,7 +112,7 @@ impl<const V: usize> CycleConst for [Vec<usize>; V] {
 
 impl<const V: usize> CycleConst for [BTreeSet<usize>; V] {
     fn cycle() -> Self {
-        let mut graph: [BTreeSet<usize>; V] = from_fn(|_| BTreeSet::new());
+        let mut graph = Self::empty();
 
         if V == 0 {
             return graph;
@@ -132,7 +133,7 @@ where
     H: BuildHasher + Default,
 {
     fn cycle() -> Self {
-        let mut graph: [HashSet<usize, H>; V] = from_fn(|_| HashSet::with_hasher(H::default()));
+        let mut graph = Self::empty();
 
         if V == 0 {
             return graph;
@@ -164,31 +165,21 @@ mod tests {
     #[test]
     fn arr_vec() {
         assert!(<[Vec::<usize>; 0]>::cycle().is_empty());
-
-        // 0 → 0
         assert_eq!(<[Vec::<usize>; 1]>::cycle(), [vec![0]]);
-
-        // 0 → 1 → 0
         assert_eq!(<[Vec::<usize>; 2]>::cycle(), [vec![1], vec![0]]);
-
-        // 0 → 1 → 2 → 0
         assert_eq!(<[Vec::<usize>; 3]>::cycle(), [vec![1], vec![2], vec![0]]);
     }
 
     #[test]
     fn arr_btree_set() {
         assert!(<[BTreeSet::<usize>; 0]>::cycle().is_empty());
-
-        // 0 → 0
         assert_eq!(<[BTreeSet::<usize>; 1]>::cycle(), [BTreeSet::from([0])]);
 
-        // 0 → 1 → 0
         assert_eq!(
             <[BTreeSet::<usize>; 2]>::cycle(),
             [BTreeSet::from([1]), BTreeSet::from([0])]
         );
 
-        // 0 → 1 → 2 → 0
         assert_eq!(
             <[BTreeSet::<usize>; 3]>::cycle(),
             [
@@ -202,17 +193,13 @@ mod tests {
     #[test]
     fn arr_hash_set() {
         assert!(<[HashSet::<usize>; 0]>::cycle().is_empty());
-
-        // 0 → 0
         assert_eq!(<[HashSet::<usize>; 1]>::cycle(), [HashSet::from([0])]);
 
-        // 0 → 1 → 0
         assert_eq!(
             <[HashSet::<usize>; 2]>::cycle(),
             [HashSet::from([1]), HashSet::from([0])]
         );
 
-        // 0 → 1 → 2 → 0
         assert_eq!(
             <[HashSet::<usize>; 3]>::cycle(),
             [HashSet::from([1]), HashSet::from([2]), HashSet::from([0])]
@@ -222,14 +209,8 @@ mod tests {
     #[test]
     fn arr_tuple() {
         assert!(<[(_, _); 0]>::cycle().is_empty());
-
-        // 0 → 0
         assert_eq!(<[(_, _); 1]>::cycle(), [(0, 0)]);
-
-        // 0 → 1 → 0
         assert_eq!(<[(_, _); 2]>::cycle(), [(0, 1), (1, 0)]);
-
-        // 0 → 1 → 2 → 0
         assert_eq!(<[(_, _); 3]>::cycle(), [(0, 1), (1, 2), (2, 0)]);
     }
 

@@ -10,14 +10,8 @@
 //! use graaf::gen::Cycle;
 //!
 //! assert!(Vec::<Vec<usize>>::cycle(0).is_empty());
-//!
-//! // 0 → 0
 //! assert_eq!(Vec::<Vec<usize>>::cycle(1), vec![vec![0]]);
-//!
-//! // 0 → 1 → 0
 //! assert_eq!(Vec::<Vec<usize>>::cycle(2), vec![vec![1], vec![0]]);
-//!
-//! // 0 → 1 → 2 → 0
 //! assert_eq!(Vec::<Vec<usize>>::cycle(3), vec![vec![1], vec![2], vec![0]]);
 //! ```
 //!
@@ -26,6 +20,7 @@
 extern crate alloc;
 
 use {
+    crate::gen::Empty,
     alloc::collections::{
         BTreeMap,
         BTreeSet,
@@ -80,11 +75,11 @@ pub trait Cycle {
 
 impl Cycle for Vec<Vec<usize>> {
     fn cycle(v: usize) -> Self {
-        if v == 0 {
-            return Self::new();
-        }
+        let mut graph = Self::empty(v);
 
-        let mut graph = vec![Vec::new(); v];
+        if v == 0 {
+            return graph;
+        }
 
         for (s, vec) in graph.iter_mut().enumerate().take(v - 1) {
             vec.push(s + 1);
@@ -98,11 +93,11 @@ impl Cycle for Vec<Vec<usize>> {
 
 impl Cycle for Vec<BTreeSet<usize>> {
     fn cycle(v: usize) -> Self {
-        if v == 0 {
-            return Self::new();
-        }
+        let mut graph = Self::empty(v);
 
-        let mut graph = vec![BTreeSet::new(); v];
+        if v == 0 {
+            return graph;
+        }
 
         for (s, set) in graph.iter_mut().enumerate().take(v - 1) {
             let _ = set.insert(s + 1);
@@ -120,11 +115,11 @@ where
     HashSet<usize, H>: Clone,
 {
     fn cycle(v: usize) -> Self {
-        if v == 0 {
-            return Self::new();
-        }
+        let mut graph = Self::empty(v);
 
-        let mut graph = vec![HashSet::with_hasher(H::default()); v];
+        if v == 0 {
+            return graph;
+        }
 
         for (s, set) in graph.iter_mut().enumerate().take(v - 1) {
             let _ = set.insert(s + 1);
@@ -138,11 +133,11 @@ where
 
 impl Cycle for BTreeMap<usize, Vec<usize>> {
     fn cycle(v: usize) -> Self {
-        if v == 0 {
-            return Self::new();
-        }
+        let mut graph = Self::empty(v);
 
-        let mut graph = Self::new();
+        if v == 0 {
+            return graph;
+        }
 
         for s in 0..v - 1 {
             let _ = graph.insert(s, vec![s + 1]);
@@ -156,11 +151,11 @@ impl Cycle for BTreeMap<usize, Vec<usize>> {
 
 impl Cycle for BTreeMap<usize, BTreeSet<usize>> {
     fn cycle(v: usize) -> Self {
-        if v == 0 {
-            return Self::new();
-        }
+        let mut graph = Self::empty(v);
 
-        let mut graph = Self::new();
+        if v == 0 {
+            return graph;
+        }
 
         for s in 0..v - 1 {
             let _ = graph.insert(s, BTreeSet::from([s + 1]));
@@ -177,11 +172,11 @@ where
     H: BuildHasher + Default,
 {
     fn cycle(v: usize) -> Self {
-        if v == 0 {
-            return Self::with_hasher(H::default());
-        }
+        let mut graph = Self::empty(v);
 
-        let mut graph = Self::with_hasher(H::default());
+        if v == 0 {
+            return graph;
+        }
 
         for s in 0..v - 1 {
             let _ = graph.insert(s, vec![s + 1]);
@@ -198,11 +193,11 @@ where
     H: BuildHasher + Default,
 {
     fn cycle(v: usize) -> Self {
-        if v == 0 {
-            return Self::with_hasher(H::default());
-        }
+        let mut graph = Self::empty(v);
 
-        let mut graph = Self::with_hasher(H::default());
+        if v == 0 {
+            return graph;
+        }
 
         for s in 0..v - 1 {
             let mut set = HashSet::with_hasher(H::default());
@@ -244,7 +239,7 @@ where
 {
     fn cycle(v: usize) -> Self {
         if v == 0 {
-            return Self::with_hasher(H::default());
+            return Self::empty(v);
         }
 
         (0..v).map(|s| (s, (s + 1) % v)).collect()
@@ -265,194 +260,178 @@ mod tests {
         proptest::prelude::*,
     };
 
+    fn prop_count_all_edges<T: Cycle + CountAllEdges>(v: usize) {
+        assert_eq!(T::cycle(v).count_all_edges(), v);
+    }
+
+    fn prop_count_all_vertices<T: Cycle + CountAllVertices>(v: usize) {
+        assert_eq!(T::cycle(v).count_all_vertices(), v);
+    }
+
+    fn prop_indegree<T: Cycle + Indegree>(v: usize) {
+        let graph = T::cycle(v);
+
+        for s in 0..v {
+            assert_eq!(graph.indegree(s), 1);
+        }
+    }
+
+    fn prop_is_simple<T: Cycle + IsSimple>(v: usize) {
+        assert!(T::cycle(v).is_simple());
+    }
+
+    fn prop_outdegree<T: Cycle + Outdegree>(v: usize) {
+        let graph = T::cycle(v);
+
+        for s in 0..v {
+            assert_eq!(graph.outdegree(s), 1);
+        }
+    }
+
     proptest! {
         #[test]
         fn count_all_edges_vec_vec(v in 0..100_usize) {
-            assert_eq!(Vec::<Vec<usize>>::cycle(v).count_all_edges(), v);
+            prop_count_all_edges::<Vec<Vec<usize>>>(v);
         }
 
         #[test]
         fn count_all_edges_vec_btree_set(v in 0..100_usize) {
-            assert_eq!(Vec::<BTreeSet<usize>>::cycle(v).count_all_edges(), v);
+            prop_count_all_edges::<Vec<BTreeSet<usize>>>(v);
         }
 
         #[test]
         fn count_all_edges_vec_hash_set(v in 0..100_usize) {
-            assert_eq!(Vec::<HashSet<usize>>::cycle(v).count_all_edges(), v);
+            prop_count_all_edges::<Vec<HashSet<usize>>>(v);
         }
 
         #[test]
         fn count_all_edges_btree_map_vec(v in 0..100_usize) {
-            assert_eq!(BTreeMap::<usize, Vec<usize>>::cycle(v).count_all_edges(), v);
+            prop_count_all_edges::<BTreeMap<usize, Vec<usize>>>(v);
         }
 
         #[test]
         fn count_all_edges_btree_map_btree_set(v in 0..100_usize) {
-            assert_eq!(BTreeMap::<usize, BTreeSet<usize>>::cycle(v).count_all_edges(), v);
+            prop_count_all_edges::<BTreeMap<usize, BTreeSet<usize>>>(v);
         }
 
         #[test]
         fn count_all_edges_hash_map_vec(v in 0..100_usize) {
-            assert_eq!(HashMap::<usize, Vec<usize>>::cycle(v).count_all_edges(), v);
+            prop_count_all_edges::<HashMap<usize, Vec<usize>>>(v);
         }
 
         #[test]
         fn count_all_edges_hash_map_hash_set(v in 0..100_usize) {
-            assert_eq!(HashMap::<usize, HashSet<usize>>::cycle(v).count_all_edges(), v);
+            prop_count_all_edges::<HashMap<usize, HashSet<usize>>>(v);
         }
 
         #[test]
         fn count_all_edges_vec_tuple(v in 0..100_usize) {
-            assert_eq!(Vec::<(usize, usize)>::cycle(v).count_all_edges(), v);
+            prop_count_all_edges::<Vec<(usize, usize)>>(v);
         }
 
         #[test]
         fn count_all_edges_btree_set_tuple(v in 0..100_usize) {
-            assert_eq!(BTreeSet::<(usize, usize)>::cycle(v).count_all_edges(), v);
+            prop_count_all_edges::<BTreeSet<(usize, usize)>>(v);
         }
 
         #[test]
         fn count_all_edges_hash_set_tuple(v in 0..100_usize) {
-            assert_eq!(HashSet::<(usize, usize)>::cycle(v).count_all_edges(), v);
+            prop_count_all_edges::<HashSet<(usize, usize)>>(v);
         }
 
         #[test]
         fn count_all_vertices_vec_vec(v in 0..100_usize) {
-            assert_eq!(Vec::<Vec<usize>>::cycle(v).count_all_vertices(), v);
+            prop_count_all_vertices::<Vec<Vec<usize>>>(v);
         }
 
         #[test]
         fn count_all_vertices_vec_btree_set(v in 0..100_usize) {
-            assert_eq!(Vec::<BTreeSet<usize>>::cycle(v).count_all_vertices(), v);
+            prop_count_all_vertices::<Vec<BTreeSet<usize>>>(v);
         }
 
         #[test]
         fn count_all_vertices_vec_hash_set(v in 0..100_usize) {
-            assert_eq!(Vec::<HashSet<usize>>::cycle(v).count_all_vertices(), v);
+            prop_count_all_vertices::<Vec<HashSet<usize>>>(v);
         }
 
         #[test]
         fn indegree_vec_btree_set(v in 1..100_usize) {
-            let graph = Vec::<BTreeSet<usize>>::cycle(v);
-
-            for s in 0..v {
-                assert_eq!(graph.indegree(s), 1);
-            }
+            prop_indegree::<Vec<BTreeSet<usize>>>(v);
         }
 
         #[test]
         fn indegree_vec_hash_set(v in 1..100_usize) {
-            let graph = Vec::<HashSet<usize>>::cycle(v);
-
-            for s in 0..v {
-                assert_eq!(graph.indegree(s), 1);
-            }
+            prop_indegree::<Vec<HashSet<usize>>>(v);
         }
 
         #[test]
         fn indegree_btree_map_btree_set(v in 1..100_usize) {
-            let graph = BTreeMap::<usize, BTreeSet<usize>>::cycle(v);
-
-            for s in 0..v {
-                assert_eq!(graph.indegree(s), 1);
-            }
+            prop_indegree::<BTreeMap<usize, BTreeSet<usize>>>(v);
         }
 
         #[test]
         fn indegree_hash_map_hash_set(v in 1..100_usize) {
-            let graph = HashMap::<usize, HashSet<usize>>::cycle(v);
-
-            for s in 0..v {
-                assert_eq!(graph.indegree(s), 1);
-            }
+            prop_indegree::<HashMap<usize, HashSet<usize>>>(v);
         }
 
         #[test]
         fn is_simple_vec_btree_set(v in 2..100_usize) {
-            assert!(Vec::<BTreeSet<usize>>::cycle(v).is_simple());
+            prop_is_simple::<Vec<BTreeSet<usize>>>(v);
         }
 
         #[test]
         fn is_simple_vec_hash_set(v in 2..100_usize) {
-            assert!(Vec::<HashSet<usize>>::cycle(v).is_simple());
+            prop_is_simple::<Vec<HashSet<usize>>>(v);
         }
 
         #[test]
         fn is_simple_vec_tuple(v in 2..100_usize) {
-            assert!(Vec::<(usize, usize)>::cycle(v).is_simple());
+            prop_is_simple::<Vec<(usize, usize)>>(v);
         }
 
         #[test]
         fn is_simple_btree_set_tuple(v in 2..100_usize) {
-            assert!(BTreeSet::<(usize, usize)>::cycle(v).is_simple());
+            prop_is_simple::<BTreeSet<(usize, usize)>>(v);
         }
 
         #[test]
         fn is_simple_hash_set_tuple(v in 2..100_usize) {
-            assert!(HashSet::<(usize, usize)>::cycle(v).is_simple());
+            prop_is_simple::<HashSet<(usize, usize)>>(v);
         }
 
         #[test]
         fn outdegree_vec_vec(v in 1..100_usize) {
-            let graph = Vec::<Vec<usize>>::cycle(v);
-
-            for s in 0..v {
-                assert_eq!(graph.outdegree(s), 1);
-            }
+            prop_outdegree::<Vec<Vec<usize>>>(v);
         }
 
         #[test]
         fn outdegree_vec_btree_set(v in 1..100_usize) {
-            let graph = Vec::<BTreeSet<usize>>::cycle(v);
-
-            for s in 0..v {
-                assert_eq!(graph.outdegree(s), 1);
-            }
+            prop_outdegree::<Vec<BTreeSet<usize>>>(v);
         }
 
         #[test]
         fn outdegree_vec_hash_set(v in 1..100_usize) {
-            let graph = Vec::<HashSet<usize>>::cycle(v);
-
-            for s in 0..v {
-                assert_eq!(graph.outdegree(s), 1);
-            }
+            prop_outdegree::<Vec<HashSet<usize>>>(v);
         }
 
         #[test]
         fn outdegree_btree_map_vec(v in 1..100_usize) {
-            let graph = BTreeMap::<usize, Vec<usize>>::cycle(v);
-
-            for s in 0..v {
-                assert_eq!(graph.outdegree(s), 1);
-            }
+            prop_outdegree::<BTreeMap<usize, Vec<usize>>>(v);
         }
 
         #[test]
         fn outdegree_btree_map_btree_set(v in 1..100_usize) {
-            let graph = BTreeMap::<usize, BTreeSet<usize>>::cycle(v);
-
-            for s in 0..v {
-                assert_eq!(graph.outdegree(s), 1);
-            }
+            prop_outdegree::<BTreeMap<usize, BTreeSet<usize>>>(v);
         }
 
         #[test]
         fn outdegree_hash_map_vec(v in 1..100_usize) {
-            let graph = HashMap::<usize, Vec<usize>>::cycle(v);
-
-            for s in 0..v {
-                assert_eq!(graph.outdegree(s), 1);
-            }
+            prop_outdegree::<HashMap<usize, Vec<usize>>>(v);
         }
 
         #[test]
         fn outdegree_hash_map_hash_set(v in 1..100_usize) {
-            let graph = HashMap::<usize, HashSet<usize>>::cycle(v);
-
-            for s in 0..v {
-                assert_eq!(graph.outdegree(s), 1);
-            }
+            prop_outdegree::<HashMap<usize, HashSet<usize>>>(v);
         }
     }
 
@@ -460,11 +439,8 @@ mod tests {
     fn vec_vec() {
         for (v, g) in [
             Vec::new(),
-            // 0 → 0
             vec![vec![0]],
-            // 0 → 1 → 0
             vec![vec![1], vec![0]],
-            // 0 → 1 → 2 → 0
             vec![vec![1], vec![2], vec![0]],
         ]
         .iter()
@@ -478,11 +454,8 @@ mod tests {
     fn vec_btree_set() {
         for (v, g) in [
             Vec::new(),
-            // 0 → 0
             vec![BTreeSet::from([0])],
-            // 0 → 1 → 0
             vec![BTreeSet::from([1]), BTreeSet::from([0])],
-            // 0 → 1 → 2 → 0
             vec![
                 BTreeSet::from([1]),
                 BTreeSet::from([2]),
@@ -500,11 +473,8 @@ mod tests {
     fn vec_hash_set() {
         for (v, g) in [
             Vec::new(),
-            // 0 → 0
             vec![HashSet::from([0])],
-            // 0 → 1 → 0
             vec![HashSet::from([1]), HashSet::from([0])],
-            // 0 → 1 → 2 → 0
             vec![HashSet::from([1]), HashSet::from([2]), HashSet::from([0])],
         ]
         .iter()
@@ -518,11 +488,8 @@ mod tests {
     fn btree_map_vec() {
         for (v, g) in [
             BTreeMap::new(),
-            // 0 → 0
             BTreeMap::from([(0, vec![0])]),
-            // 0 → 1 → 0
             BTreeMap::from([(0, vec![1]), (1, vec![0])]),
-            // 0 → 1 → 2 → 0
             BTreeMap::from([(0, vec![1]), (1, vec![2]), (2, vec![0])]),
         ]
         .iter()
@@ -536,11 +503,8 @@ mod tests {
     fn btree_map_btree_set() {
         for (v, g) in [
             BTreeMap::new(),
-            // 0 → 0
             BTreeMap::from([(0, BTreeSet::from([0]))]),
-            // 0 → 1 → 0
             BTreeMap::from([(0, BTreeSet::from([1])), (1, BTreeSet::from([0]))]),
-            // 0 → 1 → 2 → 0
             BTreeMap::from([
                 (0, BTreeSet::from([1])),
                 (1, BTreeSet::from([2])),
@@ -558,11 +522,8 @@ mod tests {
     fn hash_map_vec() {
         for (v, g) in [
             HashMap::new(),
-            // 0 → 0
             HashMap::from([(0, vec![0])]),
-            // 0 → 1 → 0
             HashMap::from([(0, vec![1]), (1, vec![0])]),
-            // 0 → 1 → 2 → 0
             HashMap::from([(0, vec![1]), (1, vec![2]), (2, vec![0])]),
         ]
         .iter()
@@ -576,11 +537,8 @@ mod tests {
     fn hash_map_hash_set() {
         for (v, g) in [
             HashMap::new(),
-            // 0 → 0
             HashMap::from([(0, HashSet::from([0]))]),
-            // 0 → 1 → 0
             HashMap::from([(0, HashSet::from([1])), (1, HashSet::from([0]))]),
-            // 0 → 1 → 2 → 0
             HashMap::from([
                 (0, HashSet::from([1])),
                 (1, HashSet::from([2])),
@@ -598,11 +556,8 @@ mod tests {
     fn vec_tuple() {
         for (v, g) in [
             Vec::new(),
-            // 0 → 0
             vec![(0, 0)],
-            // 0 → 1 → 0
             vec![(0, 1), (1, 0)],
-            // 0 → 1 → 2 → 0
             vec![(0, 1), (1, 2), (2, 0)],
         ]
         .iter()
@@ -616,11 +571,8 @@ mod tests {
     fn btree_set_tuple() {
         for (v, g) in [
             BTreeSet::new(),
-            // 0 → 0
             BTreeSet::from([(0, 0)]),
-            // 0 → 1 → 0
             BTreeSet::from([(0, 1), (1, 0)]),
-            // 0 → 1 → 2 → 0
             BTreeSet::from([(0, 1), (1, 2), (2, 0)]),
         ]
         .iter()
@@ -634,11 +586,8 @@ mod tests {
     fn hash_set_tuple() {
         for (v, g) in [
             HashSet::new(),
-            // 0 → 0
             HashSet::from([(0, 0)]),
-            // 0 → 1 → 0
             HashSet::from([(0, 1), (1, 0)]),
-            // 0 → 1 → 2 → 0
             HashSet::from([(0, 1), (1, 2), (2, 0)]),
         ]
         .iter()
@@ -665,43 +614,36 @@ mod tests {
 
     #[test]
     fn is_simple_btree_set_tuple_0() {
-        // 0 → 0
         assert!(BTreeSet::<(usize, usize)>::cycle(0).is_simple());
     }
 
     #[test]
     fn is_simple_hash_set_tuple_0() {
-        // 0 → 0
         assert!(HashSet::<(usize, usize)>::cycle(0).is_simple());
     }
 
     #[test]
     fn is_simple_vec_btree_set_1() {
-        // 0 → 0
         assert!(!Vec::<BTreeSet<usize>>::cycle(1).is_simple());
     }
 
     #[test]
     fn is_simple_vec_hash_set_1() {
-        // 0 → 0
         assert!(!Vec::<HashSet<usize>>::cycle(1).is_simple());
     }
 
     #[test]
     fn is_simple_vec_tuple_1() {
-        // 0 → 0
         assert!(!Vec::<(usize, usize)>::cycle(1).is_simple());
     }
 
     #[test]
     fn is_simple_btree_set_tuple_1() {
-        // 0 → 0
         assert!(!BTreeSet::<(usize, usize)>::cycle(1).is_simple());
     }
 
     #[test]
     fn is_simple_hash_set_tuple_1() {
-        // 0 → 0
         assert!(!HashSet::<(usize, usize)>::cycle(1).is_simple());
     }
 }
