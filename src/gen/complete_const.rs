@@ -1,4 +1,4 @@
-//! A trait to generate const-sized complete directed graphs
+//! A trait to generate const-sized symmetric complete directed graphs
 //!
 //! The generated graphs are simple; they contain no self-loops. To generate
 //! variable-sized complete graphs, see [`Complete`].
@@ -23,6 +23,7 @@
 extern crate alloc;
 
 use {
+    super::EmptyConst,
     alloc::collections::BTreeSet,
     core::{
         array::from_fn,
@@ -31,12 +32,12 @@ use {
     std::collections::HashSet,
 };
 
-/// A trait to generate const-sized complete directed graphs
+/// A trait to generate const-sized symmetric complete directed graphs
 ///
 /// # How can I implement `CompleteConst`?
 ///
-/// Provide an implementation of `complete` that generates a complete graph with
-/// `V` vertices.
+/// Provide an implementation of `complete` that generates a symmetric complete
+/// graph with `V` vertices.
 ///
 /// ```
 /// use {
@@ -96,7 +97,7 @@ pub trait CompleteConst {
 
 impl<const V: usize> CompleteConst for [Vec<usize>; V] {
     fn complete() -> Self {
-        let mut graph: [Vec<usize>; V] = from_fn(|_| Vec::new());
+        let mut graph = Self::empty();
 
         for (s, vec) in graph.iter_mut().enumerate().take(V) {
             for t in 0..V {

@@ -22,7 +22,6 @@
 //!
 //! graph.add_edge(1, 1);
 //!
-//! // Loops are not allowed in simple graphs.
 //! assert!(!graph.is_simple());
 //! ```
 

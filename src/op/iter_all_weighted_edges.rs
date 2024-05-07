@@ -6,12 +6,10 @@
 //! use graaf::op::IterAllWeightedEdges;
 //!
 //! let graph = vec![(0, 1, 2), (1, 2, 3), (2, 0, 4)];
-//! let mut iter = graph.iter_all_weighted_edges();
 //!
-//! assert_eq!(iter.next(), Some((0, 1, &2)));
-//! assert_eq!(iter.next(), Some((1, 2, &3)));
-//! assert_eq!(iter.next(), Some((2, 0, &4)));
-//! assert_eq!(iter.next(), None);
+//! assert!(graph
+//!     .iter_all_weighted_edges()
+//!     .eq([(0, 1, &2), (1, 2, &3), (2, 0, &4)].into_iter()));
 //! ```
 
 extern crate alloc;
@@ -52,12 +50,10 @@ use {
 /// use graaf::op::IterAllWeightedEdges;
 ///
 /// let graph = vec![(0, 1, 2), (1, 2, 3), (2, 0, 4)];
-/// let mut iter = graph.iter_all_weighted_edges();
 ///
-/// assert_eq!(iter.next(), Some((0, 1, &2)));
-/// assert_eq!(iter.next(), Some((1, 2, &3)));
-/// assert_eq!(iter.next(), Some((2, 0, &4)));
-/// assert_eq!(iter.next(), None);
+/// assert!(graph
+///     .iter_all_weighted_edges()
+///     .eq([(0, 1, &2), (1, 2, &3), (2, 0, &4)].into_iter()));
 /// ```
 pub trait IterAllWeightedEdges<W> {
     /// Returns an iterator over all edges in a graph.
@@ -120,12 +116,9 @@ mod tests {
 
     macro_rules! test_iter_all_weighted_edges_stable {
         ($graph:expr) => {
-            let mut iter = $graph.iter_all_weighted_edges();
-
-            assert_eq!(iter.next(), Some((0, 1, &2)));
-            assert_eq!(iter.next(), Some((1, 2, &3)));
-            assert_eq!(iter.next(), Some((2, 0, &4)));
-            assert_eq!(iter.next(), None);
+            assert!($graph
+                .iter_all_weighted_edges()
+                .eq([(0, 1, &2), (1, 2, &3), (2, 0, &4)].into_iter()));
         };
     }
 

@@ -12,26 +12,17 @@
 //!     vec![(3, 4), (4, 5), (5, 6)],
 //! ];
 //!
-//! let mut iter = graph.iter_weighted_edges(0);
+//! assert!(graph
+//!     .iter_weighted_edges(0)
+//!     .eq([(1, &2), (2, &3), (3, &4)].into_iter()));
 //!
-//! assert_eq!(iter.next(), Some((1, &2)));
-//! assert_eq!(iter.next(), Some((2, &3)));
-//! assert_eq!(iter.next(), Some((3, &4)));
-//! assert_eq!(iter.next(), None);
+//! assert!(graph
+//!     .iter_weighted_edges(1)
+//!     .eq([(2, &3), (3, &4), (4, &5)].into_iter()));
 //!
-//! let mut iter = graph.iter_weighted_edges(1);
-//!
-//! assert_eq!(iter.next(), Some((2, &3)));
-//! assert_eq!(iter.next(), Some((3, &4)));
-//! assert_eq!(iter.next(), Some((4, &5)));
-//! assert_eq!(iter.next(), None);
-//!
-//! let mut iter = graph.iter_weighted_edges(2);
-//!
-//! assert_eq!(iter.next(), Some((3, &4)));
-//! assert_eq!(iter.next(), Some((4, &5)));
-//! assert_eq!(iter.next(), Some((5, &6)));
-//! assert_eq!(iter.next(), None);
+//! assert!(graph
+//!     .iter_weighted_edges(2)
+//!     .eq([(3, &4), (4, &5), (5, &6)].into_iter()));
 //! ```
 
 extern crate alloc;
@@ -84,26 +75,17 @@ use {
 ///     vec![(3, 4), (4, 5), (5, 6)],
 /// ];
 ///
-/// let mut iter = graph.iter_weighted_edges(0);
+/// assert!(graph
+///     .iter_weighted_edges(0)
+///     .eq([(1, &2), (2, &3), (3, &4)].into_iter()));
 ///
-/// assert_eq!(iter.next(), Some((1, &2)));
-/// assert_eq!(iter.next(), Some((2, &3)));
-/// assert_eq!(iter.next(), Some((3, &4)));
-/// assert_eq!(iter.next(), None);
+/// assert!(graph
+///     .iter_weighted_edges(1)
+///     .eq([(2, &3), (3, &4), (4, &5)].into_iter()));
 ///
-/// let mut iter = graph.iter_weighted_edges(1);
-///
-/// assert_eq!(iter.next(), Some((2, &3)));
-/// assert_eq!(iter.next(), Some((3, &4)));
-/// assert_eq!(iter.next(), Some((4, &5)));
-/// assert_eq!(iter.next(), None);
-///
-/// let mut iter = graph.iter_weighted_edges(2);
-///
-/// assert_eq!(iter.next(), Some((3, &4)));
-/// assert_eq!(iter.next(), Some((4, &5)));
-/// assert_eq!(iter.next(), Some((5, &6)));
-/// assert_eq!(iter.next(), None);
+/// assert!(graph
+///     .iter_weighted_edges(2)
+///     .eq([(3, &4), (4, &5), (5, &6)].into_iter()));
 /// ```
 pub trait IterWeightedEdges<W> {
     /// Returns an iterator over the edges with the source vertex `s`.
@@ -440,17 +422,6 @@ mod tests {
         };
     }
 
-    macro_rules! test_iter_weighted_edges_stable {
-        ($graph:expr) => {
-            let mut iter = $graph.iter_weighted_edges(1);
-
-            assert_eq!(iter.next(), Some((2, &3)));
-            assert_eq!(iter.next(), Some((3, &4)));
-            assert_eq!(iter.next(), Some((4, &5)));
-            assert_eq!(iter.next(), None);
-        };
-    }
-
     #[test]
     fn vec_vec() {
         let graph = vec![
@@ -459,7 +430,9 @@ mod tests {
             vec![(3, 4), (4, 5), (5, 6)],
         ];
 
-        test_iter_weighted_edges_stable!(graph);
+        assert!(graph
+            .iter_weighted_edges(1)
+            .eq([(2, &3), (3, &4), (4, &5)].into_iter()));
     }
 
     #[test]
@@ -514,7 +487,9 @@ mod tests {
             vec![(3, 4), (4, 5), (5, 6)],
         ];
 
-        test_iter_weighted_edges_stable!(graph);
+        assert!(graph
+            .iter_weighted_edges(1)
+            .eq([(2, &3), (3, &4), (4, &5)].into_iter()));
     }
 
     #[test]
@@ -569,7 +544,9 @@ mod tests {
             vec![(3, 4), (4, 5), (5, 6)],
         ];
 
-        test_iter_weighted_edges_stable!(graph);
+        assert!(graph
+            .iter_weighted_edges(1)
+            .eq([(2, &3), (3, &4), (4, &5)].into_iter()));
     }
 
     #[test]
@@ -624,7 +601,9 @@ mod tests {
             (2, vec![(3, 4), (4, 5), (5, 6)]),
         ]);
 
-        test_iter_weighted_edges_stable!(graph);
+        assert!(graph
+            .iter_weighted_edges(1)
+            .eq([(2, &3), (3, &4), (4, &5)].into_iter()));
     }
 
     #[test]
@@ -635,7 +614,9 @@ mod tests {
             (2, vec![(3, 4), (4, 5), (5, 6)]),
         ]);
 
-        test_iter_weighted_edges_stable!(graph);
+        assert!(graph
+            .iter_weighted_edges(1)
+            .eq([(2, &3), (3, &4), (4, &5)].into_iter()));
     }
 
     #[test]

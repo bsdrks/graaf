@@ -6,13 +6,8 @@
 //! use graaf::op::IterVertices;
 //!
 //! let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
-//! let mut iter = graph.iter_vertices();
 //!
-//! assert_eq!(iter.next(), Some(0));
-//! assert_eq!(iter.next(), Some(1));
-//! assert_eq!(iter.next(), Some(2));
-//! assert_eq!(iter.next(), Some(3));
-//! assert_eq!(iter.next(), None);
+//! assert!(graph.iter_vertices().eq(0..4));
 //! ```
 
 extern crate alloc;
@@ -56,13 +51,8 @@ use {
 /// use graaf::op::IterVertices;
 ///
 /// let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
-/// let mut iter = graph.iter_vertices();
 ///
-/// assert_eq!(iter.next(), Some(0));
-/// assert_eq!(iter.next(), Some(1));
-/// assert_eq!(iter.next(), Some(2));
-/// assert_eq!(iter.next(), Some(3));
-/// assert_eq!(iter.next(), None);
+/// assert!(graph.iter_vertices().eq(0..4));
 /// ```
 pub trait IterVertices {
     /// Returns an iterator over the vertices.
@@ -244,23 +234,11 @@ where
 mod tests {
     use super::*;
 
-    macro_rules! test_iter_vertices {
-        ($graph:expr) => {
-            let mut iter = $graph.iter_vertices();
-
-            assert_eq!(iter.next(), Some(0));
-            assert_eq!(iter.next(), Some(1));
-            assert_eq!(iter.next(), Some(2));
-            assert_eq!(iter.next(), Some(3));
-            assert_eq!(iter.next(), None);
-        };
-    }
-
     #[test]
     fn vec_vec_unweighted() {
         let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        test_iter_vertices!(graph);
+        assert!(graph.iter_vertices().eq(0..4));
     }
 
     #[test]
@@ -272,7 +250,7 @@ mod tests {
             vec![(1, 2)],
         ];
 
-        test_iter_vertices!(graph);
+        assert!(graph.iter_vertices().eq(0..4));
     }
 
     #[test]
@@ -284,7 +262,7 @@ mod tests {
             BTreeSet::from([1, 2]),
         ];
 
-        test_iter_vertices!(graph);
+        assert!(graph.iter_vertices().eq(0..4));
     }
 
     #[test]
@@ -296,7 +274,7 @@ mod tests {
             BTreeSet::from([(1, 2)]),
         ];
 
-        test_iter_vertices!(graph);
+        assert!(graph.iter_vertices().eq(0..4));
     }
 
     #[test]
@@ -308,7 +286,7 @@ mod tests {
             HashSet::from([1, 2]),
         ];
 
-        test_iter_vertices!(graph);
+        assert!(graph.iter_vertices().eq(0..4));
     }
 
     #[test]
@@ -320,7 +298,7 @@ mod tests {
             HashSet::from([(1, 2)]),
         ];
 
-        test_iter_vertices!(graph);
+        assert!(graph.iter_vertices().eq(0..4));
     }
 
     #[test]
@@ -332,7 +310,7 @@ mod tests {
             BTreeMap::from([(1, 2)]),
         ];
 
-        test_iter_vertices!(graph);
+        assert!(graph.iter_vertices().eq(0..4));
     }
 
     #[test]
@@ -344,14 +322,14 @@ mod tests {
             HashMap::from([(1, 2)]),
         ];
 
-        test_iter_vertices!(graph);
+        assert!(graph.iter_vertices().eq(0..4));
     }
 
     #[test]
     fn slice_vec_unweighted() {
         let graph: &[Vec<usize>] = &[vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        test_iter_vertices!(graph);
+        assert!(graph.iter_vertices().eq(0..4));
     }
 
     #[test]
@@ -363,7 +341,7 @@ mod tests {
             vec![(1, 2)],
         ];
 
-        test_iter_vertices!(graph);
+        assert!(graph.iter_vertices().eq(0..4));
     }
 
     #[test]
@@ -375,7 +353,7 @@ mod tests {
             BTreeSet::from([1, 2]),
         ];
 
-        test_iter_vertices!(graph);
+        assert!(graph.iter_vertices().eq(0..4));
     }
 
     #[test]
@@ -387,7 +365,7 @@ mod tests {
             BTreeSet::from([(1, 2)]),
         ];
 
-        test_iter_vertices!(graph);
+        assert!(graph.iter_vertices().eq(0..4));
     }
 
     #[test]
@@ -399,7 +377,7 @@ mod tests {
             HashSet::from([1, 2]),
         ];
 
-        test_iter_vertices!(graph);
+        assert!(graph.iter_vertices().eq(0..4));
     }
 
     #[test]
@@ -411,7 +389,7 @@ mod tests {
             HashSet::from([(1, 2)]),
         ];
 
-        test_iter_vertices!(graph);
+        assert!(graph.iter_vertices().eq(0..4));
     }
 
     #[test]
@@ -423,7 +401,7 @@ mod tests {
             BTreeMap::from([(1, 2)]),
         ];
 
-        test_iter_vertices!(graph);
+        assert!(graph.iter_vertices().eq(0..4));
     }
 
     #[test]
@@ -435,14 +413,14 @@ mod tests {
             HashMap::from([(1, 2)]),
         ];
 
-        test_iter_vertices!(graph);
+        assert!(graph.iter_vertices().eq(0..4));
     }
 
     #[test]
     fn arr_vec_unweighted() {
         let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        test_iter_vertices!(graph);
+        assert!(graph.iter_vertices().eq(0..4));
     }
 
     #[test]
@@ -454,7 +432,7 @@ mod tests {
             vec![(1, 2)],
         ];
 
-        test_iter_vertices!(graph);
+        assert!(graph.iter_vertices().eq(0..4));
     }
 
     #[test]
@@ -466,7 +444,7 @@ mod tests {
             BTreeSet::from([1, 2]),
         ];
 
-        test_iter_vertices!(graph);
+        assert!(graph.iter_vertices().eq(0..4));
     }
 
     #[test]
@@ -478,7 +456,7 @@ mod tests {
             BTreeSet::from([(1, 2)]),
         ];
 
-        test_iter_vertices!(graph);
+        assert!(graph.iter_vertices().eq(0..4));
     }
 
     #[test]
@@ -490,7 +468,7 @@ mod tests {
             HashSet::from([1, 2]),
         ];
 
-        test_iter_vertices!(graph);
+        assert!(graph.iter_vertices().eq(0..4));
     }
 
     #[test]
@@ -502,7 +480,7 @@ mod tests {
             HashSet::from([(1, 2)]),
         ];
 
-        test_iter_vertices!(graph);
+        assert!(graph.iter_vertices().eq(0..4));
     }
 
     #[test]
@@ -514,7 +492,7 @@ mod tests {
             BTreeMap::from([(1, 2)]),
         ];
 
-        test_iter_vertices!(graph);
+        assert!(graph.iter_vertices().eq(0..4));
     }
 
     #[test]
@@ -526,6 +504,6 @@ mod tests {
             HashMap::from([(1, 2)]),
         ];
 
-        test_iter_vertices!(graph);
+        assert!(graph.iter_vertices().eq(0..4));
     }
 }

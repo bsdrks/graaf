@@ -6,12 +6,10 @@
 //! use graaf::op::IterAllEdges;
 //!
 //! let graph = vec![(0, 1), (1, 2), (2, 0)];
-//! let mut iter = graph.iter_all_edges();
 //!
-//! assert_eq!(iter.next(), Some((0, 1)));
-//! assert_eq!(iter.next(), Some((1, 2)));
-//! assert_eq!(iter.next(), Some((2, 0)));
-//! assert_eq!(iter.next(), None);
+//! assert!(graph
+//!     .iter_all_edges()
+//!     .eq([(0, 1), (1, 2), (2, 0)].into_iter()),);
 //! ```
 
 extern crate alloc;
@@ -49,12 +47,10 @@ use {
 /// use graaf::op::IterAllEdges;
 ///
 /// let graph = vec![(0, 1), (1, 2), (2, 0)];
-/// let mut iter = graph.iter_all_edges();
 ///
-/// assert_eq!(iter.next(), Some((0, 1)));
-/// assert_eq!(iter.next(), Some((1, 2)));
-/// assert_eq!(iter.next(), Some((2, 0)));
-/// assert_eq!(iter.next(), None);
+/// assert!(graph
+///     .iter_all_edges()
+///     .eq([(0, 1), (1, 2), (2, 0)].into_iter()));
 /// ```
 pub trait IterAllEdges {
     /// Returns an iterator over all edges in a graph.
@@ -98,17 +94,6 @@ where
 mod tests {
     use super::*;
 
-    macro_rules! test_iter_all_edges_stable {
-        ($graph:expr) => {
-            let mut iter = $graph.iter_all_edges();
-
-            assert_eq!(iter.next(), Some((0, 1)));
-            assert_eq!(iter.next(), Some((1, 2)));
-            assert_eq!(iter.next(), Some((2, 0)));
-            assert_eq!(iter.next(), None);
-        };
-    }
-
     macro_rules! test_iter_all_edges_unstable {
         ($graph:expr) => {
             let mut iter = $graph.iter_all_edges();
@@ -124,21 +109,34 @@ mod tests {
     fn vec() {
         let graph = vec![(0, 1), (1, 2), (2, 0)];
 
-        test_iter_all_edges_stable!(graph);
+        assert!(graph
+            .iter_all_edges()
+            .eq([(0, 1), (1, 2), (2, 0)].into_iter()));
     }
 
     #[test]
     fn slice() {
         let graph: &[(usize, usize)] = &[(0, 1), (1, 2), (2, 0)];
 
-        test_iter_all_edges_stable!(graph);
+        assert!(graph
+            .iter_all_edges()
+            .eq([(0, 1), (1, 2), (2, 0)].into_iter()));
     }
 
     #[test]
     fn arr() {
         let graph = [(0, 1), (1, 2), (2, 0)];
 
-        test_iter_all_edges_stable!(graph);
+        assert!(graph
+            .iter_all_edges()
+            .eq([(0, 1), (1, 2), (2, 0)].into_iter()));
+    }
+
+    #[test]
+    fn btree_set() {
+        let graph: BTreeSet<(usize, usize)> = BTreeSet::from([(0, 1), (1, 2), (2, 0)]);
+
+        test_iter_all_edges_unstable!(graph);
     }
 
     #[test]

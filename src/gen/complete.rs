@@ -1,4 +1,4 @@
-//! A trait to generate variable-sized complete directed graphs
+//! A trait to generate variable-sized complete symmetric directed graphs
 //!
 //! The generated graphs are simple; they contain no self-loops. To generate
 //! const-sized complete graphs, see [`CompleteConst`].
@@ -34,12 +34,12 @@ use {
     },
 };
 
-/// A trait to generate variable-size complete directed graphs
+/// A trait to generate variable-size symmetric complete directed graphs
 ///
 /// # How can I implement `Complete`?
 ///
-/// Provide an implementation of `complete` that generates a complete graph with
-/// `v` vertices.
+/// Provide an implementation of `complete` that generates a symmetric complete
+/// graph with `v` vertices.
 ///
 /// ```
 /// use {

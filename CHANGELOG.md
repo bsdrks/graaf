@@ -19,6 +19,16 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.35.4] - 2024-05-07
+
+Added
+
+- Add `btree_set` unit test for `iter_all_weighted_edges`.
+
+Changed
+
+- Simplify tests with `Iterator::eq`.
+
 ## [0.35.3] - 2024-05-06
 
 Changed
