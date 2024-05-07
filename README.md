@@ -22,6 +22,8 @@ graaf = { version = "0.35.5", default-features = false }
 
 ### Operations
 
+Build and query graphs made with standard collections, or implement the operation traits for your types.
+
 ```rust
 use {
     graaf::{

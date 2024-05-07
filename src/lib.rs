@@ -4,6 +4,9 @@
 //!
 //! ## Operations
 //!
+//! Build and query graphs made with standard collections, or implement the
+//! operation traits for your types.
+//!
 //! ```rust
 //! use {
 //!     graaf::{

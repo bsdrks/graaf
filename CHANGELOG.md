@@ -19,6 +19,12 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.35.6] - 2024-05-07
+
+Added
+
+- Add back the description of operations in `README`.
+
 ## [0.35.5] - 2024-05-07
 
 Changed
