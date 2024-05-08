@@ -19,6 +19,26 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.36.0] - 2024-05-08
+
+Added
+
+- Add `IsBalanced` trait.
+- Implement `IsBalanced` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `IterAllEdges` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `IterAllEdges` for `BTreeMap<usize, Vec<usize>>`.
+- Implement `IterAllEdges` for `HashMap<usize, HashSet<usize>>`.
+- Implement `IterAllEdges` for `HashMap<usize, Vec<usize>>`.
+- Implement `IterAllEdges` for `Vec<BTreeSet<usize>>`.
+- Implement `IterAllEdges` for `Vec<HashSet<usize>>`.
+- Implement `IterAllEdges` for `Vec<Vec<usize>>`.
+- Implement `IterAllEdges` for `[BTreeSet<usize>; V]`.
+- Implement `IterAllEdges` for `[BTreeSet<usize>]`.
+- Implement `IterAllEdges` for `[HashSet<usize>; V]`.
+- Implement `IterAllEdges` for `[HashSet<usize>]`.
+- Implement `IterAllEdges` for `[Vec<usize>; V]`.
+- Implement `IterAllEdges` for `[Vec<usize>]`.
+
 ## [0.35.6] - 2024-05-07
 
 Added
