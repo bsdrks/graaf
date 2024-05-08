@@ -37,11 +37,18 @@ use {
     super::{
         Indegree,
         IterAllEdges,
+        IterAllWeightedEdges,
         Outdegree,
     },
-    alloc::collections::BTreeSet,
+    alloc::collections::{
+        BTreeMap,
+        BTreeSet,
+    },
     core::hash::BuildHasher,
-    std::collections::HashSet,
+    std::collections::{
+        HashMap,
+        HashSet,
+    },
 };
 
 /// A trait to determine whether a graph is balanced
@@ -55,22 +62,23 @@ use {
 /// extern crate alloc;
 ///
 /// use {
-///    alloc::collections::BTreeSet,
-///   graaf::op::{
-///      Indegree,
-///     IsBalanced,
-///    Outdegree,
+///     alloc::collections::BTreeSet,
+///     graaf::op::{
+///         Indegree,
+///         IsBalanced,
+///         Outdegree,
+///     },
 /// };
 ///
 /// struct Graph<const V: usize> {
-///    edges: [BTreeSet<usize>; V],
+///     edges: [BTreeSet<usize>; V],
 /// }
 ///
 /// impl<const V: usize> IsBalanced for Graph<V> {
-///    fn is_balanced(&self) -> bool {
-///     self.iter_all_edges()
-///        .all(|(s, t)| self.indegree(t) == self.outdegree(s))
-///   }
+///     fn is_balanced(&self) -> bool {
+///         self.iter_all_edges()
+///             .all(|(s, t)| self.indegree(t) == self.outdegree(s))
+///     }
 /// }
 /// ```
 ///
@@ -139,6 +147,40 @@ where
     }
 }
 
+impl<W> IsBalanced for Vec<BTreeMap<usize, W>> {
+    fn is_balanced(&self) -> bool {
+        self.iter_all_weighted_edges()
+            .all(|(s, t, _)| self.indegree(t) == self.outdegree(s))
+    }
+}
+
+impl<W, H> IsBalanced for Vec<HashMap<usize, W, H>>
+where
+    H: BuildHasher,
+{
+    fn is_balanced(&self) -> bool {
+        self.iter_all_weighted_edges()
+            .all(|(s, t, _)| self.indegree(t) == self.outdegree(s))
+    }
+}
+
+impl<const V: usize, W> IsBalanced for [BTreeMap<usize, W>; V] {
+    fn is_balanced(&self) -> bool {
+        self.iter_all_weighted_edges()
+            .all(|(s, t, _)| self.indegree(t) == self.outdegree(s))
+    }
+}
+
+impl<const V: usize, W, H> IsBalanced for [HashMap<usize, W, H>; V]
+where
+    H: BuildHasher,
+{
+    fn is_balanced(&self) -> bool {
+        self.iter_all_weighted_edges()
+            .all(|(s, t, _)| self.indegree(t) == self.outdegree(s))
+    }
+}
+
 #[cfg(test)]
 mod tests {
     extern crate alloc;
@@ -188,6 +230,50 @@ mod tests {
             HashSet::from([1, 2]),
             HashSet::from([0, 2]),
             HashSet::from([0, 1]),
+        ];
+
+        assert!(graph.is_balanced());
+    }
+
+    #[test]
+    fn vec_btree_map() {
+        let graph = vec![
+            BTreeMap::from([(1, 2), (2, 3)]),
+            BTreeMap::from([(0, 2), (2, 3)]),
+            BTreeMap::from([(0, 1), (1, 2)]),
+        ];
+
+        assert!(graph.is_balanced());
+    }
+
+    #[test]
+    fn vec_hash_map() {
+        let graph = vec![
+            HashMap::from([(1, 2), (2, 3)]),
+            HashMap::from([(0, 2), (2, 3)]),
+            HashMap::from([(0, 1), (1, 2)]),
+        ];
+
+        assert!(graph.is_balanced());
+    }
+
+    #[test]
+    fn arr_btree_map() {
+        let graph = [
+            BTreeMap::from([(1, 2), (2, 3)]),
+            BTreeMap::from([(0, 2), (2, 3)]),
+            BTreeMap::from([(0, 1), (1, 2)]),
+        ];
+
+        assert!(graph.is_balanced());
+    }
+
+    #[test]
+    fn arr_hash_map() {
+        let graph = [
+            HashMap::from([(1, 2), (2, 3)]),
+            HashMap::from([(0, 2), (2, 3)]),
+            HashMap::from([(0, 1), (1, 2)]),
         ];
 
         assert!(graph.is_balanced());

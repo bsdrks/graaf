@@ -19,12 +19,40 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.37.0] - 2024-05-08
+
+Added
+
+- Implement `IsBalanced` for `Vec<BTreeMap<usize, W>>`.
+- Implement `IsBalanced` for `Vec<HashMap<usize, W>>`.
+- Implement `IsBalanced` for `[BTreeMap<usize, W>; V]`.
+- Implement `IsBalanced` for `[HashMap<usize, W>; V]`.
+- Implement `IterAllWeightedEdges` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement `IterAllWeightedEdges` for `BTreeMap<usize, BTreeSet<(usize, W)>>`.
+- Implement `IterAllWeightedEdges` for `BTreeMap<usize, Vec<(usize, W)>>`.
+- Implement `IterAllWeightedEdges` for `HashMap<usize, HashMap<usize, W>>`.
+- Implement `IterAllWeightedEdges` for `HashMap<usize, HashSet<(usize, W)>>`.
+- Implement `IterAllWeightedEdges` for `HashMap<usize, Vec<(usize, W)>>`.
+- Implement `IterAllWeightedEdges` for `Vec<BTreeMap<usize, W>>`.
+- Implement `IterAllWeightedEdges` for `Vec<BTreeSet<(usize, W)>>`.
+- Implement `IterAllWeightedEdges` for `Vec<HashMap<usize, W>>`.
+- Implement `IterAllWeightedEdges` for `Vec<HashSet<(usize, W)>>`.
+- Implement `IterAllWeightedEdges` for `Vec<Vec<(usize, W)>>`.
+- Implement `IterAllWeightedEdges` for `[BTreeMap<usize, W>; V]`.
+- Implement `IterAllWeightedEdges` for `[BTreeSet<(usize, W)>; V]`.
+- Implement `IterAllWeightedEdges` for `[HashMap<usize, W>; V]`.
+- Implement `IterAllWeightedEdges` for `[HashSet<(usize, W)>; V]`.
+- Implement `IterAllWeightedEdges` for `[Vec<(usize, W)>; V]`.
+
 ## [0.36.0] - 2024-05-08
 
 Added
 
 - Add `IsBalanced` trait.
-- Implement `IsBalanced` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `IsBalanced` for `Vec<BTreeSet<usize>>`.
+- Implement `IsBalanced` for `Vec<HashSet<usize>>`.
+- Implement `IsBalanced` for `[BTreeSet<usize>; V]`.
+- Implement `IsBalanced` for `[HashSet<usize>; V]`.
 - Implement `IterAllEdges` for `BTreeMap<usize, BTreeSet<usize>>`.
 - Implement `IterAllEdges` for `BTreeMap<usize, Vec<usize>>`.
 - Implement `IterAllEdges` for `HashMap<usize, HashSet<usize>>`.
