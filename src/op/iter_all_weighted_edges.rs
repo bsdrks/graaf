@@ -477,7 +477,7 @@ mod tests {
     fn hash_map_vec() {
         let graph = HashMap::from([(0, vec![(1, 2)]), (1, vec![(2, 3)]), (2, vec![(0, 4)])]);
 
-        test_iter_all_weighted_edges_stable!(graph);
+        test_iter_all_weighted_edges_unstable!(graph);
     }
 
     #[test]
