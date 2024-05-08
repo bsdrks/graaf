@@ -45,6 +45,61 @@ use {
 };
 
 /// A trait to determine whether a graph is balanced
+///
+/// # How can I implement `IsBalanced`?
+///
+/// Provide an implementation of `is_balanced` that returns `true` if the graph
+/// is balanced and `false` otherwise.
+///
+/// ```
+/// extern crate alloc;
+///
+/// use {
+///    alloc::collections::BTreeSet,
+///   graaf::op::{
+///      Indegree,
+///     IsBalanced,
+///    Outdegree,
+/// };
+///
+/// struct Graph<const V: usize> {
+///    edges: [BTreeSet<usize>; V],
+/// }
+///
+/// impl<const V: usize> IsBalanced for Graph<V> {
+///    fn is_balanced(&self) -> bool {
+///     self.iter_all_edges()
+///        .all(|(s, t)| self.indegree(t) == self.outdegree(s))
+///   }
+/// }
+/// ```
+///
+/// # Examples
+///
+/// ```
+/// extern crate alloc;
+///
+/// use {
+///     alloc::collections::BTreeSet,
+///     graaf::op::IsBalanced,
+/// };
+///
+/// let graph: [BTreeSet<usize>; 3] = [
+///     BTreeSet::from([1, 2]),
+///     BTreeSet::from([0, 2]),
+///     BTreeSet::from([0, 1]),
+/// ];
+///
+/// assert!(graph.is_balanced());
+///
+/// let graph: [BTreeSet<usize>; 3] = [
+///     BTreeSet::from([1, 2]),
+///     BTreeSet::from([0, 2]),
+///     BTreeSet::from([0]),
+/// ];
+///
+/// assert!(!graph.is_balanced());
+/// ```
 pub trait IsBalanced {
     /// Returns whether the graph is balanced.
     fn is_balanced(&self) -> bool;
