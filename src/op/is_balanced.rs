@@ -66,18 +66,20 @@ use {
 ///     graaf::op::{
 ///         Indegree,
 ///         IsBalanced,
+///         IterAllEdges,
 ///         Outdegree,
 ///     },
 /// };
 ///
 /// struct Graph<const V: usize> {
-///     edges: [BTreeSet<usize>; V],
+///     pub edges: [BTreeSet<usize>; V],
 /// }
 ///
 /// impl<const V: usize> IsBalanced for Graph<V> {
 ///     fn is_balanced(&self) -> bool {
-///         self.iter_all_edges()
-///             .all(|(s, t)| self.indegree(t) == self.outdegree(s))
+///         self.edges
+///             .iter_all_edges()
+///             .all(|(s, t)| self.edges.indegree(t) == self.edges.outdegree(s))
 ///     }
 /// }
 /// ```
