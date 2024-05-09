@@ -19,6 +19,65 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.38.0] - 2024-05-09
+
+Added
+
+- Add documentation alias "isograph" for `IsBalanced`.
+- Add documentation alias "pseudosymmetric" for `IsBalanced`.
+- Add trait `HasEdgeSymmetric`.
+- Add trait `IsSymmetric`.
+- Implement `HasEdgeSymmetric` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement `HasEdgeSymmetric` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `HasEdgeSymmetric` for `BTreeSet<(usize, usize)>`.
+- Implement `HasEdgeSymmetric` for `HashMap<usize, HashMap<usize, W>>`.
+- Implement `HasEdgeSymmetric` for `HashMap<usize, HashSet<usize>>`.
+- Implement `HasEdgeSymmetric` for `HashSet<(usize, usize)>`.
+- Implement `HasEdgeSymmetric` for `Vec<BTreeMap<usize, W>>`.
+- Implement `HasEdgeSymmetric` for `Vec<BTreeSet<usize>>`.
+- Implement `HasEdgeSymmetric` for `Vec<HashMap<usize, W>>`.
+- Implement `HasEdgeSymmetric` for `Vec<HashSet<usize>>`.
+- Implement `HasEdgeSymmetric` for `[BTreeMap<usize, W>; V]`.
+- Implement `HasEdgeSymmetric` for `[BTreeMap<usize, W>]`.
+- Implement `HasEdgeSymmetric` for `[BTreeSet<usize>; V]`.
+- Implement `HasEdgeSymmetric` for `[BTreeSet<usize>]`.
+- Implement `HasEdgeSymmetric` for `[HashMap<usize, W>; V]`.
+- Implement `HasEdgeSymmetric` for `[HashMap<usize, W>]`.
+- Implement `HasEdgeSymmetric` for `[HashSet<usize>; V]`.
+- Implement `HasEdgeSymmetric` for `[HashSet<usize>]`.
+- Implement `IsSymmetric` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement `IsSymmetric` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `IsSymmetric` for `HashMap<usize, HashMap<usize, W>>`.
+- Implement `IsSymmetric` for `HashMap<usize, HashSet<usize>>`.
+- Implement `IsSymmetric` for `Vec<BTreeMap<usize, W>>`.
+- Implement `IsSymmetric` for `Vec<BTreeSet<usize>>`.
+- Implement `IsSymmetric` for `Vec<HashMap<usize, W>>`.
+- Implement `IsSymmetric` for `Vec<HashSet<usize>>`.
+- Implement `IsSymmetric` for `[BTreeMap<usize, W>; V]`.
+- Implement `IsSymmetric` for `[BTreeMap<usize, W>]`.
+- Implement `IsSymmetric` for `[BTreeSet<usize>; V]`.
+- Implement `IsSymmetric` for `[BTreeSet<usize>]`.
+- Implement `IsSymmetric` for `[HashMap<usize, W>; V]`.
+- Implement `IsSymmetric` for `[HashMap<usize, W>]`.
+- Implement `IsSymmetric` for `[HashSet<usize>; V]`.
+- Implement `IsSymmetric` for `[HashSet<usize>]`.
+- Implement `IterAllWeightedEdges` for `[BTreeMap<usize, W>]`.
+- Implement `IterAllWeightedEdges` for `[BTreeSet<(usize, W)>]`.
+- Implement `IterAllWeightedEdges` for `[HashMap<usize, W>]`.
+- Implement `IterAllWeightedEdges` for `[HashSet<(usize, W)>]`.
+- Implement `IterAllWeightedEdges` for `[Vec<(usize, W)>]`.
+
+Changed
+
+- Breaking: Rename `add_weighted_edge_is_edge` to `add_weighted_edge_has_edge`.
+- Breaking: Rename `add_edge_remove_edge` to `add_edge_has_edge`.
+- Breaking: Rename `IsEdge` to `HasEdge`.
+
+Removed
+
+- Remove bound `W: Ord` from `HasEdge for [BTreeMap<usize, W>]`.
+- Remove bound `W: Ord` from `HasEdge for [BTreeMap<usize, W>; V]`.
+
 ## [0.37.0] - 2024-05-08
 
 Added

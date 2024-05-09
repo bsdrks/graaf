@@ -30,7 +30,7 @@ use crate::op::{
     CountAllEdges,
     CountAllVertices,
     Indegree,
-    IsEdge,
+    HasEdge,
     IsSimple,
     IterEdges,
     IterVertices,
@@ -105,17 +105,17 @@ where
     ///
     /// ```
     /// use graaf::{
-    ///     op::IsEdge,
+    ///     op::HasEdge,
     ///     repr::AdjacencyMatrix,
     /// };
     ///
     /// let mut graph = AdjacencyMatrix::<3>::new();
     ///
-    /// assert!(!graph.is_edge(0, 1));
+    /// assert!(!graph.has_edge(0, 1));
     ///
     /// graph.toggle(0, 1);
     ///
-    /// assert!(graph.is_edge(0, 1));
+    /// assert!(graph.has_edge(0, 1));
     /// ```
     pub fn toggle(&mut self, s: usize, t: usize) {
         assert!(s < V, "s is not in the graph");
@@ -187,15 +187,15 @@ where
     fn indegree(&self, t: usize) -> usize {
         assert!(t < V, "t is not in the graph");
 
-        (0..V).filter(|&s| self.is_edge(s, t)).count()
+        (0..V).filter(|&s| self.has_edge(s, t)).count()
     }
 }
 
-impl<const V: usize> IsEdge for AdjacencyMatrix<V>
+impl<const V: usize> HasEdge for AdjacencyMatrix<V>
 where
     [(); blocks!(V)]:,
 {
-    fn is_edge(&self, s: usize, t: usize) -> bool {
+    fn has_edge(&self, s: usize, t: usize) -> bool {
         if s >= V || t >= V {
             return false;
         }
@@ -211,7 +211,7 @@ where
     [(); blocks!(V)]:,
 {
     fn is_simple(&self) -> bool {
-        (0..V).all(|s| !self.is_edge(s, s))
+        (0..V).all(|s| !self.has_edge(s, s))
     }
 }
 
@@ -225,7 +225,7 @@ where
     fn iter_edges(&self, s: usize) -> impl Iterator<Item = usize> {
         assert!(s < V, "s is not in the graph");
 
-        (0..V).filter(move |t| self.is_edge(s, *t))
+        (0..V).filter(move |t| self.has_edge(s, *t))
     }
 }
 
@@ -248,7 +248,7 @@ where
     fn outdegree(&self, s: usize) -> usize {
         assert!(s < V, "s is not in the graph");
 
-        (0..V).filter(|&t| self.is_edge(s, t)).count()
+        (0..V).filter(|&t| self.has_edge(s, t)).count()
     }
 }
 
@@ -263,12 +263,12 @@ where
         assert!(s < V, "s is not in the graph");
         assert!(t < V, "t is not in the graph");
 
-        let is_edge = self.is_edge(s, t);
+        let has_edge = self.has_edge(s, t);
         let i = Self::index(s, t);
 
         self.blocks[i >> 6] &= !Self::mask(i);
 
-        is_edge
+        has_edge
     }
 }
 
@@ -398,30 +398,30 @@ mod tests {
     }
 
     #[test]
-    fn is_edge() {
+    fn has_edge() {
         let mut graph = AdjacencyMatrix::<3>::new();
 
-        assert!(!graph.is_edge(0, 1));
-        assert!(!graph.is_edge(0, 2));
-        assert!(!graph.is_edge(1, 0));
-        assert!(!graph.is_edge(1, 2));
-        assert!(!graph.is_edge(2, 0));
-        assert!(!graph.is_edge(2, 1));
-        assert!(!graph.is_edge(3, 0));
-        assert!(!graph.is_edge(0, 3));
+        assert!(!graph.has_edge(0, 1));
+        assert!(!graph.has_edge(0, 2));
+        assert!(!graph.has_edge(1, 0));
+        assert!(!graph.has_edge(1, 2));
+        assert!(!graph.has_edge(2, 0));
+        assert!(!graph.has_edge(2, 1));
+        assert!(!graph.has_edge(3, 0));
+        assert!(!graph.has_edge(0, 3));
 
         graph.add_edge(0, 1);
         graph.add_edge(0, 2);
         graph.add_edge(2, 1);
 
-        assert!(graph.is_edge(0, 1));
-        assert!(graph.is_edge(0, 2));
-        assert!(!graph.is_edge(1, 0));
-        assert!(!graph.is_edge(1, 2));
-        assert!(!graph.is_edge(2, 0));
-        assert!(graph.is_edge(2, 1));
-        assert!(!graph.is_edge(3, 0));
-        assert!(!graph.is_edge(0, 3));
+        assert!(graph.has_edge(0, 1));
+        assert!(graph.has_edge(0, 2));
+        assert!(!graph.has_edge(1, 0));
+        assert!(!graph.has_edge(1, 2));
+        assert!(!graph.has_edge(2, 0));
+        assert!(graph.has_edge(2, 1));
+        assert!(!graph.has_edge(3, 0));
+        assert!(!graph.has_edge(0, 3));
     }
 
     #[test]
@@ -504,25 +504,25 @@ mod tests {
         graph.add_edge(1, 0);
         graph.add_edge(2, 1);
 
-        assert!(!graph.is_edge(0, 0));
-        assert!(graph.is_edge(0, 1));
-        assert!(graph.is_edge(0, 2));
-        assert!(graph.is_edge(1, 0));
-        assert!(!graph.is_edge(1, 1));
-        assert!(!graph.is_edge(1, 2));
-        assert!(!graph.is_edge(2, 0));
-        assert!(graph.is_edge(2, 1));
-        assert!(!graph.is_edge(2, 2));
+        assert!(!graph.has_edge(0, 0));
+        assert!(graph.has_edge(0, 1));
+        assert!(graph.has_edge(0, 2));
+        assert!(graph.has_edge(1, 0));
+        assert!(!graph.has_edge(1, 1));
+        assert!(!graph.has_edge(1, 2));
+        assert!(!graph.has_edge(2, 0));
+        assert!(graph.has_edge(2, 1));
+        assert!(!graph.has_edge(2, 2));
 
         assert!(graph.remove_edge(0, 1));
         assert!(graph.remove_edge(0, 2));
         assert!(graph.remove_edge(1, 0));
         assert!(graph.remove_edge(2, 1));
 
-        assert!(!graph.is_edge(0, 1));
-        assert!(!graph.is_edge(0, 2));
-        assert!(!graph.is_edge(1, 0));
-        assert!(!graph.is_edge(2, 1));
+        assert!(!graph.has_edge(0, 1));
+        assert!(!graph.has_edge(0, 2));
+        assert!(!graph.has_edge(1, 0));
+        assert!(!graph.has_edge(2, 1));
     }
 
     #[test]

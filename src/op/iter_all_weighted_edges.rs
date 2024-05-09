@@ -129,6 +129,67 @@ where
     }
 }
 
+impl<W> IterAllWeightedEdges<W> for [Vec<(usize, W)>] {
+    fn iter_all_weighted_edges<'a>(&'a self) -> impl Iterator<Item = (usize, usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self.iter()
+            .enumerate()
+            .flat_map(move |(s, vec)| vec.iter().map(move |(t, w)| (s, *t, w)))
+    }
+}
+
+impl<W> IterAllWeightedEdges<W> for [BTreeSet<(usize, W)>] {
+    fn iter_all_weighted_edges<'a>(&'a self) -> impl Iterator<Item = (usize, usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self.iter()
+            .enumerate()
+            .flat_map(move |(s, set)| set.iter().map(move |(t, w)| (s, *t, w)))
+    }
+}
+
+impl<W, H> IterAllWeightedEdges<W> for [HashSet<(usize, W), H>]
+where
+    H: BuildHasher,
+{
+    fn iter_all_weighted_edges<'a>(&'a self) -> impl Iterator<Item = (usize, usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self.iter()
+            .enumerate()
+            .flat_map(move |(s, set)| set.iter().map(move |(t, w)| (s, *t, w)))
+    }
+}
+
+impl<W> IterAllWeightedEdges<W> for [BTreeMap<usize, W>] {
+    fn iter_all_weighted_edges<'a>(&'a self) -> impl Iterator<Item = (usize, usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self.iter()
+            .enumerate()
+            .flat_map(move |(s, map)| map.iter().map(move |(t, w)| (s, *t, w)))
+    }
+}
+
+impl<W, H> IterAllWeightedEdges<W> for [HashMap<usize, W, H>]
+where
+    H: BuildHasher,
+{
+    fn iter_all_weighted_edges<'a>(&'a self) -> impl Iterator<Item = (usize, usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self.iter()
+            .enumerate()
+            .flat_map(move |(s, map)| map.iter().map(move |(t, w)| (s, *t, w)))
+    }
+}
+
 impl<const V: usize, W> IterAllWeightedEdges<W> for [Vec<(usize, W)>; V] {
     fn iter_all_weighted_edges<'a>(&'a self) -> impl Iterator<Item = (usize, usize, &'a W)>
     where
@@ -385,6 +446,57 @@ mod tests {
     #[test]
     fn vec_hash_map() {
         let graph = vec![
+            HashMap::from([(1, 2)]),
+            HashMap::from([(2, 3)]),
+            HashMap::from([(0, 4)]),
+        ];
+
+        test_iter_all_weighted_edges_unstable!(graph);
+    }
+
+    #[test]
+    fn slice_vec() {
+        let graph: &[Vec<(usize, usize)>] = &[vec![(1, 2)], vec![(2, 3)], vec![(0, 4)]];
+
+        test_iter_all_weighted_edges_stable!(graph);
+    }
+
+    #[test]
+    fn slice_btree_set() {
+        let graph: &[BTreeSet<(usize, usize)>] = &[
+            BTreeSet::from([(1, 2)]),
+            BTreeSet::from([(2, 3)]),
+            BTreeSet::from([(0, 4)]),
+        ];
+
+        test_iter_all_weighted_edges_stable!(graph);
+    }
+
+    #[test]
+    fn slice_hash_set() {
+        let graph: &[HashSet<(usize, usize)>] = &[
+            HashSet::from([(1, 2)]),
+            HashSet::from([(2, 3)]),
+            HashSet::from([(0, 4)]),
+        ];
+
+        test_iter_all_weighted_edges_unstable!(graph);
+    }
+
+    #[test]
+    fn slice_btree_map() {
+        let graph = &[
+            BTreeMap::from([(1, 2)]),
+            BTreeMap::from([(2, 3)]),
+            BTreeMap::from([(0, 4)]),
+        ];
+
+        test_iter_all_weighted_edges_stable!(graph);
+    }
+
+    #[test]
+    fn slice_hash_map() {
+        let graph = &[
             HashMap::from([(1, 2)]),
             HashMap::from([(2, 3)]),
             HashMap::from([(0, 4)]),

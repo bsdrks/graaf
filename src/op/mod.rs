@@ -114,10 +114,12 @@ pub mod add_weighted_edge;
 pub mod count_all_edges;
 pub mod count_all_vertices;
 pub mod edge_weight;
+pub mod has_edge;
+pub mod has_edge_symmetric;
 pub mod indegree;
 pub mod is_balanced;
-pub mod is_edge;
 pub mod is_simple;
+pub mod is_symmetric;
 pub mod iter_all_edges;
 pub mod iter_all_weighted_edges;
 pub mod iter_edges;
@@ -132,10 +134,12 @@ pub use {
     count_all_edges::CountAllEdges,
     count_all_vertices::CountAllVertices,
     edge_weight::EdgeWeight,
+    has_edge::HasEdge,
+    has_edge_symmetric::HasEdgeSymmetric,
     indegree::Indegree,
     is_balanced::IsBalanced,
-    is_edge::IsEdge,
     is_simple::IsSimple,
+    is_symmetric::IsSymmetric,
     iter_all_edges::IterAllEdges,
     iter_all_weighted_edges::IterAllWeightedEdges,
     iter_edges::IterEdges,

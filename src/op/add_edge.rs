@@ -70,14 +70,14 @@ use {
 /// Types that also implement [`RemoveEdge`] should ensure that
 /// [`add_edge_remove_edge`] holds.
 ///
-/// ## `AddEdge` and `IsEdge`
+/// ## `AddEdge` and `HasEdge`
 ///
-/// Types that also implement [`IsEdge`] should ensure that [`add_edge_is_edge`]
-/// holds.
+/// Types that also implement [`HasEdge`] should ensure that
+/// [`add_edge_has_edge`] holds.
 ///
-/// [`IsEdge`]: crate::op::IsEdge
+/// [`HasEdge`]: crate::op::HasEdge
 /// [`RemoveEdge`]: crate::op::RemoveEdge
-/// [`add_edge_is_edge`]: crate::prop::add_edge_is_edge
+/// [`add_edge_has_edge`]: crate::prop::add_edge_has_edge
 /// [`add_edge_remove_edge`]: crate::prop::add_edge_remove_edge
 pub trait AddEdge {
     /// Adds an edge from `s` to `t`.

@@ -1,3 +1,5 @@
+#![doc(alias = "isograph")]
+#![doc(alias = "pseudosymmetric")]
 //! A trait to determine whether a directed graph is balanced
 //!
 //! A directed graph is balanced if the indegree of each vertex is equal to its
@@ -110,6 +112,8 @@ use {
 ///
 /// assert!(!graph.is_balanced());
 /// ```
+#[doc(alias = "isograph")]
+#[doc(alias = "pseudosymmetric")]
 pub trait IsBalanced {
     /// Returns whether the graph is balanced.
     fn is_balanced(&self) -> bool;

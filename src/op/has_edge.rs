@@ -1,10 +1,13 @@
 //! A trait to check if an edge exists from one vertex to another
 //!
+//! To check if an edge exists from `s` to `t` and from `t` to `s`, see
+//! [`HasEdgeSymmetric`].
+//!
 //! # Examples
 //!
 //! ```
 //! use {
-//!     graaf::op::IsEdge,
+//!     graaf::op::HasEdge,
 //!     std::collections::HashSet,
 //! };
 //!
@@ -14,16 +17,18 @@
 //!     HashSet::from([0, 1]),
 //! ];
 //!
-//! assert!(!graph.is_edge(0, 0));
-//! assert!(graph.is_edge(0, 1));
-//! assert!(graph.is_edge(0, 2));
-//! assert!(graph.is_edge(1, 0));
-//! assert!(!graph.is_edge(1, 1));
-//! assert!(!graph.is_edge(1, 2));
-//! assert!(graph.is_edge(2, 0));
-//! assert!(graph.is_edge(2, 1));
-//! assert!(!graph.is_edge(2, 2));
+//! assert!(!graph.has_edge(0, 0));
+//! assert!(graph.has_edge(0, 1));
+//! assert!(graph.has_edge(0, 2));
+//! assert!(graph.has_edge(1, 0));
+//! assert!(!graph.has_edge(1, 1));
+//! assert!(!graph.has_edge(1, 2));
+//! assert!(graph.has_edge(2, 0));
+//! assert!(graph.has_edge(2, 1));
+//! assert!(!graph.has_edge(2, 2));
 //! ```
+//!
+//! [`HasEdgeSymmetric`]: crate::op::HasEdgeSymmetric
 
 extern crate alloc;
 
@@ -41,14 +46,14 @@ use {
 
 /// A trait to check if an edge exists from one vertex to another
 ///
-/// # How can I implement `IsEdge`?
+/// # How can I implement `HasEdge`?
 ///
-/// Provide an implementation of `is_edge` that returns `true` if there is an
+/// Provide an implementation of `has_edge` that returns `true` if there is an
 /// edge from `s` to `t`.
 ///
 /// ```
 /// use {
-///     graaf::op::IsEdge,
+///     graaf::op::HasEdge,
 ///     std::collections::HashSet,
 /// };
 ///
@@ -56,8 +61,8 @@ use {
 ///     edges: Vec<HashSet<usize>>,
 /// }
 ///
-/// impl IsEdge for Graph {
-///     fn is_edge(&self, s: usize, t: usize) -> bool {
+/// impl HasEdge for Graph {
+///     fn has_edge(&self, s: usize, t: usize) -> bool {
 ///         self.edges.get(s).map_or(false, |set| set.contains(&t))
 ///     }
 /// }
@@ -67,7 +72,7 @@ use {
 ///
 /// ```
 /// use {
-///     graaf::op::IsEdge,
+///     graaf::op::HasEdge,
 ///     std::collections::HashSet,
 /// };
 ///
@@ -77,35 +82,35 @@ use {
 ///     HashSet::from([0, 1]),
 /// ];
 ///
-/// assert!(!graph.is_edge(0, 0));
-/// assert!(graph.is_edge(0, 1));
-/// assert!(graph.is_edge(0, 2));
-/// assert!(graph.is_edge(1, 0));
-/// assert!(!graph.is_edge(1, 1));
-/// assert!(!graph.is_edge(1, 2));
-/// assert!(graph.is_edge(2, 0));
-/// assert!(graph.is_edge(2, 1));
-/// assert!(!graph.is_edge(2, 2));
+/// assert!(!graph.has_edge(0, 0));
+/// assert!(graph.has_edge(0, 1));
+/// assert!(graph.has_edge(0, 2));
+/// assert!(graph.has_edge(1, 0));
+/// assert!(!graph.has_edge(1, 1));
+/// assert!(!graph.has_edge(1, 2));
+/// assert!(graph.has_edge(2, 0));
+/// assert!(graph.has_edge(2, 1));
+/// assert!(!graph.has_edge(2, 2));
 /// ```
 ///
 /// # Properties
 ///
-/// ## `IsEdge` and `AddEdge`
+/// ## `HasEdge` and `AddEdge`
 ///
 /// Types that also implement [`AddEdge`] should ensure that
-/// [`add_edge_is_edge`] holds.
+/// [`add_edge_has_edge`] holds.
 ///
-/// ## `IsEdge` and `AddWeightedEdge`
+/// ## `HasEdge` and `AddWeightedEdge`
 ///
 /// Types that also implement [`AddWeightedEdge`] should ensure that
-/// [`add_weighted_edge_is_edge`] holds.
+/// [`add_weighted_edge_has_edge`] holds.
 ///
 /// [`AddEdge`]: crate::op::AddEdge
 /// [`AddWeightedEdge`]: crate::op::AddWeightedEdge
-/// [`add_edge_is_edge`]: crate::prop::add_edge_is_edge
-/// [`add_weighted_edge_is_edge`]: crate::prop::add_weighted_edge_is_edge
-pub trait IsEdge {
-    /// Returns whether there is an edge from `s` to `t`.
+/// [`add_edge_has_edge`]: crate::prop::add_edge_has_edge
+/// [`add_weighted_edge_has_edge`]: crate::prop::add_weighted_edge_has_edge
+pub trait HasEdge {
+    /// Returns whether an edge exists from `s` to `t`.
     ///
     /// # Arguments
     ///
@@ -115,146 +120,140 @@ pub trait IsEdge {
     /// # Panics
     ///
     /// Implementations may not panic if `s` or `t` are not in the graph.
-    fn is_edge(&self, s: usize, t: usize) -> bool;
+    fn has_edge(&self, s: usize, t: usize) -> bool;
 }
 
-impl IsEdge for Vec<BTreeSet<usize>> {
-    fn is_edge(&self, s: usize, t: usize) -> bool {
+impl HasEdge for Vec<BTreeSet<usize>> {
+    fn has_edge(&self, s: usize, t: usize) -> bool {
         self.get(s).map_or(false, |set| set.contains(&t))
     }
 }
 
-impl<H> IsEdge for Vec<HashSet<usize, H>>
+impl<H> HasEdge for Vec<HashSet<usize, H>>
 where
     H: BuildHasher,
 {
-    fn is_edge(&self, s: usize, t: usize) -> bool {
+    fn has_edge(&self, s: usize, t: usize) -> bool {
         self.get(s).map_or(false, |set| set.contains(&t))
     }
 }
 
-impl<W> IsEdge for Vec<BTreeMap<usize, W>> {
-    fn is_edge(&self, s: usize, t: usize) -> bool {
+impl<W> HasEdge for Vec<BTreeMap<usize, W>> {
+    fn has_edge(&self, s: usize, t: usize) -> bool {
         self.get(s).map_or(false, |map| map.contains_key(&t))
     }
 }
 
-impl<W, H> IsEdge for Vec<HashMap<usize, W, H>>
+impl<W, H> HasEdge for Vec<HashMap<usize, W, H>>
 where
     H: BuildHasher,
 {
-    fn is_edge(&self, s: usize, t: usize) -> bool {
+    fn has_edge(&self, s: usize, t: usize) -> bool {
         self.get(s).map_or(false, |map| map.contains_key(&t))
     }
 }
 
-impl IsEdge for [BTreeSet<usize>] {
-    fn is_edge(&self, s: usize, t: usize) -> bool {
+impl HasEdge for [BTreeSet<usize>] {
+    fn has_edge(&self, s: usize, t: usize) -> bool {
         self.get(s).map_or(false, |set| set.contains(&t))
     }
 }
 
-impl<H> IsEdge for [HashSet<usize, H>]
+impl<H> HasEdge for [HashSet<usize, H>]
 where
     H: BuildHasher,
 {
-    fn is_edge(&self, s: usize, t: usize) -> bool {
+    fn has_edge(&self, s: usize, t: usize) -> bool {
         self.get(s).map_or(false, |set| set.contains(&t))
     }
 }
 
-impl<W> IsEdge for [BTreeMap<usize, W>]
-where
-    W: Ord,
-{
-    fn is_edge(&self, s: usize, t: usize) -> bool {
+impl<W> HasEdge for [BTreeMap<usize, W>] {
+    fn has_edge(&self, s: usize, t: usize) -> bool {
         self.get(s).map_or(false, |map| map.contains_key(&t))
     }
 }
 
-impl<W, H> IsEdge for [HashMap<usize, W, H>]
+impl<W, H> HasEdge for [HashMap<usize, W, H>]
 where
     H: BuildHasher,
 {
-    fn is_edge(&self, s: usize, t: usize) -> bool {
+    fn has_edge(&self, s: usize, t: usize) -> bool {
         self.get(s).map_or(false, |map| map.contains_key(&t))
     }
 }
 
-impl<const V: usize> IsEdge for [BTreeSet<usize>; V] {
-    fn is_edge(&self, s: usize, t: usize) -> bool {
+impl<const V: usize> HasEdge for [BTreeSet<usize>; V] {
+    fn has_edge(&self, s: usize, t: usize) -> bool {
         self.get(s).map_or(false, |set| set.contains(&t))
     }
 }
 
-impl<const V: usize, H> IsEdge for [HashSet<usize, H>; V]
+impl<const V: usize, H> HasEdge for [HashSet<usize, H>; V]
 where
     H: BuildHasher,
 {
-    fn is_edge(&self, s: usize, t: usize) -> bool {
+    fn has_edge(&self, s: usize, t: usize) -> bool {
         self.get(s).map_or(false, |set| set.contains(&t))
     }
 }
 
-impl<const V: usize, W> IsEdge for [BTreeMap<usize, W>; V]
-where
-    W: Ord,
-{
-    fn is_edge(&self, s: usize, t: usize) -> bool {
+impl<const V: usize, W> HasEdge for [BTreeMap<usize, W>; V] {
+    fn has_edge(&self, s: usize, t: usize) -> bool {
         self.get(s).map_or(false, |map| map.contains_key(&t))
     }
 }
 
-impl<const V: usize, W, H> IsEdge for [HashMap<usize, W, H>; V]
+impl<const V: usize, W, H> HasEdge for [HashMap<usize, W, H>; V]
 where
     H: BuildHasher,
 {
-    fn is_edge(&self, s: usize, t: usize) -> bool {
+    fn has_edge(&self, s: usize, t: usize) -> bool {
         self.get(s).map_or(false, |map| map.contains_key(&t))
     }
 }
 
-impl IsEdge for BTreeSet<(usize, usize)> {
-    fn is_edge(&self, s: usize, t: usize) -> bool {
+impl HasEdge for BTreeSet<(usize, usize)> {
+    fn has_edge(&self, s: usize, t: usize) -> bool {
         self.contains(&(s, t))
     }
 }
 
-impl<H> IsEdge for HashSet<(usize, usize), H>
+impl<H> HasEdge for HashSet<(usize, usize), H>
 where
     H: BuildHasher,
 {
-    fn is_edge(&self, s: usize, t: usize) -> bool {
+    fn has_edge(&self, s: usize, t: usize) -> bool {
         self.contains(&(s, t))
     }
 }
 
-impl IsEdge for BTreeMap<usize, BTreeSet<usize>> {
-    fn is_edge(&self, s: usize, t: usize) -> bool {
+impl HasEdge for BTreeMap<usize, BTreeSet<usize>> {
+    fn has_edge(&self, s: usize, t: usize) -> bool {
         self.get(&s).map_or(false, |set| set.contains(&t))
     }
 }
 
-impl<H> IsEdge for HashMap<usize, HashSet<usize, H>, H>
+impl<H> HasEdge for HashMap<usize, HashSet<usize, H>, H>
 where
     H: BuildHasher,
 {
-    fn is_edge(&self, s: usize, t: usize) -> bool {
+    fn has_edge(&self, s: usize, t: usize) -> bool {
         self.get(&s).map_or(false, |set| set.contains(&t))
     }
 }
 
-impl<W> IsEdge for BTreeMap<usize, BTreeMap<usize, W>> {
-    fn is_edge(&self, s: usize, t: usize) -> bool {
+impl<W> HasEdge for BTreeMap<usize, BTreeMap<usize, W>> {
+    fn has_edge(&self, s: usize, t: usize) -> bool {
         self.get(&s).map_or(false, |map| map.contains_key(&t))
     }
 }
 
-impl<W, H> IsEdge for HashMap<usize, HashMap<usize, W, H>, H>
+impl<W, H> HasEdge for HashMap<usize, HashMap<usize, W, H>, H>
 where
     H: BuildHasher,
 {
-    fn is_edge(&self, s: usize, t: usize) -> bool {
+    fn has_edge(&self, s: usize, t: usize) -> bool {
         self.get(&s).map_or(false, |map| map.contains_key(&t))
     }
 }
@@ -263,17 +262,17 @@ where
 mod tests {
     use super::*;
 
-    macro_rules! test_is_edge {
+    macro_rules! test_has_edge {
         ($graph:expr) => {
-            assert!(!$graph.is_edge(0, 0));
-            assert!($graph.is_edge(0, 1));
-            assert!($graph.is_edge(0, 2));
-            assert!($graph.is_edge(1, 0));
-            assert!(!$graph.is_edge(1, 1));
-            assert!(!$graph.is_edge(1, 2));
-            assert!($graph.is_edge(2, 0));
-            assert!($graph.is_edge(2, 1));
-            assert!(!$graph.is_edge(2, 2));
+            assert!(!$graph.has_edge(0, 0));
+            assert!($graph.has_edge(0, 1));
+            assert!($graph.has_edge(0, 2));
+            assert!($graph.has_edge(1, 0));
+            assert!(!$graph.has_edge(1, 1));
+            assert!(!$graph.has_edge(1, 2));
+            assert!($graph.has_edge(2, 0));
+            assert!($graph.has_edge(2, 1));
+            assert!(!$graph.has_edge(2, 2));
         };
     }
 
@@ -285,7 +284,7 @@ mod tests {
             BTreeSet::from([0, 1]),
         ];
 
-        test_is_edge!(graph);
+        test_has_edge!(graph);
     }
 
     #[test]
@@ -296,7 +295,7 @@ mod tests {
             HashSet::from([0, 1]),
         ];
 
-        test_is_edge!(graph);
+        test_has_edge!(graph);
     }
 
     #[test]
@@ -307,7 +306,7 @@ mod tests {
             BTreeMap::from([(0, 1), (1, 1)]),
         ];
 
-        test_is_edge!(graph);
+        test_has_edge!(graph);
     }
 
     #[test]
@@ -318,7 +317,7 @@ mod tests {
             HashMap::from([(0, 1), (1, 1)]),
         ];
 
-        test_is_edge!(graph);
+        test_has_edge!(graph);
     }
 
     #[test]
@@ -329,7 +328,7 @@ mod tests {
             BTreeSet::from([0, 1]),
         ];
 
-        test_is_edge!(graph);
+        test_has_edge!(graph);
     }
 
     #[test]
@@ -340,7 +339,7 @@ mod tests {
             HashSet::from([0, 1]),
         ];
 
-        test_is_edge!(graph);
+        test_has_edge!(graph);
     }
 
     #[test]
@@ -351,7 +350,7 @@ mod tests {
             BTreeMap::from([(0, 1), (1, 1)]),
         ];
 
-        test_is_edge!(graph);
+        test_has_edge!(graph);
     }
 
     #[test]
@@ -362,7 +361,7 @@ mod tests {
             HashMap::from([(0, 1), (1, 1)]),
         ];
 
-        test_is_edge!(graph);
+        test_has_edge!(graph);
     }
 
     #[test]
@@ -373,7 +372,7 @@ mod tests {
             BTreeSet::from([0, 1]),
         ];
 
-        test_is_edge!(graph);
+        test_has_edge!(graph);
     }
 
     #[test]
@@ -384,7 +383,7 @@ mod tests {
             HashSet::from([0, 1]),
         ];
 
-        test_is_edge!(graph);
+        test_has_edge!(graph);
     }
 
     #[test]
@@ -395,7 +394,7 @@ mod tests {
             BTreeMap::from([(0, 1), (1, 1)]),
         ];
 
-        test_is_edge!(graph);
+        test_has_edge!(graph);
     }
 
     #[test]
@@ -406,21 +405,21 @@ mod tests {
             HashMap::from([(0, 1), (1, 1)]),
         ];
 
-        test_is_edge!(graph);
+        test_has_edge!(graph);
     }
 
     #[test]
     fn btree_set() {
         let graph = BTreeSet::from([(0, 1), (0, 2), (1, 0), (2, 0), (2, 1)]);
 
-        test_is_edge!(graph);
+        test_has_edge!(graph);
     }
 
     #[test]
     fn hash_set() {
         let graph = HashSet::from([(0, 1), (0, 2), (1, 0), (2, 0), (2, 1)]);
 
-        test_is_edge!(graph);
+        test_has_edge!(graph);
     }
 
     #[test]
@@ -431,7 +430,7 @@ mod tests {
             (2, BTreeSet::from([0, 1])),
         ]);
 
-        test_is_edge!(graph);
+        test_has_edge!(graph);
     }
 
     #[test]
@@ -442,7 +441,7 @@ mod tests {
             (2, HashSet::from([0, 1])),
         ]);
 
-        test_is_edge!(graph);
+        test_has_edge!(graph);
     }
 
     #[test]
@@ -453,7 +452,7 @@ mod tests {
             (2, BTreeMap::from([(0, 1), (1, 1)])),
         ]);
 
-        test_is_edge!(graph);
+        test_has_edge!(graph);
     }
 
     #[test]
@@ -464,6 +463,6 @@ mod tests {
             (2, HashMap::from([(0, 1), (1, 1)])),
         ]);
 
-        test_is_edge!(graph);
+        test_has_edge!(graph);
     }
 }
