@@ -19,6 +19,12 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.38.1] - 2024-05-09
+
+Changed
+
+- Fix formatting
+
 ## [0.38.0] - 2024-05-09
 
 Added

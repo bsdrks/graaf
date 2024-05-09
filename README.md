@@ -8,14 +8,14 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.38.0"
+graaf = "0.38.1"
 ```
 
 To use stable Rust, turn off the `adjacency_matrix` feature:
 
 ```toml
 [dependencies]
-graaf = { version = "0.38.0", default-features = false }
+graaf = { version = "0.38.1", default-features = false }
 ```
 
 ## Overview
