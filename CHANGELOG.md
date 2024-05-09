@@ -19,6 +19,24 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.38.2] - 2024-05-09
+
+Added
+
+- Add property test `binop_vertices_bounds` for `binop_vertices`.
+- Add unit test `arr_vec_parallel_edges` for `IsSimple`.
+- Add unit test `arr_vec_self_loop` for `IsSimple`.
+- Add unit test `arr_vec_simple` for `IsSimple`.
+- Add unit test `slice_vec_parallel_edges` for `IsSimple`.
+- Add unit test `slice_vec_self_loop` for `IsSimple`.
+- Add unit test `slice_vec_simple` for `IsSimple`.
+- Add unit test `vec_vec_parallel_edges` for `IsSimple`.
+- Add unit test `vec_vec_self_loop` for `IsSimple`.
+- Add unit test `vec_vec_simple` for `IsSimple`.
+- Implement `IsSimple` for `Vec<Vec<usize>>`.
+- Implement `IsSimple` for `[Vec<usize>; V]`.
+- Implement `IsSimple` for `[Vec<usize>]`.
+
 ## [0.38.1] - 2024-05-09
 
 Changed

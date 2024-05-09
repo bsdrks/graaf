@@ -3,6 +3,7 @@
 #![cfg(test)]
 
 use proptest::{
+    self,
     prelude::prop,
     strategy::{
         Just,
@@ -24,4 +25,22 @@ pub fn binop_vertices(min: usize, max: usize) -> impl Strategy<Value = (usize, u
 
         (Just(v), s, t)
     })
+}
+
+#[cfg(test)]
+mod tests {
+    use {
+        super::*,
+        proptest::proptest,
+    };
+
+    proptest! {
+        #[test]
+        fn binop_vertices_bounds((v, s, t) in binop_vertices(1, 100)) {
+            assert!(v >= 1);
+            assert!(v <= 100);
+            assert!(s < v);
+            assert!(t < v);
+        }
+    }
 }
