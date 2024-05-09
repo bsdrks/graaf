@@ -1,4 +1,4 @@
-//! An adjacency matrix representation of an unweighted digraph
+//! An adjacency matrix representation of an unweighted directed graph
 //!
 //! The matrix is stored as a bit array, and is suited for dense graphs with a
 //! small number of vertices.
@@ -44,7 +44,7 @@ macro_rules! blocks {
     };
 }
 
-/// An adjacency matrix representation of an unweighted digraph
+/// An adjacency matrix representation of an unweighted directed graph
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct AdjacencyMatrix<const V: usize>
 where

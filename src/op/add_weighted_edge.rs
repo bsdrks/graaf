@@ -269,9 +269,7 @@ where
 
 impl<W> AddWeightedEdge<W> for BTreeMap<usize, Vec<(usize, W)>> {
     fn add_weighted_edge(&mut self, s: usize, t: usize, w: W) {
-        self.get_mut(&s)
-            .expect("s is not in the graph")
-            .push((t, w));
+        self.entry(s).or_default().push((t, w));
     }
 }
 
@@ -280,19 +278,13 @@ where
     W: Ord,
 {
     fn add_weighted_edge(&mut self, s: usize, t: usize, w: W) {
-        let _ = self
-            .get_mut(&s)
-            .expect("s is not in the graph")
-            .insert((t, w));
+        let _ = self.entry(s).or_default().insert((t, w));
     }
 }
 
 impl<W> AddWeightedEdge<W> for BTreeMap<usize, BTreeMap<usize, W>> {
     fn add_weighted_edge(&mut self, s: usize, t: usize, w: W) {
-        let _ = self
-            .get_mut(&s)
-            .expect("s is not in the graph")
-            .insert(t, w);
+        let _ = self.entry(s).or_default().insert(t, w);
     }
 }
 
@@ -319,12 +311,10 @@ where
 impl<W, H> AddWeightedEdge<W> for HashMap<usize, HashMap<usize, W, H>, H>
 where
     H: BuildHasher,
+    HashMap<usize, W, H>: Default,
 {
     fn add_weighted_edge(&mut self, s: usize, t: usize, w: W) {
-        let _ = self
-            .get_mut(&s)
-            .expect("s is not in the graph")
-            .insert(t, w);
+        let _ = self.entry(s).or_default().insert(t, w);
     }
 }
 

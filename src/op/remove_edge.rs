@@ -272,11 +272,15 @@ where
 }
 
 impl RemoveEdge for BTreeMap<usize, BTreeSet<usize>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn remove_edge(&mut self, s: usize, t: usize) -> bool {
-        self.get_mut(&s).unwrap().remove(&t)
+        self.get_mut(&s).map(|set| set.remove(&t)).unwrap()
+    }
+}
+
+impl<W> RemoveEdge for BTreeMap<usize, BTreeMap<usize, W>> {
+    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+        self.get_mut(&s)
+            .map_or(false, |map| map.remove(&t).is_some())
     }
 }
 
@@ -284,20 +288,8 @@ impl<H> RemoveEdge for HashMap<usize, HashSet<usize, H>, H>
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn remove_edge(&mut self, s: usize, t: usize) -> bool {
-        self.get_mut(&s).unwrap().remove(&t)
-    }
-}
-
-impl<W> RemoveEdge for BTreeMap<usize, BTreeMap<usize, W>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
-    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
-        self.get_mut(&s).unwrap().remove(&t).is_some()
+        self.get_mut(&s).map(|set| set.remove(&t)).unwrap()
     }
 }
 
@@ -305,11 +297,9 @@ impl<W, H> RemoveEdge for HashMap<usize, HashMap<usize, W, H>, H>
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
     fn remove_edge(&mut self, s: usize, t: usize) -> bool {
-        self.get_mut(&s).unwrap().remove(&t).is_some()
+        self.get_mut(&s)
+            .map_or(false, |map| map.remove(&t).is_some())
     }
 }
 

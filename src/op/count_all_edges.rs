@@ -60,18 +60,12 @@ pub trait CountAllEdges {
 }
 
 impl<T> CountAllEdges for Vec<Vec<T>> {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.iter().map(Vec::len).sum()
     }
 }
 
 impl<T> CountAllEdges for Vec<BTreeSet<T>> {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.iter().map(BTreeSet::len).sum()
     }
@@ -81,18 +75,12 @@ impl<T, H> CountAllEdges for Vec<HashSet<T, H>>
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.iter().map(HashSet::len).sum()
     }
 }
 
 impl<K, W> CountAllEdges for Vec<BTreeMap<K, W>> {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.iter().map(BTreeMap::len).sum()
     }
@@ -102,27 +90,18 @@ impl<K, W, H> CountAllEdges for Vec<HashMap<K, W, H>>
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.iter().map(HashMap::len).sum()
     }
 }
 
 impl<T> CountAllEdges for [Vec<T>] {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.iter().map(Vec::len).sum()
     }
 }
 
 impl<T> CountAllEdges for [BTreeSet<T>] {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.iter().map(BTreeSet::len).sum()
     }
@@ -132,18 +111,12 @@ impl<T, H> CountAllEdges for [HashSet<T, H>]
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.iter().map(HashSet::len).sum()
     }
 }
 
 impl<K, W> CountAllEdges for [BTreeMap<K, W>] {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.iter().map(BTreeMap::len).sum()
     }
@@ -153,36 +126,24 @@ impl<K, W, H> CountAllEdges for [HashMap<K, W, H>]
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.iter().map(HashMap::len).sum()
     }
 }
 
 impl<const V: usize, T> CountAllEdges for [Vec<T>; V] {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.iter().map(Vec::len).sum()
     }
 }
 
 impl<const V: usize, T> CountAllEdges for [BTreeSet<T>; V] {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.iter().map(BTreeSet::len).sum()
     }
 }
 
 impl<const V: usize, K, W> CountAllEdges for [BTreeMap<K, W>; V] {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.iter().map(BTreeMap::len).sum()
     }
@@ -192,9 +153,6 @@ impl<const V: usize, T, H> CountAllEdges for [HashSet<T, H>; V]
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.iter().map(HashSet::len).sum()
     }
@@ -204,36 +162,24 @@ impl<const V: usize, K, W, H> CountAllEdges for [HashMap<K, W, H>; V]
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.iter().map(HashMap::len).sum()
     }
 }
 
 impl<K, T> CountAllEdges for BTreeMap<K, Vec<T>> {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.values().map(Vec::len).sum()
     }
 }
 
 impl<K, T> CountAllEdges for BTreeMap<K, BTreeSet<T>> {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.values().map(BTreeSet::len).sum()
     }
 }
 
 impl<K, W> CountAllEdges for BTreeMap<K, BTreeMap<K, W>> {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.values().map(BTreeMap::len).sum()
     }
@@ -243,9 +189,6 @@ impl<K, T, H> CountAllEdges for HashMap<K, Vec<T>, H>
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.values().map(Vec::len).sum()
     }
@@ -255,9 +198,6 @@ impl<K, T, H> CountAllEdges for HashMap<K, HashSet<T, H>, H>
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.values().map(HashSet::len).sum()
     }
@@ -267,45 +207,30 @@ impl<K, W, H> CountAllEdges for HashMap<K, HashMap<K, W, H>, H>
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.values().map(HashMap::len).sum()
     }
 }
 
 impl CountAllEdges for Vec<(usize, usize)> {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.len()
     }
 }
 
 impl<W> CountAllEdges for Vec<(usize, usize, W)> {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.len()
     }
 }
 
 impl CountAllEdges for BTreeSet<(usize, usize)> {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.len()
     }
 }
 
 impl<W> CountAllEdges for BTreeSet<(usize, usize, W)> {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.len()
     }
@@ -315,9 +240,6 @@ impl<H> CountAllEdges for HashSet<(usize, usize), H>
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.len()
     }
@@ -327,9 +249,6 @@ impl<W, H> CountAllEdges for HashSet<(usize, usize, W), H>
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if the number of edges exceeds `usize::MAX`.
     fn count_all_edges(&self) -> usize {
         self.len()
     }

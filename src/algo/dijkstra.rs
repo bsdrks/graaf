@@ -96,7 +96,7 @@ use {
 };
 
 /// Calculates the distances from the source vertices to all vertices in a
-/// weighted digraph.
+/// weighted directed graph.
 ///
 /// # Arguments
 ///
@@ -162,7 +162,8 @@ pub fn distances<G, S, W>(
     }
 }
 
-/// Calculates all distances from a single source vertex in a weighted digraph.
+/// Calculates all distances from a single source vertex in a weighted directed
+/// graph.
 ///
 /// # Arguments
 ///
@@ -205,7 +206,7 @@ where
 }
 
 /// Calculates the predecessor tree and distances of the shortest paths from the
-/// source vertices to all vertices in a weighted digraph.
+/// source vertices to all vertices in a weighted directed graph.
 ///
 /// # Arguments
 ///
@@ -278,7 +279,7 @@ pub fn predecessors<G, S, W>(
 }
 
 /// Calculates the predecessor tree for the shortest paths from a single source
-/// vertex in a weighted digraph.
+/// vertex in a weighted directed graph.
 ///
 /// # Arguments
 ///
@@ -325,9 +326,9 @@ where
 
 /// Calculates the shortest path from the source vertex to a target vertex.
 ///
-/// In a weighted digraph, the shortest path is the path with the smallest
-/// sum of weights. There can be multiple shortest paths in a graph, but this
-/// function only returns one.
+/// In a weighted directed graph, the shortest path is the path with the
+/// smallest sum of weights. There can be multiple shortest paths in a graph,
+/// but this function only returns one.
 ///
 /// # Arguments
 ///
@@ -425,9 +426,9 @@ where
 /// Calculates the shortest path from a single source vertex to a single target
 /// vertex.
 ///
-/// In a weighted digraph, the shortest path is the path with the smallest
-/// sum of weights. There can be multiple shortest paths in a graph, but this
-/// function only returns one.
+/// In a weighted directed graph, the shortest path is the path with the
+/// smallest sum of weights. There can be multiple shortest paths in a graph,
+/// but this function only returns one.
 ///
 /// # Arguments
 ///

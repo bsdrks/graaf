@@ -19,6 +19,27 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.39.0] - 2024-05-09
+
+Changed
+
+- Breaking: `AddEdge for BTreeMap<usize, BTreeSet<usize>>` no longer panics.
+- Breaking: `AddEdge for BTreeMap<usize, Vec<usize>>` no longer panics.
+- Breaking: `AddEdge for HashMap<usize, HashSet<usize>>` no longer panics.
+- Breaking: `AddEdge for HashMap<usize, Vec<usize>>` no longer panics.
+- Breaking: `AddWeightedEdge for BTreeMap<usize, BTreeMap<usize, W>>` no longer panics.
+- Breaking: `AddWeightedEdge for BTreeMap<usize, BTreeSet<(usize, W)>>` no longer panics.
+- Breaking: `AddWeightedEdge for BTreeMap<usize, Vec<(usize, W)>>` no longer panics.
+- Breaking: `AddWeightedEdge for HashMap<usize, HashMap<usize, W>>` no longer panics.
+- Breaking: `RemoveEdge for BTreeMap<usize, BTreeMap<usize, W>>` no longer panics.
+- Breaking: `RemoveEdge for BTreeMap<usize, BTreeSet<usize>>` no longer panics.
+- Breaking: `RemoveEdge for HashMap<usize, HashMap<usize, W>>` no longer panics.
+- Breaking: `RemoveEdge for HashMap<usize, HashSet<usize>>` no longer panics.
+
+Removed
+
+- Remove panic documentation from `CountAllEdges` implementations.
+
 ## [0.38.2] - 2024-05-09
 
 Added
