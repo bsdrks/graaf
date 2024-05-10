@@ -86,7 +86,6 @@ use {
 ///     [HashSet::from([1]), HashSet::from([2]), HashSet::from([0])]
 /// );
 /// ```
-#[doc(alias = "circular")]
 pub trait CycleConst {
     /// Generates a cycle graph.
     fn cycle() -> Self;

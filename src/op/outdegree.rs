@@ -1,3 +1,5 @@
+#![doc(alias = "out_valence")]
+#![doc(alias = "outward_demidegree")]
 //! A trait to get the outdegree of a given vertex in a directed graph
 //!
 //! # Examples
@@ -269,7 +271,19 @@ where
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use {
+        super::*,
+        crate::{
+            gen::{
+                Empty,
+                EmptyConst,
+            },
+            op::{
+                AddEdge,
+                AddWeightedEdge,
+            },
+        },
+    };
 
     macro_rules! test_outdegree {
         ($graph:expr) => {
@@ -280,301 +294,235 @@ mod tests {
         };
     }
 
-    #[test]
-    fn vec_vec_unweighted() {
-        let graph = vec![vec![1, 2], vec![0], vec![1]];
+    macro_rules! test_outdegree_unweighted {
+        ($graph:expr) => {
+            $graph.add_edge(0, 1);
+            $graph.add_edge(0, 2);
+            $graph.add_edge(1, 0);
+            $graph.add_edge(2, 1);
 
-        test_outdegree!(graph);
+            test_outdegree!($graph);
+        };
+    }
+
+    macro_rules! test_outdegree_weighted {
+        ($graph:expr) => {
+            $graph.add_weighted_edge(0, 1, 1);
+            $graph.add_weighted_edge(0, 2, 2);
+            $graph.add_weighted_edge(1, 0, 3);
+            $graph.add_weighted_edge(2, 1, 4);
+
+            test_outdegree!($graph);
+        };
     }
 
     #[test]
-    fn vec_vec_weighted() {
-        let graph = vec![vec![(1, 1), (2, 1)], vec![(0, 1)], vec![(1, 1)]];
+    fn vec_vec_unweighted() {
+        let graph = &mut Vec::<Vec<usize>>::empty(4);
 
-        test_outdegree!(graph);
+        test_outdegree_unweighted!(graph);
     }
 
     #[test]
     fn vec_btree_set_unweighted() {
-        let graph = vec![
-            BTreeSet::from([1, 2]),
-            BTreeSet::from([0]),
-            BTreeSet::from([1]),
-        ];
+        let graph = &mut Vec::<BTreeSet<usize>>::empty(4);
 
-        test_outdegree!(graph);
-    }
-
-    #[test]
-    fn vec_btree_set_weighted() {
-        let graph = vec![
-            BTreeSet::from([(1, 1), (2, 1)]),
-            BTreeSet::from([(0, 1)]),
-            BTreeSet::from([(1, 1)]),
-        ];
-
-        test_outdegree!(graph);
+        test_outdegree_unweighted!(graph);
     }
 
     #[test]
     fn vec_hash_set_unweighted() {
-        let graph = vec![
-            HashSet::from([1, 2]),
-            HashSet::from([0]),
-            HashSet::from([1]),
-        ];
+        let graph = &mut Vec::<HashSet<usize>>::empty(4);
 
-        test_outdegree!(graph);
-    }
-
-    #[test]
-    fn vec_hash_set_weighted() {
-        let graph = vec![
-            HashSet::from([(1, 1), (2, 1)]),
-            HashSet::from([(0, 1)]),
-            HashSet::from([(1, 1)]),
-        ];
-
-        test_outdegree!(graph);
-    }
-
-    #[test]
-    fn vec_btree_map() {
-        let graph = vec![
-            BTreeMap::from([(1, 1), (2, 1)]),
-            BTreeMap::from([(0, 1)]),
-            BTreeMap::from([(1, 1)]),
-        ];
-
-        test_outdegree!(graph);
-    }
-
-    #[test]
-    fn vec_hash_map() {
-        let graph = vec![
-            HashMap::from([(1, 1), (2, 1)]),
-            HashMap::from([(0, 1)]),
-            HashMap::from([(1, 1)]),
-        ];
-
-        test_outdegree!(graph);
+        test_outdegree_unweighted!(graph);
     }
 
     #[test]
     fn slice_vec_unweighted() {
-        let graph: &[Vec<usize>] = &[vec![1, 2], vec![0], vec![1]];
+        let graph: &mut [Vec<usize>] = &mut Vec::<Vec<usize>>::empty(4);
 
-        test_outdegree!(graph);
-    }
-
-    #[test]
-    fn slice_vec_weighted() {
-        let graph: &[Vec<(usize, i32)>] = &[vec![(1, 1), (2, 1)], vec![(0, 1)], vec![(1, 1)]];
-
-        test_outdegree!(graph);
+        test_outdegree_unweighted!(graph);
     }
 
     #[test]
     fn slice_btree_set_unweighted() {
-        let graph: &[BTreeSet<usize>] = &[
-            BTreeSet::from([1, 2]),
-            BTreeSet::from([0]),
-            BTreeSet::from([1]),
-        ];
+        let graph: &mut [BTreeSet<usize>] = &mut Vec::<BTreeSet<usize>>::empty(4);
 
-        test_outdegree!(graph);
-    }
-
-    #[test]
-    fn slice_btree_set_weighted() {
-        let graph: &[BTreeSet<(usize, i32)>] = &[
-            BTreeSet::from([(1, 1), (2, 1)]),
-            BTreeSet::from([(0, 1)]),
-            BTreeSet::from([(1, 1)]),
-        ];
-
-        test_outdegree!(graph);
+        test_outdegree_unweighted!(graph);
     }
 
     #[test]
     fn slice_hash_set_unweighted() {
-        let graph: &[HashSet<usize>] = &[
-            HashSet::from([1, 2]),
-            HashSet::from([0]),
-            HashSet::from([1]),
-        ];
+        let graph: &mut [HashSet<usize>] = &mut Vec::<HashSet<usize>>::empty(4);
 
-        test_outdegree!(graph);
-    }
-
-    #[test]
-    fn slice_hash_set_weighted() {
-        let graph: &[HashSet<(usize, i32)>] = &[
-            HashSet::from([(1, 1), (2, 1)]),
-            HashSet::from([(0, 1)]),
-            HashSet::from([(1, 1)]),
-        ];
-
-        test_outdegree!(graph);
-    }
-
-    #[test]
-    fn slice_btree_map() {
-        let graph: &[BTreeMap<usize, i32>] = &[
-            BTreeMap::from([(1, 1), (2, 1)]),
-            BTreeMap::from([(0, 1)]),
-            BTreeMap::from([(1, 1)]),
-        ];
-
-        test_outdegree!(graph);
-    }
-
-    #[test]
-    fn slice_hash_map() {
-        let graph: &[HashMap<usize, i32>] = &[
-            HashMap::from([(1, 1), (2, 1)]),
-            HashMap::from([(0, 1)]),
-            HashMap::from([(1, 1)]),
-        ];
-
-        test_outdegree!(graph);
+        test_outdegree_unweighted!(graph);
     }
 
     #[test]
     fn arr_vec_unweighted() {
-        let graph = [vec![1, 2], vec![0], vec![1]];
+        let graph = &mut <[Vec<usize>; 4]>::empty();
 
-        test_outdegree!(graph);
-    }
-
-    #[test]
-    fn arr_vec_weighted() {
-        let graph = [vec![(1, 1), (2, 1)], vec![(0, 1)], vec![(1, 1)]];
-
-        test_outdegree!(graph);
+        test_outdegree_unweighted!(graph);
     }
 
     #[test]
     fn arr_btree_set_unweighted() {
-        let graph = [
-            BTreeSet::from([1, 2]),
-            BTreeSet::from([0]),
-            BTreeSet::from([1]),
-        ];
+        let graph = &mut <[BTreeSet<usize>; 4]>::empty();
 
-        test_outdegree!(graph);
-    }
-
-    #[test]
-    fn arr_btree_set_weighted() {
-        let graph = [
-            BTreeSet::from([(1, 1), (2, 1)]),
-            BTreeSet::from([(0, 1)]),
-            BTreeSet::from([(1, 1)]),
-        ];
-
-        test_outdegree!(graph);
+        test_outdegree_unweighted!(graph);
     }
 
     #[test]
     fn arr_hash_set_unweighted() {
-        let graph = [
-            HashSet::from([1, 2]),
-            HashSet::from([0]),
-            HashSet::from([1]),
-        ];
+        let graph = &mut <[HashSet<usize>; 4]>::empty();
 
-        test_outdegree!(graph);
-    }
-
-    #[test]
-    fn arr_hash_set_weighted() {
-        let graph = [
-            HashSet::from([(1, 1), (2, 1)]),
-            HashSet::from([(0, 1)]),
-            HashSet::from([(1, 1)]),
-        ];
-
-        test_outdegree!(graph);
-    }
-
-    #[test]
-    fn arr_btree_map() {
-        let graph = [
-            BTreeMap::from([(1, 1), (2, 1)]),
-            BTreeMap::from([(0, 1)]),
-            BTreeMap::from([(1, 1)]),
-        ];
-
-        test_outdegree!(graph);
-    }
-
-    #[test]
-    fn arr_hash_map() {
-        let graph = [
-            HashMap::from([(1, 1), (2, 1)]),
-            HashMap::from([(0, 1)]),
-            HashMap::from([(1, 1)]),
-        ];
-
-        test_outdegree!(graph);
+        test_outdegree_unweighted!(graph);
     }
 
     #[test]
     fn btree_map_vec() {
-        let graph = BTreeMap::from([(0, vec![1, 2]), (1, vec![0]), (2, vec![1])]);
+        let graph = &mut BTreeMap::<usize, Vec<usize>>::empty(4);
 
-        test_outdegree!(graph);
+        test_outdegree_unweighted!(graph);
     }
 
     #[test]
     fn hash_map_vec() {
-        let graph = HashMap::from([(0, vec![1, 2]), (1, vec![0]), (2, vec![1])]);
+        let graph = &mut HashMap::<usize, Vec<usize>>::empty(4);
 
-        test_outdegree!(graph);
+        test_outdegree_unweighted!(graph);
     }
 
     #[test]
     fn btree_map_btree_set() {
-        let graph = BTreeMap::from([
-            (0, BTreeSet::from([1, 2])),
-            (1, BTreeSet::from([0])),
-            (2, BTreeSet::from([1])),
-        ]);
+        let graph = &mut BTreeMap::<usize, BTreeSet<usize>>::empty(4);
 
-        test_outdegree!(graph);
+        test_outdegree_unweighted!(graph);
     }
 
     #[test]
     fn hash_map_hash_set() {
-        let graph = HashMap::from([
-            (0, HashSet::from([1, 2])),
-            (1, HashSet::from([0])),
-            (2, HashSet::from([1])),
-        ]);
+        let graph = &mut HashMap::<usize, HashSet<usize>>::empty(4);
 
-        test_outdegree!(graph);
+        test_outdegree_unweighted!(graph);
+    }
+
+    #[test]
+    fn vec_vec_weighted() {
+        let graph = &mut Vec::<Vec<(usize, i32)>>::empty(4);
+
+        test_outdegree_weighted!(graph);
+    }
+
+    #[test]
+    fn vec_btree_set_weighted() {
+        let graph = &mut Vec::<BTreeSet<(usize, i32)>>::empty(4);
+
+        test_outdegree_weighted!(graph);
+    }
+
+    #[test]
+    fn vec_hash_set_weighted() {
+        let graph = &mut Vec::<HashSet<(usize, i32)>>::empty(4);
+
+        test_outdegree_weighted!(graph);
+    }
+
+    #[test]
+    fn vec_btree_map() {
+        let graph = &mut Vec::<BTreeMap<usize, i32>>::empty(4);
+
+        test_outdegree_weighted!(graph);
+    }
+
+    #[test]
+    fn vec_hash_map() {
+        let graph = &mut Vec::<HashMap<usize, i32>>::empty(4);
+
+        test_outdegree_weighted!(graph);
+    }
+
+    #[test]
+    fn slice_vec_weighted() {
+        let graph: &mut [Vec<(usize, i32)>] = &mut Vec::<Vec<(usize, i32)>>::empty(4);
+
+        test_outdegree_weighted!(graph);
+    }
+
+    #[test]
+    fn slice_btree_set_weighted() {
+        let graph: &mut [BTreeSet<(usize, i32)>] = &mut Vec::<BTreeSet<(usize, i32)>>::empty(4);
+
+        test_outdegree_weighted!(graph);
+    }
+
+    #[test]
+    fn slice_hash_set_weighted() {
+        let graph: &mut [HashSet<(usize, i32)>] = &mut Vec::<HashSet<(usize, i32)>>::empty(4);
+
+        test_outdegree_weighted!(graph);
+    }
+
+    #[test]
+    fn slice_btree_map() {
+        let graph: &mut [BTreeMap<usize, i32>] = &mut Vec::<BTreeMap<usize, i32>>::empty(4);
+
+        test_outdegree_weighted!(graph);
+    }
+
+    #[test]
+    fn slice_hash_map() {
+        let graph: &mut [HashMap<usize, i32>] = &mut Vec::<HashMap<usize, i32>>::empty(4);
+
+        test_outdegree_weighted!(graph);
+    }
+
+    #[test]
+    fn arr_vec_weighted() {
+        let graph = &mut <[Vec<(usize, i32)>; 4]>::empty();
+
+        test_outdegree_weighted!(graph);
+    }
+
+    #[test]
+    fn arr_btree_set_weighted() {
+        let graph = &mut <[BTreeSet<(usize, i32)>; 4]>::empty();
+
+        test_outdegree_weighted!(graph);
+    }
+
+    #[test]
+    fn arr_hash_set_weighted() {
+        let graph = &mut <[HashSet<(usize, i32)>; 4]>::empty();
+
+        test_outdegree_weighted!(graph);
+    }
+
+    #[test]
+    fn arr_btree_map() {
+        let graph = &mut <[BTreeMap<usize, i32>; 4]>::empty();
+
+        test_outdegree_weighted!(graph);
+    }
+
+    #[test]
+    fn arr_hash_map() {
+        let graph = &mut <[HashMap<usize, i32>; 4]>::empty();
+
+        test_outdegree_weighted!(graph);
     }
 
     #[test]
     fn btree_map_btree_map() {
-        let graph = BTreeMap::from([
-            (0, BTreeMap::from([(1, 1), (2, 1)])),
-            (1, BTreeMap::from([(0, 1)])),
-            (2, BTreeMap::from([(1, 1)])),
-        ]);
+        let graph = &mut BTreeMap::<usize, BTreeMap<usize, i32>>::empty(4);
 
-        test_outdegree!(graph);
+        test_outdegree_weighted!(graph);
     }
 
     #[test]
     fn hash_map_hash_map() {
-        let graph = HashMap::from([
-            (0, HashMap::from([(1, 1), (2, 1)])),
-            (1, HashMap::from([(0, 1)])),
-            (2, HashMap::from([(1, 1)])),
-        ]);
+        let graph = &mut HashMap::<usize, HashMap<usize, i32>>::empty(4);
 
-        test_outdegree!(graph);
+        test_outdegree_weighted!(graph);
     }
 }

@@ -2,6 +2,8 @@
 
 ## Provisional roadmap
 
+- Add `IsPendant`.
+- Add `IsRegular`.
 - Add `Path` generator.
 - Add `algo::dijkstra::single_pair_shortest_path`.
 - Add `bfs::shortest_paths`.
@@ -13,11 +15,76 @@
 - Add `op::eccentricity`.
 - Add `op::periphery`.
 - Add `op::radius`.
+- Ensure that all `op` implementation examples use the other `op` traits where possible.
 - Benchmark against popular Rust graph libraries.
 - Benchmark against popular graph libraries in other languages.
 - Implement `From` and `Into` for `AdjacencyMatrix`.
+- Implement missing `op` traits for `AdjacencyMatrix`.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.40.0] - 2024-05-10
+
+Added
+
+- Add documentation alias "in_valence" for `indegree`.
+- Add documentation alias "inward_demidegree" for `indegree`.
+- Add documentation alias "out_valence" for `outdegree`.
+- Add documentation alias "outward_demidegree" for `outdegree`.
+- Add unit test `arr_btree_map` for `IsIsolated`.
+- Add unit test `arr_btree_set` for `IsIsolated`.
+- Add unit test `arr_hash_map` for `IsIsolated`.
+- Add unit test `arr_hash_set` for `IsIsolated`.
+- Add unit test `btree_map_btree_map` for `IsIsolated`.
+- Add unit test `btree_map_btree_set` for `IsIsolated`.
+- Add unit test `hash_map_hash_map` for `IsIsolated`.
+- Add unit test `hash_map_hash_set` for `IsIsolated`.
+- Add unit test `slice_btree_map` for `IsBalanced`.
+- Add unit test `slice_btree_map` for `IsIsolated`.
+- Add unit test `slice_btree_set` for `IsBalanced`.
+- Add unit test `slice_btree_set` for `IsIsolated`.
+- Add unit test `slice_hash_map` for `IsBalanced`.
+- Add unit test `slice_hash_map` for `IsIsolated`.
+- Add unit test `slice_hash_set` for `IsBalanced`.
+- Add unit test `slice_hash_set` for `IsIsolated`.
+- Add unit test `vec_btree_map` for `IsIsolated`.
+- Add unit test `vec_btree_set` for `IsIsolated`.
+- Add unit test `vec_hash_map` for `IsIsolated`.
+- Add unit test `vec_hash_set` for `IsIsolated`.
+- Implement `IsBalanced` for `[BTreeMap<usize, W>]`.
+- Implement `IsBalanced` for `[BTreeSet<usize>]`.
+- Implement `IsBalanced` for `[HashMap<usize, W>]`.
+- Implement `IsBalanced` for `[HashSet<usize>]`.
+- Implement `IsIsolated` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement `IsIsolated` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `IsIsolated` for `HashMap<usize, HashMap<usize, W>>`.
+- Implement `IsIsolated` for `HashMap<usize, HashSet<usize>>`.
+- Implement `IsIsolated` for `Vec<BTreeMap<usize, W>>`.
+- Implement `IsIsolated` for `Vec<BTreeSet<usize>>`.
+- Implement `IsIsolated` for `Vec<HashMap<usize, W>>`.
+- Implement `IsIsolated` for `Vec<HashSet<usize>>`.
+- Implement `IsIsolated` for `[BTreeMap<usize, W>; V]`.
+- Implement `IsIsolated` for `[BTreeMap<usize, W>]`.
+- Implement `IsIsolated` for `[BTreeSet<usize>; V]`.
+- Implement `IsIsolated` for `[BTreeSet<usize>]`.
+- Implement `IsIsolated` for `[HashMap<usize, W>; V]`.
+- Implement `IsIsolated` for `[HashMap<usize, W>]`.
+- Implement `IsIsolated` for `[HashSet<usize>; V]`.
+- Implement `IsIsolated` for `[HashSet<usize>]`.
+
+Changed
+
+- Restrict existing documentation aliases to module level.
+- Simplify `AddEdge` "Panics" sections.
+- Simplify `Indegree` tests.
+- Simplify `IsBalanced` tests.
+- Simplify `Outdegree` tests.
+
+Fixed
+
+- Breaking: Fix `IsBalanced`.
+- Fix `empty_const` documentation aliases.
+- Fix `complete` documentation aliases.
 
 ## [0.39.0] - 2024-05-09
 
@@ -671,10 +738,10 @@ Added
 
 Changed
 
-- Breaking: Return `bfs::shortest_path` when it finds the target before pushing the target to the queue.
+- Breaking: Return immediately in `bfs::shortest_path` when it finds the target, before pushing the target to the queue.
 - Compress textual diagrams.
 - Cross-link `bfs` and `dijkstra` in module documentation.
-- Document reasons for panic in `bfs` and `dijkstra`.
+- Document "Panics" in `bfs` and `dijkstra`.
 - Link to `op` in the documentation of `repr`.
 - Remove `min_time` from benches.
 

@@ -86,7 +86,6 @@ use {
 ///     ]
 /// );
 /// ```
-#[doc(alias = "circular")]
 pub trait CompleteConst {
     /// Generates a complete graph.
     fn complete() -> Self;

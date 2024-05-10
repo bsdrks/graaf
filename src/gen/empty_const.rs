@@ -83,7 +83,6 @@ use {
 ///     [HashSet::new(), HashSet::new(), HashSet::new()]
 /// );
 /// ```
-#[doc(alias = "circular")]
 pub trait EmptyConst {
     /// Generates a empty graph.
     fn empty() -> Self;

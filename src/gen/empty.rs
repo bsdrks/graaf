@@ -68,7 +68,6 @@ use {
 ///     }
 /// );
 /// ```
-#[doc(alias = "edgless")]
 pub trait Empty {
     /// Generates an empty graph.
     ///

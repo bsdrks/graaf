@@ -118,6 +118,7 @@ pub mod has_edge;
 pub mod has_edge_symmetric;
 pub mod indegree;
 pub mod is_balanced;
+pub mod is_isolated;
 pub mod is_simple;
 pub mod is_symmetric;
 pub mod iter_all_edges;
@@ -138,6 +139,7 @@ pub use {
     has_edge_symmetric::HasEdgeSymmetric,
     indegree::Indegree,
     is_balanced::IsBalanced,
+    is_isolated::IsIsolated,
     is_simple::IsSimple,
     is_symmetric::IsSymmetric,
     iter_all_edges::IterAllEdges,
