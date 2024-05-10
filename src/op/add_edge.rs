@@ -92,8 +92,7 @@ pub trait AddEdge {
 impl AddEdge for Vec<Vec<usize>> {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph or if the new capacity of the vector
-    /// exceeds `isize::MAX`.
+    /// Panics if `s` is not in the graph.
     fn add_edge(&mut self, s: usize, t: usize) {
         self[s].push(t);
     }
@@ -123,8 +122,7 @@ where
 impl AddEdge for [Vec<usize>] {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph or if the new capacity of the vector
-    /// exceeds `isize::MAX`.
+    /// Panics if `s` is not in the graph.
     fn add_edge(&mut self, s: usize, t: usize) {
         self[s].push(t);
     }
@@ -154,8 +152,7 @@ where
 impl<const V: usize> AddEdge for [Vec<usize>; V] {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph or if the new capacity of the vector
-    /// exceeds `isize::MAX`.
+    /// Panics if `s` is not in the graph.
     fn add_edge(&mut self, s: usize, t: usize) {
         self[s].push(t);
     }
