@@ -43,7 +43,7 @@ use {
 ///
 /// impl Outdegree for Graph {
 ///     fn outdegree(&self, s: usize) -> usize {
-///         self.edges.get(s).map_or(0, |v| v.len())
+///         self.edges.get(s).map_or(0, Vec::len)
 ///     }
 /// }
 /// ```
