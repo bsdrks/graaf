@@ -90,7 +90,7 @@ where
         s * V + t
     }
 
-    /// Toggles the edge from `s` to `t`.
+    /// Toggles the edge from the source vertex to the target vertex.
     ///
     /// # Arguments
     ///
