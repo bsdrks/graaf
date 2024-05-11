@@ -8,10 +8,10 @@
 //!
 //! let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 //!
-//! assert!(graph.iter_edges(0).eq([1, 2].into_iter()));
-//! assert!(graph.iter_edges(1).eq([0, 2, 3].into_iter()));
-//! assert!(graph.iter_edges(2).eq([0, 1, 3].into_iter()));
-//! assert!(graph.iter_edges(3).eq([1, 2].into_iter()));
+//! assert!(graph.iter_edges(0).eq([1, 2]));
+//! assert!(graph.iter_edges(1).eq([0, 2, 3]));
+//! assert!(graph.iter_edges(2).eq([0, 1, 3]));
+//! assert!(graph.iter_edges(3).eq([1, 2]));
 //! ```
 //!
 //! The order of the edges is not guaranteed for, e.g., `Vec<HashSet<_>>`:
@@ -79,10 +79,10 @@ use {
 ///
 /// let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 ///
-/// assert!(graph.iter_edges(0).eq([1, 2].into_iter()));
-/// assert!(graph.iter_edges(1).eq([0, 2, 3].into_iter()));
-/// assert!(graph.iter_edges(2).eq([0, 1, 3].into_iter()));
-/// assert!(graph.iter_edges(3).eq([1, 2].into_iter()));
+/// assert!(graph.iter_edges(0).eq([1, 2]));
+/// assert!(graph.iter_edges(1).eq([0, 2, 3]));
+/// assert!(graph.iter_edges(2).eq([0, 1, 3]));
+/// assert!(graph.iter_edges(3).eq([1, 2]));
 /// ```
 ///
 /// The order of the edges is not guaranteed for, e.g., `Vec<HashSet<_>>`:
@@ -253,10 +253,10 @@ mod tests {
 
     macro_rules! test_iter_edges_stable {
         ($graph:expr) => {
-            assert!($graph.iter_edges(0).eq([1, 2].into_iter()));
-            assert!($graph.iter_edges(1).eq([0, 2, 3].into_iter()));
-            assert!($graph.iter_edges(2).eq([0, 1, 3].into_iter()));
-            assert!($graph.iter_edges(3).eq([1, 2].into_iter()));
+            assert!($graph.iter_edges(0).eq([1, 2]));
+            assert!($graph.iter_edges(1).eq([0, 2, 3]));
+            assert!($graph.iter_edges(2).eq([0, 1, 3]));
+            assert!($graph.iter_edges(3).eq([1, 2]));
         };
     }
 

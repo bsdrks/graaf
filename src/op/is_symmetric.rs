@@ -34,7 +34,7 @@ extern crate alloc;
 
 use {
     super::{
-        HasEdgeSymmetric,
+        HasEdge,
         IterAllEdges,
         IterAllWeightedEdges,
     },
@@ -89,8 +89,7 @@ pub trait IsSymmetric {
 
 impl IsSymmetric for Vec<BTreeSet<usize>> {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_edges()
-            .all(|(s, t)| self.has_edge_symmetric(s, t))
+        self.iter_all_edges().all(|(s, t)| self.has_edge(t, s))
     }
 }
 
@@ -99,15 +98,13 @@ where
     H: BuildHasher,
 {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_edges()
-            .all(|(s, t)| self.has_edge_symmetric(s, t))
+        self.iter_all_edges().all(|(s, t)| self.has_edge(t, s))
     }
 }
 
 impl IsSymmetric for [BTreeSet<usize>] {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_edges()
-            .all(|(s, t)| self.has_edge_symmetric(s, t))
+        self.iter_all_edges().all(|(s, t)| self.has_edge(t, s))
     }
 }
 
@@ -116,15 +113,13 @@ where
     H: BuildHasher,
 {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_edges()
-            .all(|(s, t)| self.has_edge_symmetric(s, t))
+        self.iter_all_edges().all(|(s, t)| self.has_edge(t, s))
     }
 }
 
 impl<const V: usize> IsSymmetric for [BTreeSet<usize>; V] {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_edges()
-            .all(|(s, t)| self.has_edge_symmetric(s, t))
+        self.iter_all_edges().all(|(s, t)| self.has_edge(t, s))
     }
 }
 
@@ -133,15 +128,13 @@ where
     H: BuildHasher + Default,
 {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_edges()
-            .all(|(s, t)| self.has_edge_symmetric(s, t))
+        self.iter_all_edges().all(|(s, t)| self.has_edge(t, s))
     }
 }
 
 impl IsSymmetric for BTreeMap<usize, BTreeSet<usize>> {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_edges()
-            .all(|(s, t)| self.has_edge_symmetric(s, t))
+        self.iter_all_edges().all(|(s, t)| self.has_edge(t, s))
     }
 }
 
@@ -150,15 +143,14 @@ where
     H: BuildHasher,
 {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_edges()
-            .all(|(s, t)| self.has_edge_symmetric(s, t))
+        self.iter_all_edges().all(|(s, t)| self.has_edge(t, s))
     }
 }
 
 impl<W> IsSymmetric for Vec<BTreeMap<usize, W>> {
     fn is_symmetric(&self) -> bool {
         self.iter_all_weighted_edges()
-            .all(|(s, t, _)| self.has_edge_symmetric(s, t))
+            .all(|(s, t, _)| self.has_edge(t, s))
     }
 }
 
@@ -168,14 +160,14 @@ where
 {
     fn is_symmetric(&self) -> bool {
         self.iter_all_weighted_edges()
-            .all(|(s, t, _)| self.has_edge_symmetric(s, t))
+            .all(|(s, t, _)| self.has_edge(t, s))
     }
 }
 
 impl<W> IsSymmetric for [BTreeMap<usize, W>] {
     fn is_symmetric(&self) -> bool {
         self.iter_all_weighted_edges()
-            .all(|(s, t, _)| self.has_edge_symmetric(s, t))
+            .all(|(s, t, _)| self.has_edge(t, s))
     }
 }
 
@@ -185,14 +177,14 @@ where
 {
     fn is_symmetric(&self) -> bool {
         self.iter_all_weighted_edges()
-            .all(|(s, t, _)| self.has_edge_symmetric(s, t))
+            .all(|(s, t, _)| self.has_edge(t, s))
     }
 }
 
 impl<const V: usize, W> IsSymmetric for [BTreeMap<usize, W>; V] {
     fn is_symmetric(&self) -> bool {
         self.iter_all_weighted_edges()
-            .all(|(s, t, _)| self.has_edge_symmetric(s, t))
+            .all(|(s, t, _)| self.has_edge(t, s))
     }
 }
 
@@ -202,14 +194,14 @@ where
 {
     fn is_symmetric(&self) -> bool {
         self.iter_all_weighted_edges()
-            .all(|(s, t, _)| self.has_edge_symmetric(s, t))
+            .all(|(s, t, _)| self.has_edge(t, s))
     }
 }
 
 impl<W> IsSymmetric for BTreeMap<usize, BTreeMap<usize, W>> {
     fn is_symmetric(&self) -> bool {
         self.iter_all_weighted_edges()
-            .all(|(s, t, _)| self.has_edge_symmetric(s, t))
+            .all(|(s, t, _)| self.has_edge(t, s))
     }
 }
 
@@ -219,7 +211,7 @@ where
 {
     fn is_symmetric(&self) -> bool {
         self.iter_all_weighted_edges()
-            .all(|(s, t, _)| self.has_edge_symmetric(s, t))
+            .all(|(s, t, _)| self.has_edge(t, s))
     }
 }
 

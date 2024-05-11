@@ -12,17 +12,9 @@
 //!     vec![(3, 4), (4, 5), (5, 6)],
 //! ];
 //!
-//! assert!(graph
-//!     .iter_weighted_edges(0)
-//!     .eq([(1, &2), (2, &3), (3, &4)].into_iter()));
-//!
-//! assert!(graph
-//!     .iter_weighted_edges(1)
-//!     .eq([(2, &3), (3, &4), (4, &5)].into_iter()));
-//!
-//! assert!(graph
-//!     .iter_weighted_edges(2)
-//!     .eq([(3, &4), (4, &5), (5, &6)].into_iter()));
+//! assert!(graph.iter_weighted_edges(0).eq([(1, &2), (2, &3), (3, &4)]));
+//! assert!(graph.iter_weighted_edges(1).eq([(2, &3), (3, &4), (4, &5)]));
+//! assert!(graph.iter_weighted_edges(2).eq([(3, &4), (4, &5), (5, &6)]));
 //! ```
 
 extern crate alloc;
@@ -75,17 +67,9 @@ use {
 ///     vec![(3, 4), (4, 5), (5, 6)],
 /// ];
 ///
-/// assert!(graph
-///     .iter_weighted_edges(0)
-///     .eq([(1, &2), (2, &3), (3, &4)].into_iter()));
-///
-/// assert!(graph
-///     .iter_weighted_edges(1)
-///     .eq([(2, &3), (3, &4), (4, &5)].into_iter()));
-///
-/// assert!(graph
-///     .iter_weighted_edges(2)
-///     .eq([(3, &4), (4, &5), (5, &6)].into_iter()));
+/// assert!(graph.iter_weighted_edges(0).eq([(1, &2), (2, &3), (3, &4)]));
+/// assert!(graph.iter_weighted_edges(1).eq([(2, &3), (3, &4), (4, &5)]));
+/// assert!(graph.iter_weighted_edges(2).eq([(3, &4), (4, &5), (5, &6)]));
 /// ```
 pub trait IterWeightedEdges<W> {
     /// Returns an iterator over the edges with the source vertex `s`.
@@ -430,9 +414,7 @@ mod tests {
             vec![(3, 4), (4, 5), (5, 6)],
         ];
 
-        assert!(graph
-            .iter_weighted_edges(1)
-            .eq([(2, &3), (3, &4), (4, &5)].into_iter()));
+        assert!(graph.iter_weighted_edges(1).eq([(2, &3), (3, &4), (4, &5)]));
     }
 
     #[test]
@@ -487,9 +469,7 @@ mod tests {
             vec![(3, 4), (4, 5), (5, 6)],
         ];
 
-        assert!(graph
-            .iter_weighted_edges(1)
-            .eq([(2, &3), (3, &4), (4, &5)].into_iter()));
+        assert!(graph.iter_weighted_edges(1).eq([(2, &3), (3, &4), (4, &5)]));
     }
 
     #[test]
@@ -544,9 +524,7 @@ mod tests {
             vec![(3, 4), (4, 5), (5, 6)],
         ];
 
-        assert!(graph
-            .iter_weighted_edges(1)
-            .eq([(2, &3), (3, &4), (4, &5)].into_iter()));
+        assert!(graph.iter_weighted_edges(1).eq([(2, &3), (3, &4), (4, &5)]));
     }
 
     #[test]
@@ -601,9 +579,7 @@ mod tests {
             (2, vec![(3, 4), (4, 5), (5, 6)]),
         ]);
 
-        assert!(graph
-            .iter_weighted_edges(1)
-            .eq([(2, &3), (3, &4), (4, &5)].into_iter()));
+        assert!(graph.iter_weighted_edges(1).eq([(2, &3), (3, &4), (4, &5)]));
     }
 
     #[test]
@@ -614,9 +590,7 @@ mod tests {
             (2, vec![(3, 4), (4, 5), (5, 6)]),
         ]);
 
-        assert!(graph
-            .iter_weighted_edges(1)
-            .eq([(2, &3), (3, &4), (4, &5)].into_iter()));
+        assert!(graph.iter_weighted_edges(1).eq([(2, &3), (3, &4), (4, &5)]));
     }
 
     #[test]

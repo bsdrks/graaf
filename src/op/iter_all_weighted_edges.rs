@@ -9,7 +9,7 @@
 //!
 //! assert!(graph
 //!     .iter_all_weighted_edges()
-//!     .eq([(0, 1, &2), (1, 2, &3), (2, 0, &4)].into_iter()));
+//!     .eq([(0, 1, &2), (1, 2, &3), (2, 0, &4)]));
 //! ```
 
 extern crate alloc;
@@ -59,7 +59,7 @@ use {
 ///
 /// assert!(graph
 ///     .iter_all_weighted_edges()
-///     .eq([(0, 1, &2), (1, 2, &3), (2, 0, &4)].into_iter()));
+///     .eq([(0, 1, &2), (1, 2, &3), (2, 0, &4)]));
 /// ```
 pub trait IterAllWeightedEdges<W> {
     /// Returns an iterator over all edges in a graph.
@@ -376,7 +376,7 @@ mod tests {
         ($graph:expr) => {
             assert!($graph
                 .iter_all_weighted_edges()
-                .eq([(0, 1, &2), (1, 2, &3), (2, 0, &4)].into_iter()));
+                .eq([(0, 1, &2), (1, 2, &3), (2, 0, &4)]));
         };
     }
 

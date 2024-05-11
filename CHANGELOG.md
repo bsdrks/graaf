@@ -15,14 +15,35 @@
 - Add `op::eccentricity`.
 - Add `op::periphery`.
 - Add `op::radius`.
-- Disallow graphs with no vertices.
-- Ensure that all `op` implementation examples use the other `op` traits where possible.
 - Benchmark against popular Rust graph libraries.
 - Benchmark against popular graph libraries in other languages.
+- Disallow graphs with no vertices.
+- Ensure that all `op` implementation examples use the other `op` traits where possible.
 - Implement `From` and `Into` for `AdjacencyMatrix`.
+- Implement `_mut` versions of `op` iterator traits.
 - Implement missing `op` traits for `AdjacencyMatrix`.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+- Use `iter_vertices` in implementations of other `op` traits.
+
+## [0.42.0] - 2024-05-11
+
+Added
+
+- Add unit test `has_edge` for `AdjacencyMatrix<V>`.
+- Implement `HasEdgeSymmetric` for `AdjacencyMatrix<V>`.
+- Implement `IsBalanced` for `AdjacencyMatrix<V>`.
+- Implement `IsIsolated` for `AdjacencyMatrix<V>`.
+- Implement `IsSymmetric` for `AdjacencyMatrix<V>`.
+- Implement `IterAllEdges` for `AdjacencyMatrix<V>`.
+
+Changed
+
+- Breaking: `AdjacencyMatrix::<0>::new` now panics.
+- Simplify `AdjacencyMatrix<V>` op implementations with `IterVertices`.
+- Simplify `AdjacencyMatrix<V>` tests with `Iterator::eq`.
+- Simplify `IsSymmetric` implementations with `HasEdge`.
+- Simplify arguments to `Iterator::eq` in tests.
 
 ## [0.41.0] - 2024-05-11
 

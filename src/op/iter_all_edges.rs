@@ -7,9 +7,7 @@
 //!
 //! let graph = vec![(0, 1), (1, 2), (2, 0)];
 //!
-//! assert!(graph
-//!     .iter_all_edges()
-//!     .eq([(0, 1), (1, 2), (2, 0)].into_iter()),);
+//! assert!(graph.iter_all_edges().eq([(0, 1), (1, 2), (2, 0)]));
 //! ```
 
 extern crate alloc;
@@ -54,9 +52,7 @@ use {
 ///
 /// let graph = vec![(0, 1), (1, 2), (2, 0)];
 ///
-/// assert!(graph
-///     .iter_all_edges()
-///     .eq([(0, 1), (1, 2), (2, 0)].into_iter()));
+/// assert!(graph.iter_all_edges().eq([(0, 1), (1, 2), (2, 0)]));
 /// ```
 pub trait IterAllEdges {
     /// Returns an iterator over all edges in a graph.
@@ -230,9 +226,7 @@ mod tests {
     fn vec_vec() {
         let graph = vec![vec![1], vec![2], vec![0]];
 
-        assert!(graph
-            .iter_all_edges()
-            .eq([(0, 1), (1, 2), (2, 0)].into_iter()));
+        assert!(graph.iter_all_edges().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]
@@ -258,9 +252,7 @@ mod tests {
     fn slice_vec() {
         let graph: &[Vec<usize>] = &[vec![1], vec![2], vec![0]];
 
-        assert!(graph
-            .iter_all_edges()
-            .eq([(0, 1), (1, 2), (2, 0)].into_iter()));
+        assert!(graph.iter_all_edges().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]
@@ -286,9 +278,7 @@ mod tests {
     fn arr_vec() {
         let graph = [vec![1], vec![2], vec![0]];
 
-        assert!(graph
-            .iter_all_edges()
-            .eq([(0, 1), (1, 2), (2, 0)].into_iter()));
+        assert!(graph.iter_all_edges().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]
@@ -313,9 +303,7 @@ mod tests {
     fn btree_map_vec() {
         let graph = BTreeMap::from([(0, vec![1]), (1, vec![2]), (2, vec![0])]);
 
-        assert!(graph
-            .iter_all_edges()
-            .eq([(0, 1), (1, 2), (2, 0)].into_iter()));
+        assert!(graph.iter_all_edges().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]
@@ -351,27 +339,21 @@ mod tests {
     fn vec_tuple() {
         let graph = vec![(0, 1), (1, 2), (2, 0)];
 
-        assert!(graph
-            .iter_all_edges()
-            .eq([(0, 1), (1, 2), (2, 0)].into_iter()));
+        assert!(graph.iter_all_edges().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]
     fn slice_tuple() {
         let graph: &[(usize, usize)] = &[(0, 1), (1, 2), (2, 0)];
 
-        assert!(graph
-            .iter_all_edges()
-            .eq([(0, 1), (1, 2), (2, 0)].into_iter()));
+        assert!(graph.iter_all_edges().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]
     fn arr_tuple() {
         let graph = [(0, 1), (1, 2), (2, 0)];
 
-        assert!(graph
-            .iter_all_edges()
-            .eq([(0, 1), (1, 2), (2, 0)].into_iter()));
+        assert!(graph.iter_all_edges().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]

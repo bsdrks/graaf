@@ -30,8 +30,13 @@ use crate::op::{
     CountAllEdges,
     CountAllVertices,
     HasEdge,
+    HasEdgeSymmetric,
     Indegree,
+    IsBalanced,
+    IsIsolated,
     IsSimple,
+    IsSymmetric,
+    IterAllEdges,
     IterEdges,
     IterVertices,
     Outdegree,
@@ -75,8 +80,14 @@ where
     /// assert_eq!(graph.count_all_edges(), 0);
     /// assert_eq!(graph.count_all_vertices(), 3);
     /// ```
+    ///
+    /// # Panics
+    ///
+    /// Panics if `V` is zero.
     #[must_use]
     pub const fn new() -> Self {
+        assert!(V > 0, "a graph must have at least one vertex");
+
         Self {
             blocks: [0; blocks!(V)],
         }
@@ -177,20 +188,6 @@ where
     }
 }
 
-impl<const V: usize> Indegree for AdjacencyMatrix<V>
-where
-    [(); blocks!(V)]:,
-{
-    /// # Panics
-    ///
-    /// Panics if `t >= V`.
-    fn indegree(&self, t: usize) -> usize {
-        assert!(t < V, "t is not in the graph");
-
-        (0..V).filter(|&s| self.has_edge(s, t)).count()
-    }
-}
-
 impl<const V: usize> HasEdge for AdjacencyMatrix<V>
 where
     [(); blocks!(V)]:,
@@ -206,12 +203,77 @@ where
     }
 }
 
+impl<const V: usize> HasEdgeSymmetric for AdjacencyMatrix<V>
+where
+    [(); blocks!(V)]:,
+{
+    fn has_edge_symmetric(&self, s: usize, t: usize) -> bool {
+        self.has_edge(s, t) && self.has_edge(t, s)
+    }
+}
+
+impl<const V: usize> Indegree for AdjacencyMatrix<V>
+where
+    [(); blocks!(V)]:,
+{
+    /// # Panics
+    ///
+    /// Panics if `t >= V`.
+    fn indegree(&self, t: usize) -> usize {
+        assert!(t < V, "t is not in the graph");
+
+        self.iter_vertices()
+            .filter(|&s| self.has_edge(s, t))
+            .count()
+    }
+}
+
+impl<const V: usize> IsBalanced for AdjacencyMatrix<V>
+where
+    [(); blocks!(V)]:,
+{
+    fn is_balanced(&self) -> bool {
+        self.iter_vertices()
+            .all(|s| self.indegree(s) == self.outdegree(s))
+    }
+}
+
+impl<const V: usize> IsIsolated for AdjacencyMatrix<V>
+where
+    [(); blocks!(V)]:,
+{
+    fn is_isolated(&self, s: usize) -> bool {
+        self.indegree(s) == 0 && self.outdegree(s) == 0
+    }
+}
+
 impl<const V: usize> IsSimple for AdjacencyMatrix<V>
 where
     [(); blocks!(V)]:,
 {
     fn is_simple(&self) -> bool {
-        (0..V).all(|s| !self.has_edge(s, s))
+        self.iter_vertices().all(|s| !self.has_edge(s, s))
+    }
+}
+
+impl<const V: usize> IsSymmetric for AdjacencyMatrix<V>
+where
+    [(); blocks!(V)]:,
+{
+    fn is_symmetric(&self) -> bool {
+        self.iter_all_edges().all(|(s, t)| self.has_edge(t, s))
+    }
+}
+
+impl<const V: usize> IterAllEdges for AdjacencyMatrix<V>
+where
+    [(); blocks!(V)]:,
+{
+    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
+        self.iter_vertices().flat_map(move |s| {
+            self.iter_vertices()
+                .filter_map(move |t| self.has_edge(s, t).then_some((s, t)))
+        })
     }
 }
 
@@ -225,7 +287,7 @@ where
     fn iter_edges(&self, s: usize) -> impl Iterator<Item = usize> {
         assert!(s < V, "s is not in the graph");
 
-        (0..V).filter(move |t| self.has_edge(s, *t))
+        self.iter_vertices().filter(move |&t| self.has_edge(s, t))
     }
 }
 
@@ -248,7 +310,9 @@ where
     fn outdegree(&self, s: usize) -> usize {
         assert!(s < V, "s is not in the graph");
 
-        (0..V).filter(|&t| self.has_edge(s, t)).count()
+        self.iter_vertices()
+            .filter(|&t| self.has_edge(s, t))
+            .count()
     }
 }
 
@@ -281,6 +345,12 @@ mod tests {
         let graph = AdjacencyMatrix::<3>::new();
 
         assert_eq!(graph.blocks, [0]);
+    }
+
+    #[test]
+    #[should_panic(expected = "a graph must have at least one vertex")]
+    const fn new_panic() {
+        let _ = AdjacencyMatrix::<0>::new();
     }
 
     #[test]
@@ -375,29 +445,6 @@ mod tests {
     }
 
     #[test]
-    fn indegree() {
-        let mut graph = AdjacencyMatrix::<3>::new();
-
-        assert_eq!(graph.indegree(0), 0);
-        assert_eq!(graph.indegree(1), 0);
-        assert_eq!(graph.indegree(2), 0);
-
-        graph.add_edge(0, 1);
-        graph.add_edge(0, 2);
-
-        assert_eq!(graph.indegree(0), 0);
-        assert_eq!(graph.indegree(1), 1);
-        assert_eq!(graph.indegree(2), 1);
-    }
-
-    #[test]
-    #[should_panic(expected = "t is not in the graph")]
-    fn indegree_t_gte_v() {
-        let graph = AdjacencyMatrix::<3>::new();
-        let _ = graph.indegree(3);
-    }
-
-    #[test]
     fn has_edge() {
         let mut graph = AdjacencyMatrix::<3>::new();
 
@@ -425,6 +472,102 @@ mod tests {
     }
 
     #[test]
+    fn has_edge_symmetric() {
+        let mut graph = AdjacencyMatrix::<3>::new();
+
+        assert!(!graph.has_edge_symmetric(0, 1));
+        assert!(!graph.has_edge_symmetric(0, 2));
+        assert!(!graph.has_edge_symmetric(1, 0));
+        assert!(!graph.has_edge_symmetric(1, 2));
+        assert!(!graph.has_edge_symmetric(2, 0));
+        assert!(!graph.has_edge_symmetric(2, 1));
+        assert!(!graph.has_edge_symmetric(3, 0));
+        assert!(!graph.has_edge_symmetric(0, 3));
+
+        graph.add_edge(0, 1);
+        graph.add_edge(0, 2);
+        graph.add_edge(1, 0);
+        graph.add_edge(2, 1);
+
+        assert!(graph.has_edge_symmetric(0, 1));
+        assert!(!graph.has_edge_symmetric(0, 2));
+        assert!(graph.has_edge_symmetric(1, 0));
+        assert!(!graph.has_edge_symmetric(1, 2));
+        assert!(!graph.has_edge_symmetric(2, 0));
+        assert!(!graph.has_edge_symmetric(2, 1));
+        assert!(!graph.has_edge_symmetric(3, 0));
+        assert!(!graph.has_edge_symmetric(0, 3));
+    }
+
+    #[test]
+    fn indegree() {
+        let mut graph = AdjacencyMatrix::<3>::new();
+
+        assert_eq!(graph.indegree(0), 0);
+        assert_eq!(graph.indegree(1), 0);
+        assert_eq!(graph.indegree(2), 0);
+
+        graph.add_edge(0, 1);
+        graph.add_edge(0, 2);
+
+        assert_eq!(graph.indegree(0), 0);
+        assert_eq!(graph.indegree(1), 1);
+        assert_eq!(graph.indegree(2), 1);
+    }
+
+    #[test]
+    #[should_panic(expected = "t is not in the graph")]
+    fn indegree_t_gte_v() {
+        let graph = AdjacencyMatrix::<3>::new();
+        let _ = graph.indegree(3);
+    }
+
+    #[test]
+    fn is_balanced() {
+        let mut graph = AdjacencyMatrix::<3>::new();
+
+        assert!(graph.is_balanced());
+
+        graph.add_edge(0, 1);
+
+        assert!(!graph.is_balanced());
+
+        graph.add_edge(1, 0);
+
+        assert!(graph.is_balanced());
+
+        graph.add_edge(0, 2);
+
+        assert!(!graph.is_balanced());
+
+        graph.add_edge(1, 2);
+
+        assert!(!graph.is_balanced());
+
+        graph.add_edge(2, 0);
+
+        assert!(!graph.is_balanced());
+
+        graph.add_edge(2, 1);
+
+        assert!(graph.is_balanced());
+    }
+
+    #[test]
+    fn is_isolated() {
+        let mut graph = AdjacencyMatrix::<4>::new();
+
+        graph.add_edge(0, 1);
+        graph.add_edge(0, 2);
+        graph.add_edge(1, 2);
+
+        assert!(!graph.is_isolated(0));
+        assert!(!graph.is_isolated(1));
+        assert!(!graph.is_isolated(2));
+        assert!(graph.is_isolated(3));
+    }
+
+    #[test]
     fn is_simple() {
         let mut graph = AdjacencyMatrix::<3>::new();
 
@@ -439,9 +582,45 @@ mod tests {
     fn is_simple_self_loop() {
         let mut graph = AdjacencyMatrix::<3>::new();
 
-        graph.add_edge(0, 0); // Self-loop {0, 0}
+        graph.add_edge(0, 0);
 
         assert!(!graph.is_simple());
+    }
+
+    #[test]
+    fn is_symmetric_simple() {
+        let mut graph = AdjacencyMatrix::<2>::new();
+
+        graph.add_edge(0, 1);
+        graph.add_edge(1, 0);
+
+        assert!(graph.is_symmetric());
+
+        let mut graph = AdjacencyMatrix::<2>::new();
+
+        graph.add_edge(0, 1);
+
+        assert!(!graph.is_symmetric());
+
+        let mut graph = AdjacencyMatrix::<3>::new();
+
+        graph.add_edge(0, 1);
+        graph.add_edge(0, 2);
+        graph.add_edge(1, 2);
+        graph.add_edge(2, 0);
+
+        assert!(!graph.is_symmetric());
+    }
+
+    #[test]
+    fn iter_all_edges() {
+        let mut graph = AdjacencyMatrix::<3>::new();
+
+        graph.add_edge(0, 1);
+        graph.add_edge(1, 2);
+        graph.add_edge(2, 0);
+
+        assert!(graph.iter_all_edges().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]
@@ -452,9 +631,9 @@ mod tests {
         graph.add_edge(0, 2);
         graph.add_edge(2, 1);
 
-        assert_eq!(graph.iter_edges(0).collect::<Vec<_>>(), vec![1, 2]);
-        assert_eq!(graph.iter_edges(1).collect::<Vec<_>>(), Vec::new());
-        assert_eq!(graph.iter_edges(2).collect::<Vec<_>>(), vec![1]);
+        assert!(graph.iter_edges(0).eq([1, 2]));
+        assert!(graph.iter_edges(1).eq([]));
+        assert!(graph.iter_edges(2).eq([1]));
     }
 
     #[test]
@@ -468,7 +647,7 @@ mod tests {
     fn iter_vertices() {
         let graph = AdjacencyMatrix::<3>::new();
 
-        assert_eq!(graph.iter_vertices().collect::<Vec<_>>(), vec![0, 1, 2]);
+        assert!(graph.iter_vertices().eq([0, 1, 2]));
     }
 
     #[test]
