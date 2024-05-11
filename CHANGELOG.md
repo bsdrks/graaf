@@ -15,6 +15,7 @@
 - Add `op::eccentricity`.
 - Add `op::periphery`.
 - Add `op::radius`.
+- Disallow graphs with no vertices.
 - Ensure that all `op` implementation examples use the other `op` traits where possible.
 - Benchmark against popular Rust graph libraries.
 - Benchmark against popular graph libraries in other languages.
@@ -22,6 +23,17 @@
 - Implement missing `op` traits for `AdjacencyMatrix`.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.41.0] - 2024-05-11
+
+Changed
+
+- Breaking: `Complete::complete` now panics if `v` is zero.
+- Breaking: `CompleteConst::complete_const` now panics if `V` is zero.
+- Breaking: `Cycle::cycle` now panics if `v` is zero.
+- Breaking: `CycleConst::cycle_const` now panics if `V` is zero.
+- Breaking: `Empty::empty` now panics if `v` is zero.
+- Breaking: `EmptyConst::empty_const` now panics if `V` is zero.
 
 ## [0.40.0] - 2024-05-10
 
@@ -83,8 +95,8 @@ Changed
 Fixed
 
 - Breaking: Fix `IsBalanced`.
-- Fix `empty_const` documentation aliases.
 - Fix `complete` documentation aliases.
+- Fix `empty_const` documentation aliases.
 
 ## [0.39.0] - 2024-05-09
 

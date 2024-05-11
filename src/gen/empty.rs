@@ -9,7 +9,6 @@
 //! ```
 //! use graaf::gen::Empty;
 //!
-//! assert!(Vec::<Vec<usize>>::empty(0).is_empty());
 //! assert_eq!(Vec::<Vec<usize>>::empty(1), vec![Vec::new()]);
 //! assert_eq!(Vec::<Vec<usize>>::empty(2), vec![Vec::new(), Vec::new()]);
 //!
@@ -54,7 +53,12 @@ use {
 /// }
 ///
 /// impl Empty for Graph {
+///     /// # Panics
+///     ///
+///     /// Panics if `v` is 0.
 ///     fn empty(v: usize) -> Self {
+///         assert!(v > 0, "a graph must have at least one vertex");
+///
 ///         Graph {
 ///             edges: HashSet::new(),
 ///         }
@@ -68,6 +72,20 @@ use {
 ///     }
 /// );
 /// ```
+///
+/// # Examples
+///
+/// ```
+/// use graaf::gen::Empty;
+///
+/// assert_eq!(Vec::<Vec<usize>>::empty(1), vec![Vec::new()]);
+/// assert_eq!(Vec::<Vec<usize>>::empty(2), vec![Vec::new(), Vec::new()]);
+///
+/// assert_eq!(
+///     Vec::<Vec<usize>>::empty(3),
+///     vec![Vec::new(), Vec::new(), Vec::new()]
+/// );
+/// ```
 pub trait Empty {
     /// Generates an empty graph.
     ///
@@ -78,13 +96,23 @@ pub trait Empty {
 }
 
 impl Empty for Vec<Vec<usize>> {
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
     fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
         vec![Vec::new(); v]
     }
 }
 
 impl Empty for Vec<BTreeSet<usize>> {
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
     fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
         vec![BTreeSet::new(); v]
     }
 }
@@ -94,19 +122,34 @@ where
     H: BuildHasher + Default,
     HashSet<usize, H>: Clone,
 {
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
     fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
         vec![HashSet::with_hasher(H::default()); v]
     }
 }
 
 impl Empty for BTreeMap<usize, Vec<usize>> {
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
     fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
         (0..v).map(|s| (s, Vec::new())).collect()
     }
 }
 
 impl Empty for BTreeMap<usize, BTreeSet<usize>> {
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
     fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
         (0..v).map(|s| (s, BTreeSet::new())).collect()
     }
 }
@@ -115,7 +158,12 @@ impl<H> Empty for HashMap<usize, Vec<usize>, H>
 where
     H: BuildHasher + Default,
 {
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
     fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
         (0..v).map(|s| (s, Vec::new())).collect()
     }
 }
@@ -124,7 +172,12 @@ impl<H> Empty for HashMap<usize, HashSet<usize, H>, H>
 where
     H: BuildHasher + Default,
 {
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
     fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
         (0..v)
             .map(|s| (s, HashSet::with_hasher(H::default())))
             .collect()
@@ -132,13 +185,23 @@ where
 }
 
 impl Empty for Vec<(usize, usize)> {
-    fn empty(_: usize) -> Self {
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
+    fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
         Self::new()
     }
 }
 
 impl Empty for BTreeSet<(usize, usize)> {
-    fn empty(_: usize) -> Self {
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
+    fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
         Self::new()
     }
 }
@@ -147,7 +210,12 @@ impl<H> Empty for HashSet<(usize, usize), H>
 where
     H: BuildHasher + Default,
 {
-    fn empty(_: usize) -> Self {
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
+    fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
         Self::with_hasher(H::default())
     }
 }
@@ -156,7 +224,12 @@ impl<W> Empty for Vec<Vec<(usize, W)>>
 where
     W: Clone,
 {
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
     fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
         vec![Vec::new(); v]
     }
 }
@@ -165,7 +238,12 @@ impl<W> Empty for Vec<BTreeSet<(usize, W)>>
 where
     W: Clone,
 {
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
     fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
         vec![BTreeSet::new(); v]
     }
 }
@@ -176,7 +254,12 @@ where
     H: BuildHasher + Default,
     HashSet<(usize, W), H>: Clone,
 {
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
     fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
         vec![HashSet::with_hasher(H::default()); v]
     }
 }
@@ -185,7 +268,12 @@ impl<W> Empty for Vec<BTreeMap<usize, W>>
 where
     W: Clone,
 {
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
     fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
         vec![BTreeMap::new(); v]
     }
 }
@@ -196,7 +284,12 @@ where
     H: BuildHasher + Default,
     HashMap<usize, W, H>: Clone,
 {
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
     fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
         vec![HashMap::with_hasher(H::default()); v]
     }
 }
@@ -205,7 +298,12 @@ impl<W> Empty for BTreeMap<usize, Vec<(usize, W)>>
 where
     W: Clone,
 {
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
     fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
         (0..v).map(|s| (s, Vec::new())).collect()
     }
 }
@@ -214,7 +312,12 @@ impl<W> Empty for BTreeMap<usize, BTreeSet<(usize, W)>>
 where
     W: Clone,
 {
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
     fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
         (0..v).map(|s| (s, BTreeSet::new())).collect()
     }
 }
@@ -223,7 +326,12 @@ impl<W> Empty for BTreeMap<usize, BTreeMap<usize, W>>
 where
     W: Clone,
 {
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
     fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
         (0..v).map(|s| (s, BTreeMap::new())).collect()
     }
 }
@@ -233,7 +341,12 @@ where
     W: Clone,
     H: BuildHasher + Default,
 {
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
     fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
         (0..v).map(|s| (s, Vec::new())).collect()
     }
 }
@@ -243,7 +356,12 @@ where
     W: Clone,
     H: BuildHasher + Default,
 {
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
     fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
         (0..v)
             .map(|s| (s, HashSet::with_hasher(H::default())))
             .collect()
@@ -255,7 +373,12 @@ where
     W: Clone,
     H: BuildHasher + Default,
 {
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
     fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
         (0..v)
             .map(|s| (s, HashMap::with_hasher(H::default())))
             .collect()
@@ -263,13 +386,23 @@ where
 }
 
 impl<W> Empty for Vec<(usize, usize, W)> {
-    fn empty(_: usize) -> Self {
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
+    fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
         Self::new()
     }
 }
 
 impl<W> Empty for BTreeSet<(usize, usize, W)> {
-    fn empty(_: usize) -> Self {
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
+    fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
         Self::new()
     }
 }
@@ -278,7 +411,12 @@ impl<W, H> Empty for HashSet<(usize, usize, W), H>
 where
     H: BuildHasher + Default,
 {
-    fn empty(_: usize) -> Self {
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
+    fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
         Self::with_hasher(H::default())
     }
 }
@@ -327,152 +465,152 @@ mod tests {
 
     proptest! {
         #[test]
-        fn count_all_edges_vec_vec_unweighted(v in 0..100_usize) {
+        fn count_all_edges_vec_vec_unweighted(v in 1..100_usize) {
             prop_count_all_edges::<Vec<Vec<usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_vec_btree_set_unweighted(v in 0..100_usize) {
+        fn count_all_edges_vec_btree_set_unweighted(v in 1..100_usize) {
             prop_count_all_edges::<Vec<BTreeSet<usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_vec_hash_set_unweighted(v in 0..100_usize) {
+        fn count_all_edges_vec_hash_set_unweighted(v in 1..100_usize) {
             prop_count_all_edges::<Vec<HashSet<usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_btree_map_vec_unweighted(v in 0..100_usize) {
+        fn count_all_edges_btree_map_vec_unweighted(v in 1..100_usize) {
             prop_count_all_edges::<BTreeMap<usize, Vec<usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_btree_map_btree_set_unweighted(v in 0..100_usize) {
+        fn count_all_edges_btree_map_btree_set_unweighted(v in 1..100_usize) {
             prop_count_all_edges::<BTreeMap<usize, BTreeSet<usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_hash_map_vec_unweighted(v in 0..100_usize) {
+        fn count_all_edges_hash_map_vec_unweighted(v in 1..100_usize) {
             prop_count_all_edges::<HashMap<usize, Vec<usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_hash_map_hash_set_unweighted(v in 0..100_usize) {
+        fn count_all_edges_hash_map_hash_set_unweighted(v in 1..100_usize) {
             prop_count_all_edges::<HashMap<usize, HashSet<usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_vec_tuple_unweighted(v in 0..100_usize) {
+        fn count_all_edges_vec_tuple_unweighted(v in 1..100_usize) {
             prop_count_all_edges::<Vec<(usize, usize)>>(v);
         }
 
         #[test]
-        fn count_all_edges_btree_set_tuple_unweighted(v in 0..100_usize) {
+        fn count_all_edges_btree_set_tuple_unweighted(v in 1..100_usize) {
             prop_count_all_edges::<BTreeSet<(usize, usize)>>(v);
         }
 
         #[test]
-        fn count_all_edges_hash_set_tuple_unweighted(v in 0..100_usize) {
+        fn count_all_edges_hash_set_tuple_unweighted(v in 1..100_usize) {
             prop_count_all_edges::<HashSet<(usize, usize)>>(v);
         }
 
         #[test]
-        fn count_all_edges_vec_vec_weighted(v in 0..100_usize) {
+        fn count_all_edges_vec_vec_weighted(v in 1..100_usize) {
             prop_count_all_edges::<Vec<Vec<(usize, usize)>>>(v);
         }
 
         #[test]
-        fn count_all_edges_vec_btree_set_weighted(v in 0..100_usize) {
+        fn count_all_edges_vec_btree_set_weighted(v in 1..100_usize) {
             prop_count_all_edges::<Vec<BTreeSet<(usize, usize)>>>(v);
         }
 
         #[test]
-        fn count_all_edges_vec_hash_set_weighted(v in 0..100_usize) {
+        fn count_all_edges_vec_hash_set_weighted(v in 1..100_usize) {
             prop_count_all_edges::<Vec<HashSet<(usize, usize)>>>(v);
         }
 
         #[test]
-        fn count_all_edges_vec_btree_map_weighted(v in 0..100_usize) {
+        fn count_all_edges_vec_btree_map_weighted(v in 1..100_usize) {
             prop_count_all_edges::<Vec<BTreeMap<usize, usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_vec_hash_map_weighted(v in 0..100_usize) {
+        fn count_all_edges_vec_hash_map_weighted(v in 1..100_usize) {
             prop_count_all_edges::<Vec<HashMap<usize, usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_btree_map_vec_weighted(v in 0..100_usize) {
+        fn count_all_edges_btree_map_vec_weighted(v in 1..100_usize) {
             prop_count_all_edges::<BTreeMap<usize, Vec<(usize, usize)>>>(v);
         }
 
         #[test]
-        fn count_all_edges_btree_map_btree_set_weighted(v in 0..100_usize) {
+        fn count_all_edges_btree_map_btree_set_weighted(v in 1..100_usize) {
             prop_count_all_edges::<BTreeMap<usize, BTreeSet<(usize, usize)>>>(v);
         }
 
         #[test]
-        fn count_all_edges_btree_map_btree_map(v in 0..100_usize) {
+        fn count_all_edges_btree_map_btree_map(v in 1..100_usize) {
             prop_count_all_edges::<BTreeMap<usize, BTreeMap<usize, usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_hash_map_vec_weighted(v in 0..100_usize) {
+        fn count_all_edges_hash_map_vec_weighted(v in 1..100_usize) {
             prop_count_all_edges::<HashMap<usize, Vec<(usize, usize)>>>(v);
         }
 
         #[test]
-        fn count_all_edges_hash_map_hash_set_weighted(v in 0..100_usize) {
+        fn count_all_edges_hash_map_hash_set_weighted(v in 1..100_usize) {
             prop_count_all_edges::<HashMap<usize, HashSet<(usize, usize)>>>(v);
         }
 
         #[test]
-        fn count_all_edges_hash_map_hash_map(v in 0..100_usize) {
+        fn count_all_edges_hash_map_hash_map(v in 1..100_usize) {
             prop_count_all_edges::<HashMap<usize, HashMap<usize, usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_vec_tuple_weighted(v in 0..100_usize) {
+        fn count_all_edges_vec_tuple_weighted(v in 1..100_usize) {
             prop_count_all_edges::<Vec<(usize, usize, usize)>>(v);
         }
 
         #[test]
-        fn count_all_edges_btree_set_tuple_weighted(v in 0..100_usize) {
+        fn count_all_edges_btree_set_tuple_weighted(v in 1..100_usize) {
             prop_count_all_edges::<BTreeSet<(usize, usize, usize)>>(v);
         }
 
         #[test]
-        fn count_all_edges_hash_set_tuple_weighted(v in 0..100_usize) {
+        fn count_all_edges_hash_set_tuple_weighted(v in 1..100_usize) {
             prop_count_all_edges::<HashSet<(usize, usize, usize)>>(v);
         }
 
         #[test]
-        fn count_all_vertices_vec_vec_unweighted(v in 0..100_usize) {
+        fn count_all_vertices_vec_vec_unweighted(v in 1..100_usize) {
             prop_count_all_vertices::<Vec<Vec<usize>>>(v);
         }
 
         #[test]
-        fn count_all_vertices_vec_btree_set_unweighted(v in 0..100_usize) {
+        fn count_all_vertices_vec_btree_set_unweighted(v in 1..100_usize) {
             prop_count_all_vertices::<Vec<BTreeSet<usize>>>(v);
         }
 
         #[test]
-        fn count_all_vertices_vec_hash_set_unweighted(v in 0..100_usize) {
+        fn count_all_vertices_vec_hash_set_unweighted(v in 1..100_usize) {
             prop_count_all_vertices::<Vec<HashSet<usize>>>(v);
         }
 
         #[test]
-        fn count_all_vertices_vec_vec_weighted(v in 0..100_usize) {
+        fn count_all_vertices_vec_vec_weighted(v in 1..100_usize) {
             prop_count_all_vertices::<Vec<Vec<(usize, usize)>>>(v);
         }
 
         #[test]
-        fn count_all_vertices_vec_btree_set_weighted(v in 0..100_usize) {
+        fn count_all_vertices_vec_btree_set_weighted(v in 1..100_usize) {
             prop_count_all_vertices::<Vec<BTreeSet<(usize, usize)>>>(v);
         }
 
         #[test]
-        fn count_all_vertices_vec_hash_set_weighted(v in 0..100_usize) {
+        fn count_all_vertices_vec_hash_set_weighted(v in 1..100_usize) {
             prop_count_all_vertices::<Vec<HashSet<(usize, usize)>>>(v);
         }
 
@@ -527,42 +665,42 @@ mod tests {
         }
 
         #[test]
-        fn is_simple_vec_btree_set_unweighted(v in 0..100_usize) {
+        fn is_simple_vec_btree_set_unweighted(v in 1..100_usize) {
             prop_is_simple::<Vec<BTreeSet<usize>>>(v);
         }
 
         #[test]
-        fn is_simple_vec_hash_set_unweighted(v in 0..100_usize) {
+        fn is_simple_vec_hash_set_unweighted(v in 1..100_usize) {
             prop_is_simple::<Vec<HashSet<usize>>>(v);
         }
 
         #[test]
-        fn is_simple_vec_tuple_unweighted(v in 0..100_usize) {
+        fn is_simple_vec_tuple_unweighted(v in 1..100_usize) {
             prop_is_simple::<Vec<(usize, usize)>>(v);
         }
 
         #[test]
-        fn is_simple_btree_set_tuple_unweighted(v in 0..100_usize) {
+        fn is_simple_btree_set_tuple_unweighted(v in 1..100_usize) {
             prop_is_simple::<BTreeSet<(usize, usize)>>(v);
         }
 
         #[test]
-        fn is_simple_hash_set_tuple_unweighted(v in 0..100_usize) {
+        fn is_simple_hash_set_tuple_unweighted(v in 1..100_usize) {
             prop_is_simple::<HashSet<(usize, usize)>>(v);
         }
 
         #[test]
-        fn is_simple_vec_tuple_weighted(v in 0..100_usize) {
+        fn is_simple_vec_tuple_weighted(v in 1..100_usize) {
             prop_is_simple::<Vec<(usize, usize, usize)>>(v);
         }
 
         #[test]
-        fn is_simple_btree_set_tuple_weighted(v in 0..100_usize) {
+        fn is_simple_btree_set_tuple_weighted(v in 1..100_usize) {
             prop_is_simple::<BTreeSet<(usize, usize, usize)>>(v);
         }
 
         #[test]
-        fn is_simple_hash_set_tuple_weighted(v in 0..100_usize) {
+        fn is_simple_hash_set_tuple_weighted(v in 1..100_usize) {
             prop_is_simple::<HashSet<(usize, usize, usize)>>(v);
         }
 
@@ -639,375 +777,516 @@ mod tests {
 
     #[test]
     fn vec_vec_unweighted() {
-        for (v, g) in [
-            Vec::new(),
-            vec![Vec::new()],
-            vec![Vec::new(), Vec::new()],
-            vec![Vec::new(), Vec::new(), Vec::new()],
-        ]
-        .iter()
-        .enumerate()
-        {
-            assert_eq!(&Vec::<Vec<usize>>::empty(v), g);
-        }
+        assert_eq!(Vec::<Vec<usize>>::empty(1), vec![Vec::new()]);
+        assert_eq!(Vec::<Vec<usize>>::empty(2), vec![Vec::new(), Vec::new()]);
+
+        assert_eq!(
+            Vec::<Vec<usize>>::empty(3),
+            vec![Vec::new(), Vec::new(), Vec::new()]
+        );
     }
 
     #[test]
     fn vec_btree_set_unweighted() {
-        for (v, g) in [
-            Vec::new(),
-            vec![BTreeSet::new()],
-            vec![BTreeSet::new(), BTreeSet::new()],
-            vec![BTreeSet::new(), BTreeSet::new(), BTreeSet::new()],
-        ]
-        .iter()
-        .enumerate()
-        {
-            assert_eq!(&Vec::<BTreeSet<usize>>::empty(v), g);
-        }
+        assert_eq!(Vec::<BTreeSet<usize>>::empty(1), vec![BTreeSet::new()]);
+
+        assert_eq!(
+            Vec::<BTreeSet<usize>>::empty(2),
+            vec![BTreeSet::new(), BTreeSet::new()]
+        );
+
+        assert_eq!(
+            Vec::<BTreeSet<usize>>::empty(3),
+            vec![BTreeSet::new(), BTreeSet::new(), BTreeSet::new()]
+        );
     }
 
     #[test]
     fn vec_hash_set_unweighted() {
-        for (v, g) in [
-            Vec::new(),
-            vec![HashSet::new()],
-            vec![HashSet::new(), HashSet::new()],
-            vec![HashSet::new(), HashSet::new(), HashSet::new()],
-        ]
-        .iter()
-        .enumerate()
-        {
-            assert_eq!(&Vec::<HashSet<usize>>::empty(v), g);
-        }
+        assert_eq!(Vec::<HashSet<usize>>::empty(1), vec![HashSet::new()]);
+
+        assert_eq!(
+            Vec::<HashSet<usize>>::empty(2),
+            vec![HashSet::new(), HashSet::new()]
+        );
+
+        assert_eq!(
+            Vec::<HashSet<usize>>::empty(3),
+            vec![HashSet::new(), HashSet::new(), HashSet::new()]
+        );
     }
 
     #[test]
     fn btree_map_vec_unweighted() {
-        for (v, g) in [
-            BTreeMap::new(),
-            BTreeMap::from([(0, Vec::new())]),
-            BTreeMap::from([(0, Vec::new()), (1, Vec::new())]),
-            BTreeMap::from([(0, Vec::new()), (1, Vec::new()), (2, Vec::new())]),
-        ]
-        .iter()
-        .enumerate()
-        {
-            assert_eq!(&BTreeMap::<usize, Vec<usize>>::empty(v), g);
-        }
+        assert_eq!(
+            BTreeMap::<usize, Vec<usize>>::empty(1),
+            BTreeMap::from([(0, Vec::new())])
+        );
+
+        assert_eq!(
+            BTreeMap::<usize, Vec<usize>>::empty(2),
+            BTreeMap::from([(0, Vec::new()), (1, Vec::new())])
+        );
+
+        assert_eq!(
+            BTreeMap::<usize, Vec<usize>>::empty(3),
+            BTreeMap::from([(0, Vec::new()), (1, Vec::new()), (2, Vec::new())])
+        );
     }
 
     #[test]
     fn btree_map_btree_set_unweighted() {
-        for (v, g) in [
-            BTreeMap::new(),
-            BTreeMap::from([(0, BTreeSet::new())]),
-            BTreeMap::from([(0, BTreeSet::new()), (1, BTreeSet::new())]),
+        assert_eq!(
+            BTreeMap::<usize, BTreeSet<usize>>::empty(1),
+            BTreeMap::from([(0, BTreeSet::new())])
+        );
+
+        assert_eq!(
+            BTreeMap::<usize, BTreeSet<usize>>::empty(2),
+            BTreeMap::from([(0, BTreeSet::new()), (1, BTreeSet::new())])
+        );
+
+        assert_eq!(
+            BTreeMap::<usize, BTreeSet<usize>>::empty(3),
             BTreeMap::from([
                 (0, BTreeSet::new()),
                 (1, BTreeSet::new()),
                 (2, BTreeSet::new()),
-            ]),
-        ]
-        .iter()
-        .enumerate()
-        {
-            assert_eq!(&BTreeMap::<usize, BTreeSet<usize>>::empty(v), g);
-        }
+            ])
+        );
     }
 
     #[test]
     fn hash_map_vec_unweighted() {
-        for (v, g) in [
-            HashMap::new(),
-            HashMap::from([(0, Vec::new())]),
-            HashMap::from([(0, Vec::new()), (1, Vec::new())]),
-            HashMap::from([(0, Vec::new()), (1, Vec::new()), (2, Vec::new())]),
-        ]
-        .iter()
-        .enumerate()
-        {
-            assert_eq!(&HashMap::<usize, Vec<usize>>::empty(v), g);
-        }
+        assert_eq!(
+            HashMap::<usize, Vec<usize>>::empty(1),
+            HashMap::from([(0, Vec::new())])
+        );
+
+        assert_eq!(
+            HashMap::<usize, Vec<usize>>::empty(2),
+            HashMap::from([(0, Vec::new()), (1, Vec::new())])
+        );
+
+        assert_eq!(
+            HashMap::<usize, Vec<usize>>::empty(3),
+            HashMap::from([(0, Vec::new()), (1, Vec::new()), (2, Vec::new())])
+        );
     }
 
     #[test]
     fn hash_map_hash_set_unweighted() {
-        for (v, g) in [
-            HashMap::new(),
-            HashMap::from([(0, HashSet::new())]),
-            HashMap::from([(0, HashSet::new()), (1, HashSet::new())]),
+        assert_eq!(
+            HashMap::<usize, HashSet<usize>>::empty(1),
+            HashMap::from([(0, HashSet::new())])
+        );
+
+        assert_eq!(
+            HashMap::<usize, HashSet<usize>>::empty(2),
+            HashMap::from([(0, HashSet::new()), (1, HashSet::new())])
+        );
+
+        assert_eq!(
+            HashMap::<usize, HashSet<usize>>::empty(3),
             HashMap::from([
                 (0, HashSet::new()),
                 (1, HashSet::new()),
                 (2, HashSet::new()),
-            ]),
-        ]
-        .iter()
-        .enumerate()
-        {
-            assert_eq!(&HashMap::<usize, HashSet<usize>>::empty(v), g);
-        }
+            ])
+        );
     }
 
     #[test]
     fn vec_tuple_unweighted() {
-        for (v, g) in [Vec::new(), Vec::new(), Vec::new(), Vec::new()]
-            .iter()
-            .enumerate()
-        {
-            assert_eq!(&Vec::<(usize, usize)>::empty(v), g);
-        }
+        assert_eq!(Vec::<(usize, usize)>::empty(1), Vec::new());
+        assert_eq!(Vec::<(usize, usize)>::empty(2), Vec::new());
+        assert_eq!(Vec::<(usize, usize)>::empty(3), Vec::new());
     }
 
     #[test]
     fn btree_set_tuple_unweighted() {
-        for (v, g) in [
-            BTreeSet::new(),
-            BTreeSet::new(),
-            BTreeSet::new(),
-            BTreeSet::new(),
-        ]
-        .iter()
-        .enumerate()
-        {
-            assert_eq!(&BTreeSet::<(usize, usize)>::empty(v), g);
-        }
+        assert_eq!(BTreeSet::<(usize, usize)>::empty(1), BTreeSet::new());
+        assert_eq!(BTreeSet::<(usize, usize)>::empty(2), BTreeSet::new());
+        assert_eq!(BTreeSet::<(usize, usize)>::empty(3), BTreeSet::new());
     }
 
     #[test]
     fn hash_set_tuple_unweighted() {
-        for (v, g) in [
-            HashSet::new(),
-            HashSet::new(),
-            HashSet::new(),
-            HashSet::new(),
-        ]
-        .iter()
-        .enumerate()
-        {
-            assert_eq!(&HashSet::<(usize, usize)>::empty(v), g);
-        }
+        assert_eq!(HashSet::<(usize, usize)>::empty(1), HashSet::new());
+        assert_eq!(HashSet::<(usize, usize)>::empty(2), HashSet::new());
+        assert_eq!(HashSet::<(usize, usize)>::empty(3), HashSet::new());
     }
 
     #[test]
     fn vec_vec_weighted() {
-        for (v, g) in [
-            Vec::new(),
-            vec![Vec::new()],
-            vec![Vec::new(), Vec::new()],
-            vec![Vec::new(), Vec::new(), Vec::new()],
-        ]
-        .iter()
-        .enumerate()
-        {
-            assert_eq!(&Vec::<Vec<(usize, usize)>>::empty(v), g);
-        }
+        assert_eq!(Vec::<Vec<(usize, usize)>>::empty(1), vec![Vec::new()]);
+
+        assert_eq!(
+            Vec::<Vec<(usize, usize)>>::empty(2),
+            vec![Vec::new(), Vec::new()]
+        );
+
+        assert_eq!(
+            Vec::<Vec<(usize, usize)>>::empty(3),
+            vec![Vec::new(), Vec::new(), Vec::new()]
+        );
     }
 
     #[test]
     fn vec_btree_set_weighted() {
-        for (v, g) in [
-            Vec::new(),
-            vec![BTreeSet::new()],
-            vec![BTreeSet::new(), BTreeSet::new()],
-            vec![BTreeSet::new(), BTreeSet::new(), BTreeSet::new()],
-        ]
-        .iter()
-        .enumerate()
-        {
-            assert_eq!(&Vec::<BTreeSet<(usize, usize)>>::empty(v), g);
-        }
+        assert_eq!(
+            Vec::<BTreeSet<(usize, usize)>>::empty(1),
+            vec![BTreeSet::new()]
+        );
+
+        assert_eq!(
+            Vec::<BTreeSet<(usize, usize)>>::empty(2),
+            vec![BTreeSet::new(), BTreeSet::new()]
+        );
+
+        assert_eq!(
+            Vec::<BTreeSet<(usize, usize)>>::empty(3),
+            vec![BTreeSet::new(), BTreeSet::new(), BTreeSet::new()]
+        );
     }
 
     #[test]
     fn vec_hash_set_weighted() {
-        for (v, g) in [
-            Vec::new(),
-            vec![HashSet::new()],
-            vec![HashSet::new(), HashSet::new()],
-            vec![HashSet::new(), HashSet::new(), HashSet::new()],
-        ]
-        .iter()
-        .enumerate()
-        {
-            assert_eq!(&Vec::<HashSet<(usize, usize)>>::empty(v), g);
-        }
+        assert_eq!(
+            Vec::<HashSet<(usize, usize)>>::empty(1),
+            vec![HashSet::new()]
+        );
+
+        assert_eq!(
+            Vec::<HashSet<(usize, usize)>>::empty(2),
+            vec![HashSet::new(), HashSet::new()]
+        );
+
+        assert_eq!(
+            Vec::<HashSet<(usize, usize)>>::empty(3),
+            vec![HashSet::new(), HashSet::new(), HashSet::new()]
+        );
     }
 
     #[test]
     fn vec_btree_map_weighted() {
-        for (v, g) in [
-            Vec::new(),
-            vec![BTreeMap::new()],
-            vec![BTreeMap::new(), BTreeMap::new()],
-            vec![BTreeMap::new(), BTreeMap::new(), BTreeMap::new()],
-        ]
-        .iter()
-        .enumerate()
-        {
-            assert_eq!(&Vec::<BTreeMap<usize, usize>>::empty(v), g);
-        }
+        assert_eq!(
+            Vec::<BTreeMap<usize, usize>>::empty(1),
+            vec![BTreeMap::new()]
+        );
+
+        assert_eq!(
+            Vec::<BTreeMap<usize, usize>>::empty(2),
+            vec![BTreeMap::new(), BTreeMap::new()]
+        );
+
+        assert_eq!(
+            Vec::<BTreeMap<usize, usize>>::empty(3),
+            vec![BTreeMap::new(), BTreeMap::new(), BTreeMap::new()]
+        );
     }
 
     #[test]
     fn vec_hash_map_weighted() {
-        for (v, g) in [
-            Vec::new(),
-            vec![HashMap::new()],
-            vec![HashMap::new(), HashMap::new()],
-            vec![HashMap::new(), HashMap::new(), HashMap::new()],
-        ]
-        .iter()
-        .enumerate()
-        {
-            assert_eq!(&Vec::<HashMap<usize, usize>>::empty(v), g);
-        }
+        assert_eq!(Vec::<HashMap<usize, usize>>::empty(1), vec![HashMap::new()]);
+
+        assert_eq!(
+            Vec::<HashMap<usize, usize>>::empty(2),
+            vec![HashMap::new(), HashMap::new()]
+        );
+
+        assert_eq!(
+            Vec::<HashMap<usize, usize>>::empty(3),
+            vec![HashMap::new(), HashMap::new(), HashMap::new()]
+        );
     }
 
     #[test]
     fn btree_map_vec_weighted() {
-        for (v, g) in [
-            BTreeMap::new(),
-            BTreeMap::from([(0, Vec::new())]),
-            BTreeMap::from([(0, Vec::new()), (1, Vec::new())]),
-            BTreeMap::from([(0, Vec::new()), (1, Vec::new()), (2, Vec::new())]),
-        ]
-        .iter()
-        .enumerate()
-        {
-            assert_eq!(&BTreeMap::<usize, Vec<(usize, usize)>>::empty(v), g);
-        }
+        assert_eq!(
+            BTreeMap::<usize, Vec<(usize, usize)>>::empty(1),
+            BTreeMap::from([(0, Vec::new())])
+        );
+
+        assert_eq!(
+            BTreeMap::<usize, Vec<(usize, usize)>>::empty(2),
+            BTreeMap::from([(0, Vec::new()), (1, Vec::new())])
+        );
+
+        assert_eq!(
+            BTreeMap::<usize, Vec<(usize, usize)>>::empty(3),
+            BTreeMap::from([(0, Vec::new()), (1, Vec::new()), (2, Vec::new())])
+        );
     }
 
     #[test]
     fn btree_map_btree_set_weighted() {
-        for (v, g) in [
-            BTreeMap::new(),
-            BTreeMap::from([(0, BTreeSet::new())]),
-            BTreeMap::from([(0, BTreeSet::new()), (1, BTreeSet::new())]),
+        assert_eq!(
+            BTreeMap::<usize, BTreeSet<(usize, usize)>>::empty(1),
+            BTreeMap::from([(0, BTreeSet::new())])
+        );
+
+        assert_eq!(
+            BTreeMap::<usize, BTreeSet<(usize, usize)>>::empty(2),
+            BTreeMap::from([(0, BTreeSet::new()), (1, BTreeSet::new())])
+        );
+
+        assert_eq!(
+            BTreeMap::<usize, BTreeSet<(usize, usize)>>::empty(3),
             BTreeMap::from([
                 (0, BTreeSet::new()),
                 (1, BTreeSet::new()),
                 (2, BTreeSet::new()),
-            ]),
-        ]
-        .iter()
-        .enumerate()
-        {
-            assert_eq!(&BTreeMap::<usize, BTreeSet<(usize, usize)>>::empty(v), g);
-        }
+            ])
+        );
     }
 
     #[test]
     fn btree_map_btree_map() {
-        for (v, g) in [
-            BTreeMap::new(),
-            BTreeMap::from([(0, BTreeMap::new())]),
-            BTreeMap::from([(0, BTreeMap::new()), (1, BTreeMap::new())]),
+        assert_eq!(
+            BTreeMap::<usize, BTreeMap<usize, usize>>::empty(1),
+            BTreeMap::from([(0, BTreeMap::new())])
+        );
+
+        assert_eq!(
+            BTreeMap::<usize, BTreeMap<usize, usize>>::empty(2),
+            BTreeMap::from([(0, BTreeMap::new()), (1, BTreeMap::new())])
+        );
+
+        assert_eq!(
+            BTreeMap::<usize, BTreeMap<usize, usize>>::empty(3),
             BTreeMap::from([
                 (0, BTreeMap::new()),
                 (1, BTreeMap::new()),
                 (2, BTreeMap::new()),
-            ]),
-        ]
-        .iter()
-        .enumerate()
-        {
-            assert_eq!(&BTreeMap::<usize, BTreeMap<usize, usize>>::empty(v), g);
-        }
+            ])
+        );
     }
 
     #[test]
     fn hash_map_vec_weighted() {
-        for (v, g) in [
-            HashMap::new(),
-            HashMap::from([(0, Vec::new())]),
-            HashMap::from([(0, Vec::new()), (1, Vec::new())]),
-            HashMap::from([(0, Vec::new()), (1, Vec::new()), (2, Vec::new())]),
-        ]
-        .iter()
-        .enumerate()
-        {
-            assert_eq!(&HashMap::<usize, Vec<(usize, usize)>>::empty(v), g);
-        }
+        assert_eq!(
+            HashMap::<usize, Vec<(usize, usize)>>::empty(1),
+            HashMap::from([(0, Vec::new())])
+        );
+
+        assert_eq!(
+            HashMap::<usize, Vec<(usize, usize)>>::empty(2),
+            HashMap::from([(0, Vec::new()), (1, Vec::new())])
+        );
+
+        assert_eq!(
+            HashMap::<usize, Vec<(usize, usize)>>::empty(3),
+            HashMap::from([(0, Vec::new()), (1, Vec::new()), (2, Vec::new())])
+        );
     }
 
     #[test]
     fn hash_map_hash_set_weighted() {
-        for (v, g) in [
-            HashMap::new(),
-            HashMap::from([(0, HashSet::new())]),
-            HashMap::from([(0, HashSet::new()), (1, HashSet::new())]),
+        assert_eq!(
+            HashMap::<usize, HashSet<(usize, usize)>>::empty(1),
+            HashMap::from([(0, HashSet::new())])
+        );
+
+        assert_eq!(
+            HashMap::<usize, HashSet<(usize, usize)>>::empty(2),
+            HashMap::from([(0, HashSet::new()), (1, HashSet::new())])
+        );
+
+        assert_eq!(
+            HashMap::<usize, HashSet<(usize, usize)>>::empty(3),
             HashMap::from([
                 (0, HashSet::new()),
                 (1, HashSet::new()),
                 (2, HashSet::new()),
-            ]),
-        ]
-        .iter()
-        .enumerate()
-        {
-            assert_eq!(&HashMap::<usize, HashSet<(usize, usize)>>::empty(v), g);
-        }
+            ])
+        );
     }
 
     #[test]
     fn hash_map_hash_map() {
-        for (v, g) in [
-            HashMap::new(),
-            HashMap::from([(0, HashMap::new())]),
-            HashMap::from([(0, HashMap::new()), (1, HashMap::new())]),
+        assert_eq!(
+            HashMap::<usize, HashMap<usize, usize>>::empty(1),
+            HashMap::from([(0, HashMap::new())])
+        );
+
+        assert_eq!(
+            HashMap::<usize, HashMap<usize, usize>>::empty(2),
+            HashMap::from([(0, HashMap::new()), (1, HashMap::new())])
+        );
+
+        assert_eq!(
+            HashMap::<usize, HashMap<usize, usize>>::empty(3),
             HashMap::from([
                 (0, HashMap::new()),
                 (1, HashMap::new()),
                 (2, HashMap::new()),
-            ]),
-        ]
-        .iter()
-        .enumerate()
-        {
-            assert_eq!(&HashMap::<usize, HashMap<usize, usize>>::empty(v), g);
-        }
+            ])
+        );
     }
 
     #[test]
     fn vec_tuple_weighted() {
-        for (v, g) in [Vec::new(), Vec::new(), Vec::new(), Vec::new()]
-            .iter()
-            .enumerate()
-        {
-            assert_eq!(&Vec::<(usize, usize, usize)>::empty(v), g);
-        }
+        assert_eq!(Vec::<(usize, usize, usize)>::empty(1), Vec::new());
+        assert_eq!(Vec::<(usize, usize, usize)>::empty(2), Vec::new());
+        assert_eq!(Vec::<(usize, usize, usize)>::empty(3), Vec::new());
     }
 
     #[test]
     fn btree_set_tuple_weighted() {
-        for (v, g) in [
-            BTreeSet::new(),
-            BTreeSet::new(),
-            BTreeSet::new(),
-            BTreeSet::new(),
-        ]
-        .iter()
-        .enumerate()
-        {
-            assert_eq!(&BTreeSet::<(usize, usize, usize)>::empty(v), g);
-        }
+        assert_eq!(BTreeSet::<(usize, usize, usize)>::empty(1), BTreeSet::new());
+        assert_eq!(BTreeSet::<(usize, usize, usize)>::empty(2), BTreeSet::new());
+        assert_eq!(BTreeSet::<(usize, usize, usize)>::empty(3), BTreeSet::new());
     }
 
     #[test]
     fn hash_set_tuple_weighted() {
-        for (v, g) in [
-            HashSet::new(),
-            HashSet::new(),
-            HashSet::new(),
-            HashSet::new(),
-        ]
-        .iter()
-        .enumerate()
-        {
-            assert_eq!(&HashSet::<(usize, usize, usize)>::empty(v), g);
-        }
+        assert_eq!(HashSet::<(usize, usize, usize)>::empty(1), HashSet::new());
+        assert_eq!(HashSet::<(usize, usize, usize)>::empty(2), HashSet::new());
+        assert_eq!(HashSet::<(usize, usize, usize)>::empty(3), HashSet::new());
+    }
+
+    #[test]
+    #[should_panic(expected = "a graph must have at least one vertex")]
+    fn vec_vec_unweighted_panic() {
+        let _ = Vec::<Vec<usize>>::empty(0);
+    }
+
+    #[test]
+    #[should_panic(expected = "a graph must have at least one vertex")]
+    fn vec_btree_set_unweighted_panic() {
+        let _ = Vec::<BTreeSet<usize>>::empty(0);
+    }
+
+    #[test]
+    #[should_panic(expected = "a graph must have at least one vertex")]
+    fn vec_hash_set_unweighted_panic() {
+        let _ = Vec::<HashSet<usize>>::empty(0);
+    }
+
+    #[test]
+    #[should_panic(expected = "a graph must have at least one vertex")]
+    fn btree_map_vec_unweighted_panic() {
+        let _ = BTreeMap::<usize, Vec<usize>>::empty(0);
+    }
+
+    #[test]
+    #[should_panic(expected = "a graph must have at least one vertex")]
+    fn btree_map_btree_set_unweighted_panic() {
+        let _ = BTreeMap::<usize, BTreeSet<usize>>::empty(0);
+    }
+
+    #[test]
+    #[should_panic(expected = "a graph must have at least one vertex")]
+    fn hash_map_vec_unweighted_panic() {
+        let _ = HashMap::<usize, Vec<usize>>::empty(0);
+    }
+
+    #[test]
+    #[should_panic(expected = "a graph must have at least one vertex")]
+    fn hash_map_hash_set_unweighted_panic() {
+        let _ = HashMap::<usize, HashSet<usize>>::empty(0);
+    }
+
+    #[test]
+    #[should_panic(expected = "a graph must have at least one vertex")]
+    fn vec_tuple_unweighted_panic() {
+        let _ = Vec::<(usize, usize)>::empty(0);
+    }
+
+    #[test]
+    #[should_panic(expected = "a graph must have at least one vertex")]
+    fn btree_set_tuple_unweighted_panic() {
+        let _ = BTreeSet::<(usize, usize)>::empty(0);
+    }
+
+    #[test]
+    #[should_panic(expected = "a graph must have at least one vertex")]
+    fn hash_set_tuple_unweighted_panic() {
+        let _ = HashSet::<(usize, usize)>::empty(0);
+    }
+
+    #[test]
+    #[should_panic(expected = "a graph must have at least one vertex")]
+    fn vec_vec_weighted_panic() {
+        let _ = Vec::<Vec<(usize, usize)>>::empty(0);
+    }
+
+    #[test]
+    #[should_panic(expected = "a graph must have at least one vertex")]
+    fn vec_btree_set_weighted_panic() {
+        let _ = Vec::<BTreeSet<(usize, usize)>>::empty(0);
+    }
+
+    #[test]
+    #[should_panic(expected = "a graph must have at least one vertex")]
+    fn vec_hash_set_weighted_panic() {
+        let _ = Vec::<HashSet<(usize, usize)>>::empty(0);
+    }
+
+    #[test]
+    #[should_panic(expected = "a graph must have at least one vertex")]
+    fn vec_btree_map_weighted_panic() {
+        let _ = Vec::<BTreeMap<usize, usize>>::empty(0);
+    }
+
+    #[test]
+    #[should_panic(expected = "a graph must have at least one vertex")]
+    fn vec_hash_map_weighted_panic() {
+        let _ = Vec::<HashMap<usize, usize>>::empty(0);
+    }
+
+    #[test]
+    #[should_panic(expected = "a graph must have at least one vertex")]
+    fn btree_map_vec_weighted_panic() {
+        let _ = BTreeMap::<usize, Vec<(usize, usize)>>::empty(0);
+    }
+
+    #[test]
+    #[should_panic(expected = "a graph must have at least one vertex")]
+    fn btree_map_btree_set_weighted_panic() {
+        let _ = BTreeMap::<usize, BTreeSet<(usize, usize)>>::empty(0);
+    }
+
+    #[test]
+    #[should_panic(expected = "a graph must have at least one vertex")]
+    fn btree_map_btree_map_panic() {
+        let _ = BTreeMap::<usize, BTreeMap<usize, usize>>::empty(0);
+    }
+
+    #[test]
+    #[should_panic(expected = "a graph must have at least one vertex")]
+    fn hash_map_vec_weighted_panic() {
+        let _ = HashMap::<usize, Vec<(usize, usize)>>::empty(0);
+    }
+
+    #[test]
+    #[should_panic(expected = "a graph must have at least one vertex")]
+    fn hash_map_hash_set_weighted_panic() {
+        let _ = HashMap::<usize, HashSet<(usize, usize)>>::empty(0);
+    }
+
+    #[test]
+    #[should_panic(expected = "a graph must have at least one vertex")]
+    fn hash_map_hash_map_panic() {
+        let _ = HashMap::<usize, HashMap<usize, usize>>::empty(0);
+    }
+
+    #[test]
+    #[should_panic(expected = "a graph must have at least one vertex")]
+    fn vec_tuple_weighted_panic() {
+        let _ = Vec::<(usize, usize, usize)>::empty(0);
+    }
+
+    #[test]
+    #[should_panic(expected = "a graph must have at least one vertex")]
+    fn btree_set_tuple_weighted_panic() {
+        let _ = BTreeSet::<(usize, usize, usize)>::empty(0);
+    }
+
+    #[test]
+    #[should_panic(expected = "a graph must have at least one vertex")]
+    fn hash_set_tuple_weighted_panic() {
+        let _ = HashSet::<(usize, usize, usize)>::empty(0);
     }
 }
