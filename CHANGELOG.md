@@ -2,8 +2,6 @@
 
 ## Provisional roadmap
 
-- Add `IsPendant`.
-- Add `Degree`.
 - Add `IsRegular`.
 - Add `Path` generator.
 - Add `algo::dijkstra::single_pair_shortest_path`.
@@ -22,6 +20,12 @@
 - Implement `_mut` versions of `op` iterator traits.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.42.2] - 2024-05-11
+
+Added
+
+- Add `IsPendant` trait.
 
 ## [0.42.1] - 2024-05-11
 
