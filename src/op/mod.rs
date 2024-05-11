@@ -113,6 +113,7 @@ pub mod add_edge;
 pub mod add_weighted_edge;
 pub mod count_all_edges;
 pub mod count_all_vertices;
+pub mod degree;
 pub mod edge_weight;
 pub mod has_edge;
 pub mod has_edge_symmetric;
@@ -134,6 +135,7 @@ pub use {
     add_weighted_edge::AddWeightedEdge,
     count_all_edges::CountAllEdges,
     count_all_vertices::CountAllVertices,
+    degree::Degree,
     edge_weight::EdgeWeight,
     has_edge::HasEdge,
     has_edge_symmetric::HasEdgeSymmetric,

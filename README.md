@@ -78,8 +78,7 @@ assert_eq!(spsp(&graph, 0, 3), None);
 
 ### Representations
 
-Use custom graph representations. An adjacency matrix representation is
-available with the `adjacency_matrix` feature.
+An adjacency matrix representation is available with the `adjacency_matrix` feature.
 
 ```rust
 use graaf::{

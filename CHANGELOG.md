@@ -3,6 +3,7 @@
 ## Provisional roadmap
 
 - Add `IsPendant`.
+- Add `Degree`.
 - Add `IsRegular`.
 - Add `Path` generator.
 - Add `algo::dijkstra::single_pair_shortest_path`.
@@ -17,14 +18,16 @@
 - Add `op::radius`.
 - Benchmark against popular Rust graph libraries.
 - Benchmark against popular graph libraries in other languages.
-- Disallow graphs with no vertices.
 - Ensure that all `op` implementation examples use the other `op` traits where possible.
-- Implement `From` and `Into` for `AdjacencyMatrix`.
 - Implement `_mut` versions of `op` iterator traits.
-- Implement missing `op` traits for `AdjacencyMatrix`.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
-- Use `iter_vertices` in implementations of other `op` traits.
+
+## [0.42.1] - 2024-05-11
+
+Added
+
+- Add `Degree` trait.
 
 ## [0.42.0] - 2024-05-11
 

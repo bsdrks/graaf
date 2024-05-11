@@ -2,6 +2,8 @@
 #![doc(alias = "inward_demidegree")]
 //! A trait to get the indegree of a given vertex
 //!
+//! The indegree is the number of edges incident into a vertex.
+//!
 //! # Examples
 //!
 //! ```
@@ -46,7 +48,6 @@ use {
 ///
 /// struct Graph {
 ///     edges: Vec<HashSet<usize>>,
-///     vertices: usize,
 /// }
 ///
 /// impl Indegree for Graph {

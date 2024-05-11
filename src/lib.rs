@@ -11,19 +11,12 @@
 //! use {
 //!     graaf::{
 //!         gen::EmptyConst,
-//!         op::{
-//!             AddEdge,
-//!             Indegree,
-//!             Outdegree,
-//!             RemoveEdge,
-//!         },
+//!         op::*,
 //!     },
 //!     std::collections::BTreeSet,
 //! };
 //!
 //! let mut graph = <[BTreeSet<usize>; 3]>::empty();
-//!
-//! // 1 ← 0 → 2
 //!
 //! graph.add_edge(0, 1);
 //! graph.add_edge(0, 2);
@@ -61,24 +54,18 @@
 //!
 //! ## Representations
 //!
-//! Use custom graph representations. An adjacency matrix representation is
-//! available with the `adjacency_matrix` feature.
+//! An adjacency matrix representation is available with the `adjacency_matrix`
+//! feature.
 //!
 //! ```rust
 //! use graaf::{
-//!     op::{
-//!         AddEdge,
-//!         IsSimple,
-//!     },
+//!     op::*,
 //!     repr::AdjacencyMatrix,
 //! };
 //!
 //! let mut graph = AdjacencyMatrix::<3>::new();
 //!
 //! graph.add_edge(0, 1);
-//!
-//! assert!(graph.is_simple());
-//!
 //! graph.add_edge(1, 1);
 //!
 //! assert!(!graph.is_simple());

@@ -2,6 +2,8 @@
 #![doc(alias = "outward_demidegree")]
 //! A trait to get the outdegree of a given vertex in a directed graph
 //!
+//! The outdegree is the number of edges incident out of a vertex.
+//!
 //! # Examples
 //!
 //! ```
