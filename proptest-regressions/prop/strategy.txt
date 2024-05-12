@@ -5,3 +5,5 @@
 # It is recommended to check this file in to source control so that
 # everyone who runs the test benefits from these saved cases.
 cc c33d58784dd1777100bdd0af1b78f9bee0d2a05040f12f847a5cfece5c5549eb # shrinks to graph = [[0]]
+cc 0dc39eb1ec5ecdb537df1cba0b92ed71f3c9fe96b08c482659f712e50434294c # shrinks to graph = {(0, 0)}
+cc a0af3db2f75f4ea9e571888e96a1d8751e827e2cf18cbe91a00493954cb3125b # shrinks to (v, s, t) = (109, 0, 1)

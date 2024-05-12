@@ -21,6 +21,12 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.42.3] - unreleased
+
+Changed
+
+- Improve `binop_vertices` tests.
+
 ## [0.42.2] - 2024-05-11
 
 Added

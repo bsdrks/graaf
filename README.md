@@ -8,14 +8,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.42.2"
-```
-
-To use stable Rust, turn off the `adjacency_matrix` feature:
-
-```toml
-[dependencies]
-graaf = { version = "0.42.2", default-features = false }
+graaf = "0.42.3"
 ```
 
 ## Overview
@@ -23,7 +16,7 @@ graaf = { version = "0.42.2", default-features = false }
 ### Operations
 
 Build and query graphs made with standard collections, or implement the
-operation traits for your types.
+operation traits for your own types.
 
 ```rust
 use {
@@ -96,10 +89,14 @@ Generate parameterized graphs.
 ```rust
 use graaf::gen::Cycle;
 
-let graph = Vec::<Vec<usize>>::cycle(5);
+let graph = Vec::<Vec<usize>>::cycle(4);
 
-assert_eq!(graph, vec![vec![1], vec![2], vec![3], vec![4], vec![0]]);
+assert_eq!(graph, vec![vec![1], vec![2], vec![3], vec![0]]);
 ```
+
+## Features
+
+- `adjacency_matrix` enables the adjacency matrix representation. Requires nightly.
 
 ## Changelog
 
