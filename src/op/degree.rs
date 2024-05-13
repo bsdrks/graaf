@@ -304,6 +304,20 @@ mod tests {
     }
 
     #[test]
+    fn btree_map_btree_set() {
+        let graph = &mut BTreeMap::<usize, BTreeSet<usize>>::empty(3);
+
+        test_degree_unweighted!(graph);
+    }
+
+    #[test]
+    fn hash_map_hash_set() {
+        let graph = &mut HashMap::<usize, HashSet<usize>>::empty(3);
+
+        test_degree_unweighted!(graph);
+    }
+
+    #[test]
     fn vec_btree_map() {
         let graph = &mut <Vec<BTreeMap<usize, usize>>>::empty(3);
 
@@ -346,24 +360,10 @@ mod tests {
     }
 
     #[test]
-    fn btree_map_btree_set() {
-        let graph = &mut BTreeMap::<usize, BTreeSet<usize>>::empty(3);
-
-        test_degree_unweighted!(graph);
-    }
-
-    #[test]
     fn btree_map_btree_map() {
         let graph = &mut BTreeMap::<usize, BTreeMap<usize, usize>>::empty(3);
 
         test_degree_weighted!(graph);
-    }
-
-    #[test]
-    fn hash_map_hash_set() {
-        let graph = &mut HashMap::<usize, HashSet<usize>>::empty(3);
-
-        test_degree_unweighted!(graph);
     }
 
     #[test]

@@ -21,6 +21,69 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.43.0] - 2024-05-13
+
+Added
+
+- Add `IsRegular` trait.
+- Add a "How to implement" section to `IsSymmetric` documentation.
+- Add prop test `empty_btree_map_btree_map` for `IsRegular`.
+- Add prop test `empty_btree_map_btree_set_unweighted` for `IsRegular`.
+- Add prop test `empty_hash_map_hash_map` for `IsRegular`.
+- Add prop test `empty_hash_map_hash_set_unweighted` for `IsRegular`.
+- Add prop test `empty_vec_btree_map` for `IsRegular`.
+- Add prop test `empty_vec_btree_set_unweighted` for `IsRegular`.
+- Add prop test `empty_vec_hash_map` for `IsRegular`.
+- Add prop test `empty_vec_hash_set_unweighted` for `IsRegular`.
+- Add unit test `arr_btree_map` for `IsRegular`.
+- Add unit test `arr_btree_set_unweighted` for `IsRegular`.
+- Add unit test `arr_hash_map` for `IsRegular`.
+- Add unit test `arr_hash_set_unweighted` for `IsRegular`.
+- Add unit test `btree_map_btree_map()` for `IterVertices`.
+- Add unit test `btree_map_btree_map` for `IsRegular`.
+- Add unit test `btree_map_btree_set_weighted()` for `IterVertices`.
+- Add unit test `btree_map_btree_set` for `IsRegular`.
+- Add unit test `btree_map_vec_weighted()` for `IterVertices`.
+- Add unit test `hash_map_hash_map()` for `IterVertices`.
+- Add unit test `hash_map_hash_map` for `IsRegular`.
+- Add unit test `hash_map_hash_set_weighted()` for `IterVertices`.
+- Add unit test `hash_map_hash_set` for `IsRegular`.
+- Add unit test `hash_map_vec_weighted()` for `IterVertices`.
+- Add unit test `slice_btree_map` for `IsRegular`.
+- Add unit test `slice_btree_set_unweighted` for `IsRegular`.
+- Add unit test `slice_hash_map` for `IsRegular`.
+- Add unit test `slice_hash_set_unweighted` for `IsRegular`.
+- Add unit test `vec_btree_map` for `IsRegular`.
+- Add unit test `vec_btree_set_unweighted` for `IsRegular`.
+- Add unit test `vec_hash_map` for `IsRegular`.
+- Add unit test `vec_hash_set_unweighted` for `IsRegular`.
+- Implement `IsRegular` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement `IsRegular` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `IsRegular` for `HashMap<usize, HashMap<usize, W>>`.
+- Implement `IsRegular` for `HashMap<usize, HashSet<usize>>`.
+- Implement `IsRegular` for `Vec<BTreeMap<usize, W>>`.
+- Implement `IsRegular` for `Vec<BTreeSet<usize>>`.
+- Implement `IsRegular` for `Vec<HashMap<usize, W>>`.
+- Implement `IsRegular` for `Vec<HashSet<usize>>`.
+- Implement `IsRegular` for `[BTreeMap<usize, W>; V]`.
+- Implement `IsRegular` for `[BTreeMap<usize, W>]`.
+- Implement `IsRegular` for `[BTreeSet<usize>; V]`.
+- Implement `IsRegular` for `[BTreeSet<usize>]`.
+- Implement `IsRegular` for `[HashMap<usize, W>; V]`.
+- Implement `IsRegular` for `[HashMap<usize, W>]`.
+- Implement `IsRegular` for `[HashSet<usize>; V]`.
+- Implement `IsRegular` for `[HashSet<usize>]`.
+- Implement `IterVertices` for `BTreeMap<usize, BTreeMap<usize, W>>`
+- Implement `IterVertices` for `BTreeMap<usize, BTreeSet<(usize, W)>>`
+- Implement `IterVertices` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `IterVertices` for `BTreeMap<usize, Vec<(usize, W)>>`
+- Implement `IterVertices` for `BTreeMap<usize, Vec<usize>>`.
+- Implement `IterVertices` for `HashMap<usize, HashMap<usize, W>>`
+- Implement `IterVertices` for `HashMap<usize, HashSet<(usize, W)>>`
+- Implement `IterVertices` for `HashMap<usize, HashSet<usize>>`.
+- Implement `IterVertices` for `HashMap<usize, Vec<(usize, W)>>`
+- Implement `IterVertices` for `HashMap<usize, Vec<usize>>`.
+
 ## [0.42.4] - 2024-05-12
 
 Added
@@ -1655,7 +1718,7 @@ Changed
 
 Removed
 
-- Remove `new` benchmark.
+- Remove the `new` benchmark.
 
 ## [0.2.3] - 2024-03-31
 

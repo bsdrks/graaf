@@ -429,6 +429,7 @@ mod tests {
             CountAllEdges,
             CountAllVertices,
             Indegree,
+            IsRegular,
             IsSimple,
             Outdegree,
         },
@@ -449,6 +450,10 @@ mod tests {
         for s in 0..v {
             assert_eq!(graph.indegree(s), 0);
         }
+    }
+
+    fn prop_is_regular<T: IsRegular + Empty>(v: usize) {
+        assert!(T::empty(v).is_regular());
     }
 
     fn prop_is_simple<T: IsSimple + Empty>(v: usize) {
@@ -662,6 +667,11 @@ mod tests {
         #[test]
         fn indegree_hash_map_hash_map(v in 1..100_usize) {
             prop_indegree::<HashMap<usize, HashMap<usize, usize>>>(v);
+        }
+
+        #[test]
+        fn is_regular_vec_btree_set_unweighted(v in 1..100_usize) {
+            prop_is_regular::<Vec<BTreeSet<usize>>>(v);
         }
 
         #[test]

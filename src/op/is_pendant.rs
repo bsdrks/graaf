@@ -56,7 +56,7 @@ use {
 ///     std::collections::HashSet,
 /// };
 ///
-/// pub struct Graph {
+/// struct Graph {
 ///     edges: Vec<HashSet<usize>>,
 /// }
 ///

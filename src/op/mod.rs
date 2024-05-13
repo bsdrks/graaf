@@ -121,6 +121,7 @@ pub mod indegree;
 pub mod is_balanced;
 pub mod is_isolated;
 pub mod is_pendant;
+pub mod is_regular;
 pub mod is_simple;
 pub mod is_symmetric;
 pub mod iter_all_edges;
@@ -144,6 +145,7 @@ pub use {
     is_balanced::IsBalanced,
     is_isolated::IsIsolated,
     is_pendant::IsPendant,
+    is_regular::IsRegular,
     is_simple::IsSimple,
     is_symmetric::IsSymmetric,
     iter_all_edges::IterAllEdges,

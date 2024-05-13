@@ -43,8 +43,6 @@ use {
 
 /// A trait to determine whether a vertex is isolated
 ///
-/// A vertex is isolated if it has no incoming or outgoing edges.
-///
 /// # How can I implement `IsIsolated`?
 ///
 /// Provide an implementation of `is_isolated` that returns `true` if the vertex

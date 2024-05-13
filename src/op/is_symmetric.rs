@@ -56,8 +56,54 @@ use {
 /// Provide an implementation of `is_symmetric` that returns `true` if the graph
 /// is symmetric and `false` otherwise.
 ///
-/// # Examples
+/// ```
+/// extern crate alloc;
 ///
+/// use {
+///     alloc::collections::BTreeSet,
+///     graaf::op::{
+///         HasEdge,
+///         IsSymmetric,
+///         IterAllEdges,
+///     },
+/// };
+///
+/// struct Graph {
+///     edges: Vec<BTreeSet<usize>>,
+/// }
+///
+/// impl IsSymmetric for Graph {
+///     fn is_symmetric(&self) -> bool {
+///         self.edges
+///             .iter_all_edges()
+///             .all(|(s, t)| self.edges.has_edge(t, s))
+///     }
+/// }
+///
+/// let graph = Graph {
+///     edges: vec![BTreeSet::from([1]), BTreeSet::from([0])],
+/// };
+///
+/// assert!(graph.is_symmetric());
+///
+/// let graph = Graph {
+///     edges: vec![BTreeSet::from([1]), BTreeSet::new()],
+/// };
+///
+/// assert!(!graph.is_symmetric());
+///
+/// let graph = Graph {
+///     edges: vec![
+///         BTreeSet::from([1, 2]),
+///         BTreeSet::from([2]),
+///         BTreeSet::from([0]),
+///     ],
+/// };
+///
+/// assert!(!graph.is_symmetric());
+/// ```
+///
+/// # Examples
 /// ```
 /// extern crate alloc;
 ///
