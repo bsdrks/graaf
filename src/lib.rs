@@ -21,15 +21,9 @@
 //! graph.add_edge(0, 1);
 //! graph.add_edge(0, 2);
 //!
-//! assert_eq!(graph.outdegree(0), 2);
-//! assert_eq!(graph.indegree(1), 1);
-//! assert_eq!(graph.indegree(2), 1);
-//!
-//! graph.remove_edge(0, 1);
-//!
-//! assert_eq!(graph.outdegree(0), 1);
-//! assert_eq!(graph.indegree(1), 0);
-//! assert_eq!(graph.indegree(2), 1);
+//! assert_eq!(graph.degree(0), 2);
+//! assert_eq!(graph.degree(1), 1);
+//! assert_eq!(graph.degree(2), 1);
 //! ```
 //!
 //! ## Algorithms
@@ -76,11 +70,15 @@
 //! Generate parameterized graphs.
 //!
 //! ```rust
-//! use graaf::gen::Cycle;
+//! use graaf::gen::*;
 //!
-//! let graph = Vec::<Vec<usize>>::cycle(5);
+//! assert_eq!(Vec::<Vec<usize>>::empty(2), vec![Vec::new(), Vec::new()]);
+//! assert_eq!(Vec::<Vec<usize>>::cycle(3), vec![vec![1], vec![2], vec![0]]);
 //!
-//! assert_eq!(graph, vec![vec![1], vec![2], vec![3], vec![4], vec![0]]);
+//! assert_eq!(
+//!     <[Vec::<usize>; 3]>::complete(),
+//!     [vec![1, 2], vec![0, 2], vec![0, 1]]
+//! );
 //! ```
 
 // Clippy lint groups

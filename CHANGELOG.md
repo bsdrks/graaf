@@ -21,7 +21,17 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
-## [0.42.3] - unreleased
+## [0.42.4] - 2024-05-12
+
+Added
+
+- Add proptest strategy `simple_v_e`.
+
+Changed
+
+- Simplify `README` examples.
+
+## [0.42.3] - 2024-05-12
 
 Changed
 

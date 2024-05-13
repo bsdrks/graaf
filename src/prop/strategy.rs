@@ -20,8 +20,8 @@ use proptest::{
 ///
 /// # Panics
 ///
-/// Panics if `min` is zero.
-/// Panics if `min` is greater than `max`.
+/// * Panics if `min` is 0.
+/// * Panics if `min` is greater than `max`.
 pub fn binop_vertices(min: usize, max: usize) -> impl Strategy<Value = (usize, usize, usize)> {
     assert!(min > 0, "a graph must have at least one vertex");
 
@@ -33,6 +33,28 @@ pub fn binop_vertices(min: usize, max: usize) -> impl Strategy<Value = (usize, u
             (Just(v), s, t)
         })
         .prop_filter("s != t", |(_, s, t)| s != t)
+}
+
+/// Generates a pair `(v, e)` where `v` is the number of vertices and `e` is the
+/// number of edges in a simple graph.
+///
+/// The number of edges is in the range `0..=v * (v - 1)`.
+///
+/// # Arguments
+///
+/// * `max`: The maximum number of vertices in the graph.
+///
+/// # Panics
+///
+/// * Panics if `max` is 0.
+pub fn simple_v_e(max: usize) -> impl Strategy<Value = (usize, usize)> {
+    assert!(max > 0, "a graph must have at least one vertex");
+
+    (1..=max).prop_flat_map(|v| {
+        let e = 0..=v * (v - 1);
+
+        (Just(v), e)
+    })
 }
 
 #[cfg(test)]
@@ -65,6 +87,13 @@ mod tests {
             assert_eq!(v, 10);
             assert!(s < v);
             assert!(t < v);
+        }
+
+        #[test]
+        fn simple_v_e_bounds((v, e) in simple_v_e(10)) {
+            assert!(v >= 1);
+            assert!(v <= 10);
+            assert!(e <= v * (v - 1));
         }
     }
 }

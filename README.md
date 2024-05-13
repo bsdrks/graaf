@@ -8,7 +8,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.42.3"
+graaf = "0.42.4"
 ```
 
 ## Overview
@@ -32,15 +32,9 @@ let mut graph = <[BTreeSet<usize>; 3]>::empty();
 graph.add_edge(0, 1);
 graph.add_edge(0, 2);
 
-assert_eq!(graph.outdegree(0), 2);
-assert_eq!(graph.indegree(1), 1);
-assert_eq!(graph.indegree(2), 1);
-
-graph.remove_edge(0, 1);
-
-assert_eq!(graph.outdegree(0), 1);
-assert_eq!(graph.indegree(1), 0);
-assert_eq!(graph.indegree(2), 1);
+assert_eq!(graph.degree(0), 2);
+assert_eq!(graph.degree(1), 1);
+assert_eq!(graph.degree(2), 1);
 ```
 
 ### Algorithms
@@ -87,16 +81,20 @@ assert!(!graph.is_simple());
 Generate parameterized graphs.
 
 ```rust
-use graaf::gen::Cycle;
+use graaf::gen::*;
 
-let graph = Vec::<Vec<usize>>::cycle(4);
+assert_eq!(Vec::<Vec<usize>>::empty(2), vec![Vec::new(), Vec::new()]);
+assert_eq!(Vec::<Vec<usize>>::cycle(3), vec![vec![1], vec![2], vec![0]]);
 
-assert_eq!(graph, vec![vec![1], vec![2], vec![3], vec![0]]);
+assert_eq!(
+    <[Vec::<usize>; 3]>::complete(),
+    [vec![1, 2], vec![0, 2], vec![0, 1]]
+);
 ```
 
 ## Features
 
-- `adjacency_matrix` enables the adjacency matrix representation. Requires nightly.
+`adjacency_matrix` enables the adjacency matrix representation. Requires nightly.
 
 ## Changelog
 
