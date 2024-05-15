@@ -1,13 +1,13 @@
-//! A trait to count all edges in a directed graph
+//! A trait to count the number of edges in a directed graph
 //!
 //! # Examples
 //!
 //! ```
-//! use graaf::op::CountAllEdges;
+//! use graaf::op::Size;
 //!
 //! let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 //!
-//! assert_eq!(graph.count_all_edges(), 10);
+//! assert_eq!(graph.size(), 10);
 //! ```
 
 extern crate alloc;
@@ -24,22 +24,22 @@ use {
     },
 };
 
-/// A trait to count all edges in a directed graph
+/// A trait to count the number of edges in a directed graph
 ///
-/// # How can I implement `CountAllEdges`?
+/// # How can I implement `Size`?
 ///
-/// Provide an implementation of `count_all_edges` that returns the number of
+/// Provide an implementation of `size` that returns the number of
 /// edges in the graph.
 ///
 /// ```
-/// use graaf::op::CountAllEdges;
+/// use graaf::op::Size;
 ///
 /// struct Graph {
 ///     edges: Vec<Vec<usize>>,
 /// }
 ///
-/// impl CountAllEdges for Graph {
-///     fn count_all_edges(&self) -> usize {
+/// impl Size for Graph {
+///     fn size(&self) -> usize {
 ///         self.edges.iter().map(Vec::len).sum()
 ///     }
 /// }
@@ -48,208 +48,208 @@ use {
 /// # Examples
 ///
 /// ```
-/// use graaf::op::CountAllEdges;
+/// use graaf::op::Size;
 ///
 /// let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 ///
-/// assert_eq!(graph.count_all_edges(), 10);
+/// assert_eq!(graph.size(), 10);
 /// ```
-pub trait CountAllEdges {
+pub trait Size {
     /// Counts all edges.
-    fn count_all_edges(&self) -> usize;
+    fn size(&self) -> usize;
 }
 
-impl<T> CountAllEdges for Vec<Vec<T>> {
-    fn count_all_edges(&self) -> usize {
+impl<T> Size for Vec<Vec<T>> {
+    fn size(&self) -> usize {
         self.iter().map(Vec::len).sum()
     }
 }
 
-impl<T> CountAllEdges for Vec<BTreeSet<T>> {
-    fn count_all_edges(&self) -> usize {
+impl<T> Size for Vec<BTreeSet<T>> {
+    fn size(&self) -> usize {
         self.iter().map(BTreeSet::len).sum()
     }
 }
 
-impl<T, H> CountAllEdges for Vec<HashSet<T, H>>
+impl<T, H> Size for Vec<HashSet<T, H>>
 where
     H: BuildHasher,
 {
-    fn count_all_edges(&self) -> usize {
+    fn size(&self) -> usize {
         self.iter().map(HashSet::len).sum()
     }
 }
 
-impl<K, W> CountAllEdges for Vec<BTreeMap<K, W>> {
-    fn count_all_edges(&self) -> usize {
+impl<K, W> Size for Vec<BTreeMap<K, W>> {
+    fn size(&self) -> usize {
         self.iter().map(BTreeMap::len).sum()
     }
 }
 
-impl<K, W, H> CountAllEdges for Vec<HashMap<K, W, H>>
+impl<K, W, H> Size for Vec<HashMap<K, W, H>>
 where
     H: BuildHasher,
 {
-    fn count_all_edges(&self) -> usize {
+    fn size(&self) -> usize {
         self.iter().map(HashMap::len).sum()
     }
 }
 
-impl<T> CountAllEdges for [Vec<T>] {
-    fn count_all_edges(&self) -> usize {
+impl<T> Size for [Vec<T>] {
+    fn size(&self) -> usize {
         self.iter().map(Vec::len).sum()
     }
 }
 
-impl<T> CountAllEdges for [BTreeSet<T>] {
-    fn count_all_edges(&self) -> usize {
+impl<T> Size for [BTreeSet<T>] {
+    fn size(&self) -> usize {
         self.iter().map(BTreeSet::len).sum()
     }
 }
 
-impl<T, H> CountAllEdges for [HashSet<T, H>]
+impl<T, H> Size for [HashSet<T, H>]
 where
     H: BuildHasher,
 {
-    fn count_all_edges(&self) -> usize {
+    fn size(&self) -> usize {
         self.iter().map(HashSet::len).sum()
     }
 }
 
-impl<K, W> CountAllEdges for [BTreeMap<K, W>] {
-    fn count_all_edges(&self) -> usize {
+impl<K, W> Size for [BTreeMap<K, W>] {
+    fn size(&self) -> usize {
         self.iter().map(BTreeMap::len).sum()
     }
 }
 
-impl<K, W, H> CountAllEdges for [HashMap<K, W, H>]
+impl<K, W, H> Size for [HashMap<K, W, H>]
 where
     H: BuildHasher,
 {
-    fn count_all_edges(&self) -> usize {
+    fn size(&self) -> usize {
         self.iter().map(HashMap::len).sum()
     }
 }
 
-impl<const V: usize, T> CountAllEdges for [Vec<T>; V] {
-    fn count_all_edges(&self) -> usize {
+impl<const V: usize, T> Size for [Vec<T>; V] {
+    fn size(&self) -> usize {
         self.iter().map(Vec::len).sum()
     }
 }
 
-impl<const V: usize, T> CountAllEdges for [BTreeSet<T>; V] {
-    fn count_all_edges(&self) -> usize {
+impl<const V: usize, T> Size for [BTreeSet<T>; V] {
+    fn size(&self) -> usize {
         self.iter().map(BTreeSet::len).sum()
     }
 }
 
-impl<const V: usize, K, W> CountAllEdges for [BTreeMap<K, W>; V] {
-    fn count_all_edges(&self) -> usize {
+impl<const V: usize, K, W> Size for [BTreeMap<K, W>; V] {
+    fn size(&self) -> usize {
         self.iter().map(BTreeMap::len).sum()
     }
 }
 
-impl<const V: usize, T, H> CountAllEdges for [HashSet<T, H>; V]
+impl<const V: usize, T, H> Size for [HashSet<T, H>; V]
 where
     H: BuildHasher,
 {
-    fn count_all_edges(&self) -> usize {
+    fn size(&self) -> usize {
         self.iter().map(HashSet::len).sum()
     }
 }
 
-impl<const V: usize, K, W, H> CountAllEdges for [HashMap<K, W, H>; V]
+impl<const V: usize, K, W, H> Size for [HashMap<K, W, H>; V]
 where
     H: BuildHasher,
 {
-    fn count_all_edges(&self) -> usize {
+    fn size(&self) -> usize {
         self.iter().map(HashMap::len).sum()
     }
 }
 
-impl<K, T> CountAllEdges for BTreeMap<K, Vec<T>> {
-    fn count_all_edges(&self) -> usize {
+impl<K, T> Size for BTreeMap<K, Vec<T>> {
+    fn size(&self) -> usize {
         self.values().map(Vec::len).sum()
     }
 }
 
-impl<K, T> CountAllEdges for BTreeMap<K, BTreeSet<T>> {
-    fn count_all_edges(&self) -> usize {
+impl<K, T> Size for BTreeMap<K, BTreeSet<T>> {
+    fn size(&self) -> usize {
         self.values().map(BTreeSet::len).sum()
     }
 }
 
-impl<K, W> CountAllEdges for BTreeMap<K, BTreeMap<K, W>> {
-    fn count_all_edges(&self) -> usize {
+impl<K, W> Size for BTreeMap<K, BTreeMap<K, W>> {
+    fn size(&self) -> usize {
         self.values().map(BTreeMap::len).sum()
     }
 }
 
-impl<K, T, H> CountAllEdges for HashMap<K, Vec<T>, H>
+impl<K, T, H> Size for HashMap<K, Vec<T>, H>
 where
     H: BuildHasher,
 {
-    fn count_all_edges(&self) -> usize {
+    fn size(&self) -> usize {
         self.values().map(Vec::len).sum()
     }
 }
 
-impl<K, T, H> CountAllEdges for HashMap<K, HashSet<T, H>, H>
+impl<K, T, H> Size for HashMap<K, HashSet<T, H>, H>
 where
     H: BuildHasher,
 {
-    fn count_all_edges(&self) -> usize {
+    fn size(&self) -> usize {
         self.values().map(HashSet::len).sum()
     }
 }
 
-impl<K, W, H> CountAllEdges for HashMap<K, HashMap<K, W, H>, H>
+impl<K, W, H> Size for HashMap<K, HashMap<K, W, H>, H>
 where
     H: BuildHasher,
 {
-    fn count_all_edges(&self) -> usize {
+    fn size(&self) -> usize {
         self.values().map(HashMap::len).sum()
     }
 }
 
-impl CountAllEdges for Vec<(usize, usize)> {
-    fn count_all_edges(&self) -> usize {
+impl Size for Vec<(usize, usize)> {
+    fn size(&self) -> usize {
         self.len()
     }
 }
 
-impl<W> CountAllEdges for Vec<(usize, usize, W)> {
-    fn count_all_edges(&self) -> usize {
+impl<W> Size for Vec<(usize, usize, W)> {
+    fn size(&self) -> usize {
         self.len()
     }
 }
 
-impl CountAllEdges for BTreeSet<(usize, usize)> {
-    fn count_all_edges(&self) -> usize {
+impl Size for BTreeSet<(usize, usize)> {
+    fn size(&self) -> usize {
         self.len()
     }
 }
 
-impl<W> CountAllEdges for BTreeSet<(usize, usize, W)> {
-    fn count_all_edges(&self) -> usize {
+impl<W> Size for BTreeSet<(usize, usize, W)> {
+    fn size(&self) -> usize {
         self.len()
     }
 }
 
-impl<H> CountAllEdges for HashSet<(usize, usize), H>
+impl<H> Size for HashSet<(usize, usize), H>
 where
     H: BuildHasher,
 {
-    fn count_all_edges(&self) -> usize {
+    fn size(&self) -> usize {
         self.len()
     }
 }
 
-impl<W, H> CountAllEdges for HashSet<(usize, usize, W), H>
+impl<W, H> Size for HashSet<(usize, usize, W), H>
 where
     H: BuildHasher,
 {
-    fn count_all_edges(&self) -> usize {
+    fn size(&self) -> usize {
         self.len()
     }
 }
@@ -262,7 +262,7 @@ mod tests {
     fn vec_vec() {
         let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        assert_eq!(graph.count_all_edges(), 10);
+        assert_eq!(graph.size(), 10);
     }
 
     #[test]
@@ -274,7 +274,7 @@ mod tests {
             BTreeSet::from([1, 2]),
         ];
 
-        assert_eq!(graph.count_all_edges(), 10);
+        assert_eq!(graph.size(), 10);
     }
 
     #[test]
@@ -286,7 +286,7 @@ mod tests {
             HashSet::from([1, 2]),
         ];
 
-        assert_eq!(graph.count_all_edges(), 10);
+        assert_eq!(graph.size(), 10);
     }
 
     #[test]
@@ -297,7 +297,7 @@ mod tests {
             BTreeMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.count_all_edges(), 5);
+        assert_eq!(graph.size(), 5);
     }
 
     #[test]
@@ -308,14 +308,14 @@ mod tests {
             HashMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.count_all_edges(), 5);
+        assert_eq!(graph.size(), 5);
     }
 
     #[test]
     fn slice_vec() {
         let graph: &[Vec<usize>] = &[vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        assert_eq!(graph.count_all_edges(), 10);
+        assert_eq!(graph.size(), 10);
     }
 
     #[test]
@@ -327,7 +327,7 @@ mod tests {
             BTreeSet::from([1, 2]),
         ];
 
-        assert_eq!(graph.count_all_edges(), 10);
+        assert_eq!(graph.size(), 10);
     }
 
     #[test]
@@ -339,7 +339,7 @@ mod tests {
             HashSet::from([1, 2]),
         ];
 
-        assert_eq!(graph.count_all_edges(), 10);
+        assert_eq!(graph.size(), 10);
     }
 
     #[test]
@@ -350,7 +350,7 @@ mod tests {
             BTreeMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.count_all_edges(), 5);
+        assert_eq!(graph.size(), 5);
     }
 
     #[test]
@@ -361,14 +361,14 @@ mod tests {
             HashMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.count_all_edges(), 5);
+        assert_eq!(graph.size(), 5);
     }
 
     #[test]
     fn arr_vec() {
         let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        assert_eq!(graph.count_all_edges(), 10);
+        assert_eq!(graph.size(), 10);
     }
 
     #[test]
@@ -380,7 +380,7 @@ mod tests {
             BTreeSet::from([1, 2]),
         ];
 
-        assert_eq!(graph.count_all_edges(), 10);
+        assert_eq!(graph.size(), 10);
     }
 
     #[test]
@@ -392,7 +392,7 @@ mod tests {
             HashSet::from([1, 2]),
         ];
 
-        assert_eq!(graph.count_all_edges(), 10);
+        assert_eq!(graph.size(), 10);
     }
 
     #[test]
@@ -403,7 +403,7 @@ mod tests {
             BTreeMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.count_all_edges(), 5);
+        assert_eq!(graph.size(), 5);
     }
 
     #[test]
@@ -414,14 +414,14 @@ mod tests {
             HashMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.count_all_edges(), 5);
+        assert_eq!(graph.size(), 5);
     }
 
     #[test]
     fn btree_map_vec() {
         let graph = BTreeMap::from([(0, vec![1, 2]), (1, vec![0, 2]), (2, vec![0, 1])]);
 
-        assert_eq!(graph.count_all_edges(), 6);
+        assert_eq!(graph.size(), 6);
     }
 
     #[test]
@@ -432,7 +432,7 @@ mod tests {
             (2, BTreeSet::from([0, 1])),
         ]);
 
-        assert_eq!(graph.count_all_edges(), 6);
+        assert_eq!(graph.size(), 6);
     }
 
     #[test]
@@ -443,14 +443,14 @@ mod tests {
             (2, BTreeMap::from([(0, 7), (1, 8)])),
         ]);
 
-        assert_eq!(graph.count_all_edges(), 5);
+        assert_eq!(graph.size(), 5);
     }
 
     #[test]
     fn hash_map_vec() {
         let graph = HashMap::from([(0, vec![1, 2]), (1, vec![0, 2]), (2, vec![0, 1])]);
 
-        assert_eq!(graph.count_all_edges(), 6);
+        assert_eq!(graph.size(), 6);
     }
 
     #[test]
@@ -461,7 +461,7 @@ mod tests {
             (2, HashSet::from([0, 1])),
         ]);
 
-        assert_eq!(graph.count_all_edges(), 6);
+        assert_eq!(graph.size(), 6);
     }
 
     #[test]
@@ -472,48 +472,48 @@ mod tests {
             (2, HashMap::from([(0, 7), (1, 8)])),
         ]);
 
-        assert_eq!(graph.count_all_edges(), 5);
+        assert_eq!(graph.size(), 5);
     }
 
     #[test]
     fn vec_tuple_unweighted() {
         let graph = vec![(0, 1), (1, 2), (2, 0)];
 
-        assert_eq!(graph.count_all_edges(), 3);
+        assert_eq!(graph.size(), 3);
     }
 
     #[test]
     fn vec_tuple_weighted() {
         let graph = vec![(0, 1, 2), (1, 2, 3), (2, 0, 4)];
 
-        assert_eq!(graph.count_all_edges(), 3);
+        assert_eq!(graph.size(), 3);
     }
 
     #[test]
     fn btree_set_tuple_unweighted() {
         let graph = BTreeSet::from([(0, 1), (1, 2), (2, 0)]);
 
-        assert_eq!(graph.count_all_edges(), 3);
+        assert_eq!(graph.size(), 3);
     }
 
     #[test]
     fn btree_set_tuple_weighted() {
         let graph = BTreeSet::from([(0, 1, 2), (1, 2, 3), (2, 0, 4)]);
 
-        assert_eq!(graph.count_all_edges(), 3);
+        assert_eq!(graph.size(), 3);
     }
 
     #[test]
     fn hash_set_tuple_unweighted() {
         let graph = HashSet::from([(0, 1), (1, 2), (2, 0)]);
 
-        assert_eq!(graph.count_all_edges(), 3);
+        assert_eq!(graph.size(), 3);
     }
 
     #[test]
     fn hash_set_tuple_weighted() {
         let graph = HashSet::from([(0, 1, 2), (1, 2, 3), (2, 0, 4)]);
 
-        assert_eq!(graph.count_all_edges(), 3);
+        assert_eq!(graph.size(), 3);
     }
 }

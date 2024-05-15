@@ -1,7 +1,9 @@
 //! An adjacency matrix representation of an unweighted directed graph
 //!
-//! The matrix is stored as a bit array, and is suited for dense graphs with a
-//! small number of vertices.
+//! An adjacency matrix is a symmetric binary matrix where a value of `1` at
+//! row `s` and column `t` indicates an edge from vertex `s` to vertex `t`. The
+//! matrix is stored as a bit array, and is suited for dense graphs with a small
+//! number of vertices.
 //!
 //! # Examples
 //!
@@ -27,8 +29,6 @@
 
 use crate::op::{
     AddEdge,
-    CountAllEdges,
-    CountAllVertices,
     HasEdge,
     HasEdgeSymmetric,
     Indegree,
@@ -39,8 +39,10 @@ use crate::op::{
     IterAllEdges,
     IterEdges,
     IterVertices,
+    Order,
     Outdegree,
     RemoveEdge,
+    Size,
 };
 
 macro_rules! blocks {
@@ -69,16 +71,16 @@ where
     /// ```
     /// use graaf::{
     ///     op::{
-    ///         CountAllEdges,
-    ///         CountAllVertices,
+    ///         Order,
+    ///         Size,
     ///     },
     ///     repr::AdjacencyMatrix,
     /// };
     ///
     /// let graph = AdjacencyMatrix::<3>::new();
     ///
-    /// assert_eq!(graph.count_all_edges(), 0);
-    /// assert_eq!(graph.count_all_vertices(), 3);
+    /// assert_eq!(graph.size(), 0);
+    /// assert_eq!(graph.order(), 3);
     /// ```
     ///
     /// # Panics
@@ -164,14 +166,14 @@ where
     }
 }
 
-impl<const V: usize> CountAllEdges for AdjacencyMatrix<V>
+impl<const V: usize> Size for AdjacencyMatrix<V>
 where
     [(); blocks!(V)]:,
 {
     /// # Panics
     ///
     /// Panics when the number of edges is greater than `usize::MAX`.
-    fn count_all_edges(&self) -> usize {
+    fn size(&self) -> usize {
         self.blocks
             .iter()
             .map(|&block| block.count_ones() as usize)
@@ -179,11 +181,11 @@ where
     }
 }
 
-impl<const V: usize> CountAllVertices for AdjacencyMatrix<V>
+impl<const V: usize> Order for AdjacencyMatrix<V>
 where
     [(); blocks!(V)]:,
 {
-    fn count_all_vertices(&self) -> usize {
+    fn order(&self) -> usize {
         V
     }
 }
@@ -413,35 +415,35 @@ mod tests {
     }
 
     #[test]
-    fn count_all_edges() {
+    fn size() {
         let graph = AdjacencyMatrix::<3>::new();
 
-        assert_eq!(graph.count_all_edges(), 0);
+        assert_eq!(graph.size(), 0);
 
         let mut graph = AdjacencyMatrix::<3>::new();
 
         graph.add_edge(0, 1);
 
-        assert_eq!(graph.count_all_edges(), 1);
+        assert_eq!(graph.size(), 1);
 
         graph.add_edge(0, 2);
 
-        assert_eq!(graph.count_all_edges(), 2);
+        assert_eq!(graph.size(), 2);
     }
 
     #[test]
-    fn count_all_vertices() {
+    fn order() {
         let graph = AdjacencyMatrix::<3>::new();
 
-        assert_eq!(graph.count_all_vertices(), 3);
+        assert_eq!(graph.order(), 3);
 
         let graph = AdjacencyMatrix::<1>::new();
 
-        assert_eq!(graph.count_all_vertices(), 1);
+        assert_eq!(graph.order(), 1);
 
         let graph = AdjacencyMatrix::<512>::new();
 
-        assert_eq!(graph.count_all_vertices(), 512);
+        assert_eq!(graph.order(), 512);
     }
 
     #[test]

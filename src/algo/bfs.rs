@@ -93,8 +93,8 @@ use {
     crate::{
         algo::predecessor,
         op::{
-            CountAllVertices,
             IterEdges,
+            Order,
         },
     },
     alloc::collections::VecDeque,
@@ -189,9 +189,9 @@ where
 /// ```
 pub fn single_source_distances<G>(graph: &G, s: usize) -> Vec<usize>
 where
-    G: CountAllVertices + IterEdges,
+    G: Order + IterEdges,
 {
-    let mut dist = vec![usize::MAX; graph.count_all_vertices()];
+    let mut dist = vec![usize::MAX; graph.order()];
     let mut queue = VecDeque::from(vec![(s, 0)]);
 
     dist[s] = 0;
@@ -305,10 +305,10 @@ pub fn predecessors<G, S, W>(
 /// ```
 pub fn single_source_predecessors<G>(graph: &G, s: usize) -> Vec<Option<usize>>
 where
-    G: CountAllVertices + IterEdges,
+    G: Order + IterEdges,
 {
-    let mut pred = vec![None; graph.count_all_vertices()];
-    let mut dist = vec![usize::MAX; graph.count_all_vertices()];
+    let mut pred = vec![None; graph.order()];
+    let mut dist = vec![usize::MAX; graph.order()];
     let mut queue = VecDeque::from(vec![(s, 0)]);
 
     dist[s] = 0;
@@ -461,10 +461,10 @@ where
 #[doc(alias = "spsp")]
 pub fn single_pair_shortest_path<G>(graph: &G, s: usize, t: usize) -> Option<Vec<usize>>
 where
-    G: CountAllVertices + IterEdges,
+    G: Order + IterEdges,
 {
-    let mut pred = vec![None; graph.count_all_vertices()];
-    let mut dist = vec![usize::MAX; graph.count_all_vertices()];
+    let mut pred = vec![None; graph.order()];
+    let mut dist = vec![usize::MAX; graph.order()];
     let mut queue = VecDeque::from(vec![(s, 0)]);
 
     dist[s] = 0;

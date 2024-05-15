@@ -1,4 +1,4 @@
-//! Benchmark implementations of [`graaf::op::CountAllEdges`].
+//! Benchmark implementations of [`graaf::op::Size`].
 
 extern crate alloc;
 
@@ -12,7 +12,7 @@ use {
     graaf::op::{
         AddEdge,
         AddWeightedEdge,
-        CountAllEdges,
+        Size,
     },
     std::collections::{
         HashMap,
@@ -56,7 +56,7 @@ fn vec_vec(bencher: Bencher<'_, '_>, v: usize) {
 
     complete_graph!(v, adj);
 
-    bencher.bench_local(|| adj.count_all_edges());
+    bencher.bench_local(|| adj.size());
 }
 
 #[divan::bench(args = ARGS)]
@@ -65,7 +65,7 @@ fn vec_btree_set(bencher: Bencher<'_, '_>, v: usize) {
 
     complete_graph!(v, adj);
 
-    bencher.bench_local(|| adj.count_all_edges());
+    bencher.bench_local(|| adj.size());
 }
 
 #[divan::bench(args = ARGS)]
@@ -74,7 +74,7 @@ fn vec_hash_set(bencher: Bencher<'_, '_>, v: usize) {
 
     complete_graph!(v, adj);
 
-    bencher.bench_local(|| adj.count_all_edges());
+    bencher.bench_local(|| adj.size());
 }
 
 #[divan::bench(args = ARGS)]
@@ -83,7 +83,7 @@ fn vec_btree_map(bencher: Bencher<'_, '_>, v: usize) {
 
     complete_weighted_graph!(v, adj);
 
-    bencher.bench_local(|| adj.count_all_edges());
+    bencher.bench_local(|| adj.size());
 }
 
 #[divan::bench(args = ARGS)]
@@ -92,7 +92,7 @@ fn vec_hash_map(bencher: Bencher<'_, '_>, v: usize) {
 
     complete_weighted_graph!(v, adj);
 
-    bencher.bench_local(|| adj.count_all_edges());
+    bencher.bench_local(|| adj.size());
 }
 
 #[divan::bench(consts = ARGS)]
@@ -101,7 +101,7 @@ fn arr_vec<const V: usize>(bencher: Bencher<'_, '_>) {
 
     complete_graph!(V, adj);
 
-    bencher.bench_local(|| adj.count_all_edges());
+    bencher.bench_local(|| adj.size());
 }
 
 #[divan::bench(consts = ARGS)]
@@ -110,7 +110,7 @@ fn arr_btree_set<const V: usize>(bencher: Bencher<'_, '_>) {
 
     complete_graph!(V, adj);
 
-    bencher.bench_local(|| adj.count_all_edges());
+    bencher.bench_local(|| adj.size());
 }
 
 #[divan::bench(consts = ARGS)]
@@ -119,7 +119,7 @@ fn arr_hash_set<const V: usize>(bencher: Bencher<'_, '_>) {
 
     complete_graph!(V, adj);
 
-    bencher.bench_local(|| adj.count_all_edges());
+    bencher.bench_local(|| adj.size());
 }
 
 #[divan::bench(consts = ARGS)]
@@ -128,7 +128,7 @@ fn arr_btree_map<const V: usize>(bencher: Bencher<'_, '_>) {
 
     complete_weighted_graph!(V, adj);
 
-    bencher.bench_local(|| adj.count_all_edges());
+    bencher.bench_local(|| adj.size());
 }
 
 #[divan::bench(consts = ARGS)]
@@ -137,7 +137,7 @@ fn arr_hash_map<const V: usize>(bencher: Bencher<'_, '_>) {
 
     complete_weighted_graph!(V, adj);
 
-    bencher.bench_local(|| adj.count_all_edges());
+    bencher.bench_local(|| adj.size());
 }
 
 #[divan::bench(args = ARGS)]
@@ -150,7 +150,7 @@ fn btree_map_vec(bencher: Bencher<'_, '_>, v: usize) {
 
     complete_graph!(v, adj);
 
-    bencher.bench_local(|| adj.count_all_edges());
+    bencher.bench_local(|| adj.size());
 }
 
 #[divan::bench(args = ARGS)]
@@ -163,7 +163,7 @@ fn hash_map_vec(bencher: Bencher<'_, '_>, v: usize) {
 
     complete_graph!(v, adj);
 
-    bencher.bench_local(|| adj.count_all_edges());
+    bencher.bench_local(|| adj.size());
 }
 
 #[divan::bench(args = ARGS)]
@@ -176,7 +176,7 @@ fn btree_map_btree_set(bencher: Bencher<'_, '_>, v: usize) {
 
     complete_graph!(v, adj);
 
-    bencher.bench_local(|| adj.count_all_edges());
+    bencher.bench_local(|| adj.size());
 }
 
 #[divan::bench(args = ARGS)]
@@ -189,7 +189,7 @@ fn hash_map_hash_set(bencher: Bencher<'_, '_>, v: usize) {
 
     complete_graph!(v, adj);
 
-    bencher.bench(|| adj.count_all_edges());
+    bencher.bench(|| adj.size());
 }
 
 #[divan::bench(args = ARGS)]
@@ -202,7 +202,7 @@ fn btree_map_btree_map(bencher: Bencher<'_, '_>, v: usize) {
 
     complete_weighted_graph!(v, adj);
 
-    bencher.bench(|| adj.count_all_edges());
+    bencher.bench(|| adj.size());
 }
 
 #[divan::bench(args = ARGS)]
@@ -215,5 +215,5 @@ fn hash_map_hash_map(bencher: Bencher<'_, '_>, v: usize) {
 
     complete_weighted_graph!(v, adj);
 
-    bencher.bench(|| adj.count_all_edges());
+    bencher.bench(|| adj.size());
 }

@@ -236,21 +236,21 @@ mod tests {
     use {
         super::*,
         crate::op::{
-            CountAllEdges,
-            CountAllVertices,
             Indegree,
             IsSimple,
+            Order,
             Outdegree,
+            Size,
         },
         proptest::prelude::*,
     };
 
-    fn prop_count_all_edges<T: Complete + CountAllEdges>(v: usize) {
-        assert_eq!(T::complete(v).count_all_edges(), v * (v - 1));
+    fn prop_size<T: Complete + Size>(v: usize) {
+        assert_eq!(T::complete(v).size(), v * (v - 1));
     }
 
-    fn prop_count_all_vertices<T: Complete + CountAllVertices>(v: usize) {
-        assert_eq!(T::complete(v).count_all_vertices(), v);
+    fn prop_order<T: Complete + Order>(v: usize) {
+        assert_eq!(T::complete(v).order(), v);
     }
 
     fn prop_indegree<T: Complete + Indegree>(v: usize) {
@@ -275,68 +275,68 @@ mod tests {
 
     proptest! {
         #[test]
-        fn count_all_edges_vec_vec(v in 1..100_usize) {
-            prop_count_all_edges::<Vec<Vec<usize>>>(v);
+        fn size_vec_vec(v in 1..100_usize) {
+            prop_size::<Vec<Vec<usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_vec_btree_set(v in 1..100_usize) {
-            prop_count_all_edges::<Vec<BTreeSet<usize>>>(v);
+        fn size_vec_btree_set(v in 1..100_usize) {
+            prop_size::<Vec<BTreeSet<usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_vec_hash_set(v in 1..100_usize) {
-            prop_count_all_edges::<Vec<HashSet<usize>>>(v);
+        fn size_vec_hash_set(v in 1..100_usize) {
+            prop_size::<Vec<HashSet<usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_btree_map_vec(v in 1..100_usize) {
-            prop_count_all_edges::<BTreeMap<usize, Vec<usize>>>(v);
+        fn size_btree_map_vec(v in 1..100_usize) {
+            prop_size::<BTreeMap<usize, Vec<usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_btree_map_btree_set(v in 1..100_usize) {
-            prop_count_all_edges::<BTreeMap<usize, BTreeSet<usize>>>(v);
+        fn size_btree_map_btree_set(v in 1..100_usize) {
+            prop_size::<BTreeMap<usize, BTreeSet<usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_hash_map_vec(v in 1..100_usize) {
-            prop_count_all_edges::<HashMap<usize, Vec<usize>>>(v);
+        fn size_hash_map_vec(v in 1..100_usize) {
+            prop_size::<HashMap<usize, Vec<usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_hash_map_hash_set(v in 1..100_usize) {
-            prop_count_all_edges::<HashMap<usize, HashSet<usize>>>(v);
+        fn size_hash_map_hash_set(v in 1..100_usize) {
+            prop_size::<HashMap<usize, HashSet<usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_vec_tuple(v in 1..100_usize) {
-            prop_count_all_edges::<Vec<(usize, usize)>>(v);
+        fn size_vec_tuple(v in 1..100_usize) {
+            prop_size::<Vec<(usize, usize)>>(v);
         }
 
         #[test]
-        fn count_all_edges_btree_set_tuple(v in 1..100_usize) {
-            prop_count_all_edges::<BTreeSet<(usize, usize)>>(v);
+        fn size_btree_set_tuple(v in 1..100_usize) {
+            prop_size::<BTreeSet<(usize, usize)>>(v);
         }
 
         #[test]
-        fn count_all_edges_hash_set_tuple(v in 1..100_usize) {
-            prop_count_all_edges::<HashSet<(usize, usize)>>(v);
+        fn size_hash_set_tuple(v in 1..100_usize) {
+            prop_size::<HashSet<(usize, usize)>>(v);
         }
 
         #[test]
-        fn count_all_vertices_vec_vec(v in 1..100_usize) {
-            prop_count_all_vertices::<Vec<Vec<usize>>>(v);
+        fn order_vec_vec(v in 1..100_usize) {
+            prop_order::<Vec<Vec<usize>>>(v);
         }
 
         #[test]
-        fn count_all_vertices_vec_btree_set(v in 1..100_usize) {
-            prop_count_all_vertices::<Vec<BTreeSet<usize>>>(v);
+        fn order_vec_btree_set(v in 1..100_usize) {
+            prop_order::<Vec<BTreeSet<usize>>>(v);
         }
 
         #[test]
-        fn count_all_vertices_vec_hash_set(v in 1..100_usize) {
-            prop_count_all_vertices::<Vec<HashSet<usize>>>(v);
+        fn order_vec_hash_set(v in 1..100_usize) {
+            prop_order::<Vec<HashSet<usize>>>(v);
         }
 
         #[test]

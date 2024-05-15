@@ -1,6 +1,6 @@
 # ![Graaf!](/logo.png "Graaf") &emsp; [![Crates.io](https://img.shields.io/crates/v/graaf.svg)](https://crates.io/crates/graaf) [![Build status](https://github.com/bsdrks/graaf/actions/workflows/rust.yml/badge.svg)](https://github.com/bsdrks/graaf/actions) [![API reference](https://docs.rs/graaf/badge.svg)](https://docs.rs/graaf) [![Coverage Status](https://coveralls.io/repos/github/bsdrks/graaf/badge.svg?branch=main)](https://coveralls.io/github/bsdrks/graaf?branch=main)
 
-Algorithms, operations, generators, and representations for directed graphs
+Work with directed graphs
 
 ## Installation
 
@@ -8,15 +8,14 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.43.0"
+graaf = "0.44.0"
 ```
 
 ## Overview
 
 ### Operations
 
-Build and query graphs made with standard collections, or implement the
-operation traits for your own types.
+Build and query graphs.
 
 ```rust
 use {
@@ -39,8 +38,7 @@ assert_eq!(graph.degree(2), 1);
 
 ### Algorithms
 
-Search, traverse, and analyze graphs built from the types that implement the
-operation traits.
+Search, traverse, and analyze graphs.
 
 ```rust
 use graaf::algo::bfs::single_pair_shortest_path as spsp;
@@ -94,7 +92,9 @@ assert_eq!(
 
 ## Features
 
-`adjacency_matrix` enables the adjacency matrix representation. Requires nightly.
+These features require nightly Rust.
+
+- `adjacency_matrix` enables the adjacency matrix representation.
 
 ## Changelog
 
@@ -102,7 +102,7 @@ See [CHANGELOG.md](https://github.com/bsdrks/graaf/blob/main/CHANGELOG.md).
 
 ## License
 
-Licensed under either the [Apache License, Version 2.0] or the [MIT license] at your option.
+Use `graaf` under either the [Apache License, Version 2.0], or the [MIT license] at your option.
 
 [Apache License, Version 2.0]: LICENSE-APACHE
 [MIT license]: LICENSE-MIT

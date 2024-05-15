@@ -2,7 +2,6 @@
 
 ## Provisional roadmap
 
-- Add `IsRegular`.
 - Add `Path` generator.
 - Add `algo::dijkstra::single_pair_shortest_path`.
 - Add `bfs::shortest_paths`.
@@ -20,6 +19,13 @@
 - Implement `_mut` versions of `op` iterator traits.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.44.0] - 2024-05-15
+
+Changed
+
+- Breaking: Rename `CountAllVertices` to `Order`.
+- Breaking: Rename `CountAllEdges` to `Size`.
 
 ## [0.43.0] - 2024-05-13
 
@@ -224,7 +230,7 @@ Changed
 
 Removed
 
-- Remove panic documentation from `CountAllEdges` implementations.
+- Remove panic documentation from `Size` implementations.
 
 ## [0.38.2] - 2024-05-09
 
@@ -426,12 +432,12 @@ Added
 - Add `CompleteConst` unit test `arr_btree_set`.
 - Add `CompleteConst` unit test `arr_hash_set`.
 - Add `CompleteConst` unit test `arr_vec`.
-- Add `CompleteConst` unit test `count_all_edges_arr_btree_set`.
-- Add `CompleteConst` unit test `count_all_edges_arr_hash_set`.
-- Add `CompleteConst` unit test `count_all_edges_arr_vec`.
-- Add `CompleteConst` unit test `count_all_vertices_arr_btree_set`.
-- Add `CompleteConst` unit test `count_all_vertices_arr_hash_set`.
-- Add `CompleteConst` unit test `count_all_vertices_arr_vec`.
+- Add `CompleteConst` unit test `size_arr_btree_set`.
+- Add `CompleteConst` unit test `size_arr_hash_set`.
+- Add `CompleteConst` unit test `size_arr_vec`.
+- Add `CompleteConst` unit test `order_arr_btree_set`.
+- Add `CompleteConst` unit test `order_arr_hash_set`.
+- Add `CompleteConst` unit test `order_arr_vec`.
 - Add `CompleteConst` unit test `indegree_arr_btree_set`.
 - Add `CompleteConst` unit test `indegree_arr_hash_set`.
 - Add `CompleteConst` unit test `is_simple_arr_btree_set`.
@@ -439,13 +445,13 @@ Added
 - Add `CompleteConst` unit test `outdegree_arr_btree_set`.
 - Add `CompleteConst` unit test `outdegree_arr_hash_set`.
 - Add `CompleteConst` unit test `outdegree_arr_vec`.
-- Add `Complete` unit test `count_all_edges_btree_map_btree_set_0`.
-- Add `Complete` unit test `count_all_edges_btree_map_vec_0`.
-- Add `Complete` unit test `count_all_edges_hash_map_hash_set_0`.
-- Add `Complete` unit test `count_all_edges_hash_map_vec_0`.
-- Add `Complete` unit test `count_all_edges_vec_btree_set_0`.
-- Add `Complete` unit test `count_all_edges_vec_hash_set_0`.
-- Add `Complete` unit test `count_all_edges_vec_vec_0`.
+- Add `Complete` unit test `size_btree_map_btree_set_0`.
+- Add `Complete` unit test `size_btree_map_vec_0`.
+- Add `Complete` unit test `size_hash_map_hash_set_0`.
+- Add `Complete` unit test `size_hash_map_vec_0`.
+- Add `Complete` unit test `size_vec_btree_set_0`.
+- Add `Complete` unit test `size_vec_hash_set_0`.
+- Add `Complete` unit test `size_vec_vec_0`.
 - Add `Complete` unit test `indegree_btree_map_btree_set_0`.
 - Add `Complete` unit test `indegree_hash_map_hash_set_0`.
 - Add `Complete` unit test `indegree_vec_btree_set_0`.
@@ -527,16 +533,16 @@ Changed
 
 Added
 
-- Add `gen::Star` property test `count_all_edges_btree_map_btree_set`.
-- Add `gen::Star` property test `count_all_edges_btree_map_vec`.
-- Add `gen::Star` property test `count_all_edges_hash_map_hash_set`.
-- Add `gen::Star` property test `count_all_edges_hash_map_vec`.
-- Add `gen::Star` property test `count_all_edges_vec_btree_set`.
-- Add `gen::Star` property test `count_all_edges_vec_hash_set`.
-- Add `gen::Star` property test `count_all_edges_vec_vec`.
-- Add `gen::Star` property test `count_all_vertices_vec_btree_set`.
-- Add `gen::Star` property test `count_all_vertices_vec_hash_set`.
-- Add `gen::Star` property test `count_all_vertices_vec_vec`.
+- Add `gen::Star` property test `size_btree_map_btree_set`.
+- Add `gen::Star` property test `size_btree_map_vec`.
+- Add `gen::Star` property test `size_hash_map_hash_set`.
+- Add `gen::Star` property test `size_hash_map_vec`.
+- Add `gen::Star` property test `size_vec_btree_set`.
+- Add `gen::Star` property test `size_vec_hash_set`.
+- Add `gen::Star` property test `size_vec_vec`.
+- Add `gen::Star` property test `order_vec_btree_set`.
+- Add `gen::Star` property test `order_vec_hash_set`.
+- Add `gen::Star` property test `order_vec_vec`.
 - Add `gen::Star` property test `indegree_btree_map_btree_set`.
 - Add `gen::Star` property test `indegree_hash_map_hash_set`.
 - Add `gen::Star` property test `indegree_vec_btree_set`.
@@ -602,19 +608,19 @@ Fixed
 
 Added
 
-- Add `CountAllEdges` unit test `btree_set_tuple_unweighted`.
-- Add `CountAllEdges` unit test `btree_set_tuple_weighted`.
-- Add `CountAllEdges` unit test `hash_set_tuple_unweighted`.
-- Add `CountAllEdges` unit test `hash_set_tuple_weighted`.
-- Add `CountAllEdges` unit test `vec_tuple_unweighted`.
-- Add `CountAllEdges` unit test `vec_tuple_weighted`.
+- Add `Size` unit test `btree_set_tuple_unweighted`.
+- Add `Size` unit test `btree_set_tuple_weighted`.
+- Add `Size` unit test `hash_set_tuple_unweighted`.
+- Add `Size` unit test `hash_set_tuple_weighted`.
+- Add `Size` unit test `vec_tuple_unweighted`.
+- Add `Size` unit test `vec_tuple_weighted`.
 - Add `CycleConst` unit test `arr_tuple`.
 - Add `CycleConst` unit test `is_simple_arr_btree_set`.
 - Add `CycleConst` unit test `is_simple_arr_hash_set`.
 - Add `CycleConst` unit test `is_simple_arr_tuple`.
-- Add `Cycle` property test `count_all_edges_btree_set_tuple`.
-- Add `Cycle` property test `count_all_edges_hash_set_tuple`.
-- Add `Cycle` property test `count_all_edges_vec_tuple`.
+- Add `Cycle` property test `size_btree_set_tuple`.
+- Add `Cycle` property test `size_hash_set_tuple`.
+- Add `Cycle` property test `size_vec_tuple`.
 - Add `Cycle` property test `is_simple_btree_set_tuple`.
 - Add `Cycle` property test `is_simple_hash_set_tuple`.
 - Add `Cycle` property test `is_simple_vec_btree_set`.
@@ -637,12 +643,12 @@ Added
 - Add `LinearConst` unit test `is_simple_arr_hash_set`.
 - Add `Linear` property test `is_simple_vec_btree_set`.
 - Add `Linear` property test `is_simple_vec_hash_set`.
-- Implement `CountAllEdges` for `BTreeSet<(usize, usize)>`.
-- Implement `CountAllEdges` for `BTreeSet<(usize, usize, W)>`.
-- Implement `CountAllEdges` for `HashSet<(usize, usize)>`.
-- Implement `CountAllEdges` for `HashSet<(usize, usize, W)>`.
-- Implement `CountAllEdges` for `Vec<(usize, usize)>`.
-- Implement `CountAllEdges` for `Vec<(usize, usize, W)>`.
+- Implement `Size` for `BTreeSet<(usize, usize)>`.
+- Implement `Size` for `BTreeSet<(usize, usize, W)>`.
+- Implement `Size` for `HashSet<(usize, usize)>`.
+- Implement `Size` for `HashSet<(usize, usize, W)>`.
+- Implement `Size` for `Vec<(usize, usize)>`.
+- Implement `Size` for `Vec<(usize, usize, W)>`.
 - Implement `CycleConst` for `[(usize, usize); V]`.
 - Implement `Cycle` for `BTreeSet<(usize, usize)>`.
 - Implement `Cycle` for `HashSet<(usize, usize)>`.
@@ -672,13 +678,13 @@ Changed
 
 Added
 
-- Add `gen::Cycle` property test `count_all_edges_btree_map_btree_set`.
-- Add `gen::Cycle` property test `count_all_edges_btree_map_vec`.
-- Add `gen::Cycle` property test `count_all_edges_hash_map_hash_set`.
-- Add `gen::Cycle` property test `count_all_edges_hash_map_vec`.
-- Add `gen::Cycle` property test `count_all_edges_vec_btree_set`.
-- Add `gen::Cycle` property test `count_all_edges_vec_hash_set`.
-- Add `gen::Cycle` property test `count_all_edges_vec_vec`.
+- Add `gen::Cycle` property test `size_btree_map_btree_set`.
+- Add `gen::Cycle` property test `size_btree_map_vec`.
+- Add `gen::Cycle` property test `size_hash_map_hash_set`.
+- Add `gen::Cycle` property test `size_hash_map_vec`.
+- Add `gen::Cycle` property test `size_vec_btree_set`.
+- Add `gen::Cycle` property test `size_vec_hash_set`.
+- Add `gen::Cycle` property test `size_vec_vec`.
 - Add `gen::Cycle` property test `indegree_btree_map_btree_set`.
 - Add `gen::Cycle` property test `indegree_hash_map_hash_set`.
 - Add `gen::Cycle` property test `outdegree_btree_map_btree_set`.
@@ -689,16 +695,16 @@ Added
 - Add `gen::Cycle` unit test `btree_map_vec`.
 - Add `gen::Cycle` unit test `hash_map_hash_set`.
 - Add `gen::Cycle` unit test `hash_map_vec`.
-- Add `gen::Linear` property test `count_all_edges_btree_map_btree_set`.
-- Add `gen::Linear` property test `count_all_edges_btree_map_vec`.
-- Add `gen::Linear` property test `count_all_edges_hash_map_hash_set`.
-- Add `gen::Linear` property test `count_all_edges_hash_map_vec`.
-- Add `gen::Linear` property test `count_all_edges_vec_btree_set`.
-- Add `gen::Linear` property test `count_all_edges_vec_hash_set`.
-- Add `gen::Linear` property test `count_all_edges_vec_vec`.
-- Add `gen::Linear` property test `count_all_vertices_vec_btree_set`.
-- Add `gen::Linear` property test `count_all_vertices_vec_hash_set`.
-- Add `gen::Linear` property test `count_all_vertices_vec_vec`.
+- Add `gen::Linear` property test `size_btree_map_btree_set`.
+- Add `gen::Linear` property test `size_btree_map_vec`.
+- Add `gen::Linear` property test `size_hash_map_hash_set`.
+- Add `gen::Linear` property test `size_hash_map_vec`.
+- Add `gen::Linear` property test `size_vec_btree_set`.
+- Add `gen::Linear` property test `size_vec_hash_set`.
+- Add `gen::Linear` property test `size_vec_vec`.
+- Add `gen::Linear` property test `order_vec_btree_set`.
+- Add `gen::Linear` property test `order_vec_hash_set`.
+- Add `gen::Linear` property test `order_vec_vec`.
 - Add `gen::Linear` property test `indegree_btree_map_btree_set`.
 - Add `gen::Linear` property test `indegree_hash_map_hash_set`.
 - Add `gen::Linear` property test `indegree_vec_btree_set`.
@@ -725,9 +731,9 @@ Added
 
 Added
 
-- Add `gen::Cycle` property test `count_all_vertices_vec_vec`.
-- Add `gen::Cycle` property test `count_all_vertices_vec_btree_set`.
-- Add `gen::Cycle` property test `count_all_vertices_vec_hash_set`.
+- Add `gen::Cycle` property test `order_vec_vec`.
+- Add `gen::Cycle` property test `order_vec_btree_set`.
+- Add `gen::Cycle` property test `order_vec_hash_set`.
 - Add `gen::Cycle` property test `indegree_vec_btree_set`.
 - Add `gen::Cycle` property test `indegree_vec_hash_set`.
 - Add `gen::Cycle` property test `outdegree_vec_vec`.
@@ -853,7 +859,7 @@ Added
 - Bench `add_edge` for `BTreeMap<usize, Vec<usize>>`.
 - Bench `add_edge` for `Vec<BTreeSet<usize>>`.
 - Bench `add_edge` for `[BTreeSet<usize>; V]`.
-- Bench `count_all_edges` for `Vec<BTreeMap<usize, usize>>`.
+- Bench `size` for `Vec<BTreeMap<usize, usize>>`.
 
 Changed
 
@@ -1226,12 +1232,12 @@ Added
 
 Added
 
-- Implement `CountAllVertices` for `Vec<BTreeSet<(usize, W)>>`.
-- Implement `CountAllVertices` for `Vec<HashSet<(usize, W)>>`.
-- Implement `CountAllVertices` for `[BTreeSet<(usize, W)>; V]`.
-- Implement `CountAllVertices` for `[BTreeSet<(usize, W)>]`.
-- Implement `CountAllVertices` for `[HashSet<(usize, W); V]`.
-- Implement `CountAllVertices` for `[HashSet<(usize, W)]`.
+- Implement `Order` for `Vec<BTreeSet<(usize, W)>>`.
+- Implement `Order` for `Vec<HashSet<(usize, W)>>`.
+- Implement `Order` for `[BTreeSet<(usize, W)>; V]`.
+- Implement `Order` for `[BTreeSet<(usize, W)>]`.
+- Implement `Order` for `[HashSet<(usize, W); V]`.
+- Implement `Order` for `[HashSet<(usize, W)]`.
 
 Fixed
 
@@ -1257,45 +1263,45 @@ Added
 
 Added
 
-- Implement `CountAllVertices` for `Vec<BTreeMap<usize, W>>`.
-- Implement `CountAllVertices` for `Vec<BTreeSet<usize>>`.
-- Implement `CountAllVertices` for `Vec<HashMap<usize, W>>`.
-- Implement `CountAllVertices` for `Vec<HashSet<usize>>`.
-- Implement `CountAllVertices` for `Vec<Vec<(usize, W)>>`.
-- Implement `CountAllVertices` for `Vec<Vec<usize>>`.
-- Implement `CountAllVertices` for `[BTreeMap<usize, W>; V]`.
-- Implement `CountAllVertices` for `[BTreeMap<usize, W>]`.
-- Implement `CountAllVertices` for `[BTreeSet<usize>; V]`.
-- Implement `CountAllVertices` for `[BTreeSet<usize>]`.
-- Implement `CountAllVertices` for `[HashMap<usize, W>; V]`.
-- Implement `CountAllVertices` for `[HashMap<usize, W>]`.
-- Implement `CountAllVertices` for `[HashSet<usize>; V]`.
-- Implement `CountAllVertices` for `[HashSet<usize>]`.
-- Implement `CountAllVertices` for `[Vec<(usize, W)>; V]`.
-- Implement `CountAllVertices` for `[Vec<(usize, W)>]`.
-- Implement `CountAllVertices` for `[Vec<usize>; V]`.
-- Implement `CountAllVertices` for `[Vec<usize>]`.
+- Implement `Order` for `Vec<BTreeMap<usize, W>>`.
+- Implement `Order` for `Vec<BTreeSet<usize>>`.
+- Implement `Order` for `Vec<HashMap<usize, W>>`.
+- Implement `Order` for `Vec<HashSet<usize>>`.
+- Implement `Order` for `Vec<Vec<(usize, W)>>`.
+- Implement `Order` for `Vec<Vec<usize>>`.
+- Implement `Order` for `[BTreeMap<usize, W>; V]`.
+- Implement `Order` for `[BTreeMap<usize, W>]`.
+- Implement `Order` for `[BTreeSet<usize>; V]`.
+- Implement `Order` for `[BTreeSet<usize>]`.
+- Implement `Order` for `[HashMap<usize, W>; V]`.
+- Implement `Order` for `[HashMap<usize, W>]`.
+- Implement `Order` for `[HashSet<usize>; V]`.
+- Implement `Order` for `[HashSet<usize>]`.
+- Implement `Order` for `[Vec<(usize, W)>; V]`.
+- Implement `Order` for `[Vec<(usize, W)>]`.
+- Implement `Order` for `[Vec<usize>; V]`.
+- Implement `Order` for `[Vec<usize>]`.
 
 Removed
 
-- Breaking: Remove `CountAllVertices` for `HashMap<_>`.
-- Breaking: Remove `CountAllVertices` for `Vec<T>`.
-- Breaking: Remove `CountAllVertices` for `[T; V]`.
-- Breaking: Remove `CountAllVertices` for `[T]`.
+- Breaking: Remove `Order` for `HashMap<_>`.
+- Breaking: Remove `Order` for `Vec<T>`.
+- Breaking: Remove `Order` for `[T; V]`.
+- Breaking: Remove `Order` for `[T]`.
 
 ## [0.12.1] - 2024-04-14
 
 Added
 
-- Implement `CountAllEdges` for `BTreeMap<K, BTreeMap<K, W>>`.
-- Implement `CountAllEdges` for `BTreeMap<K, BTreeSet<T>>`.
-- Implement `CountAllEdges` for `BTreeMap<K, Vec<T>>`.
-- Implement `CountAllEdges` for `Vec<BTreeMap<K, W>>`.
-- Implement `CountAllEdges` for `Vec<BTreeSet<T>>`.
-- Implement `CountAllEdges` for `[BTreeMap<K, W>; V]`.
-- Implement `CountAllEdges` for `[BTreeMap<K, W>]`.
-- Implement `CountAllEdges` for `[BTreeSet<T>; V]`.
-- Implement `CountAllEdges` for `[BTreeSet<T>]`.
+- Implement `Size` for `BTreeMap<K, BTreeMap<K, W>>`.
+- Implement `Size` for `BTreeMap<K, BTreeSet<T>>`.
+- Implement `Size` for `BTreeMap<K, Vec<T>>`.
+- Implement `Size` for `Vec<BTreeMap<K, W>>`.
+- Implement `Size` for `Vec<BTreeSet<T>>`.
+- Implement `Size` for `[BTreeMap<K, W>; V]`.
+- Implement `Size` for `[BTreeMap<K, W>]`.
+- Implement `Size` for `[BTreeSet<T>; V]`.
+- Implement `Size` for `[BTreeSet<T>]`.
 - Implement `IsEdge` for `Vec<HashMap<usize, W>>`.
 - Implement `IsEdge` for `[HashMap<usize, W>; V]`.
 
@@ -1347,12 +1353,12 @@ Added
 - Implement `AddWeightedEdge` for `[HashMap<usize, W>; V]`.
 - Implement `AddWeightedEdge` for `[HashSet<(usize, W)>; V]`.
 - Implement `AddWeightedEdge` for `[Vec<(usize, W)>; V]`.
-- Implement `CountAllEdges` for `Vec<HashMap<K, W>>`.
-- Implement `CountAllEdges` for `Vec<HashSet<T>>`.
-- Implement `CountAllEdges` for `Vec<Vec<T>>`.
-- Implement `CountAllEdges` for `[HashMap<K, W>; V]`.
-- Implement `CountAllEdges` for `[HashSet<T>; V]`.
-- Implement `CountAllEdges` for `[Vec<T>; V]`.
+- Implement `Size` for `Vec<HashMap<K, W>>`.
+- Implement `Size` for `Vec<HashSet<T>>`.
+- Implement `Size` for `Vec<Vec<T>>`.
+- Implement `Size` for `[HashMap<K, W>; V]`.
+- Implement `Size` for `[HashSet<T>; V]`.
+- Implement `Size` for `[Vec<T>; V]`.
 - Implement `EdgeWeight` for `Vec<HashMap<usize, W>>`.
 - Implement `EdgeWeight` for `[HashMap<usize, W>; V]`.
 - Implement `Indegree` for `Vec<HashMap<usize, W>>`.
@@ -1474,10 +1480,10 @@ Changed
 
 Added
 
-- Implement `CountAllEdges` for `[HashMap<K, W>]`.
-- Implement `CountAllEdges` for `[HashSet<T>]`.
-- Implement `CountAllEdges` for `[Vec<T>]`.
-- Implement `CountAllVertices` for `[T]`.
+- Implement `Size` for `[HashMap<K, W>]`.
+- Implement `Size` for `[HashSet<T>]`.
+- Implement `Size` for `[Vec<T>]`.
+- Implement `Order` for `[T]`.
 - Implement `EdgeWeight` for `[HashMap<usize, W>]`.
 - Implement `Indegree` for `[HashMap<usize, W>]`.
 - Implement `Indegree` for `[HashSet<usize>]`.
@@ -1503,12 +1509,12 @@ Changed
 
 Removed
 
-- Remove `CountAllEdges` for `Vec<HashMap<K, W>>`.
-- Remove `CountAllEdges` for `Vec<HashSet<T>>`.
-- Remove `CountAllEdges` for `Vec<Vec<T>>`.
-- Remove `CountAllEdges` for `[HashMap<K, W>; V]`.
-- Remove `CountAllEdges` for `[HashSet<T>; V]`.
-- Remove `CountAllEdges` for `[Vec<T>; V]`.
+- Remove `Size` for `Vec<HashMap<K, W>>`.
+- Remove `Size` for `Vec<HashSet<T>>`.
+- Remove `Size` for `Vec<Vec<T>>`.
+- Remove `Size` for `[HashMap<K, W>; V]`.
+- Remove `Size` for `[HashSet<T>; V]`.
+- Remove `Size` for `[Vec<T>; V]`.
 - Remove `Indegree` for `Vec<HashMap<usize, W>>`.
 - Remove `Indegree` for `Vec<HashSet<usize>>`.
 - Remove `Indegree` for `[HashMap<usize, W>; V]`.
@@ -1574,8 +1580,8 @@ Added
 - Add a doctest for `AdjacencyMatrix::toggle`.
 - Add implementation documentation for `AddEdge`.
 - Add implementation documentation for `AddWeightedEdge`.
-- Add implementation documentation for `CountAllEdges`.
-- Add implementation documentation for `CountAllVertices`.
+- Add implementation documentation for `Size`.
+- Add implementation documentation for `Order`.
 - Add implementation documentation for `EdgeWeight`.
 - Add implementation documentation for `Indegree`.
 - Add implementation documentation for `IsEdge`.
@@ -1598,8 +1604,8 @@ Changed
 Added
 
 - Add a doctest for `op::add_weighted_edge::AddWeightedEdge`.
-- Add a doctest for `op::count_all_edges::CountAllEdges`.
-- Add a doctest for `op::count_all_vertices::CountAllVertices`.
+- Add a doctest for `op::size::Size`.
+- Add a doctest for `op::order::Order`.
 - Add a doctest for `op::edge_weight::EdgeWeight`.
 - Add a doctest for `op::indegree::Indegree`.
 - Add a doctest for `op::is_edge::IsEdge`.
@@ -1611,8 +1617,8 @@ Added
 - Add a doctest for `op::outdegree::OutDegree`.
 - Add a doctest for `op::remove_edge::RemoveEdge`.
 - Add documentation for `op::add_weighted_edge`.
-- Add documentation for `op::count_all_edges`.
-- Add documentation for `op::count_all_vertices`.
+- Add documentation for `op::size`.
+- Add documentation for `op::order`.
 - Add documentation for `op::edge_weight`.
 - Add documentation for `op::indegree`.
 - Add documentation for `op::is_edge`.

@@ -1,6 +1,6 @@
 [package]
 name = "graaf"
-version = "0.43.0"
+version = "0.44.0"
 edition = "2021"
 authors = ["Bas Dirks <bas.dirks@protonmail.com>"]
 categories = ["algorithms", "data-structures", "mathematics"]
@@ -32,8 +32,8 @@ path = "benches/op/add_edge.rs"
 harness = false
 
 [[bench]]
-name = "count_all_edges"
-path = "benches/op/count_all_edges.rs"
+name = "size"
+path = "benches/op/size.rs"
 harness = false
 
 [[bench]]

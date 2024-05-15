@@ -1,13 +1,13 @@
-//! A trait to count all vertices in a graph
+//! A trait to count the number of vertices in a graph
 //!
 //! # Example
 //!
 //! ```
-//! use graaf::op::CountAllVertices;
+//! use graaf::op::Order;
 //!
 //! let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 //!
-//! assert_eq!(graph.count_all_vertices(), 4);
+//! assert_eq!(graph.order(), 4);
 //! ```
 
 extern crate alloc;
@@ -24,22 +24,22 @@ use {
     },
 };
 
-/// A trait to count all vertices in a graph
+/// A trait to count the number of vertices in a graph
 ///
-/// # How can I implement `CountAllVertices`?
+/// # How can I implement `Order`?
 ///
-/// Provides an implementation of `count_all_vertices` that returns the number
+/// Provides an implementation of `order` that returns the number
 /// of vertices in the graph.
 ///
 /// ```
-/// use graaf::op::CountAllVertices;
+/// use graaf::op::Order;
 ///
 /// struct Graph {
 ///     vertices: Vec<usize>,
 /// }
 ///
-/// impl CountAllVertices for Graph {
-///     fn count_all_vertices(&self) -> usize {
+/// impl Order for Graph {
+///     fn order(&self) -> usize {
 ///         self.vertices.len()
 ///     }
 /// }
@@ -48,184 +48,184 @@ use {
 /// # Example
 ///
 /// ```
-/// use graaf::op::CountAllVertices;
+/// use graaf::op::Order;
 ///
 /// let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 ///
-/// assert_eq!(graph.count_all_vertices(), 4);
+/// assert_eq!(graph.order(), 4);
 /// ```
-pub trait CountAllVertices {
+pub trait Order {
     /// Count all vertices.
-    fn count_all_vertices(&self) -> usize;
+    fn order(&self) -> usize;
 }
 
-impl CountAllVertices for Vec<Vec<usize>> {
-    fn count_all_vertices(&self) -> usize {
+impl Order for Vec<Vec<usize>> {
+    fn order(&self) -> usize {
         self.len()
     }
 }
 
-impl<W> CountAllVertices for Vec<Vec<(usize, W)>> {
-    fn count_all_vertices(&self) -> usize {
+impl<W> Order for Vec<Vec<(usize, W)>> {
+    fn order(&self) -> usize {
         self.len()
     }
 }
 
-impl CountAllVertices for Vec<BTreeSet<usize>> {
-    fn count_all_vertices(&self) -> usize {
+impl Order for Vec<BTreeSet<usize>> {
+    fn order(&self) -> usize {
         self.len()
     }
 }
 
-impl<W> CountAllVertices for Vec<BTreeSet<(usize, W)>> {
-    fn count_all_vertices(&self) -> usize {
+impl<W> Order for Vec<BTreeSet<(usize, W)>> {
+    fn order(&self) -> usize {
         self.len()
     }
 }
 
-impl<H> CountAllVertices for Vec<HashSet<usize, H>>
+impl<H> Order for Vec<HashSet<usize, H>>
 where
     H: BuildHasher,
 {
-    fn count_all_vertices(&self) -> usize {
+    fn order(&self) -> usize {
         self.len()
     }
 }
 
-impl<H, W> CountAllVertices for Vec<HashSet<(usize, W), H>>
+impl<H, W> Order for Vec<HashSet<(usize, W), H>>
 where
     H: BuildHasher,
 {
-    fn count_all_vertices(&self) -> usize {
+    fn order(&self) -> usize {
         self.len()
     }
 }
 
-impl<W> CountAllVertices for Vec<BTreeMap<usize, W>> {
-    fn count_all_vertices(&self) -> usize {
+impl<W> Order for Vec<BTreeMap<usize, W>> {
+    fn order(&self) -> usize {
         self.len()
     }
 }
 
-impl<W, H> CountAllVertices for Vec<HashMap<usize, W, H>>
+impl<W, H> Order for Vec<HashMap<usize, W, H>>
 where
     H: BuildHasher,
 {
-    fn count_all_vertices(&self) -> usize {
+    fn order(&self) -> usize {
         self.len()
     }
 }
 
-impl CountAllVertices for [Vec<usize>] {
-    fn count_all_vertices(&self) -> usize {
+impl Order for [Vec<usize>] {
+    fn order(&self) -> usize {
         self.len()
     }
 }
 
-impl<W> CountAllVertices for [Vec<(usize, W)>] {
-    fn count_all_vertices(&self) -> usize {
+impl<W> Order for [Vec<(usize, W)>] {
+    fn order(&self) -> usize {
         self.len()
     }
 }
 
-impl CountAllVertices for [BTreeSet<usize>] {
-    fn count_all_vertices(&self) -> usize {
+impl Order for [BTreeSet<usize>] {
+    fn order(&self) -> usize {
         self.len()
     }
 }
 
-impl<W> CountAllVertices for [BTreeSet<(usize, W)>] {
-    fn count_all_vertices(&self) -> usize {
+impl<W> Order for [BTreeSet<(usize, W)>] {
+    fn order(&self) -> usize {
         self.len()
     }
 }
 
-impl<H> CountAllVertices for [HashSet<usize, H>]
+impl<H> Order for [HashSet<usize, H>]
 where
     H: BuildHasher,
 {
-    fn count_all_vertices(&self) -> usize {
+    fn order(&self) -> usize {
         self.len()
     }
 }
 
-impl<H, W> CountAllVertices for [HashSet<(usize, W), H>]
+impl<H, W> Order for [HashSet<(usize, W), H>]
 where
     H: BuildHasher,
 {
-    fn count_all_vertices(&self) -> usize {
+    fn order(&self) -> usize {
         self.len()
     }
 }
 
-impl<W> CountAllVertices for [BTreeMap<usize, W>] {
-    fn count_all_vertices(&self) -> usize {
+impl<W> Order for [BTreeMap<usize, W>] {
+    fn order(&self) -> usize {
         self.len()
     }
 }
 
-impl<W, H> CountAllVertices for [HashMap<usize, W, H>]
+impl<W, H> Order for [HashMap<usize, W, H>]
 where
     H: BuildHasher,
 {
-    fn count_all_vertices(&self) -> usize {
+    fn order(&self) -> usize {
         self.len()
     }
 }
 
-impl<const V: usize> CountAllVertices for [Vec<usize>; V] {
-    fn count_all_vertices(&self) -> usize {
+impl<const V: usize> Order for [Vec<usize>; V] {
+    fn order(&self) -> usize {
         V
     }
 }
 
-impl<const V: usize, W> CountAllVertices for [Vec<(usize, W)>; V] {
-    fn count_all_vertices(&self) -> usize {
+impl<const V: usize, W> Order for [Vec<(usize, W)>; V] {
+    fn order(&self) -> usize {
         V
     }
 }
 
-impl<const V: usize> CountAllVertices for [BTreeSet<usize>; V] {
-    fn count_all_vertices(&self) -> usize {
+impl<const V: usize> Order for [BTreeSet<usize>; V] {
+    fn order(&self) -> usize {
         V
     }
 }
 
-impl<const V: usize, W> CountAllVertices for [BTreeSet<(usize, W)>; V] {
-    fn count_all_vertices(&self) -> usize {
+impl<const V: usize, W> Order for [BTreeSet<(usize, W)>; V] {
+    fn order(&self) -> usize {
         V
     }
 }
 
-impl<const V: usize, H> CountAllVertices for [HashSet<usize, H>; V]
+impl<const V: usize, H> Order for [HashSet<usize, H>; V]
 where
     H: BuildHasher,
 {
-    fn count_all_vertices(&self) -> usize {
+    fn order(&self) -> usize {
         V
     }
 }
 
-impl<const V: usize, W, H> CountAllVertices for [HashSet<(usize, W), H>; V]
+impl<const V: usize, W, H> Order for [HashSet<(usize, W), H>; V]
 where
     H: BuildHasher,
 {
-    fn count_all_vertices(&self) -> usize {
+    fn order(&self) -> usize {
         V
     }
 }
 
-impl<const V: usize, W> CountAllVertices for [BTreeMap<usize, W>; V] {
-    fn count_all_vertices(&self) -> usize {
+impl<const V: usize, W> Order for [BTreeMap<usize, W>; V] {
+    fn order(&self) -> usize {
         V
     }
 }
 
-impl<const V: usize, W, H> CountAllVertices for [HashMap<usize, W, H>; V]
+impl<const V: usize, W, H> Order for [HashMap<usize, W, H>; V]
 where
     H: BuildHasher,
 {
-    fn count_all_vertices(&self) -> usize {
+    fn order(&self) -> usize {
         V
     }
 }
@@ -238,14 +238,14 @@ mod tests {
     fn vec_vec_unweighted() {
         let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        assert_eq!(graph.count_all_vertices(), 4);
+        assert_eq!(graph.order(), 4);
     }
 
     #[test]
     fn vec_vec_weighted() {
         let graph = vec![vec![(1, 2), (2, 3)], vec![(0, 4)], vec![(0, 7), (1, 8)]];
 
-        assert_eq!(graph.count_all_vertices(), 3);
+        assert_eq!(graph.order(), 3);
     }
 
     #[test]
@@ -256,7 +256,7 @@ mod tests {
             BTreeSet::from([0, 1, 3]),
         ];
 
-        assert_eq!(graph.count_all_vertices(), 3);
+        assert_eq!(graph.order(), 3);
     }
 
     #[test]
@@ -267,7 +267,7 @@ mod tests {
             BTreeSet::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.count_all_vertices(), 3);
+        assert_eq!(graph.order(), 3);
     }
 
     #[test]
@@ -279,7 +279,7 @@ mod tests {
             HashSet::from([1, 2]),
         ];
 
-        assert_eq!(graph.count_all_vertices(), 4);
+        assert_eq!(graph.order(), 4);
     }
 
     #[test]
@@ -290,7 +290,7 @@ mod tests {
             HashSet::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.count_all_vertices(), 3);
+        assert_eq!(graph.order(), 3);
     }
 
     #[test]
@@ -301,7 +301,7 @@ mod tests {
             BTreeMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.count_all_vertices(), 3);
+        assert_eq!(graph.order(), 3);
     }
 
     #[test]
@@ -312,14 +312,14 @@ mod tests {
             HashMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.count_all_vertices(), 3);
+        assert_eq!(graph.order(), 3);
     }
 
     #[test]
     fn slice_vec_unweighted() {
         let graph: &[Vec<usize>] = &[vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        assert_eq!(graph.count_all_vertices(), 4);
+        assert_eq!(graph.order(), 4);
     }
 
     #[test]
@@ -327,7 +327,7 @@ mod tests {
         let graph: &[Vec<(usize, i32)>] =
             &[vec![(1, 2), (2, 3)], vec![(0, 4)], vec![(0, 7), (1, 8)]];
 
-        assert_eq!(graph.count_all_vertices(), 3);
+        assert_eq!(graph.order(), 3);
     }
 
     #[test]
@@ -338,7 +338,7 @@ mod tests {
             BTreeSet::from([0, 1, 3]),
         ];
 
-        assert_eq!(graph.count_all_vertices(), 3);
+        assert_eq!(graph.order(), 3);
     }
 
     #[test]
@@ -349,7 +349,7 @@ mod tests {
             BTreeSet::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.count_all_vertices(), 3);
+        assert_eq!(graph.order(), 3);
     }
 
     #[test]
@@ -361,7 +361,7 @@ mod tests {
             HashSet::from([1, 2]),
         ];
 
-        assert_eq!(graph.count_all_vertices(), 4);
+        assert_eq!(graph.order(), 4);
     }
 
     #[test]
@@ -372,7 +372,7 @@ mod tests {
             HashSet::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.count_all_vertices(), 3);
+        assert_eq!(graph.order(), 3);
     }
 
     #[test]
@@ -383,7 +383,7 @@ mod tests {
             BTreeMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.count_all_vertices(), 3);
+        assert_eq!(graph.order(), 3);
     }
 
     #[test]
@@ -394,21 +394,21 @@ mod tests {
             HashMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.count_all_vertices(), 3);
+        assert_eq!(graph.order(), 3);
     }
 
     #[test]
     fn arr_vec_unweighted() {
         let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        assert_eq!(graph.count_all_vertices(), 4);
+        assert_eq!(graph.order(), 4);
     }
 
     #[test]
     fn arr_vec_weighted() {
         let graph = [vec![(1, 2), (2, 3)], vec![(0, 4)], vec![(0, 7), (1, 8)]];
 
-        assert_eq!(graph.count_all_vertices(), 3);
+        assert_eq!(graph.order(), 3);
     }
 
     #[test]
@@ -419,7 +419,7 @@ mod tests {
             BTreeSet::from([0, 1, 3]),
         ];
 
-        assert_eq!(graph.count_all_vertices(), 3);
+        assert_eq!(graph.order(), 3);
     }
 
     #[test]
@@ -430,7 +430,7 @@ mod tests {
             BTreeSet::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.count_all_vertices(), 3);
+        assert_eq!(graph.order(), 3);
     }
 
     #[test]
@@ -441,7 +441,7 @@ mod tests {
             HashSet::from([0, 1, 3]),
         ];
 
-        assert_eq!(graph.count_all_vertices(), 3);
+        assert_eq!(graph.order(), 3);
     }
 
     #[test]
@@ -452,7 +452,7 @@ mod tests {
             HashSet::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.count_all_vertices(), 3);
+        assert_eq!(graph.order(), 3);
     }
 
     #[test]
@@ -463,7 +463,7 @@ mod tests {
             BTreeMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.count_all_vertices(), 3);
+        assert_eq!(graph.order(), 3);
     }
 
     #[test]
@@ -474,6 +474,6 @@ mod tests {
             HashMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.count_all_vertices(), 3);
+        assert_eq!(graph.order(), 3);
     }
 }

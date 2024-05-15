@@ -88,8 +88,8 @@ extern crate alloc;
 use {
     super::predecessor,
     crate::op::{
-        CountAllVertices,
         IterWeightedEdges,
+        Order,
     },
     alloc::collections::BinaryHeap,
     core::cmp::Reverse,
@@ -144,7 +144,7 @@ pub fn distances<G, S, W>(
     dist: &mut [W],
     heap: &mut BinaryHeap<(Reverse<W>, usize)>,
 ) where
-    G: CountAllVertices + IterWeightedEdges<W>,
+    G: Order + IterWeightedEdges<W>,
     S: Fn(W, &W) -> W,
     W: Copy + Ord,
 {
@@ -193,9 +193,9 @@ pub fn distances<G, S, W>(
 /// ```
 pub fn single_source_distances<G>(graph: &G, s: usize) -> Vec<usize>
 where
-    G: CountAllVertices + IterWeightedEdges<usize>,
+    G: Order + IterWeightedEdges<usize>,
 {
-    let mut dist = vec![usize::MAX; graph.count_all_vertices()];
+    let mut dist = vec![usize::MAX; graph.order()];
     let mut heap = BinaryHeap::from([(Reverse(0), s)]);
 
     dist[s] = 0;
@@ -259,7 +259,7 @@ pub fn predecessors<G, S, W>(
     dist: &mut [W],
     heap: &mut BinaryHeap<(Reverse<W>, usize)>,
 ) where
-    G: CountAllVertices + IterWeightedEdges<W>,
+    G: Order + IterWeightedEdges<W>,
     S: Fn(W, &W) -> W,
     W: Copy + Ord,
 {
@@ -310,9 +310,9 @@ pub fn predecessors<G, S, W>(
 /// ```
 pub fn single_source_predecessors<G>(graph: &G, s: usize) -> Vec<Option<usize>>
 where
-    G: CountAllVertices + IterWeightedEdges<usize>,
+    G: Order + IterWeightedEdges<usize>,
 {
-    let v = graph.count_all_vertices();
+    let v = graph.order();
     let mut pred = vec![None; v];
     let mut dist = vec![usize::MAX; v];
     let mut heap = BinaryHeap::from([(Reverse(0), s)]);
@@ -393,7 +393,7 @@ pub fn shortest_path<G, S, T, W>(
     heap: &mut BinaryHeap<(Reverse<W>, usize)>,
 ) -> Option<Vec<usize>>
 where
-    G: CountAllVertices + IterWeightedEdges<W>,
+    G: Order + IterWeightedEdges<W>,
     S: Fn(W, &W) -> W,
     T: Fn(usize, &W) -> bool,
     W: Copy + Ord,
@@ -474,9 +474,9 @@ where
 #[doc(alias = "spsp")]
 pub fn single_pair_shortest_path<G>(graph: &G, s: usize, t: usize) -> Option<Vec<usize>>
 where
-    G: CountAllVertices + IterWeightedEdges<usize>,
+    G: Order + IterWeightedEdges<usize>,
 {
-    let v = graph.count_all_vertices();
+    let v = graph.order();
     let pred = &mut vec![None; v];
     let dist = &mut vec![usize::MAX; v];
     let heap = &mut BinaryHeap::from([(Reverse(0), s)]);

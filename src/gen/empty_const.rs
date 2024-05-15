@@ -199,8 +199,8 @@ mod tests {
     use {
         super::*,
         crate::op::{
-            CountAllEdges,
-            CountAllVertices,
+            Order,
+            Size,
         },
     };
 
@@ -321,170 +321,125 @@ mod tests {
     }
 
     #[test]
-    fn count_all_edges_arr_vec_unweighted() {
-        assert_eq!(<[Vec<usize>; 1]>::empty().count_all_edges(), 0);
-        assert_eq!(<[Vec<usize>; 2]>::empty().count_all_edges(), 0);
-        assert_eq!(<[Vec<usize>; 3]>::empty().count_all_edges(), 0);
+    fn size_arr_vec_unweighted() {
+        assert_eq!(<[Vec<usize>; 1]>::empty().size(), 0);
+        assert_eq!(<[Vec<usize>; 2]>::empty().size(), 0);
+        assert_eq!(<[Vec<usize>; 3]>::empty().size(), 0);
     }
 
     #[test]
-    fn count_all_edges_arr_btree_set_unweighted() {
-        assert_eq!(<[BTreeSet<usize>; 1]>::empty().count_all_edges(), 0);
-        assert_eq!(<[BTreeSet<usize>; 2]>::empty().count_all_edges(), 0);
-        assert_eq!(<[BTreeSet<usize>; 3]>::empty().count_all_edges(), 0);
+    fn size_arr_btree_set_unweighted() {
+        assert_eq!(<[BTreeSet<usize>; 1]>::empty().size(), 0);
+        assert_eq!(<[BTreeSet<usize>; 2]>::empty().size(), 0);
+        assert_eq!(<[BTreeSet<usize>; 3]>::empty().size(), 0);
     }
 
     #[test]
-    fn count_all_edges_arr_hash_set_unweighted() {
-        assert_eq!(<[HashSet<usize>; 1]>::empty().count_all_edges(), 0);
-        assert_eq!(<[HashSet<usize>; 2]>::empty().count_all_edges(), 0);
-        assert_eq!(<[HashSet<usize>; 3]>::empty().count_all_edges(), 0);
+    fn size_arr_hash_set_unweighted() {
+        assert_eq!(<[HashSet<usize>; 1]>::empty().size(), 0);
+        assert_eq!(<[HashSet<usize>; 2]>::empty().size(), 0);
+        assert_eq!(<[HashSet<usize>; 3]>::empty().size(), 0);
     }
 
     #[test]
-    fn count_all_edges_arr_vec_weighted() {
-        assert_eq!(<[Vec<(usize, usize)>; 1]>::empty().count_all_edges(), 0);
-        assert_eq!(<[Vec<(usize, usize)>; 2]>::empty().count_all_edges(), 0);
-        assert_eq!(<[Vec<(usize, usize)>; 3]>::empty().count_all_edges(), 0);
+    fn size_arr_vec_weighted() {
+        assert_eq!(<[Vec<(usize, usize)>; 1]>::empty().size(), 0);
+        assert_eq!(<[Vec<(usize, usize)>; 2]>::empty().size(), 0);
+        assert_eq!(<[Vec<(usize, usize)>; 3]>::empty().size(), 0);
     }
 
     #[test]
-    fn count_all_edges_arr_btree_set_weighted() {
-        assert_eq!(
-            <[BTreeSet<(usize, usize)>; 1]>::empty().count_all_edges(),
-            0
-        );
+    fn size_arr_btree_set_weighted() {
+        assert_eq!(<[BTreeSet<(usize, usize)>; 1]>::empty().size(), 0);
 
-        assert_eq!(
-            <[BTreeSet<(usize, usize)>; 2]>::empty().count_all_edges(),
-            0
-        );
+        assert_eq!(<[BTreeSet<(usize, usize)>; 2]>::empty().size(), 0);
 
-        assert_eq!(
-            <[BTreeSet<(usize, usize)>; 3]>::empty().count_all_edges(),
-            0
-        );
+        assert_eq!(<[BTreeSet<(usize, usize)>; 3]>::empty().size(), 0);
     }
 
     #[test]
-    fn count_all_edges_arr_hash_set_weighted() {
-        assert_eq!(<[HashSet<(usize, usize)>; 1]>::empty().count_all_edges(), 0);
-        assert_eq!(<[HashSet<(usize, usize)>; 2]>::empty().count_all_edges(), 0);
-        assert_eq!(<[HashSet<(usize, usize)>; 3]>::empty().count_all_edges(), 0);
+    fn size_arr_hash_set_weighted() {
+        assert_eq!(<[HashSet<(usize, usize)>; 1]>::empty().size(), 0);
+        assert_eq!(<[HashSet<(usize, usize)>; 2]>::empty().size(), 0);
+        assert_eq!(<[HashSet<(usize, usize)>; 3]>::empty().size(), 0);
     }
 
     #[test]
-    fn count_all_edges_arr_btree_map() {
-        assert_eq!(<[BTreeMap<usize, usize>; 1]>::empty().count_all_edges(), 0);
-        assert_eq!(<[BTreeMap<usize, usize>; 2]>::empty().count_all_edges(), 0);
-        assert_eq!(<[BTreeMap<usize, usize>; 3]>::empty().count_all_edges(), 0);
+    fn size_arr_btree_map() {
+        assert_eq!(<[BTreeMap<usize, usize>; 1]>::empty().size(), 0);
+        assert_eq!(<[BTreeMap<usize, usize>; 2]>::empty().size(), 0);
+        assert_eq!(<[BTreeMap<usize, usize>; 3]>::empty().size(), 0);
     }
 
     #[test]
-    fn count_all_edges_arr_hash_map() {
-        assert_eq!(<[HashMap<usize, usize>; 1]>::empty().count_all_edges(), 0);
-        assert_eq!(<[HashMap<usize, usize>; 2]>::empty().count_all_edges(), 0);
-        assert_eq!(<[HashMap<usize, usize>; 3]>::empty().count_all_edges(), 0);
+    fn size_arr_hash_map() {
+        assert_eq!(<[HashMap<usize, usize>; 1]>::empty().size(), 0);
+        assert_eq!(<[HashMap<usize, usize>; 2]>::empty().size(), 0);
+        assert_eq!(<[HashMap<usize, usize>; 3]>::empty().size(), 0);
     }
 
     #[test]
-    fn count_all_vertices_arr_vec_unweighted() {
-        assert_eq!(<[Vec<usize>; 1]>::empty().count_all_vertices(), 1);
-        assert_eq!(<[Vec<usize>; 2]>::empty().count_all_vertices(), 2);
-        assert_eq!(<[Vec<usize>; 3]>::empty().count_all_vertices(), 3);
+    fn order_arr_vec_unweighted() {
+        assert_eq!(<[Vec<usize>; 1]>::empty().order(), 1);
+        assert_eq!(<[Vec<usize>; 2]>::empty().order(), 2);
+        assert_eq!(<[Vec<usize>; 3]>::empty().order(), 3);
     }
 
     #[test]
-    fn count_all_vertices_arr_btree_set_unweighted() {
-        assert_eq!(<[BTreeSet<usize>; 1]>::empty().count_all_vertices(), 1);
-        assert_eq!(<[BTreeSet<usize>; 2]>::empty().count_all_vertices(), 2);
-        assert_eq!(<[BTreeSet<usize>; 3]>::empty().count_all_vertices(), 3);
+    fn order_arr_btree_set_unweighted() {
+        assert_eq!(<[BTreeSet<usize>; 1]>::empty().order(), 1);
+        assert_eq!(<[BTreeSet<usize>; 2]>::empty().order(), 2);
+        assert_eq!(<[BTreeSet<usize>; 3]>::empty().order(), 3);
     }
 
     #[test]
-    fn count_all_vertices_arr_hash_set_unweighted() {
-        assert_eq!(<[HashSet<usize>; 1]>::empty().count_all_vertices(), 1);
-        assert_eq!(<[HashSet<usize>; 2]>::empty().count_all_vertices(), 2);
-        assert_eq!(<[HashSet<usize>; 3]>::empty().count_all_vertices(), 3);
+    fn order_arr_hash_set_unweighted() {
+        assert_eq!(<[HashSet<usize>; 1]>::empty().order(), 1);
+        assert_eq!(<[HashSet<usize>; 2]>::empty().order(), 2);
+        assert_eq!(<[HashSet<usize>; 3]>::empty().order(), 3);
     }
 
     #[test]
-    fn count_all_vertices_arr_arr_weighted() {
-        assert_eq!(<[Vec<(usize, usize)>; 1]>::empty().count_all_vertices(), 1);
-        assert_eq!(<[Vec<(usize, usize)>; 2]>::empty().count_all_vertices(), 2);
-        assert_eq!(<[Vec<(usize, usize)>; 3]>::empty().count_all_vertices(), 3);
+    fn order_arr_arr_weighted() {
+        assert_eq!(<[Vec<(usize, usize)>; 1]>::empty().order(), 1);
+        assert_eq!(<[Vec<(usize, usize)>; 2]>::empty().order(), 2);
+        assert_eq!(<[Vec<(usize, usize)>; 3]>::empty().order(), 3);
     }
 
     #[test]
-    fn count_all_vertices_arr_btree_set_weighted() {
-        assert_eq!(
-            <[BTreeSet<(usize, usize)>; 1]>::empty().count_all_vertices(),
-            1
-        );
+    fn order_arr_btree_set_weighted() {
+        assert_eq!(<[BTreeSet<(usize, usize)>; 1]>::empty().order(), 1);
 
-        assert_eq!(
-            <[BTreeSet<(usize, usize)>; 2]>::empty().count_all_vertices(),
-            2
-        );
+        assert_eq!(<[BTreeSet<(usize, usize)>; 2]>::empty().order(), 2);
 
-        assert_eq!(
-            <[BTreeSet<(usize, usize)>; 3]>::empty().count_all_vertices(),
-            3
-        );
+        assert_eq!(<[BTreeSet<(usize, usize)>; 3]>::empty().order(), 3);
     }
 
     #[test]
-    fn count_all_vertices_arr_hash_set_weighted() {
-        assert_eq!(
-            <[HashSet<(usize, usize)>; 1]>::empty().count_all_vertices(),
-            1
-        );
+    fn order_arr_hash_set_weighted() {
+        assert_eq!(<[HashSet<(usize, usize)>; 1]>::empty().order(), 1);
 
-        assert_eq!(
-            <[HashSet<(usize, usize)>; 2]>::empty().count_all_vertices(),
-            2
-        );
+        assert_eq!(<[HashSet<(usize, usize)>; 2]>::empty().order(), 2);
 
-        assert_eq!(
-            <[HashSet<(usize, usize)>; 3]>::empty().count_all_vertices(),
-            3
-        );
+        assert_eq!(<[HashSet<(usize, usize)>; 3]>::empty().order(), 3);
     }
 
     #[test]
-    fn count_all_vertices_arr_btree_map() {
-        assert_eq!(
-            <[BTreeMap<usize, usize>; 1]>::empty().count_all_vertices(),
-            1
-        );
+    fn order_arr_btree_map() {
+        assert_eq!(<[BTreeMap<usize, usize>; 1]>::empty().order(), 1);
 
-        assert_eq!(
-            <[BTreeMap<usize, usize>; 2]>::empty().count_all_vertices(),
-            2
-        );
+        assert_eq!(<[BTreeMap<usize, usize>; 2]>::empty().order(), 2);
 
-        assert_eq!(
-            <[BTreeMap<usize, usize>; 3]>::empty().count_all_vertices(),
-            3
-        );
+        assert_eq!(<[BTreeMap<usize, usize>; 3]>::empty().order(), 3);
     }
 
     #[test]
-    fn count_all_vertices_arr_hash_map() {
-        assert_eq!(
-            <[HashMap<usize, usize>; 1]>::empty().count_all_vertices(),
-            1
-        );
+    fn order_arr_hash_map() {
+        assert_eq!(<[HashMap<usize, usize>; 1]>::empty().order(), 1);
 
-        assert_eq!(
-            <[HashMap<usize, usize>; 2]>::empty().count_all_vertices(),
-            2
-        );
+        assert_eq!(<[HashMap<usize, usize>; 2]>::empty().order(), 2);
 
-        assert_eq!(
-            <[HashMap<usize, usize>; 3]>::empty().count_all_vertices(),
-            3
-        );
+        assert_eq!(<[HashMap<usize, usize>; 3]>::empty().order(), 3);
     }
 
     #[test]

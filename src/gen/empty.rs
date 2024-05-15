@@ -426,22 +426,22 @@ mod tests {
     use {
         super::*,
         crate::op::{
-            CountAllEdges,
-            CountAllVertices,
             Indegree,
             IsRegular,
             IsSimple,
+            Order,
             Outdegree,
+            Size,
         },
         proptest::prelude::*,
     };
 
-    fn prop_count_all_edges<T: CountAllEdges + Empty>(v: usize) {
-        assert_eq!(T::empty(v).count_all_edges(), 0);
+    fn prop_size<T: Size + Empty>(v: usize) {
+        assert_eq!(T::empty(v).size(), 0);
     }
 
-    fn prop_count_all_vertices<T: CountAllVertices + Empty>(v: usize) {
-        assert_eq!(T::empty(v).count_all_vertices(), v);
+    fn prop_order<T: Order + Empty>(v: usize) {
+        assert_eq!(T::empty(v).order(), v);
     }
 
     fn prop_indegree<T: Indegree + Empty>(v: usize) {
@@ -470,153 +470,153 @@ mod tests {
 
     proptest! {
         #[test]
-        fn count_all_edges_vec_vec_unweighted(v in 1..100_usize) {
-            prop_count_all_edges::<Vec<Vec<usize>>>(v);
+        fn size_vec_vec_unweighted(v in 1..100_usize) {
+            prop_size::<Vec<Vec<usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_vec_btree_set_unweighted(v in 1..100_usize) {
-            prop_count_all_edges::<Vec<BTreeSet<usize>>>(v);
+        fn size_vec_btree_set_unweighted(v in 1..100_usize) {
+            prop_size::<Vec<BTreeSet<usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_vec_hash_set_unweighted(v in 1..100_usize) {
-            prop_count_all_edges::<Vec<HashSet<usize>>>(v);
+        fn size_vec_hash_set_unweighted(v in 1..100_usize) {
+            prop_size::<Vec<HashSet<usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_btree_map_vec_unweighted(v in 1..100_usize) {
-            prop_count_all_edges::<BTreeMap<usize, Vec<usize>>>(v);
+        fn size_btree_map_vec_unweighted(v in 1..100_usize) {
+            prop_size::<BTreeMap<usize, Vec<usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_btree_map_btree_set_unweighted(v in 1..100_usize) {
-            prop_count_all_edges::<BTreeMap<usize, BTreeSet<usize>>>(v);
+        fn size_btree_map_btree_set_unweighted(v in 1..100_usize) {
+            prop_size::<BTreeMap<usize, BTreeSet<usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_hash_map_vec_unweighted(v in 1..100_usize) {
-            prop_count_all_edges::<HashMap<usize, Vec<usize>>>(v);
+        fn size_hash_map_vec_unweighted(v in 1..100_usize) {
+            prop_size::<HashMap<usize, Vec<usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_hash_map_hash_set_unweighted(v in 1..100_usize) {
-            prop_count_all_edges::<HashMap<usize, HashSet<usize>>>(v);
+        fn size_hash_map_hash_set_unweighted(v in 1..100_usize) {
+            prop_size::<HashMap<usize, HashSet<usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_vec_tuple_unweighted(v in 1..100_usize) {
-            prop_count_all_edges::<Vec<(usize, usize)>>(v);
+        fn size_vec_tuple_unweighted(v in 1..100_usize) {
+            prop_size::<Vec<(usize, usize)>>(v);
         }
 
         #[test]
-        fn count_all_edges_btree_set_tuple_unweighted(v in 1..100_usize) {
-            prop_count_all_edges::<BTreeSet<(usize, usize)>>(v);
+        fn size_btree_set_tuple_unweighted(v in 1..100_usize) {
+            prop_size::<BTreeSet<(usize, usize)>>(v);
         }
 
         #[test]
-        fn count_all_edges_hash_set_tuple_unweighted(v in 1..100_usize) {
-            prop_count_all_edges::<HashSet<(usize, usize)>>(v);
+        fn size_hash_set_tuple_unweighted(v in 1..100_usize) {
+            prop_size::<HashSet<(usize, usize)>>(v);
         }
 
         #[test]
-        fn count_all_edges_vec_vec_weighted(v in 1..100_usize) {
-            prop_count_all_edges::<Vec<Vec<(usize, usize)>>>(v);
+        fn size_vec_vec_weighted(v in 1..100_usize) {
+            prop_size::<Vec<Vec<(usize, usize)>>>(v);
         }
 
         #[test]
-        fn count_all_edges_vec_btree_set_weighted(v in 1..100_usize) {
-            prop_count_all_edges::<Vec<BTreeSet<(usize, usize)>>>(v);
+        fn size_vec_btree_set_weighted(v in 1..100_usize) {
+            prop_size::<Vec<BTreeSet<(usize, usize)>>>(v);
         }
 
         #[test]
-        fn count_all_edges_vec_hash_set_weighted(v in 1..100_usize) {
-            prop_count_all_edges::<Vec<HashSet<(usize, usize)>>>(v);
+        fn size_vec_hash_set_weighted(v in 1..100_usize) {
+            prop_size::<Vec<HashSet<(usize, usize)>>>(v);
         }
 
         #[test]
-        fn count_all_edges_vec_btree_map_weighted(v in 1..100_usize) {
-            prop_count_all_edges::<Vec<BTreeMap<usize, usize>>>(v);
+        fn size_vec_btree_map_weighted(v in 1..100_usize) {
+            prop_size::<Vec<BTreeMap<usize, usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_vec_hash_map_weighted(v in 1..100_usize) {
-            prop_count_all_edges::<Vec<HashMap<usize, usize>>>(v);
+        fn size_vec_hash_map_weighted(v in 1..100_usize) {
+            prop_size::<Vec<HashMap<usize, usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_btree_map_vec_weighted(v in 1..100_usize) {
-            prop_count_all_edges::<BTreeMap<usize, Vec<(usize, usize)>>>(v);
+        fn size_btree_map_vec_weighted(v in 1..100_usize) {
+            prop_size::<BTreeMap<usize, Vec<(usize, usize)>>>(v);
         }
 
         #[test]
-        fn count_all_edges_btree_map_btree_set_weighted(v in 1..100_usize) {
-            prop_count_all_edges::<BTreeMap<usize, BTreeSet<(usize, usize)>>>(v);
+        fn size_btree_map_btree_set_weighted(v in 1..100_usize) {
+            prop_size::<BTreeMap<usize, BTreeSet<(usize, usize)>>>(v);
         }
 
         #[test]
-        fn count_all_edges_btree_map_btree_map(v in 1..100_usize) {
-            prop_count_all_edges::<BTreeMap<usize, BTreeMap<usize, usize>>>(v);
+        fn size_btree_map_btree_map(v in 1..100_usize) {
+            prop_size::<BTreeMap<usize, BTreeMap<usize, usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_hash_map_vec_weighted(v in 1..100_usize) {
-            prop_count_all_edges::<HashMap<usize, Vec<(usize, usize)>>>(v);
+        fn size_hash_map_vec_weighted(v in 1..100_usize) {
+            prop_size::<HashMap<usize, Vec<(usize, usize)>>>(v);
         }
 
         #[test]
-        fn count_all_edges_hash_map_hash_set_weighted(v in 1..100_usize) {
-            prop_count_all_edges::<HashMap<usize, HashSet<(usize, usize)>>>(v);
+        fn size_hash_map_hash_set_weighted(v in 1..100_usize) {
+            prop_size::<HashMap<usize, HashSet<(usize, usize)>>>(v);
         }
 
         #[test]
-        fn count_all_edges_hash_map_hash_map(v in 1..100_usize) {
-            prop_count_all_edges::<HashMap<usize, HashMap<usize, usize>>>(v);
+        fn size_hash_map_hash_map(v in 1..100_usize) {
+            prop_size::<HashMap<usize, HashMap<usize, usize>>>(v);
         }
 
         #[test]
-        fn count_all_edges_vec_tuple_weighted(v in 1..100_usize) {
-            prop_count_all_edges::<Vec<(usize, usize, usize)>>(v);
+        fn size_vec_tuple_weighted(v in 1..100_usize) {
+            prop_size::<Vec<(usize, usize, usize)>>(v);
         }
 
         #[test]
-        fn count_all_edges_btree_set_tuple_weighted(v in 1..100_usize) {
-            prop_count_all_edges::<BTreeSet<(usize, usize, usize)>>(v);
+        fn size_btree_set_tuple_weighted(v in 1..100_usize) {
+            prop_size::<BTreeSet<(usize, usize, usize)>>(v);
         }
 
         #[test]
-        fn count_all_edges_hash_set_tuple_weighted(v in 1..100_usize) {
-            prop_count_all_edges::<HashSet<(usize, usize, usize)>>(v);
+        fn size_hash_set_tuple_weighted(v in 1..100_usize) {
+            prop_size::<HashSet<(usize, usize, usize)>>(v);
         }
 
         #[test]
-        fn count_all_vertices_vec_vec_unweighted(v in 1..100_usize) {
-            prop_count_all_vertices::<Vec<Vec<usize>>>(v);
+        fn order_vec_vec_unweighted(v in 1..100_usize) {
+            prop_order::<Vec<Vec<usize>>>(v);
         }
 
         #[test]
-        fn count_all_vertices_vec_btree_set_unweighted(v in 1..100_usize) {
-            prop_count_all_vertices::<Vec<BTreeSet<usize>>>(v);
+        fn order_vec_btree_set_unweighted(v in 1..100_usize) {
+            prop_order::<Vec<BTreeSet<usize>>>(v);
         }
 
         #[test]
-        fn count_all_vertices_vec_hash_set_unweighted(v in 1..100_usize) {
-            prop_count_all_vertices::<Vec<HashSet<usize>>>(v);
+        fn order_vec_hash_set_unweighted(v in 1..100_usize) {
+            prop_order::<Vec<HashSet<usize>>>(v);
         }
 
         #[test]
-        fn count_all_vertices_vec_vec_weighted(v in 1..100_usize) {
-            prop_count_all_vertices::<Vec<Vec<(usize, usize)>>>(v);
+        fn order_vec_vec_weighted(v in 1..100_usize) {
+            prop_order::<Vec<Vec<(usize, usize)>>>(v);
         }
 
         #[test]
-        fn count_all_vertices_vec_btree_set_weighted(v in 1..100_usize) {
-            prop_count_all_vertices::<Vec<BTreeSet<(usize, usize)>>>(v);
+        fn order_vec_btree_set_weighted(v in 1..100_usize) {
+            prop_order::<Vec<BTreeSet<(usize, usize)>>>(v);
         }
 
         #[test]
-        fn count_all_vertices_vec_hash_set_weighted(v in 1..100_usize) {
-            prop_count_all_vertices::<Vec<HashSet<(usize, usize)>>>(v);
+        fn order_vec_hash_set_weighted(v in 1..100_usize) {
+            prop_order::<Vec<HashSet<(usize, usize)>>>(v);
         }
 
         #[test]
