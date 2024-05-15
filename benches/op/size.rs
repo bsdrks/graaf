@@ -10,8 +10,8 @@ use {
     core::array::from_fn,
     divan::Bencher,
     graaf::op::{
-        AddEdge,
-        AddWeightedEdge,
+        AddArc,
+        AddWeightedArc,
         Size,
     },
     std::collections::{
@@ -29,7 +29,7 @@ macro_rules! complete_graph {
         for s in 0..$v {
             for t in 0..$v {
                 if s != t {
-                    $adj.add_edge(s, t);
+                    $adj.add_arc(s, t);
                 }
             }
         }
@@ -41,7 +41,7 @@ macro_rules! complete_weighted_graph {
         for s in 0..$v {
             for t in 0..$v {
                 if s != t {
-                    $adj.add_weighted_edge(s, t, 1);
+                    $adj.add_weighted_arc(s, t, 1);
                 }
             }
         }

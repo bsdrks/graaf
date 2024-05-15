@@ -1,9 +1,9 @@
-//! Benchmark implementations of [`graaf::op::AddEdge`].
+//! Benchmark implementations of [`graaf::op::AddArc`].
 
 use {
     core::array::from_fn,
     divan::Bencher,
-    graaf::op::AddEdge,
+    graaf::op::AddArc,
     std::collections::{
         BTreeMap,
         BTreeSet,
@@ -16,13 +16,13 @@ fn main() {
     divan::main();
 }
 
-macro_rules! bench_local_add_edge_complete_graph {
+macro_rules! bench_local_add_arc_complete_graph {
     ($bencher:ident, $v:ident, $adj:ident) => {
         $bencher.bench_local(|| {
             for s in 0..$v {
                 for t in 0..$v {
                     if s != t {
-                        $adj.add_edge(s, t);
+                        $adj.add_arc(s, t);
                     }
                 }
             }
@@ -36,7 +36,7 @@ const ARGS: [usize; 3] = [10, 100, 1000];
 fn vec_vec(bencher: Bencher<'_, '_>, v: usize) {
     let mut adj = vec![Vec::<usize>::new(); v];
 
-    bench_local_add_edge_complete_graph!(bencher, v, adj);
+    bench_local_add_arc_complete_graph!(bencher, v, adj);
 
     let _ = adj;
 }
@@ -45,7 +45,7 @@ fn vec_vec(bencher: Bencher<'_, '_>, v: usize) {
 fn vec_btree_set(bencher: Bencher<'_, '_>, v: usize) {
     let mut adj = vec![BTreeSet::<usize>::new(); v];
 
-    bench_local_add_edge_complete_graph!(bencher, v, adj);
+    bench_local_add_arc_complete_graph!(bencher, v, adj);
 
     let _ = adj;
 }
@@ -54,7 +54,7 @@ fn vec_btree_set(bencher: Bencher<'_, '_>, v: usize) {
 fn vec_hash_set(bencher: Bencher<'_, '_>, v: usize) {
     let mut adj = vec![HashSet::<usize>::new(); v];
 
-    bench_local_add_edge_complete_graph!(bencher, v, adj);
+    bench_local_add_arc_complete_graph!(bencher, v, adj);
 
     let _ = adj;
 }
@@ -63,7 +63,7 @@ fn vec_hash_set(bencher: Bencher<'_, '_>, v: usize) {
 fn arr_vec<const V: usize>(bencher: Bencher<'_, '_>) {
     let mut adj = from_fn::<Vec<usize>, V, _>(|_| Vec::new());
 
-    bench_local_add_edge_complete_graph!(bencher, V, adj);
+    bench_local_add_arc_complete_graph!(bencher, V, adj);
 
     let _ = adj;
 }
@@ -72,7 +72,7 @@ fn arr_vec<const V: usize>(bencher: Bencher<'_, '_>) {
 fn arr_btree_set<const V: usize>(bencher: Bencher<'_, '_>) {
     let mut adj = from_fn::<BTreeSet<usize>, V, _>(|_| BTreeSet::new());
 
-    bench_local_add_edge_complete_graph!(bencher, V, adj);
+    bench_local_add_arc_complete_graph!(bencher, V, adj);
 
     let _ = adj;
 }
@@ -81,7 +81,7 @@ fn arr_btree_set<const V: usize>(bencher: Bencher<'_, '_>) {
 fn arr_hash_set<const V: usize>(bencher: Bencher<'_, '_>) {
     let mut adj = from_fn::<HashSet<usize>, V, _>(|_| HashSet::new());
 
-    bench_local_add_edge_complete_graph!(bencher, V, adj);
+    bench_local_add_arc_complete_graph!(bencher, V, adj);
 
     let _ = adj;
 }
@@ -94,7 +94,7 @@ fn btree_map_vec(bencher: Bencher<'_, '_>, v: usize) {
         let _ = adj.insert(s, Vec::new());
     }
 
-    bench_local_add_edge_complete_graph!(bencher, v, adj);
+    bench_local_add_arc_complete_graph!(bencher, v, adj);
 
     let _ = adj;
 }
@@ -107,7 +107,7 @@ fn btree_map_btree_set<const V: usize>(bencher: Bencher<'_, '_>) {
         let _ = adj.insert(s, BTreeSet::new());
     }
 
-    bench_local_add_edge_complete_graph!(bencher, V, adj);
+    bench_local_add_arc_complete_graph!(bencher, V, adj);
 
     let _ = adj;
 }
@@ -120,7 +120,7 @@ fn hash_map_vec<const V: usize>(bencher: Bencher<'_, '_>) {
         let _ = adj.insert(s, Vec::new());
     }
 
-    bench_local_add_edge_complete_graph!(bencher, V, adj);
+    bench_local_add_arc_complete_graph!(bencher, V, adj);
 
     let _ = adj;
 }
@@ -133,7 +133,7 @@ fn hash_map_hash_set<const V: usize>(bencher: Bencher<'_, '_>) {
         let _ = adj.insert(s, HashSet::new());
     }
 
-    bench_local_add_edge_complete_graph!(bencher, V, adj);
+    bench_local_add_arc_complete_graph!(bencher, V, adj);
 
     let _ = adj;
 }

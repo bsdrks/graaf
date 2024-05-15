@@ -93,7 +93,7 @@ use {
     crate::{
         algo::predecessor,
         op::{
-            IterEdges,
+            IterArcs,
             Order,
         },
     },
@@ -141,14 +141,14 @@ use {
 /// ```
 pub fn distances<G, S, W>(graph: &G, step: S, dist: &mut [W], queue: &mut VecDeque<(usize, W)>)
 where
-    G: IterEdges,
+    G: IterArcs,
     S: Fn(W) -> W,
     W: Copy + Ord,
 {
     while let Some((s, w)) = queue.pop_front() {
         let w = step(w);
 
-        for t in graph.iter_edges(s) {
+        for t in graph.iter_arcs(s) {
             if w >= dist[t] {
                 continue;
             }
@@ -189,7 +189,7 @@ where
 /// ```
 pub fn single_source_distances<G>(graph: &G, s: usize) -> Vec<usize>
 where
-    G: Order + IterEdges,
+    G: Order + IterArcs,
 {
     let mut dist = vec![usize::MAX; graph.order()];
     let mut queue = VecDeque::from(vec![(s, 0)]);
@@ -254,14 +254,14 @@ pub fn predecessors<G, S, W>(
     dist: &mut [W],
     queue: &mut VecDeque<(usize, W)>,
 ) where
-    G: IterEdges,
+    G: IterArcs,
     S: Fn(W) -> W,
     W: Copy + Ord,
 {
     while let Some((s, w)) = queue.pop_front() {
         let w = step(w);
 
-        for t in graph.iter_edges(s) {
+        for t in graph.iter_arcs(s) {
             if w >= dist[t] {
                 continue;
             }
@@ -305,7 +305,7 @@ pub fn predecessors<G, S, W>(
 /// ```
 pub fn single_source_predecessors<G>(graph: &G, s: usize) -> Vec<Option<usize>>
 where
-    G: Order + IterEdges,
+    G: Order + IterArcs,
 {
     let mut pred = vec![None; graph.order()];
     let mut dist = vec![usize::MAX; graph.order()];
@@ -378,14 +378,14 @@ pub fn shortest_path<G, S, T>(
     queue: &mut VecDeque<(usize, usize)>,
 ) -> Option<Vec<usize>>
 where
-    G: IterEdges,
+    G: IterArcs,
     S: Fn(usize) -> usize,
     T: Fn(usize) -> bool,
 {
     while let Some((s, w)) = queue.pop_front() {
         let w = step(w);
 
-        for t in graph.iter_edges(s) {
+        for t in graph.iter_arcs(s) {
             if w >= dist[t] {
                 continue;
             }
@@ -411,7 +411,7 @@ where
 /// Calculates the shortest path from a single source vertex to a single target
 /// vertex.
 ///
-/// In an unweighted graph, the shortest path is the path with the fewest edges.
+/// In an unweighted graph, the shortest path is the path with the fewest arcs.
 /// There can be multiple shortest paths in a graph, but this function only
 /// returns one.
 ///
@@ -461,7 +461,7 @@ where
 #[doc(alias = "spsp")]
 pub fn single_pair_shortest_path<G>(graph: &G, s: usize, t: usize) -> Option<Vec<usize>>
 where
-    G: Order + IterEdges,
+    G: Order + IterArcs,
 {
     let mut pred = vec![None; graph.order()];
     let mut dist = vec![usize::MAX; graph.order()];

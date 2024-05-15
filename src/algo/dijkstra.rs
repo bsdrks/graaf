@@ -88,7 +88,7 @@ extern crate alloc;
 use {
     super::predecessor,
     crate::op::{
-        IterWeightedEdges,
+        IterWeightedArcs,
         Order,
     },
     alloc::collections::BinaryHeap,
@@ -144,12 +144,12 @@ pub fn distances<G, S, W>(
     dist: &mut [W],
     heap: &mut BinaryHeap<(Reverse<W>, usize)>,
 ) where
-    G: Order + IterWeightedEdges<W>,
+    G: Order + IterWeightedArcs<W>,
     S: Fn(W, &W) -> W,
     W: Copy + Ord,
 {
     while let Some((Reverse(acc), s)) = heap.pop() {
-        for (t, w) in graph.iter_weighted_edges(s) {
+        for (t, w) in graph.iter_weighted_arcs(s) {
             let w = step(acc, w);
 
             if w >= dist[t] {
@@ -193,7 +193,7 @@ pub fn distances<G, S, W>(
 /// ```
 pub fn single_source_distances<G>(graph: &G, s: usize) -> Vec<usize>
 where
-    G: Order + IterWeightedEdges<usize>,
+    G: Order + IterWeightedArcs<usize>,
 {
     let mut dist = vec![usize::MAX; graph.order()];
     let mut heap = BinaryHeap::from([(Reverse(0), s)]);
@@ -259,12 +259,12 @@ pub fn predecessors<G, S, W>(
     dist: &mut [W],
     heap: &mut BinaryHeap<(Reverse<W>, usize)>,
 ) where
-    G: Order + IterWeightedEdges<W>,
+    G: Order + IterWeightedArcs<W>,
     S: Fn(W, &W) -> W,
     W: Copy + Ord,
 {
     while let Some((Reverse(acc), s)) = heap.pop() {
-        for (t, w) in graph.iter_weighted_edges(s) {
+        for (t, w) in graph.iter_weighted_arcs(s) {
             let w = step(acc, w);
 
             if w >= dist[t] {
@@ -310,7 +310,7 @@ pub fn predecessors<G, S, W>(
 /// ```
 pub fn single_source_predecessors<G>(graph: &G, s: usize) -> Vec<Option<usize>>
 where
-    G: Order + IterWeightedEdges<usize>,
+    G: Order + IterWeightedArcs<usize>,
 {
     let v = graph.order();
     let mut pred = vec![None; v];
@@ -393,7 +393,7 @@ pub fn shortest_path<G, S, T, W>(
     heap: &mut BinaryHeap<(Reverse<W>, usize)>,
 ) -> Option<Vec<usize>>
 where
-    G: Order + IterWeightedEdges<W>,
+    G: Order + IterWeightedArcs<W>,
     S: Fn(W, &W) -> W,
     T: Fn(usize, &W) -> bool,
     W: Copy + Ord,
@@ -407,7 +407,7 @@ where
             });
         }
 
-        for (t, w) in graph.iter_weighted_edges(s) {
+        for (t, w) in graph.iter_weighted_arcs(s) {
             let w = step(acc, w);
 
             if w >= dist[t] {
@@ -474,7 +474,7 @@ where
 #[doc(alias = "spsp")]
 pub fn single_pair_shortest_path<G>(graph: &G, s: usize, t: usize) -> Option<Vec<usize>>
 where
-    G: Order + IterWeightedEdges<usize>,
+    G: Order + IterWeightedArcs<usize>,
 {
     let v = graph.order();
     let pred = &mut vec![None; v];
@@ -490,7 +490,7 @@ where
 mod tests {
     use {
         super::*,
-        crate::op::AddWeightedEdge,
+        crate::op::AddWeightedArc,
     };
 
     const GRAPH_0: [&[(usize, usize)]; 0] = [];
@@ -611,8 +611,8 @@ mod tests {
         let mut graph = vec![Vec::new(); 3];
 
         for (s, t, w) in EDGES_BRYR_1 {
-            graph.add_weighted_edge(s, t, w);
-            graph.add_weighted_edge(t, s, w);
+            graph.add_weighted_arc(s, t, w);
+            graph.add_weighted_arc(t, s, w);
         }
 
         let mut dist = [0, usize::MAX, usize::MAX];
@@ -628,8 +628,8 @@ mod tests {
         let mut graph = vec![Vec::new(); 6];
 
         for (s, t, w) in EDGES_BRYR_2 {
-            graph.add_weighted_edge(s, t, w);
-            graph.add_weighted_edge(t, s, w);
+            graph.add_weighted_arc(s, t, w);
+            graph.add_weighted_arc(t, s, w);
         }
 
         let mut dist = [
@@ -653,8 +653,8 @@ mod tests {
         let mut graph = vec![Vec::new(); 10];
 
         for (s, t, w) in EDGES_BRYR_3 {
-            graph.add_weighted_edge(s, t, w);
-            graph.add_weighted_edge(t, s, w);
+            graph.add_weighted_arc(s, t, w);
+            graph.add_weighted_arc(t, s, w);
         }
 
         let mut dist = [
@@ -754,8 +754,8 @@ mod tests {
         let mut graph = vec![Vec::new(); 3];
 
         for (s, t, w) in EDGES_BRYR_1 {
-            graph.add_weighted_edge(s, t, w);
-            graph.add_weighted_edge(t, s, w);
+            graph.add_weighted_arc(s, t, w);
+            graph.add_weighted_arc(t, s, w);
         }
 
         for (s, dist) in EXPECTED.iter().enumerate() {
@@ -778,8 +778,8 @@ mod tests {
         let mut graph = vec![Vec::new(); 6];
 
         for (s, t, w) in EDGES_BRYR_2 {
-            graph.add_weighted_edge(s, t, w);
-            graph.add_weighted_edge(t, s, w);
+            graph.add_weighted_arc(s, t, w);
+            graph.add_weighted_arc(t, s, w);
         }
 
         for (s, dist) in EXPECTED.iter().enumerate() {
@@ -806,8 +806,8 @@ mod tests {
         let mut graph = vec![Vec::new(); 10];
 
         for (s, t, w) in EDGES_BRYR_3 {
-            graph.add_weighted_edge(s, t, w);
-            graph.add_weighted_edge(t, s, w);
+            graph.add_weighted_arc(s, t, w);
+            graph.add_weighted_arc(t, s, w);
         }
 
         for (s, dist) in EXPECTED.iter().enumerate() {
@@ -898,8 +898,8 @@ mod tests {
         let mut graph = vec![Vec::new(); 3];
 
         for (s, t, w) in EDGES_BRYR_1 {
-            graph.add_weighted_edge(s, t, w);
-            graph.add_weighted_edge(t, s, w);
+            graph.add_weighted_arc(s, t, w);
+            graph.add_weighted_arc(t, s, w);
         }
 
         let mut pred = [None; 3];
@@ -917,8 +917,8 @@ mod tests {
         let mut graph = vec![Vec::new(); 6];
 
         for (s, t, w) in EDGES_BRYR_2 {
-            graph.add_weighted_edge(s, t, w);
-            graph.add_weighted_edge(t, s, w);
+            graph.add_weighted_arc(s, t, w);
+            graph.add_weighted_arc(t, s, w);
         }
 
         let mut pred = [None; 6];
@@ -945,8 +945,8 @@ mod tests {
         let mut graph = vec![Vec::new(); 10];
 
         for (s, t, w) in EDGES_BRYR_3 {
-            graph.add_weighted_edge(s, t, w);
-            graph.add_weighted_edge(t, s, w);
+            graph.add_weighted_arc(s, t, w);
+            graph.add_weighted_arc(t, s, w);
         }
 
         let mut pred = [None; 10];
@@ -1068,8 +1068,8 @@ mod tests {
         let mut graph = vec![Vec::new(); 3];
 
         for (s, t, w) in EDGES_BRYR_1 {
-            graph.add_weighted_edge(s, t, w);
-            graph.add_weighted_edge(t, s, w);
+            graph.add_weighted_arc(s, t, w);
+            graph.add_weighted_arc(t, s, w);
         }
 
         for (i, expected) in EXPECTED.iter().enumerate() {
@@ -1094,8 +1094,8 @@ mod tests {
         let mut graph = vec![Vec::new(); 6];
 
         for (s, t, w) in EDGES_BRYR_2 {
-            graph.add_weighted_edge(s, t, w);
-            graph.add_weighted_edge(t, s, w);
+            graph.add_weighted_arc(s, t, w);
+            graph.add_weighted_arc(t, s, w);
         }
 
         for (i, expected) in EXPECTED.iter().enumerate() {
@@ -1124,8 +1124,8 @@ mod tests {
         let mut graph = vec![Vec::new(); 10];
 
         for (s, t, w) in EDGES_BRYR_3 {
-            graph.add_weighted_edge(s, t, w);
-            graph.add_weighted_edge(t, s, w);
+            graph.add_weighted_arc(s, t, w);
+            graph.add_weighted_arc(t, s, w);
         }
 
         for (i, expected) in EXPECTED.iter().enumerate() {
@@ -1250,8 +1250,8 @@ mod tests {
         let mut graph = vec![Vec::new(); 3];
 
         for (s, t, w) in EDGES_BRYR_1 {
-            graph.add_weighted_edge(s, t, w);
-            graph.add_weighted_edge(t, s, w);
+            graph.add_weighted_arc(s, t, w);
+            graph.add_weighted_arc(t, s, w);
         }
 
         let mut pred = [None; 3];
@@ -1277,8 +1277,8 @@ mod tests {
         let mut graph = vec![Vec::new(); 6];
 
         for (s, t, w) in EDGES_BRYR_2 {
-            graph.add_weighted_edge(s, t, w);
-            graph.add_weighted_edge(t, s, w);
+            graph.add_weighted_arc(s, t, w);
+            graph.add_weighted_arc(t, s, w);
         }
 
         let mut pred = [None; 6];
@@ -1313,8 +1313,8 @@ mod tests {
         let mut graph = vec![Vec::new(); 10];
 
         for (s, t, w) in EDGES_BRYR_3 {
-            graph.add_weighted_edge(s, t, w);
-            graph.add_weighted_edge(t, s, w);
+            graph.add_weighted_arc(s, t, w);
+            graph.add_weighted_arc(t, s, w);
         }
 
         let mut pred = [None; 10];
@@ -1400,8 +1400,8 @@ mod tests {
         let mut graph = vec![Vec::new(); 3];
 
         for (s, t, w) in EDGES_BRYR_1 {
-            graph.add_weighted_edge(s, t, w);
-            graph.add_weighted_edge(t, s, w);
+            graph.add_weighted_arc(s, t, w);
+            graph.add_weighted_arc(t, s, w);
         }
 
         let path = single_pair_shortest_path(&graph, 0, 2);
@@ -1414,8 +1414,8 @@ mod tests {
         let mut graph = vec![Vec::new(); 6];
 
         for (s, t, w) in EDGES_BRYR_2 {
-            graph.add_weighted_edge(s, t, w);
-            graph.add_weighted_edge(t, s, w);
+            graph.add_weighted_arc(s, t, w);
+            graph.add_weighted_arc(t, s, w);
         }
 
         let path = single_pair_shortest_path(&graph, 0, 5);
@@ -1428,8 +1428,8 @@ mod tests {
         let mut graph = vec![Vec::new(); 10];
 
         for (s, t, w) in EDGES_BRYR_3 {
-            graph.add_weighted_edge(s, t, w);
-            graph.add_weighted_edge(t, s, w);
+            graph.add_weighted_arc(s, t, w);
+            graph.add_weighted_arc(t, s, w);
         }
 
         let path = single_pair_shortest_path(&graph, 0, 9);

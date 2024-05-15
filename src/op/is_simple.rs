@@ -1,6 +1,6 @@
 //! A trait to determine whether a graph is simple
 //!
-//! A graph is simple if it has no self-loops or parallel edges.
+//! A graph is simple if it has no self-loops or parallel arcs.
 //!
 //! # Examples
 //!
@@ -27,8 +27,8 @@ extern crate alloc;
 
 use {
     super::{
-        IterAllEdges,
-        IterAllWeightedEdges,
+        IterAllArcs,
+        IterAllWeightedArcs,
     },
     alloc::collections::BTreeSet,
     core::hash::BuildHasher,
@@ -49,12 +49,12 @@ use {
 /// };
 ///
 /// struct Graph {
-///     edges: Vec<HashSet<usize>>,
+///     arcs: Vec<HashSet<usize>>,
 /// }
 ///
 /// impl IsSimple for Graph {
 ///     fn is_simple(&self) -> bool {
-///         self.edges
+///         self.arcs
 ///             .iter()
 ///             .enumerate()
 ///             .all(|(s, set)| !set.contains(&s))
@@ -164,7 +164,7 @@ impl<const V: usize> IsSimple for [BTreeSet<usize>; V] {
 
 impl IsSimple for BTreeSet<(usize, usize)> {
     fn is_simple(&self) -> bool {
-        self.iter_all_edges().all(|(s, t)| s != t)
+        self.iter_all_arcs().all(|(s, t)| s != t)
     }
 }
 
@@ -173,7 +173,7 @@ where
     H: BuildHasher,
 {
     fn is_simple(&self) -> bool {
-        self.iter_all_edges().all(|(s, t)| s != t)
+        self.iter_all_arcs().all(|(s, t)| s != t)
     }
 }
 
@@ -181,7 +181,7 @@ impl IsSimple for Vec<(usize, usize)> {
     fn is_simple(&self) -> bool {
         let mut set = HashSet::new();
 
-        self.iter_all_edges()
+        self.iter_all_arcs()
             .all(|(s, t)| s != t && set.insert((s, t)))
     }
 }
@@ -190,7 +190,7 @@ impl IsSimple for [(usize, usize)] {
     fn is_simple(&self) -> bool {
         let mut set = HashSet::new();
 
-        self.iter_all_edges()
+        self.iter_all_arcs()
             .all(|(s, t)| s != t && set.insert((s, t)))
     }
 }
@@ -199,7 +199,7 @@ impl<const V: usize> IsSimple for [(usize, usize); V] {
     fn is_simple(&self) -> bool {
         let mut set = HashSet::new();
 
-        self.iter_all_edges()
+        self.iter_all_arcs()
             .all(|(s, t)| s != t && set.insert((s, t)))
     }
 }
@@ -208,7 +208,7 @@ impl<W> IsSimple for Vec<(usize, usize, W)> {
     fn is_simple(&self) -> bool {
         let mut set = HashSet::new();
 
-        self.iter_all_weighted_edges()
+        self.iter_all_weighted_arcs()
             .all(|(s, t, _)| s != t && set.insert((s, t)))
     }
 }
@@ -217,7 +217,7 @@ impl<W> IsSimple for [(usize, usize, W)] {
     fn is_simple(&self) -> bool {
         let mut set = HashSet::new();
 
-        self.iter_all_weighted_edges()
+        self.iter_all_weighted_arcs()
             .all(|(s, t, _)| s != t && set.insert((s, t)))
     }
 }
@@ -226,7 +226,7 @@ impl<const V: usize, W> IsSimple for [(usize, usize, W); V] {
     fn is_simple(&self) -> bool {
         let mut set = HashSet::new();
 
-        self.iter_all_weighted_edges()
+        self.iter_all_weighted_arcs()
             .all(|(s, t, _)| s != t && set.insert((s, t)))
     }
 }
@@ -235,7 +235,7 @@ impl<W> IsSimple for BTreeSet<(usize, usize, W)> {
     fn is_simple(&self) -> bool {
         let mut set = HashSet::new();
 
-        self.iter_all_weighted_edges()
+        self.iter_all_weighted_arcs()
             .all(|(s, t, _)| s != t && set.insert((s, t)))
     }
 }
@@ -247,7 +247,7 @@ where
     fn is_simple(&self) -> bool {
         let mut set = HashSet::new();
 
-        self.iter_all_weighted_edges()
+        self.iter_all_weighted_arcs()
             .all(|(s, t, _)| s != t && set.insert((s, t)))
     }
 }
@@ -271,7 +271,7 @@ mod tests {
     }
 
     #[test]
-    fn vec_vec_parallel_edges() {
+    fn vec_vec_parallel_arcs() {
         let graph = vec![vec![0, 1], vec![0, 1], vec![0]];
 
         assert!(!graph.is_simple());
@@ -328,7 +328,7 @@ mod tests {
     }
 
     #[test]
-    fn slice_vec_parallel_edges() {
+    fn slice_vec_parallel_arcs() {
         let graph: &[Vec<usize>] = &[vec![0, 1], vec![0, 1], vec![0]];
 
         assert!(!graph.is_simple());
@@ -386,7 +386,7 @@ mod tests {
     }
 
     #[test]
-    fn arr_vec_parallel_edges() {
+    fn arr_vec_parallel_arcs() {
         let graph = [vec![0, 1], vec![0, 1], vec![0]];
 
         assert!(!graph.is_simple());
@@ -443,7 +443,7 @@ mod tests {
     }
 
     #[test]
-    fn vec_tuple_unweighted_parallel_edges() {
+    fn vec_tuple_unweighted_parallel_arcs() {
         let graph = vec![(0, 1), (0, 1), (0, 2)];
 
         assert!(!graph.is_simple());
@@ -464,7 +464,7 @@ mod tests {
     }
 
     #[test]
-    fn slice_tuple_unweighted_parallel_edges() {
+    fn slice_tuple_unweighted_parallel_arcs() {
         let graph: &[(usize, usize)] = &[(0, 1), (0, 1), (0, 2)];
 
         assert!(!graph.is_simple());
@@ -485,7 +485,7 @@ mod tests {
     }
 
     #[test]
-    fn arr_tuple_unweighted_parallel_edges() {
+    fn arr_tuple_unweighted_parallel_arcs() {
         let graph = [(0, 1), (0, 1), (0, 2)];
 
         assert!(!graph.is_simple());
@@ -534,7 +534,7 @@ mod tests {
     }
 
     #[test]
-    fn vec_tuple_weighted_parallel_edges() {
+    fn vec_tuple_weighted_parallel_arcs() {
         let graph = vec![(0, 1, 1), (0, 1, 1), (0, 2, 1)];
 
         assert!(!graph.is_simple());
@@ -555,7 +555,7 @@ mod tests {
     }
 
     #[test]
-    fn slice_tuple_weighted_parallel_edges() {
+    fn slice_tuple_weighted_parallel_arcs() {
         let graph: &[(usize, usize, usize)] = &[(0, 1, 1), (0, 1, 1), (0, 2, 1)];
 
         assert!(!graph.is_simple());
@@ -576,7 +576,7 @@ mod tests {
     }
 
     #[test]
-    fn arr_tuple_weighted_parallel_edges() {
+    fn arr_tuple_weighted_parallel_arcs() {
         let graph = [(0, 1, 1), (0, 1, 1), (0, 2, 1)];
 
         assert!(!graph.is_simple());
@@ -615,7 +615,7 @@ mod tests {
     }
 
     #[test]
-    fn btree_set_tuple_weighted_parallel_edges() {
+    fn btree_set_tuple_weighted_parallel_arcs() {
         let graph: BTreeSet<(usize, usize, usize)> =
             BTreeSet::from([(0, 1, 1), (0, 1, 2), (0, 2, 1)]);
 
@@ -623,7 +623,7 @@ mod tests {
     }
 
     #[test]
-    fn hash_set_tuple_weighted_parallel_edges() {
+    fn hash_set_tuple_weighted_parallel_arcs() {
         let graph: HashSet<(usize, usize, usize)> =
             HashSet::from([(0, 1, 1), (0, 1, 2), (0, 2, 1)]);
 

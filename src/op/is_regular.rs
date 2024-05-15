@@ -11,7 +11,7 @@
 //!         gen::Cycle,
 //!         op::{
 //!             IsRegular,
-//!             RemoveEdge,
+//!             RemoveArc,
 //!         },
 //!     },
 //!     std::collections::BTreeSet,
@@ -21,7 +21,7 @@
 //!
 //! assert!(graph.is_regular());
 //!
-//! graph.remove_edge(6, 0);
+//! graph.remove_arc(6, 0);
 //!
 //! assert!(!graph.is_regular());
 //! ```
@@ -66,7 +66,7 @@ use {
 /// };
 ///
 /// struct Graph {
-///     edges: Vec<BTreeSet<usize>>,
+///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
 /// impl IsRegular for Graph {
@@ -74,17 +74,17 @@ use {
 ///     ///
 ///     /// Panics if the graph has no vertices.
 ///     fn is_regular(&self) -> bool {
-///         let mut vertices = self.edges.iter_vertices();
+///         let mut vertices = self.arcs.iter_vertices();
 ///
 ///         let v = vertices
 ///             .next()
 ///             .expect("a graph must have at least one vertex");
 ///
-///         let indegree = self.edges.indegree(v);
-///         let outdegree = self.edges.outdegree(v);
+///         let indegree = self.arcs.indegree(v);
+///         let outdegree = self.arcs.outdegree(v);
 ///
 ///         vertices
-///             .all(|v| self.edges.indegree(v) == indegree && self.edges.outdegree(v) == outdegree)
+///             .all(|v| self.arcs.indegree(v) == indegree && self.arcs.outdegree(v) == outdegree)
 ///     }
 /// }
 /// ```
@@ -415,7 +415,7 @@ mod tests {
                 CycleConst,
                 Empty,
             },
-            op::RemoveEdge,
+            op::RemoveArc,
         },
         proptest::proptest,
     };
@@ -424,7 +424,7 @@ mod tests {
         ($graph:expr) => {
             assert!($graph.is_regular());
 
-            let _ = $graph.remove_edge(2, 0);
+            let _ = $graph.remove_arc(2, 0);
 
             assert!(!$graph.is_regular());
         };

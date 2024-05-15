@@ -1,6 +1,6 @@
 //! A trait to determine whether a vertex in a directed graph is isolated
 //!
-//! A vertex is isolated if it has no incoming or outgoing edges.
+//! A vertex is isolated if it has no incoming or outgoing arcs.
 //!
 //! # Examples
 //!
@@ -59,17 +59,17 @@ use {
 /// };
 ///
 /// struct Graph {
-///     edges: Vec<HashSet<usize>>,
+///     arcs: Vec<HashSet<usize>>,
 /// }
 ///
 /// impl IsIsolated for Graph {
 ///     fn is_isolated(&self, s: usize) -> bool {
-///         self.edges.indegree(s) == 0 && self.edges.outdegree(s) == 0
+///         self.arcs.indegree(s) == 0 && self.arcs.outdegree(s) == 0
 ///     }
 /// }
 ///
 /// let graph = Graph {
-///     edges: vec![
+///     arcs: vec![
 ///         HashSet::from([1, 2]),
 ///         HashSet::from([0]),
 ///         HashSet::new(),
@@ -233,8 +233,8 @@ mod tests {
                 EmptyConst,
             },
             op::{
-                AddEdge,
-                AddWeightedEdge,
+                AddArc,
+                AddWeightedArc,
             },
         },
     };
@@ -250,9 +250,9 @@ mod tests {
 
     macro_rules! test_is_isolated_unweighted {
         ($graph:expr) => {
-            $graph.add_edge(0, 1);
-            $graph.add_edge(0, 2);
-            $graph.add_edge(1, 2);
+            $graph.add_arc(0, 1);
+            $graph.add_arc(0, 2);
+            $graph.add_arc(1, 2);
 
             test_is_isolated!($graph);
         };
@@ -260,9 +260,9 @@ mod tests {
 
     macro_rules! test_is_isolated_weighted {
         ($graph:expr) => {
-            $graph.add_weighted_edge(0, 1, 1);
-            $graph.add_weighted_edge(0, 2, 1);
-            $graph.add_weighted_edge(1, 2, 1);
+            $graph.add_weighted_arc(0, 1, 1);
+            $graph.add_weighted_arc(0, 2, 1);
+            $graph.add_weighted_arc(1, 2, 1);
 
             test_is_isolated!($graph);
         };

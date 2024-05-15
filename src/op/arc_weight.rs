@@ -1,10 +1,10 @@
-//! A trait to get the weight of a given edge
+//! A trait to get the weight of a given arc
 //!
 //! # Examples
 //!
 //! ```
 //! use {
-//!     graaf::op::EdgeWeight,
+//!     graaf::op::ArcWeight,
 //!     std::collections::HashMap,
 //! };
 //!
@@ -14,14 +14,14 @@
 //!     HashMap::from([(0, 7), (1, 8)]),
 //! ];
 //!
-//! assert_eq!(graph.edge_weight(0, 0), None);
-//! assert_eq!(graph.edge_weight(0, 1), Some(&2));
-//! assert_eq!(graph.edge_weight(0, 2), Some(&3));
-//! assert_eq!(graph.edge_weight(1, 0), Some(&4));
-//! assert_eq!(graph.edge_weight(1, 1), None);
-//! assert_eq!(graph.edge_weight(2, 0), Some(&7));
-//! assert_eq!(graph.edge_weight(2, 1), Some(&8));
-//! assert_eq!(graph.edge_weight(2, 2), None);
+//! assert_eq!(graph.arc_weight(0, 0), None);
+//! assert_eq!(graph.arc_weight(0, 1), Some(&2));
+//! assert_eq!(graph.arc_weight(0, 2), Some(&3));
+//! assert_eq!(graph.arc_weight(1, 0), Some(&4));
+//! assert_eq!(graph.arc_weight(1, 1), None);
+//! assert_eq!(graph.arc_weight(2, 0), Some(&7));
+//! assert_eq!(graph.arc_weight(2, 1), Some(&8));
+//! assert_eq!(graph.arc_weight(2, 2), None);
 //! ```
 
 extern crate alloc;
@@ -32,26 +32,26 @@ use {
     std::collections::HashMap,
 };
 
-/// A trait to get the weight of a given edge
+/// A trait to get the weight of a given arc
 ///
-/// # How can I implement `EdgeWeight`?
+/// # How can I implement `ArcWeight`?
 ///
-/// Provide an implementation of `edge_weight` that returns the weight of the
-/// edge from `s` to `t`.
+/// Provide an implementation of `arc_weight` that returns the weight of the
+/// arc from `s` to `t`.
 ///
 /// ```
 /// use {
-///     graaf::op::EdgeWeight,
+///     graaf::op::ArcWeight,
 ///     std::collections::HashMap,
 /// };
 ///
 /// struct Graph {
-///     edges: Vec<HashMap<usize, usize>>,
+///     arcs: Vec<HashMap<usize, usize>>,
 /// }
 ///
-/// impl EdgeWeight<usize> for Graph {
-///     fn edge_weight(&self, s: usize, t: usize) -> Option<&usize> {
-///         self.edges.get(s).and_then(|m| m.get(&t))
+/// impl ArcWeight<usize> for Graph {
+///     fn arc_weight(&self, s: usize, t: usize) -> Option<&usize> {
+///         self.arcs.get(s).and_then(|m| m.get(&t))
 ///     }
 /// }
 /// ```
@@ -60,7 +60,7 @@ use {
 ///
 /// ```
 /// use {
-///     graaf::op::EdgeWeight,
+///     graaf::op::ArcWeight,
 ///     std::collections::HashMap,
 /// };
 ///
@@ -70,81 +70,81 @@ use {
 ///     HashMap::from([(0, 7), (1, 8)]),
 /// ];
 ///
-/// assert_eq!(graph.edge_weight(0, 0), None);
-/// assert_eq!(graph.edge_weight(0, 1), Some(&2));
-/// assert_eq!(graph.edge_weight(0, 2), Some(&3));
-/// assert_eq!(graph.edge_weight(1, 0), Some(&4));
-/// assert_eq!(graph.edge_weight(1, 1), None);
-/// assert_eq!(graph.edge_weight(2, 0), Some(&7));
-/// assert_eq!(graph.edge_weight(2, 1), Some(&8));
-/// assert_eq!(graph.edge_weight(2, 2), None);
+/// assert_eq!(graph.arc_weight(0, 0), None);
+/// assert_eq!(graph.arc_weight(0, 1), Some(&2));
+/// assert_eq!(graph.arc_weight(0, 2), Some(&3));
+/// assert_eq!(graph.arc_weight(1, 0), Some(&4));
+/// assert_eq!(graph.arc_weight(1, 1), None);
+/// assert_eq!(graph.arc_weight(2, 0), Some(&7));
+/// assert_eq!(graph.arc_weight(2, 1), Some(&8));
+/// assert_eq!(graph.arc_weight(2, 2), None);
 /// ```
-pub trait EdgeWeight<W> {
-    /// Returns the weight of the edge from `s` to `t`.
+pub trait ArcWeight<W> {
+    /// Returns the weight of the arc from `s` to `t`.
     ///
     /// # Arguments
     ///
     /// * `s`: The source vertex.
     /// * `t`: The target vertex.
-    fn edge_weight(&self, s: usize, t: usize) -> Option<&W>;
+    fn arc_weight(&self, s: usize, t: usize) -> Option<&W>;
 }
 
-impl<W> EdgeWeight<W> for Vec<BTreeMap<usize, W>> {
-    fn edge_weight(&self, s: usize, t: usize) -> Option<&W> {
+impl<W> ArcWeight<W> for Vec<BTreeMap<usize, W>> {
+    fn arc_weight(&self, s: usize, t: usize) -> Option<&W> {
         self.get(s).and_then(|m| m.get(&t))
     }
 }
 
-impl<W, H> EdgeWeight<W> for Vec<HashMap<usize, W, H>>
+impl<W, H> ArcWeight<W> for Vec<HashMap<usize, W, H>>
 where
     H: BuildHasher,
 {
-    fn edge_weight(&self, s: usize, t: usize) -> Option<&W> {
+    fn arc_weight(&self, s: usize, t: usize) -> Option<&W> {
         self.get(s).and_then(|m| m.get(&t))
     }
 }
 
-impl<W> EdgeWeight<W> for [BTreeMap<usize, W>] {
-    fn edge_weight(&self, s: usize, t: usize) -> Option<&W> {
+impl<W> ArcWeight<W> for [BTreeMap<usize, W>] {
+    fn arc_weight(&self, s: usize, t: usize) -> Option<&W> {
         self.get(s).and_then(|m| m.get(&t))
     }
 }
 
-impl<W, H> EdgeWeight<W> for [HashMap<usize, W, H>]
+impl<W, H> ArcWeight<W> for [HashMap<usize, W, H>]
 where
     H: BuildHasher,
 {
-    fn edge_weight(&self, s: usize, t: usize) -> Option<&W> {
+    fn arc_weight(&self, s: usize, t: usize) -> Option<&W> {
         self.get(s).and_then(|m| m.get(&t))
     }
 }
 
-impl<const V: usize, W> EdgeWeight<W> for [BTreeMap<usize, W>; V] {
-    fn edge_weight(&self, s: usize, t: usize) -> Option<&W> {
+impl<const V: usize, W> ArcWeight<W> for [BTreeMap<usize, W>; V] {
+    fn arc_weight(&self, s: usize, t: usize) -> Option<&W> {
         self.get(s).and_then(|m| m.get(&t))
     }
 }
 
-impl<const V: usize, W, H> EdgeWeight<W> for [HashMap<usize, W, H>; V]
+impl<const V: usize, W, H> ArcWeight<W> for [HashMap<usize, W, H>; V]
 where
     H: BuildHasher,
 {
-    fn edge_weight(&self, s: usize, t: usize) -> Option<&W> {
+    fn arc_weight(&self, s: usize, t: usize) -> Option<&W> {
         self.get(s).and_then(|m| m.get(&t))
     }
 }
 
-impl<W> EdgeWeight<W> for BTreeMap<usize, BTreeMap<usize, W>> {
-    fn edge_weight(&self, s: usize, t: usize) -> Option<&W> {
+impl<W> ArcWeight<W> for BTreeMap<usize, BTreeMap<usize, W>> {
+    fn arc_weight(&self, s: usize, t: usize) -> Option<&W> {
         self.get(&s).and_then(|m| m.get(&t))
     }
 }
 
-impl<W, H> EdgeWeight<W> for HashMap<usize, HashMap<usize, W, H>, H>
+impl<W, H> ArcWeight<W> for HashMap<usize, HashMap<usize, W, H>, H>
 where
     H: BuildHasher,
 {
-    fn edge_weight(&self, s: usize, t: usize) -> Option<&W> {
+    fn arc_weight(&self, s: usize, t: usize) -> Option<&W> {
         self.get(&s).and_then(|m| m.get(&t))
     }
 }
@@ -153,13 +153,13 @@ where
 mod tests {
     use super::*;
 
-    macro_rules! test_edge_weight {
+    macro_rules! test_arc_weight {
         ($graph:expr) => {
-            assert_eq!($graph.edge_weight(0, 1), Some(&2));
-            assert_eq!($graph.edge_weight(0, 2), Some(&3));
-            assert_eq!($graph.edge_weight(1, 0), Some(&4));
-            assert_eq!($graph.edge_weight(2, 0), Some(&7));
-            assert_eq!($graph.edge_weight(2, 1), Some(&8));
+            assert_eq!($graph.arc_weight(0, 1), Some(&2));
+            assert_eq!($graph.arc_weight(0, 2), Some(&3));
+            assert_eq!($graph.arc_weight(1, 0), Some(&4));
+            assert_eq!($graph.arc_weight(2, 0), Some(&7));
+            assert_eq!($graph.arc_weight(2, 1), Some(&8));
         };
     }
 
@@ -171,7 +171,7 @@ mod tests {
             BTreeMap::from([(0, 7), (1, 8)]),
         ];
 
-        test_edge_weight!(graph);
+        test_arc_weight!(graph);
     }
 
     #[test]
@@ -182,7 +182,7 @@ mod tests {
             HashMap::from([(0, 7), (1, 8)]),
         ];
 
-        test_edge_weight!(graph);
+        test_arc_weight!(graph);
     }
 
     #[test]
@@ -193,7 +193,7 @@ mod tests {
             BTreeMap::from([(0, 7), (1, 8)]),
         ];
 
-        test_edge_weight!(graph);
+        test_arc_weight!(graph);
     }
 
     #[test]
@@ -204,7 +204,7 @@ mod tests {
             HashMap::from([(0, 7), (1, 8)]),
         ];
 
-        test_edge_weight!(graph);
+        test_arc_weight!(graph);
     }
 
     #[test]
@@ -215,7 +215,7 @@ mod tests {
             BTreeMap::from([(0, 7), (1, 8)]),
         ];
 
-        test_edge_weight!(graph);
+        test_arc_weight!(graph);
     }
 
     #[test]
@@ -226,7 +226,7 @@ mod tests {
             HashMap::from([(0, 7), (1, 8)]),
         ];
 
-        test_edge_weight!(graph);
+        test_arc_weight!(graph);
     }
 
     #[test]
@@ -236,7 +236,7 @@ mod tests {
         let _ = graph.insert(1, BTreeMap::from([(0, 4)]));
         let _ = graph.insert(2, BTreeMap::from([(0, 7), (1, 8)]));
 
-        test_edge_weight!(graph);
+        test_arc_weight!(graph);
     }
     #[test]
     fn hash_map_hash_map() {
@@ -245,6 +245,6 @@ mod tests {
         let _ = graph.insert(1, HashMap::from([(0, 4)]));
         let _ = graph.insert(2, HashMap::from([(0, 7), (1, 8)]));
 
-        test_edge_weight!(graph);
+        test_arc_weight!(graph);
     }
 }

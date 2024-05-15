@@ -73,14 +73,14 @@ use {
 /// };
 ///
 /// struct Graph<const V: usize> {
-///     pub edges: [BTreeSet<usize>; V],
+///     pub arcs: [BTreeSet<usize>; V],
 /// }
 ///
 /// impl<const V: usize> IsBalanced for Graph<V> {
 ///     fn is_balanced(&self) -> bool {
-///         self.edges
+///         self.arcs
 ///             .iter_vertices()
-///             .all(|s| self.edges.indegree(s) == self.edges.outdegree(s))
+///             .all(|s| self.arcs.indegree(s) == self.arcs.outdegree(s))
 ///     }
 /// }
 /// ```
@@ -230,8 +230,8 @@ mod tests {
                 EmptyConst,
             },
             op::{
-                AddEdge,
-                AddWeightedEdge,
+                AddArc,
+                AddWeightedArc,
             },
         },
         alloc::collections::BTreeSet,
@@ -242,27 +242,27 @@ mod tests {
         ($graph:expr) => {
             assert!($graph.is_balanced());
 
-            $graph.add_edge(0, 1);
+            $graph.add_arc(0, 1);
 
             assert!(!$graph.is_balanced());
 
-            $graph.add_edge(1, 0);
+            $graph.add_arc(1, 0);
 
             assert!($graph.is_balanced());
 
-            $graph.add_edge(0, 2);
+            $graph.add_arc(0, 2);
 
             assert!(!$graph.is_balanced());
 
-            $graph.add_edge(1, 2);
+            $graph.add_arc(1, 2);
 
             assert!(!$graph.is_balanced());
 
-            $graph.add_edge(2, 0);
+            $graph.add_arc(2, 0);
 
             assert!(!$graph.is_balanced());
 
-            $graph.add_edge(2, 1);
+            $graph.add_arc(2, 1);
 
             assert!($graph.is_balanced());
         };
@@ -272,27 +272,27 @@ mod tests {
         ($graph:expr) => {
             assert!($graph.is_balanced());
 
-            $graph.add_weighted_edge(0, 1, 1);
+            $graph.add_weighted_arc(0, 1, 1);
 
             assert!(!$graph.is_balanced());
 
-            $graph.add_weighted_edge(1, 0, -3);
+            $graph.add_weighted_arc(1, 0, -3);
 
             assert!($graph.is_balanced());
 
-            $graph.add_weighted_edge(0, 2, 2);
+            $graph.add_weighted_arc(0, 2, 2);
 
             assert!(!$graph.is_balanced());
 
-            $graph.add_weighted_edge(1, 2, 0);
+            $graph.add_weighted_arc(1, 2, 0);
 
             assert!(!$graph.is_balanced());
 
-            $graph.add_weighted_edge(2, 0, 1);
+            $graph.add_weighted_arc(2, 0, 1);
 
             assert!(!$graph.is_balanced());
 
-            $graph.add_weighted_edge(2, 1, 1);
+            $graph.add_weighted_arc(2, 1, 1);
 
             assert!($graph.is_balanced());
         };

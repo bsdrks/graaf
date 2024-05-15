@@ -15,17 +15,23 @@
 - Add `op::radius`.
 - Benchmark against popular Rust graph libraries.
 - Benchmark against popular graph libraries in other languages.
-- Ensure that all `op` implementation examples use the other `op` traits where possible.
 - Implement `_mut` versions of `op` iterator traits.
+- Implement the `dfs` module.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.45.0] - 2024-05-15
+
+Changed
+
+- Breaking: Rename `*edge*` to `*arc*` in places where it refers to directed edges.
 
 ## [0.44.0] - 2024-05-15
 
 Changed
 
 - Breaking: Rename `CountAllVertices` to `Order`.
-- Breaking: Rename `CountAllEdges` to `Size`.
+- Breaking: Rename `CountAllArcs` to `Size`.
 
 ## [0.43.0] - 2024-05-13
 
@@ -122,19 +128,19 @@ Added
 
 Added
 
-- Add unit test `has_edge` for `AdjacencyMatrix<V>`.
-- Implement `HasEdgeSymmetric` for `AdjacencyMatrix<V>`.
+- Add unit test `has_arc` for `AdjacencyMatrix<V>`.
+- Implement `HasEdge` for `AdjacencyMatrix<V>`.
 - Implement `IsBalanced` for `AdjacencyMatrix<V>`.
 - Implement `IsIsolated` for `AdjacencyMatrix<V>`.
 - Implement `IsSymmetric` for `AdjacencyMatrix<V>`.
-- Implement `IterAllEdges` for `AdjacencyMatrix<V>`.
+- Implement `IterAllArcs` for `AdjacencyMatrix<V>`.
 
 Changed
 
 - Breaking: `AdjacencyMatrix::<0>::new` now panics.
 - Simplify `AdjacencyMatrix<V>` op implementations with `IterVertices`.
 - Simplify `AdjacencyMatrix<V>` tests with `Iterator::eq`.
-- Simplify `IsSymmetric` implementations with `HasEdge`.
+- Simplify `IsSymmetric` implementations with `HasArc`.
 - Simplify arguments to `Iterator::eq` in tests.
 
 ## [0.41.0] - 2024-05-11
@@ -200,7 +206,7 @@ Added
 Changed
 
 - Restrict existing documentation aliases to module level.
-- Simplify `AddEdge` "Panics" sections.
+- Simplify `AddArc` "Panics" sections.
 - Simplify `Indegree` tests.
 - Simplify `IsBalanced` tests.
 - Simplify `Outdegree` tests.
@@ -215,18 +221,18 @@ Fixed
 
 Changed
 
-- Breaking: `AddEdge for BTreeMap<usize, BTreeSet<usize>>` no longer panics.
-- Breaking: `AddEdge for BTreeMap<usize, Vec<usize>>` no longer panics.
-- Breaking: `AddEdge for HashMap<usize, HashSet<usize>>` no longer panics.
-- Breaking: `AddEdge for HashMap<usize, Vec<usize>>` no longer panics.
-- Breaking: `AddWeightedEdge for BTreeMap<usize, BTreeMap<usize, W>>` no longer panics.
-- Breaking: `AddWeightedEdge for BTreeMap<usize, BTreeSet<(usize, W)>>` no longer panics.
-- Breaking: `AddWeightedEdge for BTreeMap<usize, Vec<(usize, W)>>` no longer panics.
-- Breaking: `AddWeightedEdge for HashMap<usize, HashMap<usize, W>>` no longer panics.
-- Breaking: `RemoveEdge for BTreeMap<usize, BTreeMap<usize, W>>` no longer panics.
-- Breaking: `RemoveEdge for BTreeMap<usize, BTreeSet<usize>>` no longer panics.
-- Breaking: `RemoveEdge for HashMap<usize, HashMap<usize, W>>` no longer panics.
-- Breaking: `RemoveEdge for HashMap<usize, HashSet<usize>>` no longer panics.
+- Breaking: `AddArc for BTreeMap<usize, BTreeSet<usize>>` no longer panics.
+- Breaking: `AddArc for BTreeMap<usize, Vec<usize>>` no longer panics.
+- Breaking: `AddArc for HashMap<usize, HashSet<usize>>` no longer panics.
+- Breaking: `AddArc for HashMap<usize, Vec<usize>>` no longer panics.
+- Breaking: `AddWeightedArc for BTreeMap<usize, BTreeMap<usize, W>>` no longer panics.
+- Breaking: `AddWeightedArc for BTreeMap<usize, BTreeSet<(usize, W)>>` no longer panics.
+- Breaking: `AddWeightedArc for BTreeMap<usize, Vec<(usize, W)>>` no longer panics.
+- Breaking: `AddWeightedArc for HashMap<usize, HashMap<usize, W>>` no longer panics.
+- Breaking: `RemoveArc for BTreeMap<usize, BTreeMap<usize, W>>` no longer panics.
+- Breaking: `RemoveArc for BTreeMap<usize, BTreeSet<usize>>` no longer panics.
+- Breaking: `RemoveArc for HashMap<usize, HashMap<usize, W>>` no longer panics.
+- Breaking: `RemoveArc for HashMap<usize, HashSet<usize>>` no longer panics.
 
 Removed
 
@@ -237,13 +243,13 @@ Removed
 Added
 
 - Add property test `binop_vertices_bounds` for `binop_vertices`.
-- Add unit test `arr_vec_parallel_edges` for `IsSimple`.
+- Add unit test `arr_vec_parallel_arcs` for `IsSimple`.
 - Add unit test `arr_vec_self_loop` for `IsSimple`.
 - Add unit test `arr_vec_simple` for `IsSimple`.
-- Add unit test `slice_vec_parallel_edges` for `IsSimple`.
+- Add unit test `slice_vec_parallel_arcs` for `IsSimple`.
 - Add unit test `slice_vec_self_loop` for `IsSimple`.
 - Add unit test `slice_vec_simple` for `IsSimple`.
-- Add unit test `vec_vec_parallel_edges` for `IsSimple`.
+- Add unit test `vec_vec_parallel_arcs` for `IsSimple`.
 - Add unit test `vec_vec_self_loop` for `IsSimple`.
 - Add unit test `vec_vec_simple` for `IsSimple`.
 - Implement `IsSimple` for `Vec<Vec<usize>>`.
@@ -262,26 +268,26 @@ Added
 
 - Add documentation alias "isograph" for `IsBalanced`.
 - Add documentation alias "pseudosymmetric" for `IsBalanced`.
-- Add trait `HasEdgeSymmetric`.
+- Add trait `HasEdge`.
 - Add trait `IsSymmetric`.
-- Implement `HasEdgeSymmetric` for `BTreeMap<usize, BTreeMap<usize, W>>`.
-- Implement `HasEdgeSymmetric` for `BTreeMap<usize, BTreeSet<usize>>`.
-- Implement `HasEdgeSymmetric` for `BTreeSet<(usize, usize)>`.
-- Implement `HasEdgeSymmetric` for `HashMap<usize, HashMap<usize, W>>`.
-- Implement `HasEdgeSymmetric` for `HashMap<usize, HashSet<usize>>`.
-- Implement `HasEdgeSymmetric` for `HashSet<(usize, usize)>`.
-- Implement `HasEdgeSymmetric` for `Vec<BTreeMap<usize, W>>`.
-- Implement `HasEdgeSymmetric` for `Vec<BTreeSet<usize>>`.
-- Implement `HasEdgeSymmetric` for `Vec<HashMap<usize, W>>`.
-- Implement `HasEdgeSymmetric` for `Vec<HashSet<usize>>`.
-- Implement `HasEdgeSymmetric` for `[BTreeMap<usize, W>; V]`.
-- Implement `HasEdgeSymmetric` for `[BTreeMap<usize, W>]`.
-- Implement `HasEdgeSymmetric` for `[BTreeSet<usize>; V]`.
-- Implement `HasEdgeSymmetric` for `[BTreeSet<usize>]`.
-- Implement `HasEdgeSymmetric` for `[HashMap<usize, W>; V]`.
-- Implement `HasEdgeSymmetric` for `[HashMap<usize, W>]`.
-- Implement `HasEdgeSymmetric` for `[HashSet<usize>; V]`.
-- Implement `HasEdgeSymmetric` for `[HashSet<usize>]`.
+- Implement `HasEdge` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement `HasEdge` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `HasEdge` for `BTreeSet<(usize, usize)>`.
+- Implement `HasEdge` for `HashMap<usize, HashMap<usize, W>>`.
+- Implement `HasEdge` for `HashMap<usize, HashSet<usize>>`.
+- Implement `HasEdge` for `HashSet<(usize, usize)>`.
+- Implement `HasEdge` for `Vec<BTreeMap<usize, W>>`.
+- Implement `HasEdge` for `Vec<BTreeSet<usize>>`.
+- Implement `HasEdge` for `Vec<HashMap<usize, W>>`.
+- Implement `HasEdge` for `Vec<HashSet<usize>>`.
+- Implement `HasEdge` for `[BTreeMap<usize, W>; V]`.
+- Implement `HasEdge` for `[BTreeMap<usize, W>]`.
+- Implement `HasEdge` for `[BTreeSet<usize>; V]`.
+- Implement `HasEdge` for `[BTreeSet<usize>]`.
+- Implement `HasEdge` for `[HashMap<usize, W>; V]`.
+- Implement `HasEdge` for `[HashMap<usize, W>]`.
+- Implement `HasEdge` for `[HashSet<usize>; V]`.
+- Implement `HasEdge` for `[HashSet<usize>]`.
 - Implement `IsSymmetric` for `BTreeMap<usize, BTreeMap<usize, W>>`.
 - Implement `IsSymmetric` for `BTreeMap<usize, BTreeSet<usize>>`.
 - Implement `IsSymmetric` for `HashMap<usize, HashMap<usize, W>>`.
@@ -298,22 +304,22 @@ Added
 - Implement `IsSymmetric` for `[HashMap<usize, W>]`.
 - Implement `IsSymmetric` for `[HashSet<usize>; V]`.
 - Implement `IsSymmetric` for `[HashSet<usize>]`.
-- Implement `IterAllWeightedEdges` for `[BTreeMap<usize, W>]`.
-- Implement `IterAllWeightedEdges` for `[BTreeSet<(usize, W)>]`.
-- Implement `IterAllWeightedEdges` for `[HashMap<usize, W>]`.
-- Implement `IterAllWeightedEdges` for `[HashSet<(usize, W)>]`.
-- Implement `IterAllWeightedEdges` for `[Vec<(usize, W)>]`.
+- Implement `IterAllWeightedArcs` for `[BTreeMap<usize, W>]`.
+- Implement `IterAllWeightedArcs` for `[BTreeSet<(usize, W)>]`.
+- Implement `IterAllWeightedArcs` for `[HashMap<usize, W>]`.
+- Implement `IterAllWeightedArcs` for `[HashSet<(usize, W)>]`.
+- Implement `IterAllWeightedArcs` for `[Vec<(usize, W)>]`.
 
 Changed
 
-- Breaking: Rename `add_weighted_edge_is_edge` to `add_weighted_edge_has_edge`.
-- Breaking: Rename `add_edge_remove_edge` to `add_edge_has_edge`.
-- Breaking: Rename `IsEdge` to `HasEdge`.
+- Breaking: Rename `add_weighted_arc_is_arc` to `add_weighted_arc_has_arc`.
+- Breaking: Rename `add_arc_remove_arc` to `add_arc_has_arc`.
+- Breaking: Rename `IsArc` to `HasArc`.
 
 Removed
 
-- Remove bound `W: Ord` from `HasEdge for [BTreeMap<usize, W>]`.
-- Remove bound `W: Ord` from `HasEdge for [BTreeMap<usize, W>; V]`.
+- Remove bound `W: Ord` from `HasArc for [BTreeMap<usize, W>]`.
+- Remove bound `W: Ord` from `HasArc for [BTreeMap<usize, W>; V]`.
 
 ## [0.37.0] - 2024-05-08
 
@@ -323,22 +329,22 @@ Added
 - Implement `IsBalanced` for `Vec<HashMap<usize, W>>`.
 - Implement `IsBalanced` for `[BTreeMap<usize, W>; V]`.
 - Implement `IsBalanced` for `[HashMap<usize, W>; V]`.
-- Implement `IterAllWeightedEdges` for `BTreeMap<usize, BTreeMap<usize, W>>`.
-- Implement `IterAllWeightedEdges` for `BTreeMap<usize, BTreeSet<(usize, W)>>`.
-- Implement `IterAllWeightedEdges` for `BTreeMap<usize, Vec<(usize, W)>>`.
-- Implement `IterAllWeightedEdges` for `HashMap<usize, HashMap<usize, W>>`.
-- Implement `IterAllWeightedEdges` for `HashMap<usize, HashSet<(usize, W)>>`.
-- Implement `IterAllWeightedEdges` for `HashMap<usize, Vec<(usize, W)>>`.
-- Implement `IterAllWeightedEdges` for `Vec<BTreeMap<usize, W>>`.
-- Implement `IterAllWeightedEdges` for `Vec<BTreeSet<(usize, W)>>`.
-- Implement `IterAllWeightedEdges` for `Vec<HashMap<usize, W>>`.
-- Implement `IterAllWeightedEdges` for `Vec<HashSet<(usize, W)>>`.
-- Implement `IterAllWeightedEdges` for `Vec<Vec<(usize, W)>>`.
-- Implement `IterAllWeightedEdges` for `[BTreeMap<usize, W>; V]`.
-- Implement `IterAllWeightedEdges` for `[BTreeSet<(usize, W)>; V]`.
-- Implement `IterAllWeightedEdges` for `[HashMap<usize, W>; V]`.
-- Implement `IterAllWeightedEdges` for `[HashSet<(usize, W)>; V]`.
-- Implement `IterAllWeightedEdges` for `[Vec<(usize, W)>; V]`.
+- Implement `IterAllWeightedArcs` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement `IterAllWeightedArcs` for `BTreeMap<usize, BTreeSet<(usize, W)>>`.
+- Implement `IterAllWeightedArcs` for `BTreeMap<usize, Vec<(usize, W)>>`.
+- Implement `IterAllWeightedArcs` for `HashMap<usize, HashMap<usize, W>>`.
+- Implement `IterAllWeightedArcs` for `HashMap<usize, HashSet<(usize, W)>>`.
+- Implement `IterAllWeightedArcs` for `HashMap<usize, Vec<(usize, W)>>`.
+- Implement `IterAllWeightedArcs` for `Vec<BTreeMap<usize, W>>`.
+- Implement `IterAllWeightedArcs` for `Vec<BTreeSet<(usize, W)>>`.
+- Implement `IterAllWeightedArcs` for `Vec<HashMap<usize, W>>`.
+- Implement `IterAllWeightedArcs` for `Vec<HashSet<(usize, W)>>`.
+- Implement `IterAllWeightedArcs` for `Vec<Vec<(usize, W)>>`.
+- Implement `IterAllWeightedArcs` for `[BTreeMap<usize, W>; V]`.
+- Implement `IterAllWeightedArcs` for `[BTreeSet<(usize, W)>; V]`.
+- Implement `IterAllWeightedArcs` for `[HashMap<usize, W>; V]`.
+- Implement `IterAllWeightedArcs` for `[HashSet<(usize, W)>; V]`.
+- Implement `IterAllWeightedArcs` for `[Vec<(usize, W)>; V]`.
 
 ## [0.36.0] - 2024-05-08
 
@@ -349,19 +355,19 @@ Added
 - Implement `IsBalanced` for `Vec<HashSet<usize>>`.
 - Implement `IsBalanced` for `[BTreeSet<usize>; V]`.
 - Implement `IsBalanced` for `[HashSet<usize>; V]`.
-- Implement `IterAllEdges` for `BTreeMap<usize, BTreeSet<usize>>`.
-- Implement `IterAllEdges` for `BTreeMap<usize, Vec<usize>>`.
-- Implement `IterAllEdges` for `HashMap<usize, HashSet<usize>>`.
-- Implement `IterAllEdges` for `HashMap<usize, Vec<usize>>`.
-- Implement `IterAllEdges` for `Vec<BTreeSet<usize>>`.
-- Implement `IterAllEdges` for `Vec<HashSet<usize>>`.
-- Implement `IterAllEdges` for `Vec<Vec<usize>>`.
-- Implement `IterAllEdges` for `[BTreeSet<usize>; V]`.
-- Implement `IterAllEdges` for `[BTreeSet<usize>]`.
-- Implement `IterAllEdges` for `[HashSet<usize>; V]`.
-- Implement `IterAllEdges` for `[HashSet<usize>]`.
-- Implement `IterAllEdges` for `[Vec<usize>; V]`.
-- Implement `IterAllEdges` for `[Vec<usize>]`.
+- Implement `IterAllArcs` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `IterAllArcs` for `BTreeMap<usize, Vec<usize>>`.
+- Implement `IterAllArcs` for `HashMap<usize, HashSet<usize>>`.
+- Implement `IterAllArcs` for `HashMap<usize, Vec<usize>>`.
+- Implement `IterAllArcs` for `Vec<BTreeSet<usize>>`.
+- Implement `IterAllArcs` for `Vec<HashSet<usize>>`.
+- Implement `IterAllArcs` for `Vec<Vec<usize>>`.
+- Implement `IterAllArcs` for `[BTreeSet<usize>; V]`.
+- Implement `IterAllArcs` for `[BTreeSet<usize>]`.
+- Implement `IterAllArcs` for `[HashSet<usize>; V]`.
+- Implement `IterAllArcs` for `[HashSet<usize>]`.
+- Implement `IterAllArcs` for `[Vec<usize>; V]`.
+- Implement `IterAllArcs` for `[Vec<usize>]`.
 
 ## [0.35.6] - 2024-05-07
 
@@ -388,7 +394,7 @@ Fixed
 
 Added
 
-- Add `btree_set` unit test for `iter_all_weighted_edges`.
+- Add `btree_set` unit test for `iter_all_weighted_arcs`.
 
 Changed
 
@@ -527,7 +533,7 @@ Added
 
 Changed
 
-- Breaking: Return an empty edge list for the one vertex in `gen::Star::star(1)`.
+- Breaking: Return an empty arc list for the one vertex in `gen::Star::star(1)`.
 
 ## [0.32.3] - 2024-05-04
 
@@ -720,10 +726,10 @@ Added
 - Implement `Cycle` for `BTreeMap<usize, Vec<usize>>`.
 - Implement `Cycle` for `HashMap<usize, HashSet<usize>>`.
 - Implement `Cycle` for `HashMap<usize, Vec<usize>>`.
-- Implement `EdgeWeight` for `BTreeMap<usize, BTreeMap<usize, W>>`.
-- Implement `EdgeWeight` for `Vec<BTreeMap<usize, W>>`.
-- Implement `EdgeWeight` for `[BTreeMap<usize, W>; V]`.
-- Implement `EdgeWeight` for `[BTreeMap<usize, W>]`.
+- Implement `ArcWeight` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement `ArcWeight` for `Vec<BTreeMap<usize, W>>`.
+- Implement `ArcWeight` for `[BTreeMap<usize, W>; V]`.
+- Implement `ArcWeight` for `[BTreeMap<usize, W>]`.
 - Implement `Linear` for `HashMap<usize, HashSet<usize>>`.
 - Implement `Linear` for `HashMap<usize, Vec<usize>>`.
 
@@ -763,32 +769,32 @@ Fixed
 
 Removed
 
-- Breaking: Remove `prop::remove_edge_is_edge`.
+- Breaking: Remove `prop::remove_arc_is_arc`.
 
 ## [0.29.1] - 2024-04-28
 
 Added
 
-- Add `add_weighted_edge_is_edge` property test `btree_map_btree_set`.
-- Add `add_weighted_edge_is_edge` property test `hash_map_hash_set`.
-- Add `add_weighted_edge_is_edge` property test `slice_btree_set`.
-- Add `add_weighted_edge_is_edge` property test `slice_hash_set`.
-- Add `add_weighted_edge_is_edge` property test `vec_btree_map`.
-- Add `add_weighted_edge_is_edge` property test `vec_hash_map`.
-- Add `add_weighted_edge_is_edge` unit test `arr_btree_map`.
-- Add `add_weighted_edge_is_edge` unit test `arr_hash_map`.
-- Add `add_weighted_edge_remove_edge` property test `btree_map_btree_map`.
-- Add `add_weighted_edge_remove_edge` property test `hash_map_hash_map`.
-- Add `add_weighted_edge_remove_edge` property test `slice_btree_map`.
-- Add `add_weighted_edge_remove_edge` property test `slice_hash_map`.
-- Add `add_weighted_edge_remove_edge` property test `vec_btree_map`.
-- Add `add_weighted_edge_remove_edge` property test `vec_hash_map`.
-- Add `add_weighted_edge_remove_edge` unit test `arr_btree_map`.
-- Add `add_weighted_edge_remove_edge` unit test `arr_hash_map`.
+- Add `add_weighted_arc_is_arc` property test `btree_map_btree_set`.
+- Add `add_weighted_arc_is_arc` property test `hash_map_hash_set`.
+- Add `add_weighted_arc_is_arc` property test `slice_btree_set`.
+- Add `add_weighted_arc_is_arc` property test `slice_hash_set`.
+- Add `add_weighted_arc_is_arc` property test `vec_btree_map`.
+- Add `add_weighted_arc_is_arc` property test `vec_hash_map`.
+- Add `add_weighted_arc_is_arc` unit test `arr_btree_map`.
+- Add `add_weighted_arc_is_arc` unit test `arr_hash_map`.
+- Add `add_weighted_arc_remove_arc` property test `btree_map_btree_map`.
+- Add `add_weighted_arc_remove_arc` property test `hash_map_hash_map`.
+- Add `add_weighted_arc_remove_arc` property test `slice_btree_map`.
+- Add `add_weighted_arc_remove_arc` property test `slice_hash_map`.
+- Add `add_weighted_arc_remove_arc` property test `vec_btree_map`.
+- Add `add_weighted_arc_remove_arc` property test `vec_hash_map`.
+- Add `add_weighted_arc_remove_arc` unit test `arr_btree_map`.
+- Add `add_weighted_arc_remove_arc` unit test `arr_hash_map`.
 
 Changed
 
-- Loosen bound on `G` in `add_weighted_edge_is_edge` to `?Sized`.
+- Loosen bound on `G` in `add_weighted_arc_is_arc` to `?Sized`.
 
 Fixed
 
@@ -796,24 +802,24 @@ Fixed
 
 Removed
 
-- Remove `add_weighted_edge_is_edge` unit test `vec_hash_map`.
-- Remove `add_weighted_edge_remove_edge` unit test `vec_hash_map`.
+- Remove `add_weighted_arc_is_arc` unit test `vec_hash_map`.
+- Remove `add_weighted_arc_remove_arc` unit test `vec_hash_map`.
 - Rename `prop::strategy::v_s_t` to `prop::strategy::binop_vertices`.
 
 ## [0.29.0] - 2024-04-28
 
 Added
 
-- Add `add_edge_is_edge` property test `btree_map_btree_set`.
-- Add `add_edge_is_edge` property test `hash_map_hash_set`.
-- Add `add_edge_is_edge` property test `slice_btree_set`.
-- Add `add_edge_is_edge` property test `slice_hash_set`.
-- Add `add_edge_is_edge` property test `vec_btree_set`.
-- Add `add_edge_is_edge` property test `vec_hash_set`.
-- Add `add_edge_is_edge` unit test `arr_btree_set`.
-- Add `add_edge_remove_edge` property test `vec_btree_set`.
-- Add `add_edge_remove_edge` property test `vec_hash_set`.
-- Add `add_edge_remove_edge` unit test `arr_btree_set`.
+- Add `add_arc_is_arc` property test `btree_map_btree_set`.
+- Add `add_arc_is_arc` property test `hash_map_hash_set`.
+- Add `add_arc_is_arc` property test `slice_btree_set`.
+- Add `add_arc_is_arc` property test `slice_hash_set`.
+- Add `add_arc_is_arc` property test `vec_btree_set`.
+- Add `add_arc_is_arc` property test `vec_hash_set`.
+- Add `add_arc_is_arc` unit test `arr_btree_set`.
+- Add `add_arc_remove_arc` property test `vec_btree_set`.
+- Add `add_arc_remove_arc` property test `vec_hash_set`.
+- Add `add_arc_remove_arc` unit test `arr_btree_set`.
 - Add `prop::strategy::v_s_t` to order, source, and target.
 - Add `proptest` as a dev-dependency.
 
@@ -823,10 +829,10 @@ Changed
 
 Removed
 
-- Remove `add_edge_is_edge` unit test `hash_map_hash_set`.
-- Remove `add_edge_is_edge` unit test `hash_map_hash_set`.
-- Remove `add_edge_is_edge` unit test `vec_hash_set`.
-- Remove `add_edge_remove_edge` unit test `vec_hash_set`.
+- Remove `add_arc_is_arc` unit test `hash_map_hash_set`.
+- Remove `add_arc_is_arc` unit test `hash_map_hash_set`.
+- Remove `add_arc_is_arc` unit test `vec_hash_set`.
+- Remove `add_arc_remove_arc` unit test `vec_hash_set`.
 
 ## [0.28.2] - 2024-04-28
 
@@ -855,10 +861,10 @@ Added
 
 - Add `algo::dijkstra::shortest_path`.
 - Add `bench` job to GHA workflow.
-- Bench `add_edge` for `BTreeMap<usize, BTreeSet<usize>>`.
-- Bench `add_edge` for `BTreeMap<usize, Vec<usize>>`.
-- Bench `add_edge` for `Vec<BTreeSet<usize>>`.
-- Bench `add_edge` for `[BTreeSet<usize>; V]`.
+- Bench `add_arc` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Bench `add_arc` for `BTreeMap<usize, Vec<usize>>`.
+- Bench `add_arc` for `Vec<BTreeSet<usize>>`.
+- Bench `add_arc` for `[BTreeSet<usize>; V]`.
 - Bench `size` for `Vec<BTreeMap<usize, usize>>`.
 
 Changed
@@ -880,13 +886,13 @@ Changed
 
 Added
 
-- Add `op::Target`, a trait to get the target vertex of an adjacency list edge.
+- Add `op::Target`, a trait to get the target vertex of an adjacency list arc.
 
 Changed
 
-- Replace `Linear for G: AddEdge + Empty` with `Linear for Vec<BTreeSet<usize>>`.
-- Replace `Linear for G: AddEdge + Empty` with `Linear for Vec<HashSet<usize>>`.
-- Replace `Linear for G: AddEdge + Empty` with `Linear for Vec<Vec<usize>>`.
+- Replace `Linear for G: AddArc + Empty` with `Linear for Vec<BTreeSet<usize>>`.
+- Replace `Linear for G: AddArc + Empty` with `Linear for Vec<HashSet<usize>>`.
+- Replace `Linear for G: AddArc + Empty` with `Linear for Vec<Vec<usize>>`.
 
 Removed
 
@@ -897,14 +903,14 @@ Removed
 Added
 
 - Add `gen::Empty`, a generator for empty graphs.
-- Implement `Linear` for `G: AddEdge + Empty`.
+- Implement `Linear` for `G: AddArc + Empty`.
 - Implement `Empty` for `Vec<T: Clone + Default + IntoIterator<Item = usize>>`.
 
 Changed
 
-- Replace `Linear for Vec<BTreeSet<usize>>` with `Linear for G: AddEdge + Empty`.
-- Replace `Linear for Vec<HashSet<usize>>` with `Linear for G: AddEdge + Empty`.
-- Replace `Linear for Vec<Vec<usize>>` with `Linear for G: AddEdge + Empty`.
+- Replace `Linear for Vec<BTreeSet<usize>>` with `Linear for G: AddArc + Empty`.
+- Replace `Linear for Vec<HashSet<usize>>` with `Linear for G: AddArc + Empty`.
+- Replace `Linear for Vec<Vec<usize>>` with `Linear for G: AddArc + Empty`.
 
 ## [0.26.0] - 2024-04-25
 
@@ -950,10 +956,10 @@ Added
 
 Changed
 
-- `IsEdge` for `[BTreeMap<usize, W>]` no longer panics if `s` is not in the graph.
-- `IsEdge` for `[BTreeSet<usize>]` no longer panics if `s` is not in the graph.
-- `IsEdge` for `[HashMap<usize, W>]` no longer panics if `s` is not in the graph.
-- `IsEdge` for `[HashSet<usize>]` no longer panics if `s` is not in the graph.
+- `IsArc` for `[BTreeMap<usize, W>]` no longer panics if `s` is not in the graph.
+- `IsArc` for `[BTreeSet<usize>]` no longer panics if `s` is not in the graph.
+- `IsArc` for `[HashMap<usize, W>]` no longer panics if `s` is not in the graph.
+- `IsArc` for `[HashSet<usize>]` no longer panics if `s` is not in the graph.
 
 ## [0.23.1] - 2024-04-23
 
@@ -1104,24 +1110,24 @@ Removed
 
 Fixed
 
-- Remove unused parameter `W` from `remove_edge_is_edge`.
+- Remove unused parameter `W` from `remove_arc_is_arc`.
 
 ## [0.16.1] - 2024-04-17
 
 Added
 
-- Implement `RemoveEdge` for `BTreeMap<usize, BTreeMap<usize, W>>`.
-- Implement `RemoveEdge` for `BTreeMap<usize, BTreeSet<usize>>`.
-- Implement `RemoveEdge` for `Vec<BTreeMap<usize, W>>`.
-- Implement `RemoveEdge` for `Vec<BTreeSet<usize>>`.
-- Implement `RemoveEdge` for `[BTreeMap<usize, W>; V]`.
-- Implement `RemoveEdge` for `[BTreeMap<usize, W>]`.
-- Implement `RemoveEdge` for `[BTreeSet<usize>; V]`.
-- Implement `RemoveEdge` for `[BTreeSet<usize>]`.
+- Implement `RemoveArc` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement `RemoveArc` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `RemoveArc` for `Vec<BTreeMap<usize, W>>`.
+- Implement `RemoveArc` for `Vec<BTreeSet<usize>>`.
+- Implement `RemoveArc` for `[BTreeMap<usize, W>; V]`.
+- Implement `RemoveArc` for `[BTreeMap<usize, W>]`.
+- Implement `RemoveArc` for `[BTreeSet<usize>; V]`.
+- Implement `RemoveArc` for `[BTreeSet<usize>]`.
 
 Changed
 
-- `RemoveEdge::remove_edge` now returns a `bool` indicating whether it removed the edge.
+- `RemoveArc::remove_arc` now returns a `bool` indicating whether it removed the arc.
 
 ## [0.16.0] - 2024-04-17
 
@@ -1171,15 +1177,15 @@ Changed
 
 Added
 
-- Implement `IterWeightedEdges` for `Vec<BTreeMap<usize, W>>`.
-- Implement `IterWeightedEdges` for `Vec<BTreeSet<(usize, W)>>`.
-- Implement `IterWeightedEdges` for `[BTreeMap<usize, W>; V]`.
-- Implement `IterWeightedEdges` for `[BTreeMap<usize, W>]`.
-- Implement `IterWeightedEdges` for `[BTreeSet<(usize, W)>; V]`.
-- Implement `IterWeightedEdges` for `[BTreeSet<(usize, W)>]`.
-- Implement `IterWeightedEdges` for `BTreeMap<usize, Vec<(usize, W)>>`.
-- Implement `IterWeightedEdges` for `BTreeMap<usize, BTreeSet<(usize, W)>>`.
-- Implement `IterWeightedEdges` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement `IterWeightedArcs` for `Vec<BTreeMap<usize, W>>`.
+- Implement `IterWeightedArcs` for `Vec<BTreeSet<(usize, W)>>`.
+- Implement `IterWeightedArcs` for `[BTreeMap<usize, W>; V]`.
+- Implement `IterWeightedArcs` for `[BTreeMap<usize, W>]`.
+- Implement `IterWeightedArcs` for `[BTreeSet<(usize, W)>; V]`.
+- Implement `IterWeightedArcs` for `[BTreeSet<(usize, W)>]`.
+- Implement `IterWeightedArcs` for `BTreeMap<usize, Vec<(usize, W)>>`.
+- Implement `IterWeightedArcs` for `BTreeMap<usize, BTreeSet<(usize, W)>>`.
+- Implement `IterWeightedArcs` for `BTreeMap<usize, BTreeMap<usize, W>>`.
 
 ## [0.15.0] - 2024-04-16
 
@@ -1191,11 +1197,11 @@ Removed
 
 Added
 
-- Implement `IterEdges` for `BTreeMap<usize, BTreeSet<usize>>`.
-- Implement `IterEdges` for `BTreeMap<usize, Vec<usize>>`.
-- Implement `IterEdges` for `Vec<BTreeSet<usize>>`.
-- Implement `IterEdges` for `[BTreeSet<usize>; V]`.
-- Implement `IterEdges` for `[BTreeSet<usize>]`.
+- Implement `IterArcs` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `IterArcs` for `BTreeMap<usize, Vec<usize>>`.
+- Implement `IterArcs` for `Vec<BTreeSet<usize>>`.
+- Implement `IterArcs` for `[BTreeSet<usize>; V]`.
+- Implement `IterArcs` for `[BTreeSet<usize>]`.
 
 Fixes
 
@@ -1210,8 +1216,8 @@ Added
 - Implement `IsSimple` for `[BTreeSet<usize>; V]`.
 - Implement `IsSimple` for `BTreeSet<(usize, usize)>`.
 - Implement `IsSimple` for `BTreeSet<(usize, usize, W)>`.
-- Implement `IterAllEdges` for `BTreeSet<(usize, usize)>`.
-- Implement `IterAllWeightedEdges` for `BTreeSet<(usize, usize, W)>`.
+- Implement `IterAllArcs` for `BTreeSet<(usize, usize)>`.
+- Implement `IterAllWeightedArcs` for `BTreeSet<(usize, usize, W)>`.
 
 ## [0.14.0] - 2024-04-15
 
@@ -1249,15 +1255,15 @@ Fixed
 
 Added
 
-- Implement `IsEdge` for `BTreeMap<usize, BTreeMap<usize, W>>`.
-- Implement `IsEdge` for `BTreeMap<usize, BTreeSet<usize>>`.
-- Implement `IsEdge` for `BTreeSet<(usize, usize)>`.
-- Implement `IsEdge` for `Vec<BTreeMap<usize, W>>`.
-- Implement `IsEdge` for `Vec<BTreeSet<usize>>`.
-- Implement `IsEdge` for `[BTreeMap<usize, W>; V]`.
-- Implement `IsEdge` for `[BTreeMap<usize, W>]`.
-- Implement `IsEdge` for `[BTreeSet<usize>; V]`.
-- Implement `IsEdge` for `[BTreeSet<usize>]`.
+- Implement `IsArc` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement `IsArc` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `IsArc` for `BTreeSet<(usize, usize)>`.
+- Implement `IsArc` for `Vec<BTreeMap<usize, W>>`.
+- Implement `IsArc` for `Vec<BTreeSet<usize>>`.
+- Implement `IsArc` for `[BTreeMap<usize, W>; V]`.
+- Implement `IsArc` for `[BTreeMap<usize, W>]`.
+- Implement `IsArc` for `[BTreeSet<usize>; V]`.
+- Implement `IsArc` for `[BTreeSet<usize>]`.
 
 ## [0.13.0] - 2024-04-14
 
@@ -1302,8 +1308,8 @@ Added
 - Implement `Size` for `[BTreeMap<K, W>]`.
 - Implement `Size` for `[BTreeSet<T>; V]`.
 - Implement `Size` for `[BTreeSet<T>]`.
-- Implement `IsEdge` for `Vec<HashMap<usize, W>>`.
-- Implement `IsEdge` for `[HashMap<usize, W>; V]`.
+- Implement `IsArc` for `Vec<HashMap<usize, W>>`.
+- Implement `IsArc` for `[HashMap<usize, W>; V]`.
 
 Removed
 
@@ -1313,29 +1319,29 @@ Removed
 
 Added
 
-- Implement `AddWeightedEdge` for `BTreeMap<usize, BTreeMap<usize, W>>`.
-- Implement `AddWeightedEdge` for `BTreeMap<usize, BTreeSet<(usize, W)>>`.
-- Implement `AddWeightedEdge` for `BTreeMap<usize, Vec<(usize, W)>>`.
-- Implement `AddWeightedEdge` for `Vec<BTreeMap<usize, W>>`.
-- Implement `AddWeightedEdge` for `Vec<BTreeSet<(usize, W)>>`.
-- Implement `AddWeightedEdge` for `[BTreeMap<usize, W>; V]`.
-- Implement `AddWeightedEdge` for `[BTreeMap<usize, W>]`.
-- Implement `AddWeightedEdge` for `[BTreeSet<(usize, W)>; V]`.
-- Implement `AddWeightedEdge` for `[BTreeSet<(usize, W)>]`.
+- Implement `AddWeightedArc` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement `AddWeightedArc` for `BTreeMap<usize, BTreeSet<(usize, W)>>`.
+- Implement `AddWeightedArc` for `BTreeMap<usize, Vec<(usize, W)>>`.
+- Implement `AddWeightedArc` for `Vec<BTreeMap<usize, W>>`.
+- Implement `AddWeightedArc` for `Vec<BTreeSet<(usize, W)>>`.
+- Implement `AddWeightedArc` for `[BTreeMap<usize, W>; V]`.
+- Implement `AddWeightedArc` for `[BTreeMap<usize, W>]`.
+- Implement `AddWeightedArc` for `[BTreeSet<(usize, W)>; V]`.
+- Implement `AddWeightedArc` for `[BTreeSet<(usize, W)>]`.
 
 Changed
 
-- Breaking: `AddWeightedEdge` for `HashMap<_>` now panics if `s` is not in the graph.
+- Breaking: `AddWeightedArc` for `HashMap<_>` now panics if `s` is not in the graph.
 
 ## [0.11.1] - 2024-04-14
 
 Added
 
-- Implement `AddEdge` for `BTreeMap<usize, BTreeSet<usize>>`.
-- Implement `AddEdge` for `BTreeMap<usize, Vec<usize>>`.
-- Implement `AddEdge` for `Vec<BTreeSet<usize>>`.
-- Implement `AddEdge` for `[BTreeSet<usize>; V]`.
-- Implement `AddEdge` for `[BTreeSet<usize>]`.
+- Implement `AddArc` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `AddArc` for `BTreeMap<usize, Vec<usize>>`.
+- Implement `AddArc` for `Vec<BTreeSet<usize>>`.
+- Implement `AddArc` for `[BTreeSet<usize>; V]`.
+- Implement `AddArc` for `[BTreeSet<usize>]`.
 
 ## [0.11.0] - 2024-04-14
 
@@ -1343,40 +1349,40 @@ Added back `op` implementations for `Vec` and arrays to simplify use cases.
 
 Added
 
-- Implement `AddEdge` for `Vec<HashSet<usize>>`.
-- Implement `AddEdge` for `Vec<Vec<usizee>>`.
-- Implement `AddEdge` for `[HashSet<usize>; V]`.
-- Implement `AddEdge` for `[Vec<usize>; V]`.
-- Implement `AddWeightedEdge` for `Vec<HashMap<usize, W>>`.
-- Implement `AddWeightedEdge` for `Vec<HashSet<(usize, W)>>`.
-- Implement `AddWeightedEdge` for `Vec<Vec<(usize, W)>>`.
-- Implement `AddWeightedEdge` for `[HashMap<usize, W>; V]`.
-- Implement `AddWeightedEdge` for `[HashSet<(usize, W)>; V]`.
-- Implement `AddWeightedEdge` for `[Vec<(usize, W)>; V]`.
+- Implement `AddArc` for `Vec<HashSet<usize>>`.
+- Implement `AddArc` for `Vec<Vec<usizee>>`.
+- Implement `AddArc` for `[HashSet<usize>; V]`.
+- Implement `AddArc` for `[Vec<usize>; V]`.
+- Implement `AddWeightedArc` for `Vec<HashMap<usize, W>>`.
+- Implement `AddWeightedArc` for `Vec<HashSet<(usize, W)>>`.
+- Implement `AddWeightedArc` for `Vec<Vec<(usize, W)>>`.
+- Implement `AddWeightedArc` for `[HashMap<usize, W>; V]`.
+- Implement `AddWeightedArc` for `[HashSet<(usize, W)>; V]`.
+- Implement `AddWeightedArc` for `[Vec<(usize, W)>; V]`.
 - Implement `Size` for `Vec<HashMap<K, W>>`.
 - Implement `Size` for `Vec<HashSet<T>>`.
 - Implement `Size` for `Vec<Vec<T>>`.
 - Implement `Size` for `[HashMap<K, W>; V]`.
 - Implement `Size` for `[HashSet<T>; V]`.
 - Implement `Size` for `[Vec<T>; V]`.
-- Implement `EdgeWeight` for `Vec<HashMap<usize, W>>`.
-- Implement `EdgeWeight` for `[HashMap<usize, W>; V]`.
+- Implement `ArcWeight` for `Vec<HashMap<usize, W>>`.
+- Implement `ArcWeight` for `[HashMap<usize, W>; V]`.
 - Implement `Indegree` for `Vec<HashMap<usize, W>>`.
 - Implement `Indegree` for `Vec<HashSet<usize>>`.
 - Implement `Indegree` for `[HashMap<usize, W>; V]`.
 - Implement `Indegree` for `[HashSet<usize>; V]`.
-- Implement `IsEdge` for `Vec<HashSet<usize>>`.
-- Implement `IsEdge` for `[HashMap<usize, W>; V]`.
+- Implement `IsArc` for `Vec<HashSet<usize>>`.
+- Implement `IsArc` for `[HashMap<usize, W>; V]`.
 - Implement `IsSimple` for `Vec<(usize, usize)>`.
 - Implement `IsSimple` for `Vec<(usize, usize, W)>`.
 - Implement `IsSimple` for `Vec<HashSet<usize>>`.
 - Implement `IsSimple` for `[(usize, usize); V]`.
 - Implement `IsSimple` for `[(usize, usize, W); V]`.
 - Implement `IsSimple` for `[HashSet<usize>; V]`.
-- Implement `IterAllEdges` for `Vec<(usize, usize)>`.
-- Implement `IterAllEdges` for `[(usize, usize); V]`.
-- Implement `IterAllWeightedEdges` for `Vec<(usize, usize, W)>`.
-- Implement `IterAllWeightedEdges` for `[(usize, usize, W); V]`.
+- Implement `IterAllArcs` for `Vec<(usize, usize)>`.
+- Implement `IterAllArcs` for `[(usize, usize); V]`.
+- Implement `IterAllWeightedArcs` for `Vec<(usize, usize, W)>`.
+- Implement `IterAllWeightedArcs` for `[(usize, usize, W); V]`.
 - Implement `IterVertices` for `Vec<T>`.
 - Implement `IterVertices` for `[T; V]`.
 - Implement `Outdegree` for `Vec<HashMap<K, W>>`.
@@ -1385,17 +1391,17 @@ Added
 - Implement `Outdegree` for `[HashMap<K, W>; V]`.
 - Implement `Outdegree` for `[HashSet<T>; V]`.
 - Implement `Outdegree` for `[Vec<T>; V]`.
-- Implement `RemoveEdge` for `Vec<HashMap<usize, W>>`.
-- Implement `RemoveEdge` for `Vec<HashSet<usize>>`.
-- Implement `RemoveEdge` for `[HashMap<usize, W>; V]`.
-- Implement `RemoveEdge` for `[HashSet<usize>; V]`.
-- Test `add_edge_remove_edge` for `AdjacencyMatrix`.
-- Test `add_edge_remove_edge` for `Vec<HashSet<usize>>`.
-- Test `add_edge_remove_edge` for `[HashSet<usize>; V]`.
+- Implement `RemoveArc` for `Vec<HashMap<usize, W>>`.
+- Implement `RemoveArc` for `Vec<HashSet<usize>>`.
+- Implement `RemoveArc` for `[HashMap<usize, W>; V]`.
+- Implement `RemoveArc` for `[HashSet<usize>; V]`.
+- Test `add_arc_remove_arc` for `AdjacencyMatrix`.
+- Test `add_arc_remove_arc` for `Vec<HashSet<usize>>`.
+- Test `add_arc_remove_arc` for `[HashSet<usize>; V]`.
 
 Fixed
 
-- Remove stray `W` type parameter in `add_edge_remove_edge`.
+- Remove stray `W` type parameter in `add_arc_remove_arc`.
 
 ## [0.10.0] - 2024-04-12
 
@@ -1405,27 +1411,27 @@ Added
 
 Fixed
 
-- `IsSimple` now checks for parallel edges in `HashSet<(usize, usize, W)>`.
+- `IsSimple` now checks for parallel arcs in `HashSet<(usize, usize, W)>`.
 
 ## [0.9.0] - 2024-04-12
 
 Fixed
 
-- `IsSimple` now checks for parallel edges in `HashSet<(usize, usize)>`.
-- `IsSimple` now checks for parallel edges in `[(usize, usize)]`.
-- `IsSimple` now checks for parallel edges in `[(usize, usize, W)]`.
+- `IsSimple` now checks for parallel arcs in `HashSet<(usize, usize)>`.
+- `IsSimple` now checks for parallel arcs in `[(usize, usize)]`.
+- `IsSimple` now checks for parallel arcs in `[(usize, usize, W)]`.
 
 ## [0.8.4] - 2024-04-11
 
 Fixed
 
-- Add missing property `add_weighted_edge_remove_edge`.
+- Add missing property `add_weighted_arc_remove_arc`.
 
 ## [0.8.3] - 2024-04-11
 
 Added
 
-- Test `add_edge_is_edge` for implementors of `AddEdge` and `IsEdge`.
+- Test `add_arc_is_arc` for implementors of `AddArc` and `IsArc`.
 
 ## [0.8.2] - 2024-04-10
 
@@ -1446,8 +1452,8 @@ Added
 
 Removed
 
-- Remove `EdgeWeight` for `Vec<HashMap<usize, W>>`.
-- Remove `EdgeWeight` for `[HashMap<usize, W>; V]`.
+- Remove `ArcWeight` for `Vec<HashMap<usize, W>>`.
+- Remove `ArcWeight` for `[HashMap<usize, W>; V]`.
 - Remove `IterVertices` for `HashSet<T>`.
 
 ## [0.8.0] - 2024-04-09
@@ -1459,22 +1465,22 @@ Added
 
 Removed
 
-- Remove `AddEdge` for `Vec<HashSet<T>>`.
-- Remove `AddEdge` for `Vec<Vec<T>>`.
-- Remove `AddEdge` for `[HashSet<T>; V]`.
-- Remove `AddEdge` for `[Vec<T>; V]`.
-- Remove `AddWeightedEdge` for `Vec<HashMap<usize, W>>`.
-- Remove `AddWeightedEdge` for `Vec<HashSet<(usize, W)>>`.
-- Remove `AddWeightedEdge` for `Vec<Vec<(usize, W)>>`.
-- Remove `AddWeightedEdge` for `[HashMap<usize, W>; V]`.
-- Remove `AddWeightedEdge` for `[HashSet<(usize, W)>; V]`.
-- Remove `AddWeightedEdge` for `[Vec<(usize, W)>; V]`.
+- Remove `AddArc` for `Vec<HashSet<T>>`.
+- Remove `AddArc` for `Vec<Vec<T>>`.
+- Remove `AddArc` for `[HashSet<T>; V]`.
+- Remove `AddArc` for `[Vec<T>; V]`.
+- Remove `AddWeightedArc` for `Vec<HashMap<usize, W>>`.
+- Remove `AddWeightedArc` for `Vec<HashSet<(usize, W)>>`.
+- Remove `AddWeightedArc` for `Vec<Vec<(usize, W)>>`.
+- Remove `AddWeightedArc` for `[HashMap<usize, W>; V]`.
+- Remove `AddWeightedArc` for `[HashSet<(usize, W)>; V]`.
+- Remove `AddWeightedArc` for `[Vec<(usize, W)>; V]`.
 
 Changed
 
-- Change `iter_all_edges` return type to `impl Iterator<Item = (usize, usize)>`.
-- Change `iter_all_weighted_edges` return type to `impl Iterator<Item = (usize, usize, &W)>`.
-- Change `iter_weighted_edges` return type to `impl Iterator<Item = (usize, &W)>`.
+- Change `iter_all_arcs` return type to `impl Iterator<Item = (usize, usize)>`.
+- Change `iter_all_weighted_arcs` return type to `impl Iterator<Item = (usize, usize, &W)>`.
+- Change `iter_weighted_arcs` return type to `impl Iterator<Item = (usize, &W)>`.
 
 ## [0.7.0] - 2024-04-07
 
@@ -1484,28 +1490,28 @@ Added
 - Implement `Size` for `[HashSet<T>]`.
 - Implement `Size` for `[Vec<T>]`.
 - Implement `Order` for `[T]`.
-- Implement `EdgeWeight` for `[HashMap<usize, W>]`.
+- Implement `ArcWeight` for `[HashMap<usize, W>]`.
 - Implement `Indegree` for `[HashMap<usize, W>]`.
 - Implement `Indegree` for `[HashSet<usize>]`.
-- Implement `IsEdge` for `[HashMap<usize, W>]`.
-- Implement `IsEdge` for `[HashSet<usize>]`.
-- Implement `IterAllEdges` for `[(usize, usize)]`.
-- Implement `IterAllWeightedEdges` for `[(usize, usize, W)]`.
-- Implement `IterEdges` for `[HashSet<usize>]`.
-- Implement `IterEdges` for `[Vec<usize>]`.
+- Implement `IsArc` for `[HashMap<usize, W>]`.
+- Implement `IsArc` for `[HashSet<usize>]`.
+- Implement `IterAllArcs` for `[(usize, usize)]`.
+- Implement `IterAllWeightedArcs` for `[(usize, usize, W)]`.
+- Implement `IterArcs` for `[HashSet<usize>]`.
+- Implement `IterArcs` for `[Vec<usize>]`.
 - Implement `IterVertices` for `&[T]`.
-- Implement `IterWeightedEdges` for `[HashMap<usize, W>]`.
-- Implement `IterWeightedEdges` for `[HashSet<(usize, W)>]`.
-- Implement `IterWeightedEdges` for `[Vec<(usize, W)>]`.
+- Implement `IterWeightedArcs` for `[HashMap<usize, W>]`.
+- Implement `IterWeightedArcs` for `[HashSet<(usize, W)>]`.
+- Implement `IterWeightedArcs` for `[Vec<(usize, W)>]`.
 - Implement `Outdegree` for `[HashMap<K, W>]`.
 - Implement `Outdegree` for `[HashSet<T>]`.
 - Implement `Outdegree` for `[Vec<T>]`.
-- Implement `RemoveEdge` for `[HashMap<usize, W>]`.
-- Implement `RemoveEdge` for `[HashSet<usize>]`.
+- Implement `RemoveArc` for `[HashMap<usize, W>]`.
+- Implement `RemoveArc` for `[HashSet<usize>]`.
 
 Changed
 
-- Return `(&'a usize, &'a W)` from `iter_weighted_edges`.
+- Return `(&'a usize, &'a W)` from `iter_weighted_arcs`.
 
 Removed
 
@@ -1519,14 +1525,14 @@ Removed
 - Remove `Indegree` for `Vec<HashSet<usize>>`.
 - Remove `Indegree` for `[HashMap<usize, W>; V]`.
 - Remove `Indegree` for `[HashSet<usize>; V]`.
-- Remove `IsEdge` for `Vec<HashMap<usize, W>>`.
-- Remove `IsEdge` for `Vec<HashSet<usize>>`.
-- Remove `IsEdge` for `[HashMap<usize, W>; V]`.
-- Remove `IsEdge` for `[HashSet<usize>; V]`.
-- Remove `IterAllEdges` for `Vec<(usize, usize)>`.
-- Remove `IterAllEdges` for `[(usize, usize); V]`.
-- Remove `IterAllWeightedEdges` for `Vec<(usize, usize, W)>`.
-- Remove `IterAllWeightedEdges` for `[(usize, usize, W); V]`.
+- Remove `IsArc` for `Vec<HashMap<usize, W>>`.
+- Remove `IsArc` for `Vec<HashSet<usize>>`.
+- Remove `IsArc` for `[HashMap<usize, W>; V]`.
+- Remove `IsArc` for `[HashSet<usize>; V]`.
+- Remove `IterAllArcs` for `Vec<(usize, usize)>`.
+- Remove `IterAllArcs` for `[(usize, usize); V]`.
+- Remove `IterAllWeightedArcs` for `Vec<(usize, usize, W)>`.
+- Remove `IterAllWeightedArcs` for `[(usize, usize, W); V]`.
 - Remove `IterVertices` for `Vec<T>`.
 - Remove `IterVertices` for `[T; V]`.
 - Remove `Outdegree` for `Vec<HashMap<usize, W>>`.
@@ -1535,10 +1541,10 @@ Removed
 - Remove `Outdegree` for `[HashMap<usize, W>; V]>`.
 - Remove `Outdegree` for `[HashSet<usize>; V]>`.
 - Remove `Outdegree` for `[Vec<T>; V]`.
-- Remove `RemoveEdge` for `Vec<HashMap<usize, W>>`.
-- Remove `RemoveEdge` for `Vec<HashSet<usize>>`.
-- Remove `RemoveEdge` for `[HashMap<usize, W>; V]`.
-- Remove `RemoveEdge` for `[HashSet<usize>; V]`.
+- Remove `RemoveArc` for `Vec<HashMap<usize, W>>`.
+- Remove `RemoveArc` for `Vec<HashSet<usize>>`.
+- Remove `RemoveArc` for `[HashMap<usize, W>; V]`.
+- Remove `RemoveArc` for `[HashSet<usize>; V]`.
 
 ## [0.6.3] - 2024-04-06
 
@@ -1552,13 +1558,13 @@ Added
 
 - Add more tests to `algo::bfs`.
 - Add more tests to `algo::dijkstra`.
-- Implement `AddEdge` for `[HashSet<usize>]`.
-- Implement `AddEdge` for `[Vec<usize>]`.
-- Implement `AddWeightedEdge` for `[HashMap<usize, W>]`.
-- Implement `AddWeightedEdge` for `[HashSet<(usize, W)>]`.
-- Implement `AddWeightedEdge` for `[Vec<(usize, W)>]`.
-- Implement `IterAllEdges` for `[(usize, usize)]`.
-- Implement `IterAllWeightedEdges` for `[(usize, usize, W)]`.
+- Implement `AddArc` for `[HashSet<usize>]`.
+- Implement `AddArc` for `[Vec<usize>]`.
+- Implement `AddWeightedArc` for `[HashMap<usize, W>]`.
+- Implement `AddWeightedArc` for `[HashSet<(usize, W)>]`.
+- Implement `AddWeightedArc` for `[Vec<(usize, W)>]`.
+- Implement `IterAllArcs` for `[(usize, usize)]`.
+- Implement `IterAllWeightedArcs` for `[(usize, usize, W)]`.
 
 ## [0.6.1] - 2024-04-06
 
@@ -1578,19 +1584,19 @@ Added
 - Add `authors` to `README.md`.
 - Add a doctest for `AdjacencyMatrix::new`.
 - Add a doctest for `AdjacencyMatrix::toggle`.
-- Add implementation documentation for `AddEdge`.
-- Add implementation documentation for `AddWeightedEdge`.
+- Add implementation documentation for `AddArc`.
+- Add implementation documentation for `AddWeightedArc`.
 - Add implementation documentation for `Size`.
 - Add implementation documentation for `Order`.
-- Add implementation documentation for `EdgeWeight`.
+- Add implementation documentation for `ArcWeight`.
 - Add implementation documentation for `Indegree`.
-- Add implementation documentation for `IsEdge`.
-- Add implementation documentation for `IterAllEdges`.
-- Add implementation documentation for `IterAllWeightedEdges`.
-- Add implementation documentation for `IterEdges`.
-- Add implementation documentation for `IterWeightedEdges`.
+- Add implementation documentation for `IsArc`.
+- Add implementation documentation for `IterAllArcs`.
+- Add implementation documentation for `IterAllWeightedArcs`.
+- Add implementation documentation for `IterArcs`.
+- Add implementation documentation for `IterWeightedArcs`.
 - Add implementation documentation for `Outdegree`.
-- Add implementation documentation for `RemoveEdge`.
+- Add implementation documentation for `RemoveArc`.
 
 Changed
 
@@ -1603,39 +1609,39 @@ Changed
 
 Added
 
-- Add a doctest for `op::add_weighted_edge::AddWeightedEdge`.
+- Add a doctest for `op::add_weighted_arc::AddWeightedArc`.
 - Add a doctest for `op::size::Size`.
 - Add a doctest for `op::order::Order`.
-- Add a doctest for `op::edge_weight::EdgeWeight`.
+- Add a doctest for `op::arc_weight::ArcWeight`.
 - Add a doctest for `op::indegree::Indegree`.
-- Add a doctest for `op::is_edge::IsEdge`.
-- Add a doctest for `op::iter_all_edges::IterAllEdges`.
-- Add a doctest for `op::iter_all_weighted_edges::IterAllWeightedEdges`.
-- Add a doctest for `op::iter_edges::IterEdges`.
+- Add a doctest for `op::is_arc::IsArc`.
+- Add a doctest for `op::iter_all_arcs::IterAllArcs`.
+- Add a doctest for `op::iter_all_weighted_arcs::IterAllWeightedArcs`.
+- Add a doctest for `op::iter_arcs::IterArcs`.
 - Add a doctest for `op::iter_vertices::IterVertices`.
-- Add a doctest for `op::iter_weighted_edges::IterWeightedEdges`.
+- Add a doctest for `op::iter_weighted_arcs::IterWeightedArcs`.
 - Add a doctest for `op::outdegree::OutDegree`.
-- Add a doctest for `op::remove_edge::RemoveEdge`.
-- Add documentation for `op::add_weighted_edge`.
+- Add a doctest for `op::remove_arc::RemoveArc`.
+- Add documentation for `op::add_weighted_arc`.
 - Add documentation for `op::size`.
 - Add documentation for `op::order`.
-- Add documentation for `op::edge_weight`.
+- Add documentation for `op::arc_weight`.
 - Add documentation for `op::indegree`.
-- Add documentation for `op::is_edge`.
-- Add documentation for `op::iter_all_edges`.
-- Add documentation for `op::iter_all_weighted_edges`.
-- Add documentation for `op::iter_edges`.
+- Add documentation for `op::is_arc`.
+- Add documentation for `op::iter_all_arcs`.
+- Add documentation for `op::iter_all_weighted_arcs`.
+- Add documentation for `op::iter_arcs`.
 - Add documentation for `op::iter_vertices`.
-- Add documentation for `op::iter_weighted_edges`.
+- Add documentation for `op::iter_weighted_arcs`.
 - Add documentation for `op::outdegree`.
-- Add documentation for `op::remove_edge`.
+- Add documentation for `op::remove_arc`.
 
 ## [0.5.2] - 2024-04-04
 
 Added
 
-- Add doctest for `op::add_edge::AddEdge`.
-- Add documentation for `op::add_edge`.
+- Add doctest for `op::add_arc::AddArc`.
+- Add documentation for `op::add_arc`.
 - Add module-level doctest for `algo::bfs`.
 - Add module-level doctest for `algo::dijkstra`.
 
@@ -1651,10 +1657,10 @@ Added
 Added
 
 - Implement `Indegree` for `HashMap<usize, HashMap<usize, W>>`.
-- Implement `IsEdge` for `HashSet<(usize, usize)>`.
+- Implement `IsArc` for `HashSet<(usize, usize)>`.
 - Implement `IterVertices` for `HashSet<T>`.
-- Implement `IterWeightedEdges` for `Vec<HashMap<usize, W>>`.
-- Implement `IterWeightedEdges` for `[HashMap<usize, W>; V]`.
+- Implement `IterWeightedArcs` for `Vec<HashMap<usize, W>>`.
+- Implement `IterWeightedArcs` for `[HashMap<usize, W>; V]`.
 - Implement `Outdegree` for `Vec<HashMap<usize, W>>`.
 - Implement `Outdegree` for `[HashMap<usize, W>; V]`.
 

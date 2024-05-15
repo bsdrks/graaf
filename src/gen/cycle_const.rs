@@ -52,7 +52,7 @@ use {
 /// where
 ///     H: BuildHasher,
 /// {
-///     edges: [HashSet<usize, H>; V],
+///     arcs: [HashSet<usize, H>; V],
 /// }
 ///
 /// impl<const V: usize, H> CycleConst for Graph<V, H>
@@ -65,22 +65,22 @@ use {
 ///     fn cycle() -> Self {
 ///         assert!(V > 0, "a graph must have at least one vertex");
 ///
-///         let mut edges = from_fn(|_| HashSet::with_hasher(H::default()));
+///         let mut arcs = from_fn(|_| HashSet::with_hasher(H::default()));
 ///
-///         for (s, set) in edges.iter_mut().enumerate().take(V - 1) {
+///         for (s, set) in arcs.iter_mut().enumerate().take(V - 1) {
 ///             let _ = set.insert(s + 1);
 ///         }
 ///
-///         let _ = edges[V - 1].insert(0);
+///         let _ = arcs[V - 1].insert(0);
 ///
-///         Graph { edges }
+///         Graph { arcs }
 ///     }
 /// }
 ///
 /// let graph = Graph::<3, RandomState>::cycle();
 ///
 /// assert_eq!(
-///     graph.edges,
+///     graph.arcs,
 ///     [HashSet::from([1]), HashSet::from([2]), HashSet::from([0])]
 /// );
 /// ```

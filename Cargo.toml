@@ -27,8 +27,8 @@ default = ["adjacency_matrix"]
 adjacency_matrix = []
 
 [[bench]]
-name = "add_edge"
-path = "benches/op/add_edge.rs"
+name = "add_arc"
+path = "benches/op/add_arc.rs"
 harness = false
 
 [[bench]]

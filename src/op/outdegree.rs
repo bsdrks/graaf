@@ -2,7 +2,7 @@
 #![doc(alias = "outward_demidegree")]
 //! A trait to get the outdegree of a given vertex in a directed graph
 //!
-//! The outdegree is the number of edges incident out of a vertex.
+//! The outdegree is the number of arcs incident out of a vertex.
 //!
 //! # Examples
 //!
@@ -42,12 +42,12 @@ use {
 /// use graaf::op::Outdegree;
 ///
 /// struct Graph {
-///     edges: Vec<Vec<usize>>,
+///     arcs: Vec<Vec<usize>>,
 /// }
 ///
 /// impl Outdegree for Graph {
 ///     fn outdegree(&self, s: usize) -> usize {
-///         self.edges.get(s).map_or(0, Vec::len)
+///         self.arcs.get(s).map_or(0, Vec::len)
 ///     }
 /// }
 /// ```
@@ -281,8 +281,8 @@ mod tests {
                 EmptyConst,
             },
             op::{
-                AddEdge,
-                AddWeightedEdge,
+                AddArc,
+                AddWeightedArc,
             },
         },
     };
@@ -298,10 +298,10 @@ mod tests {
 
     macro_rules! test_outdegree_unweighted {
         ($graph:expr) => {
-            $graph.add_edge(0, 1);
-            $graph.add_edge(0, 2);
-            $graph.add_edge(1, 0);
-            $graph.add_edge(2, 1);
+            $graph.add_arc(0, 1);
+            $graph.add_arc(0, 2);
+            $graph.add_arc(1, 0);
+            $graph.add_arc(2, 1);
 
             test_outdegree!($graph);
         };
@@ -309,10 +309,10 @@ mod tests {
 
     macro_rules! test_outdegree_weighted {
         ($graph:expr) => {
-            $graph.add_weighted_edge(0, 1, 1);
-            $graph.add_weighted_edge(0, 2, 2);
-            $graph.add_weighted_edge(1, 0, 3);
-            $graph.add_weighted_edge(2, 1, 4);
+            $graph.add_weighted_arc(0, 1, 1);
+            $graph.add_weighted_arc(0, 2, 2);
+            $graph.add_weighted_arc(1, 0, 3);
+            $graph.add_weighted_arc(2, 1, 4);
 
             test_outdegree!($graph);
         };

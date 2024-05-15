@@ -1,10 +1,10 @@
-//! A trait to remove an edge from a directed graph
+//! A trait to remove an arc from a directed graph
 //!
 //! # Examples
 //!
 //! ```
 //! use {
-//!     graaf::op::RemoveEdge,
+//!     graaf::op::RemoveArc,
 //!     std::collections::HashSet,
 //! };
 //!
@@ -14,28 +14,28 @@
 //!     HashSet::from([1]),
 //! ];
 //!
-//! assert!(graph.remove_edge(0, 1));
+//! assert!(graph.remove_arc(0, 1));
 //!
 //! assert_eq!(
 //!     graph,
 //!     vec![HashSet::from([2]), HashSet::from([0]), HashSet::from([1])]
 //! );
 //!
-//! assert!(graph.remove_edge(0, 2));
+//! assert!(graph.remove_arc(0, 2));
 //!
 //! assert_eq!(
 //!     graph,
 //!     vec![HashSet::new(), HashSet::from([0]), HashSet::from([1])]
 //! );
 //!
-//! assert!(graph.remove_edge(1, 0));
+//! assert!(graph.remove_arc(1, 0));
 //!
 //! assert_eq!(
 //!     graph,
 //!     vec![HashSet::new(), HashSet::new(), HashSet::from([1])]
 //! );
 //!
-//! graph.remove_edge(2, 1);
+//! graph.remove_arc(2, 1);
 //!
 //! assert_eq!(graph, vec![HashSet::new(), HashSet::new(), HashSet::new()]);
 //! ```
@@ -54,26 +54,26 @@ use {
     },
 };
 
-/// A trait to remove an edge from a directed graph
+/// A trait to remove an arc from a directed graph
 ///
-/// # How can I implement `RemoveEdge`?
+/// # How can I implement `RemoveArc`?
 ///
-/// Provide an implementation of `remove_edge` that removes the edge from `s` to
-/// `t` from a directed graph. Return whether the edge was removed.
+/// Provide an implementation of `remove_arc` that removes the arc from `s` to
+/// `t` from a directed graph. Return whether the arc was removed.
 ///
 /// ```
 /// use {
-///     graaf::op::RemoveEdge,
+///     graaf::op::RemoveArc,
 ///     std::collections::HashSet,
 /// };
 ///
 /// struct Graph {
-///     edges: Vec<HashSet<usize>>,
+///     arcs: Vec<HashSet<usize>>,
 /// }
 ///
-/// impl RemoveEdge for Graph {
-///     fn remove_edge(&mut self, s: usize, t: usize) -> bool {
-///         self.edges[s].remove(&t)
+/// impl RemoveArc for Graph {
+///     fn remove_arc(&mut self, s: usize, t: usize) -> bool {
+///         self.arcs[s].remove(&t)
 ///     }
 /// }
 /// ```
@@ -82,7 +82,7 @@ use {
 ///
 /// ```
 /// use {
-///     graaf::op::RemoveEdge,
+///     graaf::op::RemoveArc,
 ///     std::collections::HashSet,
 /// };
 ///
@@ -92,212 +92,212 @@ use {
 ///     HashSet::from([1]),
 /// ];
 ///
-/// assert!(graph.remove_edge(0, 1));
+/// assert!(graph.remove_arc(0, 1));
 ///
 /// assert_eq!(
 ///     graph,
 ///     vec![HashSet::from([2]), HashSet::from([0]), HashSet::from([1])]
 /// );
 ///
-/// assert!(graph.remove_edge(0, 2));
+/// assert!(graph.remove_arc(0, 2));
 ///
 /// assert_eq!(
 ///     graph,
 ///     vec![HashSet::new(), HashSet::from([0]), HashSet::from([1])]
 /// );
 ///
-/// assert!(graph.remove_edge(1, 0));
+/// assert!(graph.remove_arc(1, 0));
 ///
 /// assert_eq!(
 ///     graph,
 ///     vec![HashSet::new(), HashSet::new(), HashSet::from([1])]
 /// );
 ///
-/// graph.remove_edge(2, 1);
+/// graph.remove_arc(2, 1);
 ///
 /// assert_eq!(graph, vec![HashSet::new(), HashSet::new(), HashSet::new()]);
 /// ```
 ///
 /// # Properties
 ///
-/// ## `RemoveEdge` and `AddEdge`
+/// ## `RemoveArc` and `AddArc`
 ///
-/// Types that also implement [`AddEdge`] should ensure that
-/// [`add_edge_remove_edge`] holds.
+/// Types that also implement [`AddArc`] should ensure that
+/// [`add_arc_remove_arc`] holds.
 ///
-/// ## `RemoveEdge` and `AddWeightedEdge`
+/// ## `RemoveArc` and `AddWeightedArc`
 ///
-/// Types that also implement [`AddWeightedEdge`] should ensure that
-/// [`add_weighted_edge_remove_edge`] holds.
+/// Types that also implement [`AddWeightedArc`] should ensure that
+/// [`add_weighted_arc_remove_arc`] holds.
 ///
-/// [`AddEdge`]: crate::op::AddEdge
-/// [`AddWeightedEdge`]: crate::op::AddWeightedEdge
-/// [`add_edge_remove_edge`]: crate::prop::add_edge_remove_edge
-/// [`add_weighted_edge_remove_edge`]: crate::prop::add_weighted_edge_remove_edge
-pub trait RemoveEdge {
-    /// Removes the edge from `s` to `t` from a graph. Returns whether the
-    /// edge was removed.
+/// [`AddArc`]: crate::op::AddArc
+/// [`AddWeightedArc`]: crate::op::AddWeightedArc
+/// [`add_arc_remove_arc`]: crate::prop::add_arc_remove_arc
+/// [`add_weighted_arc_remove_arc`]: crate::prop::add_weighted_arc_remove_arc
+pub trait RemoveArc {
+    /// Removes the arc from `s` to `t` from a graph. Returns whether the
+    /// arc was removed.
     ///
     /// # Arguments
     ///
     /// * `s`: The source vertex.
     /// * `t`: The target vertex.
-    fn remove_edge(&mut self, s: usize, t: usize) -> bool;
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool;
 }
 
-impl RemoveEdge for Vec<BTreeSet<usize>> {
+impl RemoveArc for Vec<BTreeSet<usize>> {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self[s].remove(&t)
     }
 }
 
-impl<H> RemoveEdge for Vec<HashSet<usize, H>>
+impl<H> RemoveArc for Vec<HashSet<usize, H>>
 where
     H: BuildHasher,
 {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self[s].remove(&t)
     }
 }
 
-impl<W> RemoveEdge for Vec<BTreeMap<usize, W>> {
+impl<W> RemoveArc for Vec<BTreeMap<usize, W>> {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self[s].remove(&t).is_some()
     }
 }
 
-impl<W, H> RemoveEdge for Vec<HashMap<usize, W, H>>
+impl<W, H> RemoveArc for Vec<HashMap<usize, W, H>>
 where
     H: BuildHasher,
 {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self[s].remove(&t).is_some()
     }
 }
 
-impl RemoveEdge for [BTreeSet<usize>] {
+impl RemoveArc for [BTreeSet<usize>] {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self[s].remove(&t)
     }
 }
 
-impl<H> RemoveEdge for [HashSet<usize, H>]
+impl<H> RemoveArc for [HashSet<usize, H>]
 where
     H: BuildHasher,
 {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self[s].remove(&t)
     }
 }
 
-impl<W> RemoveEdge for [BTreeMap<usize, W>] {
+impl<W> RemoveArc for [BTreeMap<usize, W>] {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self[s].remove(&t).is_some()
     }
 }
 
-impl<W, H> RemoveEdge for [HashMap<usize, W, H>]
+impl<W, H> RemoveArc for [HashMap<usize, W, H>]
 where
     H: BuildHasher,
 {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self[s].remove(&t).is_some()
     }
 }
 
-impl<const V: usize> RemoveEdge for [BTreeSet<usize>; V] {
+impl<const V: usize> RemoveArc for [BTreeSet<usize>; V] {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self[s].remove(&t)
     }
 }
 
-impl<const V: usize, H> RemoveEdge for [HashSet<usize, H>; V]
+impl<const V: usize, H> RemoveArc for [HashSet<usize, H>; V]
 where
     H: BuildHasher,
 {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self[s].remove(&t)
     }
 }
 
-impl<const V: usize, W> RemoveEdge for [BTreeMap<usize, W>; V] {
+impl<const V: usize, W> RemoveArc for [BTreeMap<usize, W>; V] {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self[s].remove(&t).is_some()
     }
 }
 
-impl<const V: usize, W, H> RemoveEdge for [HashMap<usize, W, H>; V]
+impl<const V: usize, W, H> RemoveArc for [HashMap<usize, W, H>; V]
 where
     H: BuildHasher,
 {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self[s].remove(&t).is_some()
     }
 }
 
-impl RemoveEdge for BTreeMap<usize, BTreeSet<usize>> {
-    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+impl RemoveArc for BTreeMap<usize, BTreeSet<usize>> {
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self.get_mut(&s).map(|set| set.remove(&t)).unwrap()
     }
 }
 
-impl<W> RemoveEdge for BTreeMap<usize, BTreeMap<usize, W>> {
-    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+impl<W> RemoveArc for BTreeMap<usize, BTreeMap<usize, W>> {
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self.get_mut(&s)
             .map_or(false, |map| map.remove(&t).is_some())
     }
 }
 
-impl<H> RemoveEdge for HashMap<usize, HashSet<usize, H>, H>
+impl<H> RemoveArc for HashMap<usize, HashSet<usize, H>, H>
 where
     H: BuildHasher,
 {
-    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self.get_mut(&s).map(|set| set.remove(&t)).unwrap()
     }
 }
 
-impl<W, H> RemoveEdge for HashMap<usize, HashMap<usize, W, H>, H>
+impl<W, H> RemoveArc for HashMap<usize, HashMap<usize, W, H>, H>
 where
     H: BuildHasher,
 {
-    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self.get_mut(&s)
             .map_or(false, |map| map.remove(&t).is_some())
     }
@@ -324,7 +324,7 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_edge(0, 1));
+        assert!(graph.remove_arc(0, 1));
 
         assert_eq!(
             graph,
@@ -335,14 +335,14 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_edge(0, 2));
+        assert!(graph.remove_arc(0, 2));
 
         assert_eq!(
             graph,
             vec![BTreeSet::new(), BTreeSet::from([0]), BTreeSet::from([1])]
         );
 
-        assert!(graph.remove_edge(1, 0));
+        assert!(graph.remove_arc(1, 0));
 
         assert_eq!(
             graph,
@@ -367,7 +367,7 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_edge(0, 1));
+        assert!(graph.remove_arc(0, 1));
 
         assert_eq!(
             graph,
@@ -378,7 +378,7 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_edge(0, 2));
+        assert!(graph.remove_arc(0, 2));
 
         assert_eq!(
             graph,
@@ -389,7 +389,7 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_edge(1, 0));
+        assert!(graph.remove_arc(1, 0));
 
         assert_eq!(
             graph,
@@ -407,21 +407,21 @@ mod tests {
             &[BTreeSet::from([1, 2]), BTreeSet::from([2]), BTreeSet::new()]
         );
 
-        assert!(graph.remove_edge(0, 1));
+        assert!(graph.remove_arc(0, 1));
 
         assert_eq!(
             graph,
             vec![BTreeSet::from([2]), BTreeSet::from([2]), BTreeSet::new()]
         );
 
-        assert!(graph.remove_edge(0, 2));
+        assert!(graph.remove_arc(0, 2));
 
         assert_eq!(
             graph,
             vec![BTreeSet::new(), BTreeSet::from([2]), BTreeSet::new()]
         );
 
-        assert!(graph.remove_edge(1, 2));
+        assert!(graph.remove_arc(1, 2));
 
         assert_eq!(
             graph,
@@ -446,7 +446,7 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_edge(0, 1));
+        assert!(graph.remove_arc(0, 1));
 
         assert_eq!(
             graph,
@@ -457,7 +457,7 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_edge(0, 2));
+        assert!(graph.remove_arc(0, 2));
 
         assert_eq!(
             graph,
@@ -468,7 +468,7 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_edge(1, 0));
+        assert!(graph.remove_arc(1, 0));
 
         assert_eq!(
             graph,
@@ -493,7 +493,7 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_edge(0, 1));
+        assert!(graph.remove_arc(0, 1));
 
         assert_eq!(
             graph,
@@ -504,14 +504,14 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_edge(0, 2));
+        assert!(graph.remove_arc(0, 2));
 
         assert_eq!(
             graph,
             [BTreeSet::new(), BTreeSet::from([0]), BTreeSet::from([1])]
         );
 
-        assert!(graph.remove_edge(1, 0));
+        assert!(graph.remove_arc(1, 0));
 
         assert_eq!(
             graph,
@@ -536,7 +536,7 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_edge(0, 1));
+        assert!(graph.remove_arc(0, 1));
 
         assert_eq!(
             graph,
@@ -547,7 +547,7 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_edge(0, 2));
+        assert!(graph.remove_arc(0, 2));
 
         assert_eq!(
             graph,
@@ -558,7 +558,7 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_edge(1, 0));
+        assert!(graph.remove_arc(1, 0));
 
         assert_eq!(
             graph,
@@ -583,7 +583,7 @@ mod tests {
             ])
         );
 
-        assert!(graph.remove_edge(0, 1));
+        assert!(graph.remove_arc(0, 1));
 
         assert_eq!(
             graph,
@@ -594,7 +594,7 @@ mod tests {
             ])
         );
 
-        assert!(graph.remove_edge(0, 2));
+        assert!(graph.remove_arc(0, 2));
 
         assert_eq!(
             graph,
@@ -605,7 +605,7 @@ mod tests {
             ])
         );
 
-        assert!(graph.remove_edge(1, 0));
+        assert!(graph.remove_arc(1, 0));
 
         assert_eq!(
             graph,
@@ -634,7 +634,7 @@ mod tests {
             ])
         );
 
-        assert!(graph.remove_edge(0, 1));
+        assert!(graph.remove_arc(0, 1));
 
         assert_eq!(
             graph,
@@ -645,7 +645,7 @@ mod tests {
             ])
         );
 
-        assert!(graph.remove_edge(0, 2));
+        assert!(graph.remove_arc(0, 2));
 
         assert_eq!(
             graph,
@@ -656,7 +656,7 @@ mod tests {
             ])
         );
 
-        assert!(graph.remove_edge(1, 0));
+        assert!(graph.remove_arc(1, 0));
 
         assert_eq!(
             graph,
@@ -685,21 +685,21 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_edge(0, 1));
+        assert!(graph.remove_arc(0, 1));
 
         assert_eq!(
             graph,
             vec![HashSet::from([2]), HashSet::from([0]), HashSet::from([1])]
         );
 
-        assert!(graph.remove_edge(0, 2));
+        assert!(graph.remove_arc(0, 2));
 
         assert_eq!(
             graph,
             vec![HashSet::new(), HashSet::from([0]), HashSet::from([1])]
         );
 
-        assert!(graph.remove_edge(1, 0));
+        assert!(graph.remove_arc(1, 0));
 
         assert_eq!(
             graph,
@@ -724,7 +724,7 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_edge(0, 1));
+        assert!(graph.remove_arc(0, 1));
 
         assert_eq!(
             graph,
@@ -735,7 +735,7 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_edge(0, 2));
+        assert!(graph.remove_arc(0, 2));
 
         assert_eq!(
             graph,
@@ -746,7 +746,7 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_edge(1, 0));
+        assert!(graph.remove_arc(1, 0));
 
         assert_eq!(
             graph,
@@ -764,21 +764,21 @@ mod tests {
             &[HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()]
         );
 
-        assert!(graph.remove_edge(0, 1));
+        assert!(graph.remove_arc(0, 1));
 
         assert_eq!(
             graph,
             vec![HashSet::from([2]), HashSet::from([2]), HashSet::new()]
         );
 
-        assert!(graph.remove_edge(0, 2));
+        assert!(graph.remove_arc(0, 2));
 
         assert_eq!(
             graph,
             vec![HashSet::new(), HashSet::from([2]), HashSet::new()]
         );
 
-        assert!(graph.remove_edge(1, 2));
+        assert!(graph.remove_arc(1, 2));
 
         assert_eq!(graph, vec![HashSet::new(), HashSet::new(), HashSet::new()]);
     }
@@ -800,7 +800,7 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_edge(0, 1));
+        assert!(graph.remove_arc(0, 1));
 
         assert_eq!(
             graph,
@@ -811,7 +811,7 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_edge(0, 2));
+        assert!(graph.remove_arc(0, 2));
 
         assert_eq!(
             graph,
@@ -822,7 +822,7 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_edge(1, 0));
+        assert!(graph.remove_arc(1, 0));
 
         assert_eq!(
             graph,
@@ -847,21 +847,21 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_edge(0, 1));
+        assert!(graph.remove_arc(0, 1));
 
         assert_eq!(
             graph,
             [HashSet::from([2]), HashSet::from([0]), HashSet::from([1])]
         );
 
-        assert!(graph.remove_edge(0, 2));
+        assert!(graph.remove_arc(0, 2));
 
         assert_eq!(
             graph,
             [HashSet::new(), HashSet::from([0]), HashSet::from([1])]
         );
 
-        assert!(graph.remove_edge(1, 0));
+        assert!(graph.remove_arc(1, 0));
 
         assert_eq!(graph, [HashSet::new(), HashSet::new(), HashSet::from([1])]);
     }
@@ -883,7 +883,7 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_edge(0, 1));
+        assert!(graph.remove_arc(0, 1));
 
         assert_eq!(
             graph,
@@ -894,7 +894,7 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_edge(0, 2));
+        assert!(graph.remove_arc(0, 2));
 
         assert_eq!(
             graph,
@@ -905,7 +905,7 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_edge(1, 0));
+        assert!(graph.remove_arc(1, 0));
 
         assert_eq!(
             graph,
@@ -930,7 +930,7 @@ mod tests {
             ])
         );
 
-        assert!(graph.remove_edge(0, 1));
+        assert!(graph.remove_arc(0, 1));
 
         assert_eq!(
             graph,
@@ -941,7 +941,7 @@ mod tests {
             ])
         );
 
-        assert!(graph.remove_edge(0, 2));
+        assert!(graph.remove_arc(0, 2));
 
         assert_eq!(
             graph,
@@ -952,7 +952,7 @@ mod tests {
             ])
         );
 
-        assert!(graph.remove_edge(1, 0));
+        assert!(graph.remove_arc(1, 0));
 
         assert_eq!(
             graph,
@@ -981,7 +981,7 @@ mod tests {
             ])
         );
 
-        assert!(graph.remove_edge(0, 1));
+        assert!(graph.remove_arc(0, 1));
 
         assert_eq!(
             graph,
@@ -992,7 +992,7 @@ mod tests {
             ])
         );
 
-        assert!(graph.remove_edge(0, 2));
+        assert!(graph.remove_arc(0, 2));
 
         assert_eq!(
             graph,
@@ -1003,7 +1003,7 @@ mod tests {
             ])
         );
 
-        assert!(graph.remove_edge(1, 0));
+        assert!(graph.remove_arc(1, 0));
 
         assert_eq!(
             graph,

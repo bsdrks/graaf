@@ -36,9 +36,9 @@ pub fn binop_vertices(min: usize, max: usize) -> impl Strategy<Value = (usize, u
 }
 
 /// Generates a pair `(v, e)` where `v` is the number of vertices and `e` is the
-/// number of edges in a simple graph.
+/// number of arcs in a simple graph.
 ///
-/// The number of edges is in the range `0..=v * (v - 1)`.
+/// The number of arcs is in the range `0..=v * (v - 1)`.
 ///
 /// # Arguments
 ///

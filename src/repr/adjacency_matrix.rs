@@ -1,7 +1,7 @@
 //! An adjacency matrix representation of an unweighted directed graph
 //!
 //! An adjacency matrix is a symmetric binary matrix where a value of `1` at
-//! row `s` and column `t` indicates an edge from vertex `s` to vertex `t`. The
+//! row `s` and column `t` indicates an arc from vertex `s` to vertex `t`. The
 //! matrix is stored as a bit array, and is suited for dense graphs with a small
 //! number of vertices.
 //!
@@ -10,7 +10,7 @@
 //! ```
 //! use graaf::{
 //!     op::{
-//!         AddEdge,
+//!         AddArc,
 //!         IsSimple,
 //!     },
 //!     repr::AdjacencyMatrix,
@@ -18,30 +18,30 @@
 //!
 //! let mut graph = AdjacencyMatrix::<3>::new();
 //!
-//! graph.add_edge(0, 1);
+//! graph.add_arc(0, 1);
 //!
 //! assert!(graph.is_simple());
 //!
-//! graph.add_edge(1, 1);
+//! graph.add_arc(1, 1);
 //!
 //! assert!(!graph.is_simple());
 //! ```
 
 use crate::op::{
-    AddEdge,
+    AddArc,
+    HasArc,
     HasEdge,
-    HasEdgeSymmetric,
     Indegree,
     IsBalanced,
     IsIsolated,
     IsSimple,
     IsSymmetric,
-    IterAllEdges,
-    IterEdges,
+    IterAllArcs,
+    IterArcs,
     IterVertices,
     Order,
     Outdegree,
-    RemoveEdge,
+    RemoveArc,
     Size,
 };
 
@@ -103,7 +103,7 @@ where
         s * V + t
     }
 
-    /// Toggles the edge from the source vertex to the target vertex.
+    /// Toggles the arc from the source vertex to the target vertex.
     ///
     /// # Arguments
     ///
@@ -118,17 +118,17 @@ where
     ///
     /// ```
     /// use graaf::{
-    ///     op::HasEdge,
+    ///     op::HasArc,
     ///     repr::AdjacencyMatrix,
     /// };
     ///
     /// let mut graph = AdjacencyMatrix::<3>::new();
     ///
-    /// assert!(!graph.has_edge(0, 1));
+    /// assert!(!graph.has_arc(0, 1));
     ///
     /// graph.toggle(0, 1);
     ///
-    /// assert!(graph.has_edge(0, 1));
+    /// assert!(graph.has_arc(0, 1));
     /// ```
     pub fn toggle(&mut self, s: usize, t: usize) {
         assert!(s < V, "s is not in the graph");
@@ -149,14 +149,14 @@ where
     }
 }
 
-impl<const V: usize> AddEdge for AdjacencyMatrix<V>
+impl<const V: usize> AddArc for AdjacencyMatrix<V>
 where
     [(); blocks!(V)]:,
 {
     /// # Panics
     ///
     /// Panics if `s` or `t` is not in the graph.
-    fn add_edge(&mut self, s: usize, t: usize) {
+    fn add_arc(&mut self, s: usize, t: usize) {
         assert!(s < V, "s is not in the graph");
         assert!(t < V, "t is not in the graph");
 
@@ -172,7 +172,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics when the number of edges is greater than `usize::MAX`.
+    /// Panics when the number of arcs is greater than `usize::MAX`.
     fn size(&self) -> usize {
         self.blocks
             .iter()
@@ -190,11 +190,11 @@ where
     }
 }
 
-impl<const V: usize> HasEdge for AdjacencyMatrix<V>
+impl<const V: usize> HasArc for AdjacencyMatrix<V>
 where
     [(); blocks!(V)]:,
 {
-    fn has_edge(&self, s: usize, t: usize) -> bool {
+    fn has_arc(&self, s: usize, t: usize) -> bool {
         if s >= V || t >= V {
             return false;
         }
@@ -205,12 +205,12 @@ where
     }
 }
 
-impl<const V: usize> HasEdgeSymmetric for AdjacencyMatrix<V>
+impl<const V: usize> HasEdge for AdjacencyMatrix<V>
 where
     [(); blocks!(V)]:,
 {
-    fn has_edge_symmetric(&self, s: usize, t: usize) -> bool {
-        self.has_edge(s, t) && self.has_edge(t, s)
+    fn has_edge(&self, s: usize, t: usize) -> bool {
+        self.has_arc(s, t) && self.has_arc(t, s)
     }
 }
 
@@ -224,9 +224,7 @@ where
     fn indegree(&self, t: usize) -> usize {
         assert!(t < V, "t is not in the graph");
 
-        self.iter_vertices()
-            .filter(|&s| self.has_edge(s, t))
-            .count()
+        self.iter_vertices().filter(|&s| self.has_arc(s, t)).count()
     }
 }
 
@@ -254,7 +252,7 @@ where
     [(); blocks!(V)]:,
 {
     fn is_simple(&self) -> bool {
-        self.iter_vertices().all(|s| !self.has_edge(s, s))
+        self.iter_vertices().all(|s| !self.has_arc(s, s))
     }
 }
 
@@ -263,33 +261,33 @@ where
     [(); blocks!(V)]:,
 {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_edges().all(|(s, t)| self.has_edge(t, s))
+        self.iter_all_arcs().all(|(s, t)| self.has_arc(t, s))
     }
 }
 
-impl<const V: usize> IterAllEdges for AdjacencyMatrix<V>
+impl<const V: usize> IterAllArcs for AdjacencyMatrix<V>
 where
     [(); blocks!(V)]:,
 {
-    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
+    fn iter_all_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
         self.iter_vertices().flat_map(move |s| {
             self.iter_vertices()
-                .filter_map(move |t| self.has_edge(s, t).then_some((s, t)))
+                .filter_map(move |t| self.has_arc(s, t).then_some((s, t)))
         })
     }
 }
 
-impl<const V: usize> IterEdges for AdjacencyMatrix<V>
+impl<const V: usize> IterArcs for AdjacencyMatrix<V>
 where
     [(); blocks!(V)]:,
 {
     /// # Panics
     ///
     /// Panics if `s >= V`.
-    fn iter_edges(&self, s: usize) -> impl Iterator<Item = usize> {
+    fn iter_arcs(&self, s: usize) -> impl Iterator<Item = usize> {
         assert!(s < V, "s is not in the graph");
 
-        self.iter_vertices().filter(move |&t| self.has_edge(s, t))
+        self.iter_vertices().filter(move |&t| self.has_arc(s, t))
     }
 }
 
@@ -312,29 +310,27 @@ where
     fn outdegree(&self, s: usize) -> usize {
         assert!(s < V, "s is not in the graph");
 
-        self.iter_vertices()
-            .filter(|&t| self.has_edge(s, t))
-            .count()
+        self.iter_vertices().filter(|&t| self.has_arc(s, t)).count()
     }
 }
 
-impl<const V: usize> RemoveEdge for AdjacencyMatrix<V>
+impl<const V: usize> RemoveArc for AdjacencyMatrix<V>
 where
     [(); blocks!(V)]:,
 {
     /// # Panics
     ///
     /// Panics if `s >= V` or `t >= V`.
-    fn remove_edge(&mut self, s: usize, t: usize) -> bool {
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         assert!(s < V, "s is not in the graph");
         assert!(t < V, "t is not in the graph");
 
-        let has_edge = self.has_edge(s, t);
+        let has_arc = self.has_arc(s, t);
         let i = Self::index(s, t);
 
         self.blocks[i >> 6] &= !Self::mask(i);
 
-        has_edge
+        has_arc
     }
 }
 
@@ -389,29 +385,29 @@ mod tests {
     }
 
     #[test]
-    fn add_edge() {
+    fn add_arc() {
         let mut graph = AdjacencyMatrix::<3>::new();
 
-        graph.add_edge(0, 1);
-        graph.add_edge(0, 2);
+        graph.add_arc(0, 1);
+        graph.add_arc(0, 2);
 
         assert_eq!(graph.blocks, [0b110]);
     }
 
     #[test]
     #[should_panic(expected = "s is not in the graph")]
-    fn add_edge_s_gte_v() {
+    fn add_arc_s_gte_v() {
         let mut graph = AdjacencyMatrix::<3>::new();
 
-        graph.add_edge(3, 0);
+        graph.add_arc(3, 0);
     }
 
     #[test]
     #[should_panic(expected = "t is not in the graph")]
-    fn add_edge_t_gte_v() {
+    fn add_arc_t_gte_v() {
         let mut graph = AdjacencyMatrix::<3>::new();
 
-        graph.add_edge(0, 3);
+        graph.add_arc(0, 3);
     }
 
     #[test]
@@ -422,11 +418,11 @@ mod tests {
 
         let mut graph = AdjacencyMatrix::<3>::new();
 
-        graph.add_edge(0, 1);
+        graph.add_arc(0, 1);
 
         assert_eq!(graph.size(), 1);
 
-        graph.add_edge(0, 2);
+        graph.add_arc(0, 2);
 
         assert_eq!(graph.size(), 2);
     }
@@ -447,6 +443,33 @@ mod tests {
     }
 
     #[test]
+    fn has_arc() {
+        let mut graph = AdjacencyMatrix::<3>::new();
+
+        assert!(!graph.has_arc(0, 1));
+        assert!(!graph.has_arc(0, 2));
+        assert!(!graph.has_arc(1, 0));
+        assert!(!graph.has_arc(1, 2));
+        assert!(!graph.has_arc(2, 0));
+        assert!(!graph.has_arc(2, 1));
+        assert!(!graph.has_arc(3, 0));
+        assert!(!graph.has_arc(0, 3));
+
+        graph.add_arc(0, 1);
+        graph.add_arc(0, 2);
+        graph.add_arc(2, 1);
+
+        assert!(graph.has_arc(0, 1));
+        assert!(graph.has_arc(0, 2));
+        assert!(!graph.has_arc(1, 0));
+        assert!(!graph.has_arc(1, 2));
+        assert!(!graph.has_arc(2, 0));
+        assert!(graph.has_arc(2, 1));
+        assert!(!graph.has_arc(3, 0));
+        assert!(!graph.has_arc(0, 3));
+    }
+
+    #[test]
     fn has_edge() {
         let mut graph = AdjacencyMatrix::<3>::new();
 
@@ -459,46 +482,19 @@ mod tests {
         assert!(!graph.has_edge(3, 0));
         assert!(!graph.has_edge(0, 3));
 
-        graph.add_edge(0, 1);
-        graph.add_edge(0, 2);
-        graph.add_edge(2, 1);
+        graph.add_arc(0, 1);
+        graph.add_arc(0, 2);
+        graph.add_arc(1, 0);
+        graph.add_arc(2, 1);
 
         assert!(graph.has_edge(0, 1));
-        assert!(graph.has_edge(0, 2));
-        assert!(!graph.has_edge(1, 0));
+        assert!(!graph.has_edge(0, 2));
+        assert!(graph.has_edge(1, 0));
         assert!(!graph.has_edge(1, 2));
         assert!(!graph.has_edge(2, 0));
-        assert!(graph.has_edge(2, 1));
+        assert!(!graph.has_edge(2, 1));
         assert!(!graph.has_edge(3, 0));
         assert!(!graph.has_edge(0, 3));
-    }
-
-    #[test]
-    fn has_edge_symmetric() {
-        let mut graph = AdjacencyMatrix::<3>::new();
-
-        assert!(!graph.has_edge_symmetric(0, 1));
-        assert!(!graph.has_edge_symmetric(0, 2));
-        assert!(!graph.has_edge_symmetric(1, 0));
-        assert!(!graph.has_edge_symmetric(1, 2));
-        assert!(!graph.has_edge_symmetric(2, 0));
-        assert!(!graph.has_edge_symmetric(2, 1));
-        assert!(!graph.has_edge_symmetric(3, 0));
-        assert!(!graph.has_edge_symmetric(0, 3));
-
-        graph.add_edge(0, 1);
-        graph.add_edge(0, 2);
-        graph.add_edge(1, 0);
-        graph.add_edge(2, 1);
-
-        assert!(graph.has_edge_symmetric(0, 1));
-        assert!(!graph.has_edge_symmetric(0, 2));
-        assert!(graph.has_edge_symmetric(1, 0));
-        assert!(!graph.has_edge_symmetric(1, 2));
-        assert!(!graph.has_edge_symmetric(2, 0));
-        assert!(!graph.has_edge_symmetric(2, 1));
-        assert!(!graph.has_edge_symmetric(3, 0));
-        assert!(!graph.has_edge_symmetric(0, 3));
     }
 
     #[test]
@@ -509,8 +505,8 @@ mod tests {
         assert_eq!(graph.indegree(1), 0);
         assert_eq!(graph.indegree(2), 0);
 
-        graph.add_edge(0, 1);
-        graph.add_edge(0, 2);
+        graph.add_arc(0, 1);
+        graph.add_arc(0, 2);
 
         assert_eq!(graph.indegree(0), 0);
         assert_eq!(graph.indegree(1), 1);
@@ -530,27 +526,27 @@ mod tests {
 
         assert!(graph.is_balanced());
 
-        graph.add_edge(0, 1);
+        graph.add_arc(0, 1);
 
         assert!(!graph.is_balanced());
 
-        graph.add_edge(1, 0);
+        graph.add_arc(1, 0);
 
         assert!(graph.is_balanced());
 
-        graph.add_edge(0, 2);
+        graph.add_arc(0, 2);
 
         assert!(!graph.is_balanced());
 
-        graph.add_edge(1, 2);
+        graph.add_arc(1, 2);
 
         assert!(!graph.is_balanced());
 
-        graph.add_edge(2, 0);
+        graph.add_arc(2, 0);
 
         assert!(!graph.is_balanced());
 
-        graph.add_edge(2, 1);
+        graph.add_arc(2, 1);
 
         assert!(graph.is_balanced());
     }
@@ -559,9 +555,9 @@ mod tests {
     fn is_isolated() {
         let mut graph = AdjacencyMatrix::<4>::new();
 
-        graph.add_edge(0, 1);
-        graph.add_edge(0, 2);
-        graph.add_edge(1, 2);
+        graph.add_arc(0, 1);
+        graph.add_arc(0, 2);
+        graph.add_arc(1, 2);
 
         assert!(!graph.is_isolated(0));
         assert!(!graph.is_isolated(1));
@@ -573,9 +569,9 @@ mod tests {
     fn is_simple() {
         let mut graph = AdjacencyMatrix::<3>::new();
 
-        graph.add_edge(0, 1);
-        graph.add_edge(0, 2);
-        graph.add_edge(2, 1);
+        graph.add_arc(0, 1);
+        graph.add_arc(0, 2);
+        graph.add_arc(2, 1);
 
         assert!(graph.is_simple());
     }
@@ -584,7 +580,7 @@ mod tests {
     fn is_simple_self_loop() {
         let mut graph = AdjacencyMatrix::<3>::new();
 
-        graph.add_edge(0, 0);
+        graph.add_arc(0, 0);
 
         assert!(!graph.is_simple());
     }
@@ -593,56 +589,56 @@ mod tests {
     fn is_symmetric_simple() {
         let mut graph = AdjacencyMatrix::<2>::new();
 
-        graph.add_edge(0, 1);
-        graph.add_edge(1, 0);
+        graph.add_arc(0, 1);
+        graph.add_arc(1, 0);
 
         assert!(graph.is_symmetric());
 
         let mut graph = AdjacencyMatrix::<2>::new();
 
-        graph.add_edge(0, 1);
+        graph.add_arc(0, 1);
 
         assert!(!graph.is_symmetric());
 
         let mut graph = AdjacencyMatrix::<3>::new();
 
-        graph.add_edge(0, 1);
-        graph.add_edge(0, 2);
-        graph.add_edge(1, 2);
-        graph.add_edge(2, 0);
+        graph.add_arc(0, 1);
+        graph.add_arc(0, 2);
+        graph.add_arc(1, 2);
+        graph.add_arc(2, 0);
 
         assert!(!graph.is_symmetric());
     }
 
     #[test]
-    fn iter_all_edges() {
+    fn iter_all_arcs() {
         let mut graph = AdjacencyMatrix::<3>::new();
 
-        graph.add_edge(0, 1);
-        graph.add_edge(1, 2);
-        graph.add_edge(2, 0);
+        graph.add_arc(0, 1);
+        graph.add_arc(1, 2);
+        graph.add_arc(2, 0);
 
-        assert!(graph.iter_all_edges().eq([(0, 1), (1, 2), (2, 0)]));
+        assert!(graph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]
-    fn iter_edges() {
+    fn iter_arcs() {
         let mut graph = AdjacencyMatrix::<3>::new();
 
-        graph.add_edge(0, 1);
-        graph.add_edge(0, 2);
-        graph.add_edge(2, 1);
+        graph.add_arc(0, 1);
+        graph.add_arc(0, 2);
+        graph.add_arc(2, 1);
 
-        assert!(graph.iter_edges(0).eq([1, 2]));
-        assert!(graph.iter_edges(1).eq([]));
-        assert!(graph.iter_edges(2).eq([1]));
+        assert!(graph.iter_arcs(0).eq([1, 2]));
+        assert!(graph.iter_arcs(1).eq([]));
+        assert!(graph.iter_arcs(2).eq([1]));
     }
 
     #[test]
     #[should_panic(expected = "s is not in the graph")]
-    fn iter_edges_s_gte_v() {
+    fn iter_arcs_s_gte_v() {
         let graph = AdjacencyMatrix::<3>::new();
-        let _ = graph.iter_edges(3);
+        let _ = graph.iter_arcs(3);
     }
 
     #[test]
@@ -660,9 +656,9 @@ mod tests {
         assert_eq!(graph.outdegree(1), 0);
         assert_eq!(graph.outdegree(2), 0);
 
-        graph.add_edge(0, 1);
-        graph.add_edge(0, 2);
-        graph.add_edge(2, 1);
+        graph.add_arc(0, 1);
+        graph.add_arc(0, 2);
+        graph.add_arc(2, 1);
 
         assert_eq!(graph.outdegree(0), 2);
         assert_eq!(graph.outdegree(1), 0);
@@ -677,48 +673,48 @@ mod tests {
     }
 
     #[test]
-    fn remove_edge() {
+    fn remove_arc() {
         let mut graph = AdjacencyMatrix::<3>::new();
 
-        graph.add_edge(0, 1);
-        graph.add_edge(0, 2);
-        graph.add_edge(1, 0);
-        graph.add_edge(2, 1);
+        graph.add_arc(0, 1);
+        graph.add_arc(0, 2);
+        graph.add_arc(1, 0);
+        graph.add_arc(2, 1);
 
-        assert!(!graph.has_edge(0, 0));
-        assert!(graph.has_edge(0, 1));
-        assert!(graph.has_edge(0, 2));
-        assert!(graph.has_edge(1, 0));
-        assert!(!graph.has_edge(1, 1));
-        assert!(!graph.has_edge(1, 2));
-        assert!(!graph.has_edge(2, 0));
-        assert!(graph.has_edge(2, 1));
-        assert!(!graph.has_edge(2, 2));
+        assert!(!graph.has_arc(0, 0));
+        assert!(graph.has_arc(0, 1));
+        assert!(graph.has_arc(0, 2));
+        assert!(graph.has_arc(1, 0));
+        assert!(!graph.has_arc(1, 1));
+        assert!(!graph.has_arc(1, 2));
+        assert!(!graph.has_arc(2, 0));
+        assert!(graph.has_arc(2, 1));
+        assert!(!graph.has_arc(2, 2));
 
-        assert!(graph.remove_edge(0, 1));
-        assert!(graph.remove_edge(0, 2));
-        assert!(graph.remove_edge(1, 0));
-        assert!(graph.remove_edge(2, 1));
+        assert!(graph.remove_arc(0, 1));
+        assert!(graph.remove_arc(0, 2));
+        assert!(graph.remove_arc(1, 0));
+        assert!(graph.remove_arc(2, 1));
 
-        assert!(!graph.has_edge(0, 1));
-        assert!(!graph.has_edge(0, 2));
-        assert!(!graph.has_edge(1, 0));
-        assert!(!graph.has_edge(2, 1));
+        assert!(!graph.has_arc(0, 1));
+        assert!(!graph.has_arc(0, 2));
+        assert!(!graph.has_arc(1, 0));
+        assert!(!graph.has_arc(2, 1));
     }
 
     #[test]
     #[should_panic(expected = "s is not in the graph")]
-    fn remove_edge_s_gte_v() {
+    fn remove_arc_s_gte_v() {
         let mut graph = AdjacencyMatrix::<3>::new();
 
-        let _ = graph.remove_edge(3, 0);
+        let _ = graph.remove_arc(3, 0);
     }
 
     #[test]
     #[should_panic(expected = "t is not in the graph")]
-    fn remove_edge_t_gte_v() {
+    fn remove_arc_t_gte_v() {
         let mut graph = AdjacencyMatrix::<3>::new();
 
-        let _ = graph.remove_edge(0, 3);
+        let _ = graph.remove_arc(0, 3);
     }
 }

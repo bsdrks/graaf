@@ -1,6 +1,6 @@
 //! A trait to determine whether a directed graph is symmetric
 //!
-//! A directed graph is symmetric if for every edge `(s, t)` there is an edge
+//! A directed graph is symmetric if for every arc `(s, t)` there is an arc
 //! `(t, s)`.
 //!
 //! # Examples
@@ -34,9 +34,9 @@ extern crate alloc;
 
 use {
     super::{
-        HasEdge,
-        IterAllEdges,
-        IterAllWeightedEdges,
+        HasArc,
+        IterAllArcs,
+        IterAllWeightedArcs,
     },
     alloc::collections::{
         BTreeMap,
@@ -62,38 +62,38 @@ use {
 /// use {
 ///     alloc::collections::BTreeSet,
 ///     graaf::op::{
-///         HasEdge,
+///         HasArc,
 ///         IsSymmetric,
-///         IterAllEdges,
+///         IterAllArcs,
 ///     },
 /// };
 ///
 /// struct Graph {
-///     edges: Vec<BTreeSet<usize>>,
+///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
 /// impl IsSymmetric for Graph {
 ///     fn is_symmetric(&self) -> bool {
-///         self.edges
-///             .iter_all_edges()
-///             .all(|(s, t)| self.edges.has_edge(t, s))
+///         self.arcs
+///             .iter_all_arcs()
+///             .all(|(s, t)| self.arcs.has_arc(t, s))
 ///     }
 /// }
 ///
 /// let graph = Graph {
-///     edges: vec![BTreeSet::from([1]), BTreeSet::from([0])],
+///     arcs: vec![BTreeSet::from([1]), BTreeSet::from([0])],
 /// };
 ///
 /// assert!(graph.is_symmetric());
 ///
 /// let graph = Graph {
-///     edges: vec![BTreeSet::from([1]), BTreeSet::new()],
+///     arcs: vec![BTreeSet::from([1]), BTreeSet::new()],
 /// };
 ///
 /// assert!(!graph.is_symmetric());
 ///
 /// let graph = Graph {
-///     edges: vec![
+///     arcs: vec![
 ///         BTreeSet::from([1, 2]),
 ///         BTreeSet::from([2]),
 ///         BTreeSet::from([0]),
@@ -135,7 +135,7 @@ pub trait IsSymmetric {
 
 impl IsSymmetric for Vec<BTreeSet<usize>> {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_edges().all(|(s, t)| self.has_edge(t, s))
+        self.iter_all_arcs().all(|(s, t)| self.has_arc(t, s))
     }
 }
 
@@ -144,13 +144,13 @@ where
     H: BuildHasher,
 {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_edges().all(|(s, t)| self.has_edge(t, s))
+        self.iter_all_arcs().all(|(s, t)| self.has_arc(t, s))
     }
 }
 
 impl IsSymmetric for [BTreeSet<usize>] {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_edges().all(|(s, t)| self.has_edge(t, s))
+        self.iter_all_arcs().all(|(s, t)| self.has_arc(t, s))
     }
 }
 
@@ -159,13 +159,13 @@ where
     H: BuildHasher,
 {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_edges().all(|(s, t)| self.has_edge(t, s))
+        self.iter_all_arcs().all(|(s, t)| self.has_arc(t, s))
     }
 }
 
 impl<const V: usize> IsSymmetric for [BTreeSet<usize>; V] {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_edges().all(|(s, t)| self.has_edge(t, s))
+        self.iter_all_arcs().all(|(s, t)| self.has_arc(t, s))
     }
 }
 
@@ -174,13 +174,13 @@ where
     H: BuildHasher + Default,
 {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_edges().all(|(s, t)| self.has_edge(t, s))
+        self.iter_all_arcs().all(|(s, t)| self.has_arc(t, s))
     }
 }
 
 impl IsSymmetric for BTreeMap<usize, BTreeSet<usize>> {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_edges().all(|(s, t)| self.has_edge(t, s))
+        self.iter_all_arcs().all(|(s, t)| self.has_arc(t, s))
     }
 }
 
@@ -189,14 +189,14 @@ where
     H: BuildHasher,
 {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_edges().all(|(s, t)| self.has_edge(t, s))
+        self.iter_all_arcs().all(|(s, t)| self.has_arc(t, s))
     }
 }
 
 impl<W> IsSymmetric for Vec<BTreeMap<usize, W>> {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_weighted_edges()
-            .all(|(s, t, _)| self.has_edge(t, s))
+        self.iter_all_weighted_arcs()
+            .all(|(s, t, _)| self.has_arc(t, s))
     }
 }
 
@@ -205,15 +205,15 @@ where
     H: BuildHasher,
 {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_weighted_edges()
-            .all(|(s, t, _)| self.has_edge(t, s))
+        self.iter_all_weighted_arcs()
+            .all(|(s, t, _)| self.has_arc(t, s))
     }
 }
 
 impl<W> IsSymmetric for [BTreeMap<usize, W>] {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_weighted_edges()
-            .all(|(s, t, _)| self.has_edge(t, s))
+        self.iter_all_weighted_arcs()
+            .all(|(s, t, _)| self.has_arc(t, s))
     }
 }
 
@@ -222,15 +222,15 @@ where
     H: BuildHasher,
 {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_weighted_edges()
-            .all(|(s, t, _)| self.has_edge(t, s))
+        self.iter_all_weighted_arcs()
+            .all(|(s, t, _)| self.has_arc(t, s))
     }
 }
 
 impl<const V: usize, W> IsSymmetric for [BTreeMap<usize, W>; V] {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_weighted_edges()
-            .all(|(s, t, _)| self.has_edge(t, s))
+        self.iter_all_weighted_arcs()
+            .all(|(s, t, _)| self.has_arc(t, s))
     }
 }
 
@@ -239,15 +239,15 @@ where
     H: BuildHasher,
 {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_weighted_edges()
-            .all(|(s, t, _)| self.has_edge(t, s))
+        self.iter_all_weighted_arcs()
+            .all(|(s, t, _)| self.has_arc(t, s))
     }
 }
 
 impl<W> IsSymmetric for BTreeMap<usize, BTreeMap<usize, W>> {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_weighted_edges()
-            .all(|(s, t, _)| self.has_edge(t, s))
+        self.iter_all_weighted_arcs()
+            .all(|(s, t, _)| self.has_arc(t, s))
     }
 }
 
@@ -256,8 +256,8 @@ where
     H: BuildHasher,
 {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_weighted_edges()
-            .all(|(s, t, _)| self.has_edge(t, s))
+        self.iter_all_weighted_arcs()
+            .all(|(s, t, _)| self.has_arc(t, s))
     }
 }
 

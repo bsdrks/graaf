@@ -1,10 +1,10 @@
-//! A trait to iterate over all edges with a given source vertex in a weighted
+//! A trait to iterate over all arcs with a given source vertex in a weighted
 //! directed graph
 //!
 //! # Examples
 //!
 //! ```
-//! use graaf::op::IterWeightedEdges;
+//! use graaf::op::IterWeightedArcs;
 //!
 //! let graph = vec![
 //!     vec![(1, 2), (2, 3), (3, 4)],
@@ -12,9 +12,9 @@
 //!     vec![(3, 4), (4, 5), (5, 6)],
 //! ];
 //!
-//! assert!(graph.iter_weighted_edges(0).eq([(1, &2), (2, &3), (3, &4)]));
-//! assert!(graph.iter_weighted_edges(1).eq([(2, &3), (3, &4), (4, &5)]));
-//! assert!(graph.iter_weighted_edges(2).eq([(3, &4), (4, &5), (5, &6)]));
+//! assert!(graph.iter_weighted_arcs(0).eq([(1, &2), (2, &3), (3, &4)]));
+//! assert!(graph.iter_weighted_arcs(1).eq([(2, &3), (3, &4), (4, &5)]));
+//! assert!(graph.iter_weighted_arcs(2).eq([(3, &4), (4, &5), (5, &6)]));
 //! ```
 
 extern crate alloc;
@@ -31,27 +31,27 @@ use {
     },
 };
 
-/// A trait to iterate over all edges with a given source vertex in a weighted
+/// A trait to iterate over all arcs with a given source vertex in a weighted
 /// directed graph
 ///
-/// # How can I implement `IterWeightedEdges`?
+/// # How can I implement `IterWeightedArcs`?
 ///
-/// Provide an implementation of `iter_weighted_edges` that returns an iterator
-/// over all weighted edges with the source vertex `s`.
+/// Provide an implementation of `iter_weighted_arcs` that returns an iterator
+/// over all weighted arcs with the source vertex `s`.
 ///
 /// ```
-/// use graaf::op::IterWeightedEdges;
+/// use graaf::op::IterWeightedArcs;
 ///
 /// struct Graph {
-///     edges: Vec<Vec<(usize, usize)>>,
+///     arcs: Vec<Vec<(usize, usize)>>,
 /// }
 ///
-/// impl IterWeightedEdges<usize> for Graph {
-///     fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a usize)>
+/// impl IterWeightedArcs<usize> for Graph {
+///     fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a usize)>
 ///     where
 ///         usize: 'a,
 ///     {
-///         self.edges[s].iter().map(|(t, w)| (*t, w))
+///         self.arcs[s].iter().map(|(t, w)| (*t, w))
 ///     }
 /// }
 /// ```
@@ -59,7 +59,7 @@ use {
 /// # Examples
 ///
 /// ```
-/// use graaf::op::IterWeightedEdges;
+/// use graaf::op::IterWeightedArcs;
 ///
 /// let graph = vec![
 ///     vec![(1, 2), (2, 3), (3, 4)],
@@ -67,29 +67,29 @@ use {
 ///     vec![(3, 4), (4, 5), (5, 6)],
 /// ];
 ///
-/// assert!(graph.iter_weighted_edges(0).eq([(1, &2), (2, &3), (3, &4)]));
-/// assert!(graph.iter_weighted_edges(1).eq([(2, &3), (3, &4), (4, &5)]));
-/// assert!(graph.iter_weighted_edges(2).eq([(3, &4), (4, &5), (5, &6)]));
+/// assert!(graph.iter_weighted_arcs(0).eq([(1, &2), (2, &3), (3, &4)]));
+/// assert!(graph.iter_weighted_arcs(1).eq([(2, &3), (3, &4), (4, &5)]));
+/// assert!(graph.iter_weighted_arcs(2).eq([(3, &4), (4, &5), (5, &6)]));
 /// ```
-pub trait IterWeightedEdges<W> {
-    /// Returns an iterator over the edges with the source vertex `s`.
+pub trait IterWeightedArcs<W> {
+    /// Returns an iterator over the arcs with the source vertex `s`.
     ///
     /// # Arguments
     ///
     /// * `s`: The source vertex.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a;
 }
 
-impl<W> IterWeightedEdges<W> for Vec<Vec<(usize, W)>>
+impl<W> IterWeightedArcs<W> for Vec<Vec<(usize, W)>>
 where
     W: Copy,
 {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
@@ -97,14 +97,14 @@ where
     }
 }
 
-impl<W> IterWeightedEdges<W> for Vec<BTreeSet<(usize, W)>>
+impl<W> IterWeightedArcs<W> for Vec<BTreeSet<(usize, W)>>
 where
     W: Copy,
 {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
@@ -112,7 +112,7 @@ where
     }
 }
 
-impl<W, H> IterWeightedEdges<W> for Vec<HashSet<(usize, W), H>>
+impl<W, H> IterWeightedArcs<W> for Vec<HashSet<(usize, W), H>>
 where
     W: Copy,
     H: BuildHasher,
@@ -120,7 +120,7 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
@@ -128,14 +128,14 @@ where
     }
 }
 
-impl<W> IterWeightedEdges<W> for Vec<BTreeMap<usize, W>>
+impl<W> IterWeightedArcs<W> for Vec<BTreeMap<usize, W>>
 where
     W: Copy,
 {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
@@ -143,7 +143,7 @@ where
     }
 }
 
-impl<W, H> IterWeightedEdges<W> for Vec<HashMap<usize, W, H>>
+impl<W, H> IterWeightedArcs<W> for Vec<HashMap<usize, W, H>>
 where
     W: Copy,
     H: BuildHasher,
@@ -151,7 +151,7 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
@@ -159,14 +159,14 @@ where
     }
 }
 
-impl<W> IterWeightedEdges<W> for [Vec<(usize, W)>]
+impl<W> IterWeightedArcs<W> for [Vec<(usize, W)>]
 where
     W: Copy,
 {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
@@ -174,14 +174,14 @@ where
     }
 }
 
-impl<W> IterWeightedEdges<W> for [BTreeSet<(usize, W)>]
+impl<W> IterWeightedArcs<W> for [BTreeSet<(usize, W)>]
 where
     W: Copy,
 {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
@@ -189,7 +189,7 @@ where
     }
 }
 
-impl<W, H> IterWeightedEdges<W> for [HashSet<(usize, W), H>]
+impl<W, H> IterWeightedArcs<W> for [HashSet<(usize, W), H>]
 where
     W: Copy,
     H: BuildHasher,
@@ -197,7 +197,7 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
@@ -205,14 +205,14 @@ where
     }
 }
 
-impl<W> IterWeightedEdges<W> for [BTreeMap<usize, W>]
+impl<W> IterWeightedArcs<W> for [BTreeMap<usize, W>]
 where
     W: Copy,
 {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
@@ -220,7 +220,7 @@ where
     }
 }
 
-impl<W, H> IterWeightedEdges<W> for [HashMap<usize, W, H>]
+impl<W, H> IterWeightedArcs<W> for [HashMap<usize, W, H>]
 where
     W: Copy,
     H: BuildHasher,
@@ -228,7 +228,7 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
@@ -236,11 +236,11 @@ where
     }
 }
 
-impl<const V: usize, W> IterWeightedEdges<W> for [Vec<(usize, W)>; V]
+impl<const V: usize, W> IterWeightedArcs<W> for [Vec<(usize, W)>; V]
 where
     W: Copy,
 {
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
@@ -248,11 +248,11 @@ where
     }
 }
 
-impl<const V: usize, W> IterWeightedEdges<W> for [BTreeSet<(usize, W)>; V]
+impl<const V: usize, W> IterWeightedArcs<W> for [BTreeSet<(usize, W)>; V]
 where
     W: Copy,
 {
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
@@ -260,37 +260,12 @@ where
     }
 }
 
-impl<const V: usize, W, H> IterWeightedEdges<W> for [HashSet<(usize, W), H>; V]
-where
-    W: Copy,
-    H: BuildHasher,
-{
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a,
-    {
-        self[s].iter().map(|(t, w)| (*t, w))
-    }
-}
-
-impl<const V: usize, W> IterWeightedEdges<W> for [BTreeMap<usize, W>; V]
-where
-    W: Copy,
-{
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a,
-    {
-        self[s].iter().map(|(t, w)| (*t, w))
-    }
-}
-
-impl<const V: usize, W, H> IterWeightedEdges<W> for [HashMap<usize, W, H>; V]
+impl<const V: usize, W, H> IterWeightedArcs<W> for [HashSet<(usize, W), H>; V]
 where
     W: Copy,
     H: BuildHasher,
 {
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
@@ -298,14 +273,39 @@ where
     }
 }
 
-impl<W> IterWeightedEdges<W> for BTreeMap<usize, Vec<(usize, W)>>
+impl<const V: usize, W> IterWeightedArcs<W> for [BTreeMap<usize, W>; V]
+where
+    W: Copy,
+{
+    fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self[s].iter().map(|(t, w)| (*t, w))
+    }
+}
+
+impl<const V: usize, W, H> IterWeightedArcs<W> for [HashMap<usize, W, H>; V]
+where
+    W: Copy,
+    H: BuildHasher,
+{
+    fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self[s].iter().map(|(t, w)| (*t, w))
+    }
+}
+
+impl<W> IterWeightedArcs<W> for BTreeMap<usize, Vec<(usize, W)>>
 where
     W: Copy,
 {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
@@ -313,7 +313,7 @@ where
     }
 }
 
-impl<W, H> IterWeightedEdges<W> for HashMap<usize, Vec<(usize, W)>, H>
+impl<W, H> IterWeightedArcs<W> for HashMap<usize, Vec<(usize, W)>, H>
 where
     H: BuildHasher,
     W: Copy,
@@ -321,7 +321,7 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
@@ -329,14 +329,14 @@ where
     }
 }
 
-impl<W> IterWeightedEdges<W> for BTreeMap<usize, BTreeSet<(usize, W)>>
+impl<W> IterWeightedArcs<W> for BTreeMap<usize, BTreeSet<(usize, W)>>
 where
     W: Copy,
 {
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
@@ -344,38 +344,7 @@ where
     }
 }
 
-impl<W, H> IterWeightedEdges<W> for HashMap<usize, HashSet<(usize, W), H>, H>
-where
-    H: BuildHasher,
-    W: Copy,
-{
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a,
-    {
-        self[&s].iter().map(|(t, w)| (*t, w))
-    }
-}
-
-impl<W> IterWeightedEdges<W> for BTreeMap<usize, BTreeMap<usize, W>>
-where
-    W: Copy,
-{
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a,
-    {
-        self[&s].iter().map(|(t, w)| (*t, w))
-    }
-}
-
-impl<W, H> IterWeightedEdges<W> for HashMap<usize, HashMap<usize, W, H>, H>
+impl<W, H> IterWeightedArcs<W> for HashMap<usize, HashSet<(usize, W), H>, H>
 where
     H: BuildHasher,
     W: Copy,
@@ -383,7 +352,38 @@ where
     /// # Panics
     ///
     /// Panics if `s` is not in the graph.
-    fn iter_weighted_edges<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self[&s].iter().map(|(t, w)| (*t, w))
+    }
+}
+
+impl<W> IterWeightedArcs<W> for BTreeMap<usize, BTreeMap<usize, W>>
+where
+    W: Copy,
+{
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    where
+        W: 'a,
+    {
+        self[&s].iter().map(|(t, w)| (*t, w))
+    }
+}
+
+impl<W, H> IterWeightedArcs<W> for HashMap<usize, HashMap<usize, W, H>, H>
+where
+    H: BuildHasher,
+    W: Copy,
+{
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the graph.
+    fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
@@ -395,9 +395,9 @@ where
 mod tests {
     use super::*;
 
-    macro_rules! test_iter_weighted_edges_unstable {
+    macro_rules! test_iter_weighted_arcs_unstable {
         ($graph:expr) => {
-            let mut iter = $graph.iter_weighted_edges(1);
+            let mut iter = $graph.iter_weighted_arcs(1);
 
             assert!(matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5))));
             assert!(matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5))));
@@ -414,7 +414,7 @@ mod tests {
             vec![(3, 4), (4, 5), (5, 6)],
         ];
 
-        assert!(graph.iter_weighted_edges(1).eq([(2, &3), (3, &4), (4, &5)]));
+        assert!(graph.iter_weighted_arcs(1).eq([(2, &3), (3, &4), (4, &5)]));
     }
 
     #[test]
@@ -425,7 +425,7 @@ mod tests {
             BTreeSet::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_iter_weighted_edges_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(graph);
     }
 
     #[test]
@@ -436,7 +436,7 @@ mod tests {
             HashSet::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_iter_weighted_edges_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(graph);
     }
 
     #[test]
@@ -447,7 +447,7 @@ mod tests {
             BTreeMap::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_iter_weighted_edges_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(graph);
     }
 
     #[test]
@@ -458,7 +458,7 @@ mod tests {
             HashMap::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_iter_weighted_edges_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(graph);
     }
 
     #[test]
@@ -469,7 +469,7 @@ mod tests {
             vec![(3, 4), (4, 5), (5, 6)],
         ];
 
-        assert!(graph.iter_weighted_edges(1).eq([(2, &3), (3, &4), (4, &5)]));
+        assert!(graph.iter_weighted_arcs(1).eq([(2, &3), (3, &4), (4, &5)]));
     }
 
     #[test]
@@ -480,7 +480,7 @@ mod tests {
             BTreeSet::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_iter_weighted_edges_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(graph);
     }
 
     #[test]
@@ -491,7 +491,7 @@ mod tests {
             HashSet::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_iter_weighted_edges_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(graph);
     }
 
     #[test]
@@ -502,7 +502,7 @@ mod tests {
             BTreeMap::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_iter_weighted_edges_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(graph);
     }
 
     #[test]
@@ -513,7 +513,7 @@ mod tests {
             HashMap::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_iter_weighted_edges_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(graph);
     }
 
     #[test]
@@ -524,7 +524,7 @@ mod tests {
             vec![(3, 4), (4, 5), (5, 6)],
         ];
 
-        assert!(graph.iter_weighted_edges(1).eq([(2, &3), (3, &4), (4, &5)]));
+        assert!(graph.iter_weighted_arcs(1).eq([(2, &3), (3, &4), (4, &5)]));
     }
 
     #[test]
@@ -535,7 +535,7 @@ mod tests {
             BTreeSet::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_iter_weighted_edges_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(graph);
     }
 
     #[test]
@@ -546,7 +546,7 @@ mod tests {
             HashSet::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_iter_weighted_edges_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(graph);
     }
 
     #[test]
@@ -557,7 +557,7 @@ mod tests {
             BTreeMap::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_iter_weighted_edges_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(graph);
     }
 
     #[test]
@@ -568,7 +568,7 @@ mod tests {
             HashMap::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_iter_weighted_edges_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(graph);
     }
 
     #[test]
@@ -579,7 +579,7 @@ mod tests {
             (2, vec![(3, 4), (4, 5), (5, 6)]),
         ]);
 
-        assert!(graph.iter_weighted_edges(1).eq([(2, &3), (3, &4), (4, &5)]));
+        assert!(graph.iter_weighted_arcs(1).eq([(2, &3), (3, &4), (4, &5)]));
     }
 
     #[test]
@@ -590,7 +590,7 @@ mod tests {
             (2, vec![(3, 4), (4, 5), (5, 6)]),
         ]);
 
-        assert!(graph.iter_weighted_edges(1).eq([(2, &3), (3, &4), (4, &5)]));
+        assert!(graph.iter_weighted_arcs(1).eq([(2, &3), (3, &4), (4, &5)]));
     }
 
     #[test]
@@ -601,7 +601,7 @@ mod tests {
             (2, BTreeSet::from([(3, 4), (4, 5), (5, 6)])),
         ]);
 
-        test_iter_weighted_edges_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(graph);
     }
 
     #[test]
@@ -612,7 +612,7 @@ mod tests {
             (2, HashSet::from([(3, 4), (4, 5), (5, 6)])),
         ]);
 
-        test_iter_weighted_edges_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(graph);
     }
 
     #[test]
@@ -623,7 +623,7 @@ mod tests {
             (2, BTreeMap::from([(3, 4), (4, 5), (5, 6)])),
         ]);
 
-        test_iter_weighted_edges_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(graph);
     }
 
     #[test]
@@ -634,6 +634,6 @@ mod tests {
             (2, HashMap::from([(3, 4), (4, 5), (5, 6)])),
         ]);
 
-        test_iter_weighted_edges_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(graph);
     }
 }

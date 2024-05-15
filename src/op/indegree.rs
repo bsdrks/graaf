@@ -2,7 +2,7 @@
 #![doc(alias = "inward_demidegree")]
 //! A trait to get the indegree of a given vertex
 //!
-//! The indegree is the number of edges incident into a vertex.
+//! The indegree is the number of arcs incident into a vertex.
 //!
 //! # Examples
 //!
@@ -47,12 +47,12 @@ use {
 /// };
 ///
 /// struct Graph {
-///     edges: Vec<HashSet<usize>>,
+///     arcs: Vec<HashSet<usize>>,
 /// }
 ///
 /// impl Indegree for Graph {
 ///     fn indegree(&self, t: usize) -> usize {
-///         self.edges.iter().filter(|set| set.contains(&t)).count()
+///         self.arcs.iter().filter(|set| set.contains(&t)).count()
 ///     }
 /// }
 /// ```
@@ -212,8 +212,8 @@ mod tests {
                 EmptyConst,
             },
             op::{
-                AddEdge,
-                AddWeightedEdge,
+                AddArc,
+                AddWeightedArc,
             },
         },
     };
@@ -228,9 +228,9 @@ mod tests {
 
     macro_rules! test_indegree_unweighted {
         ($graph:expr) => {
-            $graph.add_edge(0, 1);
-            $graph.add_edge(0, 2);
-            $graph.add_edge(1, 2);
+            $graph.add_arc(0, 1);
+            $graph.add_arc(0, 2);
+            $graph.add_arc(1, 2);
 
             test_indegree!($graph);
         };
@@ -238,9 +238,9 @@ mod tests {
 
     macro_rules! test_indegree_weighted {
         ($graph:expr) => {
-            $graph.add_weighted_edge(0, 1, 1);
-            $graph.add_weighted_edge(0, 2, 2);
-            $graph.add_weighted_edge(1, 2, 3);
+            $graph.add_weighted_arc(0, 1, 1);
+            $graph.add_weighted_arc(0, 2, 2);
+            $graph.add_weighted_arc(1, 2, 3);
 
             test_indegree!($graph);
         };

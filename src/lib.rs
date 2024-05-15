@@ -18,8 +18,8 @@
 //!
 //! let mut graph = <[BTreeSet<usize>; 3]>::empty();
 //!
-//! graph.add_edge(0, 1);
-//! graph.add_edge(0, 2);
+//! graph.add_arc(0, 1);
+//! graph.add_arc(0, 2);
 //!
 //! assert_eq!(graph.degree(0), 2);
 //! assert_eq!(graph.degree(1), 1);
@@ -59,8 +59,8 @@
 //!
 //! let mut graph = AdjacencyMatrix::<3>::new();
 //!
-//! graph.add_edge(0, 1);
-//! graph.add_edge(1, 1);
+//! graph.add_arc(0, 1);
+//! graph.add_arc(1, 1);
 //!
 //! assert!(!graph.is_simple());
 //! ```

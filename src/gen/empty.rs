@@ -1,8 +1,7 @@
 #![doc(alias = "edgeless")]
 //! A trait to generate empty variable-sized directed graphs
 //!
-//! Empty graphs are also known as edgeless graphs. To generate empty
-//! const-sized directed graphs, see [`EmptyConst`].
+//! To generate empty const-sized directed graphs, see [`EmptyConst`].
 //!
 //! # Examples
 //!
@@ -49,7 +48,7 @@ use {
 ///
 /// #[derive(Debug, PartialEq)]
 /// struct Graph {
-///     edges: HashSet<(usize, usize)>,
+///     arcs: HashSet<(usize, usize)>,
 /// }
 ///
 /// impl Empty for Graph {
@@ -60,7 +59,7 @@ use {
 ///         assert!(v > 0, "a graph must have at least one vertex");
 ///
 ///         Graph {
-///             edges: HashSet::new(),
+///             arcs: HashSet::new(),
 ///         }
 ///     }
 /// }
@@ -68,7 +67,7 @@ use {
 /// assert_eq!(
 ///     Graph::empty(3),
 ///     Graph {
-///         edges: HashSet::new()
+///         arcs: HashSet::new()
 ///     }
 /// );
 /// ```

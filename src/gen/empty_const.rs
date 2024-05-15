@@ -61,7 +61,7 @@ use {
 /// where
 ///     H: BuildHasher,
 /// {
-///     edges: [HashSet<usize, H>; V],
+///     arcs: [HashSet<usize, H>; V],
 /// }
 ///
 /// impl<const V: usize, H> EmptyConst for Graph<V, H>
@@ -75,17 +75,14 @@ use {
 ///         assert!(V > 0, "a graph must have at least one vertex");
 ///
 ///         Graph {
-///             edges: from_fn(|_| HashSet::with_hasher(H::default())),
+///             arcs: from_fn(|_| HashSet::with_hasher(H::default())),
 ///         }
 ///     }
 /// }
 ///
 /// let graph = Graph::<3, RandomState>::empty();
 ///
-/// assert_eq!(
-///     graph.edges,
-///     [HashSet::new(), HashSet::new(), HashSet::new()]
-/// );
+/// assert_eq!(graph.arcs, [HashSet::new(), HashSet::new(), HashSet::new()]);
 /// ```
 pub trait EmptyConst {
     /// Generates a empty graph.

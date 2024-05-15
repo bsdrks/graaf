@@ -1,13 +1,13 @@
-//! A trait to iterate over all edges in an unweighted directed graph
+//! A trait to iterate over all arcs in an unweighted directed graph
 //!
 //! # Examples
 //!
 //! ```
-//! use graaf::op::IterAllEdges;
+//! use graaf::op::IterAllArcs;
 //!
 //! let graph = vec![(0, 1), (1, 2), (2, 0)];
 //!
-//! assert!(graph.iter_all_edges().eq([(0, 1), (1, 2), (2, 0)]));
+//! assert!(graph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
 //! ```
 
 extern crate alloc;
@@ -24,23 +24,23 @@ use {
     },
 };
 
-/// A trait to iterate over all edges in an unweighted directed graph
+/// A trait to iterate over all arcs in an unweighted directed graph
 ///
-/// # How can I implement `IterAllEdges`?
+/// # How can I implement `IterAllArcs`?
 ///
-/// Provide an implementation of `iter_all_edges` that returns an iterator over
-/// all edges in a graph.
+/// Provide an implementation of `iter_all_arcs` that returns an iterator over
+/// all arcs in a graph.
 ///
 /// ```
-/// use graaf::op::IterAllEdges;
+/// use graaf::op::IterAllArcs;
 ///
 /// struct Graph {
-///     edges: Vec<(usize, usize)>,
+///     arcs: Vec<(usize, usize)>,
 /// }
 ///
-/// impl IterAllEdges for Graph {
-///     fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
-///         self.edges.iter().copied()
+/// impl IterAllArcs for Graph {
+///     fn iter_all_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
+///         self.arcs.iter().copied()
 ///     }
 /// }
 /// ```
@@ -48,161 +48,161 @@ use {
 /// # Examples
 ///
 /// ```
-/// use graaf::op::IterAllEdges;
+/// use graaf::op::IterAllArcs;
 ///
 /// let graph = vec![(0, 1), (1, 2), (2, 0)];
 ///
-/// assert!(graph.iter_all_edges().eq([(0, 1), (1, 2), (2, 0)]));
+/// assert!(graph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
 /// ```
-pub trait IterAllEdges {
-    /// Returns an iterator over all edges in a graph.
-    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)>;
+pub trait IterAllArcs {
+    /// Returns an iterator over all arcs in a graph.
+    fn iter_all_arcs(&self) -> impl Iterator<Item = (usize, usize)>;
 }
 
-impl IterAllEdges for Vec<Vec<usize>> {
-    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
+impl IterAllArcs for Vec<Vec<usize>> {
+    fn iter_all_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
         self.iter()
             .enumerate()
             .flat_map(|(s, vec)| vec.iter().map(move |t| (s, *t)))
     }
 }
 
-impl IterAllEdges for Vec<BTreeSet<usize>> {
-    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
+impl IterAllArcs for Vec<BTreeSet<usize>> {
+    fn iter_all_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
         self.iter()
             .enumerate()
             .flat_map(|(s, set)| set.iter().map(move |t| (s, *t)))
     }
 }
 
-impl<H> IterAllEdges for Vec<HashSet<usize, H>>
+impl<H> IterAllArcs for Vec<HashSet<usize, H>>
 where
     H: BuildHasher,
 {
-    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
+    fn iter_all_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
         self.iter()
             .enumerate()
             .flat_map(|(s, set)| set.iter().map(move |t| (s, *t)))
     }
 }
 
-impl IterAllEdges for [Vec<usize>] {
-    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
+impl IterAllArcs for [Vec<usize>] {
+    fn iter_all_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
         self.iter()
             .enumerate()
             .flat_map(|(s, vec)| vec.iter().map(move |t| (s, *t)))
     }
 }
 
-impl IterAllEdges for [BTreeSet<usize>] {
-    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
+impl IterAllArcs for [BTreeSet<usize>] {
+    fn iter_all_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
         self.iter()
             .enumerate()
             .flat_map(|(s, set)| set.iter().map(move |t| (s, *t)))
     }
 }
 
-impl<H> IterAllEdges for [HashSet<usize, H>]
+impl<H> IterAllArcs for [HashSet<usize, H>]
 where
     H: BuildHasher,
 {
-    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
+    fn iter_all_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
         self.iter()
             .enumerate()
             .flat_map(|(s, set)| set.iter().map(move |t| (s, *t)))
     }
 }
 
-impl<const V: usize> IterAllEdges for [Vec<usize>; V] {
-    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
+impl<const V: usize> IterAllArcs for [Vec<usize>; V] {
+    fn iter_all_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
         self.iter()
             .enumerate()
             .flat_map(|(s, vec)| vec.iter().map(move |t| (s, *t)))
     }
 }
 
-impl<const V: usize> IterAllEdges for [BTreeSet<usize>; V] {
-    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
+impl<const V: usize> IterAllArcs for [BTreeSet<usize>; V] {
+    fn iter_all_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
         self.iter()
             .enumerate()
             .flat_map(|(s, set)| set.iter().map(move |t| (s, *t)))
     }
 }
 
-impl<const V: usize, H> IterAllEdges for [HashSet<usize, H>; V]
+impl<const V: usize, H> IterAllArcs for [HashSet<usize, H>; V]
 where
     H: BuildHasher,
 {
-    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
+    fn iter_all_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
         self.iter()
             .enumerate()
             .flat_map(|(s, set)| set.iter().map(move |t| (s, *t)))
     }
 }
 
-impl IterAllEdges for BTreeMap<usize, Vec<usize>> {
-    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
+impl IterAllArcs for BTreeMap<usize, Vec<usize>> {
+    fn iter_all_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
         self.iter()
             .flat_map(|(s, vec)| vec.iter().map(move |t| (*s, *t)))
     }
 }
 
-impl IterAllEdges for BTreeMap<usize, BTreeSet<usize>> {
-    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
+impl IterAllArcs for BTreeMap<usize, BTreeSet<usize>> {
+    fn iter_all_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
         self.iter()
             .flat_map(|(s, set)| set.iter().map(move |t| (*s, *t)))
     }
 }
 
-impl<H> IterAllEdges for HashMap<usize, Vec<usize>, H>
+impl<H> IterAllArcs for HashMap<usize, Vec<usize>, H>
 where
     H: BuildHasher,
 {
-    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
+    fn iter_all_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
         self.iter()
             .flat_map(|(s, vec)| vec.iter().map(move |t| (*s, *t)))
     }
 }
 
-impl<H> IterAllEdges for HashMap<usize, HashSet<usize, H>, H>
+impl<H> IterAllArcs for HashMap<usize, HashSet<usize, H>, H>
 where
     H: BuildHasher,
 {
-    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
+    fn iter_all_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
         self.iter()
             .flat_map(|(s, set)| set.iter().map(move |t| (*s, *t)))
     }
 }
 
-impl IterAllEdges for Vec<(usize, usize)> {
-    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
+impl IterAllArcs for Vec<(usize, usize)> {
+    fn iter_all_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
         self.iter().copied()
     }
 }
 
-impl IterAllEdges for [(usize, usize)] {
-    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
+impl IterAllArcs for [(usize, usize)] {
+    fn iter_all_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
         self.iter().copied()
     }
 }
 
-impl<const V: usize> IterAllEdges for [(usize, usize); V] {
-    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
+impl<const V: usize> IterAllArcs for [(usize, usize); V] {
+    fn iter_all_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
         self.iter().copied()
     }
 }
 
-impl IterAllEdges for BTreeSet<(usize, usize)> {
-    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
+impl IterAllArcs for BTreeSet<(usize, usize)> {
+    fn iter_all_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
         self.iter().copied()
     }
 }
 
-impl<H> IterAllEdges for HashSet<(usize, usize), H>
+impl<H> IterAllArcs for HashSet<(usize, usize), H>
 where
     H: BuildHasher,
 {
-    fn iter_all_edges(&self) -> impl Iterator<Item = (usize, usize)> {
+    fn iter_all_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
         self.iter().copied()
     }
 }
@@ -211,9 +211,9 @@ where
 mod tests {
     use super::*;
 
-    macro_rules! test_iter_all_edges_unstable {
+    macro_rules! test_iter_all_arcs_unstable {
         ($graph:expr) => {
-            let mut iter = $graph.iter_all_edges();
+            let mut iter = $graph.iter_all_arcs();
 
             assert!(matches!(iter.next(), Some((0, 1) | (1, 2) | (2, 0))));
             assert!(matches!(iter.next(), Some((0, 1) | (1, 2) | (2, 0))));
@@ -226,7 +226,7 @@ mod tests {
     fn vec_vec() {
         let graph = vec![vec![1], vec![2], vec![0]];
 
-        assert!(graph.iter_all_edges().eq([(0, 1), (1, 2), (2, 0)]));
+        assert!(graph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]
@@ -237,7 +237,7 @@ mod tests {
             BTreeSet::from([0]),
         ];
 
-        test_iter_all_edges_unstable!(graph);
+        test_iter_all_arcs_unstable!(graph);
     }
 
     #[test]
@@ -245,14 +245,14 @@ mod tests {
     fn vec_hash_set() {
         let graph = vec![HashSet::from([1]), HashSet::from([2]), HashSet::from([0])];
 
-        test_iter_all_edges_unstable!(graph);
+        test_iter_all_arcs_unstable!(graph);
     }
 
     #[test]
     fn slice_vec() {
         let graph: &[Vec<usize>] = &[vec![1], vec![2], vec![0]];
 
-        assert!(graph.iter_all_edges().eq([(0, 1), (1, 2), (2, 0)]));
+        assert!(graph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]
@@ -263,7 +263,7 @@ mod tests {
             BTreeSet::from([0]),
         ];
 
-        test_iter_all_edges_unstable!(graph);
+        test_iter_all_arcs_unstable!(graph);
     }
 
     #[test]
@@ -271,14 +271,14 @@ mod tests {
         let graph: &[HashSet<usize>] =
             &[HashSet::from([1]), HashSet::from([2]), HashSet::from([0])];
 
-        test_iter_all_edges_unstable!(graph);
+        test_iter_all_arcs_unstable!(graph);
     }
 
     #[test]
     fn arr_vec() {
         let graph = [vec![1], vec![2], vec![0]];
 
-        assert!(graph.iter_all_edges().eq([(0, 1), (1, 2), (2, 0)]));
+        assert!(graph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]
@@ -289,21 +289,21 @@ mod tests {
             BTreeSet::from([0]),
         ];
 
-        test_iter_all_edges_unstable!(graph);
+        test_iter_all_arcs_unstable!(graph);
     }
 
     #[test]
     fn arr_hash_set() {
         let graph = [HashSet::from([1]), HashSet::from([2]), HashSet::from([0])];
 
-        test_iter_all_edges_unstable!(graph);
+        test_iter_all_arcs_unstable!(graph);
     }
 
     #[test]
     fn btree_map_vec() {
         let graph = BTreeMap::from([(0, vec![1]), (1, vec![2]), (2, vec![0])]);
 
-        assert!(graph.iter_all_edges().eq([(0, 1), (1, 2), (2, 0)]));
+        assert!(graph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]
@@ -314,14 +314,14 @@ mod tests {
             (2, BTreeSet::from([0])),
         ]);
 
-        test_iter_all_edges_unstable!(graph);
+        test_iter_all_arcs_unstable!(graph);
     }
 
     #[test]
     fn hash_map_vec() {
         let graph = HashMap::from([(0, vec![1]), (1, vec![2]), (2, vec![0])]);
 
-        test_iter_all_edges_unstable!(graph);
+        test_iter_all_arcs_unstable!(graph);
     }
 
     #[test]
@@ -332,41 +332,41 @@ mod tests {
             (2, HashSet::from([0])),
         ]);
 
-        test_iter_all_edges_unstable!(graph);
+        test_iter_all_arcs_unstable!(graph);
     }
 
     #[test]
     fn vec_tuple() {
         let graph = vec![(0, 1), (1, 2), (2, 0)];
 
-        assert!(graph.iter_all_edges().eq([(0, 1), (1, 2), (2, 0)]));
+        assert!(graph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]
     fn slice_tuple() {
         let graph: &[(usize, usize)] = &[(0, 1), (1, 2), (2, 0)];
 
-        assert!(graph.iter_all_edges().eq([(0, 1), (1, 2), (2, 0)]));
+        assert!(graph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]
     fn arr_tuple() {
         let graph = [(0, 1), (1, 2), (2, 0)];
 
-        assert!(graph.iter_all_edges().eq([(0, 1), (1, 2), (2, 0)]));
+        assert!(graph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]
     fn btree_set() {
         let graph: BTreeSet<(usize, usize)> = BTreeSet::from([(0, 1), (1, 2), (2, 0)]);
 
-        test_iter_all_edges_unstable!(graph);
+        test_iter_all_arcs_unstable!(graph);
     }
 
     #[test]
     fn hash_set() {
         let graph: HashSet<(usize, usize)> = HashSet::from([(0, 1), (1, 2), (2, 0)]);
 
-        test_iter_all_edges_unstable!(graph);
+        test_iter_all_arcs_unstable!(graph);
     }
 }

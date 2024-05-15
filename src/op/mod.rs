@@ -14,10 +14,10 @@
 //! use {
 //!     alloc::collections::BTreeSet,
 //!     graaf::op::{
-//!         AddEdge,
+//!         AddArc,
 //!         Indegree,
 //!         Outdegree,
-//!         RemoveEdge,
+//!         RemoveArc,
 //!     },
 //! };
 //!
@@ -25,14 +25,14 @@
 //!
 //! // 1 ← 0 → 2
 //!
-//! graph.add_edge(0, 1);
-//! graph.add_edge(0, 2);
+//! graph.add_arc(0, 1);
+//! graph.add_arc(0, 2);
 //!
 //! assert_eq!(graph.outdegree(0), 2);
 //! assert_eq!(graph.indegree(1), 1);
 //! assert_eq!(graph.indegree(2), 1);
 //!
-//! graph.remove_edge(0, 1);
+//! graph.remove_arc(0, 1);
 //!
 //! assert_eq!(graph.outdegree(0), 1);
 //! assert_eq!(graph.indegree(1), 0);
@@ -83,7 +83,7 @@
 //! - `[Vec<(usize, W)>; V]`
 //! - `[Vec<(usize, W)>]`
 //!
-//! ## Edge list
+//! ## Arc list
 //!
 //! ### Unweighted
 //!
@@ -109,12 +109,12 @@
 //! [`array`]: https://doc.rust-lang.org/std/primitive.array.html
 //! [`slice`]: https://doc.rust-lang.org/std/primitive.slice.html
 
-pub mod add_edge;
-pub mod add_weighted_edge;
+pub mod add_arc;
+pub mod add_weighted_arc;
+pub mod arc_weight;
 pub mod degree;
-pub mod edge_weight;
+pub mod has_arc;
 pub mod has_edge;
-pub mod has_edge_symmetric;
 pub mod indegree;
 pub mod is_balanced;
 pub mod is_isolated;
@@ -122,23 +122,23 @@ pub mod is_pendant;
 pub mod is_regular;
 pub mod is_simple;
 pub mod is_symmetric;
-pub mod iter_all_edges;
-pub mod iter_all_weighted_edges;
-pub mod iter_edges;
+pub mod iter_all_arcs;
+pub mod iter_all_weighted_arcs;
+pub mod iter_arcs;
 pub mod iter_vertices;
-pub mod iter_weighted_edges;
+pub mod iter_weighted_arcs;
 pub mod order;
 pub mod outdegree;
-pub mod remove_edge;
+pub mod remove_arc;
 pub mod size;
 
 pub use {
-    add_edge::AddEdge,
-    add_weighted_edge::AddWeightedEdge,
+    add_arc::AddArc,
+    add_weighted_arc::AddWeightedArc,
+    arc_weight::ArcWeight,
     degree::Degree,
-    edge_weight::EdgeWeight,
+    has_arc::HasArc,
     has_edge::HasEdge,
-    has_edge_symmetric::HasEdgeSymmetric,
     indegree::Indegree,
     is_balanced::IsBalanced,
     is_isolated::IsIsolated,
@@ -146,13 +146,13 @@ pub use {
     is_regular::IsRegular,
     is_simple::IsSimple,
     is_symmetric::IsSymmetric,
-    iter_all_edges::IterAllEdges,
-    iter_all_weighted_edges::IterAllWeightedEdges,
-    iter_edges::IterEdges,
+    iter_all_arcs::IterAllArcs,
+    iter_all_weighted_arcs::IterAllWeightedArcs,
+    iter_arcs::IterArcs,
     iter_vertices::IterVertices,
-    iter_weighted_edges::IterWeightedEdges,
+    iter_weighted_arcs::IterWeightedArcs,
     order::Order,
     outdegree::Outdegree,
-    remove_edge::RemoveEdge,
+    remove_arc::RemoveArc,
     size::Size,
 };

@@ -52,7 +52,7 @@ use {
 /// where
 ///     H: BuildHasher,
 /// {
-///     edges: [HashSet<usize, H>; V],
+///     arcs: [HashSet<usize, H>; V],
 /// }
 ///
 /// impl<const V: usize, H> CompleteConst for Graph<V, H>
@@ -65,9 +65,9 @@ use {
 ///     fn complete() -> Self {
 ///         assert!(V > 0, "a graph must have at least one vertex");
 ///
-///         let mut edges = <[HashSet<usize, H>; V]>::empty();
+///         let mut arcs = <[HashSet<usize, H>; V]>::empty();
 ///
-///         for (s, set) in edges.iter_mut().enumerate() {
+///         for (s, set) in arcs.iter_mut().enumerate() {
 ///             for t in 0..V {
 ///                 if s != t {
 ///                     let _ = set.insert(t);
@@ -75,14 +75,14 @@ use {
 ///             }
 ///         }
 ///
-///         Graph { edges }
+///         Graph { arcs }
 ///     }
 /// }
 ///
 /// let graph = Graph::<3, RandomState>::complete();
 ///
 /// assert_eq!(
-///     graph.edges,
+///     graph.arcs,
 ///     [
 ///         HashSet::from([1, 2]),
 ///         HashSet::from([0, 2]),

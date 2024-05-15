@@ -1,4 +1,4 @@
-//! A trait to count the number of edges in a directed graph
+//! A trait to count the number of arcs in a directed graph
 //!
 //! # Examples
 //!
@@ -24,23 +24,23 @@ use {
     },
 };
 
-/// A trait to count the number of edges in a directed graph
+/// A trait to count the number of arcs in a directed graph
 ///
 /// # How can I implement `Size`?
 ///
 /// Provide an implementation of `size` that returns the number of
-/// edges in the graph.
+/// arcs in the graph.
 ///
 /// ```
 /// use graaf::op::Size;
 ///
 /// struct Graph {
-///     edges: Vec<Vec<usize>>,
+///     arcs: Vec<Vec<usize>>,
 /// }
 ///
 /// impl Size for Graph {
 ///     fn size(&self) -> usize {
-///         self.edges.iter().map(Vec::len).sum()
+///         self.arcs.iter().map(Vec::len).sum()
 ///     }
 /// }
 /// ```
@@ -55,7 +55,7 @@ use {
 /// assert_eq!(graph.size(), 10);
 /// ```
 pub trait Size {
-    /// Counts all edges.
+    /// Counts all arcs.
     fn size(&self) -> usize;
 }
 

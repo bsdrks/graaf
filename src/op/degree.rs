@@ -1,7 +1,7 @@
 #![doc(alias = "valency")]
 //! A trait to get the degree of a given vertex
 //!
-//! The degree of a vertex is the number of edges incident on it. For directed
+//! The degree of a vertex is the number of arcs incident on it. For directed
 //! graphs, the degree is the sum of the indegree and outdegree.
 //!
 //! # Examples
@@ -58,12 +58,12 @@ use {
 /// };
 ///
 /// struct Graph {
-///     edges: Vec<HashSet<usize>>,
+///     arcs: Vec<HashSet<usize>>,
 /// }
 ///
 /// impl Degree for Graph {
 ///     fn degree(&self, s: usize) -> usize {
-///         self.edges.indegree(s) + self.edges.outdegree(s)
+///         self.arcs.indegree(s) + self.arcs.outdegree(s)
 ///     }
 /// }
 /// ```
@@ -225,8 +225,8 @@ mod tests {
                 EmptyConst,
             },
             op::{
-                AddEdge,
-                AddWeightedEdge,
+                AddArc,
+                AddWeightedArc,
             },
         },
     };
@@ -241,10 +241,10 @@ mod tests {
 
     macro_rules! test_degree_unweighted {
         ($graph:expr) => {
-            $graph.add_edge(0, 1);
-            $graph.add_edge(0, 2);
-            $graph.add_edge(1, 2);
-            $graph.add_edge(2, 0);
+            $graph.add_arc(0, 1);
+            $graph.add_arc(0, 2);
+            $graph.add_arc(1, 2);
+            $graph.add_arc(2, 0);
 
             test_degree!($graph);
         };
@@ -252,10 +252,10 @@ mod tests {
 
     macro_rules! test_degree_weighted {
         ($graph:expr) => {
-            $graph.add_weighted_edge(0, 1, 1);
-            $graph.add_weighted_edge(0, 2, 2);
-            $graph.add_weighted_edge(1, 2, 3);
-            $graph.add_weighted_edge(2, 0, 2);
+            $graph.add_weighted_arc(0, 1, 1);
+            $graph.add_weighted_arc(0, 2, 2);
+            $graph.add_weighted_arc(1, 2, 3);
+            $graph.add_weighted_arc(2, 0, 2);
 
             test_degree!($graph);
         };

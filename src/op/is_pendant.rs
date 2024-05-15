@@ -57,17 +57,17 @@ use {
 /// };
 ///
 /// struct Graph {
-///     edges: Vec<HashSet<usize>>,
+///     arcs: Vec<HashSet<usize>>,
 /// }
 ///
 /// impl IsPendant for Graph {
 ///     fn is_pendant(&self, s: usize) -> bool {
-///         self.edges.degree(s) == 1
+///         self.arcs.degree(s) == 1
 ///     }
 /// }
 ///
 /// let graph = Graph {
-///     edges: vec![
+///     arcs: vec![
 ///         HashSet::from([1, 2]),
 ///         HashSet::from([0]),
 ///         HashSet::new(),
@@ -216,8 +216,8 @@ mod tests {
                 EmptyConst,
             },
             op::{
-                AddEdge,
-                AddWeightedEdge,
+                AddArc,
+                AddWeightedArc,
             },
         },
     };
@@ -234,10 +234,10 @@ mod tests {
 
     macro_rules! test_is_pendant_unweighted {
         ($graph:expr) => {
-            $graph.add_edge(0, 1);
-            $graph.add_edge(0, 2);
-            $graph.add_edge(1, 0);
-            $graph.add_edge(3, 0);
+            $graph.add_arc(0, 1);
+            $graph.add_arc(0, 2);
+            $graph.add_arc(1, 0);
+            $graph.add_arc(3, 0);
 
             test_is_pendant!($graph);
         };
@@ -245,10 +245,10 @@ mod tests {
 
     macro_rules! test_is_pendant_weighted {
         ($graph:expr) => {
-            $graph.add_weighted_edge(0, 1, 1);
-            $graph.add_weighted_edge(0, 2, 1);
-            $graph.add_weighted_edge(1, 0, 1);
-            $graph.add_weighted_edge(3, 0, 1);
+            $graph.add_weighted_arc(0, 1, 1);
+            $graph.add_weighted_arc(0, 2, 1);
+            $graph.add_weighted_arc(1, 0, 1);
+            $graph.add_weighted_arc(3, 0, 1);
 
             test_is_pendant!($graph);
         };

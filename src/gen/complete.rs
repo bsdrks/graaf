@@ -47,7 +47,7 @@ use {
 /// };
 ///
 /// struct Graph {
-///     edges: HashSet<(usize, usize)>,
+///     arcs: HashSet<(usize, usize)>,
 /// }
 ///
 /// impl Complete for Graph {
@@ -57,25 +57,25 @@ use {
 ///     fn complete(v: usize) -> Self {
 ///         assert!(v > 0, "a graph must have at least one vertex");
 ///
-///         let mut edges = HashSet::new();
+///         let mut arcs = HashSet::new();
 ///
 ///         for s in 0..v {
 ///             for t in 0..v {
 ///                 if s != t {
-///                     let _ = edges.insert((s, t));
-///                     let _ = edges.insert((t, s));
+///                     let _ = arcs.insert((s, t));
+///                     let _ = arcs.insert((t, s));
 ///                 }
 ///             }
 ///         }
 ///
-///         Graph { edges }
+///         Graph { arcs }
 ///     }
 /// }
 ///
 /// let graph = Graph::complete(3);
 ///
 /// assert_eq!(
-///     graph.edges,
+///     graph.arcs,
 ///     HashSet::from([(0, 1), (1, 0), (0, 2), (2, 0), (1, 2), (2, 1)])
 /// );
 /// ```

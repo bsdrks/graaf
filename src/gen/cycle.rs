@@ -45,22 +45,22 @@ use {
 /// };
 ///
 /// struct Graph {
-///     edges: HashSet<(usize, usize)>,
+///     arcs: HashSet<(usize, usize)>,
 /// }
 ///
 /// impl Cycle for Graph {
 ///     fn cycle(v: usize) -> Self {
-///         let mut edges = (0..v - 1).map(|s| (s, s + 1)).collect::<HashSet<_>>();
+///         let mut arcs = (0..v - 1).map(|s| (s, s + 1)).collect::<HashSet<_>>();
 ///
-///         edges.insert((v - 1, 0));
+///         arcs.insert((v - 1, 0));
 ///
-///         Graph { edges }
+///         Graph { arcs }
 ///     }
 /// }
 ///
 /// let graph = Graph::cycle(3);
 ///
-/// assert_eq!(graph.edges, HashSet::from([(0, 1), (1, 2), (2, 0)]));
+/// assert_eq!(graph.arcs, HashSet::from([(0, 1), (1, 2), (2, 0)]));
 /// ```
 ///
 /// # Examples
