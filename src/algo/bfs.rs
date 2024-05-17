@@ -4,38 +4,6 @@
 //! vertices of an unweighted graph in order of their distance from the source
 //! vertex. Use [`dijkstra`] for weighted graphs.
 //!
-//! Use [`single_source_distances`] if you:
-//! - need the distances from a single source vertex to all other vertices.
-//!
-//! Use [`single_source_predecessors`] if you:
-//! - need the predecessor tree for the shortest paths from a single source
-//!   vertex to all other vertices.
-//!
-//! Use [`single_pair_shortest_path`] if you:
-//! - need the shortest path from a single source vertex to a single target
-//!   vertex.
-//!
-//! Use [`distances`] if you:
-//! - need the distances from multiple source vertices to all other vertices,
-//! - have predefined starting distances,
-//! - have predefined distances for non-source vertices,
-//! - want to use your own step function.
-//!
-//! Use [`predecessors`] if you:
-//! - need the predecessor tree and distances,
-//! - have multiple source vertices,
-//! - have predefined starting distances,
-//! - have predefined distances for non-source vertices,
-//! - want to use your own step function.
-//!
-//! Use [`shortest_path`] if you:
-//! - need the shortest path, the predecessor tree, and distances,
-//! - have multiple source vertices,
-//! - have predefined starting distances,
-//! - have predefined distances for non-source vertices,
-//! - want to use your own step function,
-//! - want to use your own target predicate.
-//!
 //! The implementations use distances instead of a set or boolean array to check
 //! if a vertex has been visited because we already calculate these distances
 //! during traversal.

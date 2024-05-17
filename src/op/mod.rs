@@ -125,6 +125,7 @@ pub mod is_symmetric;
 pub mod iter_all_arcs;
 pub mod iter_all_weighted_arcs;
 pub mod iter_arcs;
+pub mod iter_arcs_mut;
 pub mod iter_vertices;
 pub mod iter_weighted_arcs;
 pub mod order;
@@ -149,6 +150,7 @@ pub use {
     iter_all_arcs::IterAllArcs,
     iter_all_weighted_arcs::IterAllWeightedArcs,
     iter_arcs::IterArcs,
+    iter_arcs_mut::IterArcsMut,
     iter_vertices::IterVertices,
     iter_weighted_arcs::IterWeightedArcs,
     order::Order,

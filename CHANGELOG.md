@@ -2,8 +2,6 @@
 
 ## Provisional roadmap
 
-- Add `Path` generator.
-- Add `algo::dijkstra::single_pair_shortest_path`.
 - Add `bfs::shortest_paths`.
 - Add `bfs::single_pair_shortest_paths`.
 - Add `dijkstra::shortest_paths`.
@@ -19,6 +17,22 @@
 - Implement the `dfs` module.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.46.0] - 2024-05-17
+
+Added
+
+- Add `IterArcsMut` trait.
+- Add `arr_vec` unit test for `IterArcsMut`.
+- Add `btree_map_vec` unit test for `IterArcsMut`.
+- Add `hash_map_vec` unit test for `IterArcsMut`.
+- Add `slice_vec` unit test for `IterArcsMut`.
+- Add `vec_vec` unit test for `IterArcsMut`.
+- Implement `IterArcsMut` for `BTreeMap<usize, Vec<usize>>`.
+- Implement `IterArcsMut` for `HashMap<usize, Vec<usize>>`.
+- Implement `IterArcsMut` for `Vec<Vec<usize>>`.
+- Implement `IterArcsMut` for `[Vec<usize>; V]`.
+- Implement `IterArcsMut` for `[Vec<usize>]`.
 
 ## [0.45.1] - 2024-05-17
 

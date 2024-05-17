@@ -129,7 +129,7 @@ use {
 /// assert!(!graph.is_symmetric());
 /// ```
 pub trait IsSymmetric {
-    /// Returns whether the graph is symmetric
+    /// Returns whether the graph is symmetric.
     fn is_symmetric(&self) -> bool;
 }
 

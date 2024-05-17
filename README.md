@@ -8,7 +8,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.45.1"
+graaf = "0.46.0"
 ```
 
 ## Overview
@@ -81,8 +81,15 @@ Generate parameterized graphs.
 ```rust
 use graaf::gen::*;
 
-assert_eq!(Vec::<Vec<usize>>::empty(2), vec![Vec::new(), Vec::new()]);
-assert_eq!(Vec::<Vec<usize>>::cycle(3), vec![vec![1], vec![2], vec![0]]);
+assert_eq!(
+    Vec::<Vec<usize>>::empty(2),
+    vec![Vec::new(), Vec::new()]
+);
+
+assert_eq!(
+    Vec::<Vec<usize>>::cycle(3),
+    vec![vec![1], vec![2], vec![0]]
+);
 
 assert_eq!(
     <[Vec::<usize>; 3]>::complete(),
