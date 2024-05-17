@@ -20,6 +20,12 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.45.1] - 2024-05-17
+
+Fixed
+
+- Fix typo
+
 ## [0.45.0] - 2024-05-15
 
 Changed
