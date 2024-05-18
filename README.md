@@ -1,4 +1,4 @@
-# ![Graaf!](/logo.png "Graaf") &emsp; [![Crates.io](https://img.shields.io/crates/v/graaf.svg)](https://crates.io/crates/graaf) [![Build status](https://github.com/bsdrks/graaf/actions/workflows/rust.yml/badge.svg)](https://github.com/bsdrks/graaf/actions) [![API reference](https://docs.rs/graaf/badge.svg)](https://docs.rs/graaf) [![Coverage Status](https://coveralls.io/repos/github/bsdrks/graaf/badge.svg?branch=main)](https://coveralls.io/github/bsdrks/graaf?branch=main)
+# ![Graaf](/logo.png "Graaf") &emsp; [![Crates.io](https://img.shields.io/crates/v/graaf.svg)](https://crates.io/crates/graaf) [![Build status](https://github.com/bsdrks/graaf/actions/workflows/rust.yml/badge.svg)](https://github.com/bsdrks/graaf/actions) [![API reference](https://docs.rs/graaf/badge.svg)](https://docs.rs/graaf) [![Coverage Status](https://coveralls.io/repos/github/bsdrks/graaf/badge.svg?branch=main)](https://coveralls.io/github/bsdrks/graaf?branch=main)
 
 Work with directed graphs
 
@@ -8,14 +8,14 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.46.0"
+graaf = "0.47.0"
 ```
 
 ## Overview
 
 ### Operations
 
-Build and query graphs.
+Build and query digraphs.
 
 ```rust
 use {
@@ -38,7 +38,7 @@ assert_eq!(graph.degree(2), 1);
 
 ### Algorithms
 
-Search, traverse, and analyze graphs.
+Search, traverse, and analyze digraphs.
 
 ```rust
 use graaf::algo::bfs::single_pair_shortest_path as spsp;
@@ -76,7 +76,7 @@ assert!(!graph.is_simple());
 
 ### Generators
 
-Generate parameterized graphs.
+Generate parameterized digraphs.
 
 ```rust
 use graaf::gen::*;
@@ -97,6 +97,36 @@ assert_eq!(
 );
 ```
 
+Generate random digraphs.
+
+```rust
+use {
+    graaf::{
+        gen::RandomTournament,
+        op::{
+            Degree,
+            Indegree,
+            IterVertices,
+            Order,
+            Outdegree,
+            Size,
+        },
+    },
+    std::collections::BTreeSet,
+};
+
+let tournament = Vec::<BTreeSet<usize>>::random_tournament(4);
+
+assert_eq!(tournament.size(), 6);
+assert_eq!(tournament.order(), 4);
+
+for s in tournament.iter_vertices() {
+    assert_eq!(tournament.degree(s), 3);
+    assert!((0..3).contains(&tournament.outdegree(s)));
+    assert!((0..3).contains(&tournament.indegree(s)));
+}
+```
+
 ## Features
 
 These features require nightly Rust.
@@ -105,11 +135,12 @@ These features require nightly Rust.
 
 ## Changelog
 
-See [CHANGELOG.md](https://github.com/bsdrks/graaf/blob/main/CHANGELOG.md).
+See [CHANGELOG.md] for a list of changes.
 
 ## License
 
-Use `graaf` under either the [Apache License, Version 2.0], or the [MIT license] at your option.
+Licensed under [Apache License, Version 2.0] or [MIT license] at your option.
 
 [Apache License, Version 2.0]: LICENSE-APACHE
 [MIT license]: LICENSE-MIT
+[CHANGELOG.md]: https://github.com/bsdrks/graaf/blob/main/CHANGELOG.md

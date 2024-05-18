@@ -2,21 +2,41 @@
 
 ## Provisional roadmap
 
+- Add `IterAllArcsMut` trait.
+- Add `IterAllWeightedArcsMut` trait.
 - Add `bfs::shortest_paths`.
 - Add `bfs::single_pair_shortest_paths`.
 - Add `dijkstra::shortest_paths`.
 - Add `dijkstra::single_pair_shortest_paths`.
-- Add `op::center`.
-- Add `op::diameter`.
-- Add `op::eccentricity`.
-- Add `op::periphery`.
-- Add `op::radius`.
+- Add a `dfs` module.
 - Benchmark against popular Rust graph libraries.
 - Benchmark against popular graph libraries in other languages.
-- Implement `_mut` versions of `op` iterator traits.
-- Implement the `dfs` module.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.47.0] - 2024-05-18
+
+Added
+
+- Add `RandomTournament` example to `README`.
+- Add `gen::RandomTournament` generator.
+- Add `prng::SplitMix64` PRNG to seed `Xoshiro256StarStar`.
+- Add `prng::Xoshiro256StarStar` PRNG.
+- Add `prng` module.
+- Add unit test `btree_map_btree_set` for `RandomTournament`.
+- Add unit test `btree_map_vec` for `RandomTournament`.
+- Add unit test `hash_map_hash_set` for `RandomTournament`.
+- Add unit test `hash_map_vec` for `RandomTournament`.
+- Add unit test `vec_btree_set` for `RandomTournament`.
+- Add unit test `vec_hash_set` for `RandomTournament`.
+- Add unit test `vec_vec` for `RandomTournament`.
+- Implement `RandomTournament` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `RandomTournament` for `BTreeMap<usize, Vec<usize>>`.
+- Implement `RandomTournament` for `HashMap<usize, HashSet<usize>>`.
+- Implement `RandomTournament` for `HashMap<usize, Vec<usize>>`.
+- Implement `RandomTournament` for `Vec<BTreeSet<usize>>`.
+- Implement `RandomTournament` for `Vec<HashSet<usize>>`.
+- Implement `RandomTournament` for `Vec<Vec<usize>>`.
 
 ## [0.46.0] - 2024-05-17
 

@@ -42,6 +42,36 @@
 //!
 //! assert_eq!(Vec::<BTreeSet<usize>>::empty(3), vec![BTreeSet::new(); 3]);
 //! ```
+//!
+//! ```
+//! extern crate alloc;
+//!
+//! use {
+//!     alloc::collections::BTreeSet,
+//!     graaf::{
+//!         gen::RandomTournament,
+//!         op::{
+//!             Degree,
+//!             Indegree,
+//!             IterVertices,
+//!             Order,
+//!             Outdegree,
+//!             Size,
+//!         },
+//!     },
+//! };
+//!
+//! let tournament = Vec::<BTreeSet<usize>>::random_tournament(4);
+//!
+//! assert_eq!(tournament.size(), 6);
+//! assert_eq!(tournament.order(), 4);
+//!
+//! for s in tournament.iter_vertices() {
+//!     assert_eq!(tournament.degree(s), 3);
+//!     assert!((0..3).contains(&tournament.outdegree(s)));
+//!     assert!((0..3).contains(&tournament.indegree(s)));
+//! }
+//! ```
 
 pub mod complete;
 pub mod complete_const;
@@ -49,6 +79,8 @@ pub mod cycle;
 pub mod cycle_const;
 pub mod empty;
 pub mod empty_const;
+pub mod prng;
+pub mod random_tournament;
 
 pub use {
     complete::Complete,
@@ -57,4 +89,5 @@ pub use {
     cycle_const::CycleConst,
     empty::Empty,
     empty_const::EmptyConst,
+    random_tournament::RandomTournament,
 };
