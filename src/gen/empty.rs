@@ -91,7 +91,28 @@ pub trait Empty {
     /// # Arguments
     ///
     /// * `v` - The number of vertices in the graph
+    #[must_use]
     fn empty(v: usize) -> Self;
+
+    /// Generates a trivial graph.
+    ///
+    /// A trivial graph is a graph with a single vertex and no arcs.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use graaf::gen::Empty;
+    ///
+    /// assert_eq!(Vec::<Vec<usize>>::trivial(), vec![Vec::new()]);
+    /// ```
+    #[doc(alias = "singleton")]
+    #[must_use]
+    fn trivial() -> Self
+    where
+        Self: Sized,
+    {
+        Self::empty(1)
+    }
 }
 
 impl Empty for Vec<Vec<usize>> {
@@ -1297,5 +1318,154 @@ mod tests {
     #[should_panic(expected = "a graph must have at least one vertex")]
     fn hash_set_tuple_weighted_panic() {
         let _ = HashSet::<(usize, usize, usize)>::empty(0);
+    }
+
+    #[test]
+    fn vec_vec_unweighted_trivial() {
+        assert_eq!(Vec::<Vec<usize>>::trivial(), vec![Vec::new()]);
+    }
+
+    #[test]
+    fn vec_btree_set_unweighted_trivial() {
+        assert_eq!(Vec::<BTreeSet<usize>>::trivial(), vec![BTreeSet::new()]);
+    }
+
+    #[test]
+    fn vec_hash_set_unweighted_trivial() {
+        assert_eq!(Vec::<HashSet<usize>>::trivial(), vec![HashSet::new()]);
+    }
+
+    #[test]
+    fn btree_map_vec_unweighted_trivial() {
+        assert_eq!(
+            BTreeMap::<usize, Vec<usize>>::trivial(),
+            BTreeMap::from([(0, Vec::new())])
+        );
+    }
+
+    #[test]
+    fn btree_map_btree_set_unweighted_trivial() {
+        assert_eq!(
+            BTreeMap::<usize, BTreeSet<usize>>::trivial(),
+            BTreeMap::from([(0, BTreeSet::new())])
+        );
+    }
+
+    #[test]
+    fn hash_map_vec_unweighted_trivial() {
+        assert_eq!(
+            HashMap::<usize, Vec<usize>>::trivial(),
+            HashMap::from([(0, Vec::new())])
+        );
+    }
+
+    #[test]
+    fn hash_map_hash_set_unweighted_trivial() {
+        assert_eq!(
+            HashMap::<usize, HashSet<usize>>::trivial(),
+            HashMap::from([(0, HashSet::new())])
+        );
+    }
+
+    #[test]
+    fn vec_tuple_unweighted_trivial() {
+        assert_eq!(Vec::<(usize, usize)>::trivial(), Vec::new());
+    }
+
+    #[test]
+    fn btree_set_tuple_unweighted_trivial() {
+        assert_eq!(BTreeSet::<(usize, usize)>::trivial(), BTreeSet::new());
+    }
+
+    #[test]
+    fn hash_set_tuple_unweighted_trivial() {
+        assert_eq!(HashSet::<(usize, usize)>::trivial(), HashSet::new());
+    }
+
+    #[test]
+    fn vec_vec_weighted_trivial() {
+        assert_eq!(Vec::<Vec<(usize, usize)>>::trivial(), vec![Vec::new()]);
+    }
+
+    #[test]
+    fn vec_btree_set_weighted_trivial() {
+        assert_eq!(
+            Vec::<BTreeSet<(usize, usize)>>::trivial(),
+            vec![BTreeSet::new()]
+        );
+    }
+
+    #[test]
+    fn vec_hash_set_weighted_trivial() {
+        assert_eq!(
+            Vec::<HashSet<(usize, usize)>>::trivial(),
+            vec![HashSet::new()]
+        );
+    }
+
+    #[test]
+    fn btree_map_vec_weighted_trivial() {
+        assert_eq!(
+            BTreeMap::<usize, Vec<(usize, usize)>>::trivial(),
+            BTreeMap::from([(0, Vec::new())])
+        );
+    }
+
+    #[test]
+    fn btree_map_btree_set_weighted_trivial() {
+        assert_eq!(
+            BTreeMap::<usize, BTreeSet<(usize, usize)>>::trivial(),
+            BTreeMap::from([(0, BTreeSet::new())])
+        );
+    }
+
+    #[test]
+    fn btree_map_btree_map_trivial() {
+        assert_eq!(
+            BTreeMap::<usize, BTreeMap<usize, usize>>::trivial(),
+            BTreeMap::from([(0, BTreeMap::new())])
+        );
+    }
+
+    #[test]
+    fn hash_map_vec_weighted_trivial() {
+        assert_eq!(
+            HashMap::<usize, Vec<(usize, usize)>>::trivial(),
+            HashMap::from([(0, Vec::new())])
+        );
+    }
+
+    #[test]
+    fn hash_map_hash_set_weighted_trivial() {
+        assert_eq!(
+            HashMap::<usize, HashSet<(usize, usize)>>::trivial(),
+            HashMap::from([(0, HashSet::new())])
+        );
+    }
+
+    #[test]
+    fn hash_map_hash_map_trivial() {
+        assert_eq!(
+            HashMap::<usize, HashMap<usize, usize>>::trivial(),
+            HashMap::from([(0, HashMap::new())])
+        );
+    }
+
+    #[test]
+    fn vec_tuple_weighted_trivial() {
+        assert_eq!(Vec::<(usize, usize, usize)>::trivial(), Vec::new());
+    }
+
+    #[test]
+    fn btree_set_tuple_weighted_trivial() {
+        assert_eq!(
+            BTreeSet::<(usize, usize, usize)>::trivial(),
+            BTreeSet::new()
+        );
+    }
+
+    #[test]
+    fn hash_set_tuple_weighted_trivial() {
+        assert_eq!(HashSet::<(usize, usize, usize)>::trivial(), HashSet::new());
     }
 }

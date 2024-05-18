@@ -9,10 +9,53 @@
 - Add `dijkstra::shortest_paths`.
 - Add `dijkstra::single_pair_shortest_paths`.
 - Add a `dfs` module.
+- Add a generator for single-vertex graphs.
+- Add a generator for single-sink complete graphs.
+- Add a generator for single-source complete graphs.
 - Benchmark against popular Rust graph libraries.
 - Benchmark against popular graph libraries in other languages.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.47.1] - 2024-05-18
+
+Added
+
+- Add alias `singleton` for `trivial`.
+- Add method `trivial`.
+- Add unit test `btree_map_btree_map_trivial` for `trivial`.
+- Add unit test `btree_map_btree_set_unweighted_trivial` for `trivial`.
+- Add unit test `btree_map_btree_set_weighted_trivial` for `trivial`.
+- Add unit test `btree_map_vec_unweighted_trivial` for `trivial`.
+- Add unit test `btree_map_vec_weighted_trivial` for `trivial`.
+- Add unit test `btree_set_tuple_unweighted_trivial` for `trivial`.
+- Add unit test `btree_set_tuple_weighted_trivial` for `trivial`.
+- Add unit test `hash_map_hash_map_trivial` for `trivial`.
+- Add unit test `hash_map_hash_set_unweighted_trivial` for `trivial`.
+- Add unit test `hash_map_hash_set_weighted_trivial` for `trivial`.
+- Add unit test `hash_map_vec_unweighted_trivial` for `trivial`.
+- Add unit test `hash_map_vec_weighted_trivial` for `trivial`.
+- Add unit test `hash_set_tuple_unweighted_trivial` for `trivial`.
+- Add unit test `hash_set_tuple_weighted_trivial` for `trivial`.
+- Add unit test `vec_btree_set_unweighted_trivial` for `trivial`.
+- Add unit test `vec_btree_set_weighted_trivial` for `trivial`.
+- Add unit test `vec_hash_set_unweighted_trivial` for `trivial`.
+- Add unit test `vec_hash_set_weighted_trivial` for `trivial`.
+- Add unit test `vec_tuple_unweighted_trivial` for `trivial`.
+- Add unit test `vec_tuple_weighted_trivial` for `trivial`.
+- Add unit test `vec_vec_unweighted_trivial` for `trivial`.
+- Add unit test `vec_vec_unweighted_trivial` for `trivial`.
+- Add unit test `vec_vec_weighted_trivial` for `trivial`.
+
+Changed
+
+- Mark `RandomTournament::random_tournament` as `#[must_use]`.
+- Mark `Complete::complete` as `#[must_use]`.
+- Mark `CompleteConst::complete` as `#[must_use]`.
+- Mark `Cycle::cycle` as `#[must_use]`.
+- Mark `CycleConst::cycle` as `#[must_use]`.
+- Mark `Empty::empty` as `#[must_use]`.
+- Mark `EmptyConst::empty` as `#[must_use]`.
 
 ## [0.47.0] - 2024-05-18
 

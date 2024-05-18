@@ -86,6 +86,7 @@ use {
 /// ```
 pub trait EmptyConst {
     /// Generates a empty graph.
+    #[must_use]
     fn empty() -> Self;
 }
 

@@ -78,6 +78,7 @@ pub trait Cycle {
     /// # Arguments
     ///
     /// * `v` - The number of vertices in the graph
+    #[must_use]
     fn cycle(v: usize) -> Self;
 }
 

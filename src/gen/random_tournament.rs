@@ -161,6 +161,7 @@ use {
 /// ```
 pub trait RandomTournament {
     /// Returns a random tournament.
+    #[must_use]
     fn random_tournament(v: usize) -> Self;
 }
 
