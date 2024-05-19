@@ -13,7 +13,8 @@ use crate::op::{
 /// by [`HasArc`].
 ///
 /// Types that implement [`AddWeightedArc`] and [`HasArc`] should ensure that
-/// the property holds for every `digraph`, `s`, `t`, and `w` of the given types.
+/// the property holds for every `digraph`, `s`, `t`, and `w` of the given
+/// types.
 ///
 /// # Arguments
 ///
