@@ -24,7 +24,7 @@ fn main() {
     divan::main();
 }
 
-macro_rules! complete_graph {
+macro_rules! complete_digraph {
     ($v:ident, $adj:ident) => {
         for s in 0..$v {
             for t in 0..$v {
@@ -36,7 +36,7 @@ macro_rules! complete_graph {
     };
 }
 
-macro_rules! complete_weighted_graph {
+macro_rules! complete_weighted_digraph {
     ($v:ident, $adj:ident) => {
         for s in 0..$v {
             for t in 0..$v {
@@ -54,7 +54,7 @@ const ARGS: [usize; 3] = [10, 100, 1000];
 fn vec_vec(bencher: Bencher<'_, '_>, v: usize) {
     let mut adj = vec![Vec::<usize>::new(); v];
 
-    complete_graph!(v, adj);
+    complete_digraph!(v, adj);
 
     bencher.bench_local(|| adj.size());
 }
@@ -63,7 +63,7 @@ fn vec_vec(bencher: Bencher<'_, '_>, v: usize) {
 fn vec_btree_set(bencher: Bencher<'_, '_>, v: usize) {
     let mut adj = vec![BTreeSet::<usize>::new(); v];
 
-    complete_graph!(v, adj);
+    complete_digraph!(v, adj);
 
     bencher.bench_local(|| adj.size());
 }
@@ -72,7 +72,7 @@ fn vec_btree_set(bencher: Bencher<'_, '_>, v: usize) {
 fn vec_hash_set(bencher: Bencher<'_, '_>, v: usize) {
     let mut adj = vec![HashSet::<usize>::new(); v];
 
-    complete_graph!(v, adj);
+    complete_digraph!(v, adj);
 
     bencher.bench_local(|| adj.size());
 }
@@ -81,7 +81,7 @@ fn vec_hash_set(bencher: Bencher<'_, '_>, v: usize) {
 fn vec_btree_map(bencher: Bencher<'_, '_>, v: usize) {
     let mut adj = vec![BTreeMap::<usize, usize>::new(); v];
 
-    complete_weighted_graph!(v, adj);
+    complete_weighted_digraph!(v, adj);
 
     bencher.bench_local(|| adj.size());
 }
@@ -90,7 +90,7 @@ fn vec_btree_map(bencher: Bencher<'_, '_>, v: usize) {
 fn vec_hash_map(bencher: Bencher<'_, '_>, v: usize) {
     let mut adj = vec![HashMap::<usize, usize>::new(); v];
 
-    complete_weighted_graph!(v, adj);
+    complete_weighted_digraph!(v, adj);
 
     bencher.bench_local(|| adj.size());
 }
@@ -99,7 +99,7 @@ fn vec_hash_map(bencher: Bencher<'_, '_>, v: usize) {
 fn arr_vec<const V: usize>(bencher: Bencher<'_, '_>) {
     let mut adj = from_fn::<_, V, _>(|_| Vec::new());
 
-    complete_graph!(V, adj);
+    complete_digraph!(V, adj);
 
     bencher.bench_local(|| adj.size());
 }
@@ -108,7 +108,7 @@ fn arr_vec<const V: usize>(bencher: Bencher<'_, '_>) {
 fn arr_btree_set<const V: usize>(bencher: Bencher<'_, '_>) {
     let mut adj = from_fn::<_, V, _>(|_| BTreeSet::new());
 
-    complete_graph!(V, adj);
+    complete_digraph!(V, adj);
 
     bencher.bench_local(|| adj.size());
 }
@@ -117,7 +117,7 @@ fn arr_btree_set<const V: usize>(bencher: Bencher<'_, '_>) {
 fn arr_hash_set<const V: usize>(bencher: Bencher<'_, '_>) {
     let mut adj = from_fn::<_, V, _>(|_| HashSet::new());
 
-    complete_graph!(V, adj);
+    complete_digraph!(V, adj);
 
     bencher.bench_local(|| adj.size());
 }
@@ -126,7 +126,7 @@ fn arr_hash_set<const V: usize>(bencher: Bencher<'_, '_>) {
 fn arr_btree_map<const V: usize>(bencher: Bencher<'_, '_>) {
     let mut adj = from_fn::<_, V, _>(|_| BTreeMap::new());
 
-    complete_weighted_graph!(V, adj);
+    complete_weighted_digraph!(V, adj);
 
     bencher.bench_local(|| adj.size());
 }
@@ -135,7 +135,7 @@ fn arr_btree_map<const V: usize>(bencher: Bencher<'_, '_>) {
 fn arr_hash_map<const V: usize>(bencher: Bencher<'_, '_>) {
     let mut adj = from_fn::<_, V, _>(|_| HashMap::new());
 
-    complete_weighted_graph!(V, adj);
+    complete_weighted_digraph!(V, adj);
 
     bencher.bench_local(|| adj.size());
 }
@@ -148,7 +148,7 @@ fn btree_map_vec(bencher: Bencher<'_, '_>, v: usize) {
         let _ = adj.insert(s, Vec::new());
     }
 
-    complete_graph!(v, adj);
+    complete_digraph!(v, adj);
 
     bencher.bench_local(|| adj.size());
 }
@@ -161,7 +161,7 @@ fn hash_map_vec(bencher: Bencher<'_, '_>, v: usize) {
         let _ = adj.insert(s, Vec::new());
     }
 
-    complete_graph!(v, adj);
+    complete_digraph!(v, adj);
 
     bencher.bench_local(|| adj.size());
 }
@@ -174,7 +174,7 @@ fn btree_map_btree_set(bencher: Bencher<'_, '_>, v: usize) {
         let _ = adj.insert(s, BTreeSet::new());
     }
 
-    complete_graph!(v, adj);
+    complete_digraph!(v, adj);
 
     bencher.bench_local(|| adj.size());
 }
@@ -187,7 +187,7 @@ fn hash_map_hash_set(bencher: Bencher<'_, '_>, v: usize) {
         let _ = adj.insert(s, HashSet::new());
     }
 
-    complete_graph!(v, adj);
+    complete_digraph!(v, adj);
 
     bencher.bench(|| adj.size());
 }
@@ -200,7 +200,7 @@ fn btree_map_btree_map(bencher: Bencher<'_, '_>, v: usize) {
         let _ = adj.insert(s, BTreeMap::new());
     }
 
-    complete_weighted_graph!(v, adj);
+    complete_weighted_digraph!(v, adj);
 
     bencher.bench(|| adj.size());
 }
@@ -213,7 +213,7 @@ fn hash_map_hash_map(bencher: Bencher<'_, '_>, v: usize) {
         let _ = adj.insert(s, HashMap::new());
     }
 
-    complete_weighted_graph!(v, adj);
+    complete_weighted_digraph!(v, adj);
 
     bencher.bench(|| adj.size());
 }

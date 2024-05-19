@@ -9,13 +9,19 @@
 - Add `dijkstra::shortest_paths`.
 - Add `dijkstra::single_pair_shortest_paths`.
 - Add a `dfs` module.
-- Add a generator for single-vertex graphs.
-- Add a generator for single-sink complete graphs.
-- Add a generator for single-source complete graphs.
+- Add a generator for single-sink complete digraphs.
+- Add a generator for single-source complete digraphs.
 - Benchmark against popular Rust graph libraries.
 - Benchmark against popular graph libraries in other languages.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.47.3] - 2024-05-19
+
+Changed
+
+- Rename `graph` to `digraph` internally.
+- Raname `G` to `D` internally.
 
 ## [0.47.2] - 2024-05-19
 

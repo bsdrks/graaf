@@ -1,7 +1,7 @@
 #![doc(alias = "edgeless")]
-//! A trait to generate empty variable-sized directed graphs
+//! A trait to generate empty variable-sized digraphs
 //!
-//! To generate empty const-sized directed graphs, see [`EmptyConst`].
+//! To generate empty const-sized digraphs, see [`EmptyConst`].
 //!
 //! # Examples
 //!
@@ -33,12 +33,12 @@ use {
     },
 };
 
-/// A trait to generate empty variable-sized directed graphs
+/// A trait to generate empty variable-sized digraphs
 ///
 /// # How can I implement `Empty`?
 ///
-/// Provide an implementation of `empty` that generates an empty graph with `v`
-/// vertices.
+/// Provide an implementation of `empty` that generates an empty digraph with
+/// `v` vertices.
 ///
 /// ```
 /// use {
@@ -86,17 +86,17 @@ use {
 /// );
 /// ```
 pub trait Empty {
-    /// Generates an empty graph.
+    /// Generates an empty digraph.
     ///
     /// # Arguments
     ///
-    /// * `v` - The number of vertices in the graph
+    /// * `v` - The number of vertices in the digraph
     #[must_use]
     fn empty(v: usize) -> Self;
 
-    /// Generates a trivial graph.
+    /// Generates a trivial digraph.
     ///
-    /// A trivial graph is a graph with a single vertex and no arcs.
+    /// A trivial digraph is a digraph with a single vertex and no arcs.
     ///
     /// # Examples
     ///
@@ -465,10 +465,10 @@ mod tests {
     }
 
     fn prop_indegree<T: Indegree + Empty>(v: usize) {
-        let graph = T::empty(v);
+        let digraph = T::empty(v);
 
         for s in 0..v {
-            assert_eq!(graph.indegree(s), 0);
+            assert_eq!(digraph.indegree(s), 0);
         }
     }
 
@@ -481,10 +481,10 @@ mod tests {
     }
 
     fn prop_outdegree<T: Outdegree + Empty>(v: usize) {
-        let graph = T::empty(v);
+        let digraph = T::empty(v);
 
         for s in 0..v {
-            assert_eq!(graph.outdegree(s), 0);
+            assert_eq!(digraph.outdegree(s), 0);
         }
     }
 

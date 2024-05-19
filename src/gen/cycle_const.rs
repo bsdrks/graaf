@@ -1,8 +1,8 @@
 #![doc(alias = "circular")]
-//! A trait to generate const-sized directed cycle graphs
+//! A trait to generate const-sized directed cycle digraphs
 //!
 //! Cycle graphs are also known as circular graphs. To generate variable-sized
-//! cycle graphs, see [`Cycle`].
+//! cycle digraphs, see [`Cycle`].
 //!
 //! # Examples
 //!
@@ -28,11 +28,11 @@ use {
     std::collections::HashSet,
 };
 
-/// A trait to generate const-sized directed cycle graphs
+/// A trait to generate const-sized directed cycle digraphs
 ///
 /// # How can I implement `CycleConst`?
 ///
-/// Provide an implementation of `cycle` that generates a cycle graph with `V`
+/// Provide an implementation of `cycle` that generates a cycle digraph with `V`
 /// vertices.
 ///
 /// ```
@@ -77,15 +77,15 @@ use {
 ///     }
 /// }
 ///
-/// let graph = Graph::<3, RandomState>::cycle();
+/// let digraph = Graph::<3, RandomState>::cycle();
 ///
 /// assert_eq!(
-///     graph.arcs,
+///     digraph.arcs,
 ///     [HashSet::from([1]), HashSet::from([2]), HashSet::from([0])]
 /// );
 /// ```
 pub trait CycleConst {
-    /// Generates a cycle graph.
+    /// Generates a cycle digraph.
     #[must_use]
     fn cycle() -> Self;
 }
@@ -97,15 +97,15 @@ impl<const V: usize> CycleConst for [Vec<usize>; V] {
     fn cycle() -> Self {
         assert!(V > 0, "a graph must have at least one vertex");
 
-        let mut graph = Self::empty();
+        let mut digraph = Self::empty();
 
-        for (s, vec) in graph.iter_mut().enumerate().take(V - 1) {
+        for (s, vec) in digraph.iter_mut().enumerate().take(V - 1) {
             vec.push(s + 1);
         }
 
-        graph[V - 1].push(0);
+        digraph[V - 1].push(0);
 
-        graph
+        digraph
     }
 }
 
@@ -116,15 +116,15 @@ impl<const V: usize> CycleConst for [BTreeSet<usize>; V] {
     fn cycle() -> Self {
         assert!(V > 0, "a graph must have at least one vertex");
 
-        let mut graph = Self::empty();
+        let mut digraph = Self::empty();
 
-        for (s, set) in graph.iter_mut().enumerate().take(V - 1) {
+        for (s, set) in digraph.iter_mut().enumerate().take(V - 1) {
             let _ = set.insert(s + 1);
         }
 
-        let _ = graph[V - 1].insert(0);
+        let _ = digraph[V - 1].insert(0);
 
-        graph
+        digraph
     }
 }
 
@@ -138,15 +138,15 @@ where
     fn cycle() -> Self {
         assert!(V > 0, "a graph must have at least one vertex");
 
-        let mut graph = Self::empty();
+        let mut digraph = Self::empty();
 
-        for (s, set) in graph.iter_mut().enumerate().take(V - 1) {
+        for (s, set) in digraph.iter_mut().enumerate().take(V - 1) {
             let _ = set.insert(s + 1);
         }
 
-        let _ = graph[V - 1].insert(0);
+        let _ = digraph[V - 1].insert(0);
 
-        graph
+        digraph
     }
 }
 

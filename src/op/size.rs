@@ -1,13 +1,13 @@
-//! A trait to count the number of arcs in a directed graph
+//! A trait to count the number of arcs in a digraph
 //!
 //! # Examples
 //!
 //! ```
 //! use graaf::op::Size;
 //!
-//! let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+//! let digraph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 //!
-//! assert_eq!(graph.size(), 10);
+//! assert_eq!(digraph.size(), 10);
 //! ```
 
 extern crate alloc;
@@ -24,12 +24,12 @@ use {
     },
 };
 
-/// A trait to count the number of arcs in a directed graph
+/// A trait to count the number of arcs in a digraph
 ///
 /// # How can I implement `Size`?
 ///
 /// Provide an implementation of `size` that returns the number of
-/// arcs in the graph.
+/// arcs in the digraph.
 ///
 /// ```
 /// use graaf::op::Size;
@@ -50,9 +50,9 @@ use {
 /// ```
 /// use graaf::op::Size;
 ///
-/// let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+/// let digraph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 ///
-/// assert_eq!(graph.size(), 10);
+/// assert_eq!(digraph.size(), 10);
 /// ```
 pub trait Size {
     /// Counts all arcs.
@@ -260,260 +260,260 @@ mod tests {
 
     #[test]
     fn vec_vec() {
-        let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let digraph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        assert_eq!(graph.size(), 10);
+        assert_eq!(digraph.size(), 10);
     }
 
     #[test]
     fn vec_btree_set() {
-        let graph = vec![
+        let digraph = vec![
             BTreeSet::from([1, 2]),
             BTreeSet::from([0, 2, 3]),
             BTreeSet::from([0, 1, 3]),
             BTreeSet::from([1, 2]),
         ];
 
-        assert_eq!(graph.size(), 10);
+        assert_eq!(digraph.size(), 10);
     }
 
     #[test]
     fn vec_hash_set() {
-        let graph = vec![
+        let digraph = vec![
             HashSet::from([1, 2]),
             HashSet::from([0, 2, 3]),
             HashSet::from([0, 1, 3]),
             HashSet::from([1, 2]),
         ];
 
-        assert_eq!(graph.size(), 10);
+        assert_eq!(digraph.size(), 10);
     }
 
     #[test]
     fn vec_btree_map() {
-        let graph = vec![
+        let digraph = vec![
             BTreeMap::from([(1, 2), (2, 3)]),
             BTreeMap::from([(0, 4)]),
             BTreeMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.size(), 5);
+        assert_eq!(digraph.size(), 5);
     }
 
     #[test]
     fn vec_hash_map() {
-        let graph = vec![
+        let digraph = vec![
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(0, 4)]),
             HashMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.size(), 5);
+        assert_eq!(digraph.size(), 5);
     }
 
     #[test]
     fn slice_vec() {
-        let graph: &[Vec<usize>] = &[vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let digraph: &[Vec<usize>] = &[vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        assert_eq!(graph.size(), 10);
+        assert_eq!(digraph.size(), 10);
     }
 
     #[test]
     fn slice_btree_set() {
-        let graph: &[BTreeSet<usize>] = &[
+        let digraph: &[BTreeSet<usize>] = &[
             BTreeSet::from([1, 2]),
             BTreeSet::from([0, 2, 3]),
             BTreeSet::from([0, 1, 3]),
             BTreeSet::from([1, 2]),
         ];
 
-        assert_eq!(graph.size(), 10);
+        assert_eq!(digraph.size(), 10);
     }
 
     #[test]
     fn slice_hash_set() {
-        let graph: &[HashSet<usize>] = &[
+        let digraph: &[HashSet<usize>] = &[
             HashSet::from([1, 2]),
             HashSet::from([0, 2, 3]),
             HashSet::from([0, 1, 3]),
             HashSet::from([1, 2]),
         ];
 
-        assert_eq!(graph.size(), 10);
+        assert_eq!(digraph.size(), 10);
     }
 
     #[test]
     fn slice_btree_map() {
-        let graph: &[BTreeMap<usize, usize>] = &[
+        let digraph: &[BTreeMap<usize, usize>] = &[
             BTreeMap::from([(1, 2), (2, 3)]),
             BTreeMap::from([(0, 4)]),
             BTreeMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.size(), 5);
+        assert_eq!(digraph.size(), 5);
     }
 
     #[test]
     fn slice_hash_map() {
-        let graph: &[HashMap<usize, usize>] = &[
+        let digraph: &[HashMap<usize, usize>] = &[
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(0, 4)]),
             HashMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.size(), 5);
+        assert_eq!(digraph.size(), 5);
     }
 
     #[test]
     fn arr_vec() {
-        let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let digraph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        assert_eq!(graph.size(), 10);
+        assert_eq!(digraph.size(), 10);
     }
 
     #[test]
     fn arr_btree_set() {
-        let graph = [
+        let digraph = [
             BTreeSet::from([1, 2]),
             BTreeSet::from([0, 2, 3]),
             BTreeSet::from([0, 1, 3]),
             BTreeSet::from([1, 2]),
         ];
 
-        assert_eq!(graph.size(), 10);
+        assert_eq!(digraph.size(), 10);
     }
 
     #[test]
     fn arr_hash_set() {
-        let graph = [
+        let digraph = [
             HashSet::from([1, 2]),
             HashSet::from([0, 2, 3]),
             HashSet::from([0, 1, 3]),
             HashSet::from([1, 2]),
         ];
 
-        assert_eq!(graph.size(), 10);
+        assert_eq!(digraph.size(), 10);
     }
 
     #[test]
     fn arr_btree_map() {
-        let graph = [
+        let digraph = [
             BTreeMap::from([(1, 2), (2, 3)]),
             BTreeMap::from([(0, 4)]),
             BTreeMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.size(), 5);
+        assert_eq!(digraph.size(), 5);
     }
 
     #[test]
     fn arr_hash_map() {
-        let graph = [
+        let digraph = [
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(0, 4)]),
             HashMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.size(), 5);
+        assert_eq!(digraph.size(), 5);
     }
 
     #[test]
     fn btree_map_vec() {
-        let graph = BTreeMap::from([(0, vec![1, 2]), (1, vec![0, 2]), (2, vec![0, 1])]);
+        let digraph = BTreeMap::from([(0, vec![1, 2]), (1, vec![0, 2]), (2, vec![0, 1])]);
 
-        assert_eq!(graph.size(), 6);
+        assert_eq!(digraph.size(), 6);
     }
 
     #[test]
     fn btree_map_btree_set() {
-        let graph = BTreeMap::from([
+        let digraph = BTreeMap::from([
             (0, BTreeSet::from([1, 2])),
             (1, BTreeSet::from([0, 2])),
             (2, BTreeSet::from([0, 1])),
         ]);
 
-        assert_eq!(graph.size(), 6);
+        assert_eq!(digraph.size(), 6);
     }
 
     #[test]
     fn btree_map_btree_map() {
-        let graph = BTreeMap::from([
+        let digraph = BTreeMap::from([
             (0, BTreeMap::from([(1, 2), (2, 3)])),
             (1, BTreeMap::from([(0, 4)])),
             (2, BTreeMap::from([(0, 7), (1, 8)])),
         ]);
 
-        assert_eq!(graph.size(), 5);
+        assert_eq!(digraph.size(), 5);
     }
 
     #[test]
     fn hash_map_vec() {
-        let graph = HashMap::from([(0, vec![1, 2]), (1, vec![0, 2]), (2, vec![0, 1])]);
+        let digraph = HashMap::from([(0, vec![1, 2]), (1, vec![0, 2]), (2, vec![0, 1])]);
 
-        assert_eq!(graph.size(), 6);
+        assert_eq!(digraph.size(), 6);
     }
 
     #[test]
     fn hash_map_hash_set() {
-        let graph = HashMap::from([
+        let digraph = HashMap::from([
             (0, HashSet::from([1, 2])),
             (1, HashSet::from([0, 2])),
             (2, HashSet::from([0, 1])),
         ]);
 
-        assert_eq!(graph.size(), 6);
+        assert_eq!(digraph.size(), 6);
     }
 
     #[test]
     fn hash_map_hash_map() {
-        let graph = HashMap::from([
+        let digraph = HashMap::from([
             (0, HashMap::from([(1, 2), (2, 3)])),
             (1, HashMap::from([(0, 4)])),
             (2, HashMap::from([(0, 7), (1, 8)])),
         ]);
 
-        assert_eq!(graph.size(), 5);
+        assert_eq!(digraph.size(), 5);
     }
 
     #[test]
     fn vec_tuple_unweighted() {
-        let graph = vec![(0, 1), (1, 2), (2, 0)];
+        let digraph = vec![(0, 1), (1, 2), (2, 0)];
 
-        assert_eq!(graph.size(), 3);
+        assert_eq!(digraph.size(), 3);
     }
 
     #[test]
     fn vec_tuple_weighted() {
-        let graph = vec![(0, 1, 2), (1, 2, 3), (2, 0, 4)];
+        let digraph = vec![(0, 1, 2), (1, 2, 3), (2, 0, 4)];
 
-        assert_eq!(graph.size(), 3);
+        assert_eq!(digraph.size(), 3);
     }
 
     #[test]
     fn btree_set_tuple_unweighted() {
-        let graph = BTreeSet::from([(0, 1), (1, 2), (2, 0)]);
+        let digraph = BTreeSet::from([(0, 1), (1, 2), (2, 0)]);
 
-        assert_eq!(graph.size(), 3);
+        assert_eq!(digraph.size(), 3);
     }
 
     #[test]
     fn btree_set_tuple_weighted() {
-        let graph = BTreeSet::from([(0, 1, 2), (1, 2, 3), (2, 0, 4)]);
+        let digraph = BTreeSet::from([(0, 1, 2), (1, 2, 3), (2, 0, 4)]);
 
-        assert_eq!(graph.size(), 3);
+        assert_eq!(digraph.size(), 3);
     }
 
     #[test]
     fn hash_set_tuple_unweighted() {
-        let graph = HashSet::from([(0, 1), (1, 2), (2, 0)]);
+        let digraph = HashSet::from([(0, 1), (1, 2), (2, 0)]);
 
-        assert_eq!(graph.size(), 3);
+        assert_eq!(digraph.size(), 3);
     }
 
     #[test]
     fn hash_set_tuple_weighted() {
-        let graph = HashSet::from([(0, 1, 2), (1, 2, 3), (2, 0, 4)]);
+        let digraph = HashSet::from([(0, 1, 2), (1, 2, 3), (2, 0, 4)]);
 
-        assert_eq!(graph.size(), 3);
+        assert_eq!(digraph.size(), 3);
     }
 }

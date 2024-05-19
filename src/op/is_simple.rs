@@ -1,6 +1,6 @@
-//! A trait to determine whether a graph is simple
+//! A trait to determine whether a digraph is simple
 //!
-//! A graph is simple if it has no self-loops or parallel arcs.
+//! A digraph is simple if it has no self-loops or parallel arcs.
 //!
 //! # Examples
 //!
@@ -10,17 +10,17 @@
 //!     std::collections::HashSet,
 //! };
 //!
-//! let graph = [HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
+//! let digraph = [HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
 //!
-//! assert!(graph.is_simple());
+//! assert!(digraph.is_simple());
 //!
-//! let graph = [
+//! let digraph = [
 //!     HashSet::from([0, 1, 2]),
 //!     HashSet::from([0, 2]),
 //!     HashSet::from([0]),
 //! ];
 //!
-//! assert!(!graph.is_simple());
+//! assert!(!digraph.is_simple());
 //! ```
 
 extern crate alloc;
@@ -35,12 +35,12 @@ use {
     std::collections::HashSet,
 };
 
-/// A trait to determine whether a graph is simple
+/// A trait to determine whether a digraph is simple
 ///
 /// # How can I implement `IsSimple`?
 ///
-/// Provide an implementation of `is_simple` that returns `true` if the graph is
-/// simple and `false` otherwise.
+/// Provide an implementation of `is_simple` that returns `true` if the digraph
+/// is simple and `false` otherwise.
 ///
 /// ```
 /// use {
@@ -70,20 +70,20 @@ use {
 ///     std::collections::HashSet,
 /// };
 ///
-/// let graph = [HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
+/// let digraph = [HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
 ///
-/// assert!(graph.is_simple());
+/// assert!(digraph.is_simple());
 ///
-/// let graph = [
+/// let digraph = [
 ///     HashSet::from([0, 1, 2]),
 ///     HashSet::from([0, 2]),
 ///     HashSet::from([0]),
 /// ];
 ///
-/// assert!(!graph.is_simple());
+/// assert!(!digraph.is_simple());
 /// ```
 pub trait IsSimple {
-    /// Returns whether the graph is simple.
+    /// Returns whether the digraph is simple.
     fn is_simple(&self) -> bool;
 }
 
@@ -258,375 +258,376 @@ mod tests {
 
     #[test]
     fn vec_vec_simple() {
-        let graph = vec![vec![1, 2], vec![2], vec![]];
+        let digraph = vec![vec![1, 2], vec![2], vec![]];
 
-        assert!(graph.is_simple());
+        assert!(digraph.is_simple());
     }
 
     #[test]
     fn vec_vec_self_loop() {
-        let graph = vec![vec![0, 1, 2], vec![0, 2], vec![0]];
+        let digraph = vec![vec![0, 1, 2], vec![0, 2], vec![0]];
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn vec_vec_parallel_arcs() {
-        let graph = vec![vec![0, 1], vec![0, 1], vec![0]];
+        let digraph = vec![vec![0, 1], vec![0, 1], vec![0]];
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn vec_btree_set_simple() {
-        let graph = vec![BTreeSet::from([1, 2]), BTreeSet::from([2]), BTreeSet::new()];
+        let digraph = vec![BTreeSet::from([1, 2]), BTreeSet::from([2]), BTreeSet::new()];
 
-        assert!(graph.is_simple());
+        assert!(digraph.is_simple());
     }
 
     #[test]
     fn vec_btree_set_self_loop() {
-        let graph = vec![
+        let digraph = vec![
             BTreeSet::from([0, 1, 2]),
             BTreeSet::from([0, 2]),
             BTreeSet::from([0]),
         ];
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn vec_hash_set_simple() {
-        let graph = vec![HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
+        let digraph = vec![HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
 
-        assert!(graph.is_simple());
+        assert!(digraph.is_simple());
     }
 
     #[test]
     fn vec_hash_set_self_loop() {
-        let graph = vec![
+        let digraph = vec![
             HashSet::from([0, 1, 2]),
             HashSet::from([0, 2]),
             HashSet::from([0]),
         ];
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn slice_vec_simple() {
-        let graph: &[Vec<usize>] = &[vec![1, 2], vec![2], vec![]];
+        let digraph: &[Vec<usize>] = &[vec![1, 2], vec![2], vec![]];
 
-        assert!(graph.is_simple());
+        assert!(digraph.is_simple());
     }
 
     #[test]
     fn slice_vec_self_loop() {
-        let graph: &[Vec<usize>] = &[vec![0, 1, 2], vec![0, 2], vec![0]];
+        let digraph: &[Vec<usize>] = &[vec![0, 1, 2], vec![0, 2], vec![0]];
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn slice_vec_parallel_arcs() {
-        let graph: &[Vec<usize>] = &[vec![0, 1], vec![0, 1], vec![0]];
+        let digraph: &[Vec<usize>] = &[vec![0, 1], vec![0, 1], vec![0]];
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn slice_btree_set_simple() {
-        let graph: &[BTreeSet<usize>] =
+        let digraph: &[BTreeSet<usize>] =
             &[BTreeSet::from([1, 2]), BTreeSet::from([2]), BTreeSet::new()];
 
-        assert!(graph.is_simple());
+        assert!(digraph.is_simple());
     }
 
     #[test]
     fn slice_btree_set_self_loop() {
-        let graph: &[BTreeSet<usize>] = &[
+        let digraph: &[BTreeSet<usize>] = &[
             BTreeSet::from([0, 1, 2]),
             BTreeSet::from([0, 2]),
             BTreeSet::from([0]),
         ];
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn slice_hash_set_simple() {
-        let graph: &[HashSet<usize>] = &[HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
+        let digraph: &[HashSet<usize>] =
+            &[HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
 
-        assert!(graph.is_simple());
+        assert!(digraph.is_simple());
     }
 
     #[test]
     fn slice_hash_set_self_loop() {
-        let graph: &[HashSet<usize>] = &[
+        let digraph: &[HashSet<usize>] = &[
             HashSet::from([0, 1, 2]),
             HashSet::from([0, 2]),
             HashSet::from([0]),
         ];
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn arr_vec_simple() {
-        let graph = [vec![1, 2], vec![2], vec![]];
+        let digraph = [vec![1, 2], vec![2], vec![]];
 
-        assert!(graph.is_simple());
+        assert!(digraph.is_simple());
     }
 
     #[test]
     fn arr_vec_self_loop() {
-        let graph = [vec![0, 1, 2], vec![0, 2], vec![0]];
+        let digraph = [vec![0, 1, 2], vec![0, 2], vec![0]];
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn arr_vec_parallel_arcs() {
-        let graph = [vec![0, 1], vec![0, 1], vec![0]];
+        let digraph = [vec![0, 1], vec![0, 1], vec![0]];
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn arr_btree_set_simple() {
-        let graph = [BTreeSet::from([1, 2]), BTreeSet::from([2]), BTreeSet::new()];
+        let digraph = [BTreeSet::from([1, 2]), BTreeSet::from([2]), BTreeSet::new()];
 
-        assert!(graph.is_simple());
+        assert!(digraph.is_simple());
     }
 
     #[test]
     fn arr_btree_set_self_loop() {
-        let graph = [
+        let digraph = [
             BTreeSet::from([0, 1, 2]),
             BTreeSet::from([0, 2]),
             BTreeSet::from([0]),
         ];
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn arr_hash_set_simple() {
-        let graph = [HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
+        let digraph = [HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
 
-        assert!(graph.is_simple());
+        assert!(digraph.is_simple());
     }
 
     #[test]
     fn arr_hash_set_self_loop() {
-        let graph = [
+        let digraph = [
             HashSet::from([0, 1, 2]),
             HashSet::from([0, 2]),
             HashSet::from([0]),
         ];
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn vec_tuple_unweighted_simple() {
-        let graph = vec![(1, 2), (2, 0), (0, 1)];
+        let digraph = vec![(1, 2), (2, 0), (0, 1)];
 
-        assert!(graph.is_simple());
+        assert!(digraph.is_simple());
     }
 
     #[test]
     fn vec_tuple_unweighted_self_loop() {
-        let graph = vec![(0, 0), (0, 1), (0, 2)];
+        let digraph = vec![(0, 0), (0, 1), (0, 2)];
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn vec_tuple_unweighted_parallel_arcs() {
-        let graph = vec![(0, 1), (0, 1), (0, 2)];
+        let digraph = vec![(0, 1), (0, 1), (0, 2)];
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn slice_tuple_unweighted_simple() {
-        let graph: &[(usize, usize)] = &[(1, 2), (2, 0), (0, 1)];
+        let digraph: &[(usize, usize)] = &[(1, 2), (2, 0), (0, 1)];
 
-        assert!(graph.is_simple());
+        assert!(digraph.is_simple());
     }
 
     #[test]
     fn slice_tuple_unweighted_self_loop() {
-        let graph: &[(usize, usize)] = &[(0, 0), (0, 1), (0, 2)];
+        let digraph: &[(usize, usize)] = &[(0, 0), (0, 1), (0, 2)];
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn slice_tuple_unweighted_parallel_arcs() {
-        let graph: &[(usize, usize)] = &[(0, 1), (0, 1), (0, 2)];
+        let digraph: &[(usize, usize)] = &[(0, 1), (0, 1), (0, 2)];
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn arr_tuple_unweighted_simple() {
-        let graph = [(1, 2), (2, 0), (0, 1)];
+        let digraph = [(1, 2), (2, 0), (0, 1)];
 
-        assert!(graph.is_simple());
+        assert!(digraph.is_simple());
     }
 
     #[test]
     fn arr_tuple_unweighted_self_loop() {
-        let graph = [(0, 0), (0, 1), (0, 2)];
+        let digraph = [(0, 0), (0, 1), (0, 2)];
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn arr_tuple_unweighted_parallel_arcs() {
-        let graph = [(0, 1), (0, 1), (0, 2)];
+        let digraph = [(0, 1), (0, 1), (0, 2)];
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn btree_set_tuple_unweighted_simple() {
-        let graph: BTreeSet<(usize, usize)> = BTreeSet::from([(1, 2), (2, 0), (0, 1)]);
+        let digraph: BTreeSet<(usize, usize)> = BTreeSet::from([(1, 2), (2, 0), (0, 1)]);
 
-        assert!(graph.is_simple());
+        assert!(digraph.is_simple());
     }
 
     #[test]
     fn hash_set_tuple_unweighted_simple() {
-        let graph: HashSet<(usize, usize)> = HashSet::from([(1, 2), (2, 0), (0, 1)]);
+        let digraph: HashSet<(usize, usize)> = HashSet::from([(1, 2), (2, 0), (0, 1)]);
 
-        assert!(graph.is_simple());
+        assert!(digraph.is_simple());
     }
 
     #[test]
     fn btree_set_tuple_unweighted_self_loop() {
-        let graph: BTreeSet<(usize, usize)> = BTreeSet::from([(0, 0), (0, 1), (0, 2)]);
+        let digraph: BTreeSet<(usize, usize)> = BTreeSet::from([(0, 0), (0, 1), (0, 2)]);
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn hash_set_tuple_unweighted_self_loop() {
-        let graph: HashSet<(usize, usize)> = HashSet::from([(0, 0), (0, 1), (0, 2)]);
+        let digraph: HashSet<(usize, usize)> = HashSet::from([(0, 0), (0, 1), (0, 2)]);
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn vec_tuple_weighted_simple() {
-        let graph = vec![(1, 2, 1), (2, 0, 1), (0, 1, 1)];
+        let digraph = vec![(1, 2, 1), (2, 0, 1), (0, 1, 1)];
 
-        assert!(graph.is_simple());
+        assert!(digraph.is_simple());
     }
 
     #[test]
     fn vec_tuple_weighted_self_loop() {
-        let graph = vec![(0, 0, 1), (0, 1, 1), (0, 2, 1)];
+        let digraph = vec![(0, 0, 1), (0, 1, 1), (0, 2, 1)];
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn vec_tuple_weighted_parallel_arcs() {
-        let graph = vec![(0, 1, 1), (0, 1, 1), (0, 2, 1)];
+        let digraph = vec![(0, 1, 1), (0, 1, 1), (0, 2, 1)];
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn slice_tuple_weighted_simple() {
-        let graph: &[(usize, usize, usize)] = &[(1, 2, 1), (2, 0, 1), (0, 1, 1)];
+        let digraph: &[(usize, usize, usize)] = &[(1, 2, 1), (2, 0, 1), (0, 1, 1)];
 
-        assert!(graph.is_simple());
+        assert!(digraph.is_simple());
     }
 
     #[test]
     fn slice_tuple_weighted_self_loop() {
-        let graph: &[(usize, usize, usize)] = &[(0, 0, 1), (0, 1, 1), (0, 2, 1)];
+        let digraph: &[(usize, usize, usize)] = &[(0, 0, 1), (0, 1, 1), (0, 2, 1)];
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn slice_tuple_weighted_parallel_arcs() {
-        let graph: &[(usize, usize, usize)] = &[(0, 1, 1), (0, 1, 1), (0, 2, 1)];
+        let digraph: &[(usize, usize, usize)] = &[(0, 1, 1), (0, 1, 1), (0, 2, 1)];
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn arr_tuple_weighted_simple() {
-        let graph = [(1, 2, 1), (2, 0, 1), (0, 1, 1)];
+        let digraph = [(1, 2, 1), (2, 0, 1), (0, 1, 1)];
 
-        assert!(graph.is_simple());
+        assert!(digraph.is_simple());
     }
 
     #[test]
     fn arr_tuple_weighted_self_loop() {
-        let graph = [(0, 0, 1), (0, 1, 1), (0, 2, 1)];
+        let digraph = [(0, 0, 1), (0, 1, 1), (0, 2, 1)];
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn arr_tuple_weighted_parallel_arcs() {
-        let graph = [(0, 1, 1), (0, 1, 1), (0, 2, 1)];
+        let digraph = [(0, 1, 1), (0, 1, 1), (0, 2, 1)];
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn btree_set_tuple_weighted_simple() {
-        let graph: BTreeSet<(usize, usize, usize)> =
+        let digraph: BTreeSet<(usize, usize, usize)> =
             BTreeSet::from([(1, 2, 1), (2, 0, 1), (0, 1, 1)]);
 
-        assert!(graph.is_simple());
+        assert!(digraph.is_simple());
     }
 
     #[test]
     fn hash_set_tuple_weighted_simple() {
-        let graph: HashSet<(usize, usize, usize)> =
+        let digraph: HashSet<(usize, usize, usize)> =
             HashSet::from([(1, 2, 1), (2, 0, 1), (0, 1, 1)]);
 
-        assert!(graph.is_simple());
+        assert!(digraph.is_simple());
     }
 
     #[test]
     fn btree_set_tuple_weighted_self_loop() {
-        let graph: BTreeSet<(usize, usize, usize)> =
+        let digraph: BTreeSet<(usize, usize, usize)> =
             BTreeSet::from([(0, 0, 1), (0, 1, 1), (0, 2, 1)]);
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn hash_set_tuple_weighted_self_loop() {
-        let graph: HashSet<(usize, usize, usize)> =
+        let digraph: HashSet<(usize, usize, usize)> =
             HashSet::from([(0, 0, 1), (0, 1, 1), (0, 2, 1)]);
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn btree_set_tuple_weighted_parallel_arcs() {
-        let graph: BTreeSet<(usize, usize, usize)> =
+        let digraph: BTreeSet<(usize, usize, usize)> =
             BTreeSet::from([(0, 1, 1), (0, 1, 2), (0, 2, 1)]);
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn hash_set_tuple_weighted_parallel_arcs() {
-        let graph: HashSet<(usize, usize, usize)> =
+        let digraph: HashSet<(usize, usize, usize)> =
             HashSet::from([(0, 1, 1), (0, 1, 2), (0, 2, 1)]);
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 }

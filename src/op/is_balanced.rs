@@ -1,8 +1,8 @@
 #![doc(alias = "isograph")]
 #![doc(alias = "pseudosymmetric")]
-//! A trait to determine whether a directed graph is balanced
+//! A trait to determine whether a digraph is balanced
 //!
-//! A directed graph is balanced if the indegree of each vertex is equal to its
+//! A digraph is balanced if the indegree of each vertex is equal to its
 //! outdegree.
 //!
 //! # Examples
@@ -16,21 +16,21 @@
 //!     std::collections::HashSet,
 //! };
 //!
-//! let graph: [BTreeSet<usize>; 3] = [
+//! let digraph: [BTreeSet<usize>; 3] = [
 //!     BTreeSet::from([1, 2]),
 //!     BTreeSet::from([0, 2]),
 //!     BTreeSet::from([0, 1]),
 //! ];
 //!
-//! assert!(graph.is_balanced());
+//! assert!(digraph.is_balanced());
 //!
-//! let graph: [BTreeSet<usize>; 3] = [
+//! let digraph: [BTreeSet<usize>; 3] = [
 //!     BTreeSet::from([1, 2]),
 //!     BTreeSet::from([0, 2]),
 //!     BTreeSet::from([0]),
 //! ];
 //!
-//! assert!(!graph.is_balanced());
+//! assert!(!digraph.is_balanced());
 //! ```
 
 extern crate alloc;
@@ -52,12 +52,12 @@ use {
     },
 };
 
-/// A trait to determine whether a graph is balanced
+/// A trait to determine whether a digraph is balanced
 ///
 /// # How can I implement `IsBalanced`?
 ///
-/// Provide an implementation of `is_balanced` that returns `true` if the graph
-/// is balanced and `false` otherwise.
+/// Provide an implementation of `is_balanced` that returns `true` if the
+/// digraph is balanced and `false` otherwise.
 ///
 /// ```
 /// extern crate alloc;
@@ -95,24 +95,24 @@ use {
 ///     graaf::op::IsBalanced,
 /// };
 ///
-/// let graph: [BTreeSet<usize>; 3] = [
+/// let digraph: [BTreeSet<usize>; 3] = [
 ///     BTreeSet::from([1, 2]),
 ///     BTreeSet::from([0, 2]),
 ///     BTreeSet::from([0, 1]),
 /// ];
 ///
-/// assert!(graph.is_balanced());
+/// assert!(digraph.is_balanced());
 ///
-/// let graph: [BTreeSet<usize>; 3] = [
+/// let digraph: [BTreeSet<usize>; 3] = [
 ///     BTreeSet::from([1, 2]),
 ///     BTreeSet::from([0, 2]),
 ///     BTreeSet::from([0]),
 /// ];
 ///
-/// assert!(!graph.is_balanced());
+/// assert!(!digraph.is_balanced());
 /// ```
 pub trait IsBalanced {
-    /// Returns whether the graph is balanced.
+    /// Returns whether the digraph is balanced.
     fn is_balanced(&self) -> bool;
 }
 
@@ -239,146 +239,146 @@ mod tests {
     };
 
     macro_rules! test_is_balanced_unweighted {
-        ($graph:expr) => {
-            assert!($graph.is_balanced());
+        ($digraph:expr) => {
+            assert!($digraph.is_balanced());
 
-            $graph.add_arc(0, 1);
+            $digraph.add_arc(0, 1);
 
-            assert!(!$graph.is_balanced());
+            assert!(!$digraph.is_balanced());
 
-            $graph.add_arc(1, 0);
+            $digraph.add_arc(1, 0);
 
-            assert!($graph.is_balanced());
+            assert!($digraph.is_balanced());
 
-            $graph.add_arc(0, 2);
+            $digraph.add_arc(0, 2);
 
-            assert!(!$graph.is_balanced());
+            assert!(!$digraph.is_balanced());
 
-            $graph.add_arc(1, 2);
+            $digraph.add_arc(1, 2);
 
-            assert!(!$graph.is_balanced());
+            assert!(!$digraph.is_balanced());
 
-            $graph.add_arc(2, 0);
+            $digraph.add_arc(2, 0);
 
-            assert!(!$graph.is_balanced());
+            assert!(!$digraph.is_balanced());
 
-            $graph.add_arc(2, 1);
+            $digraph.add_arc(2, 1);
 
-            assert!($graph.is_balanced());
+            assert!($digraph.is_balanced());
         };
     }
 
     macro_rules! test_is_balanced_weighted {
-        ($graph:expr) => {
-            assert!($graph.is_balanced());
+        ($digraph:expr) => {
+            assert!($digraph.is_balanced());
 
-            $graph.add_weighted_arc(0, 1, 1);
+            $digraph.add_weighted_arc(0, 1, 1);
 
-            assert!(!$graph.is_balanced());
+            assert!(!$digraph.is_balanced());
 
-            $graph.add_weighted_arc(1, 0, -3);
+            $digraph.add_weighted_arc(1, 0, -3);
 
-            assert!($graph.is_balanced());
+            assert!($digraph.is_balanced());
 
-            $graph.add_weighted_arc(0, 2, 2);
+            $digraph.add_weighted_arc(0, 2, 2);
 
-            assert!(!$graph.is_balanced());
+            assert!(!$digraph.is_balanced());
 
-            $graph.add_weighted_arc(1, 2, 0);
+            $digraph.add_weighted_arc(1, 2, 0);
 
-            assert!(!$graph.is_balanced());
+            assert!(!$digraph.is_balanced());
 
-            $graph.add_weighted_arc(2, 0, 1);
+            $digraph.add_weighted_arc(2, 0, 1);
 
-            assert!(!$graph.is_balanced());
+            assert!(!$digraph.is_balanced());
 
-            $graph.add_weighted_arc(2, 1, 1);
+            $digraph.add_weighted_arc(2, 1, 1);
 
-            assert!($graph.is_balanced());
+            assert!($digraph.is_balanced());
         };
     }
 
     #[test]
     fn vec_btree_set() {
-        let graph = &mut <Vec<BTreeSet<usize>>>::empty(3);
+        let digraph = &mut <Vec<BTreeSet<usize>>>::empty(3);
 
-        test_is_balanced_unweighted!(graph);
+        test_is_balanced_unweighted!(digraph);
     }
 
     #[test]
     fn vec_hash_set() {
-        let graph = &mut <Vec<HashSet<usize>>>::empty(3);
+        let digraph = &mut <Vec<HashSet<usize>>>::empty(3);
 
-        test_is_balanced_unweighted!(graph);
+        test_is_balanced_unweighted!(digraph);
     }
 
     #[test]
     fn slice_btree_set() {
-        let graph: &mut [BTreeSet<usize>] = &mut Vec::<BTreeSet<usize>>::empty(3);
+        let digraph: &mut [BTreeSet<usize>] = &mut Vec::<BTreeSet<usize>>::empty(3);
 
-        test_is_balanced_unweighted!(graph);
+        test_is_balanced_unweighted!(digraph);
     }
 
     #[test]
     fn slice_hash_set() {
-        let graph: &mut [HashSet<usize>] = &mut Vec::<HashSet<usize>>::empty(3);
+        let digraph: &mut [HashSet<usize>] = &mut Vec::<HashSet<usize>>::empty(3);
 
-        test_is_balanced_unweighted!(graph);
+        test_is_balanced_unweighted!(digraph);
     }
 
     #[test]
     fn arr_btree_set() {
-        let graph = &mut <[BTreeSet<usize>; 3]>::empty();
+        let digraph = &mut <[BTreeSet<usize>; 3]>::empty();
 
-        test_is_balanced_unweighted!(graph);
+        test_is_balanced_unweighted!(digraph);
     }
 
     #[test]
     fn arr_hash_set() {
-        let graph = &mut <[HashSet<usize>; 3]>::empty();
+        let digraph = &mut <[HashSet<usize>; 3]>::empty();
 
-        test_is_balanced_unweighted!(graph);
+        test_is_balanced_unweighted!(digraph);
     }
 
     #[test]
     fn vec_btree_map() {
-        let graph = &mut <Vec<BTreeMap<usize, i32>>>::empty(3);
+        let digraph = &mut <Vec<BTreeMap<usize, i32>>>::empty(3);
 
-        test_is_balanced_weighted!(graph);
+        test_is_balanced_weighted!(digraph);
     }
 
     #[test]
     fn vec_hash_map() {
-        let graph = &mut <Vec<HashMap<usize, i32>>>::empty(3);
+        let digraph = &mut <Vec<HashMap<usize, i32>>>::empty(3);
 
-        test_is_balanced_weighted!(graph);
+        test_is_balanced_weighted!(digraph);
     }
 
     #[test]
     fn slice_btree_map() {
-        let graph: &mut [BTreeMap<usize, i32>] = &mut Vec::<BTreeMap<usize, i32>>::empty(3);
+        let digraph: &mut [BTreeMap<usize, i32>] = &mut Vec::<BTreeMap<usize, i32>>::empty(3);
 
-        test_is_balanced_weighted!(graph);
+        test_is_balanced_weighted!(digraph);
     }
 
     #[test]
     fn slice_hash_map() {
-        let graph: &mut [HashMap<usize, i32>] = &mut Vec::<HashMap<usize, i32>>::empty(3);
+        let digraph: &mut [HashMap<usize, i32>] = &mut Vec::<HashMap<usize, i32>>::empty(3);
 
-        test_is_balanced_weighted!(graph);
+        test_is_balanced_weighted!(digraph);
     }
 
     #[test]
     fn arr_btree_map() {
-        let graph = &mut <[BTreeMap<usize, i32>; 3]>::empty();
+        let digraph = &mut <[BTreeMap<usize, i32>; 3]>::empty();
 
-        test_is_balanced_weighted!(graph);
+        test_is_balanced_weighted!(digraph);
     }
 
     #[test]
     fn arr_hash_map() {
-        let graph = &mut <[HashMap<usize, i32>; 3]>::empty();
+        let digraph = &mut <[HashMap<usize, i32>; 3]>::empty();
 
-        test_is_balanced_weighted!(graph);
+        test_is_balanced_weighted!(digraph);
     }
 }

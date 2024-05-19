@@ -1,7 +1,7 @@
 //! Predecessor trees
 //!
-//! Predecessor trees are produced by many graph algorithms, e.g., those defined
-//! in [`bfs`] and [`dijkstra`].
+//! Predecessor trees are produced by many graph algorithms, e.g., those
+//! defined in [`bfs`] and [`dijkstra`].
 //!
 //! [`bfs`]: crate::algo::bfs
 //! [`dijkstra`]: crate::algo::dijkstra

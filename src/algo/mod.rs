@@ -1,6 +1,6 @@
 //! Graph algorithms
 //!
-//! Traverse and search graphs.
+//! Traverse and search digraphs.
 
 pub mod bfs;
 pub mod dijkstra;

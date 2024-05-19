@@ -1,26 +1,26 @@
 //! A trait that returns an iterator that allows modifying all arcs with a given
-//! source vertex in an unweighted directed graph
+//! source vertex in an unweighted digraph
 //!
 //! # Examples
 //!
 //! ```
 //! use graaf::op::IterArcsMut;
 //!
-//! let graph = &mut vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+//! let digraph = &mut vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 //!
-//! assert!(graph.iter_arcs_mut(0).eq(&mut [1, 2]));
-//! assert!(graph.iter_arcs_mut(1).eq(&mut [0, 2, 3]));
-//! assert!(graph.iter_arcs_mut(2).eq(&mut [0, 1, 3]));
-//! assert!(graph.iter_arcs_mut(3).eq(&mut [1, 2]));
+//! assert!(digraph.iter_arcs_mut(0).eq(&mut [1, 2]));
+//! assert!(digraph.iter_arcs_mut(1).eq(&mut [0, 2, 3]));
+//! assert!(digraph.iter_arcs_mut(2).eq(&mut [0, 1, 3]));
+//! assert!(digraph.iter_arcs_mut(3).eq(&mut [1, 2]));
 //!
-//! for t in graph.iter_arcs_mut(0) {
+//! for t in digraph.iter_arcs_mut(0) {
 //!     *t = (*t + 2) % 4;
 //! }
 //!
-//! assert!(graph.iter_arcs_mut(0).eq(&mut [3, 0]));
-//! assert!(graph.iter_arcs_mut(1).eq(&mut [0, 2, 3]));
-//! assert!(graph.iter_arcs_mut(2).eq(&mut [0, 1, 3]));
-//! assert!(graph.iter_arcs_mut(3).eq(&mut [1, 2]));
+//! assert!(digraph.iter_arcs_mut(0).eq(&mut [3, 0]));
+//! assert!(digraph.iter_arcs_mut(1).eq(&mut [0, 2, 3]));
+//! assert!(digraph.iter_arcs_mut(2).eq(&mut [0, 1, 3]));
+//! assert!(digraph.iter_arcs_mut(3).eq(&mut [1, 2]));
 //! ```
 
 extern crate alloc;
@@ -32,7 +32,7 @@ use {
 };
 
 /// A trait that returns an iterator that allows modifying all arcs with a given
-/// source vertex in an unweighted directed graph
+/// source vertex in an unweighted digraph
 ///
 /// # How can I implement `IterArcsMut`?
 ///
@@ -52,23 +52,23 @@ use {
 ///     }
 /// }
 ///
-/// let mut graph = Graph {
+/// let mut digraph = Graph {
 ///     arcs: vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]],
 /// };
 ///
-/// assert!(graph.iter_arcs_mut(0).eq(&mut [1, 2]));
-/// assert!(graph.iter_arcs_mut(1).eq(&mut [0, 2, 3]));
-/// assert!(graph.iter_arcs_mut(2).eq(&mut [0, 1, 3]));
-/// assert!(graph.iter_arcs_mut(3).eq(&mut [1, 2]));
+/// assert!(digraph.iter_arcs_mut(0).eq(&mut [1, 2]));
+/// assert!(digraph.iter_arcs_mut(1).eq(&mut [0, 2, 3]));
+/// assert!(digraph.iter_arcs_mut(2).eq(&mut [0, 1, 3]));
+/// assert!(digraph.iter_arcs_mut(3).eq(&mut [1, 2]));
 ///
-/// for t in graph.iter_arcs_mut(0) {
+/// for t in digraph.iter_arcs_mut(0) {
 ///     *t = (*t + 2) % 4;
 /// }
 ///
-/// assert!(graph.iter_arcs_mut(0).eq(&mut [3, 0]));
-/// assert!(graph.iter_arcs_mut(1).eq(&mut [0, 2, 3]));
-/// assert!(graph.iter_arcs_mut(2).eq(&mut [0, 1, 3]));
-/// assert!(graph.iter_arcs_mut(3).eq(&mut [1, 2]));
+/// assert!(digraph.iter_arcs_mut(0).eq(&mut [3, 0]));
+/// assert!(digraph.iter_arcs_mut(1).eq(&mut [0, 2, 3]));
+/// assert!(digraph.iter_arcs_mut(2).eq(&mut [0, 1, 3]));
+/// assert!(digraph.iter_arcs_mut(3).eq(&mut [1, 2]));
 /// ```
 ///
 /// # Examples
@@ -76,21 +76,21 @@ use {
 /// ```
 /// use graaf::op::IterArcsMut;
 ///
-/// let graph = &mut vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+/// let digraph = &mut vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 ///
-/// assert!(graph.iter_arcs_mut(0).eq(&mut [1, 2]));
-/// assert!(graph.iter_arcs_mut(1).eq(&mut [0, 2, 3]));
-/// assert!(graph.iter_arcs_mut(2).eq(&mut [0, 1, 3]));
-/// assert!(graph.iter_arcs_mut(3).eq(&mut [1, 2]));
+/// assert!(digraph.iter_arcs_mut(0).eq(&mut [1, 2]));
+/// assert!(digraph.iter_arcs_mut(1).eq(&mut [0, 2, 3]));
+/// assert!(digraph.iter_arcs_mut(2).eq(&mut [0, 1, 3]));
+/// assert!(digraph.iter_arcs_mut(3).eq(&mut [1, 2]));
 ///
-/// for t in graph.iter_arcs_mut(0) {
+/// for t in digraph.iter_arcs_mut(0) {
 ///     *t = (*t + 2) % 4;
 /// }
 ///
-/// assert!(graph.iter_arcs_mut(0).eq(&mut [3, 0]));
-/// assert!(graph.iter_arcs_mut(1).eq(&mut [0, 2, 3]));
-/// assert!(graph.iter_arcs_mut(2).eq(&mut [0, 1, 3]));
-/// assert!(graph.iter_arcs_mut(3).eq(&mut [1, 2]));
+/// assert!(digraph.iter_arcs_mut(0).eq(&mut [3, 0]));
+/// assert!(digraph.iter_arcs_mut(1).eq(&mut [0, 2, 3]));
+/// assert!(digraph.iter_arcs_mut(2).eq(&mut [0, 1, 3]));
+/// assert!(digraph.iter_arcs_mut(3).eq(&mut [1, 2]));
 /// ```
 pub trait IterArcsMut {
     /// Returns an iterator over all arcs with a given source vertex.
@@ -104,7 +104,7 @@ pub trait IterArcsMut {
 impl IterArcsMut for Vec<Vec<usize>> {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_arcs_mut(&mut self, s: usize) -> impl Iterator<Item = &mut usize> {
         self[s].iter_mut()
     }
@@ -113,7 +113,7 @@ impl IterArcsMut for Vec<Vec<usize>> {
 impl IterArcsMut for [Vec<usize>] {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_arcs_mut(&mut self, s: usize) -> impl Iterator<Item = &mut usize> {
         self[s].iter_mut()
     }
@@ -122,7 +122,7 @@ impl IterArcsMut for [Vec<usize>] {
 impl<const V: usize> IterArcsMut for [Vec<usize>; V] {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_arcs_mut(&mut self, s: usize) -> impl Iterator<Item = &mut usize> {
         self[s].iter_mut()
     }
@@ -131,7 +131,7 @@ impl<const V: usize> IterArcsMut for [Vec<usize>; V] {
 impl IterArcsMut for BTreeMap<usize, Vec<usize>> {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_arcs_mut(&mut self, s: usize) -> impl Iterator<Item = &mut usize> {
         self.get_mut(&s).unwrap().iter_mut()
     }
@@ -143,7 +143,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_arcs_mut(&mut self, s: usize) -> impl Iterator<Item = &mut usize> {
         self.get_mut(&s).unwrap().iter_mut()
     }
@@ -154,65 +154,66 @@ mod tests {
     use super::*;
 
     macro_rules! test_iter_arcs_mut_stable {
-        ($graph:expr) => {
-            assert!($graph.iter_arcs_mut(0).eq(&mut [1, 2]));
-            assert!($graph.iter_arcs_mut(1).eq(&mut [0, 2, 3]));
-            assert!($graph.iter_arcs_mut(2).eq(&mut [0, 1, 3]));
-            assert!($graph.iter_arcs_mut(3).eq(&mut [1, 2]));
+        ($digraph:expr) => {
+            assert!($digraph.iter_arcs_mut(0).eq(&mut [1, 2]));
+            assert!($digraph.iter_arcs_mut(1).eq(&mut [0, 2, 3]));
+            assert!($digraph.iter_arcs_mut(2).eq(&mut [0, 1, 3]));
+            assert!($digraph.iter_arcs_mut(3).eq(&mut [1, 2]));
 
-            for t in $graph.iter_arcs_mut(0) {
+            for t in $digraph.iter_arcs_mut(0) {
                 *t = (*t + 2) % 4;
             }
 
-            assert!($graph.iter_arcs_mut(0).eq(&mut [3, 0]));
-            assert!($graph.iter_arcs_mut(1).eq(&mut [0, 2, 3]));
-            assert!($graph.iter_arcs_mut(2).eq(&mut [0, 1, 3]));
-            assert!($graph.iter_arcs_mut(3).eq(&mut [1, 2]));
+            assert!($digraph.iter_arcs_mut(0).eq(&mut [3, 0]));
+            assert!($digraph.iter_arcs_mut(1).eq(&mut [0, 2, 3]));
+            assert!($digraph.iter_arcs_mut(2).eq(&mut [0, 1, 3]));
+            assert!($digraph.iter_arcs_mut(3).eq(&mut [1, 2]));
         };
     }
 
     #[test]
     fn vec_vec() {
-        let graph = &mut vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let digraph = &mut vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        test_iter_arcs_mut_stable!(graph);
+        test_iter_arcs_mut_stable!(digraph);
     }
 
     #[test]
     fn slice_vec() {
-        let graph: &mut [Vec<usize>] = &mut [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let digraph: &mut [Vec<usize>] =
+            &mut [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        test_iter_arcs_mut_stable!(graph);
+        test_iter_arcs_mut_stable!(digraph);
     }
 
     #[test]
     fn arr_vec() {
-        let graph = &mut [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let digraph = &mut [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        test_iter_arcs_mut_stable!(graph);
+        test_iter_arcs_mut_stable!(digraph);
     }
 
     #[test]
     fn btree_map_vec() {
-        let graph = &mut BTreeMap::from([
+        let digraph = &mut BTreeMap::from([
             (0, vec![1, 2]),
             (1, vec![0, 2, 3]),
             (2, vec![0, 1, 3]),
             (3, vec![1, 2]),
         ]);
 
-        test_iter_arcs_mut_stable!(graph);
+        test_iter_arcs_mut_stable!(digraph);
     }
 
     #[test]
     fn hash_map_vec() {
-        let graph = &mut HashMap::from([
+        let digraph = &mut HashMap::from([
             (0, vec![1, 2]),
             (1, vec![0, 2, 3]),
             (2, vec![0, 1, 3]),
             (3, vec![1, 2]),
         ]);
 
-        test_iter_arcs_mut_stable!(graph);
+        test_iter_arcs_mut_stable!(digraph);
     }
 }

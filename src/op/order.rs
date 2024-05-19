@@ -1,13 +1,13 @@
-//! A trait to count the number of vertices in a graph
+//! A trait to count the number of vertices in a digraph
 //!
 //! # Example
 //!
 //! ```
 //! use graaf::op::Order;
 //!
-//! let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+//! let digraph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 //!
-//! assert_eq!(graph.order(), 4);
+//! assert_eq!(digraph.order(), 4);
 //! ```
 
 extern crate alloc;
@@ -24,12 +24,12 @@ use {
     },
 };
 
-/// A trait to count the number of vertices in a graph
+/// A trait to count the number of vertices in a digraph
 ///
 /// # How can I implement `Order`?
 ///
 /// Provides an implementation of `order` that returns the number
-/// of vertices in the graph.
+/// of vertices in the digraph.
 ///
 /// ```
 /// use graaf::op::Order;
@@ -50,9 +50,9 @@ use {
 /// ```
 /// use graaf::op::Order;
 ///
-/// let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+/// let digraph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 ///
-/// assert_eq!(graph.order(), 4);
+/// assert_eq!(digraph.order(), 4);
 /// ```
 pub trait Order {
     /// Count all vertices.
@@ -236,244 +236,244 @@ mod tests {
 
     #[test]
     fn vec_vec_unweighted() {
-        let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let digraph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        assert_eq!(graph.order(), 4);
+        assert_eq!(digraph.order(), 4);
     }
 
     #[test]
     fn vec_vec_weighted() {
-        let graph = vec![vec![(1, 2), (2, 3)], vec![(0, 4)], vec![(0, 7), (1, 8)]];
+        let digraph = vec![vec![(1, 2), (2, 3)], vec![(0, 4)], vec![(0, 7), (1, 8)]];
 
-        assert_eq!(graph.order(), 3);
+        assert_eq!(digraph.order(), 3);
     }
 
     #[test]
     fn vec_btree_set_unweighted() {
-        let graph = vec![
+        let digraph = vec![
             BTreeSet::from([1, 2]),
             BTreeSet::from([0, 2, 3]),
             BTreeSet::from([0, 1, 3]),
         ];
 
-        assert_eq!(graph.order(), 3);
+        assert_eq!(digraph.order(), 3);
     }
 
     #[test]
     fn vec_btree_set_weighted() {
-        let graph = vec![
+        let digraph = vec![
             BTreeSet::from([(1, 2), (2, 3)]),
             BTreeSet::from([(0, 4)]),
             BTreeSet::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.order(), 3);
+        assert_eq!(digraph.order(), 3);
     }
 
     #[test]
     fn vec_hash_set_unweighted() {
-        let graph = vec![
+        let digraph = vec![
             HashSet::from([1, 2]),
             HashSet::from([0, 2, 3]),
             HashSet::from([0, 1, 3]),
             HashSet::from([1, 2]),
         ];
 
-        assert_eq!(graph.order(), 4);
+        assert_eq!(digraph.order(), 4);
     }
 
     #[test]
     fn vec_hash_set_weighted() {
-        let graph = vec![
+        let digraph = vec![
             HashSet::from([(1, 2), (2, 3)]),
             HashSet::from([(0, 4)]),
             HashSet::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.order(), 3);
+        assert_eq!(digraph.order(), 3);
     }
 
     #[test]
     fn vec_btree_map() {
-        let graph = vec![
+        let digraph = vec![
             BTreeMap::from([(1, 2), (2, 3)]),
             BTreeMap::from([(0, 4)]),
             BTreeMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.order(), 3);
+        assert_eq!(digraph.order(), 3);
     }
 
     #[test]
     fn vec_hash_map() {
-        let graph = vec![
+        let digraph = vec![
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(0, 4)]),
             HashMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.order(), 3);
+        assert_eq!(digraph.order(), 3);
     }
 
     #[test]
     fn slice_vec_unweighted() {
-        let graph: &[Vec<usize>] = &[vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let digraph: &[Vec<usize>] = &[vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        assert_eq!(graph.order(), 4);
+        assert_eq!(digraph.order(), 4);
     }
 
     #[test]
     fn slice_vec_weighted() {
-        let graph: &[Vec<(usize, i32)>] =
+        let digraph: &[Vec<(usize, i32)>] =
             &[vec![(1, 2), (2, 3)], vec![(0, 4)], vec![(0, 7), (1, 8)]];
 
-        assert_eq!(graph.order(), 3);
+        assert_eq!(digraph.order(), 3);
     }
 
     #[test]
     fn slice_btree_set_unweighted() {
-        let graph: &[BTreeSet<usize>] = &[
+        let digraph: &[BTreeSet<usize>] = &[
             BTreeSet::from([1, 2]),
             BTreeSet::from([0, 2, 3]),
             BTreeSet::from([0, 1, 3]),
         ];
 
-        assert_eq!(graph.order(), 3);
+        assert_eq!(digraph.order(), 3);
     }
 
     #[test]
     fn slice_btree_set_weighted() {
-        let graph: &[BTreeSet<(usize, i32)>] = &[
+        let digraph: &[BTreeSet<(usize, i32)>] = &[
             BTreeSet::from([(1, 2), (2, 3)]),
             BTreeSet::from([(0, 4)]),
             BTreeSet::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.order(), 3);
+        assert_eq!(digraph.order(), 3);
     }
 
     #[test]
     fn slice_hash_set_unweighted() {
-        let graph: &[HashSet<usize>] = &[
+        let digraph: &[HashSet<usize>] = &[
             HashSet::from([1, 2]),
             HashSet::from([0, 2, 3]),
             HashSet::from([0, 1, 3]),
             HashSet::from([1, 2]),
         ];
 
-        assert_eq!(graph.order(), 4);
+        assert_eq!(digraph.order(), 4);
     }
 
     #[test]
     fn slice_hash_set_weighted() {
-        let graph: &[HashSet<(usize, i32)>] = &[
+        let digraph: &[HashSet<(usize, i32)>] = &[
             HashSet::from([(1, 2), (2, 3)]),
             HashSet::from([(0, 4)]),
             HashSet::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.order(), 3);
+        assert_eq!(digraph.order(), 3);
     }
 
     #[test]
     fn slice_btree_map() {
-        let graph: &[BTreeMap<usize, i32>] = &[
+        let digraph: &[BTreeMap<usize, i32>] = &[
             BTreeMap::from([(1, 2), (2, 3)]),
             BTreeMap::from([(0, 4)]),
             BTreeMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.order(), 3);
+        assert_eq!(digraph.order(), 3);
     }
 
     #[test]
     fn slice_hash_map() {
-        let graph: &[HashMap<usize, i32>] = &[
+        let digraph: &[HashMap<usize, i32>] = &[
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(0, 4)]),
             HashMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.order(), 3);
+        assert_eq!(digraph.order(), 3);
     }
 
     #[test]
     fn arr_vec_unweighted() {
-        let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let digraph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        assert_eq!(graph.order(), 4);
+        assert_eq!(digraph.order(), 4);
     }
 
     #[test]
     fn arr_vec_weighted() {
-        let graph = [vec![(1, 2), (2, 3)], vec![(0, 4)], vec![(0, 7), (1, 8)]];
+        let digraph = [vec![(1, 2), (2, 3)], vec![(0, 4)], vec![(0, 7), (1, 8)]];
 
-        assert_eq!(graph.order(), 3);
+        assert_eq!(digraph.order(), 3);
     }
 
     #[test]
     fn arr_btree_set_unweighted() {
-        let graph = [
+        let digraph = [
             BTreeSet::from([1, 2]),
             BTreeSet::from([0, 2, 3]),
             BTreeSet::from([0, 1, 3]),
         ];
 
-        assert_eq!(graph.order(), 3);
+        assert_eq!(digraph.order(), 3);
     }
 
     #[test]
     fn arr_btree_set_weighted() {
-        let graph = [
+        let digraph = [
             BTreeSet::from([(1, 2), (2, 3)]),
             BTreeSet::from([(0, 4)]),
             BTreeSet::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.order(), 3);
+        assert_eq!(digraph.order(), 3);
     }
 
     #[test]
     fn arr_hash_set_unweighted() {
-        let graph = [
+        let digraph = [
             HashSet::from([1, 2]),
             HashSet::from([0, 2, 3]),
             HashSet::from([0, 1, 3]),
         ];
 
-        assert_eq!(graph.order(), 3);
+        assert_eq!(digraph.order(), 3);
     }
 
     #[test]
     fn arr_hash_set_weighted() {
-        let graph = [
+        let digraph = [
             HashSet::from([(1, 2), (2, 3)]),
             HashSet::from([(0, 4)]),
             HashSet::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.order(), 3);
+        assert_eq!(digraph.order(), 3);
     }
 
     #[test]
     fn arr_btree_map() {
-        let graph = [
+        let digraph = [
             BTreeMap::from([(1, 2), (2, 3)]),
             BTreeMap::from([(0, 4)]),
             BTreeMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.order(), 3);
+        assert_eq!(digraph.order(), 3);
     }
 
     #[test]
     fn arr_hash_map() {
-        let graph = [
+        let digraph = [
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(0, 4)]),
             HashMap::from([(0, 7), (1, 8)]),
         ];
 
-        assert_eq!(graph.order(), 3);
+        assert_eq!(digraph.order(), 3);
     }
 }

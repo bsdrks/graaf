@@ -1,4 +1,4 @@
-//! A trait to remove an arc from a directed graph
+//! A trait to remove an arc from a digraph
 //!
 //! # Examples
 //!
@@ -8,36 +8,39 @@
 //!     std::collections::HashSet,
 //! };
 //!
-//! let mut graph = vec![
+//! let mut digraph = vec![
 //!     HashSet::from([1, 2]),
 //!     HashSet::from([0]),
 //!     HashSet::from([1]),
 //! ];
 //!
-//! assert!(graph.remove_arc(0, 1));
+//! assert!(digraph.remove_arc(0, 1));
 //!
 //! assert_eq!(
-//!     graph,
+//!     digraph,
 //!     vec![HashSet::from([2]), HashSet::from([0]), HashSet::from([1])]
 //! );
 //!
-//! assert!(graph.remove_arc(0, 2));
+//! assert!(digraph.remove_arc(0, 2));
 //!
 //! assert_eq!(
-//!     graph,
+//!     digraph,
 //!     vec![HashSet::new(), HashSet::from([0]), HashSet::from([1])]
 //! );
 //!
-//! assert!(graph.remove_arc(1, 0));
+//! assert!(digraph.remove_arc(1, 0));
 //!
 //! assert_eq!(
-//!     graph,
+//!     digraph,
 //!     vec![HashSet::new(), HashSet::new(), HashSet::from([1])]
 //! );
 //!
-//! graph.remove_arc(2, 1);
+//! digraph.remove_arc(2, 1);
 //!
-//! assert_eq!(graph, vec![HashSet::new(), HashSet::new(), HashSet::new()]);
+//! assert_eq!(
+//!     digraph,
+//!     vec![HashSet::new(), HashSet::new(), HashSet::new()]
+//! );
 //! ```
 
 extern crate alloc;
@@ -54,12 +57,12 @@ use {
     },
 };
 
-/// A trait to remove an arc from a directed graph
+/// A trait to remove an arc from a digraph
 ///
 /// # How can I implement `RemoveArc`?
 ///
 /// Provide an implementation of `remove_arc` that removes the arc from `s` to
-/// `t` from a directed graph. Return whether the arc was removed.
+/// `t` from a digraph. Return whether the arc was removed.
 ///
 /// ```
 /// use {
@@ -86,36 +89,39 @@ use {
 ///     std::collections::HashSet,
 /// };
 ///
-/// let mut graph = vec![
+/// let mut digraph = vec![
 ///     HashSet::from([1, 2]),
 ///     HashSet::from([0]),
 ///     HashSet::from([1]),
 /// ];
 ///
-/// assert!(graph.remove_arc(0, 1));
+/// assert!(digraph.remove_arc(0, 1));
 ///
 /// assert_eq!(
-///     graph,
+///     digraph,
 ///     vec![HashSet::from([2]), HashSet::from([0]), HashSet::from([1])]
 /// );
 ///
-/// assert!(graph.remove_arc(0, 2));
+/// assert!(digraph.remove_arc(0, 2));
 ///
 /// assert_eq!(
-///     graph,
+///     digraph,
 ///     vec![HashSet::new(), HashSet::from([0]), HashSet::from([1])]
 /// );
 ///
-/// assert!(graph.remove_arc(1, 0));
+/// assert!(digraph.remove_arc(1, 0));
 ///
 /// assert_eq!(
-///     graph,
+///     digraph,
 ///     vec![HashSet::new(), HashSet::new(), HashSet::from([1])]
 /// );
 ///
-/// graph.remove_arc(2, 1);
+/// digraph.remove_arc(2, 1);
 ///
-/// assert_eq!(graph, vec![HashSet::new(), HashSet::new(), HashSet::new()]);
+/// assert_eq!(
+///     digraph,
+///     vec![HashSet::new(), HashSet::new(), HashSet::new()]
+/// );
 /// ```
 ///
 /// # Properties
@@ -135,7 +141,7 @@ use {
 /// [`add_arc_remove_arc`]: crate::prop::add_arc_remove_arc
 /// [`add_weighted_arc_remove_arc`]: crate::prop::add_weighted_arc_remove_arc
 pub trait RemoveArc {
-    /// Removes the arc from `s` to `t` from a graph. Returns whether the
+    /// Removes the arc from `s` to `t` from a digraph. Returns whether the
     /// arc was removed.
     ///
     /// # Arguments
@@ -148,7 +154,7 @@ pub trait RemoveArc {
 impl RemoveArc for Vec<BTreeSet<usize>> {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self[s].remove(&t)
     }
@@ -160,7 +166,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self[s].remove(&t)
     }
@@ -169,7 +175,7 @@ where
 impl<W> RemoveArc for Vec<BTreeMap<usize, W>> {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self[s].remove(&t).is_some()
     }
@@ -181,7 +187,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self[s].remove(&t).is_some()
     }
@@ -190,7 +196,7 @@ where
 impl RemoveArc for [BTreeSet<usize>] {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self[s].remove(&t)
     }
@@ -202,7 +208,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self[s].remove(&t)
     }
@@ -211,7 +217,7 @@ where
 impl<W> RemoveArc for [BTreeMap<usize, W>] {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self[s].remove(&t).is_some()
     }
@@ -223,7 +229,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self[s].remove(&t).is_some()
     }
@@ -232,7 +238,7 @@ where
 impl<const V: usize> RemoveArc for [BTreeSet<usize>; V] {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self[s].remove(&t)
     }
@@ -244,7 +250,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self[s].remove(&t)
     }
@@ -253,7 +259,7 @@ where
 impl<const V: usize, W> RemoveArc for [BTreeMap<usize, W>; V] {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self[s].remove(&t).is_some()
     }
@@ -265,7 +271,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self[s].remove(&t).is_some()
     }
@@ -309,14 +315,14 @@ mod tests {
 
     #[test]
     fn vec_btree_set() {
-        let mut graph = vec![
+        let mut digraph = vec![
             BTreeSet::from([1, 2]),
             BTreeSet::from([0]),
             BTreeSet::from([1]),
         ];
 
         assert_eq!(
-            graph,
+            digraph,
             vec![
                 BTreeSet::from([1, 2]),
                 BTreeSet::from([0]),
@@ -324,10 +330,10 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_arc(0, 1));
+        assert!(digraph.remove_arc(0, 1));
 
         assert_eq!(
-            graph,
+            digraph,
             vec![
                 BTreeSet::from([2]),
                 BTreeSet::from([0]),
@@ -335,31 +341,31 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_arc(0, 2));
+        assert!(digraph.remove_arc(0, 2));
 
         assert_eq!(
-            graph,
+            digraph,
             vec![BTreeSet::new(), BTreeSet::from([0]), BTreeSet::from([1])]
         );
 
-        assert!(graph.remove_arc(1, 0));
+        assert!(digraph.remove_arc(1, 0));
 
         assert_eq!(
-            graph,
+            digraph,
             vec![BTreeSet::new(), BTreeSet::new(), BTreeSet::from([1])]
         );
     }
 
     #[test]
     fn vec_btree_map() {
-        let mut graph = vec![
+        let mut digraph = vec![
             BTreeMap::from([(1, 1), (2, 1)]),
             BTreeMap::from([(0, 1)]),
             BTreeMap::from([(1, 1)]),
         ];
 
         assert_eq!(
-            graph,
+            digraph,
             vec![
                 BTreeMap::from([(1, 1), (2, 1)]),
                 BTreeMap::from([(0, 1)]),
@@ -367,10 +373,10 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_arc(0, 1));
+        assert!(digraph.remove_arc(0, 1));
 
         assert_eq!(
-            graph,
+            digraph,
             vec![
                 BTreeMap::from([(2, 1)]),
                 BTreeMap::from([(0, 1)]),
@@ -378,10 +384,10 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_arc(0, 2));
+        assert!(digraph.remove_arc(0, 2));
 
         assert_eq!(
-            graph,
+            digraph,
             vec![
                 BTreeMap::new(),
                 BTreeMap::from([(0, 1)]),
@@ -389,56 +395,56 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_arc(1, 0));
+        assert!(digraph.remove_arc(1, 0));
 
         assert_eq!(
-            graph,
+            digraph,
             vec![BTreeMap::new(), BTreeMap::new(), BTreeMap::from([(1, 1)])]
         );
     }
 
     #[test]
     fn slice_btree_set() {
-        let graph: &mut [BTreeSet<usize>] =
+        let digraph: &mut [BTreeSet<usize>] =
             &mut [BTreeSet::from([1, 2]), BTreeSet::from([2]), BTreeSet::new()];
 
         assert_eq!(
-            graph,
+            digraph,
             &[BTreeSet::from([1, 2]), BTreeSet::from([2]), BTreeSet::new()]
         );
 
-        assert!(graph.remove_arc(0, 1));
+        assert!(digraph.remove_arc(0, 1));
 
         assert_eq!(
-            graph,
+            digraph,
             vec![BTreeSet::from([2]), BTreeSet::from([2]), BTreeSet::new()]
         );
 
-        assert!(graph.remove_arc(0, 2));
+        assert!(digraph.remove_arc(0, 2));
 
         assert_eq!(
-            graph,
+            digraph,
             vec![BTreeSet::new(), BTreeSet::from([2]), BTreeSet::new()]
         );
 
-        assert!(graph.remove_arc(1, 2));
+        assert!(digraph.remove_arc(1, 2));
 
         assert_eq!(
-            graph,
+            digraph,
             vec![BTreeSet::new(), BTreeSet::new(), BTreeSet::new()]
         );
     }
 
     #[test]
     fn slice_btree_map() {
-        let graph: &mut [BTreeMap<usize, i32>] = &mut [
+        let digraph: &mut [BTreeMap<usize, i32>] = &mut [
             BTreeMap::from([(1, 1), (2, 1)]),
             BTreeMap::from([(0, 1)]),
             BTreeMap::from([(1, 1)]),
         ];
 
         assert_eq!(
-            graph,
+            digraph,
             &[
                 BTreeMap::from([(1, 1), (2, 1)]),
                 BTreeMap::from([(0, 1)]),
@@ -446,10 +452,10 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_arc(0, 1));
+        assert!(digraph.remove_arc(0, 1));
 
         assert_eq!(
-            graph,
+            digraph,
             vec![
                 BTreeMap::from([(2, 1)]),
                 BTreeMap::from([(0, 1)]),
@@ -457,10 +463,10 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_arc(0, 2));
+        assert!(digraph.remove_arc(0, 2));
 
         assert_eq!(
-            graph,
+            digraph,
             vec![
                 BTreeMap::new(),
                 BTreeMap::from([(0, 1)]),
@@ -468,24 +474,24 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_arc(1, 0));
+        assert!(digraph.remove_arc(1, 0));
 
         assert_eq!(
-            graph,
+            digraph,
             vec![BTreeMap::new(), BTreeMap::new(), BTreeMap::from([(1, 1)])]
         );
     }
 
     #[test]
     fn arr_btree_set() {
-        let mut graph = [
+        let mut digraph = [
             BTreeSet::from([1, 2]),
             BTreeSet::from([0]),
             BTreeSet::from([1]),
         ];
 
         assert_eq!(
-            graph,
+            digraph,
             [
                 BTreeSet::from([1, 2]),
                 BTreeSet::from([0]),
@@ -493,10 +499,10 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_arc(0, 1));
+        assert!(digraph.remove_arc(0, 1));
 
         assert_eq!(
-            graph,
+            digraph,
             [
                 BTreeSet::from([2]),
                 BTreeSet::from([0]),
@@ -504,31 +510,31 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_arc(0, 2));
+        assert!(digraph.remove_arc(0, 2));
 
         assert_eq!(
-            graph,
+            digraph,
             [BTreeSet::new(), BTreeSet::from([0]), BTreeSet::from([1])]
         );
 
-        assert!(graph.remove_arc(1, 0));
+        assert!(digraph.remove_arc(1, 0));
 
         assert_eq!(
-            graph,
+            digraph,
             [BTreeSet::new(), BTreeSet::new(), BTreeSet::from([1])]
         );
     }
 
     #[test]
     fn arr_btree_map() {
-        let mut graph = [
+        let mut digraph = [
             BTreeMap::from([(1, 1), (2, 1)]),
             BTreeMap::from([(0, 1)]),
             BTreeMap::from([(1, 1)]),
         ];
 
         assert_eq!(
-            graph,
+            digraph,
             [
                 BTreeMap::from([(1, 1), (2, 1)]),
                 BTreeMap::from([(0, 1)]),
@@ -536,10 +542,10 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_arc(0, 1));
+        assert!(digraph.remove_arc(0, 1));
 
         assert_eq!(
-            graph,
+            digraph,
             [
                 BTreeMap::from([(2, 1)]),
                 BTreeMap::from([(0, 1)]),
@@ -547,10 +553,10 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_arc(0, 2));
+        assert!(digraph.remove_arc(0, 2));
 
         assert_eq!(
-            graph,
+            digraph,
             [
                 BTreeMap::new(),
                 BTreeMap::from([(0, 1)]),
@@ -558,24 +564,24 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_arc(1, 0));
+        assert!(digraph.remove_arc(1, 0));
 
         assert_eq!(
-            graph,
+            digraph,
             [BTreeMap::new(), BTreeMap::new(), BTreeMap::from([(1, 1)])]
         );
     }
 
     #[test]
     fn btree_map_btree_set() {
-        let mut graph = BTreeMap::from([
+        let mut digraph = BTreeMap::from([
             (0, BTreeSet::from([1, 2])),
             (1, BTreeSet::from([0])),
             (2, BTreeSet::from([1])),
         ]);
 
         assert_eq!(
-            graph,
+            digraph,
             BTreeMap::from([
                 (0, BTreeSet::from([1, 2])),
                 (1, BTreeSet::from([0])),
@@ -583,10 +589,10 @@ mod tests {
             ])
         );
 
-        assert!(graph.remove_arc(0, 1));
+        assert!(digraph.remove_arc(0, 1));
 
         assert_eq!(
-            graph,
+            digraph,
             BTreeMap::from([
                 (0, BTreeSet::from([2])),
                 (1, BTreeSet::from([0])),
@@ -594,10 +600,10 @@ mod tests {
             ])
         );
 
-        assert!(graph.remove_arc(0, 2));
+        assert!(digraph.remove_arc(0, 2));
 
         assert_eq!(
-            graph,
+            digraph,
             BTreeMap::from([
                 (0, BTreeSet::new()),
                 (1, BTreeSet::from([0])),
@@ -605,10 +611,10 @@ mod tests {
             ])
         );
 
-        assert!(graph.remove_arc(1, 0));
+        assert!(digraph.remove_arc(1, 0));
 
         assert_eq!(
-            graph,
+            digraph,
             BTreeMap::from([
                 (0, BTreeSet::new()),
                 (1, BTreeSet::new()),
@@ -619,14 +625,14 @@ mod tests {
 
     #[test]
     fn btree_map_btree_map() {
-        let mut graph = BTreeMap::from([
+        let mut digraph = BTreeMap::from([
             (0, BTreeMap::from([(1, 1), (2, 1)])),
             (1, BTreeMap::from([(0, 1)])),
             (2, BTreeMap::from([(1, 1)])),
         ]);
 
         assert_eq!(
-            graph,
+            digraph,
             BTreeMap::from([
                 (0, BTreeMap::from([(1, 1), (2, 1)])),
                 (1, BTreeMap::from([(0, 1)])),
@@ -634,10 +640,10 @@ mod tests {
             ])
         );
 
-        assert!(graph.remove_arc(0, 1));
+        assert!(digraph.remove_arc(0, 1));
 
         assert_eq!(
-            graph,
+            digraph,
             BTreeMap::from([
                 (0, BTreeMap::from([(2, 1)])),
                 (1, BTreeMap::from([(0, 1)])),
@@ -645,10 +651,10 @@ mod tests {
             ])
         );
 
-        assert!(graph.remove_arc(0, 2));
+        assert!(digraph.remove_arc(0, 2));
 
         assert_eq!(
-            graph,
+            digraph,
             BTreeMap::from([
                 (0, BTreeMap::new()),
                 (1, BTreeMap::from([(0, 1)])),
@@ -656,10 +662,10 @@ mod tests {
             ])
         );
 
-        assert!(graph.remove_arc(1, 0));
+        assert!(digraph.remove_arc(1, 0));
 
         assert_eq!(
-            graph,
+            digraph,
             BTreeMap::from([
                 (0, BTreeMap::new()),
                 (1, BTreeMap::new()),
@@ -670,14 +676,14 @@ mod tests {
 
     #[test]
     fn vec_hash_set() {
-        let mut graph = vec![
+        let mut digraph = vec![
             HashSet::from([1, 2]),
             HashSet::from([0]),
             HashSet::from([1]),
         ];
 
         assert_eq!(
-            graph,
+            digraph,
             vec![
                 HashSet::from([1, 2]),
                 HashSet::from([0]),
@@ -685,38 +691,38 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_arc(0, 1));
+        assert!(digraph.remove_arc(0, 1));
 
         assert_eq!(
-            graph,
+            digraph,
             vec![HashSet::from([2]), HashSet::from([0]), HashSet::from([1])]
         );
 
-        assert!(graph.remove_arc(0, 2));
+        assert!(digraph.remove_arc(0, 2));
 
         assert_eq!(
-            graph,
+            digraph,
             vec![HashSet::new(), HashSet::from([0]), HashSet::from([1])]
         );
 
-        assert!(graph.remove_arc(1, 0));
+        assert!(digraph.remove_arc(1, 0));
 
         assert_eq!(
-            graph,
+            digraph,
             vec![HashSet::new(), HashSet::new(), HashSet::from([1])]
         );
     }
 
     #[test]
     fn vec_hash_map() {
-        let mut graph = vec![
+        let mut digraph = vec![
             HashMap::from([(1, 1), (2, 1)]),
             HashMap::from([(0, 1)]),
             HashMap::from([(1, 1)]),
         ];
 
         assert_eq!(
-            graph,
+            digraph,
             vec![
                 HashMap::from([(1, 1), (2, 1)]),
                 HashMap::from([(0, 1)]),
@@ -724,10 +730,10 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_arc(0, 1));
+        assert!(digraph.remove_arc(0, 1));
 
         assert_eq!(
-            graph,
+            digraph,
             vec![
                 HashMap::from([(2, 1)]),
                 HashMap::from([(0, 1)]),
@@ -735,10 +741,10 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_arc(0, 2));
+        assert!(digraph.remove_arc(0, 2));
 
         assert_eq!(
-            graph,
+            digraph,
             vec![
                 HashMap::new(),
                 HashMap::from([(0, 1)]),
@@ -746,53 +752,56 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_arc(1, 0));
+        assert!(digraph.remove_arc(1, 0));
 
         assert_eq!(
-            graph,
+            digraph,
             vec![HashMap::new(), HashMap::new(), HashMap::from([(1, 1)])]
         );
     }
 
     #[test]
     fn slice_hash_set() {
-        let graph: &mut [HashSet<usize>] =
+        let digraph: &mut [HashSet<usize>] =
             &mut [HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
 
         assert_eq!(
-            graph,
+            digraph,
             &[HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()]
         );
 
-        assert!(graph.remove_arc(0, 1));
+        assert!(digraph.remove_arc(0, 1));
 
         assert_eq!(
-            graph,
+            digraph,
             vec![HashSet::from([2]), HashSet::from([2]), HashSet::new()]
         );
 
-        assert!(graph.remove_arc(0, 2));
+        assert!(digraph.remove_arc(0, 2));
 
         assert_eq!(
-            graph,
+            digraph,
             vec![HashSet::new(), HashSet::from([2]), HashSet::new()]
         );
 
-        assert!(graph.remove_arc(1, 2));
+        assert!(digraph.remove_arc(1, 2));
 
-        assert_eq!(graph, vec![HashSet::new(), HashSet::new(), HashSet::new()]);
+        assert_eq!(
+            digraph,
+            vec![HashSet::new(), HashSet::new(), HashSet::new()]
+        );
     }
 
     #[test]
     fn slice_hash_map() {
-        let graph: &mut [HashMap<usize, i32>] = &mut [
+        let digraph: &mut [HashMap<usize, i32>] = &mut [
             HashMap::from([(1, 1), (2, 1)]),
             HashMap::from([(0, 1)]),
             HashMap::from([(1, 1)]),
         ];
 
         assert_eq!(
-            graph,
+            digraph,
             &[
                 HashMap::from([(1, 1), (2, 1)]),
                 HashMap::from([(0, 1)]),
@@ -800,10 +809,10 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_arc(0, 1));
+        assert!(digraph.remove_arc(0, 1));
 
         assert_eq!(
-            graph,
+            digraph,
             vec![
                 HashMap::from([(2, 1)]),
                 HashMap::from([(0, 1)]),
@@ -811,10 +820,10 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_arc(0, 2));
+        assert!(digraph.remove_arc(0, 2));
 
         assert_eq!(
-            graph,
+            digraph,
             vec![
                 HashMap::new(),
                 HashMap::from([(0, 1)]),
@@ -822,24 +831,24 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_arc(1, 0));
+        assert!(digraph.remove_arc(1, 0));
 
         assert_eq!(
-            graph,
+            digraph,
             vec![HashMap::new(), HashMap::new(), HashMap::from([(1, 1)])]
         );
     }
 
     #[test]
     fn arr_hash_set() {
-        let mut graph = [
+        let mut digraph = [
             HashSet::from([1, 2]),
             HashSet::from([0]),
             HashSet::from([1]),
         ];
 
         assert_eq!(
-            graph,
+            digraph,
             [
                 HashSet::from([1, 2]),
                 HashSet::from([0]),
@@ -847,35 +856,38 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_arc(0, 1));
+        assert!(digraph.remove_arc(0, 1));
 
         assert_eq!(
-            graph,
+            digraph,
             [HashSet::from([2]), HashSet::from([0]), HashSet::from([1])]
         );
 
-        assert!(graph.remove_arc(0, 2));
+        assert!(digraph.remove_arc(0, 2));
 
         assert_eq!(
-            graph,
+            digraph,
             [HashSet::new(), HashSet::from([0]), HashSet::from([1])]
         );
 
-        assert!(graph.remove_arc(1, 0));
+        assert!(digraph.remove_arc(1, 0));
 
-        assert_eq!(graph, [HashSet::new(), HashSet::new(), HashSet::from([1])]);
+        assert_eq!(
+            digraph,
+            [HashSet::new(), HashSet::new(), HashSet::from([1])]
+        );
     }
 
     #[test]
     fn arr_hash_map() {
-        let mut graph = [
+        let mut digraph = [
             HashMap::from([(1, 1), (2, 1)]),
             HashMap::from([(0, 1)]),
             HashMap::from([(1, 1)]),
         ];
 
         assert_eq!(
-            graph,
+            digraph,
             [
                 HashMap::from([(1, 1), (2, 1)]),
                 HashMap::from([(0, 1)]),
@@ -883,10 +895,10 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_arc(0, 1));
+        assert!(digraph.remove_arc(0, 1));
 
         assert_eq!(
-            graph,
+            digraph,
             [
                 HashMap::from([(2, 1)]),
                 HashMap::from([(0, 1)]),
@@ -894,10 +906,10 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_arc(0, 2));
+        assert!(digraph.remove_arc(0, 2));
 
         assert_eq!(
-            graph,
+            digraph,
             [
                 HashMap::new(),
                 HashMap::from([(0, 1)]),
@@ -905,24 +917,24 @@ mod tests {
             ]
         );
 
-        assert!(graph.remove_arc(1, 0));
+        assert!(digraph.remove_arc(1, 0));
 
         assert_eq!(
-            graph,
+            digraph,
             [HashMap::new(), HashMap::new(), HashMap::from([(1, 1)])]
         );
     }
 
     #[test]
     fn hash_map_hash_set() {
-        let mut graph = HashMap::from([
+        let mut digraph = HashMap::from([
             (0, HashSet::from([1, 2])),
             (1, HashSet::from([0])),
             (2, HashSet::from([1])),
         ]);
 
         assert_eq!(
-            graph,
+            digraph,
             HashMap::from([
                 (0, HashSet::from([1, 2])),
                 (1, HashSet::from([0])),
@@ -930,10 +942,10 @@ mod tests {
             ])
         );
 
-        assert!(graph.remove_arc(0, 1));
+        assert!(digraph.remove_arc(0, 1));
 
         assert_eq!(
-            graph,
+            digraph,
             HashMap::from([
                 (0, HashSet::from([2])),
                 (1, HashSet::from([0])),
@@ -941,10 +953,10 @@ mod tests {
             ])
         );
 
-        assert!(graph.remove_arc(0, 2));
+        assert!(digraph.remove_arc(0, 2));
 
         assert_eq!(
-            graph,
+            digraph,
             HashMap::from([
                 (0, HashSet::new()),
                 (1, HashSet::from([0])),
@@ -952,10 +964,10 @@ mod tests {
             ])
         );
 
-        assert!(graph.remove_arc(1, 0));
+        assert!(digraph.remove_arc(1, 0));
 
         assert_eq!(
-            graph,
+            digraph,
             HashMap::from([
                 (0, HashSet::new()),
                 (1, HashSet::new()),
@@ -966,14 +978,14 @@ mod tests {
 
     #[test]
     fn hash_map_hash_map() {
-        let mut graph = HashMap::from([
+        let mut digraph = HashMap::from([
             (0, HashMap::from([(1, 1), (2, 1)])),
             (1, HashMap::from([(0, 1)])),
             (2, HashMap::from([(1, 1)])),
         ]);
 
         assert_eq!(
-            graph,
+            digraph,
             HashMap::from([
                 (0, HashMap::from([(1, 1), (2, 1)])),
                 (1, HashMap::from([(0, 1)])),
@@ -981,10 +993,10 @@ mod tests {
             ])
         );
 
-        assert!(graph.remove_arc(0, 1));
+        assert!(digraph.remove_arc(0, 1));
 
         assert_eq!(
-            graph,
+            digraph,
             HashMap::from([
                 (0, HashMap::from([(2, 1)])),
                 (1, HashMap::from([(0, 1)])),
@@ -992,10 +1004,10 @@ mod tests {
             ])
         );
 
-        assert!(graph.remove_arc(0, 2));
+        assert!(digraph.remove_arc(0, 2));
 
         assert_eq!(
-            graph,
+            digraph,
             HashMap::from([
                 (0, HashMap::new()),
                 (1, HashMap::from([(0, 1)])),
@@ -1003,10 +1015,10 @@ mod tests {
             ])
         );
 
-        assert!(graph.remove_arc(1, 0));
+        assert!(digraph.remove_arc(1, 0));
 
         assert_eq!(
-            graph,
+            digraph,
             HashMap::from([
                 (0, HashMap::new()),
                 (1, HashMap::new()),

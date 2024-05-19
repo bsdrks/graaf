@@ -1,13 +1,13 @@
-//! A trait to iterate over all arcs in an unweighted directed graph
+//! A trait to iterate over all arcs in an unweighted digraph
 //!
 //! # Examples
 //!
 //! ```
 //! use graaf::op::IterAllArcs;
 //!
-//! let graph = vec![(0, 1), (1, 2), (2, 0)];
+//! let digraph = vec![(0, 1), (1, 2), (2, 0)];
 //!
-//! assert!(graph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
+//! assert!(digraph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
 //! ```
 
 extern crate alloc;
@@ -24,12 +24,12 @@ use {
     },
 };
 
-/// A trait to iterate over all arcs in an unweighted directed graph
+/// A trait to iterate over all arcs in an unweighted digraph
 ///
 /// # How can I implement `IterAllArcs`?
 ///
 /// Provide an implementation of `iter_all_arcs` that returns an iterator over
-/// all arcs in a graph.
+/// all arcs in a digraph.
 ///
 /// ```
 /// use graaf::op::IterAllArcs;
@@ -50,12 +50,12 @@ use {
 /// ```
 /// use graaf::op::IterAllArcs;
 ///
-/// let graph = vec![(0, 1), (1, 2), (2, 0)];
+/// let digraph = vec![(0, 1), (1, 2), (2, 0)];
 ///
-/// assert!(graph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
+/// assert!(digraph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
 /// ```
 pub trait IterAllArcs {
-    /// Returns an iterator over all arcs in a graph.
+    /// Returns an iterator over all arcs in a digraph.
     fn iter_all_arcs(&self) -> impl Iterator<Item = (usize, usize)>;
 }
 
@@ -212,8 +212,8 @@ mod tests {
     use super::*;
 
     macro_rules! test_iter_all_arcs_unstable {
-        ($graph:expr) => {
-            let mut iter = $graph.iter_all_arcs();
+        ($digraph:expr) => {
+            let mut iter = $digraph.iter_all_arcs();
 
             assert!(matches!(iter.next(), Some((0, 1) | (1, 2) | (2, 0))));
             assert!(matches!(iter.next(), Some((0, 1) | (1, 2) | (2, 0))));
@@ -224,149 +224,149 @@ mod tests {
 
     #[test]
     fn vec_vec() {
-        let graph = vec![vec![1], vec![2], vec![0]];
+        let digraph = vec![vec![1], vec![2], vec![0]];
 
-        assert!(graph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
+        assert!(digraph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]
     fn vec_btree_set() {
-        let graph = vec![
+        let digraph = vec![
             BTreeSet::from([1]),
             BTreeSet::from([2]),
             BTreeSet::from([0]),
         ];
 
-        test_iter_all_arcs_unstable!(graph);
+        test_iter_all_arcs_unstable!(digraph);
     }
 
     #[test]
 
     fn vec_hash_set() {
-        let graph = vec![HashSet::from([1]), HashSet::from([2]), HashSet::from([0])];
+        let digraph = vec![HashSet::from([1]), HashSet::from([2]), HashSet::from([0])];
 
-        test_iter_all_arcs_unstable!(graph);
+        test_iter_all_arcs_unstable!(digraph);
     }
 
     #[test]
     fn slice_vec() {
-        let graph: &[Vec<usize>] = &[vec![1], vec![2], vec![0]];
+        let digraph: &[Vec<usize>] = &[vec![1], vec![2], vec![0]];
 
-        assert!(graph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
+        assert!(digraph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]
     fn slice_btree_set() {
-        let graph: &[BTreeSet<usize>] = &[
+        let digraph: &[BTreeSet<usize>] = &[
             BTreeSet::from([1]),
             BTreeSet::from([2]),
             BTreeSet::from([0]),
         ];
 
-        test_iter_all_arcs_unstable!(graph);
+        test_iter_all_arcs_unstable!(digraph);
     }
 
     #[test]
     fn slice_hash_set() {
-        let graph: &[HashSet<usize>] =
+        let digraph: &[HashSet<usize>] =
             &[HashSet::from([1]), HashSet::from([2]), HashSet::from([0])];
 
-        test_iter_all_arcs_unstable!(graph);
+        test_iter_all_arcs_unstable!(digraph);
     }
 
     #[test]
     fn arr_vec() {
-        let graph = [vec![1], vec![2], vec![0]];
+        let digraph = [vec![1], vec![2], vec![0]];
 
-        assert!(graph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
+        assert!(digraph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]
     fn arr_btree_set() {
-        let graph = [
+        let digraph = [
             BTreeSet::from([1]),
             BTreeSet::from([2]),
             BTreeSet::from([0]),
         ];
 
-        test_iter_all_arcs_unstable!(graph);
+        test_iter_all_arcs_unstable!(digraph);
     }
 
     #[test]
     fn arr_hash_set() {
-        let graph = [HashSet::from([1]), HashSet::from([2]), HashSet::from([0])];
+        let digraph = [HashSet::from([1]), HashSet::from([2]), HashSet::from([0])];
 
-        test_iter_all_arcs_unstable!(graph);
+        test_iter_all_arcs_unstable!(digraph);
     }
 
     #[test]
     fn btree_map_vec() {
-        let graph = BTreeMap::from([(0, vec![1]), (1, vec![2]), (2, vec![0])]);
+        let digraph = BTreeMap::from([(0, vec![1]), (1, vec![2]), (2, vec![0])]);
 
-        assert!(graph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
+        assert!(digraph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]
     fn btree_map_btree_set() {
-        let graph = BTreeMap::from([
+        let digraph = BTreeMap::from([
             (0, BTreeSet::from([1])),
             (1, BTreeSet::from([2])),
             (2, BTreeSet::from([0])),
         ]);
 
-        test_iter_all_arcs_unstable!(graph);
+        test_iter_all_arcs_unstable!(digraph);
     }
 
     #[test]
     fn hash_map_vec() {
-        let graph = HashMap::from([(0, vec![1]), (1, vec![2]), (2, vec![0])]);
+        let digraph = HashMap::from([(0, vec![1]), (1, vec![2]), (2, vec![0])]);
 
-        test_iter_all_arcs_unstable!(graph);
+        test_iter_all_arcs_unstable!(digraph);
     }
 
     #[test]
     fn hash_map_hash_set() {
-        let graph = HashMap::from([
+        let digraph = HashMap::from([
             (0, HashSet::from([1])),
             (1, HashSet::from([2])),
             (2, HashSet::from([0])),
         ]);
 
-        test_iter_all_arcs_unstable!(graph);
+        test_iter_all_arcs_unstable!(digraph);
     }
 
     #[test]
     fn vec_tuple() {
-        let graph = vec![(0, 1), (1, 2), (2, 0)];
+        let digraph = vec![(0, 1), (1, 2), (2, 0)];
 
-        assert!(graph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
+        assert!(digraph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]
     fn slice_tuple() {
-        let graph: &[(usize, usize)] = &[(0, 1), (1, 2), (2, 0)];
+        let digraph: &[(usize, usize)] = &[(0, 1), (1, 2), (2, 0)];
 
-        assert!(graph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
+        assert!(digraph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]
     fn arr_tuple() {
-        let graph = [(0, 1), (1, 2), (2, 0)];
+        let digraph = [(0, 1), (1, 2), (2, 0)];
 
-        assert!(graph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
+        assert!(digraph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]
     fn btree_set() {
-        let graph: BTreeSet<(usize, usize)> = BTreeSet::from([(0, 1), (1, 2), (2, 0)]);
+        let digraph: BTreeSet<(usize, usize)> = BTreeSet::from([(0, 1), (1, 2), (2, 0)]);
 
-        test_iter_all_arcs_unstable!(graph);
+        test_iter_all_arcs_unstable!(digraph);
     }
 
     #[test]
     fn hash_set() {
-        let graph: HashSet<(usize, usize)> = HashSet::from([(0, 1), (1, 2), (2, 0)]);
+        let digraph: HashSet<(usize, usize)> = HashSet::from([(0, 1), (1, 2), (2, 0)]);
 
-        test_iter_all_arcs_unstable!(graph);
+        test_iter_all_arcs_unstable!(digraph);
     }
 }

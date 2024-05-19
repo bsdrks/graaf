@@ -1,8 +1,8 @@
 #![doc(alias = "edgeless")]
-//! A trait to generate empty const-sized directed graphs
+//! A trait to generate empty const-sized digraphs
 //!
 //! Empty graphs are also known as edgeless graphs. To generate empty
-//! variable-sized graphs, see [`Empty`].
+//! variable-sized digraphs, see [`Empty`].
 //!
 //! # Examples
 //!
@@ -37,11 +37,11 @@ use {
     },
 };
 
-/// A trait to generate empty const-sized directed graphs
+/// A trait to generate empty const-sized digraphs
 ///
 /// # How can I implement `EmptyConst`?
 ///
-/// Provide an implementation of `empty` that generates a empty graph with `V`
+/// Provide an implementation of `empty` that generates a empty digraph with `V`
 /// vertices.
 ///
 /// ```
@@ -80,12 +80,15 @@ use {
 ///     }
 /// }
 ///
-/// let graph = Graph::<3, RandomState>::empty();
+/// let digraph = Graph::<3, RandomState>::empty();
 ///
-/// assert_eq!(graph.arcs, [HashSet::new(), HashSet::new(), HashSet::new()]);
+/// assert_eq!(
+///     digraph.arcs,
+///     [HashSet::new(), HashSet::new(), HashSet::new()]
+/// );
 /// ```
 pub trait EmptyConst {
-    /// Generates a empty graph.
+    /// Generates a empty digraph.
     #[must_use]
     fn empty() -> Self;
 }

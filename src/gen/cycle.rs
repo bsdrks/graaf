@@ -1,8 +1,8 @@
 #![doc(alias = "circular")]
-//! A trait to generate variable-sized directed cycle graphs
+//! A trait to generate variable-sized directed cycle digraphs
 //!
 //! Cycle graphs are also known as circular graphs. To generate const-sized
-//! cycle graphs, see [`CycleConst`].
+//! cycle digraphs, see [`CycleConst`].
 //!
 //! # Examples
 //!
@@ -31,11 +31,11 @@ use {
     },
 };
 
-/// A trait to generate variable-size directed cycle graphs
+/// A trait to generate variable-size directed cycle digraphs
 ///
 /// # How can I implement `Cycle`?
 ///
-/// Provide an implementation of `cycle` that generates a cycle graph with `v`
+/// Provide an implementation of `cycle` that generates a cycle digraph with `v`
 /// vertices.
 ///
 /// ```
@@ -58,9 +58,9 @@ use {
 ///     }
 /// }
 ///
-/// let graph = Graph::cycle(3);
+/// let digraph = Graph::cycle(3);
 ///
-/// assert_eq!(graph.arcs, HashSet::from([(0, 1), (1, 2), (2, 0)]));
+/// assert_eq!(digraph.arcs, HashSet::from([(0, 1), (1, 2), (2, 0)]));
 /// ```
 ///
 /// # Examples
@@ -73,11 +73,11 @@ use {
 /// assert_eq!(Vec::<Vec<usize>>::cycle(3), vec![vec![1], vec![2], vec![0]]);
 /// ```
 pub trait Cycle {
-    /// Generates a cycle graph.
+    /// Generates a cycle digraph.
     ///
     /// # Arguments
     ///
-    /// * `v` - The number of vertices in the graph
+    /// * `v` - The number of vertices in the digraph
     #[must_use]
     fn cycle(v: usize) -> Self;
 }
@@ -87,15 +87,15 @@ impl Cycle for Vec<Vec<usize>> {
     ///
     /// Panics if `v` is 0.
     fn cycle(v: usize) -> Self {
-        let mut graph = Self::empty(v);
+        let mut digraph = Self::empty(v);
 
-        for (s, vec) in graph.iter_mut().enumerate().take(v - 1) {
+        for (s, vec) in digraph.iter_mut().enumerate().take(v - 1) {
             vec.push(s + 1);
         }
 
-        graph[v - 1].push(0);
+        digraph[v - 1].push(0);
 
-        graph
+        digraph
     }
 }
 
@@ -104,15 +104,15 @@ impl Cycle for Vec<BTreeSet<usize>> {
     ///
     /// Panics if `v` is 0.
     fn cycle(v: usize) -> Self {
-        let mut graph = Self::empty(v);
+        let mut digraph = Self::empty(v);
 
-        for (s, set) in graph.iter_mut().enumerate().take(v - 1) {
+        for (s, set) in digraph.iter_mut().enumerate().take(v - 1) {
             let _ = set.insert(s + 1);
         }
 
-        let _ = graph[v - 1].insert(0);
+        let _ = digraph[v - 1].insert(0);
 
-        graph
+        digraph
     }
 }
 
@@ -125,15 +125,15 @@ where
     ///
     /// Panics if `v` is 0.
     fn cycle(v: usize) -> Self {
-        let mut graph = Self::empty(v);
+        let mut digraph = Self::empty(v);
 
-        for (s, set) in graph.iter_mut().enumerate().take(v - 1) {
+        for (s, set) in digraph.iter_mut().enumerate().take(v - 1) {
             let _ = set.insert(s + 1);
         }
 
-        let _ = graph[v - 1].insert(0);
+        let _ = digraph[v - 1].insert(0);
 
-        graph
+        digraph
     }
 }
 
@@ -142,15 +142,15 @@ impl Cycle for BTreeMap<usize, Vec<usize>> {
     ///
     /// Panics if `v` is 0.
     fn cycle(v: usize) -> Self {
-        let mut graph = Self::empty(v);
+        let mut digraph = Self::empty(v);
 
         for s in 0..v - 1 {
-            let _ = graph.insert(s, vec![s + 1]);
+            let _ = digraph.insert(s, vec![s + 1]);
         }
 
-        let _ = graph.insert(v - 1, vec![0]);
+        let _ = digraph.insert(v - 1, vec![0]);
 
-        graph
+        digraph
     }
 }
 
@@ -159,15 +159,15 @@ impl Cycle for BTreeMap<usize, BTreeSet<usize>> {
     ///
     /// Panics if `v` is 0.
     fn cycle(v: usize) -> Self {
-        let mut graph = Self::empty(v);
+        let mut digraph = Self::empty(v);
 
         for s in 0..v - 1 {
-            let _ = graph.insert(s, BTreeSet::from([s + 1]));
+            let _ = digraph.insert(s, BTreeSet::from([s + 1]));
         }
 
-        let _ = graph.insert(v - 1, BTreeSet::from([0]));
+        let _ = digraph.insert(v - 1, BTreeSet::from([0]));
 
-        graph
+        digraph
     }
 }
 
@@ -179,15 +179,15 @@ where
     ///
     /// Panics if `v` is 0.
     fn cycle(v: usize) -> Self {
-        let mut graph = Self::empty(v);
+        let mut digraph = Self::empty(v);
 
         for s in 0..v - 1 {
-            let _ = graph.insert(s, vec![s + 1]);
+            let _ = digraph.insert(s, vec![s + 1]);
         }
 
-        let _ = graph.insert(v - 1, vec![0]);
+        let _ = digraph.insert(v - 1, vec![0]);
 
-        graph
+        digraph
     }
 }
 
@@ -199,19 +199,19 @@ where
     ///
     /// Panics if `v` is 0.
     fn cycle(v: usize) -> Self {
-        let mut graph = Self::empty(v);
+        let mut digraph = Self::empty(v);
 
         for s in 0..v - 1 {
             let mut set = HashSet::with_hasher(H::default());
             let _ = set.insert(s + 1);
-            let _ = graph.insert(s, set);
+            let _ = digraph.insert(s, set);
         }
 
         let mut set = HashSet::with_hasher(H::default());
         let _ = set.insert(0);
-        let _ = graph.insert(v - 1, set);
+        let _ = digraph.insert(v - 1, set);
 
-        graph
+        digraph
     }
 }
 
@@ -274,10 +274,10 @@ mod tests {
     }
 
     fn prop_indegree<T: Cycle + Indegree>(v: usize) {
-        let graph = T::cycle(v);
+        let digraph = T::cycle(v);
 
         for s in 0..v {
-            assert_eq!(graph.indegree(s), 1);
+            assert_eq!(digraph.indegree(s), 1);
         }
     }
 
@@ -286,10 +286,10 @@ mod tests {
     }
 
     fn prop_outdegree<T: Cycle + Outdegree>(v: usize) {
-        let graph = T::cycle(v);
+        let digraph = T::cycle(v);
 
         for s in 0..v {
-            assert_eq!(graph.outdegree(s), 1);
+            assert_eq!(digraph.outdegree(s), 1);
         }
     }
 

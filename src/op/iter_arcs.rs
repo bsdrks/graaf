@@ -1,17 +1,17 @@
 //! A trait to iterate over all arcs with a given source vertex in an
-//! unweighted directed graph
+//! unweighted digraph
 //!
 //! # Examples
 //!
 //! ```
 //! use graaf::op::IterArcs;
 //!
-//! let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+//! let digraph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 //!
-//! assert!(graph.iter_arcs(0).eq([1, 2]));
-//! assert!(graph.iter_arcs(1).eq([0, 2, 3]));
-//! assert!(graph.iter_arcs(2).eq([0, 1, 3]));
-//! assert!(graph.iter_arcs(3).eq([1, 2]));
+//! assert!(digraph.iter_arcs(0).eq([1, 2]));
+//! assert!(digraph.iter_arcs(1).eq([0, 2, 3]));
+//! assert!(digraph.iter_arcs(2).eq([0, 1, 3]));
+//! assert!(digraph.iter_arcs(3).eq([1, 2]));
 //! ```
 //!
 //! The order of the arcs is not guaranteed for, e.g., `Vec<HashSet<_>>`:
@@ -22,14 +22,14 @@
 //!     std::collections::HashSet,
 //! };
 //!
-//! let graph = vec![
+//! let digraph = vec![
 //!     HashSet::from([1, 2]),
 //!     HashSet::from([0, 2, 3]),
 //!     HashSet::from([0, 1, 3]),
 //!     HashSet::from([1, 2]),
 //! ];
 //!
-//! let mut iter = graph.iter_arcs(0);
+//! let mut iter = digraph.iter_arcs(0);
 //!
 //! assert!(matches!(iter.next(), Some(1 | 2)));
 //! assert!(matches!(iter.next(), Some(1 | 2)));
@@ -51,7 +51,7 @@ use {
 };
 
 /// A trait to iterate over all arcs with a given source vertex in an
-/// unweighted directed graph
+/// unweighted digraph
 ///
 /// # How can I implement `IterArcs`?
 ///
@@ -77,12 +77,12 @@ use {
 /// ```
 /// use graaf::op::IterArcs;
 ///
-/// let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+/// let digraph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 ///
-/// assert!(graph.iter_arcs(0).eq([1, 2]));
-/// assert!(graph.iter_arcs(1).eq([0, 2, 3]));
-/// assert!(graph.iter_arcs(2).eq([0, 1, 3]));
-/// assert!(graph.iter_arcs(3).eq([1, 2]));
+/// assert!(digraph.iter_arcs(0).eq([1, 2]));
+/// assert!(digraph.iter_arcs(1).eq([0, 2, 3]));
+/// assert!(digraph.iter_arcs(2).eq([0, 1, 3]));
+/// assert!(digraph.iter_arcs(3).eq([1, 2]));
 /// ```
 ///
 /// The order of the arcs is not guaranteed for, e.g., `Vec<HashSet<_>>`:
@@ -93,14 +93,14 @@ use {
 ///     std::collections::HashSet,
 /// };
 ///
-/// let graph = vec![
+/// let digraph = vec![
 ///     HashSet::from([1, 2]),
 ///     HashSet::from([0, 2, 3]),
 ///     HashSet::from([0, 1, 3]),
 ///     HashSet::from([1, 2]),
 /// ];
 ///
-/// let mut iter = graph.iter_arcs(0);
+/// let mut iter = digraph.iter_arcs(0);
 ///
 /// assert!(matches!(iter.next(), Some(1 | 2)));
 /// assert!(matches!(iter.next(), Some(1 | 2)));
@@ -118,7 +118,7 @@ pub trait IterArcs {
 impl IterArcs for Vec<Vec<usize>> {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_arcs(&self, s: usize) -> impl Iterator<Item = usize> {
         self[s].iter().copied()
     }
@@ -127,7 +127,7 @@ impl IterArcs for Vec<Vec<usize>> {
 impl IterArcs for Vec<BTreeSet<usize>> {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_arcs(&self, s: usize) -> impl Iterator<Item = usize> {
         self[s].iter().copied()
     }
@@ -139,7 +139,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_arcs(&self, s: usize) -> impl Iterator<Item = usize> {
         self[s].iter().copied()
     }
@@ -148,7 +148,7 @@ where
 impl IterArcs for [Vec<usize>] {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_arcs(&self, s: usize) -> impl Iterator<Item = usize> {
         self[s].iter().copied()
     }
@@ -157,7 +157,7 @@ impl IterArcs for [Vec<usize>] {
 impl IterArcs for [BTreeSet<usize>] {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_arcs(&self, s: usize) -> impl Iterator<Item = usize> {
         self[s].iter().copied()
     }
@@ -169,7 +169,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_arcs(&self, s: usize) -> impl Iterator<Item = usize> {
         self[s].iter().copied()
     }
@@ -178,7 +178,7 @@ where
 impl<const V: usize> IterArcs for [Vec<usize>; V] {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_arcs(&self, s: usize) -> impl Iterator<Item = usize> {
         self[s].iter().copied()
     }
@@ -187,7 +187,7 @@ impl<const V: usize> IterArcs for [Vec<usize>; V] {
 impl<const V: usize> IterArcs for [BTreeSet<usize>; V] {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_arcs(&self, s: usize) -> impl Iterator<Item = usize> {
         self[s].iter().copied()
     }
@@ -199,7 +199,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_arcs(&self, s: usize) -> impl Iterator<Item = usize> {
         self[s].iter().copied()
     }
@@ -208,7 +208,7 @@ where
 impl IterArcs for BTreeMap<usize, Vec<usize>> {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_arcs(&self, s: usize) -> impl Iterator<Item = usize> {
         self[&s].iter().copied()
     }
@@ -220,7 +220,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_arcs(&self, s: usize) -> impl Iterator<Item = usize> {
         self[&s].iter().copied()
     }
@@ -229,7 +229,7 @@ where
 impl IterArcs for BTreeMap<usize, BTreeSet<usize>> {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_arcs(&self, s: usize) -> impl Iterator<Item = usize> {
         self[&s].iter().copied()
     }
@@ -241,7 +241,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_arcs(&self, s: usize) -> impl Iterator<Item = usize> {
         self[&s].iter().copied()
     }
@@ -252,37 +252,37 @@ mod tests {
     use super::*;
 
     macro_rules! test_iter_arcs_stable {
-        ($graph:expr) => {
-            assert!($graph.iter_arcs(0).eq([1, 2]));
-            assert!($graph.iter_arcs(1).eq([0, 2, 3]));
-            assert!($graph.iter_arcs(2).eq([0, 1, 3]));
-            assert!($graph.iter_arcs(3).eq([1, 2]));
+        ($digraph:expr) => {
+            assert!($digraph.iter_arcs(0).eq([1, 2]));
+            assert!($digraph.iter_arcs(1).eq([0, 2, 3]));
+            assert!($digraph.iter_arcs(2).eq([0, 1, 3]));
+            assert!($digraph.iter_arcs(3).eq([1, 2]));
         };
     }
 
     macro_rules! test_iter_arcs_unstable {
-        ($graph:expr) => {
-            let mut iter = $graph.iter_arcs(0);
+        ($digraph:expr) => {
+            let mut iter = $digraph.iter_arcs(0);
 
             assert!(matches!(iter.next(), Some(1 | 2)));
             assert!(matches!(iter.next(), Some(1 | 2)));
             assert_eq!(iter.next(), None);
 
-            let mut iter = $graph.iter_arcs(1);
+            let mut iter = $digraph.iter_arcs(1);
 
             assert!(matches!(iter.next(), Some(0 | 2 | 3)));
             assert!(matches!(iter.next(), Some(0 | 2 | 3)));
             assert!(matches!(iter.next(), Some(0 | 2 | 3)));
             assert_eq!(iter.next(), None);
 
-            let mut iter = $graph.iter_arcs(2);
+            let mut iter = $digraph.iter_arcs(2);
 
             assert!(matches!(iter.next(), Some(0 | 1 | 3)));
             assert!(matches!(iter.next(), Some(0 | 1 | 3)));
             assert!(matches!(iter.next(), Some(0 | 1 | 3)));
             assert_eq!(iter.next(), None);
 
-            let mut iter = $graph.iter_arcs(3);
+            let mut iter = $digraph.iter_arcs(3);
 
             assert!(matches!(iter.next(), Some(1 | 2)));
             assert!(matches!(iter.next(), Some(1 | 2)));
@@ -292,142 +292,142 @@ mod tests {
 
     #[test]
     fn vec_vec() {
-        let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let digraph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        test_iter_arcs_stable!(graph);
+        test_iter_arcs_stable!(digraph);
     }
 
     #[test]
     fn vec_btree_set() {
-        let graph = vec![
+        let digraph = vec![
             BTreeSet::from([1, 2]),
             BTreeSet::from([0, 2, 3]),
             BTreeSet::from([0, 1, 3]),
             BTreeSet::from([1, 2]),
         ];
 
-        test_iter_arcs_stable!(graph);
+        test_iter_arcs_stable!(digraph);
     }
 
     #[test]
     fn vec_hash_set() {
-        let graph = vec![
+        let digraph = vec![
             HashSet::from([1, 2]),
             HashSet::from([0, 2, 3]),
             HashSet::from([0, 1, 3]),
             HashSet::from([1, 2]),
         ];
 
-        test_iter_arcs_unstable!(graph);
+        test_iter_arcs_unstable!(digraph);
     }
 
     #[test]
     fn slice_vec() {
-        let graph: &[Vec<usize>] = &[vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let digraph: &[Vec<usize>] = &[vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        test_iter_arcs_stable!(graph);
+        test_iter_arcs_stable!(digraph);
     }
 
     #[test]
     fn slice_btree_set() {
-        let graph: &[BTreeSet<usize>] = &[
+        let digraph: &[BTreeSet<usize>] = &[
             BTreeSet::from([1, 2]),
             BTreeSet::from([0, 2, 3]),
             BTreeSet::from([0, 1, 3]),
             BTreeSet::from([1, 2]),
         ];
 
-        test_iter_arcs_stable!(graph);
+        test_iter_arcs_stable!(digraph);
     }
 
     #[test]
     fn slice_hash_set() {
-        let graph: &[HashSet<usize>] = &[
+        let digraph: &[HashSet<usize>] = &[
             HashSet::from([1, 2]),
             HashSet::from([0, 2, 3]),
             HashSet::from([0, 1, 3]),
             HashSet::from([1, 2]),
         ];
 
-        test_iter_arcs_unstable!(graph);
+        test_iter_arcs_unstable!(digraph);
     }
 
     #[test]
     fn arr_vec() {
-        let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let digraph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        test_iter_arcs_stable!(graph);
+        test_iter_arcs_stable!(digraph);
     }
 
     #[test]
     fn arr_btree_set() {
-        let graph = [
+        let digraph = [
             BTreeSet::from([1, 2]),
             BTreeSet::from([0, 2, 3]),
             BTreeSet::from([0, 1, 3]),
             BTreeSet::from([1, 2]),
         ];
 
-        test_iter_arcs_stable!(graph);
+        test_iter_arcs_stable!(digraph);
     }
 
     #[test]
     fn arr_hash_set() {
-        let graph = [
+        let digraph = [
             HashSet::from([1, 2]),
             HashSet::from([0, 2, 3]),
             HashSet::from([0, 1, 3]),
             HashSet::from([1, 2]),
         ];
 
-        test_iter_arcs_unstable!(graph);
+        test_iter_arcs_unstable!(digraph);
     }
 
     #[test]
     fn btree_map_vec() {
-        let graph = BTreeMap::from([
+        let digraph = BTreeMap::from([
             (0, vec![1, 2]),
             (1, vec![0, 2, 3]),
             (2, vec![0, 1, 3]),
             (3, vec![1, 2]),
         ]);
 
-        test_iter_arcs_stable!(graph);
+        test_iter_arcs_stable!(digraph);
     }
 
     #[test]
     fn hash_map_vec() {
-        let graph = HashMap::from([
+        let digraph = HashMap::from([
             (0, vec![1, 2]),
             (1, vec![0, 2, 3]),
             (2, vec![0, 1, 3]),
             (3, vec![1, 2]),
         ]);
 
-        test_iter_arcs_stable!(graph);
+        test_iter_arcs_stable!(digraph);
     }
 
     #[test]
     fn btree_map_btree_set() {
-        let graph = BTreeMap::from([
+        let digraph = BTreeMap::from([
             (0, BTreeSet::from([1, 2])),
             (1, BTreeSet::from([0, 2, 3])),
             (2, BTreeSet::from([0, 1, 3])),
             (3, BTreeSet::from([1, 2])),
         ]);
 
-        test_iter_arcs_stable!(graph);
+        test_iter_arcs_stable!(digraph);
     }
 
     #[test]
     fn hash_map_hash_set() {
-        let graph = HashMap::from([
+        let digraph = HashMap::from([
             (0, HashSet::from([1, 2])),
             (1, HashSet::from([0, 2, 3])),
             (2, HashSet::from([0, 1, 3])),
             (3, HashSet::from([1, 2])),
         ]);
 
-        test_iter_arcs_unstable!(graph);
+        test_iter_arcs_unstable!(digraph);
     }
 }

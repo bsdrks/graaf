@@ -1,8 +1,7 @@
 #![doc(alias = "valency")]
 //! A trait to get the degree of a given vertex
 //!
-//! The degree of a vertex is the number of arcs incident on it. For directed
-//! graphs, the degree is the sum of the indegree and outdegree.
+//! For digraphs, the degree is the sum of the indegree and outdegree.
 //!
 //! # Examples
 //!
@@ -12,15 +11,15 @@
 //!     std::collections::HashSet,
 //! };
 //!
-//! let graph = vec![
+//! let digraph = vec![
 //!     HashSet::from([1, 2]),
 //!     HashSet::from([2]),
 //!     HashSet::from([0]),
 //! ];
 //!
-//! assert_eq!(graph.degree(0), 3);
-//! assert_eq!(graph.degree(1), 2);
-//! assert_eq!(graph.degree(2), 3);
+//! assert_eq!(digraph.degree(0), 3);
+//! assert_eq!(digraph.degree(1), 2);
+//! assert_eq!(digraph.degree(2), 3);
 //! ```
 
 extern crate alloc;
@@ -76,15 +75,15 @@ use {
 ///     std::collections::HashSet,
 /// };
 ///
-/// let graph = vec![
+/// let digraph = vec![
 ///     HashSet::from([1, 2]),
 ///     HashSet::from([2]),
 ///     HashSet::from([0]),
 /// ];
 ///
-/// assert_eq!(graph.degree(0), 3);
-/// assert_eq!(graph.degree(1), 2);
-/// assert_eq!(graph.degree(2), 3);
+/// assert_eq!(digraph.degree(0), 3);
+/// assert_eq!(digraph.degree(1), 2);
+/// assert_eq!(digraph.degree(2), 3);
 /// ```
 pub trait Degree {
     /// Returns the degree of a vertex.
@@ -232,144 +231,144 @@ mod tests {
     };
 
     macro_rules! test_degree {
-        ($graph:expr) => {
-            assert_eq!($graph.degree(0), 3);
-            assert_eq!($graph.degree(1), 2);
-            assert_eq!($graph.degree(2), 3);
+        ($digraph:expr) => {
+            assert_eq!($digraph.degree(0), 3);
+            assert_eq!($digraph.degree(1), 2);
+            assert_eq!($digraph.degree(2), 3);
         };
     }
 
     macro_rules! test_degree_unweighted {
-        ($graph:expr) => {
-            $graph.add_arc(0, 1);
-            $graph.add_arc(0, 2);
-            $graph.add_arc(1, 2);
-            $graph.add_arc(2, 0);
+        ($digraph:expr) => {
+            $digraph.add_arc(0, 1);
+            $digraph.add_arc(0, 2);
+            $digraph.add_arc(1, 2);
+            $digraph.add_arc(2, 0);
 
-            test_degree!($graph);
+            test_degree!($digraph);
         };
     }
 
     macro_rules! test_degree_weighted {
-        ($graph:expr) => {
-            $graph.add_weighted_arc(0, 1, 1);
-            $graph.add_weighted_arc(0, 2, 2);
-            $graph.add_weighted_arc(1, 2, 3);
-            $graph.add_weighted_arc(2, 0, 2);
+        ($digraph:expr) => {
+            $digraph.add_weighted_arc(0, 1, 1);
+            $digraph.add_weighted_arc(0, 2, 2);
+            $digraph.add_weighted_arc(1, 2, 3);
+            $digraph.add_weighted_arc(2, 0, 2);
 
-            test_degree!($graph);
+            test_degree!($digraph);
         };
     }
 
     #[test]
     fn vec_btree_set() {
-        let graph = &mut <Vec<BTreeSet<usize>>>::empty(3);
+        let digraph = &mut <Vec<BTreeSet<usize>>>::empty(3);
 
-        test_degree_unweighted!(graph);
+        test_degree_unweighted!(digraph);
     }
 
     #[test]
     fn vec_hash_set() {
-        let graph = &mut <Vec<HashSet<usize>>>::empty(3);
+        let digraph = &mut <Vec<HashSet<usize>>>::empty(3);
 
-        test_degree_unweighted!(graph);
+        test_degree_unweighted!(digraph);
     }
 
     #[test]
     fn slice_btree_set() {
-        let graph: &mut [BTreeSet<usize>] = &mut Vec::<BTreeSet<usize>>::empty(3);
+        let digraph: &mut [BTreeSet<usize>] = &mut Vec::<BTreeSet<usize>>::empty(3);
 
-        test_degree_unweighted!(graph);
+        test_degree_unweighted!(digraph);
     }
 
     #[test]
     fn slice_hash_set() {
-        let graph: &mut [HashSet<usize>] = &mut Vec::<HashSet<usize>>::empty(3);
+        let digraph: &mut [HashSet<usize>] = &mut Vec::<HashSet<usize>>::empty(3);
 
-        test_degree_unweighted!(graph);
+        test_degree_unweighted!(digraph);
     }
 
     #[test]
     fn arr_btree_set() {
-        let graph = &mut <[BTreeSet<usize>; 3]>::empty();
+        let digraph = &mut <[BTreeSet<usize>; 3]>::empty();
 
-        test_degree_unweighted!(graph);
+        test_degree_unweighted!(digraph);
     }
 
     #[test]
     fn arr_hash_set() {
-        let graph = &mut <[HashSet<usize>; 3]>::empty();
+        let digraph = &mut <[HashSet<usize>; 3]>::empty();
 
-        test_degree_unweighted!(graph);
+        test_degree_unweighted!(digraph);
     }
 
     #[test]
     fn btree_map_btree_set() {
-        let graph = &mut BTreeMap::<usize, BTreeSet<usize>>::empty(3);
+        let digraph = &mut BTreeMap::<usize, BTreeSet<usize>>::empty(3);
 
-        test_degree_unweighted!(graph);
+        test_degree_unweighted!(digraph);
     }
 
     #[test]
     fn hash_map_hash_set() {
-        let graph = &mut HashMap::<usize, HashSet<usize>>::empty(3);
+        let digraph = &mut HashMap::<usize, HashSet<usize>>::empty(3);
 
-        test_degree_unweighted!(graph);
+        test_degree_unweighted!(digraph);
     }
 
     #[test]
     fn vec_btree_map() {
-        let graph = &mut <Vec<BTreeMap<usize, usize>>>::empty(3);
+        let digraph = &mut <Vec<BTreeMap<usize, usize>>>::empty(3);
 
-        test_degree_weighted!(graph);
+        test_degree_weighted!(digraph);
     }
 
     #[test]
     fn vec_hash_map() {
-        let graph = &mut <Vec<HashMap<usize, usize>>>::empty(3);
+        let digraph = &mut <Vec<HashMap<usize, usize>>>::empty(3);
 
-        test_degree_weighted!(graph);
+        test_degree_weighted!(digraph);
     }
 
     #[test]
     fn slice_btree_map() {
-        let graph: &mut [BTreeMap<usize, usize>] = &mut Vec::<BTreeMap<usize, usize>>::empty(3);
+        let digraph: &mut [BTreeMap<usize, usize>] = &mut Vec::<BTreeMap<usize, usize>>::empty(3);
 
-        test_degree_weighted!(graph);
+        test_degree_weighted!(digraph);
     }
 
     #[test]
     fn slice_hash_map() {
-        let graph: &mut [HashMap<usize, usize>] = &mut Vec::<HashMap<usize, usize>>::empty(3);
+        let digraph: &mut [HashMap<usize, usize>] = &mut Vec::<HashMap<usize, usize>>::empty(3);
 
-        test_degree_weighted!(graph);
+        test_degree_weighted!(digraph);
     }
 
     #[test]
     fn arr_btree_map() {
-        let graph = &mut <[BTreeMap<usize, usize>; 3]>::empty();
+        let digraph = &mut <[BTreeMap<usize, usize>; 3]>::empty();
 
-        test_degree_weighted!(graph);
+        test_degree_weighted!(digraph);
     }
 
     #[test]
     fn arr_hash_map() {
-        let graph = &mut <[HashMap<usize, usize>; 3]>::empty();
+        let digraph = &mut <[HashMap<usize, usize>; 3]>::empty();
 
-        test_degree_weighted!(graph);
+        test_degree_weighted!(digraph);
     }
 
     #[test]
     fn btree_map_btree_map() {
-        let graph = &mut BTreeMap::<usize, BTreeMap<usize, usize>>::empty(3);
+        let digraph = &mut BTreeMap::<usize, BTreeMap<usize, usize>>::empty(3);
 
-        test_degree_weighted!(graph);
+        test_degree_weighted!(digraph);
     }
 
     #[test]
     fn hash_map_hash_map() {
-        let graph = &mut HashMap::<usize, HashMap<usize, usize>>::empty(3);
+        let digraph = &mut HashMap::<usize, HashMap<usize, usize>>::empty(3);
 
-        test_degree_weighted!(graph);
+        test_degree_weighted!(digraph);
     }
 }

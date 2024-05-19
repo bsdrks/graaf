@@ -1,4 +1,4 @@
-//! Benchmark [`graaf::algo::dijkstra::distances`] for different graph
+//! Benchmark [`graaf::algo::dijkstra::distances`] for different digraph
 //! representations.
 
 extern crate alloc;
@@ -20,12 +20,12 @@ const HEAP: [(Reverse<usize>, usize); 1] = [(Reverse(0), 0)];
 
 #[divan::bench]
 fn vec_vec(bencher: Bencher<'_, '_>) {
-    let graph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
+    let digraph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
     let mut dist = DIST;
     let mut heap = BinaryHeap::from(HEAP);
 
     bencher.bench_local(|| {
-        distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
+        distances(&digraph, |acc, w| acc + w, &mut dist, &mut heap);
 
         dist
     });
@@ -33,7 +33,7 @@ fn vec_vec(bencher: Bencher<'_, '_>) {
 
 #[divan::bench]
 fn vec_hash_set(bencher: Bencher<'_, '_>) {
-    let graph = vec![
+    let digraph = vec![
         HashSet::from([(1, 2)]),
         HashSet::from([(2, 2)]),
         HashSet::new(),
@@ -44,7 +44,7 @@ fn vec_hash_set(bencher: Bencher<'_, '_>) {
     let mut heap = BinaryHeap::from(HEAP);
 
     bencher.bench_local(|| {
-        distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
+        distances(&digraph, |acc, w| acc + w, &mut dist, &mut heap);
 
         dist
     });
@@ -52,12 +52,12 @@ fn vec_hash_set(bencher: Bencher<'_, '_>) {
 
 #[divan::bench]
 fn arr_vec(bencher: Bencher<'_, '_>) {
-    let graph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
+    let digraph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
     let mut dist = DIST;
     let mut heap = BinaryHeap::from(HEAP);
 
     bencher.bench_local(|| {
-        distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
+        distances(&digraph, |acc, w| acc + w, &mut dist, &mut heap);
 
         dist
     });
@@ -65,7 +65,7 @@ fn arr_vec(bencher: Bencher<'_, '_>) {
 
 #[divan::bench]
 fn arr_hash_set(bencher: Bencher<'_, '_>) {
-    let graph = [
+    let digraph = [
         HashSet::from([(1, 2)]),
         HashSet::from([(2, 2)]),
         HashSet::new(),
@@ -76,7 +76,7 @@ fn arr_hash_set(bencher: Bencher<'_, '_>) {
     let mut heap = BinaryHeap::from(HEAP);
 
     bencher.bench_local(|| {
-        distances(&graph, |acc, w| acc + w, &mut dist, &mut heap);
+        distances(&digraph, |acc, w| acc + w, &mut dist, &mut heap);
 
         dist
     });

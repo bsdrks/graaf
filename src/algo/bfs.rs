@@ -1,8 +1,8 @@
 //! Breadth-first search
 //!
 //! Breadth-first search is a graph traversal algorithm that visits
-//! vertices of an unweighted graph in order of their distance from the source
-//! vertex. Use [`dijkstra`] for weighted graphs.
+//! vertices of an unweighted digraph in order of their distance from the source
+//! vertex. Use [`dijkstra`] for weighted digraphs.
 //!
 //! The implementations use distances instead of a set or boolean array to check
 //! if a vertex has been visited because we already calculate these distances
@@ -27,27 +27,27 @@
 //! // │ 3 │     │ 2 │
 //! // ╰───╯     ╰───╯
 //!
-//! let graph = [vec![1], vec![2], Vec::new(), vec![0]];
-//! let dist = single_source_distances(&graph, 0);
-//! let pred = single_source_predecessors(&graph, 0);
+//! let digraph = [vec![1], vec![2], Vec::new(), vec![0]];
+//! let dist = single_source_distances(&digraph, 0);
+//! let pred = single_source_predecessors(&digraph, 0);
 //!
 //! assert_eq!(pred, [None, Some(0), Some(1), None]);
 //! assert_eq!(dist, [0, 1, 2, usize::MAX]);
 //!
-//! let dist = single_source_distances(&graph, 1);
-//! let pred = single_source_predecessors(&graph, 1);
+//! let dist = single_source_distances(&digraph, 1);
+//! let pred = single_source_predecessors(&digraph, 1);
 //!
 //! assert_eq!(pred, [None, None, Some(1), None]);
 //! assert_eq!(dist, [usize::MAX, 0, 1, usize::MAX]);
 //!
-//! let dist = single_source_distances(&graph, 2);
-//! let pred = single_source_predecessors(&graph, 2);
+//! let dist = single_source_distances(&digraph, 2);
+//! let pred = single_source_predecessors(&digraph, 2);
 //!
 //! assert_eq!(pred, [None, None, None, None]);
 //! assert_eq!(dist, [usize::MAX, usize::MAX, 0, usize::MAX]);
 //!
-//! let dist = single_source_distances(&graph, 3);
-//! let pred = single_source_predecessors(&graph, 3);
+//! let dist = single_source_distances(&digraph, 3);
+//! let pred = single_source_predecessors(&digraph, 3);
 //!
 //! assert_eq!(pred, [Some(3), Some(0), Some(1), None]);
 //! assert_eq!(dist, [1, 2, 3, 0]);
@@ -72,7 +72,7 @@ use {
 ///
 /// # Arguments
 ///
-/// * `graph`: The graph.
+/// * `graph`: The digraph.
 /// * `step`: The function to calculate the new weight.
 /// * `dist`: The distances from the source vertices.
 /// * `queue`: The source vertices.
@@ -99,24 +99,24 @@ use {
 /// // │ 3 │     │ 2 │
 /// // ╰───╯     ╰───╯
 ///
-/// let graph = [vec![1], vec![2], Vec::new(), vec![0]];
+/// let digraph = [vec![1], vec![2], Vec::new(), vec![0]];
 /// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
 /// let mut queue = VecDeque::from(vec![(0, 0)]);
 ///
-/// distances(&graph, |w| w + 1, &mut dist, &mut queue);
+/// distances(&digraph, |w| w + 1, &mut dist, &mut queue);
 ///
 /// assert_eq!(dist, [0, 1, 2, usize::MAX]);
 /// ```
-pub fn distances<G, S, W>(graph: &G, step: S, dist: &mut [W], queue: &mut VecDeque<(usize, W)>)
+pub fn distances<D, S, W>(digraph: &D, step: S, dist: &mut [W], queue: &mut VecDeque<(usize, W)>)
 where
-    G: IterArcs,
+    D: IterArcs,
     S: Fn(W) -> W,
     W: Copy + Ord,
 {
     while let Some((s, w)) = queue.pop_front() {
         let w = step(w);
 
-        for t in graph.iter_arcs(s) {
+        for t in digraph.iter_arcs(s) {
             if w >= dist[t] {
                 continue;
             }
@@ -131,7 +131,7 @@ where
 ///
 /// # Arguments
 ///
-/// * `graph`: The graph.
+/// * `graph`: The digraph.
 /// * `s`: The source vertex.
 ///
 /// # Panics
@@ -151,20 +151,20 @@ where
 /// // │ 3 │     │ 2 │
 /// // ╰───╯     ╰───╯
 ///
-/// let graph = [vec![1], vec![2], Vec::new(), vec![0]];
+/// let digraph = [vec![1], vec![2], Vec::new(), vec![0]];
 ///
-/// assert_eq!(single_source_distances(&graph, 0), [0, 1, 2, usize::MAX]);
+/// assert_eq!(single_source_distances(&digraph, 0), [0, 1, 2, usize::MAX]);
 /// ```
-pub fn single_source_distances<G>(graph: &G, s: usize) -> Vec<usize>
+pub fn single_source_distances<D>(digraph: &D, s: usize) -> Vec<usize>
 where
-    G: Order + IterArcs,
+    D: Order + IterArcs,
 {
-    let mut dist = vec![usize::MAX; graph.order()];
+    let mut dist = vec![usize::MAX; digraph.order()];
     let mut queue = VecDeque::from(vec![(s, 0)]);
 
     dist[s] = 0;
 
-    distances(graph, |w| w + 1, &mut dist, &mut queue);
+    distances(digraph, |w| w + 1, &mut dist, &mut queue);
 
     dist
 }
@@ -173,7 +173,7 @@ where
 ///
 /// # Arguments
 ///
-/// * `graph`: The graph.
+/// * `graph`: The digraph.
 /// * `step`: The function that calculates the accumulated weight.
 /// * `pred`: The predecessors on the shortest paths from the source vertices.
 /// * `dist`: The distances from the source vertices.
@@ -205,31 +205,31 @@ where
 /// // │ 3 │     │ 2 │
 /// // ╰───╯     ╰───╯
 ///
-/// let graph = [vec![1], vec![2], Vec::new(), vec![0]];
+/// let digraph = [vec![1], vec![2], Vec::new(), vec![0]];
 /// let mut pred = [None, None, None, None];
 /// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
 /// let mut queue = VecDeque::from([(0, 0)]);
 ///
-/// predecessors(&graph, |w| w + 1, &mut pred, &mut dist, &mut queue);
+/// predecessors(&digraph, |w| w + 1, &mut pred, &mut dist, &mut queue);
 ///
 /// assert_eq!(pred, [None, Some(0), Some(1), None]);
 /// assert_eq!(dist, [0, 1, 2, usize::MAX]);
 /// ```
-pub fn predecessors<G, S, W>(
-    graph: &G,
+pub fn predecessors<D, S, W>(
+    digraph: &D,
     step: S,
     pred: &mut [Option<usize>],
     dist: &mut [W],
     queue: &mut VecDeque<(usize, W)>,
 ) where
-    G: IterArcs,
+    D: IterArcs,
     S: Fn(W) -> W,
     W: Copy + Ord,
 {
     while let Some((s, w)) = queue.pop_front() {
         let w = step(w);
 
-        for t in graph.iter_arcs(s) {
+        for t in digraph.iter_arcs(s) {
             if w >= dist[t] {
                 continue;
             }
@@ -246,7 +246,7 @@ pub fn predecessors<G, S, W>(
 ///
 /// # Arguments
 ///
-/// * `graph`: The graph.
+/// * `graph`: The digraph.
 /// * `s`: The source vertex.
 ///
 /// # Panics
@@ -266,22 +266,22 @@ pub fn predecessors<G, S, W>(
 /// // │ 3 │     │ 2 │
 /// // ╰───╯     ╰───╯
 ///
-/// let graph = [vec![1], vec![2], Vec::new(), vec![0]];
-/// let pred = single_source_predecessors(&graph, 0);
+/// let digraph = [vec![1], vec![2], Vec::new(), vec![0]];
+/// let pred = single_source_predecessors(&digraph, 0);
 ///
 /// assert_eq!(pred, [None, Some(0), Some(1), None]);
 /// ```
-pub fn single_source_predecessors<G>(graph: &G, s: usize) -> Vec<Option<usize>>
+pub fn single_source_predecessors<D>(digraph: &D, s: usize) -> Vec<Option<usize>>
 where
-    G: Order + IterArcs,
+    D: Order + IterArcs,
 {
-    let mut pred = vec![None; graph.order()];
-    let mut dist = vec![usize::MAX; graph.order()];
+    let mut pred = vec![None; digraph.order()];
+    let mut dist = vec![usize::MAX; digraph.order()];
     let mut queue = VecDeque::from(vec![(s, 0)]);
 
     dist[s] = 0;
 
-    predecessors(graph, |w| w + 1, &mut pred, &mut dist, &mut queue);
+    predecessors(digraph, |w| w + 1, &mut pred, &mut dist, &mut queue);
 
     pred
 }
@@ -290,7 +290,7 @@ where
 ///
 /// # Arguments
 ///
-/// * `graph`: The graph.
+/// * `graph`: The digraph.
 /// * `step`: The function that calculates the accumulated distance.
 /// * `is_target`: The function that determines if the vertex is a target.
 /// * `pred`: The predecessors on the shortest paths from the source vertices.
@@ -321,13 +321,13 @@ where
 /// // │ 3 │     │ 2 │
 /// // ╰───╯     ╰───╯
 ///
-/// let graph = [vec![1], vec![2], Vec::new(), vec![0]];
+/// let digraph = [vec![1], vec![2], Vec::new(), vec![0]];
 /// let mut pred = [None, None, None, None];
 /// let mut dist = [usize::MAX, usize::MAX, usize::MAX, 0];
 /// let mut queue = VecDeque::from([(3, 0)]);
 ///
 /// let path = shortest_path(
-///     &graph,
+///     &digraph,
 ///     |w| w + 1,
 ///     |t| t == 2,
 ///     &mut pred,
@@ -337,8 +337,8 @@ where
 ///
 /// assert_eq!(path, Some(vec![3, 0, 1, 2]));
 /// ```
-pub fn shortest_path<G, S, T>(
-    graph: &G,
+pub fn shortest_path<D, S, T>(
+    digraph: &D,
     step: S,
     is_target: T,
     pred: &mut [Option<usize>],
@@ -346,14 +346,14 @@ pub fn shortest_path<G, S, T>(
     queue: &mut VecDeque<(usize, usize)>,
 ) -> Option<Vec<usize>>
 where
-    G: IterArcs,
+    D: IterArcs,
     S: Fn(usize) -> usize,
     T: Fn(usize) -> bool,
 {
     while let Some((s, w)) = queue.pop_front() {
         let w = step(w);
 
-        for t in graph.iter_arcs(s) {
+        for t in digraph.iter_arcs(s) {
             if w >= dist[t] {
                 continue;
             }
@@ -379,13 +379,13 @@ where
 /// Calculates the shortest path from a single source vertex to a single target
 /// vertex.
 ///
-/// In an unweighted graph, the shortest path is the path with the fewest arcs.
-/// There can be multiple shortest paths in a graph, but this function only
-/// returns one.
+/// In an unweighted digraph, the shortest path is the path with the fewest
+/// arcs. There can be multiple shortest paths in a digraph, but this function
+/// only returns one.
 ///
 /// # Arguments
 ///
-/// * `graph`: The graph.
+/// * `graph`: The digraph.
 /// * `s`: The source vertex.
 /// * `t`: The target vertex.
 ///
@@ -406,8 +406,8 @@ where
 /// // │ 3 │     │ 2 │
 /// // ╰───╯     ╰───╯
 ///
-/// let graph = [vec![1], vec![2], Vec::new(), vec![0]];
-/// let path = spsp(&graph, 3, 2);
+/// let digraph = [vec![1], vec![2], Vec::new(), vec![0]];
+/// let path = spsp(&digraph, 3, 2);
 ///
 /// assert_eq!(path, Some(vec![3, 0, 1, 2]));
 ///
@@ -419,26 +419,26 @@ where
 /// // │ 3 │  →  │ 2 │
 /// // ╰───╯     ╰───╯
 ///
-/// let graph = [Vec::new(), vec![0], vec![1], vec![0, 2]];
+/// let digraph = [Vec::new(), vec![0], vec![1], vec![0, 2]];
 ///
-/// assert_eq!(spsp(&graph, 3, 0), Some(vec![3, 0]));
-/// assert_eq!(spsp(&graph, 3, 1), Some(vec![3, 2, 1]));
-/// assert_eq!(spsp(&graph, 3, 2), Some(vec![3, 2]));
-/// assert_eq!(spsp(&graph, 0, 3), None);
+/// assert_eq!(spsp(&digraph, 3, 0), Some(vec![3, 0]));
+/// assert_eq!(spsp(&digraph, 3, 1), Some(vec![3, 2, 1]));
+/// assert_eq!(spsp(&digraph, 3, 2), Some(vec![3, 2]));
+/// assert_eq!(spsp(&digraph, 0, 3), None);
 /// ```
 #[doc(alias = "spsp")]
-pub fn single_pair_shortest_path<G>(graph: &G, s: usize, t: usize) -> Option<Vec<usize>>
+pub fn single_pair_shortest_path<D>(digraph: &D, s: usize, t: usize) -> Option<Vec<usize>>
 where
-    G: Order + IterArcs,
+    D: Order + IterArcs,
 {
-    let mut pred = vec![None; graph.order()];
-    let mut dist = vec![usize::MAX; graph.order()];
+    let mut pred = vec![None; digraph.order()];
+    let mut dist = vec![usize::MAX; digraph.order()];
     let mut queue = VecDeque::from(vec![(s, 0)]);
 
     dist[s] = 0;
 
     shortest_path(
-        graph,
+        digraph,
         |w| w + 1,
         |v| v == t,
         &mut pred,
@@ -468,49 +468,49 @@ mod tests {
         &[3, 4, 6],
     ];
 
-    fn to_vec<T>(graph: &[&[T]]) -> Vec<Vec<T>>
+    fn to_vec<T>(digraph: &[&[T]]) -> Vec<Vec<T>>
     where
         T: Clone,
     {
-        graph.iter().map(|v| v.to_vec()).collect()
+        digraph.iter().map(|v| v.to_vec()).collect()
     }
 
     #[test]
-    fn distances_graph_0() {
-        let graph = to_vec(&GRAPH_0);
+    fn distances_digraph_0() {
+        let digraph = to_vec(&GRAPH_0);
         let mut dist = Vec::new();
         let mut queue = VecDeque::new();
 
-        distances(&graph, |w: usize| w + 1, &mut dist, &mut queue);
+        distances(&digraph, |w: usize| w + 1, &mut dist, &mut queue);
 
         assert!(dist.is_empty());
     }
 
     #[test]
-    fn distances_graph_1() {
-        let graph = to_vec(&GRAPH_1);
+    fn distances_digraph_1() {
+        let digraph = to_vec(&GRAPH_1);
         let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
         let mut queue = VecDeque::from([(0, 0)]);
 
-        distances(&graph, |w| w + 1, &mut dist, &mut queue);
+        distances(&digraph, |w| w + 1, &mut dist, &mut queue);
 
         assert_eq!(dist, [0, 1, 2, usize::MAX]);
     }
 
     #[test]
-    fn distances_graph_2() {
-        let graph = to_vec(&GRAPH_2);
+    fn distances_digraph_2() {
+        let digraph = to_vec(&GRAPH_2);
         let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
         let mut queue = VecDeque::from([(0, 0)]);
 
-        distances(&graph, |w| w + 1, &mut dist, &mut queue);
+        distances(&digraph, |w| w + 1, &mut dist, &mut queue);
 
         assert_eq!(dist, [0, 1, 1, 2]);
     }
 
     #[test]
-    fn distances_graph_3() {
-        let graph = to_vec(&GRAPH_3);
+    fn distances_digraph_3() {
+        let digraph = to_vec(&GRAPH_3);
 
         let mut dist = [
             0,
@@ -525,20 +525,20 @@ mod tests {
 
         let mut queue = VecDeque::from([(0, 0)]);
 
-        distances(&graph, |w| w + 1, &mut dist, &mut queue);
+        distances(&digraph, |w| w + 1, &mut dist, &mut queue);
 
         assert_eq!(dist, [0, 1, 2, 1, 2, 3, 3, 2]);
     }
 
     #[test]
     #[should_panic(expected = "index out of bounds: the len is 0 but the index is 0")]
-    fn graph_0() {
-        let graph = to_vec(&GRAPH_0);
-        let _ = single_source_distances(&graph, 0);
+    fn digraph_0() {
+        let digraph = to_vec(&GRAPH_0);
+        let _ = single_source_distances(&digraph, 0);
     }
 
     #[test]
-    fn single_source_distances_graph_1() {
+    fn single_source_distances_digraph_1() {
         const M: usize = usize::MAX;
 
         #[rustfmt::skip]
@@ -549,15 +549,15 @@ mod tests {
             [1, 2, 3, 0],
         ];
 
-        let graph = to_vec(&GRAPH_1);
+        let digraph = to_vec(&GRAPH_1);
 
         for (i, &d) in EXPECTED.iter().enumerate() {
-            assert_eq!(single_source_distances(&graph, i), d);
+            assert_eq!(single_source_distances(&digraph, i), d);
         }
     }
 
     #[test]
-    fn single_source_distances_graph_2() {
+    fn single_source_distances_digraph_2() {
         #[rustfmt::skip]
         const EXPECTED: [[usize; 4]; 4] = [
             [0, 1, 1, 2],
@@ -566,15 +566,15 @@ mod tests {
             [2, 1, 1, 0],
         ];
 
-        let graph = to_vec(&GRAPH_2);
+        let digraph = to_vec(&GRAPH_2);
 
         for (i, &d) in EXPECTED.iter().enumerate() {
-            assert_eq!(single_source_distances(&graph, i), d);
+            assert_eq!(single_source_distances(&digraph, i), d);
         }
     }
 
     #[test]
-    fn single_source_distances_graph_3() {
+    fn single_source_distances_digraph_3() {
         #[rustfmt::skip]
         const EXPECTED: [[usize; 8]; 8] = [
             [0, 1, 2, 1, 2, 3, 3, 2],
@@ -587,55 +587,55 @@ mod tests {
             [2, 3, 4, 1, 1, 2, 1, 0],
         ];
 
-        let graph = to_vec(&GRAPH_3);
+        let digraph = to_vec(&GRAPH_3);
 
         for (i, &d) in EXPECTED.iter().enumerate() {
-            assert_eq!(single_source_distances(&graph, i), d);
+            assert_eq!(single_source_distances(&digraph, i), d);
         }
     }
 
     #[test]
-    fn predecessors_graph_0() {
-        let graph = to_vec(&GRAPH_0);
+    fn predecessors_digraph_0() {
+        let digraph = to_vec(&GRAPH_0);
         let mut pred = Vec::new();
         let mut dist = Vec::new();
         let mut queue = VecDeque::new();
 
-        predecessors(&graph, |w: usize| w + 1, &mut pred, &mut dist, &mut queue);
+        predecessors(&digraph, |w: usize| w + 1, &mut pred, &mut dist, &mut queue);
 
         assert!(pred.is_empty());
         assert!(dist.is_empty());
     }
 
     #[test]
-    fn predecessors_graph_1() {
-        let graph = to_vec(&GRAPH_1);
+    fn predecessors_digraph_1() {
+        let digraph = to_vec(&GRAPH_1);
         let mut pred = [None, None, None, None];
         let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
         let mut queue = VecDeque::from([(0, 0)]);
 
-        predecessors(&graph, |w| w + 1, &mut pred, &mut dist, &mut queue);
+        predecessors(&digraph, |w| w + 1, &mut pred, &mut dist, &mut queue);
 
         assert_eq!(pred, [None, Some(0), Some(1), None]);
         assert_eq!(dist, [0, 1, 2, usize::MAX]);
     }
 
     #[test]
-    fn predecessors_graph_2() {
-        let graph = to_vec(&GRAPH_2);
+    fn predecessors_digraph_2() {
+        let digraph = to_vec(&GRAPH_2);
         let mut pred = [None, None, None, None];
         let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
         let mut queue = VecDeque::from([(0, 0)]);
 
-        predecessors(&graph, |w| w + 1, &mut pred, &mut dist, &mut queue);
+        predecessors(&digraph, |w| w + 1, &mut pred, &mut dist, &mut queue);
 
         assert_eq!(pred, [None, Some(0), Some(0), Some(1)]);
         assert_eq!(dist, [0, 1, 1, 2]);
     }
 
     #[test]
-    fn predecessors_graph_3() {
-        let graph = to_vec(&GRAPH_3);
+    fn predecessors_digraph_3() {
+        let digraph = to_vec(&GRAPH_3);
         let mut pred = [None, None, None, None, None, None, None, None];
 
         let mut dist = [
@@ -651,7 +651,7 @@ mod tests {
 
         let mut queue = VecDeque::from([(0, 0)]);
 
-        predecessors(&graph, |w| w + 1, &mut pred, &mut dist, &mut queue);
+        predecessors(&digraph, |w| w + 1, &mut pred, &mut dist, &mut queue);
 
         assert_eq!(
             pred,
@@ -672,31 +672,31 @@ mod tests {
 
     #[test]
     #[should_panic(expected = "index out of bounds: the len is 0 but the index is 0")]
-    fn single_source_predecessors_graph_0() {
-        let graph = to_vec(&GRAPH_0);
-        let _ = single_source_predecessors(&graph, 0);
+    fn single_source_predecessors_digraph_0() {
+        let digraph = to_vec(&GRAPH_0);
+        let _ = single_source_predecessors(&digraph, 0);
     }
 
     #[test]
-    fn single_source_predecessors_graph_1() {
-        let graph = to_vec(&GRAPH_1);
-        let pred = single_source_predecessors(&graph, 0);
+    fn single_source_predecessors_digraph_1() {
+        let digraph = to_vec(&GRAPH_1);
+        let pred = single_source_predecessors(&digraph, 0);
 
         assert_eq!(pred, [None, Some(0), Some(1), None]);
     }
 
     #[test]
-    fn single_source_predecessors_graph_2() {
-        let graph = to_vec(&GRAPH_2);
-        let pred = single_source_predecessors(&graph, 0);
+    fn single_source_predecessors_digraph_2() {
+        let digraph = to_vec(&GRAPH_2);
+        let pred = single_source_predecessors(&digraph, 0);
 
         assert_eq!(pred, [None, Some(0), Some(0), Some(1)]);
     }
 
     #[test]
-    fn single_source_predecessors_graph_3() {
-        let graph = to_vec(&GRAPH_3);
-        let pred = single_source_predecessors(&graph, 0);
+    fn single_source_predecessors_digraph_3() {
+        let digraph = to_vec(&GRAPH_3);
+        let pred = single_source_predecessors(&digraph, 0);
 
         assert_eq!(
             pred,
@@ -714,14 +714,14 @@ mod tests {
     }
 
     #[test]
-    fn shortest_path_graph_0() {
-        let graph = to_vec(&GRAPH_0);
+    fn shortest_path_digraph_0() {
+        let digraph = to_vec(&GRAPH_0);
         let mut pred = Vec::new();
         let mut dist = Vec::new();
         let mut queue = VecDeque::new();
 
         let path = shortest_path(
-            &graph,
+            &digraph,
             |w: usize| w + 1,
             |t| t == 0,
             &mut pred,
@@ -735,14 +735,14 @@ mod tests {
     }
 
     #[test]
-    fn shortest_path_graph_1() {
-        let graph = to_vec(&GRAPH_1);
+    fn shortest_path_digraph_1() {
+        let digraph = to_vec(&GRAPH_1);
         let mut pred = [None, None, None, None];
         let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
         let mut queue = VecDeque::from([(0, 0)]);
 
         let path = shortest_path(
-            &graph,
+            &digraph,
             |w| w + 1,
             |t| t == 1,
             &mut pred,
@@ -756,14 +756,14 @@ mod tests {
     }
 
     #[test]
-    fn shortest_path_graph_2() {
-        let graph = to_vec(&GRAPH_2);
+    fn shortest_path_digraph_2() {
+        let digraph = to_vec(&GRAPH_2);
         let mut pred = [None, None, None, None];
         let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
         let mut queue = VecDeque::from([(0, 0)]);
 
         let path = shortest_path(
-            &graph,
+            &digraph,
             |w| w + 1,
             |t| t == 2,
             &mut pred,
@@ -777,8 +777,8 @@ mod tests {
     }
 
     #[test]
-    fn shortest_path_graph_3() {
-        let graph = to_vec(&GRAPH_3);
+    fn shortest_path_digraph_3() {
+        let digraph = to_vec(&GRAPH_3);
         let mut pred = [None, None, None, None, None, None, None, None];
 
         let mut dist = [
@@ -795,7 +795,7 @@ mod tests {
         let mut queue = VecDeque::from([(0, 0)]);
 
         let path = shortest_path(
-            &graph,
+            &digraph,
             |w| w + 1,
             |t| t == 2,
             &mut pred,
@@ -818,14 +818,14 @@ mod tests {
 
     #[should_panic(expected = "index out of bounds: the len is 0 but the index is 0")]
     #[test]
-    fn single_pair_shortest_path_graph_0() {
-        let graph = to_vec(&GRAPH_0);
-        let _ = single_pair_shortest_path(&graph, 0, 0);
+    fn single_pair_shortest_path_digraph_0() {
+        let digraph = to_vec(&GRAPH_0);
+        let _ = single_pair_shortest_path(&digraph, 0, 0);
     }
 
     #[test]
-    fn single_pair_shortest_path_graph_1() {
-        let graph = to_vec(&GRAPH_1);
+    fn single_pair_shortest_path_digraph_1() {
+        let digraph = to_vec(&GRAPH_1);
 
         for (s, t, p) in &[
             (0, 0, None),
@@ -845,13 +845,13 @@ mod tests {
             (3, 2, Some(vec![3, 0, 1, 2])),
             (3, 3, None),
         ] {
-            assert_eq!(single_pair_shortest_path(&graph, *s, *t), *p);
+            assert_eq!(single_pair_shortest_path(&digraph, *s, *t), *p);
         }
     }
 
     #[test]
-    fn single_pair_shortest_path_graph_2() {
-        let graph = to_vec(&GRAPH_2);
+    fn single_pair_shortest_path_digraph_2() {
+        let digraph = to_vec(&GRAPH_2);
 
         for (s, t, p) in &[
             (0, 0, None),
@@ -871,13 +871,13 @@ mod tests {
             (3, 2, Some(vec![3, 2])),
             (3, 3, None),
         ] {
-            assert_eq!(single_pair_shortest_path(&graph, *s, *t), *p);
+            assert_eq!(single_pair_shortest_path(&digraph, *s, *t), *p);
         }
     }
 
     #[test]
-    fn single_pair_shortest_path_graph_3() {
-        let graph = to_vec(&GRAPH_3);
+    fn single_pair_shortest_path_digraph_3() {
+        let digraph = to_vec(&GRAPH_3);
 
         for (s, t, p) in &[
             (0, 0, None),
@@ -945,7 +945,7 @@ mod tests {
             (7, 6, Some(vec![7, 6])),
             (7, 7, None),
         ] {
-            assert_eq!(single_pair_shortest_path(&graph, *s, *t), *p);
+            assert_eq!(single_pair_shortest_path(&digraph, *s, *t), *p);
         }
     }
 }

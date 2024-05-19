@@ -1,13 +1,13 @@
-//! A trait to iterate over all vertices in a graph
+//! A trait to iterate over all vertices in a digraph
 //!
 //! # Example
 //!
 //! ```
 //! use graaf::op::IterVertices;
 //!
-//! let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+//! let digraph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 //!
-//! assert!(graph.iter_vertices().eq(0..4));
+//! assert!(digraph.iter_vertices().eq(0..4));
 //! ```
 
 extern crate alloc;
@@ -24,12 +24,12 @@ use {
     },
 };
 
-/// A trait to iterate over all vertices in a graph
+/// A trait to iterate over all vertices in a digraph
 ///
 /// # How can I implement `IterVertices`?
 ///
 /// Provide an implementation of `iter_vertices` that returns an iterator over
-/// all vertices in the graph.
+/// all vertices in the digraph.
 ///
 /// ```
 /// use graaf::op::IterVertices;
@@ -50,9 +50,9 @@ use {
 /// ```
 /// use graaf::op::IterVertices;
 ///
-/// let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+/// let digraph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 ///
-/// assert!(graph.iter_vertices().eq(0..4));
+/// assert!(digraph.iter_vertices().eq(0..4));
 /// ```
 pub trait IterVertices {
     /// Returns an iterator over the vertices.
@@ -351,119 +351,119 @@ mod tests {
 
     #[test]
     fn vec_vec_unweighted() {
-        let graph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let digraph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        assert!(graph.iter_vertices().eq(0..4));
+        assert!(digraph.iter_vertices().eq(0..4));
     }
 
     #[test]
     fn vec_btree_set_unweighted() {
-        let graph = vec![
+        let digraph = vec![
             BTreeSet::from([1, 2]),
             BTreeSet::from([0, 2, 3]),
             BTreeSet::from([0, 1, 3]),
             BTreeSet::from([1, 2]),
         ];
 
-        assert!(graph.iter_vertices().eq(0..4));
+        assert!(digraph.iter_vertices().eq(0..4));
     }
 
     #[test]
     fn vec_hash_set_unweighted() {
-        let graph = vec![
+        let digraph = vec![
             HashSet::from([1, 2]),
             HashSet::from([0, 2, 3]),
             HashSet::from([0, 1, 3]),
             HashSet::from([1, 2]),
         ];
 
-        assert!(graph.iter_vertices().eq(0..4));
+        assert!(digraph.iter_vertices().eq(0..4));
     }
 
     #[test]
     fn slice_vec_unweighted() {
-        let graph: &[Vec<usize>] = &[vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let digraph: &[Vec<usize>] = &[vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        assert!(graph.iter_vertices().eq(0..4));
+        assert!(digraph.iter_vertices().eq(0..4));
     }
 
     #[test]
     fn slice_btree_set_unweighted() {
-        let graph: &[BTreeSet<usize>] = &[
+        let digraph: &[BTreeSet<usize>] = &[
             BTreeSet::from([1, 2]),
             BTreeSet::from([0, 2, 3]),
             BTreeSet::from([0, 1, 3]),
             BTreeSet::from([1, 2]),
         ];
 
-        assert!(graph.iter_vertices().eq(0..4));
+        assert!(digraph.iter_vertices().eq(0..4));
     }
 
     #[test]
     fn slice_hash_set_unweighted() {
-        let graph: &[HashSet<usize>] = &[
+        let digraph: &[HashSet<usize>] = &[
             HashSet::from([1, 2]),
             HashSet::from([0, 2, 3]),
             HashSet::from([0, 1, 3]),
             HashSet::from([1, 2]),
         ];
 
-        assert!(graph.iter_vertices().eq(0..4));
+        assert!(digraph.iter_vertices().eq(0..4));
     }
 
     #[test]
     fn arr_vec_unweighted() {
-        let graph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let digraph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
 
-        assert!(graph.iter_vertices().eq(0..4));
+        assert!(digraph.iter_vertices().eq(0..4));
     }
 
     #[test]
     fn arr_btree_set_unweighted() {
-        let graph = [
+        let digraph = [
             BTreeSet::from([1, 2]),
             BTreeSet::from([0, 2, 3]),
             BTreeSet::from([0, 1, 3]),
             BTreeSet::from([1, 2]),
         ];
 
-        assert!(graph.iter_vertices().eq(0..4));
+        assert!(digraph.iter_vertices().eq(0..4));
     }
 
     #[test]
     fn arr_hash_set_unweighted() {
-        let graph = [
+        let digraph = [
             HashSet::from([1, 2]),
             HashSet::from([0, 2, 3]),
             HashSet::from([0, 1, 3]),
             HashSet::from([1, 2]),
         ];
 
-        assert!(graph.iter_vertices().eq(0..4));
+        assert!(digraph.iter_vertices().eq(0..4));
     }
 
     #[test]
     fn btree_map_vec_unweighted() {
-        let graph = BTreeMap::from([(0, vec![2, 3]), (2, vec![0, 3]), (3, Vec::new())]);
+        let digraph = BTreeMap::from([(0, vec![2, 3]), (2, vec![0, 3]), (3, Vec::new())]);
 
-        assert!(graph.iter_vertices().eq([0, 2, 3]));
+        assert!(digraph.iter_vertices().eq([0, 2, 3]));
     }
 
     #[test]
     fn btree_map_btree_set_unweighted() {
-        let graph = BTreeMap::from([
+        let digraph = BTreeMap::from([
             (0, BTreeSet::from([2, 3])),
             (2, BTreeSet::from([0, 3])),
             (3, BTreeSet::new()),
         ]);
 
-        assert!(graph.iter_vertices().eq([0, 2, 3]));
+        assert!(digraph.iter_vertices().eq([0, 2, 3]));
     }
 
     #[test]
     fn hash_map_vec_unweighted() {
-        let graph = HashMap::from([(0, vec![2, 3]), (2, vec![0, 3]), (3, Vec::new())]);
-        let mut iter = graph.iter_vertices();
+        let digraph = HashMap::from([(0, vec![2, 3]), (2, vec![0, 3]), (3, Vec::new())]);
+        let mut iter = digraph.iter_vertices();
 
         assert!(matches!(iter.next(), Some(0 | 2 | 3)));
         assert!(matches!(iter.next(), Some(0 | 2 | 3)));
@@ -473,13 +473,13 @@ mod tests {
 
     #[test]
     fn hash_map_hash_set_unweighted() {
-        let graph = HashMap::from([
+        let digraph = HashMap::from([
             (0, HashSet::from([2, 3])),
             (2, HashSet::from([0, 3])),
             (3, HashSet::new()),
         ]);
 
-        let mut iter = graph.iter_vertices();
+        let mut iter = digraph.iter_vertices();
 
         assert!(matches!(iter.next(), Some(0 | 2 | 3)));
         assert!(matches!(iter.next(), Some(0 | 2 | 3)));
@@ -489,226 +489,226 @@ mod tests {
 
     #[test]
     fn vec_vec_weighted() {
-        let graph = vec![
+        let digraph = vec![
             vec![(1, 2), (2, 3)],
             vec![(0, 4)],
             vec![(0, 7), (1, 8)],
             vec![(1, 2)],
         ];
 
-        assert!(graph.iter_vertices().eq(0..4));
+        assert!(digraph.iter_vertices().eq(0..4));
     }
 
     #[test]
     fn vec_btree_set_weighted() {
-        let graph = vec![
+        let digraph = vec![
             BTreeSet::from([(1, 2), (2, 3)]),
             BTreeSet::from([(0, 4)]),
             BTreeSet::from([(0, 7), (1, 8)]),
             BTreeSet::from([(1, 2)]),
         ];
 
-        assert!(graph.iter_vertices().eq(0..4));
+        assert!(digraph.iter_vertices().eq(0..4));
     }
 
     #[test]
     fn vec_hash_set_weighted() {
-        let graph = vec![
+        let digraph = vec![
             HashSet::from([(1, 2), (2, 3)]),
             HashSet::from([(0, 4)]),
             HashSet::from([(0, 7), (1, 8)]),
             HashSet::from([(1, 2)]),
         ];
 
-        assert!(graph.iter_vertices().eq(0..4));
+        assert!(digraph.iter_vertices().eq(0..4));
     }
 
     #[test]
     fn vec_btree_map() {
-        let graph = vec![
+        let digraph = vec![
             BTreeMap::from([(1, 2), (2, 3)]),
             BTreeMap::from([(0, 4)]),
             BTreeMap::from([(0, 7), (1, 8)]),
             BTreeMap::from([(1, 2)]),
         ];
 
-        assert!(graph.iter_vertices().eq(0..4));
+        assert!(digraph.iter_vertices().eq(0..4));
     }
 
     #[test]
     fn vec_hash_map() {
-        let graph = vec![
+        let digraph = vec![
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(0, 4)]),
             HashMap::from([(0, 7), (1, 8)]),
             HashMap::from([(1, 2)]),
         ];
 
-        assert!(graph.iter_vertices().eq(0..4));
+        assert!(digraph.iter_vertices().eq(0..4));
     }
 
     #[test]
     fn slice_vec_weighted() {
-        let graph: &[Vec<(usize, i32)>] = &[
+        let digraph: &[Vec<(usize, i32)>] = &[
             vec![(1, 2), (2, 3)],
             vec![(0, 4)],
             vec![(0, 7), (1, 8)],
             vec![(1, 2)],
         ];
 
-        assert!(graph.iter_vertices().eq(0..4));
+        assert!(digraph.iter_vertices().eq(0..4));
     }
 
     #[test]
     fn slice_btree_set_weighted() {
-        let graph: &[BTreeSet<(usize, i32)>] = &[
+        let digraph: &[BTreeSet<(usize, i32)>] = &[
             BTreeSet::from([(1, 2), (2, 3)]),
             BTreeSet::from([(0, 4)]),
             BTreeSet::from([(0, 7), (1, 8)]),
             BTreeSet::from([(1, 2)]),
         ];
 
-        assert!(graph.iter_vertices().eq(0..4));
+        assert!(digraph.iter_vertices().eq(0..4));
     }
 
     #[test]
     fn slice_hash_set_weighted() {
-        let graph: &[HashSet<(usize, i32)>] = &[
+        let digraph: &[HashSet<(usize, i32)>] = &[
             HashSet::from([(1, 2), (2, 3)]),
             HashSet::from([(0, 4)]),
             HashSet::from([(0, 7), (1, 8)]),
             HashSet::from([(1, 2)]),
         ];
 
-        assert!(graph.iter_vertices().eq(0..4));
+        assert!(digraph.iter_vertices().eq(0..4));
     }
 
     #[test]
     fn slice_btree_map() {
-        let graph: &[BTreeMap<usize, i32>] = &[
+        let digraph: &[BTreeMap<usize, i32>] = &[
             BTreeMap::from([(1, 2), (2, 3)]),
             BTreeMap::from([(0, 4)]),
             BTreeMap::from([(0, 7), (1, 8)]),
             BTreeMap::from([(1, 2)]),
         ];
 
-        assert!(graph.iter_vertices().eq(0..4));
+        assert!(digraph.iter_vertices().eq(0..4));
     }
 
     #[test]
     fn slice_hash_map() {
-        let graph: &[HashMap<usize, i32>] = &[
+        let digraph: &[HashMap<usize, i32>] = &[
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(0, 4)]),
             HashMap::from([(0, 7), (1, 8)]),
             HashMap::from([(1, 2)]),
         ];
 
-        assert!(graph.iter_vertices().eq(0..4));
+        assert!(digraph.iter_vertices().eq(0..4));
     }
 
     #[test]
     fn arr_vec_weighted() {
-        let graph = [
+        let digraph = [
             vec![(1, 2), (2, 3)],
             vec![(0, 4)],
             vec![(0, 7), (1, 8)],
             vec![(1, 2)],
         ];
 
-        assert!(graph.iter_vertices().eq(0..4));
+        assert!(digraph.iter_vertices().eq(0..4));
     }
 
     #[test]
     fn arr_btree_set_weighted() {
-        let graph = [
+        let digraph = [
             BTreeSet::from([(1, 2), (2, 3)]),
             BTreeSet::from([(0, 4)]),
             BTreeSet::from([(0, 7), (1, 8)]),
             BTreeSet::from([(1, 2)]),
         ];
 
-        assert!(graph.iter_vertices().eq(0..4));
+        assert!(digraph.iter_vertices().eq(0..4));
     }
 
     #[test]
     fn arr_hash_set_weighted() {
-        let graph = [
+        let digraph = [
             HashSet::from([(1, 2), (2, 3)]),
             HashSet::from([(0, 4)]),
             HashSet::from([(0, 7), (1, 8)]),
             HashSet::from([(1, 2)]),
         ];
 
-        assert!(graph.iter_vertices().eq(0..4));
+        assert!(digraph.iter_vertices().eq(0..4));
     }
 
     #[test]
     fn arr_btree_map() {
-        let graph = [
+        let digraph = [
             BTreeMap::from([(1, 2), (2, 3)]),
             BTreeMap::from([(0, 4)]),
             BTreeMap::from([(0, 7), (1, 8)]),
             BTreeMap::from([(1, 2)]),
         ];
 
-        assert!(graph.iter_vertices().eq(0..4));
+        assert!(digraph.iter_vertices().eq(0..4));
     }
 
     #[test]
     fn arr_hash_map() {
-        let graph = [
+        let digraph = [
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(0, 4)]),
             HashMap::from([(0, 7), (1, 8)]),
             HashMap::from([(1, 2)]),
         ];
 
-        assert!(graph.iter_vertices().eq(0..4));
+        assert!(digraph.iter_vertices().eq(0..4));
     }
 
     #[test]
     fn btree_map_vec_weighted() {
-        let graph = BTreeMap::from([
+        let digraph = BTreeMap::from([
             (0, vec![(2, 2), (3, 3)]),
             (2, vec![(0, 4), (3, 2)]),
             (3, vec![(0, 7)]),
         ]);
 
-        assert!(graph.iter_vertices().eq([0, 2, 3]));
+        assert!(digraph.iter_vertices().eq([0, 2, 3]));
     }
 
     #[test]
     fn btree_map_btree_set_weighted() {
-        let graph = BTreeMap::from([
+        let digraph = BTreeMap::from([
             (0, BTreeSet::from([(2, 2), (3, 3)])),
             (2, BTreeSet::from([(0, 4), (3, 2)])),
             (3, BTreeSet::from([(0, 7)])),
         ]);
 
-        assert!(graph.iter_vertices().eq([0, 2, 3]));
+        assert!(digraph.iter_vertices().eq([0, 2, 3]));
     }
 
     #[test]
     fn btree_map_btree_map() {
-        let graph = BTreeMap::from([
+        let digraph = BTreeMap::from([
             (0, BTreeMap::from([(2, 2), (3, 3)])),
             (2, BTreeMap::from([(0, 4), (3, 2)])),
             (3, BTreeMap::from([(0, 7)])),
         ]);
 
-        assert!(graph.iter_vertices().eq([0, 2, 3]));
+        assert!(digraph.iter_vertices().eq([0, 2, 3]));
     }
 
     #[test]
     fn hash_map_vec_weighted() {
-        let graph = HashMap::from([
+        let digraph = HashMap::from([
             (0, vec![(2, 2), (3, 3)]),
             (2, vec![(0, 4), (3, 2)]),
             (3, vec![(0, 7)]),
         ]);
 
-        let mut iter = graph.iter_vertices();
+        let mut iter = digraph.iter_vertices();
 
         assert!(matches!(iter.next(), Some(0 | 2 | 3)));
         assert!(matches!(iter.next(), Some(0 | 2 | 3)));
@@ -718,13 +718,13 @@ mod tests {
 
     #[test]
     fn hash_map_hash_set_weighted() {
-        let graph = HashMap::from([
+        let digraph = HashMap::from([
             (0, HashSet::from([(2, 2), (3, 3)])),
             (2, HashSet::from([(0, 4), (3, 2)])),
             (3, HashSet::from([(0, 7)])),
         ]);
 
-        let mut iter = graph.iter_vertices();
+        let mut iter = digraph.iter_vertices();
 
         assert!(matches!(iter.next(), Some(0 | 2 | 3)));
         assert!(matches!(iter.next(), Some(0 | 2 | 3)));
@@ -734,13 +734,13 @@ mod tests {
 
     #[test]
     fn hash_map_hash_map() {
-        let graph = HashMap::from([
+        let digraph = HashMap::from([
             (0, HashMap::from([(2, 2), (3, 3)])),
             (2, HashMap::from([(0, 4), (3, 2)])),
             (3, HashMap::from([(0, 7)])),
         ]);
 
-        let mut iter = graph.iter_vertices();
+        let mut iter = digraph.iter_vertices();
 
         assert!(matches!(iter.next(), Some(0 | 2 | 3)));
         assert!(matches!(iter.next(), Some(0 | 2 | 3)));

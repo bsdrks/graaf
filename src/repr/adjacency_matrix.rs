@@ -1,9 +1,9 @@
-//! An adjacency matrix representation of an unweighted directed graph
+//! An adjacency matrix representation of an unweighted digraph
 //!
 //! An adjacency matrix is a symmetric binary matrix where a value of `1` at
 //! row `s` and column `t` indicates an arc from vertex `s` to vertex `t`. The
-//! matrix is stored as a bit array, and is suited for dense graphs with a small
-//! number of vertices.
+//! matrix is stored as a bit array, and is suited for dense digraphs with a
+//! small number of vertices.
 //!
 //! # Examples
 //!
@@ -16,15 +16,15 @@
 //!     repr::AdjacencyMatrix,
 //! };
 //!
-//! let mut graph = AdjacencyMatrix::<3>::new();
+//! let mut digraph = AdjacencyMatrix::<3>::new();
 //!
-//! graph.add_arc(0, 1);
+//! digraph.add_arc(0, 1);
 //!
-//! assert!(graph.is_simple());
+//! assert!(digraph.is_simple());
 //!
-//! graph.add_arc(1, 1);
+//! digraph.add_arc(1, 1);
 //!
-//! assert!(!graph.is_simple());
+//! assert!(!digraph.is_simple());
 //! ```
 
 use crate::op::{
@@ -51,7 +51,7 @@ macro_rules! blocks {
     };
 }
 
-/// An adjacency matrix representation of an unweighted directed graph
+/// An adjacency matrix representation of an unweighted digraph
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct AdjacencyMatrix<const V: usize>
 where
@@ -77,10 +77,10 @@ where
     ///     repr::AdjacencyMatrix,
     /// };
     ///
-    /// let graph = AdjacencyMatrix::<3>::new();
+    /// let digraph = AdjacencyMatrix::<3>::new();
     ///
-    /// assert_eq!(graph.size(), 0);
-    /// assert_eq!(graph.order(), 3);
+    /// assert_eq!(digraph.size(), 0);
+    /// assert_eq!(digraph.order(), 3);
     /// ```
     ///
     /// # Panics
@@ -122,13 +122,13 @@ where
     ///     repr::AdjacencyMatrix,
     /// };
     ///
-    /// let mut graph = AdjacencyMatrix::<3>::new();
+    /// let mut digraph = AdjacencyMatrix::<3>::new();
     ///
-    /// assert!(!graph.has_arc(0, 1));
+    /// assert!(!digraph.has_arc(0, 1));
     ///
-    /// graph.toggle(0, 1);
+    /// digraph.toggle(0, 1);
     ///
-    /// assert!(graph.has_arc(0, 1));
+    /// assert!(digraph.has_arc(0, 1));
     /// ```
     pub fn toggle(&mut self, s: usize, t: usize) {
         assert!(s < V, "s is not in the graph");
@@ -155,7 +155,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` or `t` is not in the graph.
+    /// Panics if `s` or `t` is not in the digraph.
     fn add_arc(&mut self, s: usize, t: usize) {
         assert!(s < V, "s is not in the graph");
         assert!(t < V, "t is not in the graph");
@@ -340,9 +340,9 @@ mod tests {
 
     #[test]
     fn new() {
-        let graph = AdjacencyMatrix::<3>::new();
+        let digraph = AdjacencyMatrix::<3>::new();
 
-        assert_eq!(graph.blocks, [0]);
+        assert_eq!(digraph.blocks, [0]);
     }
 
     #[test]
@@ -353,368 +353,368 @@ mod tests {
 
     #[test]
     fn toggle() {
-        let mut graph = AdjacencyMatrix::<3>::new();
+        let mut digraph = AdjacencyMatrix::<3>::new();
 
-        graph.toggle(0, 1);
-        graph.toggle(0, 2);
+        digraph.toggle(0, 1);
+        digraph.toggle(0, 2);
 
-        assert_eq!(graph.blocks, [0b110]);
+        assert_eq!(digraph.blocks, [0b110]);
     }
 
     #[test]
     #[should_panic(expected = "s is not in the graph")]
     fn toggle_s_gte_v() {
-        let mut graph = AdjacencyMatrix::<3>::new();
+        let mut digraph = AdjacencyMatrix::<3>::new();
 
-        graph.toggle(3, 0);
+        digraph.toggle(3, 0);
     }
 
     #[test]
     #[should_panic(expected = "t is not in the graph")]
     fn toggle_t_gte_v() {
-        let mut graph = AdjacencyMatrix::<3>::new();
+        let mut digraph = AdjacencyMatrix::<3>::new();
 
-        graph.toggle(0, 3);
+        digraph.toggle(0, 3);
     }
 
     #[test]
     fn default() {
-        let graph = AdjacencyMatrix::<1>::default();
+        let digraph = AdjacencyMatrix::<1>::default();
 
-        assert_eq!(graph.blocks, [0]);
+        assert_eq!(digraph.blocks, [0]);
     }
 
     #[test]
     fn add_arc() {
-        let mut graph = AdjacencyMatrix::<3>::new();
+        let mut digraph = AdjacencyMatrix::<3>::new();
 
-        graph.add_arc(0, 1);
-        graph.add_arc(0, 2);
+        digraph.add_arc(0, 1);
+        digraph.add_arc(0, 2);
 
-        assert_eq!(graph.blocks, [0b110]);
+        assert_eq!(digraph.blocks, [0b110]);
     }
 
     #[test]
     #[should_panic(expected = "s is not in the graph")]
     fn add_arc_s_gte_v() {
-        let mut graph = AdjacencyMatrix::<3>::new();
+        let mut digraph = AdjacencyMatrix::<3>::new();
 
-        graph.add_arc(3, 0);
+        digraph.add_arc(3, 0);
     }
 
     #[test]
     #[should_panic(expected = "t is not in the graph")]
     fn add_arc_t_gte_v() {
-        let mut graph = AdjacencyMatrix::<3>::new();
+        let mut digraph = AdjacencyMatrix::<3>::new();
 
-        graph.add_arc(0, 3);
+        digraph.add_arc(0, 3);
     }
 
     #[test]
     fn size() {
-        let graph = AdjacencyMatrix::<3>::new();
+        let digraph = AdjacencyMatrix::<3>::new();
 
-        assert_eq!(graph.size(), 0);
+        assert_eq!(digraph.size(), 0);
 
-        let mut graph = AdjacencyMatrix::<3>::new();
+        let mut digraph = AdjacencyMatrix::<3>::new();
 
-        graph.add_arc(0, 1);
+        digraph.add_arc(0, 1);
 
-        assert_eq!(graph.size(), 1);
+        assert_eq!(digraph.size(), 1);
 
-        graph.add_arc(0, 2);
+        digraph.add_arc(0, 2);
 
-        assert_eq!(graph.size(), 2);
+        assert_eq!(digraph.size(), 2);
     }
 
     #[test]
     fn order() {
-        let graph = AdjacencyMatrix::<3>::new();
+        let digraph = AdjacencyMatrix::<3>::new();
 
-        assert_eq!(graph.order(), 3);
+        assert_eq!(digraph.order(), 3);
 
-        let graph = AdjacencyMatrix::<1>::new();
+        let digraph = AdjacencyMatrix::<1>::new();
 
-        assert_eq!(graph.order(), 1);
+        assert_eq!(digraph.order(), 1);
 
-        let graph = AdjacencyMatrix::<512>::new();
+        let digraph = AdjacencyMatrix::<512>::new();
 
-        assert_eq!(graph.order(), 512);
+        assert_eq!(digraph.order(), 512);
     }
 
     #[test]
     fn has_arc() {
-        let mut graph = AdjacencyMatrix::<3>::new();
+        let mut digraph = AdjacencyMatrix::<3>::new();
 
-        assert!(!graph.has_arc(0, 1));
-        assert!(!graph.has_arc(0, 2));
-        assert!(!graph.has_arc(1, 0));
-        assert!(!graph.has_arc(1, 2));
-        assert!(!graph.has_arc(2, 0));
-        assert!(!graph.has_arc(2, 1));
-        assert!(!graph.has_arc(3, 0));
-        assert!(!graph.has_arc(0, 3));
+        assert!(!digraph.has_arc(0, 1));
+        assert!(!digraph.has_arc(0, 2));
+        assert!(!digraph.has_arc(1, 0));
+        assert!(!digraph.has_arc(1, 2));
+        assert!(!digraph.has_arc(2, 0));
+        assert!(!digraph.has_arc(2, 1));
+        assert!(!digraph.has_arc(3, 0));
+        assert!(!digraph.has_arc(0, 3));
 
-        graph.add_arc(0, 1);
-        graph.add_arc(0, 2);
-        graph.add_arc(2, 1);
+        digraph.add_arc(0, 1);
+        digraph.add_arc(0, 2);
+        digraph.add_arc(2, 1);
 
-        assert!(graph.has_arc(0, 1));
-        assert!(graph.has_arc(0, 2));
-        assert!(!graph.has_arc(1, 0));
-        assert!(!graph.has_arc(1, 2));
-        assert!(!graph.has_arc(2, 0));
-        assert!(graph.has_arc(2, 1));
-        assert!(!graph.has_arc(3, 0));
-        assert!(!graph.has_arc(0, 3));
+        assert!(digraph.has_arc(0, 1));
+        assert!(digraph.has_arc(0, 2));
+        assert!(!digraph.has_arc(1, 0));
+        assert!(!digraph.has_arc(1, 2));
+        assert!(!digraph.has_arc(2, 0));
+        assert!(digraph.has_arc(2, 1));
+        assert!(!digraph.has_arc(3, 0));
+        assert!(!digraph.has_arc(0, 3));
     }
 
     #[test]
     fn has_edge() {
-        let mut graph = AdjacencyMatrix::<3>::new();
+        let mut digraph = AdjacencyMatrix::<3>::new();
 
-        assert!(!graph.has_edge(0, 1));
-        assert!(!graph.has_edge(0, 2));
-        assert!(!graph.has_edge(1, 0));
-        assert!(!graph.has_edge(1, 2));
-        assert!(!graph.has_edge(2, 0));
-        assert!(!graph.has_edge(2, 1));
-        assert!(!graph.has_edge(3, 0));
-        assert!(!graph.has_edge(0, 3));
+        assert!(!digraph.has_edge(0, 1));
+        assert!(!digraph.has_edge(0, 2));
+        assert!(!digraph.has_edge(1, 0));
+        assert!(!digraph.has_edge(1, 2));
+        assert!(!digraph.has_edge(2, 0));
+        assert!(!digraph.has_edge(2, 1));
+        assert!(!digraph.has_edge(3, 0));
+        assert!(!digraph.has_edge(0, 3));
 
-        graph.add_arc(0, 1);
-        graph.add_arc(0, 2);
-        graph.add_arc(1, 0);
-        graph.add_arc(2, 1);
+        digraph.add_arc(0, 1);
+        digraph.add_arc(0, 2);
+        digraph.add_arc(1, 0);
+        digraph.add_arc(2, 1);
 
-        assert!(graph.has_edge(0, 1));
-        assert!(!graph.has_edge(0, 2));
-        assert!(graph.has_edge(1, 0));
-        assert!(!graph.has_edge(1, 2));
-        assert!(!graph.has_edge(2, 0));
-        assert!(!graph.has_edge(2, 1));
-        assert!(!graph.has_edge(3, 0));
-        assert!(!graph.has_edge(0, 3));
+        assert!(digraph.has_edge(0, 1));
+        assert!(!digraph.has_edge(0, 2));
+        assert!(digraph.has_edge(1, 0));
+        assert!(!digraph.has_edge(1, 2));
+        assert!(!digraph.has_edge(2, 0));
+        assert!(!digraph.has_edge(2, 1));
+        assert!(!digraph.has_edge(3, 0));
+        assert!(!digraph.has_edge(0, 3));
     }
 
     #[test]
     fn indegree() {
-        let mut graph = AdjacencyMatrix::<3>::new();
+        let mut digraph = AdjacencyMatrix::<3>::new();
 
-        assert_eq!(graph.indegree(0), 0);
-        assert_eq!(graph.indegree(1), 0);
-        assert_eq!(graph.indegree(2), 0);
+        assert_eq!(digraph.indegree(0), 0);
+        assert_eq!(digraph.indegree(1), 0);
+        assert_eq!(digraph.indegree(2), 0);
 
-        graph.add_arc(0, 1);
-        graph.add_arc(0, 2);
+        digraph.add_arc(0, 1);
+        digraph.add_arc(0, 2);
 
-        assert_eq!(graph.indegree(0), 0);
-        assert_eq!(graph.indegree(1), 1);
-        assert_eq!(graph.indegree(2), 1);
+        assert_eq!(digraph.indegree(0), 0);
+        assert_eq!(digraph.indegree(1), 1);
+        assert_eq!(digraph.indegree(2), 1);
     }
 
     #[test]
     #[should_panic(expected = "t is not in the graph")]
     fn indegree_t_gte_v() {
-        let graph = AdjacencyMatrix::<3>::new();
-        let _ = graph.indegree(3);
+        let digraph = AdjacencyMatrix::<3>::new();
+        let _ = digraph.indegree(3);
     }
 
     #[test]
     fn is_balanced() {
-        let mut graph = AdjacencyMatrix::<3>::new();
+        let mut digraph = AdjacencyMatrix::<3>::new();
 
-        assert!(graph.is_balanced());
+        assert!(digraph.is_balanced());
 
-        graph.add_arc(0, 1);
+        digraph.add_arc(0, 1);
 
-        assert!(!graph.is_balanced());
+        assert!(!digraph.is_balanced());
 
-        graph.add_arc(1, 0);
+        digraph.add_arc(1, 0);
 
-        assert!(graph.is_balanced());
+        assert!(digraph.is_balanced());
 
-        graph.add_arc(0, 2);
+        digraph.add_arc(0, 2);
 
-        assert!(!graph.is_balanced());
+        assert!(!digraph.is_balanced());
 
-        graph.add_arc(1, 2);
+        digraph.add_arc(1, 2);
 
-        assert!(!graph.is_balanced());
+        assert!(!digraph.is_balanced());
 
-        graph.add_arc(2, 0);
+        digraph.add_arc(2, 0);
 
-        assert!(!graph.is_balanced());
+        assert!(!digraph.is_balanced());
 
-        graph.add_arc(2, 1);
+        digraph.add_arc(2, 1);
 
-        assert!(graph.is_balanced());
+        assert!(digraph.is_balanced());
     }
 
     #[test]
     fn is_isolated() {
-        let mut graph = AdjacencyMatrix::<4>::new();
+        let mut digraph = AdjacencyMatrix::<4>::new();
 
-        graph.add_arc(0, 1);
-        graph.add_arc(0, 2);
-        graph.add_arc(1, 2);
+        digraph.add_arc(0, 1);
+        digraph.add_arc(0, 2);
+        digraph.add_arc(1, 2);
 
-        assert!(!graph.is_isolated(0));
-        assert!(!graph.is_isolated(1));
-        assert!(!graph.is_isolated(2));
-        assert!(graph.is_isolated(3));
+        assert!(!digraph.is_isolated(0));
+        assert!(!digraph.is_isolated(1));
+        assert!(!digraph.is_isolated(2));
+        assert!(digraph.is_isolated(3));
     }
 
     #[test]
     fn is_simple() {
-        let mut graph = AdjacencyMatrix::<3>::new();
+        let mut digraph = AdjacencyMatrix::<3>::new();
 
-        graph.add_arc(0, 1);
-        graph.add_arc(0, 2);
-        graph.add_arc(2, 1);
+        digraph.add_arc(0, 1);
+        digraph.add_arc(0, 2);
+        digraph.add_arc(2, 1);
 
-        assert!(graph.is_simple());
+        assert!(digraph.is_simple());
     }
 
     #[test]
     fn is_simple_self_loop() {
-        let mut graph = AdjacencyMatrix::<3>::new();
+        let mut digraph = AdjacencyMatrix::<3>::new();
 
-        graph.add_arc(0, 0);
+        digraph.add_arc(0, 0);
 
-        assert!(!graph.is_simple());
+        assert!(!digraph.is_simple());
     }
 
     #[test]
     fn is_symmetric_simple() {
-        let mut graph = AdjacencyMatrix::<2>::new();
+        let mut digraph = AdjacencyMatrix::<2>::new();
 
-        graph.add_arc(0, 1);
-        graph.add_arc(1, 0);
+        digraph.add_arc(0, 1);
+        digraph.add_arc(1, 0);
 
-        assert!(graph.is_symmetric());
+        assert!(digraph.is_symmetric());
 
-        let mut graph = AdjacencyMatrix::<2>::new();
+        let mut digraph = AdjacencyMatrix::<2>::new();
 
-        graph.add_arc(0, 1);
+        digraph.add_arc(0, 1);
 
-        assert!(!graph.is_symmetric());
+        assert!(!digraph.is_symmetric());
 
-        let mut graph = AdjacencyMatrix::<3>::new();
+        let mut digraph = AdjacencyMatrix::<3>::new();
 
-        graph.add_arc(0, 1);
-        graph.add_arc(0, 2);
-        graph.add_arc(1, 2);
-        graph.add_arc(2, 0);
+        digraph.add_arc(0, 1);
+        digraph.add_arc(0, 2);
+        digraph.add_arc(1, 2);
+        digraph.add_arc(2, 0);
 
-        assert!(!graph.is_symmetric());
+        assert!(!digraph.is_symmetric());
     }
 
     #[test]
     fn iter_all_arcs() {
-        let mut graph = AdjacencyMatrix::<3>::new();
+        let mut digraph = AdjacencyMatrix::<3>::new();
 
-        graph.add_arc(0, 1);
-        graph.add_arc(1, 2);
-        graph.add_arc(2, 0);
+        digraph.add_arc(0, 1);
+        digraph.add_arc(1, 2);
+        digraph.add_arc(2, 0);
 
-        assert!(graph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
+        assert!(digraph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]
     fn iter_arcs() {
-        let mut graph = AdjacencyMatrix::<3>::new();
+        let mut digraph = AdjacencyMatrix::<3>::new();
 
-        graph.add_arc(0, 1);
-        graph.add_arc(0, 2);
-        graph.add_arc(2, 1);
+        digraph.add_arc(0, 1);
+        digraph.add_arc(0, 2);
+        digraph.add_arc(2, 1);
 
-        assert!(graph.iter_arcs(0).eq([1, 2]));
-        assert!(graph.iter_arcs(1).eq([]));
-        assert!(graph.iter_arcs(2).eq([1]));
+        assert!(digraph.iter_arcs(0).eq([1, 2]));
+        assert!(digraph.iter_arcs(1).eq([]));
+        assert!(digraph.iter_arcs(2).eq([1]));
     }
 
     #[test]
     #[should_panic(expected = "s is not in the graph")]
     fn iter_arcs_s_gte_v() {
-        let graph = AdjacencyMatrix::<3>::new();
-        let _ = graph.iter_arcs(3);
+        let digraph = AdjacencyMatrix::<3>::new();
+        let _ = digraph.iter_arcs(3);
     }
 
     #[test]
     fn iter_vertices() {
-        let graph = AdjacencyMatrix::<3>::new();
+        let digraph = AdjacencyMatrix::<3>::new();
 
-        assert!(graph.iter_vertices().eq([0, 1, 2]));
+        assert!(digraph.iter_vertices().eq([0, 1, 2]));
     }
 
     #[test]
     fn outdegree() {
-        let mut graph = AdjacencyMatrix::<3>::new();
+        let mut digraph = AdjacencyMatrix::<3>::new();
 
-        assert_eq!(graph.outdegree(0), 0);
-        assert_eq!(graph.outdegree(1), 0);
-        assert_eq!(graph.outdegree(2), 0);
+        assert_eq!(digraph.outdegree(0), 0);
+        assert_eq!(digraph.outdegree(1), 0);
+        assert_eq!(digraph.outdegree(2), 0);
 
-        graph.add_arc(0, 1);
-        graph.add_arc(0, 2);
-        graph.add_arc(2, 1);
+        digraph.add_arc(0, 1);
+        digraph.add_arc(0, 2);
+        digraph.add_arc(2, 1);
 
-        assert_eq!(graph.outdegree(0), 2);
-        assert_eq!(graph.outdegree(1), 0);
-        assert_eq!(graph.outdegree(2), 1);
+        assert_eq!(digraph.outdegree(0), 2);
+        assert_eq!(digraph.outdegree(1), 0);
+        assert_eq!(digraph.outdegree(2), 1);
     }
 
     #[test]
     #[should_panic(expected = "s is not in the graph")]
     fn outdegree_s_gte_v() {
-        let graph = AdjacencyMatrix::<3>::new();
-        let _ = graph.outdegree(3);
+        let digraph = AdjacencyMatrix::<3>::new();
+        let _ = digraph.outdegree(3);
     }
 
     #[test]
     fn remove_arc() {
-        let mut graph = AdjacencyMatrix::<3>::new();
+        let mut digraph = AdjacencyMatrix::<3>::new();
 
-        graph.add_arc(0, 1);
-        graph.add_arc(0, 2);
-        graph.add_arc(1, 0);
-        graph.add_arc(2, 1);
+        digraph.add_arc(0, 1);
+        digraph.add_arc(0, 2);
+        digraph.add_arc(1, 0);
+        digraph.add_arc(2, 1);
 
-        assert!(!graph.has_arc(0, 0));
-        assert!(graph.has_arc(0, 1));
-        assert!(graph.has_arc(0, 2));
-        assert!(graph.has_arc(1, 0));
-        assert!(!graph.has_arc(1, 1));
-        assert!(!graph.has_arc(1, 2));
-        assert!(!graph.has_arc(2, 0));
-        assert!(graph.has_arc(2, 1));
-        assert!(!graph.has_arc(2, 2));
+        assert!(!digraph.has_arc(0, 0));
+        assert!(digraph.has_arc(0, 1));
+        assert!(digraph.has_arc(0, 2));
+        assert!(digraph.has_arc(1, 0));
+        assert!(!digraph.has_arc(1, 1));
+        assert!(!digraph.has_arc(1, 2));
+        assert!(!digraph.has_arc(2, 0));
+        assert!(digraph.has_arc(2, 1));
+        assert!(!digraph.has_arc(2, 2));
 
-        assert!(graph.remove_arc(0, 1));
-        assert!(graph.remove_arc(0, 2));
-        assert!(graph.remove_arc(1, 0));
-        assert!(graph.remove_arc(2, 1));
+        assert!(digraph.remove_arc(0, 1));
+        assert!(digraph.remove_arc(0, 2));
+        assert!(digraph.remove_arc(1, 0));
+        assert!(digraph.remove_arc(2, 1));
 
-        assert!(!graph.has_arc(0, 1));
-        assert!(!graph.has_arc(0, 2));
-        assert!(!graph.has_arc(1, 0));
-        assert!(!graph.has_arc(2, 1));
+        assert!(!digraph.has_arc(0, 1));
+        assert!(!digraph.has_arc(0, 2));
+        assert!(!digraph.has_arc(1, 0));
+        assert!(!digraph.has_arc(2, 1));
     }
 
     #[test]
     #[should_panic(expected = "s is not in the graph")]
     fn remove_arc_s_gte_v() {
-        let mut graph = AdjacencyMatrix::<3>::new();
+        let mut digraph = AdjacencyMatrix::<3>::new();
 
-        let _ = graph.remove_arc(3, 0);
+        let _ = digraph.remove_arc(3, 0);
     }
 
     #[test]
     #[should_panic(expected = "t is not in the graph")]
     fn remove_arc_t_gte_v() {
-        let mut graph = AdjacencyMatrix::<3>::new();
+        let mut digraph = AdjacencyMatrix::<3>::new();
 
-        let _ = graph.remove_arc(0, 3);
+        let _ = digraph.remove_arc(0, 3);
     }
 }

@@ -1,7 +1,7 @@
-//! A trait to generate const-sized symmetric complete directed graphs
+//! A trait to generate const-sized symmetric complete digraphs
 //!
-//! The generated graphs are simple; they contain no self-loops. To generate
-//! variable-sized complete graphs, see [`Complete`].
+//! The generated digraphs are simple; they contain no self-loops. To generate
+//! variable-sized complete digraphs, see [`Complete`].
 //!
 //! # Examples
 //!
@@ -28,12 +28,12 @@ use {
     std::collections::HashSet,
 };
 
-/// A trait to generate const-sized symmetric complete directed graphs
+/// A trait to generate const-sized symmetric complete digraphs
 ///
 /// # How can I implement `CompleteConst`?
 ///
 /// Provide an implementation of `complete` that generates a symmetric complete
-/// graph with `V` vertices.
+/// digraph with `V` vertices.
 ///
 /// ```
 /// use {
@@ -79,10 +79,10 @@ use {
 ///     }
 /// }
 ///
-/// let graph = Graph::<3, RandomState>::complete();
+/// let digraph = Graph::<3, RandomState>::complete();
 ///
 /// assert_eq!(
-///     graph.arcs,
+///     digraph.arcs,
 ///     [
 ///         HashSet::from([1, 2]),
 ///         HashSet::from([0, 2]),
@@ -91,7 +91,7 @@ use {
 /// );
 /// ```
 pub trait CompleteConst {
-    /// Generates a complete graph.
+    /// Generates a complete digraph.
     fn complete() -> Self;
 }
 
@@ -100,9 +100,9 @@ impl<const V: usize> CompleteConst for [Vec<usize>; V] {
     ///
     /// Panics if `V` is zero.
     fn complete() -> Self {
-        let mut graph = Self::empty();
+        let mut digraph = Self::empty();
 
-        for (s, vec) in graph.iter_mut().enumerate().take(V) {
+        for (s, vec) in digraph.iter_mut().enumerate().take(V) {
             for t in 0..V {
                 if s != t {
                     vec.push(t);
@@ -110,7 +110,7 @@ impl<const V: usize> CompleteConst for [Vec<usize>; V] {
             }
         }
 
-        graph
+        digraph
     }
 }
 
@@ -119,9 +119,9 @@ impl<const V: usize> CompleteConst for [BTreeSet<usize>; V] {
     ///
     /// Panics if `V` is zero.
     fn complete() -> Self {
-        let mut graph = Self::empty();
+        let mut digraph = Self::empty();
 
-        for (s, set) in graph.iter_mut().enumerate().take(V) {
+        for (s, set) in digraph.iter_mut().enumerate().take(V) {
             for t in 0..V {
                 if s != t {
                     let _ = set.insert(t);
@@ -129,7 +129,7 @@ impl<const V: usize> CompleteConst for [BTreeSet<usize>; V] {
             }
         }
 
-        graph
+        digraph
     }
 }
 
@@ -141,9 +141,9 @@ where
     ///
     /// Panics if `V` is zero.
     fn complete() -> Self {
-        let mut graph = Self::empty();
+        let mut digraph = Self::empty();
 
-        for (s, set) in graph.iter_mut().enumerate().take(V) {
+        for (s, set) in digraph.iter_mut().enumerate().take(V) {
             for t in 0..V {
                 if s != t {
                     let _ = set.insert(t);
@@ -151,7 +151,7 @@ where
             }
         }
 
-        graph
+        digraph
     }
 }
 
@@ -273,38 +273,38 @@ mod tests {
 
     #[test]
     fn indegree_arr_btree_set() {
-        let graph = <[BTreeSet<usize>; 1]>::complete();
+        let digraph = <[BTreeSet<usize>; 1]>::complete();
 
-        assert_eq!(graph.indegree(0), 0);
+        assert_eq!(digraph.indegree(0), 0);
 
-        let graph = <[BTreeSet<usize>; 2]>::complete();
+        let digraph = <[BTreeSet<usize>; 2]>::complete();
 
-        assert_eq!(graph.indegree(0), 1);
-        assert_eq!(graph.indegree(1), 1);
+        assert_eq!(digraph.indegree(0), 1);
+        assert_eq!(digraph.indegree(1), 1);
 
-        let graph = <[BTreeSet<usize>; 3]>::complete();
+        let digraph = <[BTreeSet<usize>; 3]>::complete();
 
-        assert_eq!(graph.indegree(0), 2);
-        assert_eq!(graph.indegree(1), 2);
-        assert_eq!(graph.indegree(2), 2);
+        assert_eq!(digraph.indegree(0), 2);
+        assert_eq!(digraph.indegree(1), 2);
+        assert_eq!(digraph.indegree(2), 2);
     }
 
     #[test]
     fn indegree_arr_hash_set() {
-        let graph = <[HashSet<usize>; 1]>::complete();
+        let digraph = <[HashSet<usize>; 1]>::complete();
 
-        assert_eq!(graph.indegree(0), 0);
+        assert_eq!(digraph.indegree(0), 0);
 
-        let graph = <[HashSet<usize>; 2]>::complete();
+        let digraph = <[HashSet<usize>; 2]>::complete();
 
-        assert_eq!(graph.indegree(0), 1);
-        assert_eq!(graph.indegree(1), 1);
+        assert_eq!(digraph.indegree(0), 1);
+        assert_eq!(digraph.indegree(1), 1);
 
-        let graph = <[HashSet<usize>; 3]>::complete();
+        let digraph = <[HashSet<usize>; 3]>::complete();
 
-        assert_eq!(graph.indegree(0), 2);
-        assert_eq!(graph.indegree(1), 2);
-        assert_eq!(graph.indegree(2), 2);
+        assert_eq!(digraph.indegree(0), 2);
+        assert_eq!(digraph.indegree(1), 2);
+        assert_eq!(digraph.indegree(2), 2);
     }
 
     #[test]
@@ -329,56 +329,56 @@ mod tests {
 
     #[test]
     fn outdegree_arr_vec() {
-        let graph = <[Vec<usize>; 1]>::complete();
+        let digraph = <[Vec<usize>; 1]>::complete();
 
-        assert_eq!(graph.outdegree(0), 0);
+        assert_eq!(digraph.outdegree(0), 0);
 
-        let graph = <[Vec<usize>; 2]>::complete();
+        let digraph = <[Vec<usize>; 2]>::complete();
 
-        assert_eq!(graph.outdegree(0), 1);
-        assert_eq!(graph.outdegree(1), 1);
+        assert_eq!(digraph.outdegree(0), 1);
+        assert_eq!(digraph.outdegree(1), 1);
 
-        let graph = <[Vec<usize>; 3]>::complete();
+        let digraph = <[Vec<usize>; 3]>::complete();
 
-        assert_eq!(graph.outdegree(0), 2);
-        assert_eq!(graph.outdegree(1), 2);
-        assert_eq!(graph.outdegree(2), 2);
+        assert_eq!(digraph.outdegree(0), 2);
+        assert_eq!(digraph.outdegree(1), 2);
+        assert_eq!(digraph.outdegree(2), 2);
     }
 
     #[test]
     fn outdegree_arr_btree_set() {
-        let graph = <[BTreeSet<usize>; 1]>::complete();
+        let digraph = <[BTreeSet<usize>; 1]>::complete();
 
-        assert_eq!(graph.outdegree(0), 0);
+        assert_eq!(digraph.outdegree(0), 0);
 
-        let graph = <[BTreeSet<usize>; 2]>::complete();
+        let digraph = <[BTreeSet<usize>; 2]>::complete();
 
-        assert_eq!(graph.outdegree(0), 1);
-        assert_eq!(graph.outdegree(1), 1);
+        assert_eq!(digraph.outdegree(0), 1);
+        assert_eq!(digraph.outdegree(1), 1);
 
-        let graph = <[BTreeSet<usize>; 3]>::complete();
+        let digraph = <[BTreeSet<usize>; 3]>::complete();
 
-        assert_eq!(graph.outdegree(0), 2);
-        assert_eq!(graph.outdegree(1), 2);
-        assert_eq!(graph.outdegree(2), 2);
+        assert_eq!(digraph.outdegree(0), 2);
+        assert_eq!(digraph.outdegree(1), 2);
+        assert_eq!(digraph.outdegree(2), 2);
     }
 
     #[test]
     fn outdegree_arr_hash_set() {
-        let graph = <[HashSet<usize>; 1]>::complete();
+        let digraph = <[HashSet<usize>; 1]>::complete();
 
-        assert_eq!(graph.outdegree(0), 0);
+        assert_eq!(digraph.outdegree(0), 0);
 
-        let graph = <[HashSet<usize>; 2]>::complete();
+        let digraph = <[HashSet<usize>; 2]>::complete();
 
-        assert_eq!(graph.outdegree(0), 1);
-        assert_eq!(graph.outdegree(1), 1);
+        assert_eq!(digraph.outdegree(0), 1);
+        assert_eq!(digraph.outdegree(1), 1);
 
-        let graph = <[HashSet<usize>; 3]>::complete();
+        let digraph = <[HashSet<usize>; 3]>::complete();
 
-        assert_eq!(graph.outdegree(0), 2);
-        assert_eq!(graph.outdegree(1), 2);
-        assert_eq!(graph.outdegree(2), 2);
+        assert_eq!(digraph.outdegree(0), 2);
+        assert_eq!(digraph.outdegree(1), 2);
+        assert_eq!(digraph.outdegree(2), 2);
     }
 
     #[test]

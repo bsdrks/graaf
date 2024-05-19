@@ -8,20 +8,20 @@
 //!     std::collections::HashMap,
 //! };
 //!
-//! let graph = vec![
+//! let digraph = vec![
 //!     HashMap::from([(1, 2), (2, 3)]),
 //!     HashMap::from([(0, 4)]),
 //!     HashMap::from([(0, 7), (1, 8)]),
 //! ];
 //!
-//! assert_eq!(graph.arc_weight(0, 0), None);
-//! assert_eq!(graph.arc_weight(0, 1), Some(&2));
-//! assert_eq!(graph.arc_weight(0, 2), Some(&3));
-//! assert_eq!(graph.arc_weight(1, 0), Some(&4));
-//! assert_eq!(graph.arc_weight(1, 1), None);
-//! assert_eq!(graph.arc_weight(2, 0), Some(&7));
-//! assert_eq!(graph.arc_weight(2, 1), Some(&8));
-//! assert_eq!(graph.arc_weight(2, 2), None);
+//! assert_eq!(digraph.arc_weight(0, 0), None);
+//! assert_eq!(digraph.arc_weight(0, 1), Some(&2));
+//! assert_eq!(digraph.arc_weight(0, 2), Some(&3));
+//! assert_eq!(digraph.arc_weight(1, 0), Some(&4));
+//! assert_eq!(digraph.arc_weight(1, 1), None);
+//! assert_eq!(digraph.arc_weight(2, 0), Some(&7));
+//! assert_eq!(digraph.arc_weight(2, 1), Some(&8));
+//! assert_eq!(digraph.arc_weight(2, 2), None);
 //! ```
 
 extern crate alloc;
@@ -64,20 +64,20 @@ use {
 ///     std::collections::HashMap,
 /// };
 ///
-/// let graph = vec![
+/// let digraph = vec![
 ///     HashMap::from([(1, 2), (2, 3)]),
 ///     HashMap::from([(0, 4)]),
 ///     HashMap::from([(0, 7), (1, 8)]),
 /// ];
 ///
-/// assert_eq!(graph.arc_weight(0, 0), None);
-/// assert_eq!(graph.arc_weight(0, 1), Some(&2));
-/// assert_eq!(graph.arc_weight(0, 2), Some(&3));
-/// assert_eq!(graph.arc_weight(1, 0), Some(&4));
-/// assert_eq!(graph.arc_weight(1, 1), None);
-/// assert_eq!(graph.arc_weight(2, 0), Some(&7));
-/// assert_eq!(graph.arc_weight(2, 1), Some(&8));
-/// assert_eq!(graph.arc_weight(2, 2), None);
+/// assert_eq!(digraph.arc_weight(0, 0), None);
+/// assert_eq!(digraph.arc_weight(0, 1), Some(&2));
+/// assert_eq!(digraph.arc_weight(0, 2), Some(&3));
+/// assert_eq!(digraph.arc_weight(1, 0), Some(&4));
+/// assert_eq!(digraph.arc_weight(1, 1), None);
+/// assert_eq!(digraph.arc_weight(2, 0), Some(&7));
+/// assert_eq!(digraph.arc_weight(2, 1), Some(&8));
+/// assert_eq!(digraph.arc_weight(2, 2), None);
 /// ```
 pub trait ArcWeight<W> {
     /// Returns the weight of the arc from `s` to `t`.
@@ -154,97 +154,97 @@ mod tests {
     use super::*;
 
     macro_rules! test_arc_weight {
-        ($graph:expr) => {
-            assert_eq!($graph.arc_weight(0, 1), Some(&2));
-            assert_eq!($graph.arc_weight(0, 2), Some(&3));
-            assert_eq!($graph.arc_weight(1, 0), Some(&4));
-            assert_eq!($graph.arc_weight(2, 0), Some(&7));
-            assert_eq!($graph.arc_weight(2, 1), Some(&8));
+        ($digraph:expr) => {
+            assert_eq!($digraph.arc_weight(0, 1), Some(&2));
+            assert_eq!($digraph.arc_weight(0, 2), Some(&3));
+            assert_eq!($digraph.arc_weight(1, 0), Some(&4));
+            assert_eq!($digraph.arc_weight(2, 0), Some(&7));
+            assert_eq!($digraph.arc_weight(2, 1), Some(&8));
         };
     }
 
     #[test]
     fn vec_btree_map() {
-        let graph = vec![
+        let digraph = vec![
             BTreeMap::from([(1, 2), (2, 3)]),
             BTreeMap::from([(0, 4)]),
             BTreeMap::from([(0, 7), (1, 8)]),
         ];
 
-        test_arc_weight!(graph);
+        test_arc_weight!(digraph);
     }
 
     #[test]
     fn vec_hash_map() {
-        let graph = vec![
+        let digraph = vec![
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(0, 4)]),
             HashMap::from([(0, 7), (1, 8)]),
         ];
 
-        test_arc_weight!(graph);
+        test_arc_weight!(digraph);
     }
 
     #[test]
     fn slice_btree_map() {
-        let graph: &[BTreeMap<usize, i32>] = &[
+        let digraph: &[BTreeMap<usize, i32>] = &[
             BTreeMap::from([(1, 2), (2, 3)]),
             BTreeMap::from([(0, 4)]),
             BTreeMap::from([(0, 7), (1, 8)]),
         ];
 
-        test_arc_weight!(graph);
+        test_arc_weight!(digraph);
     }
 
     #[test]
     fn slice_hash_map() {
-        let graph: &[HashMap<usize, i32>] = &[
+        let digraph: &[HashMap<usize, i32>] = &[
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(0, 4)]),
             HashMap::from([(0, 7), (1, 8)]),
         ];
 
-        test_arc_weight!(graph);
+        test_arc_weight!(digraph);
     }
 
     #[test]
     fn arr_btree_map() {
-        let graph = [
+        let digraph = [
             BTreeMap::from([(1, 2), (2, 3)]),
             BTreeMap::from([(0, 4)]),
             BTreeMap::from([(0, 7), (1, 8)]),
         ];
 
-        test_arc_weight!(graph);
+        test_arc_weight!(digraph);
     }
 
     #[test]
     fn arr_hash_map() {
-        let graph = [
+        let digraph = [
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(0, 4)]),
             HashMap::from([(0, 7), (1, 8)]),
         ];
 
-        test_arc_weight!(graph);
+        test_arc_weight!(digraph);
     }
 
     #[test]
     fn btree_map_btree_map() {
-        let mut graph = BTreeMap::new();
-        let _ = graph.insert(0, BTreeMap::from([(1, 2), (2, 3)]));
-        let _ = graph.insert(1, BTreeMap::from([(0, 4)]));
-        let _ = graph.insert(2, BTreeMap::from([(0, 7), (1, 8)]));
+        let mut digraph = BTreeMap::new();
+        let _ = digraph.insert(0, BTreeMap::from([(1, 2), (2, 3)]));
+        let _ = digraph.insert(1, BTreeMap::from([(0, 4)]));
+        let _ = digraph.insert(2, BTreeMap::from([(0, 7), (1, 8)]));
 
-        test_arc_weight!(graph);
+        test_arc_weight!(digraph);
     }
     #[test]
     fn hash_map_hash_map() {
-        let mut graph = HashMap::new();
-        let _ = graph.insert(0, HashMap::from([(1, 2), (2, 3)]));
-        let _ = graph.insert(1, HashMap::from([(0, 4)]));
-        let _ = graph.insert(2, HashMap::from([(0, 7), (1, 8)]));
+        let mut digraph = HashMap::new();
+        let _ = digraph.insert(0, HashMap::from([(1, 2), (2, 3)]));
+        let _ = digraph.insert(1, HashMap::from([(0, 4)]));
+        let _ = digraph.insert(2, HashMap::from([(0, 7), (1, 8)]));
 
-        test_arc_weight!(graph);
+        test_arc_weight!(digraph);
     }
 }

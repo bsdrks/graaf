@@ -1,20 +1,26 @@
 //! A trait to iterate over all arcs with a given source vertex in a weighted
-//! directed graph
+//! digraph
 //!
 //! # Examples
 //!
 //! ```
 //! use graaf::op::IterWeightedArcs;
 //!
-//! let graph = vec![
+//! let digraph = vec![
 //!     vec![(1, 2), (2, 3), (3, 4)],
 //!     vec![(2, 3), (3, 4), (4, 5)],
 //!     vec![(3, 4), (4, 5), (5, 6)],
 //! ];
 //!
-//! assert!(graph.iter_weighted_arcs(0).eq([(1, &2), (2, &3), (3, &4)]));
-//! assert!(graph.iter_weighted_arcs(1).eq([(2, &3), (3, &4), (4, &5)]));
-//! assert!(graph.iter_weighted_arcs(2).eq([(3, &4), (4, &5), (5, &6)]));
+//! assert!(digraph
+//!     .iter_weighted_arcs(0)
+//!     .eq([(1, &2), (2, &3), (3, &4)]));
+//! assert!(digraph
+//!     .iter_weighted_arcs(1)
+//!     .eq([(2, &3), (3, &4), (4, &5)]));
+//! assert!(digraph
+//!     .iter_weighted_arcs(2)
+//!     .eq([(3, &4), (4, &5), (5, &6)]));
 //! ```
 
 extern crate alloc;
@@ -32,7 +38,7 @@ use {
 };
 
 /// A trait to iterate over all arcs with a given source vertex in a weighted
-/// directed graph
+/// digraph
 ///
 /// # How can I implement `IterWeightedArcs`?
 ///
@@ -61,15 +67,21 @@ use {
 /// ```
 /// use graaf::op::IterWeightedArcs;
 ///
-/// let graph = vec![
+/// let digraph = vec![
 ///     vec![(1, 2), (2, 3), (3, 4)],
 ///     vec![(2, 3), (3, 4), (4, 5)],
 ///     vec![(3, 4), (4, 5), (5, 6)],
 /// ];
 ///
-/// assert!(graph.iter_weighted_arcs(0).eq([(1, &2), (2, &3), (3, &4)]));
-/// assert!(graph.iter_weighted_arcs(1).eq([(2, &3), (3, &4), (4, &5)]));
-/// assert!(graph.iter_weighted_arcs(2).eq([(3, &4), (4, &5), (5, &6)]));
+/// assert!(digraph
+///     .iter_weighted_arcs(0)
+///     .eq([(1, &2), (2, &3), (3, &4)]));
+/// assert!(digraph
+///     .iter_weighted_arcs(1)
+///     .eq([(2, &3), (3, &4), (4, &5)]));
+/// assert!(digraph
+///     .iter_weighted_arcs(2)
+///     .eq([(3, &4), (4, &5), (5, &6)]));
 /// ```
 pub trait IterWeightedArcs<W> {
     /// Returns an iterator over the arcs with the source vertex `s`.
@@ -88,7 +100,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
@@ -103,7 +115,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
@@ -119,7 +131,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
@@ -134,7 +146,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
@@ -150,7 +162,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
@@ -165,7 +177,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
@@ -180,7 +192,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
@@ -196,7 +208,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
@@ -211,7 +223,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
@@ -227,7 +239,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
@@ -304,7 +316,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
@@ -320,7 +332,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
@@ -335,7 +347,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
@@ -351,7 +363,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
@@ -366,7 +378,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
@@ -382,7 +394,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `s` is not in the graph.
+    /// Panics if `s` is not in the digraph.
     fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
@@ -396,8 +408,8 @@ mod tests {
     use super::*;
 
     macro_rules! test_iter_weighted_arcs_unstable {
-        ($graph:expr) => {
-            let mut iter = $graph.iter_weighted_arcs(1);
+        ($digraph:expr) => {
+            let mut iter = $digraph.iter_weighted_arcs(1);
 
             assert!(matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5))));
             assert!(matches!(iter.next(), Some((2, 3) | (3, 4) | (4, 5))));
@@ -408,232 +420,242 @@ mod tests {
 
     #[test]
     fn vec_vec() {
-        let graph = vec![
+        let digraph = vec![
             vec![(1, 2), (2, 3), (3, 4)],
             vec![(2, 3), (3, 4), (4, 5)],
             vec![(3, 4), (4, 5), (5, 6)],
         ];
 
-        assert!(graph.iter_weighted_arcs(1).eq([(2, &3), (3, &4), (4, &5)]));
+        assert!(digraph
+            .iter_weighted_arcs(1)
+            .eq([(2, &3), (3, &4), (4, &5)]));
     }
 
     #[test]
     fn vec_btree_set() {
-        let graph = vec![
+        let digraph = vec![
             BTreeSet::from([(1, 2), (2, 3), (3, 4)]),
             BTreeSet::from([(2, 3), (3, 4), (4, 5)]),
             BTreeSet::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_iter_weighted_arcs_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(digraph);
     }
 
     #[test]
     fn vec_hash_set() {
-        let graph = vec![
+        let digraph = vec![
             HashSet::from([(1, 2), (2, 3), (3, 4)]),
             HashSet::from([(2, 3), (3, 4), (4, 5)]),
             HashSet::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_iter_weighted_arcs_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(digraph);
     }
 
     #[test]
     fn vec_btree_map() {
-        let graph = vec![
+        let digraph = vec![
             BTreeMap::from([(1, 2), (2, 3), (3, 4)]),
             BTreeMap::from([(2, 3), (3, 4), (4, 5)]),
             BTreeMap::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_iter_weighted_arcs_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(digraph);
     }
 
     #[test]
     fn vec_hash_map() {
-        let graph = vec![
+        let digraph = vec![
             HashMap::from([(1, 2), (2, 3), (3, 4)]),
             HashMap::from([(2, 3), (3, 4), (4, 5)]),
             HashMap::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_iter_weighted_arcs_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(digraph);
     }
 
     #[test]
     fn slice_vec() {
-        let graph: &[Vec<(usize, i32)>] = &[
+        let digraph: &[Vec<(usize, i32)>] = &[
             vec![(1, 2), (2, 3), (3, 4)],
             vec![(2, 3), (3, 4), (4, 5)],
             vec![(3, 4), (4, 5), (5, 6)],
         ];
 
-        assert!(graph.iter_weighted_arcs(1).eq([(2, &3), (3, &4), (4, &5)]));
+        assert!(digraph
+            .iter_weighted_arcs(1)
+            .eq([(2, &3), (3, &4), (4, &5)]));
     }
 
     #[test]
     fn slice_btree_set() {
-        let graph: &[BTreeSet<(usize, i32)>] = &[
+        let digraph: &[BTreeSet<(usize, i32)>] = &[
             BTreeSet::from([(1, 2), (2, 3), (3, 4)]),
             BTreeSet::from([(2, 3), (3, 4), (4, 5)]),
             BTreeSet::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_iter_weighted_arcs_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(digraph);
     }
 
     #[test]
     fn slice_hash_set() {
-        let graph: &[HashSet<(usize, i32)>] = &[
+        let digraph: &[HashSet<(usize, i32)>] = &[
             HashSet::from([(1, 2), (2, 3), (3, 4)]),
             HashSet::from([(2, 3), (3, 4), (4, 5)]),
             HashSet::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_iter_weighted_arcs_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(digraph);
     }
 
     #[test]
     fn slice_btree_map() {
-        let graph: &[BTreeMap<usize, i32>] = &[
+        let digraph: &[BTreeMap<usize, i32>] = &[
             BTreeMap::from([(1, 2), (2, 3), (3, 4)]),
             BTreeMap::from([(2, 3), (3, 4), (4, 5)]),
             BTreeMap::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_iter_weighted_arcs_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(digraph);
     }
 
     #[test]
     fn slice_hash_map() {
-        let graph: &[HashMap<usize, i32>] = &[
+        let digraph: &[HashMap<usize, i32>] = &[
             HashMap::from([(1, 2), (2, 3), (3, 4)]),
             HashMap::from([(2, 3), (3, 4), (4, 5)]),
             HashMap::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_iter_weighted_arcs_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(digraph);
     }
 
     #[test]
     fn arr_vec() {
-        let graph = [
+        let digraph = [
             vec![(1, 2), (2, 3), (3, 4)],
             vec![(2, 3), (3, 4), (4, 5)],
             vec![(3, 4), (4, 5), (5, 6)],
         ];
 
-        assert!(graph.iter_weighted_arcs(1).eq([(2, &3), (3, &4), (4, &5)]));
+        assert!(digraph
+            .iter_weighted_arcs(1)
+            .eq([(2, &3), (3, &4), (4, &5)]));
     }
 
     #[test]
     fn arr_btree_set() {
-        let graph = [
+        let digraph = [
             BTreeSet::from([(1, 2), (2, 3), (3, 4)]),
             BTreeSet::from([(2, 3), (3, 4), (4, 5)]),
             BTreeSet::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_iter_weighted_arcs_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(digraph);
     }
 
     #[test]
     fn arr_hash_set() {
-        let graph = [
+        let digraph = [
             HashSet::from([(1, 2), (2, 3), (3, 4)]),
             HashSet::from([(2, 3), (3, 4), (4, 5)]),
             HashSet::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_iter_weighted_arcs_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(digraph);
     }
 
     #[test]
     fn arr_btree_map() {
-        let graph = [
+        let digraph = [
             BTreeMap::from([(1, 2), (2, 3), (3, 4)]),
             BTreeMap::from([(2, 3), (3, 4), (4, 5)]),
             BTreeMap::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_iter_weighted_arcs_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(digraph);
     }
 
     #[test]
     fn arr_hash_map() {
-        let graph = [
+        let digraph = [
             HashMap::from([(1, 2), (2, 3), (3, 4)]),
             HashMap::from([(2, 3), (3, 4), (4, 5)]),
             HashMap::from([(3, 4), (4, 5), (5, 6)]),
         ];
 
-        test_iter_weighted_arcs_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(digraph);
     }
 
     #[test]
     fn btree_map_vec() {
-        let graph = BTreeMap::from([
+        let digraph = BTreeMap::from([
             (0, vec![(1, 2), (2, 3), (3, 4)]),
             (1, vec![(2, 3), (3, 4), (4, 5)]),
             (2, vec![(3, 4), (4, 5), (5, 6)]),
         ]);
 
-        assert!(graph.iter_weighted_arcs(1).eq([(2, &3), (3, &4), (4, &5)]));
+        assert!(digraph
+            .iter_weighted_arcs(1)
+            .eq([(2, &3), (3, &4), (4, &5)]));
     }
 
     #[test]
     fn hash_map_vec() {
-        let graph = HashMap::from([
+        let digraph = HashMap::from([
             (0, vec![(1, 2), (2, 3), (3, 4)]),
             (1, vec![(2, 3), (3, 4), (4, 5)]),
             (2, vec![(3, 4), (4, 5), (5, 6)]),
         ]);
 
-        assert!(graph.iter_weighted_arcs(1).eq([(2, &3), (3, &4), (4, &5)]));
+        assert!(digraph
+            .iter_weighted_arcs(1)
+            .eq([(2, &3), (3, &4), (4, &5)]));
     }
 
     #[test]
     fn btree_map_btree_set() {
-        let graph = BTreeMap::from([
+        let digraph = BTreeMap::from([
             (0, BTreeSet::from([(1, 2), (2, 3), (3, 4)])),
             (1, BTreeSet::from([(2, 3), (3, 4), (4, 5)])),
             (2, BTreeSet::from([(3, 4), (4, 5), (5, 6)])),
         ]);
 
-        test_iter_weighted_arcs_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(digraph);
     }
 
     #[test]
     fn hash_map_hash_set() {
-        let graph = HashMap::from([
+        let digraph = HashMap::from([
             (0, HashSet::from([(1, 2), (2, 3), (3, 4)])),
             (1, HashSet::from([(2, 3), (3, 4), (4, 5)])),
             (2, HashSet::from([(3, 4), (4, 5), (5, 6)])),
         ]);
 
-        test_iter_weighted_arcs_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(digraph);
     }
 
     #[test]
     fn btree_map_btree_map() {
-        let graph = BTreeMap::from([
+        let digraph = BTreeMap::from([
             (0, BTreeMap::from([(1, 2), (2, 3), (3, 4)])),
             (1, BTreeMap::from([(2, 3), (3, 4), (4, 5)])),
             (2, BTreeMap::from([(3, 4), (4, 5), (5, 6)])),
         ]);
 
-        test_iter_weighted_arcs_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(digraph);
     }
 
     #[test]
     fn hash_map_hash_map() {
-        let graph = HashMap::from([
+        let digraph = HashMap::from([
             (0, HashMap::from([(1, 2), (2, 3), (3, 4)])),
             (1, HashMap::from([(2, 3), (3, 4), (4, 5)])),
             (2, HashMap::from([(3, 4), (4, 5), (5, 6)])),
         ]);
 
-        test_iter_weighted_arcs_unstable!(graph);
+        test_iter_weighted_arcs_unstable!(digraph);
     }
 }

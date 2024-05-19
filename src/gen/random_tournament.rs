@@ -1,6 +1,6 @@
 //! A trait to generate random variable-sized tournaments
 //!
-//! A tournament is a directed graph in which for every pair of distinct
+//! A tournament is a digraph in which for every pair of distinct
 //! vertices `s` and `t`, exactly one of the arcs `(s, t)` and `(t, s)` is
 //! present.
 //!
@@ -240,89 +240,89 @@ mod tests {
 
     #[test]
     fn vec_vec() {
-        let graph = <Vec<Vec<usize>>>::random_tournament(4);
+        let digraph = <Vec<Vec<usize>>>::random_tournament(4);
 
-        assert_eq!(graph.size(), 6);
-        assert_eq!(graph.order(), 4);
+        assert_eq!(digraph.size(), 6);
+        assert_eq!(digraph.order(), 4);
 
-        for s in graph.iter_vertices() {
-            assert!((0..3).contains(&graph.outdegree(s)));
+        for s in digraph.iter_vertices() {
+            assert!((0..3).contains(&digraph.outdegree(s)));
         }
     }
 
     #[test]
     fn vec_btree_set() {
-        let graph = <Vec<BTreeSet<usize>>>::random_tournament(4);
+        let digraph = <Vec<BTreeSet<usize>>>::random_tournament(4);
 
-        assert_eq!(graph.size(), 6);
-        assert_eq!(graph.order(), 4);
+        assert_eq!(digraph.size(), 6);
+        assert_eq!(digraph.order(), 4);
 
-        for s in graph.iter_vertices() {
-            assert_eq!(graph.degree(s), 3);
-            assert!((0..3).contains(&graph.outdegree(s)));
-            assert!((0..3).contains(&graph.indegree(s)));
+        for s in digraph.iter_vertices() {
+            assert_eq!(digraph.degree(s), 3);
+            assert!((0..3).contains(&digraph.outdegree(s)));
+            assert!((0..3).contains(&digraph.indegree(s)));
         }
     }
 
     #[test]
     fn vec_hash_set() {
-        let graph = <Vec<HashSet<usize>>>::random_tournament(4);
+        let digraph = <Vec<HashSet<usize>>>::random_tournament(4);
 
-        assert_eq!(graph.size(), 6);
-        assert_eq!(graph.order(), 4);
+        assert_eq!(digraph.size(), 6);
+        assert_eq!(digraph.order(), 4);
 
-        for s in graph.iter_vertices() {
-            assert_eq!(graph.degree(s), 3);
-            assert!((0..3).contains(&graph.outdegree(s)));
-            assert!((0..3).contains(&graph.indegree(s)));
+        for s in digraph.iter_vertices() {
+            assert_eq!(digraph.degree(s), 3);
+            assert!((0..3).contains(&digraph.outdegree(s)));
+            assert!((0..3).contains(&digraph.indegree(s)));
         }
     }
 
     #[test]
     fn btree_map_vec() {
-        let graph = <BTreeMap<usize, Vec<usize>>>::random_tournament(4);
+        let digraph = <BTreeMap<usize, Vec<usize>>>::random_tournament(4);
 
-        assert_eq!(graph.size(), 6);
+        assert_eq!(digraph.size(), 6);
 
-        for s in graph.iter_vertices() {
-            assert!((0..3).contains(&graph.outdegree(s)));
+        for s in digraph.iter_vertices() {
+            assert!((0..3).contains(&digraph.outdegree(s)));
         }
     }
 
     #[test]
     fn btree_map_btree_set() {
-        let graph = <BTreeMap<usize, BTreeSet<usize>>>::random_tournament(4);
+        let digraph = <BTreeMap<usize, BTreeSet<usize>>>::random_tournament(4);
 
-        assert_eq!(graph.size(), 6);
+        assert_eq!(digraph.size(), 6);
 
-        for s in graph.iter_vertices() {
-            assert_eq!(graph.degree(s), 3);
-            assert!((0..3).contains(&graph.outdegree(s)));
-            assert!((0..3).contains(&graph.indegree(s)));
+        for s in digraph.iter_vertices() {
+            assert_eq!(digraph.degree(s), 3);
+            assert!((0..3).contains(&digraph.outdegree(s)));
+            assert!((0..3).contains(&digraph.indegree(s)));
         }
     }
 
     #[test]
     fn hash_map_vec() {
-        let graph = <HashMap<usize, Vec<usize>>>::random_tournament(4);
+        let digraph = <HashMap<usize, Vec<usize>>>::random_tournament(4);
 
-        assert_eq!(graph.size(), 6);
+        assert_eq!(digraph.size(), 6);
 
-        for s in graph.iter_vertices() {
-            assert!((0..3).contains(&graph.outdegree(s)));
+        for s in digraph.iter_vertices() {
+            assert!((0..3).contains(&digraph.outdegree(s)));
         }
     }
 
     #[test]
     fn hash_map_hash_set() {
-        let graph = <HashMap<usize, HashSet<usize>>>::random_tournament(4);
+        let digraph = <HashMap<usize, HashSet<usize>>>::random_tournament(4);
 
-        assert_eq!(graph.size(), 6);
+        assert_eq!(digraph.size(), 6);
 
-        for s in graph.iter_vertices() {
-            assert_eq!(graph.degree(s), 3);
-            assert!((0..3).contains(&graph.outdegree(s)));
-            assert!((0..3).contains(&graph.indegree(s)));
+        for s in digraph.iter_vertices() {
+            assert_eq!(digraph.degree(s), 3);
+            assert!((0..3).contains(&digraph.outdegree(s)));
+            assert!((0..3).contains(&digraph.indegree(s)));
         }
     }
 }

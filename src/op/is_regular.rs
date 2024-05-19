@@ -1,6 +1,6 @@
-//! A trait to determine whether a directed graph is regular
+//! A trait to determine whether a digraph is regular
 //!
-//! A directed graph is regular if all vertices have the same indegree and
+//! A digraph is regular if all vertices have the same indegree and
 //! outdegree.
 //!
 //! # Examples
@@ -17,13 +17,13 @@
 //!     std::collections::BTreeSet,
 //! };
 //!
-//! let mut graph = Vec::<BTreeSet<usize>>::cycle(7);
+//! let mut digraph = Vec::<BTreeSet<usize>>::cycle(7);
 //!
-//! assert!(graph.is_regular());
+//! assert!(digraph.is_regular());
 //!
-//! graph.remove_arc(6, 0);
+//! digraph.remove_arc(6, 0);
 //!
-//! assert!(!graph.is_regular());
+//! assert!(!digraph.is_regular());
 //! ```
 
 extern crate alloc;
@@ -45,11 +45,11 @@ use {
     },
 };
 
-/// A trait to determine whether a directed graph is regular
+/// A trait to determine whether a digraph is regular
 ///
 /// # How can I implement `IsRegular`?
 ///
-/// Provide an implementation of `is_regular` that returns `true` if the graph
+/// Provide an implementation of `is_regular` that returns `true` if the digraph
 /// is regular and `false` otherwise.
 ///
 /// ```
@@ -65,14 +65,14 @@ use {
 ///     },
 /// };
 ///
-/// struct Graph {
+/// struct Digraph {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl IsRegular for Graph {
+/// impl IsRegular for Digraph {
 ///     /// # Panics
 ///     ///
-///     /// Panics if the graph has no vertices.
+///     /// Panics if the digraph has no vertices.
 ///     fn is_regular(&self) -> bool {
 ///         let mut vertices = self.arcs.iter_vertices();
 ///
@@ -89,14 +89,14 @@ use {
 /// }
 /// ```
 pub trait IsRegular {
-    /// Returns whether the graph is regular.
+    /// Returns whether the digraph is regular.
     fn is_regular(&self) -> bool;
 }
 
 impl IsRegular for Vec<BTreeSet<usize>> {
     /// # Panics
     ///
-    /// Panics if the graph has no vertices.
+    /// Panics if the digraph has no vertices.
     fn is_regular(&self) -> bool {
         let mut vertices = self.iter_vertices();
 
@@ -117,7 +117,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if the graph has no vertices.
+    /// Panics if the digraph has no vertices.
     fn is_regular(&self) -> bool {
         let mut vertices = self.iter_vertices();
 
@@ -135,7 +135,7 @@ where
 impl IsRegular for [BTreeSet<usize>] {
     /// # Panics
     ///
-    /// Panics if the graph has no vertices.
+    /// Panics if the digraph has no vertices.
     fn is_regular(&self) -> bool {
         let mut vertices = self.iter_vertices();
 
@@ -156,7 +156,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if the graph has no vertices.
+    /// Panics if the digraph has no vertices.
     fn is_regular(&self) -> bool {
         let mut vertices = self.iter_vertices();
 
@@ -174,7 +174,7 @@ where
 impl<const V: usize> IsRegular for [BTreeSet<usize>; V] {
     /// # Panics
     ///
-    /// Panics if the graph has no vertices.
+    /// Panics if the digraph has no vertices.
     fn is_regular(&self) -> bool {
         let mut vertices = self.iter_vertices();
 
@@ -195,7 +195,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if the graph has no vertices.
+    /// Panics if the digraph has no vertices.
     fn is_regular(&self) -> bool {
         let mut vertices = self.iter_vertices();
 
@@ -213,7 +213,7 @@ where
 impl IsRegular for BTreeMap<usize, BTreeSet<usize>> {
     /// # Panics
     ///
-    /// Panics if the graph has no vertices.
+    /// Panics if the digraph has no vertices.
     fn is_regular(&self) -> bool {
         let mut vertices = self.iter_vertices();
 
@@ -234,7 +234,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if the graph has no vertices.
+    /// Panics if the digraph has no vertices.
     fn is_regular(&self) -> bool {
         let mut vertices = self.iter_vertices();
 
@@ -252,7 +252,7 @@ where
 impl<W> IsRegular for Vec<BTreeMap<usize, W>> {
     /// # Panics
     ///
-    /// Panics if the graph has no vertices.
+    /// Panics if the digraph has no vertices.
     fn is_regular(&self) -> bool {
         let mut vertices = self.iter_vertices();
 
@@ -273,7 +273,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if the graph has no vertices.
+    /// Panics if the digraph has no vertices.
     fn is_regular(&self) -> bool {
         let mut vertices = self.iter_vertices();
 
@@ -291,7 +291,7 @@ where
 impl<W> IsRegular for [BTreeMap<usize, W>] {
     /// # Panics
     ///
-    /// Panics if the graph has no vertices.
+    /// Panics if the digraph has no vertices.
     fn is_regular(&self) -> bool {
         let mut vertices = self.iter_vertices();
 
@@ -312,7 +312,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if the graph has no vertices.
+    /// Panics if the digraph has no vertices.
     fn is_regular(&self) -> bool {
         let mut vertices = self.iter_vertices();
 
@@ -330,7 +330,7 @@ where
 impl<const V: usize, W> IsRegular for [BTreeMap<usize, W>; V] {
     /// # Panics
     ///
-    /// Panics if the graph has no vertices.
+    /// Panics if the digraph has no vertices.
     fn is_regular(&self) -> bool {
         let mut vertices = self.iter_vertices();
 
@@ -351,7 +351,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if the graph has no vertices.
+    /// Panics if the digraph has no vertices.
     fn is_regular(&self) -> bool {
         let mut vertices = self.iter_vertices();
 
@@ -369,7 +369,7 @@ where
 impl<W> IsRegular for BTreeMap<usize, BTreeMap<usize, W>> {
     /// # Panics
     ///
-    /// Panics if the graph has no vertices.
+    /// Panics if the digraph has no vertices.
     fn is_regular(&self) -> bool {
         let mut vertices = self.iter_vertices();
 
@@ -390,7 +390,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if the graph has no vertices.
+    /// Panics if the digraph has no vertices.
     fn is_regular(&self) -> bool {
         let mut vertices = self.iter_vertices();
 
@@ -421,214 +421,214 @@ mod tests {
     };
 
     macro_rules! test_is_regular {
-        ($graph:expr) => {
-            assert!($graph.is_regular());
+        ($digraph:expr) => {
+            assert!($digraph.is_regular());
 
-            let _ = $graph.remove_arc(2, 0);
+            let _ = $digraph.remove_arc(2, 0);
 
-            assert!(!$graph.is_regular());
+            assert!(!$digraph.is_regular());
         };
     }
 
     proptest! {
         #[test]
         fn empty_vec_btree_set_unweighted(v in 1..100_usize) {
-            let graph = Vec::<BTreeSet<usize>>::empty(v);
+            let digraph = Vec::<BTreeSet<usize>>::empty(v);
 
-            assert!(graph.is_regular());
+            assert!(digraph.is_regular());
         }
 
         #[test]
         fn empty_vec_hash_set_unweighted(v in 1..100_usize) {
-            let graph = Vec::<HashSet<usize>>::empty(v);
+            let digraph = Vec::<HashSet<usize>>::empty(v);
 
-            assert!(graph.is_regular());
+            assert!(digraph.is_regular());
         }
 
         #[test]
         fn empty_btree_map_btree_set_unweighted(v in 1..100_usize) {
-            let graph = BTreeMap::<usize, BTreeSet<usize>>::empty(v);
+            let digraph = BTreeMap::<usize, BTreeSet<usize>>::empty(v);
 
-            assert!(graph.is_regular());
+            assert!(digraph.is_regular());
         }
 
         #[test]
         fn empty_hash_map_hash_set_unweighted(v in 1..100_usize) {
-            let graph = HashMap::<usize, HashSet<usize>>::empty(v);
+            let digraph = HashMap::<usize, HashSet<usize>>::empty(v);
 
-            assert!(graph.is_regular());
+            assert!(digraph.is_regular());
         }
 
         #[test]
         fn empty_vec_btree_map(v in 1..100_usize) {
-            let graph = Vec::<BTreeMap<usize, usize>>::empty(v);
+            let digraph = Vec::<BTreeMap<usize, usize>>::empty(v);
 
-            assert!(graph.is_regular());
+            assert!(digraph.is_regular());
         }
 
         #[test]
         fn empty_vec_hash_map(v in 1..100_usize) {
-            let graph = Vec::<HashMap<usize, usize>>::empty(v);
+            let digraph = Vec::<HashMap<usize, usize>>::empty(v);
 
-            assert!(graph.is_regular());
+            assert!(digraph.is_regular());
         }
 
         #[test]
         fn empty_btree_map_btree_map(v in 1..100_usize) {
-            let graph = BTreeMap::<usize, BTreeMap<usize, usize>>::empty(v);
+            let digraph = BTreeMap::<usize, BTreeMap<usize, usize>>::empty(v);
 
-            assert!(graph.is_regular());
+            assert!(digraph.is_regular());
         }
 
         #[test]
         fn empty_hash_map_hash_map(v in 1..100_usize) {
-            let graph = HashMap::<usize, HashMap<usize, usize>>::empty(v);
+            let digraph = HashMap::<usize, HashMap<usize, usize>>::empty(v);
 
-            assert!(graph.is_regular());
+            assert!(digraph.is_regular());
         }
     }
 
     #[test]
     fn vec_btree_set_unweighted() {
-        let graph = &mut <Vec<BTreeSet<usize>>>::cycle(3);
+        let digraph = &mut <Vec<BTreeSet<usize>>>::cycle(3);
 
-        test_is_regular!(graph);
+        test_is_regular!(digraph);
     }
 
     #[test]
     fn vec_hash_set_unweighted() {
-        let graph = &mut <Vec<HashSet<usize>>>::cycle(3);
+        let digraph = &mut <Vec<HashSet<usize>>>::cycle(3);
 
-        test_is_regular!(graph);
+        test_is_regular!(digraph);
     }
 
     #[test]
     fn slice_btree_set_unweighted() {
-        let graph: &mut [BTreeSet<usize>] = &mut Vec::<BTreeSet<usize>>::cycle(3);
+        let digraph: &mut [BTreeSet<usize>] = &mut Vec::<BTreeSet<usize>>::cycle(3);
 
-        test_is_regular!(graph);
+        test_is_regular!(digraph);
     }
 
     #[test]
     fn slice_hash_set_unweighted() {
-        let graph: &mut [HashSet<usize>] = &mut Vec::<HashSet<usize>>::cycle(3);
+        let digraph: &mut [HashSet<usize>] = &mut Vec::<HashSet<usize>>::cycle(3);
 
-        test_is_regular!(graph);
+        test_is_regular!(digraph);
     }
 
     #[test]
     fn arr_btree_set_unweighted() {
-        let graph = &mut <[BTreeSet<usize>; 3]>::cycle();
+        let digraph = &mut <[BTreeSet<usize>; 3]>::cycle();
 
-        test_is_regular!(graph);
+        test_is_regular!(digraph);
     }
 
     #[test]
     fn arr_hash_set_unweighted() {
-        let graph = &mut <[HashSet<usize>; 3]>::cycle();
+        let digraph = &mut <[HashSet<usize>; 3]>::cycle();
 
-        test_is_regular!(graph);
+        test_is_regular!(digraph);
     }
 
     #[test]
     fn btree_map_btree_set() {
-        let mut graph = BTreeMap::<usize, BTreeSet<usize>>::cycle(3);
+        let mut digraph = BTreeMap::<usize, BTreeSet<usize>>::cycle(3);
 
-        test_is_regular!(graph);
+        test_is_regular!(digraph);
     }
 
     #[test]
     fn hash_map_hash_set() {
-        let mut graph = HashMap::<usize, HashSet<usize>>::cycle(3);
+        let mut digraph = HashMap::<usize, HashSet<usize>>::cycle(3);
 
-        test_is_regular!(graph);
+        test_is_regular!(digraph);
     }
 
     #[test]
     fn vec_btree_map() {
-        let mut graph = vec![
+        let mut digraph = vec![
             BTreeMap::from([(1, 4)]),
             BTreeMap::from([(2, 3)]),
             BTreeMap::from([(0, 3)]),
         ];
 
-        test_is_regular!(graph);
+        test_is_regular!(digraph);
     }
 
     #[test]
     fn vec_hash_map() {
-        let mut graph = vec![
+        let mut digraph = vec![
             HashMap::from([(1, 4)]),
             HashMap::from([(2, 3)]),
             HashMap::from([(0, 3)]),
         ];
 
-        test_is_regular!(graph);
+        test_is_regular!(digraph);
     }
 
     #[test]
     fn slice_btree_map() {
-        let graph: &mut [BTreeMap<usize, usize>] = &mut [
+        let digraph: &mut [BTreeMap<usize, usize>] = &mut [
             BTreeMap::from([(1, 4)]),
             BTreeMap::from([(2, 3)]),
             BTreeMap::from([(0, 3)]),
         ];
 
-        test_is_regular!(graph);
+        test_is_regular!(digraph);
     }
 
     #[test]
     fn slice_hash_map() {
-        let graph: &mut [HashMap<usize, usize>] = &mut [
+        let digraph: &mut [HashMap<usize, usize>] = &mut [
             HashMap::from([(1, 4)]),
             HashMap::from([(2, 3)]),
             HashMap::from([(0, 3)]),
         ];
 
-        test_is_regular!(graph);
+        test_is_regular!(digraph);
     }
 
     #[test]
     fn arr_btree_map() {
-        let mut graph = [
+        let mut digraph = [
             BTreeMap::from([(1, 4)]),
             BTreeMap::from([(2, 3)]),
             BTreeMap::from([(0, 3)]),
         ];
 
-        test_is_regular!(graph);
+        test_is_regular!(digraph);
     }
 
     #[test]
     fn arr_hash_map() {
-        let mut graph = [
+        let mut digraph = [
             HashMap::from([(1, 4)]),
             HashMap::from([(2, 3)]),
             HashMap::from([(0, 3)]),
         ];
 
-        test_is_regular!(graph);
+        test_is_regular!(digraph);
     }
 
     #[test]
     fn btree_map_btree_map() {
-        let mut graph = BTreeMap::from([
+        let mut digraph = BTreeMap::from([
             (0, BTreeMap::from([(1, 4)])),
             (1, BTreeMap::from([(2, 3)])),
             (2, BTreeMap::from([(0, 3)])),
         ]);
 
-        test_is_regular!(graph);
+        test_is_regular!(digraph);
     }
 
     #[test]
     fn hash_map_hash_map() {
-        let mut graph = HashMap::from([
+        let mut digraph = HashMap::from([
             (0, HashMap::from([(1, 4)])),
             (1, HashMap::from([(2, 3)])),
             (2, HashMap::from([(0, 3)])),
         ]);
 
-        test_is_regular!(graph);
+        test_is_regular!(digraph);
     }
 }

@@ -1,7 +1,7 @@
-//! Operations on graphs
+//! Operations on digraphs
 //!
 //! These operations are modeled as traits that can be implemented by types
-//! that represent graphs. The traits are implemented for combinations of
+//! that represent digraphs. The traits are implemented for combinations of
 //! standard types like [`array`], [`slice`], [`Vec`], [`BTreeMap`],
 //! [`BTreeSet`], [`HashMap`], and [`HashSet`] when the implementation has a
 //! close-to-optimal complexity.
@@ -21,22 +21,22 @@
 //!     },
 //! };
 //!
-//! let mut graph = vec![BTreeSet::new(); 3];
+//! let mut digraph = vec![BTreeSet::new(); 3];
 //!
 //! // 1 ← 0 → 2
 //!
-//! graph.add_arc(0, 1);
-//! graph.add_arc(0, 2);
+//! digraph.add_arc(0, 1);
+//! digraph.add_arc(0, 2);
 //!
-//! assert_eq!(graph.outdegree(0), 2);
-//! assert_eq!(graph.indegree(1), 1);
-//! assert_eq!(graph.indegree(2), 1);
+//! assert_eq!(digraph.outdegree(0), 2);
+//! assert_eq!(digraph.indegree(1), 1);
+//! assert_eq!(digraph.indegree(2), 1);
 //!
-//! graph.remove_arc(0, 1);
+//! digraph.remove_arc(0, 1);
 //!
-//! assert_eq!(graph.outdegree(0), 1);
-//! assert_eq!(graph.indegree(1), 0);
-//! assert_eq!(graph.indegree(2), 1);
+//! assert_eq!(digraph.outdegree(0), 1);
+//! assert_eq!(digraph.indegree(1), 0);
+//! assert_eq!(digraph.indegree(2), 1);
 //! ```
 //!
 //! # Supported types

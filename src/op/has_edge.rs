@@ -10,28 +10,28 @@
 //!     std::collections::HashSet,
 //! };
 //!
-//! let graph = vec![HashSet::from([1]), HashSet::from([0])];
+//! let digraph = vec![HashSet::from([1]), HashSet::from([0])];
 //!
-//! assert!(graph.has_edge(0, 1));
-//! assert!(graph.has_edge(1, 0));
+//! assert!(digraph.has_edge(0, 1));
+//! assert!(digraph.has_edge(1, 0));
 //!
-//! let graph = vec![HashSet::from([1]), HashSet::new()];
+//! let digraph = vec![HashSet::from([1]), HashSet::new()];
 //!
-//! assert!(!graph.has_edge(0, 1));
-//! assert!(!graph.has_edge(1, 0));
+//! assert!(!digraph.has_edge(0, 1));
+//! assert!(!digraph.has_edge(1, 0));
 //!
-//! let graph = vec![
+//! let digraph = vec![
 //!     HashSet::from([1, 2]),
 //!     HashSet::from([2]),
 //!     HashSet::from([0]),
 //! ];
 //!
-//! assert!(!graph.has_edge(0, 1));
-//! assert!(graph.has_edge(0, 2));
-//! assert!(!graph.has_edge(1, 0));
-//! assert!(!graph.has_edge(1, 2));
-//! assert!(graph.has_edge(2, 0));
-//! assert!(!graph.has_edge(2, 1));
+//! assert!(!digraph.has_edge(0, 1));
+//! assert!(digraph.has_edge(0, 2));
+//! assert!(!digraph.has_edge(1, 0));
+//! assert!(!digraph.has_edge(1, 2));
+//! assert!(digraph.has_edge(2, 0));
+//! assert!(!digraph.has_edge(2, 1));
 //! ```
 //!
 //! [`HasArc`]: crate::op::HasArc
@@ -56,7 +56,7 @@ use {
 /// # How can I implement `HasEdge`?
 ///
 /// Provide an implementation of `has_edge` that returns `true` if the
-/// graph has an arc between `s` and `t` and `false` otherwise.
+/// digraph has an arc between `s` and `t` and `false` otherwise.
 ///
 /// ```
 /// extern crate alloc;
@@ -76,12 +76,12 @@ use {
 ///     }
 /// }
 ///
-/// let graph = Graph {
+/// let digraph = Graph {
 ///     arcs: vec![BTreeSet::from([1]), BTreeSet::from([0])],
 /// };
 ///
-/// assert!(graph.has_edge(0, 1));
-/// assert!(graph.has_edge(1, 0));
+/// assert!(digraph.has_edge(0, 1));
+/// assert!(digraph.has_edge(1, 0));
 /// ```
 ///
 /// # Examples
@@ -92,31 +92,31 @@ use {
 ///     std::collections::HashSet,
 /// };
 ///
-/// let graph = vec![HashSet::from([1]), HashSet::from([0])];
+/// let digraph = vec![HashSet::from([1]), HashSet::from([0])];
 ///
-/// assert!(graph.has_edge(0, 1));
-/// assert!(graph.has_edge(1, 0));
+/// assert!(digraph.has_edge(0, 1));
+/// assert!(digraph.has_edge(1, 0));
 ///
-/// let graph = vec![HashSet::from([1]), HashSet::new()];
+/// let digraph = vec![HashSet::from([1]), HashSet::new()];
 ///
-/// assert!(!graph.has_edge(0, 1));
-/// assert!(!graph.has_edge(1, 0));
+/// assert!(!digraph.has_edge(0, 1));
+/// assert!(!digraph.has_edge(1, 0));
 ///
-/// let graph = vec![
+/// let digraph = vec![
 ///     HashSet::from([1, 2]),
 ///     HashSet::from([2]),
 ///     HashSet::from([0]),
 /// ];
 ///
-/// assert!(!graph.has_edge(0, 1));
-/// assert!(graph.has_edge(0, 2));
-/// assert!(!graph.has_edge(1, 0));
-/// assert!(!graph.has_edge(1, 2));
-/// assert!(graph.has_edge(2, 0));
-/// assert!(!graph.has_edge(2, 1));
+/// assert!(!digraph.has_edge(0, 1));
+/// assert!(digraph.has_edge(0, 2));
+/// assert!(!digraph.has_edge(1, 0));
+/// assert!(!digraph.has_edge(1, 2));
+/// assert!(digraph.has_edge(2, 0));
+/// assert!(!digraph.has_edge(2, 1));
 /// ```
 pub trait HasEdge {
-    /// Returns whether the graph has an arc from `s` to `t` and from `t` to
+    /// Returns whether the digraph has an arc from `s` to `t` and from `t` to
     /// `s`
     fn has_edge(&self, s: usize, t: usize) -> bool;
 }
@@ -261,203 +261,203 @@ mod tests {
     use super::*;
 
     macro_rules! test_has_arc {
-        ($graph:expr) => {
-            assert!(!$graph.has_edge(0, 1));
-            assert!($graph.has_edge(0, 2));
-            assert!(!$graph.has_edge(1, 0));
-            assert!(!$graph.has_edge(1, 2));
-            assert!($graph.has_edge(2, 0));
-            assert!(!$graph.has_edge(2, 1));
+        ($digraph:expr) => {
+            assert!(!$digraph.has_edge(0, 1));
+            assert!($digraph.has_edge(0, 2));
+            assert!(!$digraph.has_edge(1, 0));
+            assert!(!$digraph.has_edge(1, 2));
+            assert!($digraph.has_edge(2, 0));
+            assert!(!$digraph.has_edge(2, 1));
         };
     }
 
     #[test]
     fn vec_btree_set() {
-        let graph = vec![
+        let digraph = vec![
             BTreeSet::from([1, 2]),
             BTreeSet::from([2]),
             BTreeSet::from([0]),
         ];
 
-        test_has_arc!(graph);
+        test_has_arc!(digraph);
     }
 
     #[test]
     fn vec_hash_set() {
-        let graph = vec![
+        let digraph = vec![
             HashSet::from([1, 2]),
             HashSet::from([2]),
             HashSet::from([0]),
         ];
 
-        test_has_arc!(graph);
+        test_has_arc!(digraph);
     }
 
     #[test]
     fn slice_btree_set() {
-        let graph: &[BTreeSet<usize>] = &[
+        let digraph: &[BTreeSet<usize>] = &[
             BTreeSet::from([1, 2]),
             BTreeSet::from([2]),
             BTreeSet::from([0]),
         ];
 
-        test_has_arc!(graph);
+        test_has_arc!(digraph);
     }
 
     #[test]
     fn slice_hash_set() {
-        let graph: &[HashSet<usize>] = &[
+        let digraph: &[HashSet<usize>] = &[
             HashSet::from([1, 2]),
             HashSet::from([2]),
             HashSet::from([0]),
         ];
 
-        test_has_arc!(graph);
+        test_has_arc!(digraph);
     }
 
     #[test]
     fn arr_btree_set() {
-        let graph = [
+        let digraph = [
             BTreeSet::from([1, 2]),
             BTreeSet::from([2]),
             BTreeSet::from([0]),
         ];
 
-        test_has_arc!(graph);
+        test_has_arc!(digraph);
     }
 
     #[test]
     fn arr_hash_set() {
-        let graph = [
+        let digraph = [
             HashSet::from([1, 2]),
             HashSet::from([2]),
             HashSet::from([0]),
         ];
 
-        test_has_arc!(graph);
+        test_has_arc!(digraph);
     }
 
     #[test]
     fn vec_btree_map() {
-        let graph = vec![
+        let digraph = vec![
             BTreeMap::from([(1, 2), (2, 3)]),
             BTreeMap::from([(2, 4)]),
             BTreeMap::from([(0, 7)]),
         ];
 
-        test_has_arc!(graph);
+        test_has_arc!(digraph);
     }
 
     #[test]
     fn vec_hash_map() {
-        let graph = vec![
+        let digraph = vec![
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(2, 4)]),
             HashMap::from([(0, 7)]),
         ];
 
-        test_has_arc!(graph);
+        test_has_arc!(digraph);
     }
 
     #[test]
     fn slice_btree_map() {
-        let graph: &[BTreeMap<usize, usize>] = &[
+        let digraph: &[BTreeMap<usize, usize>] = &[
             BTreeMap::from([(1, 2), (2, 3)]),
             BTreeMap::from([(2, 4)]),
             BTreeMap::from([(0, 7)]),
         ];
 
-        test_has_arc!(graph);
+        test_has_arc!(digraph);
     }
 
     #[test]
     fn slice_hash_map() {
-        let graph: &[HashMap<usize, usize>] = &[
+        let digraph: &[HashMap<usize, usize>] = &[
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(2, 4)]),
             HashMap::from([(0, 7)]),
         ];
 
-        test_has_arc!(graph);
+        test_has_arc!(digraph);
     }
 
     #[test]
     fn arr_btree_map() {
-        let graph = [
+        let digraph = [
             BTreeMap::from([(1, 2), (2, 3)]),
             BTreeMap::from([(2, 4)]),
             BTreeMap::from([(0, 7)]),
         ];
 
-        test_has_arc!(graph);
+        test_has_arc!(digraph);
     }
 
     #[test]
     fn arr_hash_map() {
-        let graph = [
+        let digraph = [
             HashMap::from([(1, 2), (2, 3)]),
             HashMap::from([(2, 4)]),
             HashMap::from([(0, 7)]),
         ];
 
-        test_has_arc!(graph);
+        test_has_arc!(digraph);
     }
 
     #[test]
     fn btree_map_btree_set() {
-        let graph = BTreeMap::from([
+        let digraph = BTreeMap::from([
             (0, BTreeSet::from([1, 2])),
             (1, BTreeSet::from([2])),
             (2, BTreeSet::from([0])),
         ]);
 
-        test_has_arc!(graph);
+        test_has_arc!(digraph);
     }
 
     #[test]
     fn hash_map_hash_set() {
-        let graph = HashMap::from([
+        let digraph = HashMap::from([
             (0, HashSet::from([1, 2])),
             (1, HashSet::from([2])),
             (2, HashSet::from([0])),
         ]);
 
-        test_has_arc!(graph);
+        test_has_arc!(digraph);
     }
 
     #[test]
     fn btree_map_btree_map() {
-        let graph = BTreeMap::from([
+        let digraph = BTreeMap::from([
             (0, BTreeMap::from([(1, 2), (2, 3)])),
             (1, BTreeMap::from([(2, 4)])),
             (2, BTreeMap::from([(0, 7)])),
         ]);
 
-        test_has_arc!(graph);
+        test_has_arc!(digraph);
     }
 
     #[test]
     fn hash_map_hash_map() {
-        let graph = HashMap::from([
+        let digraph = HashMap::from([
             (0, HashMap::from([(1, 2), (2, 3)])),
             (1, HashMap::from([(2, 4)])),
             (2, HashMap::from([(0, 7)])),
         ]);
 
-        test_has_arc!(graph);
+        test_has_arc!(digraph);
     }
 
     #[test]
     fn btree_set_tuple() {
-        let graph = BTreeSet::from([(0, 1), (0, 2), (1, 2), (2, 0)]);
+        let digraph = BTreeSet::from([(0, 1), (0, 2), (1, 2), (2, 0)]);
 
-        test_has_arc!(graph);
+        test_has_arc!(digraph);
     }
 
     #[test]
     fn hash_set_tuple() {
-        let graph = HashSet::from([(0, 1), (0, 2), (1, 2), (2, 0)]);
+        let digraph = HashSet::from([(0, 1), (0, 2), (1, 2), (2, 0)]);
 
-        test_has_arc!(graph);
+        test_has_arc!(digraph);
     }
 }

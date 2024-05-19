@@ -1,7 +1,7 @@
-//! A trait to generate variable-sized complete symmetric directed graphs
+//! A trait to generate variable-sized complete symmetric digraphs
 //!
-//! The generated graphs are simple; they contain no self-loops. To generate
-//! const-sized complete graphs, see [`CompleteConst`].
+//! The generated digraphs are simple; they contain no self-loops. To generate
+//! const-sized complete digraphs, see [`CompleteConst`].
 //!
 //! # Examples
 //!
@@ -33,12 +33,12 @@ use {
     },
 };
 
-/// A trait to generate variable-size symmetric complete directed graphs
+/// A trait to generate variable-size symmetric complete digraphs
 ///
 /// # How can I implement `Complete`?
 ///
 /// Provide an implementation of `complete` that generates a symmetric complete
-/// graph with `v` vertices.
+/// digraph with `v` vertices.
 ///
 /// ```
 /// use {
@@ -72,19 +72,19 @@ use {
 ///     }
 /// }
 ///
-/// let graph = Graph::complete(3);
+/// let digraph = Graph::complete(3);
 ///
 /// assert_eq!(
-///     graph.arcs,
+///     digraph.arcs,
 ///     HashSet::from([(0, 1), (1, 0), (0, 2), (2, 0), (1, 2), (2, 1)])
 /// );
 /// ```
 pub trait Complete {
-    /// Generates a complete graph.
+    /// Generates a complete digraph.
     ///
     /// # Arguments
     ///
-    /// * `v` - The number of vertices in the graph
+    /// * `v` - The number of vertices in the digraph
     fn complete(v: usize) -> Self;
 }
 
@@ -254,10 +254,10 @@ mod tests {
     }
 
     fn prop_indegree<T: Complete + Indegree>(v: usize) {
-        let graph = T::complete(v);
+        let digraph = T::complete(v);
 
         for s in 0..v {
-            assert_eq!(graph.indegree(s), v - 1);
+            assert_eq!(digraph.indegree(s), v - 1);
         }
     }
 
@@ -266,10 +266,10 @@ mod tests {
     }
 
     fn prop_outdegree<T: Complete + Outdegree>(v: usize) {
-        let graph = T::complete(v);
+        let digraph = T::complete(v);
 
         for s in 0..v {
-            assert_eq!(graph.outdegree(s), v - 1);
+            assert_eq!(digraph.outdegree(s), v - 1);
         }
     }
 

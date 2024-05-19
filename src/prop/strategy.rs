@@ -11,12 +11,12 @@ use proptest::{
 };
 
 /// Generates a triple `(v, s, t)` where `v` is the number of vertices in a
-/// graph and `s` and `t` are vertices in the graph.
+/// digraph and `s` and `t` are vertices in the digraph.
 ///
 /// # Arguments
 ///
-/// * `min`: The minimum number of vertices in the graph.
-/// * `max`: The maximum number of vertices in the graph.
+/// * `min`: The minimum number of vertices in the digraph.
+/// * `max`: The maximum number of vertices in the digraph.
 ///
 /// # Panics
 ///
@@ -36,13 +36,13 @@ pub fn binop_vertices(min: usize, max: usize) -> impl Strategy<Value = (usize, u
 }
 
 /// Generates a pair `(v, e)` where `v` is the number of vertices and `e` is the
-/// number of arcs in a simple graph.
+/// number of arcs in a simple digraph.
 ///
 /// The number of arcs is in the range `0..=v * (v - 1)`.
 ///
 /// # Arguments
 ///
-/// * `max`: The maximum number of vertices in the graph.
+/// * `max`: The maximum number of vertices in the digraph.
 ///
 /// # Panics
 ///

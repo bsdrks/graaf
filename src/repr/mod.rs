@@ -1,4 +1,4 @@
-//! Custom graph representations
+//! Custom digraph representations
 //!
 //! See the documentation for [`op`] for a list of common representations built
 //! from standard library types.

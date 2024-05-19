@@ -1,6 +1,6 @@
 //! Graph generators
 //!
-//! Generate parametrics directed graphs.
+//! Generate parametrics digraphs.
 //!
 //! # Examples
 //!
