@@ -37,7 +37,7 @@ use crate::op::{
     IsSimple,
     IsSymmetric,
     IterAllArcs,
-    IterArcs,
+    IterOutNeighbors,
     IterVertices,
     Order,
     Outdegree,
@@ -277,14 +277,14 @@ where
     }
 }
 
-impl<const V: usize> IterArcs for AdjacencyMatrix<V>
+impl<const V: usize> IterOutNeighbors for AdjacencyMatrix<V>
 where
     [(); blocks!(V)]:,
 {
     /// # Panics
     ///
     /// Panics if `s >= V`.
-    fn iter_arcs(&self, s: usize) -> impl Iterator<Item = usize> {
+    fn iter_out_neighbors(&self, s: usize) -> impl Iterator<Item = usize> {
         assert!(s < V, "s is not in the graph");
 
         self.iter_vertices().filter(move |&t| self.has_arc(s, t))
@@ -622,23 +622,23 @@ mod tests {
     }
 
     #[test]
-    fn iter_arcs() {
+    fn iter_out_neighbors() {
         let mut digraph = AdjacencyMatrix::<3>::new();
 
         digraph.add_arc(0, 1);
         digraph.add_arc(0, 2);
         digraph.add_arc(2, 1);
 
-        assert!(digraph.iter_arcs(0).eq([1, 2]));
-        assert!(digraph.iter_arcs(1).eq([]));
-        assert!(digraph.iter_arcs(2).eq([1]));
+        assert!(digraph.iter_out_neighbors(0).eq([1, 2]));
+        assert!(digraph.iter_out_neighbors(1).eq([]));
+        assert!(digraph.iter_out_neighbors(2).eq([1]));
     }
 
     #[test]
     #[should_panic(expected = "s is not in the graph")]
-    fn iter_arcs_s_gte_v() {
+    fn iter_out_neighbors_s_gte_v() {
         let digraph = AdjacencyMatrix::<3>::new();
-        let _ = digraph.iter_arcs(3);
+        let _ = digraph.iter_out_neighbors(3);
     }
 
     #[test]

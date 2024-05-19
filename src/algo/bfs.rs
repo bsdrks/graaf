@@ -61,7 +61,7 @@ use {
     crate::{
         algo::predecessor,
         op::{
-            IterArcs,
+            IterOutNeighbors,
             Order,
         },
     },
@@ -109,14 +109,14 @@ use {
 /// ```
 pub fn distances<D, S, W>(digraph: &D, step: S, dist: &mut [W], queue: &mut VecDeque<(usize, W)>)
 where
-    D: IterArcs,
+    D: IterOutNeighbors,
     S: Fn(W) -> W,
     W: Copy + Ord,
 {
     while let Some((s, w)) = queue.pop_front() {
         let w = step(w);
 
-        for t in digraph.iter_arcs(s) {
+        for t in digraph.iter_out_neighbors(s) {
             if w >= dist[t] {
                 continue;
             }
@@ -157,7 +157,7 @@ where
 /// ```
 pub fn single_source_distances<D>(digraph: &D, s: usize) -> Vec<usize>
 where
-    D: Order + IterArcs,
+    D: Order + IterOutNeighbors,
 {
     let mut dist = vec![usize::MAX; digraph.order()];
     let mut queue = VecDeque::from(vec![(s, 0)]);
@@ -222,14 +222,14 @@ pub fn predecessors<D, S, W>(
     dist: &mut [W],
     queue: &mut VecDeque<(usize, W)>,
 ) where
-    D: IterArcs,
+    D: IterOutNeighbors,
     S: Fn(W) -> W,
     W: Copy + Ord,
 {
     while let Some((s, w)) = queue.pop_front() {
         let w = step(w);
 
-        for t in digraph.iter_arcs(s) {
+        for t in digraph.iter_out_neighbors(s) {
             if w >= dist[t] {
                 continue;
             }
@@ -273,7 +273,7 @@ pub fn predecessors<D, S, W>(
 /// ```
 pub fn single_source_predecessors<D>(digraph: &D, s: usize) -> Vec<Option<usize>>
 where
-    D: Order + IterArcs,
+    D: Order + IterOutNeighbors,
 {
     let mut pred = vec![None; digraph.order()];
     let mut dist = vec![usize::MAX; digraph.order()];
@@ -346,14 +346,14 @@ pub fn shortest_path<D, S, T>(
     queue: &mut VecDeque<(usize, usize)>,
 ) -> Option<Vec<usize>>
 where
-    D: IterArcs,
+    D: IterOutNeighbors,
     S: Fn(usize) -> usize,
     T: Fn(usize) -> bool,
 {
     while let Some((s, w)) = queue.pop_front() {
         let w = step(w);
 
-        for t in digraph.iter_arcs(s) {
+        for t in digraph.iter_out_neighbors(s) {
             if w >= dist[t] {
                 continue;
             }
@@ -429,7 +429,7 @@ where
 #[doc(alias = "spsp")]
 pub fn single_pair_shortest_path<D>(digraph: &D, s: usize, t: usize) -> Option<Vec<usize>>
 where
-    D: Order + IterArcs,
+    D: Order + IterOutNeighbors,
 {
     let mut pred = vec![None; digraph.order()];
     let mut dist = vec![usize::MAX; digraph.order()];

@@ -8,7 +8,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.47.3"
+graaf = "0.48.0"
 ```
 
 ## Overview
@@ -127,6 +127,17 @@ digraph.add_arc(1, 1);
 assert!(!digraph.is_simple());
 ```
 
+## Project goals
+
+- A flexible API for digraph operations
+- A comprehensive set of algorithms
+- Generators for common digraphs
+- Competitive performance
+- Complete documentation
+- Full unit test coverage
+- Full benchmark coverage
+- Extensive property tests
+
 ## Features
 
 These features require nightly Rust.
@@ -141,6 +152,6 @@ See [CHANGELOG.md] for a list of changes.
 
 Licensed under [Apache License, Version 2.0] or [MIT license] at your option.
 
+[CHANGELOG.md]: https://github.com/bsdrks/graaf/blob/main/CHANGELOG.md
 [Apache License, Version 2.0]: LICENSE-APACHE
 [MIT license]: LICENSE-MIT
-[CHANGELOG.md]: https://github.com/bsdrks/graaf/blob/main/CHANGELOG.md

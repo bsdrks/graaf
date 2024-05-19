@@ -1,6 +1,4 @@
 #![doc(alias = "in_degree")]
-#![doc(alias = "in_valence")]
-#![doc(alias = "inward_demidegree")]
 //! A trait to get the indegree of a given vertex
 //!
 //! The indegree is the number of arcs incident into a vertex.
@@ -79,6 +77,32 @@ pub trait Indegree {
     ///
     /// * `t`: The target vertex.
     fn indegree(&self, t: usize) -> usize;
+
+    /// Returns whether a vertex is a source of the digraph.
+    ///
+    /// A source is a vertex with an indegree of 0.
+    ///
+    /// # Arguments
+    ///
+    /// * `t`: The vertex.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use {
+    ///     graaf::op::Indegree,
+    ///     std::collections::HashSet,
+    /// };
+    ///
+    /// let digraph = vec![HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
+    ///
+    /// assert!(digraph.is_source(0));
+    /// assert!(!digraph.is_source(1));
+    /// assert!(!digraph.is_source(2));
+    /// ```
+    fn is_source(&self, t: usize) -> bool {
+        self.indegree(t) == 0
+    }
 }
 
 impl Indegree for Vec<BTreeSet<usize>> {
@@ -247,6 +271,35 @@ mod tests {
         };
     }
 
+    macro_rules! test_is_source {
+        ($digraph:expr) => {
+            assert!($digraph.is_source(0));
+            assert!(!$digraph.is_source(1));
+            assert!($digraph.is_source(2));
+            assert!(!$digraph.is_source(3));
+        };
+    }
+
+    macro_rules! test_is_source_unweighted {
+        ($digraph:expr) => {
+            $digraph.add_arc(0, 1);
+            $digraph.add_arc(0, 3);
+            $digraph.add_arc(2, 1);
+
+            test_is_source!($digraph);
+        };
+    }
+
+    macro_rules! test_is_source_weighted {
+        ($digraph:expr) => {
+            $digraph.add_weighted_arc(0, 1, 1);
+            $digraph.add_weighted_arc(0, 3, 2);
+            $digraph.add_weighted_arc(2, 1, 4);
+
+            test_is_source!($digraph);
+        };
+    }
+
     #[test]
     fn vec_btree_set() {
         let digraph = &mut <Vec<BTreeSet<usize>>>::empty(3);
@@ -357,5 +410,117 @@ mod tests {
         let digraph = &mut HashMap::<usize, HashMap<usize, usize>>::empty(3);
 
         test_indegree_weighted!(digraph);
+    }
+
+    #[test]
+    fn vec_btree_set_is_source() {
+        let digraph = &mut <Vec<BTreeSet<usize>>>::empty(3);
+
+        test_is_source_unweighted!(digraph);
+    }
+
+    #[test]
+    fn vec_hash_set_is_source() {
+        let digraph = &mut <Vec<HashSet<usize>>>::empty(3);
+
+        test_is_source_unweighted!(digraph);
+    }
+
+    #[test]
+    fn slice_btree_set_is_source() {
+        let digraph: &mut [BTreeSet<usize>] = &mut Vec::<BTreeSet<usize>>::empty(3);
+
+        test_is_source_unweighted!(digraph);
+    }
+
+    #[test]
+    fn slice_hash_set_is_source() {
+        let digraph: &mut [HashSet<usize>] = &mut Vec::<HashSet<usize>>::empty(3);
+
+        test_is_source_unweighted!(digraph);
+    }
+
+    #[test]
+    fn arr_btree_set_is_source() {
+        let digraph = &mut <[BTreeSet<usize>; 3]>::empty();
+
+        test_is_source_unweighted!(digraph);
+    }
+
+    #[test]
+    fn arr_hash_set_is_source() {
+        let digraph = &mut <[HashSet<usize>; 3]>::empty();
+
+        test_is_source_unweighted!(digraph);
+    }
+
+    #[test]
+    fn vec_btree_map_is_source() {
+        let digraph = &mut <Vec<BTreeMap<usize, usize>>>::empty(3);
+
+        test_is_source_weighted!(digraph);
+    }
+
+    #[test]
+    fn vec_hash_map_is_source() {
+        let digraph = &mut <Vec<HashMap<usize, usize>>>::empty(3);
+
+        test_is_source_weighted!(digraph);
+    }
+
+    #[test]
+    fn slice_btree_map_is_source() {
+        let digraph: &mut [BTreeMap<usize, usize>] = &mut Vec::<BTreeMap<usize, usize>>::empty(3);
+
+        test_is_source_weighted!(digraph);
+    }
+
+    #[test]
+    fn slice_hash_map_is_source() {
+        let digraph: &mut [HashMap<usize, usize>] = &mut Vec::<HashMap<usize, usize>>::empty(3);
+
+        test_is_source_weighted!(digraph);
+    }
+
+    #[test]
+    fn arr_btree_map_is_source() {
+        let digraph = &mut <[BTreeMap<usize, usize>; 3]>::empty();
+
+        test_is_source_weighted!(digraph);
+    }
+
+    #[test]
+    fn arr_hash_map_is_source() {
+        let digraph = &mut <[HashMap<usize, usize>; 3]>::empty();
+
+        test_is_source_weighted!(digraph);
+    }
+
+    #[test]
+    fn btree_map_btree_set_is_source() {
+        let digraph = &mut BTreeMap::<usize, BTreeSet<usize>>::empty(3);
+
+        test_is_source_unweighted!(digraph);
+    }
+
+    #[test]
+    fn btree_map_btree_map_is_source() {
+        let digraph = &mut BTreeMap::<usize, BTreeMap<usize, usize>>::empty(3);
+
+        test_is_source_weighted!(digraph);
+    }
+
+    #[test]
+    fn hash_map_hash_set_is_source() {
+        let digraph = &mut HashMap::<usize, HashSet<usize>>::empty(3);
+
+        test_is_source_unweighted!(digraph);
+    }
+
+    #[test]
+    fn hash_map_hash_map_is_source() {
+        let digraph = &mut HashMap::<usize, HashMap<usize, usize>>::empty(3);
+
+        test_is_source_weighted!(digraph);
     }
 }

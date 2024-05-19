@@ -16,6 +16,72 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.48.0] - 2024-05-19
+
+Added
+
+- Add `is_sink` method to `Outdegree`.
+- Add `is_source` method to `Indegree`.
+- Add project goals to `README`.
+- Add unit test `arr_btree_map_is_sink` for `is_sink`.
+- Add unit test `arr_btree_map_is_source` for `is_source`.
+- Add unit test `arr_btree_set_is_source` for `is_source`.
+- Add unit test `arr_btree_set_unweighted_is_sink` for `is_sink`.
+- Add unit test `arr_btree_set_weighted_is_sink` for `is_sink`.
+- Add unit test `arr_hash_map_is_sink` for `is_sink`.
+- Add unit test `arr_hash_map_is_source` for `is_source`.
+- Add unit test `arr_hash_set_is_source` for `is_source`.
+- Add unit test `arr_hash_set_unweighted_is_sink` for `is_sink`.
+- Add unit test `arr_hash_set_weighted_is_sink` for `is_sink`.
+- Add unit test `arr_vec_unweighted_is_sink` for `is_sink`.
+- Add unit test `arr_vec_weighted_is_sink` for `is_sink`.
+- Add unit test `btree_map_btree_map_is_sink` for `is_sink`.
+- Add unit test `btree_map_btree_map_is_source` for `is_source`.
+- Add unit test `btree_map_btree_set_is_sink` for `is_sink`.
+- Add unit test `btree_map_btree_set_is_source` for `is_source`.
+- Add unit test `btree_map_vec_is_sink` for `is_sink`.
+- Add unit test `hash_map_hash_map_is_sink` for `is_sink`.
+- Add unit test `hash_map_hash_map_is_source` for `is_source`.
+- Add unit test `hash_map_hash_set_is_sink` for `is_sink`.
+- Add unit test `hash_map_hash_set_is_source` for `is_source`.
+- Add unit test `hash_map_vec_is_sink` for `is_sink`.
+- Add unit test `slice_btree_map_is_sink` for `is_sink`.
+- Add unit test `slice_btree_map_is_source` for `is_source`.
+- Add unit test `slice_btree_set_is_source` for `is_source`.
+- Add unit test `slice_btree_set_unweighted_is_sink` for `is_sink`.
+- Add unit test `slice_btree_set_weighted_is_sink` for `is_sink`.
+- Add unit test `slice_hash_map_is_sink` for `is_sink`.
+- Add unit test `slice_hash_map_is_source` for `is_source`.
+- Add unit test `slice_hash_set_is_source` for `is_source`.
+- Add unit test `slice_hash_set_unweighted_is_sink` for `is_sink`.
+- Add unit test `slice_hash_set_weighted_is_sink` for `is_sink`.
+- Add unit test `slice_vec_unweighted_is_sink` for `is_sink`.
+- Add unit test `slice_vec_weighted_is_sink` for `is_sink`.
+- Add unit test `vec_btree_map_is_sink` for `is_sink`.
+- Add unit test `vec_btree_map_is_source` for `is_source`.
+- Add unit test `vec_btree_set_is_source` for `is_source`.
+- Add unit test `vec_btree_set_unweighted_is_sink` for `is_sink`.
+- Add unit test `vec_btree_set_weighted_is_sink` for `is_sink`.
+- Add unit test `vec_hash_map_is_sink` for `is_sink`.
+- Add unit test `vec_hash_map_is_source` for `is_source`.
+- Add unit test `vec_hash_set_is_source` for `is_source`.
+- Add unit test `vec_hash_set_unweighted_is_sink` for `is_sink`.
+- Add unit test `vec_hash_set_weighted_is_sink` for `is_sink`.
+- Add unit test `vec_vec_unweighted_is_sink` for `is_sink`.
+- Add unit test `vec_vec_weighted_is_sink` for `is_sink`.
+
+Changed
+
+- Breaking: Rename `IterArcsMut` to `IterOutNeighborsMut`.
+- Breaking: Rename `IterArcs` to `IterOutNeighbors`.
+
+Removed
+
+- Remove documentation alias "in_valence" for `indegree`.
+- Remove documentation alias "inward_demidegree" for `indegree`.
+- Remove documentation alias "out_valence" for `outdegree`.
+- Remove documentation alias "outward_demidegree" for `outdegree`.
+
 ## [0.47.3] - 2024-05-19
 
 Changed
@@ -102,17 +168,17 @@ Added
 
 Added
 
-- Add `IterArcsMut` trait.
-- Add `arr_vec` unit test for `IterArcsMut`.
-- Add `btree_map_vec` unit test for `IterArcsMut`.
-- Add `hash_map_vec` unit test for `IterArcsMut`.
-- Add `slice_vec` unit test for `IterArcsMut`.
-- Add `vec_vec` unit test for `IterArcsMut`.
-- Implement `IterArcsMut` for `BTreeMap<usize, Vec<usize>>`.
-- Implement `IterArcsMut` for `HashMap<usize, Vec<usize>>`.
-- Implement `IterArcsMut` for `Vec<Vec<usize>>`.
-- Implement `IterArcsMut` for `[Vec<usize>; V]`.
-- Implement `IterArcsMut` for `[Vec<usize>]`.
+- Add `IterOutNeighborsMut` trait.
+- Add `arr_vec` unit test for `IterOutNeighborsMut`.
+- Add `btree_map_vec` unit test for `IterOutNeighborsMut`.
+- Add `hash_map_vec` unit test for `IterOutNeighborsMut`.
+- Add `slice_vec` unit test for `IterOutNeighborsMut`.
+- Add `vec_vec` unit test for `IterOutNeighborsMut`.
+- Implement `IterOutNeighborsMut` for `BTreeMap<usize, Vec<usize>>`.
+- Implement `IterOutNeighborsMut` for `HashMap<usize, Vec<usize>>`.
+- Implement `IterOutNeighborsMut` for `Vec<Vec<usize>>`.
+- Implement `IterOutNeighborsMut` for `[Vec<usize>; V]`.
+- Implement `IterOutNeighborsMut` for `[Vec<usize>]`.
 
 ## [0.45.1] - 2024-05-17
 
@@ -972,7 +1038,7 @@ Changed
 - Breaking: Return immediately in `bfs::shortest_path` when it finds the target, before pushing the target to the queue.
 - Compress textual diagrams.
 - Cross-link `bfs` and `dijkstra` in module documentation.
-- Document "Panics" in `bfs` and `dijkstra`.
+- Document panics in `bfs` and `dijkstra`.
 - Link to `op` in the documentation of `repr`.
 - Remove `min_time` from benches.
 
@@ -1297,11 +1363,11 @@ Removed
 
 Added
 
-- Implement `IterArcs` for `BTreeMap<usize, BTreeSet<usize>>`.
-- Implement `IterArcs` for `BTreeMap<usize, Vec<usize>>`.
-- Implement `IterArcs` for `Vec<BTreeSet<usize>>`.
-- Implement `IterArcs` for `[BTreeSet<usize>; V]`.
-- Implement `IterArcs` for `[BTreeSet<usize>]`.
+- Implement `IterOutNeighbors` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `IterOutNeighbors` for `BTreeMap<usize, Vec<usize>>`.
+- Implement `IterOutNeighbors` for `Vec<BTreeSet<usize>>`.
+- Implement `IterOutNeighbors` for `[BTreeSet<usize>; V]`.
+- Implement `IterOutNeighbors` for `[BTreeSet<usize>]`.
 
 Fixes
 
@@ -1597,8 +1663,8 @@ Added
 - Implement `IsArc` for `[HashSet<usize>]`.
 - Implement `IterAllArcs` for `[(usize, usize)]`.
 - Implement `IterAllWeightedArcs` for `[(usize, usize, W)]`.
-- Implement `IterArcs` for `[HashSet<usize>]`.
-- Implement `IterArcs` for `[Vec<usize>]`.
+- Implement `IterOutNeighbors` for `[HashSet<usize>]`.
+- Implement `IterOutNeighbors` for `[Vec<usize>]`.
 - Implement `IterVertices` for `&[T]`.
 - Implement `IterWeightedArcs` for `[HashMap<usize, W>]`.
 - Implement `IterWeightedArcs` for `[HashSet<(usize, W)>]`.
@@ -1693,7 +1759,7 @@ Added
 - Add implementation documentation for `IsArc`.
 - Add implementation documentation for `IterAllArcs`.
 - Add implementation documentation for `IterAllWeightedArcs`.
-- Add implementation documentation for `IterArcs`.
+- Add implementation documentation for `IterOutNeighbors`.
 - Add implementation documentation for `IterWeightedArcs`.
 - Add implementation documentation for `Outdegree`.
 - Add implementation documentation for `RemoveArc`.
@@ -1717,7 +1783,7 @@ Added
 - Add a doctest for `op::is_arc::IsArc`.
 - Add a doctest for `op::iter_all_arcs::IterAllArcs`.
 - Add a doctest for `op::iter_all_weighted_arcs::IterAllWeightedArcs`.
-- Add a doctest for `op::iter_arcs::IterArcs`.
+- Add a doctest for `op::iter_out_neighbors::IterOutNeighbors`.
 - Add a doctest for `op::iter_vertices::IterVertices`.
 - Add a doctest for `op::iter_weighted_arcs::IterWeightedArcs`.
 - Add a doctest for `op::outdegree::OutDegree`.
@@ -1730,7 +1796,7 @@ Added
 - Add documentation for `op::is_arc`.
 - Add documentation for `op::iter_all_arcs`.
 - Add documentation for `op::iter_all_weighted_arcs`.
-- Add documentation for `op::iter_arcs`.
+- Add documentation for `op::iter_out_neighbors`.
 - Add documentation for `op::iter_vertices`.
 - Add documentation for `op::iter_weighted_arcs`.
 - Add documentation for `op::outdegree`.
