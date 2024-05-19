@@ -84,14 +84,7 @@ Generate random digraphs.
 use {
     graaf::{
         gen::RandomTournament,
-        op::{
-            Degree,
-            Indegree,
-            IterVertices,
-            Order,
-            Outdegree,
-            Size,
-        },
+        op::*,
     },
     std::collections::BTreeSet,
 };
