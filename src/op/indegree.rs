@@ -1,3 +1,4 @@
+#![doc(alias = "in_degree")]
 #![doc(alias = "in_valence")]
 #![doc(alias = "inward_demidegree")]
 //! A trait to get the indegree of a given vertex

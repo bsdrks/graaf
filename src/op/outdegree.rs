@@ -1,3 +1,4 @@
+#![doc(alias = "out_degree")]
 #![doc(alias = "out_valence")]
 #![doc(alias = "outward_demidegree")]
 //! A trait to get the outdegree of a given vertex in a directed graph

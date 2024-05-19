@@ -17,6 +17,13 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.47.2] - 2024-05-19
+
+Added
+
+- Add documentation alias "in_degree" for `op::indegree`.
+- Add documentation alias "out_degree" for `op::outdegree`.
+
 ## [0.47.1] - 2024-05-18
 
 Added
@@ -49,13 +56,13 @@ Added
 
 Changed
 
-- Mark `RandomTournament::random_tournament` as `#[must_use]`.
 - Mark `Complete::complete` as `#[must_use]`.
 - Mark `CompleteConst::complete` as `#[must_use]`.
 - Mark `Cycle::cycle` as `#[must_use]`.
 - Mark `CycleConst::cycle` as `#[must_use]`.
 - Mark `Empty::empty` as `#[must_use]`.
 - Mark `EmptyConst::empty` as `#[must_use]`.
+- Mark `RandomTournament::random_tournament` as `#[must_use]`.
 
 ## [0.47.0] - 2024-05-18
 
