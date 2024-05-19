@@ -16,6 +16,60 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.48.1] - 2024-05-19
+
+Added
+
+- Add `prop::sum_indegrees_eq_sum_outdegrees`.
+- Add property test `degree_btree_map_btree_set` for `random_tournament`.
+- Add property test `degree_hash_map_hash_set` for `random_tournament`.
+- Add property test `degree_vec_btree_set` for `random_tournament`.
+- Add property test `degree_vec_hash_set` for `random_tournament`.
+- Add property test `indegree_btree_map_btree_set` for `random_tournament`.
+- Add property test `indegree_hash_map_hash_set` for `random_tournament`.
+- Add property test `indegree_vec_btree_set` for `random_tournament`.
+- Add property test `indegree_vec_hash_set` for `random_tournament`.
+- Add property test `order_vec_btree_set` for `random_tournament`.
+- Add property test `order_vec_hash_set` for `random_tournament`.
+- Add property test `order_vec_vec` for `random_tournament`.
+- Add property test `outdegree_btree_map_btree_set` for `random_tournament`.
+- Add property test `outdegree_btree_map_vec` for `random_tournament`.
+- Add property test `outdegree_hash_map_hash_set` for `random_tournament`.
+- Add property test `outdegree_hash_map_vec` for `random_tournament`.
+- Add property test `outdegree_vec_btree_set` for `random_tournament`.
+- Add property test `outdegree_vec_hash_set` for `random_tournament`.
+- Add property test `outdegree_vec_vec` for `random_tournament`.
+- Add property test `size_btree_map_btree_set` for `random_tournament`.
+- Add property test `size_btree_map_vec` for `random_tournament`.
+- Add property test `size_hash_map_hash_set` for `random_tournament`.
+- Add property test `size_hash_map_vec` for `random_tournament`.
+- Add property test `size_vec_btree_set` for `random_tournament`.
+- Add property test `size_vec_hash_set` for `random_tournament`.
+- Add property test `size_vec_vec` for `random_tournament`.
+- Add property test `sum_indegrees_eq_sum_outdegrees_arr_btree_set` for `CompleteConst::complete`.
+- Add property test `sum_indegrees_eq_sum_outdegrees_arr_btree_set` for `CycleConst::cycle`.
+- Add property test `sum_indegrees_eq_sum_outdegrees_arr_hash_set` for `CompleteConst::complete`.
+- Add property test `sum_indegrees_eq_sum_outdegrees_arr_hash_set` for `CycleConst::cycle`.
+- Add property test `sum_indegrees_eq_sum_outdegrees_btree_map_btree_set` for `Complete::complete`.
+- Add property test `sum_indegrees_eq_sum_outdegrees_btree_map_btree_set` for `Cycle::cycle`.
+- Add property test `sum_indegrees_eq_sum_outdegrees_hash_map_hash_set` for `Complete::complete`.
+- Add property test `sum_indegrees_eq_sum_outdegrees_hash_map_hash_set` for `Cycle::cycle`.
+- Add property test `sum_indegrees_eq_sum_outdegrees_vec_btree_set` for `Complete::complete`.
+- Add property test `sum_indegrees_eq_sum_outdegrees_vec_btree_set` for `Cycle::cycle`.
+- Add property test `sum_indegrees_eq_sum_outdegrees_vec_hash_set` for `Complete::complete`.
+- Add property test `sum_indegrees_eq_sum_outdegrees_vec_hash_set` for `Cycle::cycle`.
+- Add unit test `btree_set_tuple` for `iter_all_weighted_arcs`.
+
+Removed
+
+- Remove unit test `btree_map_btree_set` for `random_tournament`.
+- Remove unit test `btree_map_vec` for `random_tournament`.
+- Remove unit test `hash_map_hash_set` for `random_tournament`.
+- Remove unit test `hash_map_vec` for `random_tournament`.
+- Remove unit test `vec_btree_set` for `random_tournament`.
+- Remove unit test `vec_hash_set` for `random_tournament`.
+- Remove unit test `vec_vec` for `random_tournament`.
+
 ## [0.48.0] - 2024-05-19
 
 Added

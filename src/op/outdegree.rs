@@ -68,7 +68,7 @@ pub trait Outdegree {
     ///
     /// # Arguments
     ///
-    /// * `s`: The source vertex.
+    /// * `s`: The head vertex.
     fn outdegree(&self, s: usize) -> usize;
 
     /// Returns whether a vertex is a sink of the digraph.
@@ -576,214 +576,214 @@ mod tests {
     fn hash_map_hash_map() {
         let digraph = &mut HashMap::<usize, HashMap<usize, i32>>::empty(4);
 
-        test_is_sink_weighted!(digraph);
+        test_outdegree_weighted!(digraph);
     }
 
     #[test]
-    fn vec_vec_unweighted_is_sink() {
+    fn is_sink_vec_vec_unweighted() {
         let digraph = &mut Vec::<Vec<usize>>::empty(4);
 
         test_is_sink_unweighted!(digraph);
     }
 
     #[test]
-    fn vec_btree_set_unweighted_is_sink() {
+    fn is_sink_vec_btree_set_unweighted() {
         let digraph = &mut Vec::<BTreeSet<usize>>::empty(4);
 
         test_is_sink_unweighted!(digraph);
     }
 
     #[test]
-    fn vec_hash_set_unweighted_is_sink() {
+    fn is_sink_vec_hash_set_unweighted() {
         let digraph = &mut Vec::<HashSet<usize>>::empty(4);
 
         test_is_sink_unweighted!(digraph);
     }
 
     #[test]
-    fn slice_vec_unweighted_is_sink() {
+    fn is_sink_slice_vec_unweighted() {
         let digraph: &mut [Vec<usize>] = &mut Vec::<Vec<usize>>::empty(4);
 
         test_is_sink_unweighted!(digraph);
     }
 
     #[test]
-    fn slice_btree_set_unweighted_is_sink() {
+    fn is_sink_slice_btree_set_unweighted() {
         let digraph: &mut [BTreeSet<usize>] = &mut Vec::<BTreeSet<usize>>::empty(4);
 
         test_is_sink_unweighted!(digraph);
     }
 
     #[test]
-    fn slice_hash_set_unweighted_is_sink() {
+    fn is_sink_slice_hash_set_unweighted() {
         let digraph: &mut [HashSet<usize>] = &mut Vec::<HashSet<usize>>::empty(4);
 
         test_is_sink_unweighted!(digraph);
     }
 
     #[test]
-    fn arr_vec_unweighted_is_sink() {
+    fn is_sink_arr_vec_unweighted() {
         let digraph = &mut <[Vec<usize>; 4]>::empty();
 
         test_is_sink_unweighted!(digraph);
     }
 
     #[test]
-    fn arr_btree_set_unweighted_is_sink() {
+    fn is_sink_arr_btree_set_unweighted() {
         let digraph = &mut <[BTreeSet<usize>; 4]>::empty();
 
         test_is_sink_unweighted!(digraph);
     }
 
     #[test]
-    fn arr_hash_set_unweighted_is_sink() {
+    fn is_sink_arr_hash_set_unweighted() {
         let digraph = &mut <[HashSet<usize>; 4]>::empty();
 
         test_is_sink_unweighted!(digraph);
     }
 
     #[test]
-    fn btree_map_vec_is_sink() {
+    fn is_sink_btree_map_vec() {
         let digraph = &mut BTreeMap::<usize, Vec<usize>>::empty(4);
 
         test_is_sink_unweighted!(digraph);
     }
 
     #[test]
-    fn hash_map_vec_is_sink() {
+    fn is_sink_hash_map_vec() {
         let digraph = &mut HashMap::<usize, Vec<usize>>::empty(4);
 
         test_is_sink_unweighted!(digraph);
     }
 
     #[test]
-    fn btree_map_btree_set_is_sink() {
+    fn is_sink_btree_map_btree_set() {
         let digraph = &mut BTreeMap::<usize, BTreeSet<usize>>::empty(4);
 
         test_is_sink_unweighted!(digraph);
     }
 
     #[test]
-    fn hash_map_hash_set_is_sink() {
+    fn is_sink_hash_map_hash_set() {
         let digraph = &mut HashMap::<usize, HashSet<usize>>::empty(4);
 
         test_is_sink_unweighted!(digraph);
     }
 
     #[test]
-    fn vec_vec_weighted_is_sink() {
+    fn is_sink_vec_vec_weighted() {
         let digraph = &mut Vec::<Vec<(usize, i32)>>::empty(4);
 
         test_is_sink_weighted!(digraph);
     }
 
     #[test]
-    fn vec_btree_set_weighted_is_sink() {
+    fn is_sink_vec_btree_set_weighted() {
         let digraph = &mut Vec::<BTreeSet<(usize, i32)>>::empty(4);
 
         test_is_sink_weighted!(digraph);
     }
 
     #[test]
-    fn vec_hash_set_weighted_is_sink() {
+    fn is_sink_vec_hash_set_weighted() {
         let digraph = &mut Vec::<HashSet<(usize, i32)>>::empty(4);
 
         test_is_sink_weighted!(digraph);
     }
 
     #[test]
-    fn vec_btree_map_is_sink() {
+    fn is_sink_vec_btree_map() {
         let digraph = &mut Vec::<BTreeMap<usize, i32>>::empty(4);
 
         test_is_sink_weighted!(digraph);
     }
 
     #[test]
-    fn vec_hash_map_is_sink() {
+    fn is_sink_vec_hash_map() {
         let digraph = &mut Vec::<HashMap<usize, i32>>::empty(4);
 
         test_is_sink_weighted!(digraph);
     }
 
     #[test]
-    fn slice_vec_weighted_is_sink() {
+    fn is_sink_slice_vec_weighted() {
         let digraph: &mut [Vec<(usize, i32)>] = &mut Vec::<Vec<(usize, i32)>>::empty(4);
 
         test_is_sink_weighted!(digraph);
     }
 
     #[test]
-    fn slice_btree_set_weighted_is_sink() {
+    fn is_sink_slice_btree_set_weighted() {
         let digraph: &mut [BTreeSet<(usize, i32)>] = &mut Vec::<BTreeSet<(usize, i32)>>::empty(4);
 
         test_is_sink_weighted!(digraph);
     }
 
     #[test]
-    fn slice_hash_set_weighted_is_sink() {
+    fn is_sink_slice_hash_set_weighted() {
         let digraph: &mut [HashSet<(usize, i32)>] = &mut Vec::<HashSet<(usize, i32)>>::empty(4);
 
         test_is_sink_weighted!(digraph);
     }
 
     #[test]
-    fn slice_btree_map_is_sink() {
+    fn is_sink_slice_btree_map() {
         let digraph: &mut [BTreeMap<usize, i32>] = &mut Vec::<BTreeMap<usize, i32>>::empty(4);
 
         test_is_sink_weighted!(digraph);
     }
 
     #[test]
-    fn slice_hash_map_is_sink() {
+    fn is_sink_slice_hash_map() {
         let digraph: &mut [HashMap<usize, i32>] = &mut Vec::<HashMap<usize, i32>>::empty(4);
 
         test_is_sink_weighted!(digraph);
     }
 
     #[test]
-    fn arr_vec_weighted_is_sink() {
+    fn is_sink_arr_vec_weighted() {
         let digraph = &mut <[Vec<(usize, i32)>; 4]>::empty();
 
         test_is_sink_weighted!(digraph);
     }
 
     #[test]
-    fn arr_btree_set_weighted_is_sink() {
+    fn is_sink_arr_btree_set_weighted() {
         let digraph = &mut <[BTreeSet<(usize, i32)>; 4]>::empty();
 
         test_is_sink_weighted!(digraph);
     }
 
     #[test]
-    fn arr_hash_set_weighted_is_sink() {
+    fn is_sink_arr_hash_set_weighted() {
         let digraph = &mut <[HashSet<(usize, i32)>; 4]>::empty();
 
         test_is_sink_weighted!(digraph);
     }
 
     #[test]
-    fn arr_btree_map_is_sink() {
+    fn is_sink_arr_btree_map() {
         let digraph = &mut <[BTreeMap<usize, i32>; 4]>::empty();
 
         test_is_sink_weighted!(digraph);
     }
 
     #[test]
-    fn arr_hash_map_is_sink() {
+    fn is_sink_arr_hash_map() {
         let digraph = &mut <[HashMap<usize, i32>; 4]>::empty();
 
         test_is_sink_weighted!(digraph);
     }
 
     #[test]
-    fn btree_map_btree_map_is_sink() {
+    fn is_sink_btree_map_btree_map() {
         let digraph = &mut BTreeMap::<usize, BTreeMap<usize, i32>>::empty(4);
 
         test_is_sink_weighted!(digraph);
     }
 
     #[test]
-    fn hash_map_hash_map_is_sink() {
+    fn is_sink_hash_map_hash_map() {
         let digraph = &mut HashMap::<usize, HashMap<usize, i32>>::empty(4);
 
         test_is_sink_weighted!(digraph);

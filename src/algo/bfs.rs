@@ -72,7 +72,7 @@ use {
 ///
 /// # Arguments
 ///
-/// * `graph`: The digraph.
+/// * `digraph`: The digraph.
 /// * `step`: The function to calculate the new weight.
 /// * `dist`: The distances from the source vertices.
 /// * `queue`: The source vertices.
@@ -81,7 +81,7 @@ use {
 ///
 /// * Panics if `step` panics.
 /// * Panics if a source or successor vertex is not in `dist`.
-/// * Panics if a source or successor vertex is not in `graph`.
+/// * Panics if a source or successor vertex is not in `digraph`.
 ///
 /// # Examples
 ///
@@ -131,7 +131,7 @@ where
 ///
 /// # Arguments
 ///
-/// * `graph`: The digraph.
+/// * `digraph`: The digraph.
 /// * `s`: The source vertex.
 ///
 /// # Panics
@@ -173,7 +173,7 @@ where
 ///
 /// # Arguments
 ///
-/// * `graph`: The digraph.
+/// * `digraph`: The digraph.
 /// * `step`: The function that calculates the accumulated weight.
 /// * `pred`: The predecessors on the shortest paths from the source vertices.
 /// * `dist`: The distances from the source vertices.
@@ -183,7 +183,7 @@ where
 ///
 /// * Panics if `step` panics.
 /// * Panics if a source or successor vertex is not in `dist`.
-/// * Panics if a source or successor vertex is not in `graph`.
+/// * Panics if a source or successor vertex is not in `digraph`.
 /// * Panics if a source or successor vertex is not in `pred`.
 ///
 /// # Examples
@@ -246,7 +246,7 @@ pub fn predecessors<D, S, W>(
 ///
 /// # Arguments
 ///
-/// * `graph`: The digraph.
+/// * `digraph`: The digraph.
 /// * `s`: The source vertex.
 ///
 /// # Panics
@@ -290,7 +290,7 @@ where
 ///
 /// # Arguments
 ///
-/// * `graph`: The digraph.
+/// * `digraph`: The digraph.
 /// * `step`: The function that calculates the accumulated distance.
 /// * `is_target`: The function that determines if the vertex is a target.
 /// * `pred`: The predecessors on the shortest paths from the source vertices.
@@ -302,7 +302,7 @@ where
 /// * Panics if `is_target` panics.
 /// * Panics if `step` panics.
 /// * Panics if a source or successor vertex is not in `dist`.
-/// * Panics if a source or successor vertex is not in `graph`.
+/// * Panics if a source or successor vertex is not in `digraph`.
 /// * Panics if a source or successor vertex is not in `pred`.
 ///
 /// # Examples
@@ -385,7 +385,7 @@ where
 ///
 /// # Arguments
 ///
-/// * `graph`: The digraph.
+/// * `digraph`: The digraph.
 /// * `s`: The source vertex.
 /// * `t`: The target vertex.
 ///

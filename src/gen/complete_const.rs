@@ -159,12 +159,15 @@ where
 mod tests {
     use {
         super::*,
-        crate::op::{
-            Indegree,
-            IsSimple,
-            Order,
-            Outdegree,
-            Size,
+        crate::{
+            op::{
+                Indegree,
+                IsSimple,
+                Order,
+                Outdegree,
+                Size,
+            },
+            prop::sum_indegrees_eq_sum_outdegrees,
         },
     };
 
@@ -379,6 +382,36 @@ mod tests {
         assert_eq!(digraph.outdegree(0), 2);
         assert_eq!(digraph.outdegree(1), 2);
         assert_eq!(digraph.outdegree(2), 2);
+    }
+
+    #[test]
+    fn sum_indegrees_eq_sum_outdegrees_arr_btree_set() {
+        assert!(sum_indegrees_eq_sum_outdegrees(
+            &<[BTreeSet<usize>; 1]>::complete()
+        ));
+
+        assert!(sum_indegrees_eq_sum_outdegrees(
+            &<[BTreeSet<usize>; 2]>::complete()
+        ));
+
+        assert!(sum_indegrees_eq_sum_outdegrees(
+            &<[BTreeSet<usize>; 3]>::complete()
+        ));
+    }
+
+    #[test]
+    fn sum_indegrees_eq_sum_outdegrees_arr_hash_set() {
+        assert!(sum_indegrees_eq_sum_outdegrees(
+            &<[HashSet<usize>; 1]>::complete()
+        ));
+
+        assert!(sum_indegrees_eq_sum_outdegrees(
+            &<[HashSet<usize>; 2]>::complete()
+        ));
+
+        assert!(sum_indegrees_eq_sum_outdegrees(
+            &<[HashSet<usize>; 3]>::complete()
+        ));
     }
 
     #[test]

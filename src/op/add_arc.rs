@@ -84,8 +84,8 @@ pub trait AddArc {
     ///
     /// # Arguments
     ///
-    /// * `s`: The source vertex.
-    /// * `t`: The target vertex.
+    /// * `s`: The head vertex.
+    /// * `t`: The tail vertex.
     fn add_arc(&mut self, s: usize, t: usize);
 }
 

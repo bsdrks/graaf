@@ -93,8 +93,8 @@ pub trait AddWeightedArc<W> {
     ///
     /// # Arguments
     ///
-    /// * `s`: The source vertex.
-    /// * `t`: The target vertex.
+    /// * `s`: The head vertex.
+    /// * `t`: The tail vertex.
     /// * `w`: The weight of the arc.
     fn add_weighted_arc(&mut self, s: usize, t: usize, w: W);
 }

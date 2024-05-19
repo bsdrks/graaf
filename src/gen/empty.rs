@@ -456,14 +456,6 @@ mod tests {
         proptest::prelude::*,
     };
 
-    fn prop_size<T: Size + Empty>(v: usize) {
-        assert_eq!(T::empty(v).size(), 0);
-    }
-
-    fn prop_order<T: Order + Empty>(v: usize) {
-        assert_eq!(T::empty(v).order(), v);
-    }
-
     fn prop_indegree<T: Indegree + Empty>(v: usize) {
         let digraph = T::empty(v);
 
@@ -480,6 +472,10 @@ mod tests {
         assert!(T::empty(v).is_simple());
     }
 
+    fn prop_order<T: Order + Empty>(v: usize) {
+        assert_eq!(T::empty(v).order(), v);
+    }
+
     fn prop_outdegree<T: Outdegree + Empty>(v: usize) {
         let digraph = T::empty(v);
 
@@ -488,7 +484,206 @@ mod tests {
         }
     }
 
+    fn prop_size<T: Size + Empty>(v: usize) {
+        assert_eq!(T::empty(v).size(), 0);
+    }
+
     proptest! {
+        #[test]
+        fn indegree_vec_btree_set_unweighted(v in 1..100_usize) {
+            prop_indegree::<Vec<BTreeSet<usize>>>(v);
+        }
+
+        #[test]
+        fn indegree_vec_hash_set_unweighted(v in 1..100_usize) {
+            prop_indegree::<Vec<HashSet<usize>>>(v);
+        }
+
+        #[test]
+        fn indegree_btree_map_btree_set_unweighted(v in 1..100_usize) {
+            prop_indegree::<BTreeMap<usize, BTreeSet<usize>>>(v);
+        }
+
+        #[test]
+        fn indegree_hash_map_hash_set_unweighted(v in 1..100_usize) {
+            prop_indegree::<HashMap<usize, HashSet<usize>>>(v);
+        }
+
+        #[test]
+        fn indegree_vec_btree_map_weighted(v in 1..100_usize) {
+            prop_indegree::<Vec<BTreeMap<usize, usize>>>(v);
+        }
+
+        #[test]
+        fn indegree_vec_hash_map_weighted(v in 1..100_usize) {
+            prop_indegree::<Vec<HashMap<usize, usize>>>(v);
+        }
+
+        #[test]
+        fn indegree_btree_map_btree_set(v in 1..100_usize) {
+            prop_indegree::<BTreeMap<usize, BTreeSet<usize>>>(v);
+        }
+
+        #[test]
+        fn indegree_hash_map_hash_set(v in 1..100_usize) {
+            prop_indegree::<HashMap<usize, HashSet<usize>>>(v);
+        }
+
+        #[test]
+        fn indegree_btree_map_btree_map(v in 1..100_usize) {
+            prop_indegree::<BTreeMap<usize, BTreeMap<usize, usize>>>(v);
+        }
+
+        #[test]
+        fn indegree_hash_map_hash_map(v in 1..100_usize) {
+            prop_indegree::<HashMap<usize, HashMap<usize, usize>>>(v);
+        }
+
+        #[test]
+        fn is_regular_vec_btree_set_unweighted(v in 1..100_usize) {
+            prop_is_regular::<Vec<BTreeSet<usize>>>(v);
+        }
+
+        #[test]
+        fn is_simple_vec_btree_set_unweighted(v in 1..100_usize) {
+            prop_is_simple::<Vec<BTreeSet<usize>>>(v);
+        }
+
+        #[test]
+        fn is_simple_vec_hash_set_unweighted(v in 1..100_usize) {
+            prop_is_simple::<Vec<HashSet<usize>>>(v);
+        }
+
+        #[test]
+        fn is_simple_vec_tuple_unweighted(v in 1..100_usize) {
+            prop_is_simple::<Vec<(usize, usize)>>(v);
+        }
+
+        #[test]
+        fn is_simple_btree_set_tuple_unweighted(v in 1..100_usize) {
+            prop_is_simple::<BTreeSet<(usize, usize)>>(v);
+        }
+
+        #[test]
+        fn is_simple_hash_set_tuple_unweighted(v in 1..100_usize) {
+            prop_is_simple::<HashSet<(usize, usize)>>(v);
+        }
+
+        #[test]
+        fn is_simple_vec_tuple_weighted(v in 1..100_usize) {
+            prop_is_simple::<Vec<(usize, usize, usize)>>(v);
+        }
+
+        #[test]
+        fn is_simple_btree_set_tuple_weighted(v in 1..100_usize) {
+            prop_is_simple::<BTreeSet<(usize, usize, usize)>>(v);
+        }
+
+        #[test]
+        fn is_simple_hash_set_tuple_weighted(v in 1..100_usize) {
+            prop_is_simple::<HashSet<(usize, usize, usize)>>(v);
+        }
+
+        #[test]
+        fn order_vec_vec_unweighted(v in 1..100_usize) {
+            prop_order::<Vec<Vec<usize>>>(v);
+        }
+
+        #[test]
+        fn order_vec_btree_set_unweighted(v in 1..100_usize) {
+            prop_order::<Vec<BTreeSet<usize>>>(v);
+        }
+
+        #[test]
+        fn order_vec_hash_set_unweighted(v in 1..100_usize) {
+            prop_order::<Vec<HashSet<usize>>>(v);
+        }
+
+        #[test]
+        fn order_vec_vec_weighted(v in 1..100_usize) {
+            prop_order::<Vec<Vec<(usize, usize)>>>(v);
+        }
+
+        #[test]
+        fn order_vec_btree_set_weighted(v in 1..100_usize) {
+            prop_order::<Vec<BTreeSet<(usize, usize)>>>(v);
+        }
+
+        #[test]
+        fn order_vec_hash_set_weighted(v in 1..100_usize) {
+            prop_order::<Vec<HashSet<(usize, usize)>>>(v);
+        }
+
+        #[test]
+        fn outdegree_vec_vec_unweighted(v in 1..100_usize) {
+            prop_outdegree::<Vec<Vec<usize>>>(v);
+        }
+
+        #[test]
+        fn outdegree_vec_btree_set_unweighted(v in 1..100_usize) {
+            prop_outdegree::<Vec<BTreeSet<usize>>>(v);
+        }
+
+        #[test]
+        fn outdegree_vec_hash_set_unweighted(v in 1..100_usize) {
+            prop_outdegree::<Vec<HashSet<usize>>>(v);
+        }
+
+        #[test]
+        fn outdegree_btree_map_vec_unweighted(v in 1..100_usize) {
+            prop_outdegree::<BTreeMap<usize, Vec<usize>>>(v);
+        }
+
+        #[test]
+        fn outdegree_btree_map_btree_set_unweighted(v in 1..100_usize) {
+            prop_outdegree::<BTreeMap<usize, BTreeSet<usize>>>(v);
+        }
+
+        #[test]
+        fn outdegree_hash_map_vec_unweighted(v in 1..100_usize) {
+            prop_outdegree::<HashMap<usize, Vec<usize>>>(v);
+        }
+
+        #[test]
+        fn outdegree_hash_map_hash_set_unweighted(v in 1..100_usize) {
+            prop_outdegree::<HashMap<usize, HashSet<usize>>>(v);
+        }
+
+        #[test]
+        fn outdegree_vec_vec_weighted(v in 1..100_usize) {
+            prop_outdegree::<Vec<Vec<(usize, usize)>>>(v);
+        }
+
+        #[test]
+        fn outdegree_vec_btree_set_weighted(v in 1..100_usize) {
+            prop_outdegree::<Vec<BTreeSet<(usize, usize)>>>(v);
+        }
+
+        #[test]
+        fn outdegree_vec_hash_set_weighted(v in 1..100_usize) {
+            prop_outdegree::<Vec<HashSet<(usize, usize)>>>(v);
+        }
+
+        #[test]
+        fn outdegree_vec_btree_map_weighted(v in 1..100_usize) {
+            prop_outdegree::<Vec<BTreeMap<usize, usize>>>(v);
+        }
+
+        #[test]
+        fn outdegree_vec_hash_map_weighted(v in 1..100_usize) {
+            prop_outdegree::<Vec<HashMap<usize, usize>>>(v);
+        }
+
+        #[test]
+        fn outdegree_btree_map_btree_map(v in 1..100_usize) {
+            prop_outdegree::<BTreeMap<usize, BTreeMap<usize, usize>>>(v);
+        }
+
+        #[test]
+        fn outdegree_hash_map_hash_map(v in 1..100_usize) {
+            prop_outdegree::<HashMap<usize, HashMap<usize, usize>>>(v);
+        }
+
         #[test]
         fn size_vec_vec_unweighted(v in 1..100_usize) {
             prop_size::<Vec<Vec<usize>>>(v);
@@ -607,201 +802,6 @@ mod tests {
         #[test]
         fn size_hash_set_tuple_weighted(v in 1..100_usize) {
             prop_size::<HashSet<(usize, usize, usize)>>(v);
-        }
-
-        #[test]
-        fn order_vec_vec_unweighted(v in 1..100_usize) {
-            prop_order::<Vec<Vec<usize>>>(v);
-        }
-
-        #[test]
-        fn order_vec_btree_set_unweighted(v in 1..100_usize) {
-            prop_order::<Vec<BTreeSet<usize>>>(v);
-        }
-
-        #[test]
-        fn order_vec_hash_set_unweighted(v in 1..100_usize) {
-            prop_order::<Vec<HashSet<usize>>>(v);
-        }
-
-        #[test]
-        fn order_vec_vec_weighted(v in 1..100_usize) {
-            prop_order::<Vec<Vec<(usize, usize)>>>(v);
-        }
-
-        #[test]
-        fn order_vec_btree_set_weighted(v in 1..100_usize) {
-            prop_order::<Vec<BTreeSet<(usize, usize)>>>(v);
-        }
-
-        #[test]
-        fn order_vec_hash_set_weighted(v in 1..100_usize) {
-            prop_order::<Vec<HashSet<(usize, usize)>>>(v);
-        }
-
-        #[test]
-        fn indegree_vec_btree_set_unweighted(v in 1..100_usize) {
-            prop_indegree::<Vec<BTreeSet<usize>>>(v);
-        }
-
-        #[test]
-        fn indegree_vec_hash_set_unweighted(v in 1..100_usize) {
-            prop_indegree::<Vec<HashSet<usize>>>(v);
-        }
-
-        #[test]
-        fn indegree_btree_map_btree_set_unweighted(v in 1..100_usize) {
-            prop_indegree::<BTreeMap<usize, BTreeSet<usize>>>(v);
-        }
-
-        #[test]
-        fn indegree_hash_map_hash_set_unweighted(v in 1..100_usize) {
-            prop_indegree::<HashMap<usize, HashSet<usize>>>(v);
-        }
-
-        #[test]
-        fn indegree_vec_btree_map_weighted(v in 1..100_usize) {
-            prop_indegree::<Vec<BTreeMap<usize, usize>>>(v);
-        }
-
-        #[test]
-        fn indegree_vec_hash_map_weighted(v in 1..100_usize) {
-            prop_indegree::<Vec<HashMap<usize, usize>>>(v);
-        }
-
-        #[test]
-        fn indegree_btree_map_btree_set(v in 1..100_usize) {
-            prop_indegree::<BTreeMap<usize, BTreeSet<usize>>>(v);
-        }
-
-        #[test]
-        fn indegree_hash_map_hash_set(v in 1..100_usize) {
-            prop_indegree::<HashMap<usize, HashSet<usize>>>(v);
-        }
-
-        #[test]
-        fn indegree_btree_map_btree_map(v in 1..100_usize) {
-            prop_indegree::<BTreeMap<usize, BTreeMap<usize, usize>>>(v);
-        }
-
-        #[test]
-        fn indegree_hash_map_hash_map(v in 1..100_usize) {
-            prop_indegree::<HashMap<usize, HashMap<usize, usize>>>(v);
-        }
-
-        #[test]
-        fn is_regular_vec_btree_set_unweighted(v in 1..100_usize) {
-            prop_is_regular::<Vec<BTreeSet<usize>>>(v);
-        }
-
-        #[test]
-        fn is_simple_vec_btree_set_unweighted(v in 1..100_usize) {
-            prop_is_simple::<Vec<BTreeSet<usize>>>(v);
-        }
-
-        #[test]
-        fn is_simple_vec_hash_set_unweighted(v in 1..100_usize) {
-            prop_is_simple::<Vec<HashSet<usize>>>(v);
-        }
-
-        #[test]
-        fn is_simple_vec_tuple_unweighted(v in 1..100_usize) {
-            prop_is_simple::<Vec<(usize, usize)>>(v);
-        }
-
-        #[test]
-        fn is_simple_btree_set_tuple_unweighted(v in 1..100_usize) {
-            prop_is_simple::<BTreeSet<(usize, usize)>>(v);
-        }
-
-        #[test]
-        fn is_simple_hash_set_tuple_unweighted(v in 1..100_usize) {
-            prop_is_simple::<HashSet<(usize, usize)>>(v);
-        }
-
-        #[test]
-        fn is_simple_vec_tuple_weighted(v in 1..100_usize) {
-            prop_is_simple::<Vec<(usize, usize, usize)>>(v);
-        }
-
-        #[test]
-        fn is_simple_btree_set_tuple_weighted(v in 1..100_usize) {
-            prop_is_simple::<BTreeSet<(usize, usize, usize)>>(v);
-        }
-
-        #[test]
-        fn is_simple_hash_set_tuple_weighted(v in 1..100_usize) {
-            prop_is_simple::<HashSet<(usize, usize, usize)>>(v);
-        }
-
-        #[test]
-        fn outdegree_vec_vec_unweighted(v in 1..100_usize) {
-            prop_outdegree::<Vec<Vec<usize>>>(v);
-        }
-
-        #[test]
-        fn outdegree_vec_btree_set_unweighted(v in 1..100_usize) {
-            prop_outdegree::<Vec<BTreeSet<usize>>>(v);
-        }
-
-        #[test]
-        fn outdegree_vec_hash_set_unweighted(v in 1..100_usize) {
-            prop_outdegree::<Vec<HashSet<usize>>>(v);
-        }
-
-        #[test]
-        fn outdegree_btree_map_vec_unweighted(v in 1..100_usize) {
-            prop_outdegree::<BTreeMap<usize, Vec<usize>>>(v);
-        }
-
-        #[test]
-        fn outdegree_btree_map_btree_set_unweighted(v in 1..100_usize) {
-            prop_outdegree::<BTreeMap<usize, BTreeSet<usize>>>(v);
-        }
-
-        #[test]
-        fn outdegree_hash_map_vec_unweighted(v in 1..100_usize) {
-            prop_outdegree::<HashMap<usize, Vec<usize>>>(v);
-        }
-
-        #[test]
-        fn outdegree_hash_map_hash_set_unweighted(v in 1..100_usize) {
-            prop_outdegree::<HashMap<usize, HashSet<usize>>>(v);
-        }
-
-        #[test]
-        fn outdegree_vec_vec_weighted(v in 1..100_usize) {
-            prop_outdegree::<Vec<Vec<(usize, usize)>>>(v);
-        }
-
-        #[test]
-        fn outdegree_vec_btree_set_weighted(v in 1..100_usize) {
-            prop_outdegree::<Vec<BTreeSet<(usize, usize)>>>(v);
-        }
-
-        #[test]
-        fn outdegree_vec_hash_set_weighted(v in 1..100_usize) {
-            prop_outdegree::<Vec<HashSet<(usize, usize)>>>(v);
-        }
-
-        #[test]
-        fn outdegree_vec_btree_map_weighted(v in 1..100_usize) {
-            prop_outdegree::<Vec<BTreeMap<usize, usize>>>(v);
-        }
-
-        #[test]
-        fn outdegree_vec_hash_map_weighted(v in 1..100_usize) {
-            prop_outdegree::<Vec<HashMap<usize, usize>>>(v);
-        }
-
-        #[test]
-        fn outdegree_btree_map_btree_map(v in 1..100_usize) {
-            prop_outdegree::<BTreeMap<usize, BTreeMap<usize, usize>>>(v);
-        }
-
-        #[test]
-        fn outdegree_hash_map_hash_map(v in 1..100_usize) {
-            prop_outdegree::<HashMap<usize, HashMap<usize, usize>>>(v);
         }
     }
 
@@ -1321,22 +1321,22 @@ mod tests {
     }
 
     #[test]
-    fn vec_vec_unweighted_trivial() {
+    fn trivial_vec_vec_unweighted() {
         assert_eq!(Vec::<Vec<usize>>::trivial(), vec![Vec::new()]);
     }
 
     #[test]
-    fn vec_btree_set_unweighted_trivial() {
+    fn trivial_vec_btree_set_unweighted() {
         assert_eq!(Vec::<BTreeSet<usize>>::trivial(), vec![BTreeSet::new()]);
     }
 
     #[test]
-    fn vec_hash_set_unweighted_trivial() {
+    fn trivial_vec_hash_set_unweighted() {
         assert_eq!(Vec::<HashSet<usize>>::trivial(), vec![HashSet::new()]);
     }
 
     #[test]
-    fn btree_map_vec_unweighted_trivial() {
+    fn trivial_btree_map_vec_unweighted() {
         assert_eq!(
             BTreeMap::<usize, Vec<usize>>::trivial(),
             BTreeMap::from([(0, Vec::new())])
@@ -1344,7 +1344,7 @@ mod tests {
     }
 
     #[test]
-    fn btree_map_btree_set_unweighted_trivial() {
+    fn trivial_btree_map_btree_set_unweighted() {
         assert_eq!(
             BTreeMap::<usize, BTreeSet<usize>>::trivial(),
             BTreeMap::from([(0, BTreeSet::new())])
@@ -1352,7 +1352,7 @@ mod tests {
     }
 
     #[test]
-    fn hash_map_vec_unweighted_trivial() {
+    fn trivial_hash_map_vec_unweighted() {
         assert_eq!(
             HashMap::<usize, Vec<usize>>::trivial(),
             HashMap::from([(0, Vec::new())])
@@ -1360,7 +1360,7 @@ mod tests {
     }
 
     #[test]
-    fn hash_map_hash_set_unweighted_trivial() {
+    fn trivial_hash_map_hash_set_unweighted() {
         assert_eq!(
             HashMap::<usize, HashSet<usize>>::trivial(),
             HashMap::from([(0, HashSet::new())])
@@ -1368,27 +1368,27 @@ mod tests {
     }
 
     #[test]
-    fn vec_tuple_unweighted_trivial() {
+    fn trivial_vec_tuple_unweighted() {
         assert_eq!(Vec::<(usize, usize)>::trivial(), Vec::new());
     }
 
     #[test]
-    fn btree_set_tuple_unweighted_trivial() {
+    fn trivial_btree_set_tuple_unweighted() {
         assert_eq!(BTreeSet::<(usize, usize)>::trivial(), BTreeSet::new());
     }
 
     #[test]
-    fn hash_set_tuple_unweighted_trivial() {
+    fn trivial_hash_set_tuple_unweighted() {
         assert_eq!(HashSet::<(usize, usize)>::trivial(), HashSet::new());
     }
 
     #[test]
-    fn vec_vec_weighted_trivial() {
+    fn trivial_vec_vec_weighted() {
         assert_eq!(Vec::<Vec<(usize, usize)>>::trivial(), vec![Vec::new()]);
     }
 
     #[test]
-    fn vec_btree_set_weighted_trivial() {
+    fn trivial_vec_btree_set_weighted() {
         assert_eq!(
             Vec::<BTreeSet<(usize, usize)>>::trivial(),
             vec![BTreeSet::new()]
@@ -1396,7 +1396,7 @@ mod tests {
     }
 
     #[test]
-    fn vec_hash_set_weighted_trivial() {
+    fn trivial_vec_hash_set_weighted() {
         assert_eq!(
             Vec::<HashSet<(usize, usize)>>::trivial(),
             vec![HashSet::new()]
@@ -1404,7 +1404,7 @@ mod tests {
     }
 
     #[test]
-    fn btree_map_vec_weighted_trivial() {
+    fn trivial_btree_map_vec_weighted() {
         assert_eq!(
             BTreeMap::<usize, Vec<(usize, usize)>>::trivial(),
             BTreeMap::from([(0, Vec::new())])
@@ -1412,7 +1412,7 @@ mod tests {
     }
 
     #[test]
-    fn btree_map_btree_set_weighted_trivial() {
+    fn trivial_btree_map_btree_set_weighted() {
         assert_eq!(
             BTreeMap::<usize, BTreeSet<(usize, usize)>>::trivial(),
             BTreeMap::from([(0, BTreeSet::new())])
@@ -1420,7 +1420,7 @@ mod tests {
     }
 
     #[test]
-    fn btree_map_btree_map_trivial() {
+    fn trivial_btree_map_btree_map() {
         assert_eq!(
             BTreeMap::<usize, BTreeMap<usize, usize>>::trivial(),
             BTreeMap::from([(0, BTreeMap::new())])
@@ -1428,7 +1428,7 @@ mod tests {
     }
 
     #[test]
-    fn hash_map_vec_weighted_trivial() {
+    fn trivial_hash_map_vec_weighted() {
         assert_eq!(
             HashMap::<usize, Vec<(usize, usize)>>::trivial(),
             HashMap::from([(0, Vec::new())])
@@ -1436,7 +1436,7 @@ mod tests {
     }
 
     #[test]
-    fn hash_map_hash_set_weighted_trivial() {
+    fn trivial_hash_map_hash_set_weighted() {
         assert_eq!(
             HashMap::<usize, HashSet<(usize, usize)>>::trivial(),
             HashMap::from([(0, HashSet::new())])
@@ -1444,7 +1444,7 @@ mod tests {
     }
 
     #[test]
-    fn hash_map_hash_map_trivial() {
+    fn trivial_hash_map_hash_map() {
         assert_eq!(
             HashMap::<usize, HashMap<usize, usize>>::trivial(),
             HashMap::from([(0, HashMap::new())])
@@ -1452,12 +1452,12 @@ mod tests {
     }
 
     #[test]
-    fn vec_tuple_weighted_trivial() {
+    fn trivial_vec_tuple_weighted() {
         assert_eq!(Vec::<(usize, usize, usize)>::trivial(), Vec::new());
     }
 
     #[test]
-    fn btree_set_tuple_weighted_trivial() {
+    fn trivial_btree_set_tuple_weighted() {
         assert_eq!(
             BTreeSet::<(usize, usize, usize)>::trivial(),
             BTreeSet::new()
@@ -1465,7 +1465,7 @@ mod tests {
     }
 
     #[test]
-    fn hash_set_tuple_weighted_trivial() {
+    fn trivial_hash_set_tuple_weighted() {
         assert_eq!(HashSet::<(usize, usize, usize)>::trivial(), HashSet::new());
     }
 }

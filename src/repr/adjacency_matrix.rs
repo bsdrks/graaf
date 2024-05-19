@@ -363,7 +363,7 @@ mod tests {
 
     #[test]
     #[should_panic(expected = "s is not in the graph")]
-    fn toggle_s_gte_v() {
+    fn toggle_panic_s_gte_v() {
         let mut digraph = AdjacencyMatrix::<3>::new();
 
         digraph.toggle(3, 0);
@@ -371,7 +371,7 @@ mod tests {
 
     #[test]
     #[should_panic(expected = "t is not in the graph")]
-    fn toggle_t_gte_v() {
+    fn toggle_panic_t_gte_v() {
         let mut digraph = AdjacencyMatrix::<3>::new();
 
         digraph.toggle(0, 3);
@@ -396,7 +396,7 @@ mod tests {
 
     #[test]
     #[should_panic(expected = "s is not in the graph")]
-    fn add_arc_s_gte_v() {
+    fn add_arc_panic_s_gte_v() {
         let mut digraph = AdjacencyMatrix::<3>::new();
 
         digraph.add_arc(3, 0);
@@ -404,7 +404,7 @@ mod tests {
 
     #[test]
     #[should_panic(expected = "t is not in the graph")]
-    fn add_arc_t_gte_v() {
+    fn add_arc_panic_t_gte_v() {
         let mut digraph = AdjacencyMatrix::<3>::new();
 
         digraph.add_arc(0, 3);
@@ -515,7 +515,7 @@ mod tests {
 
     #[test]
     #[should_panic(expected = "t is not in the graph")]
-    fn indegree_t_gte_v() {
+    fn indegree_panic_t_gte_v() {
         let digraph = AdjacencyMatrix::<3>::new();
         let _ = digraph.indegree(3);
     }
@@ -636,7 +636,7 @@ mod tests {
 
     #[test]
     #[should_panic(expected = "s is not in the graph")]
-    fn iter_out_neighbors_s_gte_v() {
+    fn iter_out_neighbors_panic_s_gte_v() {
         let digraph = AdjacencyMatrix::<3>::new();
         let _ = digraph.iter_out_neighbors(3);
     }
@@ -667,7 +667,7 @@ mod tests {
 
     #[test]
     #[should_panic(expected = "s is not in the graph")]
-    fn outdegree_s_gte_v() {
+    fn outdegree_panic_s_gte_v() {
         let digraph = AdjacencyMatrix::<3>::new();
         let _ = digraph.outdegree(3);
     }
@@ -704,7 +704,7 @@ mod tests {
 
     #[test]
     #[should_panic(expected = "s is not in the graph")]
-    fn remove_arc_s_gte_v() {
+    fn remove_arc_panic_s_gte_v() {
         let mut digraph = AdjacencyMatrix::<3>::new();
 
         let _ = digraph.remove_arc(3, 0);
@@ -712,7 +712,7 @@ mod tests {
 
     #[test]
     #[should_panic(expected = "t is not in the graph")]
-    fn remove_arc_t_gte_v() {
+    fn remove_arc_panic_t_gte_v() {
         let mut digraph = AdjacencyMatrix::<3>::new();
 
         let _ = digraph.remove_arc(0, 3);

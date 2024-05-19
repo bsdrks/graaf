@@ -615,28 +615,35 @@ mod tests {
     }
 
     #[test]
-    fn vec() {
+    fn vec_tuple() {
         let digraph = vec![(0, 1, 2), (1, 2, 3), (2, 0, 4)];
 
         test_iter_all_weighted_arcs_stable!(digraph);
     }
 
     #[test]
-    fn slice() {
+    fn slice_tuple() {
         let digraph: &[(usize, usize, usize)] = &[(0, 1, 2), (1, 2, 3), (2, 0, 4)];
 
         test_iter_all_weighted_arcs_stable!(digraph);
     }
 
     #[test]
-    fn arr() {
+    fn arr_tuple() {
         let digraph = [(0, 1, 2), (1, 2, 3), (2, 0, 4)];
 
         test_iter_all_weighted_arcs_stable!(digraph);
     }
 
     #[test]
-    fn hash_set() {
+    fn btree_set_tuple() {
+        let digraph = BTreeSet::from([(0, 1, 2), (1, 2, 3), (2, 0, 4)]);
+
+        test_iter_all_weighted_arcs_stable!(digraph);
+    }
+
+    #[test]
+    fn hash_set_tuple() {
         let digraph: HashSet<(usize, usize, usize)> =
             HashSet::from([(0, 1, 2), (1, 2, 3), (2, 0, 4)]);
 

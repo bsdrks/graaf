@@ -235,23 +235,19 @@ where
 mod tests {
     use {
         super::*,
-        crate::op::{
-            Indegree,
-            IsSimple,
-            Order,
-            Outdegree,
-            Size,
+        crate::{
+            op::{
+                Indegree,
+                IsSimple,
+                IterVertices,
+                Order,
+                Outdegree,
+                Size,
+            },
+            prop::sum_indegrees_eq_sum_outdegrees,
         },
         proptest::prelude::*,
     };
-
-    fn prop_size<T: Complete + Size>(v: usize) {
-        assert_eq!(T::complete(v).size(), v * (v - 1));
-    }
-
-    fn prop_order<T: Complete + Order>(v: usize) {
-        assert_eq!(T::complete(v).order(), v);
-    }
 
     fn prop_indegree<T: Complete + Indegree>(v: usize) {
         let digraph = T::complete(v);
@@ -265,6 +261,10 @@ mod tests {
         assert!(T::complete(v).is_simple());
     }
 
+    fn prop_order<T: Complete + Order>(v: usize) {
+        assert_eq!(T::complete(v).order(), v);
+    }
+
     fn prop_outdegree<T: Complete + Outdegree>(v: usize) {
         let digraph = T::complete(v);
 
@@ -273,7 +273,112 @@ mod tests {
         }
     }
 
+    fn prop_size<T: Complete + Size>(v: usize) {
+        assert_eq!(T::complete(v).size(), v * (v - 1));
+    }
+
+    fn prop_sum_indegrees_eq_sum_outdegrees<T: Complete + Indegree + IterVertices + Outdegree>(
+        v: usize,
+    ) {
+        assert!(sum_indegrees_eq_sum_outdegrees(&T::complete(v)));
+    }
+
     proptest! {
+        #[test]
+        fn indegree_vec_btree_set(v in 1..100_usize) {
+            prop_indegree::<Vec<BTreeSet<usize>>>(v);
+        }
+
+        #[test]
+        fn indegree_vec_hash_set(v in 1..100_usize) {
+            prop_indegree::<Vec<HashSet<usize>>>(v);
+        }
+
+        #[test]
+        fn indegree_btree_map_btree_set(v in 1..100_usize) {
+            prop_indegree::<BTreeMap<usize, BTreeSet<usize>>>(v);
+        }
+
+        #[test]
+        fn indegree_hash_map_hash_set(v in 1..100_usize) {
+            prop_indegree::<HashMap<usize, HashSet<usize>>>(v);
+        }
+
+        #[test]
+        fn is_simple_vec_btree_set(v in 1..100_usize) {
+            prop_is_simple::<Vec<BTreeSet<usize>>>(v);
+        }
+
+        #[test]
+        fn is_simple_vec_hash_set(v in 1..100_usize) {
+            prop_is_simple::<Vec<HashSet<usize>>>(v);
+        }
+
+        #[test]
+        fn is_simple_vec_tuple(v in 1..100_usize) {
+            prop_is_simple::<Vec<(usize, usize)>>(v);
+        }
+
+        #[test]
+        fn is_simple_btree_set_tuple(v in 1..100_usize) {
+            prop_is_simple::<BTreeSet<(usize, usize)>>(v);
+        }
+
+        #[test]
+        fn is_simple_hash_set_tuple(v in 1..100_usize) {
+            prop_is_simple::<HashSet<(usize, usize)>>(v);
+        }
+
+        #[test]
+        fn order_vec_vec(v in 1..100_usize) {
+            prop_order::<Vec<Vec<usize>>>(v);
+        }
+
+        #[test]
+        fn order_vec_btree_set(v in 1..100_usize) {
+            prop_order::<Vec<BTreeSet<usize>>>(v);
+        }
+
+        #[test]
+        fn order_vec_hash_set(v in 1..100_usize) {
+            prop_order::<Vec<HashSet<usize>>>(v);
+        }
+
+        #[test]
+        fn outdegree_vec_vec(v in 1..100_usize) {
+            prop_outdegree::<Vec<Vec<usize>>>(v);
+        }
+
+        #[test]
+        fn outdegree_vec_btree_set(v in 1..100_usize) {
+            prop_outdegree::<Vec<BTreeSet<usize>>>(v);
+        }
+
+        #[test]
+        fn outdegree_vec_hash_set(v in 1..100_usize) {
+            prop_outdegree::<Vec<HashSet<usize>>>(v);
+        }
+
+        #[test]
+        fn outdegree_btree_map_vec(v in 1..100_usize) {
+            prop_outdegree::<BTreeMap<usize, Vec<usize>>>(v);
+        }
+
+        #[test]
+        fn outdegree_btree_map_btree_set(v in 1..100_usize) {
+            prop_outdegree::<BTreeMap<usize, BTreeSet<usize>>>(v);
+        }
+
+        #[test]
+        fn outdegree_hash_map_vec(v in 1..100_usize) {
+            prop_outdegree::<HashMap<usize, Vec<usize>>>(v);
+        }
+
+        #[test]
+        fn outdegree_hash_map_hash_set(v in 1..100_usize) {
+            prop_outdegree::<HashMap<usize, HashSet<usize>>>(v);
+        }
+
         #[test]
         fn size_vec_vec(v in 1..100_usize) {
             prop_size::<Vec<Vec<usize>>>(v);
@@ -325,98 +430,23 @@ mod tests {
         }
 
         #[test]
-        fn order_vec_vec(v in 1..100_usize) {
-            prop_order::<Vec<Vec<usize>>>(v);
+        fn sum_indegrees_eq_sum_outdegrees_vec_btree_set(v in 1..100_usize) {
+            prop_sum_indegrees_eq_sum_outdegrees::<Vec<BTreeSet<usize>>>(v);
         }
 
         #[test]
-        fn order_vec_btree_set(v in 1..100_usize) {
-            prop_order::<Vec<BTreeSet<usize>>>(v);
+        fn sum_indegrees_eq_sum_outdegrees_vec_hash_set(v in 1..100_usize) {
+            prop_sum_indegrees_eq_sum_outdegrees::<Vec<HashSet<usize>>>(v);
         }
 
         #[test]
-        fn order_vec_hash_set(v in 1..100_usize) {
-            prop_order::<Vec<HashSet<usize>>>(v);
+        fn sum_indegrees_eq_sum_outdegrees_btree_map_btree_set(v in 1..100_usize) {
+            prop_sum_indegrees_eq_sum_outdegrees::<BTreeMap<usize, BTreeSet<usize>>>(v);
         }
 
         #[test]
-        fn indegree_vec_btree_set(v in 1..100_usize) {
-            prop_indegree::<Vec<BTreeSet<usize>>>(v);
-        }
-
-        #[test]
-        fn indegree_vec_hash_set(v in 1..100_usize) {
-            prop_indegree::<Vec<HashSet<usize>>>(v);
-        }
-
-        #[test]
-        fn indegree_btree_map_btree_set(v in 1..100_usize) {
-            prop_indegree::<BTreeMap<usize, BTreeSet<usize>>>(v);
-        }
-
-        #[test]
-        fn indegree_hash_map_hash_set(v in 1..100_usize) {
-            prop_indegree::<HashMap<usize, HashSet<usize>>>(v);
-        }
-
-        #[test]
-        fn is_simple_vec_btree_set(v in 1..100_usize) {
-            prop_is_simple::<Vec<BTreeSet<usize>>>(v);
-        }
-
-        #[test]
-        fn is_simple_vec_hash_set(v in 1..100_usize) {
-            prop_is_simple::<Vec<HashSet<usize>>>(v);
-        }
-
-        #[test]
-        fn is_simple_vec_tuple(v in 1..100_usize) {
-            prop_is_simple::<Vec<(usize, usize)>>(v);
-        }
-
-        #[test]
-        fn is_simple_btree_set_tuple(v in 1..100_usize) {
-            prop_is_simple::<BTreeSet<(usize, usize)>>(v);
-        }
-
-        #[test]
-        fn is_simple_hash_set_tuple(v in 1..100_usize) {
-            prop_is_simple::<HashSet<(usize, usize)>>(v);
-        }
-
-        #[test]
-        fn outdegree_vec_vec(v in 1..100_usize) {
-            prop_outdegree::<Vec<Vec<usize>>>(v);
-        }
-
-        #[test]
-        fn outdegree_vec_btree_set(v in 1..100_usize) {
-            prop_outdegree::<Vec<BTreeSet<usize>>>(v);
-        }
-
-        #[test]
-        fn outdegree_vec_hash_set(v in 1..100_usize) {
-            prop_outdegree::<Vec<HashSet<usize>>>(v);
-        }
-
-        #[test]
-        fn outdegree_btree_map_vec(v in 1..100_usize) {
-            prop_outdegree::<BTreeMap<usize, Vec<usize>>>(v);
-        }
-
-        #[test]
-        fn outdegree_btree_map_btree_set(v in 1..100_usize) {
-            prop_outdegree::<BTreeMap<usize, BTreeSet<usize>>>(v);
-        }
-
-        #[test]
-        fn outdegree_hash_map_vec(v in 1..100_usize) {
-            prop_outdegree::<HashMap<usize, Vec<usize>>>(v);
-        }
-
-        #[test]
-        fn outdegree_hash_map_hash_set(v in 1..100_usize) {
-            prop_outdegree::<HashMap<usize, HashSet<usize>>>(v);
+        fn sum_indegrees_eq_sum_outdegrees_hash_map_hash_set(v in 1..100_usize) {
+            prop_sum_indegrees_eq_sum_outdegrees::<HashMap<usize, HashSet<usize>>>(v);
         }
     }
 

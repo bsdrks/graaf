@@ -9,17 +9,18 @@ use crate::op::{
     RemoveArc,
 };
 
-/// Returns where adding a weighted arc with [`AddWeightedArc`] and then
+/// Returns whether adding a weighted arc with [`AddWeightedArc`] and then
 /// removing it with [`RemoveArc`] keeps the digraph unchanged.
 ///
 /// Types that implement [`AddWeightedArc`] and [`RemoveArc`] should ensure
-/// that the property holds for every `graph`, `s`, and `t` of the given types.
+/// that the property holds for every `digraph`, `s`, and `t` of the given
+/// types.
 ///
 /// # Arguments
 ///
-/// * `graph`: The digraph.
-/// * `s`: The source vertex.
-/// * `t`: The target vertex.
+/// * `digraph`: The digraph.
+/// * `s`: The tail vertex.
+/// * `t`: The head vertex.
 /// * `w`: The weight of the arc.
 ///
 /// [`AddWeightedArc`]: crate::op::AddWeightedArc

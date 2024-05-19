@@ -13,11 +13,11 @@ use crate::op::{
 /// [`RemoveArc`] keeps the digraph unchanged.
 ///
 /// Types that implement [`AddArc`] and [`RemoveArc`] should ensure that the
-/// property holds for every `graph`, `s`, and `t` of the given types.
+/// property holds for every `digraph`, `s`, and `t` of the given types.
 ///
 /// # Arguments
 ///
-/// * `graph`: The digraph.
+/// * `digraph`: The digraph.
 /// * `s`: The source vertex.
 /// * `t`: The target vertex.
 ///

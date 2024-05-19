@@ -236,93 +236,170 @@ mod tests {
             Outdegree,
             Size,
         },
+        proptest::proptest,
     };
 
-    #[test]
-    fn vec_vec() {
-        let digraph = <Vec<Vec<usize>>>::random_tournament(4);
-
-        assert_eq!(digraph.size(), 6);
-        assert_eq!(digraph.order(), 4);
+    fn prop_degree<T: Degree + IterVertices + RandomTournament>(v: usize) {
+        let digraph = T::random_tournament(v);
+        let degree = v - 1;
 
         for s in digraph.iter_vertices() {
-            assert!((0..3).contains(&digraph.outdegree(s)));
+            assert_eq!(digraph.degree(s), degree);
         }
     }
 
-    #[test]
-    fn vec_btree_set() {
-        let digraph = <Vec<BTreeSet<usize>>>::random_tournament(4);
-
-        assert_eq!(digraph.size(), 6);
-        assert_eq!(digraph.order(), 4);
+    fn prop_indegree<T: Indegree + IterVertices + RandomTournament>(v: usize) {
+        let digraph = T::random_tournament(v);
 
         for s in digraph.iter_vertices() {
-            assert_eq!(digraph.degree(s), 3);
-            assert!((0..3).contains(&digraph.outdegree(s)));
-            assert!((0..3).contains(&digraph.indegree(s)));
+            assert!((0..v).contains(&digraph.indegree(s)));
         }
     }
 
-    #[test]
-    fn vec_hash_set() {
-        let digraph = <Vec<HashSet<usize>>>::random_tournament(4);
+    fn prop_order<T: Order + RandomTournament>(v: usize) {
+        let digraph = T::random_tournament(v);
 
-        assert_eq!(digraph.size(), 6);
-        assert_eq!(digraph.order(), 4);
+        assert_eq!(digraph.order(), v);
+    }
+
+    fn prop_outdegree<T: Outdegree + IterVertices + RandomTournament>(v: usize) {
+        let digraph = T::random_tournament(v);
 
         for s in digraph.iter_vertices() {
-            assert_eq!(digraph.degree(s), 3);
-            assert!((0..3).contains(&digraph.outdegree(s)));
-            assert!((0..3).contains(&digraph.indegree(s)));
+            assert!((0..v).contains(&digraph.outdegree(s)));
         }
     }
 
-    #[test]
-    fn btree_map_vec() {
-        let digraph = <BTreeMap<usize, Vec<usize>>>::random_tournament(4);
+    fn prop_size<T: RandomTournament + Size>(v: usize) {
+        let digraph = T::random_tournament(v);
 
-        assert_eq!(digraph.size(), 6);
-
-        for s in digraph.iter_vertices() {
-            assert!((0..3).contains(&digraph.outdegree(s)));
-        }
+        assert_eq!(digraph.size(), (0..v).sum::<usize>());
     }
 
-    #[test]
-    fn btree_map_btree_set() {
-        let digraph = <BTreeMap<usize, BTreeSet<usize>>>::random_tournament(4);
-
-        assert_eq!(digraph.size(), 6);
-
-        for s in digraph.iter_vertices() {
-            assert_eq!(digraph.degree(s), 3);
-            assert!((0..3).contains(&digraph.outdegree(s)));
-            assert!((0..3).contains(&digraph.indegree(s)));
+    proptest! {
+        #[test]
+        fn degree_vec_btree_set(v in 1..100_usize) {
+            prop_degree::<Vec<BTreeSet<usize>>>(v);
         }
-    }
 
-    #[test]
-    fn hash_map_vec() {
-        let digraph = <HashMap<usize, Vec<usize>>>::random_tournament(4);
-
-        assert_eq!(digraph.size(), 6);
-
-        for s in digraph.iter_vertices() {
-            assert!((0..3).contains(&digraph.outdegree(s)));
+        #[test]
+        fn degree_vec_hash_set(v in 1..100_usize) {
+            prop_degree::<Vec<HashSet<usize>>>(v);
         }
-    }
 
-    #[test]
-    fn hash_map_hash_set() {
-        let digraph = <HashMap<usize, HashSet<usize>>>::random_tournament(4);
+        #[test]
+        fn degree_btree_map_btree_set(v in 1..100_usize) {
+            prop_degree::<BTreeMap<usize, BTreeSet<usize>>>(v);
+        }
 
-        assert_eq!(digraph.size(), 6);
+        #[test]
+        fn degree_hash_map_hash_set(v in 1..100_usize) {
+            prop_degree::<HashMap<usize, HashSet<usize>>>(v);
+        }
 
-        for s in digraph.iter_vertices() {
-            assert_eq!(digraph.degree(s), 3);
-            assert!((0..3).contains(&digraph.outdegree(s)));
-            assert!((0..3).contains(&digraph.indegree(s)));
+        #[test]
+        fn indegree_vec_btree_set(v in 1..100_usize) {
+            prop_indegree::<Vec<BTreeSet<usize>>>(v);
+        }
+
+        #[test]
+        fn indegree_vec_hash_set(v in 1..100_usize) {
+            prop_indegree::<Vec<HashSet<usize>>>(v);
+        }
+
+        #[test]
+        fn indegree_btree_map_btree_set(v in 1..100_usize) {
+            prop_indegree::<BTreeMap<usize, BTreeSet<usize>>>(v);
+        }
+
+        #[test]
+        fn indegree_hash_map_hash_set(v in 1..100_usize) {
+            prop_indegree::<HashMap<usize, HashSet<usize>>>(v);
+        }
+
+        #[test]
+        fn order_vec_vec(v in 1..100_usize) {
+            prop_order::<Vec<Vec<usize>>>(v);
+        }
+
+        #[test]
+        fn order_vec_btree_set(v in 1..100_usize) {
+            prop_order::<Vec<BTreeSet<usize>>>(v);
+        }
+
+        #[test]
+        fn order_vec_hash_set(v in 1..100_usize) {
+            prop_order::<Vec<HashSet<usize>>>(v);
+        }
+
+        #[test]
+        fn outdegree_vec_vec(v in 1..100_usize) {
+            prop_outdegree::<Vec<Vec<usize>>>(v);
+        }
+
+        #[test]
+        fn outdegree_vec_btree_set(v in 1..100_usize) {
+            prop_outdegree::<Vec<BTreeSet<usize>>>(v);
+        }
+
+        #[test]
+        fn outdegree_vec_hash_set(v in 1..100_usize) {
+            prop_outdegree::<Vec<HashSet<usize>>>(v);
+        }
+
+        #[test]
+        fn outdegree_btree_map_vec(v in 1..100_usize) {
+            prop_outdegree::<BTreeMap<usize, Vec<usize>>>(v);
+        }
+
+        #[test]
+        fn outdegree_btree_map_btree_set(v in 1..100_usize) {
+            prop_outdegree::<BTreeMap<usize, BTreeSet<usize>>>(v);
+        }
+
+        #[test]
+        fn outdegree_hash_map_vec(v in 1..100_usize) {
+            prop_outdegree::<HashMap<usize, Vec<usize>>>(v);
+        }
+
+        #[test]
+        fn outdegree_hash_map_hash_set(v in 1..100_usize) {
+            prop_outdegree::<HashMap<usize, HashSet<usize>>>(v);
+        }
+
+        #[test]
+        fn size_vec_vec(v in 1..100_usize) {
+            prop_size::<Vec<Vec<usize>>>(v);
+        }
+
+        #[test]
+        fn size_vec_btree_set(v in 1..100_usize) {
+            prop_size::<Vec<BTreeSet<usize>>>(v);
+        }
+
+        #[test]
+        fn size_vec_hash_set(v in 1..100_usize) {
+            prop_size::<Vec<HashSet<usize>>>(v);
+        }
+
+        #[test]
+        fn size_btree_map_vec(v in 1..100_usize) {
+            prop_size::<BTreeMap<usize, Vec<usize>>>(v);
+        }
+
+        #[test]
+        fn size_btree_map_btree_set(v in 1..100_usize) {
+            prop_size::<BTreeMap<usize, BTreeSet<usize>>>(v);
+        }
+
+        #[test]
+        fn size_hash_map_vec(v in 1..100_usize) {
+            prop_size::<HashMap<usize, Vec<usize>>>(v);
+        }
+
+        #[test]
+        fn size_hash_map_hash_set(v in 1..100_usize) {
+            prop_size::<HashMap<usize, HashSet<usize>>>(v);
         }
     }
 }

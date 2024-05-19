@@ -114,8 +114,8 @@ pub trait HasArc {
     ///
     /// # Arguments
     ///
-    /// * `s`: The source vertex.
-    /// * `t`: The target vertex.
+    /// * `s`: The head vertex.
+    /// * `t`: The tail vertex.
     ///
     /// # Panics
     ///

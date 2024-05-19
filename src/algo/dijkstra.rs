@@ -68,7 +68,7 @@ use {
 ///
 /// # Arguments
 ///
-/// * `graph`: The digraph.
+/// * `digraph`: The digraph.
 /// * `step`: The function that calculates the accumulated weight.
 /// * `dist`: The distances from the source vertices.
 /// * `heap`: The source vertices.
@@ -135,7 +135,7 @@ pub fn distances<D, S, W>(
 ///
 /// # Arguments
 ///
-/// * `graph`: The digraph.
+/// * `digraph`: The digraph.
 /// * `s`: The source vertex.
 ///
 /// # Panics
@@ -178,7 +178,7 @@ where
 ///
 /// # Arguments
 ///
-/// * `graph`: The digraph.
+/// * `digraph`: The digraph.
 /// * `step`: The function that calculates the accumulated weight.
 /// * `pred`: The predecessors on the shortest paths from the source vertices.
 /// * `dist`: The distances from the source vertices.
@@ -251,7 +251,7 @@ pub fn predecessors<D, S, W>(
 ///
 /// # Arguments
 ///
-/// * `graph`: The digraph.
+/// * `digraph`: The digraph.
 /// * `s`: The source vertex.
 ///
 /// # Panics
@@ -300,7 +300,7 @@ where
 ///
 /// # Arguments
 ///
-/// * `graph`: The digraph.
+/// * `digraph`: The digraph.
 /// * `step`: The function that calculates the accumulated weight.
 /// * `is_target`: The function that determines if the vertex is a target.
 /// * `pred`: The predecessors on the shortest paths from the source vertices.
@@ -400,7 +400,7 @@ where
 ///
 /// # Arguments
 ///
-/// * `graph`: The digraph.
+/// * `digraph`: The digraph.
 /// * `s`: The source vertex.
 /// * `t`: The target vertex.
 ///

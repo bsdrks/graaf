@@ -88,7 +88,7 @@ pub trait IterWeightedArcs<W> {
     ///
     /// # Arguments
     ///
-    /// * `s`: The source vertex.
+    /// * `s`: The head vertex.
     fn iter_weighted_arcs<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a;

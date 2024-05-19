@@ -11,11 +11,11 @@ use crate::op::{
 /// Returns whether adding an arc with [`AddArc`] is reflected by [`HasArc`].
 ///
 /// Types that implement [`AddArc`] and [`HasArc`] should ensure that this
-/// property holds for every `graph`, `s`, and `t` of the given types.
+/// property holds for every `digraph`, `s`, and `t` of the given types.
 ///
 /// # Arguments
 ///
-/// * `graph`: The digraph.
+/// * `digraph`: The digraph.
 /// * `s`: The source vertex.
 /// * `t`: The target vertex.
 ///

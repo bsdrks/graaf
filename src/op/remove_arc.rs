@@ -146,8 +146,8 @@ pub trait RemoveArc {
     ///
     /// # Arguments
     ///
-    /// * `s`: The source vertex.
-    /// * `t`: The target vertex.
+    /// * `s`: The head vertex.
+    /// * `t`: The tail vertex.
     fn remove_arc(&mut self, s: usize, t: usize) -> bool;
 }
 

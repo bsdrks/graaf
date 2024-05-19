@@ -84,8 +84,8 @@ pub trait ArcWeight<W> {
     ///
     /// # Arguments
     ///
-    /// * `s`: The source vertex.
-    /// * `t`: The target vertex.
+    /// * `s`: The head vertex.
+    /// * `t`: The tail vertex.
     fn arc_weight(&self, s: usize, t: usize) -> Option<&W>;
 }
 

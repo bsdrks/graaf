@@ -165,7 +165,10 @@ impl<const V: usize> CycleConst for [(usize, usize); V] {
 mod tests {
     use {
         super::*,
-        crate::op::IsSimple,
+        crate::{
+            op::IsSimple,
+            prop::sum_indegrees_eq_sum_outdegrees,
+        },
     };
 
     #[test]
@@ -246,6 +249,35 @@ mod tests {
         assert!(<[(_, _); 6]>::cycle().is_simple());
     }
 
+    #[test]
+    fn sum_indegrees_eq_sum_outdegrees_arr_btree_set() {
+        assert!(sum_indegrees_eq_sum_outdegrees(
+            &<[BTreeSet<usize>; 1]>::cycle()
+        ));
+
+        assert!(sum_indegrees_eq_sum_outdegrees(
+            &<[BTreeSet<usize>; 2]>::cycle()
+        ));
+
+        assert!(sum_indegrees_eq_sum_outdegrees(
+            &<[BTreeSet<usize>; 3]>::cycle()
+        ));
+    }
+
+    #[test]
+    fn sum_indegrees_eq_sum_outdegrees_arr_hash_set() {
+        assert!(sum_indegrees_eq_sum_outdegrees(
+            &<[HashSet<usize>; 1]>::cycle()
+        ));
+
+        assert!(sum_indegrees_eq_sum_outdegrees(
+            &<[HashSet<usize>; 2]>::cycle()
+        ));
+
+        assert!(sum_indegrees_eq_sum_outdegrees(
+            &<[HashSet<usize>; 3]>::cycle()
+        ));
+    }
     #[test]
     #[should_panic(expected = "a graph must have at least one vertex")]
     fn arr_vec_panic() {

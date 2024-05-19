@@ -255,12 +255,16 @@ where
 mod tests {
     use {
         super::*,
-        crate::op::{
-            Indegree,
-            IsSimple,
-            Order,
-            Outdegree,
-            Size,
+        crate::{
+            op::{
+                Indegree,
+                IsSimple,
+                IterVertices,
+                Order,
+                Outdegree,
+                Size,
+            },
+            prop::sum_indegrees_eq_sum_outdegrees,
         },
         proptest::prelude::*,
     };
@@ -291,6 +295,12 @@ mod tests {
         for s in 0..v {
             assert_eq!(digraph.outdegree(s), 1);
         }
+    }
+
+    fn prop_sum_indegrees_eq_sum_outdegrees<T: Cycle + Indegree + IterVertices + Outdegree>(
+        v: usize,
+    ) {
+        assert!(sum_indegrees_eq_sum_outdegrees(&T::cycle(v)));
     }
 
     proptest! {
@@ -437,6 +447,26 @@ mod tests {
         #[test]
         fn outdegree_hash_map_hash_set(v in 1..100_usize) {
             prop_outdegree::<HashMap<usize, HashSet<usize>>>(v);
+        }
+
+        #[test]
+        fn sum_indegrees_eq_sum_outdegrees_vec_btree_set(v in 1..100_usize) {
+            prop_sum_indegrees_eq_sum_outdegrees::<Vec<BTreeSet<usize>>>(v);
+        }
+
+        #[test]
+        fn sum_indegrees_eq_sum_outdegrees_vec_hash_set(v in 1..100_usize) {
+            prop_sum_indegrees_eq_sum_outdegrees::<Vec<HashSet<usize>>>(v);
+        }
+
+        #[test]
+        fn sum_indegrees_eq_sum_outdegrees_btree_map_btree_set(v in 1..100_usize) {
+            prop_sum_indegrees_eq_sum_outdegrees::<BTreeMap<usize, BTreeSet<usize>>>(v);
+        }
+
+        #[test]
+        fn sum_indegrees_eq_sum_outdegrees_hash_map_hash_set(v in 1..100_usize) {
+            prop_sum_indegrees_eq_sum_outdegrees::<HashMap<usize, HashSet<usize>>>(v);
         }
     }
 
