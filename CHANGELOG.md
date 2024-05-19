@@ -24,6 +24,10 @@ Added
 - Add documentation alias "in_degree" for `op::indegree`.
 - Add documentation alias "out_degree" for `op::outdegree`.
 
+Removed
+
+- Remove testing from `publish` script.
+
 ## [0.47.1] - 2024-05-18
 
 Added
