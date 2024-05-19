@@ -16,6 +16,12 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.48.2] - 2024-05-20
+
+Changed
+
+- Shorten `README` example.
+
 ## [0.48.1] - 2024-05-19
 
 Added
