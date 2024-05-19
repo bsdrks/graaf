@@ -26,14 +26,14 @@ use {
     std::collections::BTreeSet,
 };
 
-let mut graph = <[BTreeSet<usize>; 3]>::empty();
+let mut digraph = <[BTreeSet<usize>; 3]>::empty();
 
-graph.add_arc(0, 1);
-graph.add_arc(0, 2);
+digraph.add_arc(0, 1);
+digraph.add_arc(0, 2);
 
-assert_eq!(graph.degree(0), 2);
-assert_eq!(graph.degree(1), 1);
-assert_eq!(graph.degree(2), 1);
+assert_eq!(digraph.degree(0), 2);
+assert_eq!(digraph.degree(1), 1);
+assert_eq!(digraph.degree(2), 1);
 ```
 
 ### Algorithms
@@ -47,31 +47,12 @@ use graaf::algo::bfs::single_pair_shortest_path as spsp;
 // ↑     ↑
 // 3  →  2
 
-let graph = [Vec::new(), vec![0], vec![1], vec![0, 2]];
+let digraph = [Vec::new(), vec![0], vec![1], vec![0, 2]];
 
-assert_eq!(spsp(&graph, 3, 0), Some(vec![3, 0]));
-assert_eq!(spsp(&graph, 3, 1), Some(vec![3, 2, 1]));
-assert_eq!(spsp(&graph, 3, 2), Some(vec![3, 2]));
-assert_eq!(spsp(&graph, 0, 3), None);
-```
-
-### Representations
-
-An adjacency matrix representation is available with the `adjacency_matrix`
-feature.
-
-```rust
-use graaf::{
-    op::*,
-    repr::AdjacencyMatrix,
-};
-
-let mut graph = AdjacencyMatrix::<3>::new();
-
-graph.add_arc(0, 1);
-graph.add_arc(1, 1);
-
-assert!(!graph.is_simple());
+assert_eq!(spsp(&digraph, 3, 0), Some(vec![3, 0]));
+assert_eq!(spsp(&digraph, 3, 1), Some(vec![3, 2, 1]));
+assert_eq!(spsp(&digraph, 3, 2), Some(vec![3, 2]));
+assert_eq!(spsp(&digraph, 0, 3), None);
 ```
 
 ### Generators
@@ -125,6 +106,25 @@ for s in tournament.iter_vertices() {
     assert!((0..3).contains(&tournament.outdegree(s)));
     assert!((0..3).contains(&tournament.indegree(s)));
 }
+```
+
+### Representations
+
+An adjacency matrix representation is available with the `adjacency_matrix`
+feature.
+
+```rust
+use graaf::{
+    op::*,
+    repr::AdjacencyMatrix,
+};
+
+let mut digraph = AdjacencyMatrix::<3>::new();
+
+digraph.add_arc(0, 1);
+digraph.add_arc(1, 1);
+
+assert!(!digraph.is_simple());
 ```
 
 ## Features
