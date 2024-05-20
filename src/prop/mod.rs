@@ -1,4 +1,26 @@
 //! Cross-module properties and strategies.
+//!
+//! # Examples
+//!
+//! Properties test the combined behavior of multiple traits.
+//!
+//! ```
+//! extern crate alloc;
+//!
+//! use {
+//!     alloc::collections::BTreeSet,
+//!     graaf::{
+//!         gen::RandomTournament,
+//!         prop::sum_indegrees_eq_sum_outdegrees,
+//!     },
+//! };
+//!
+//! for v in 1..10 {
+//!     let digraph = Vec::<BTreeSet<usize>>::random_tournament(v);
+//!
+//!     assert!(sum_indegrees_eq_sum_outdegrees(&digraph));
+//! }
+//! ```
 
 mod add_arc_has_arc;
 mod add_arc_remove_arc;

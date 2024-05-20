@@ -71,7 +71,6 @@
 //! use graaf::gen::*;
 //!
 //! assert_eq!(Vec::<Vec<usize>>::empty(2), vec![Vec::new(), Vec::new()]);
-//!
 //! assert_eq!(Vec::<Vec<usize>>::cycle(3), vec![vec![1], vec![2], vec![0]]);
 //!
 //! assert_eq!(
@@ -86,14 +85,7 @@
 //! use {
 //!     graaf::{
 //!         gen::RandomTournament,
-//!         op::{
-//!             Degree,
-//!             Indegree,
-//!             IterVertices,
-//!             Order,
-//!             Outdegree,
-//!             Size,
-//!         },
+//!         op::*,
 //!     },
 //!     std::collections::BTreeSet,
 //! };

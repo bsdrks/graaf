@@ -2,19 +2,28 @@
 
 ## Provisional roadmap
 
+- Add DFS.
 - Add `IterAllArcsMut` trait.
 - Add `IterAllWeightedArcsMut` trait.
 - Add `bfs::shortest_paths`.
 - Add `bfs::single_pair_shortest_paths`.
+- Add `converse` trait.
 - Add `dijkstra::shortest_paths`.
 - Add `dijkstra::single_pair_shortest_paths`.
-- Add a `dfs` module.
+- Add `reverse_arc` trait.
 - Add a generator for single-sink complete digraphs.
 - Add a generator for single-source complete digraphs.
 - Benchmark against popular Rust graph libraries.
 - Benchmark against popular graph libraries in other languages.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.48.3] - 2024-05-20
+
+Added
+
+- Add `prop` module documentation example.
+- Add `repr` module documentation example.
 
 ## [0.48.2] - 2024-05-20
 
