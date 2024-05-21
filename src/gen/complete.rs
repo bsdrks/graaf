@@ -249,7 +249,10 @@ mod tests {
         proptest::prelude::*,
     };
 
-    fn prop_indegree<T: Complete + Indegree>(v: usize) {
+    fn prop_indegree<T>(v: usize)
+    where
+        T: Complete + Indegree,
+    {
         let digraph = T::complete(v);
 
         for s in 0..v {
@@ -257,15 +260,24 @@ mod tests {
         }
     }
 
-    fn prop_is_simple<T: Complete + IsSimple>(v: usize) {
+    fn prop_is_simple<T>(v: usize)
+    where
+        T: Complete + IsSimple,
+    {
         assert!(T::complete(v).is_simple());
     }
 
-    fn prop_order<T: Complete + Order>(v: usize) {
+    fn prop_order<T>(v: usize)
+    where
+        T: Complete + Order,
+    {
         assert_eq!(T::complete(v).order(), v);
     }
 
-    fn prop_outdegree<T: Complete + Outdegree>(v: usize) {
+    fn prop_outdegree<T>(v: usize)
+    where
+        T: Complete + Outdegree,
+    {
         let digraph = T::complete(v);
 
         for s in 0..v {
@@ -273,13 +285,17 @@ mod tests {
         }
     }
 
-    fn prop_size<T: Complete + Size>(v: usize) {
+    fn prop_size<T>(v: usize)
+    where
+        T: Complete + Size,
+    {
         assert_eq!(T::complete(v).size(), v * (v - 1));
     }
 
-    fn prop_sum_indegrees_eq_sum_outdegrees<T: Complete + Indegree + IterVertices + Outdegree>(
-        v: usize,
-    ) {
+    fn prop_sum_indegrees_eq_sum_outdegrees<T>(v: usize)
+    where
+        T: Complete + Indegree + IterVertices + Outdegree,
+    {
         assert!(sum_indegrees_eq_sum_outdegrees(&T::complete(v)));
     }
 

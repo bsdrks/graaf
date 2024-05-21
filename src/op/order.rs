@@ -92,7 +92,7 @@ where
     }
 }
 
-impl<H, W> Order for Vec<HashSet<(usize, W), H>>
+impl<W, H> Order for Vec<HashSet<(usize, W), H>>
 where
     H: BuildHasher,
 {
@@ -149,7 +149,7 @@ where
     }
 }
 
-impl<H, W> Order for [HashSet<(usize, W), H>]
+impl<W, H> Order for [HashSet<(usize, W), H>]
 where
     H: BuildHasher,
 {

@@ -271,8 +271,7 @@ where
 impl<W, H> Empty for Vec<HashSet<(usize, W), H>>
 where
     W: Clone,
-    H: BuildHasher + Default,
-    HashSet<(usize, W), H>: Clone,
+    H: BuildHasher + Clone + Default,
 {
     /// # Panics
     ///
@@ -301,8 +300,7 @@ where
 impl<W, H> Empty for Vec<HashMap<usize, W, H>>
 where
     W: Clone,
-    H: BuildHasher + Default,
-    HashMap<usize, W, H>: Clone,
+    H: BuildHasher + Clone + Default,
 {
     /// # Panics
     ///
@@ -456,7 +454,10 @@ mod tests {
         proptest::prelude::*,
     };
 
-    fn prop_indegree<T: Indegree + Empty>(v: usize) {
+    fn prop_indegree<T>(v: usize)
+    where
+        T: Indegree + Empty,
+    {
         let digraph = T::empty(v);
 
         for s in 0..v {
@@ -464,19 +465,31 @@ mod tests {
         }
     }
 
-    fn prop_is_regular<T: IsRegular + Empty>(v: usize) {
+    fn prop_is_regular<T>(v: usize)
+    where
+        T: IsRegular + Empty,
+    {
         assert!(T::empty(v).is_regular());
     }
 
-    fn prop_is_simple<T: IsSimple + Empty>(v: usize) {
+    fn prop_is_simple<T>(v: usize)
+    where
+        T: IsSimple + Empty,
+    {
         assert!(T::empty(v).is_simple());
     }
 
-    fn prop_order<T: Order + Empty>(v: usize) {
+    fn prop_order<T>(v: usize)
+    where
+        T: Order + Empty,
+    {
         assert_eq!(T::empty(v).order(), v);
     }
 
-    fn prop_outdegree<T: Outdegree + Empty>(v: usize) {
+    fn prop_outdegree<T>(v: usize)
+    where
+        T: Outdegree + Empty,
+    {
         let digraph = T::empty(v);
 
         for s in 0..v {
@@ -484,7 +497,10 @@ mod tests {
         }
     }
 
-    fn prop_size<T: Size + Empty>(v: usize) {
+    fn prop_size<T>(v: usize)
+    where
+        T: Size + Empty,
+    {
         assert_eq!(T::empty(v).size(), 0);
     }
 

@@ -305,8 +305,8 @@ where
 
 impl<W, H> AddWeightedArc<W> for HashMap<usize, HashSet<(usize, W), H>, H>
 where
-    H: BuildHasher,
     W: Eq + Hash,
+    H: BuildHasher,
     HashSet<(usize, W), H>: Default,
 {
     fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
@@ -324,1111 +324,185 @@ where
     }
 }
 
+impl<W> AddWeightedArc<W> for Vec<(usize, usize, W)> {
+    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
+        self.push((s, t, w));
+    }
+}
+
+impl<W> AddWeightedArc<W> for BTreeSet<(usize, usize, W)>
+where
+    W: Ord,
+{
+    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
+        let _ = self.insert((s, t, w));
+    }
+}
+
+impl<W, H> AddWeightedArc<W> for HashSet<(usize, usize, W), H>
+where
+    W: Eq + Hash,
+    H: BuildHasher,
+{
+    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
+        let _ = self.insert((s, t, w));
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use {
         super::*,
-        core::iter::once,
+        crate::{
+            gen::{
+                Empty,
+                EmptyConst,
+            },
+            op::IterAllWeightedArcs,
+        },
     };
+
+    macro_rules! test_add_weighted_arc {
+        ($digraph:expr) => {
+            $digraph.add_weighted_arc(0, 1, 2);
+            $digraph.add_weighted_arc(0, 2, 1);
+            $digraph.add_weighted_arc(1, 0, -2);
+            $digraph.add_weighted_arc(2, 0, 3);
+
+            let mut iter = $digraph.iter_all_weighted_arcs();
+
+            assert!(matches!(
+                iter.next(),
+                Some((0, 1, 2) | (0, 2, 1) | (1, 0, -2) | (2, 0, 3))
+            ));
+
+            assert!(matches!(
+                iter.next(),
+                Some((0, 1, 2) | (0, 2, 1) | (1, 0, -2) | (2, 0, 3))
+            ));
+
+            assert!(matches!(
+                iter.next(),
+                Some((0, 1, 2) | (0, 2, 1) | (1, 0, -2) | (2, 0, 3))
+            ));
+
+            assert!(matches!(
+                iter.next(),
+                Some((0, 1, 2) | (0, 2, 1) | (1, 0, -2) | (2, 0, 3))
+            ));
+
+            assert_eq!(iter.next(), None);
+        };
+    }
+
+    macro_rules! test_add_weighted_arc_const {
+        ($ty:ty) => {
+            let mut digraph = <$ty>::empty();
+
+            test_add_weighted_arc!(digraph);
+        };
+    }
+
+    macro_rules! test_add_weighted_arc_dynamic {
+        ($ty:ty) => {
+            let mut digraph = <$ty>::empty(3);
+
+            test_add_weighted_arc!(digraph);
+        };
+    }
 
     #[test]
     fn vec_vec() {
-        let mut digraph = vec![Vec::new(); 3];
-
-        digraph.add_weighted_arc(0, 1, 2);
-
-        assert_eq!(digraph, vec![vec![(1, 2)], Vec::new(), Vec::new()]);
-
-        digraph.add_weighted_arc(0, 2, 1);
-
-        assert_eq!(digraph, vec![vec![(1, 2), (2, 1)], Vec::new(), Vec::new()]);
-
-        digraph.add_weighted_arc(1, 2, 4);
-
-        assert_eq!(
-            digraph,
-            vec![vec![(1, 2), (2, 1)], vec![(2, 4)], Vec::new()]
-        );
-
-        digraph.add_weighted_arc(1, 0, -2);
-
-        assert_eq!(
-            digraph,
-            vec![vec![(1, 2), (2, 1)], vec![(2, 4), (0, -2)], Vec::new()]
-        );
-
-        digraph.add_weighted_arc(2, 0, 3);
-
-        assert_eq!(
-            digraph,
-            vec![vec![(1, 2), (2, 1)], vec![(2, 4), (0, -2)], vec![(0, 3)]]
-        );
+        test_add_weighted_arc_dynamic!(Vec::<Vec<(usize, i32)>>);
     }
 
     #[test]
     fn vec_btree_set() {
-        let mut digraph = vec![BTreeSet::new(); 3];
-
-        digraph.add_weighted_arc(0, 1, 2);
-
-        assert_eq!(
-            digraph,
-            vec![once((1, 2)).collect(), BTreeSet::new(), BTreeSet::new()]
-        );
-
-        digraph.add_weighted_arc(0, 2, 1);
-
-        assert_eq!(
-            digraph,
-            vec![
-                BTreeSet::from([(1, 2), (2, 1)]),
-                BTreeSet::new(),
-                BTreeSet::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(1, 2, 4);
-
-        assert_eq!(
-            digraph,
-            vec![
-                BTreeSet::from([(1, 2), (2, 1)]),
-                BTreeSet::from([(2, 4)]),
-                BTreeSet::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(1, 0, -2);
-
-        assert_eq!(
-            digraph,
-            vec![
-                BTreeSet::from([(1, 2), (2, 1)]),
-                BTreeSet::from([(2, 4), (0, -2)]),
-                BTreeSet::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(2, 0, 3);
-
-        assert_eq!(
-            digraph,
-            vec![
-                BTreeSet::from([(1, 2), (2, 1)]),
-                BTreeSet::from([(2, 4), (0, -2)]),
-                BTreeSet::from([(0, 3)])
-            ]
-        );
+        test_add_weighted_arc_dynamic!(Vec::<BTreeSet<(usize, i32)>>);
     }
 
     #[test]
     fn vec_hash_set() {
-        let mut digraph = vec![HashSet::new(); 3];
-
-        digraph.add_weighted_arc(0, 1, 2);
-
-        assert_eq!(
-            digraph,
-            vec![once((1, 2)).collect(), HashSet::new(), HashSet::new()]
-        );
-
-        digraph.add_weighted_arc(0, 2, 1);
-
-        assert_eq!(
-            digraph,
-            vec![
-                HashSet::from([(1, 2), (2, 1)]),
-                HashSet::new(),
-                HashSet::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(1, 2, 4);
-
-        assert_eq!(
-            digraph,
-            vec![
-                HashSet::from([(1, 2), (2, 1)]),
-                HashSet::from([(2, 4)]),
-                HashSet::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(1, 0, -2);
-
-        assert_eq!(
-            digraph,
-            vec![
-                HashSet::from([(1, 2), (2, 1)]),
-                HashSet::from([(2, 4), (0, -2)]),
-                HashSet::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(2, 0, 3);
-
-        assert_eq!(
-            digraph,
-            vec![
-                HashSet::from([(1, 2), (2, 1)]),
-                HashSet::from([(2, 4), (0, -2)]),
-                HashSet::from([(0, 3)])
-            ]
-        );
+        test_add_weighted_arc_dynamic!(Vec::<HashSet<(usize, i32)>>);
     }
 
     #[test]
     fn vec_btree_map() {
-        let mut digraph = vec![BTreeMap::new(); 3];
-
-        digraph.add_weighted_arc(0, 1, 2);
-
-        assert_eq!(
-            digraph,
-            vec![BTreeMap::from([(1, 2)]), BTreeMap::new(), BTreeMap::new()]
-        );
-
-        digraph.add_weighted_arc(0, 2, 1);
-
-        assert_eq!(
-            digraph,
-            vec![
-                [(1, 2), (2, 1)].into_iter().collect(),
-                BTreeMap::new(),
-                BTreeMap::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(1, 2, 4);
-
-        assert_eq!(
-            digraph,
-            vec![
-                BTreeMap::from([(1, 2), (2, 1)]),
-                BTreeMap::from([(2, 4)]),
-                BTreeMap::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(1, 0, -2);
-
-        assert_eq!(
-            digraph,
-            vec![
-                BTreeMap::from([(1, 2), (2, 1)]),
-                BTreeMap::from([(2, 4), (0, -2)]),
-                BTreeMap::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(2, 0, 3);
-
-        assert_eq!(
-            digraph,
-            vec![
-                BTreeMap::from([(1, 2), (2, 1)]),
-                BTreeMap::from([(2, 4), (0, -2)]),
-                BTreeMap::from([(0, 3)]),
-            ]
-        );
+        test_add_weighted_arc_dynamic!(Vec::<BTreeMap<usize, i32>>);
     }
 
     #[test]
     fn vec_hash_map() {
-        let mut digraph = vec![HashMap::new(); 3];
-
-        digraph.add_weighted_arc(0, 1, 2);
-
-        assert_eq!(
-            digraph,
-            vec![HashMap::from([(1, 2)]), HashMap::new(), HashMap::new()]
-        );
-
-        digraph.add_weighted_arc(0, 2, 1);
-
-        assert_eq!(
-            digraph,
-            vec![
-                [(1, 2), (2, 1)].into_iter().collect(),
-                HashMap::new(),
-                HashMap::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(1, 2, 4);
-
-        assert_eq!(
-            digraph,
-            vec![
-                HashMap::from([(1, 2), (2, 1)]),
-                HashMap::from([(2, 4)]),
-                HashMap::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(1, 0, -2);
-
-        assert_eq!(
-            digraph,
-            vec![
-                HashMap::from([(1, 2), (2, 1)]),
-                HashMap::from([(2, 4), (0, -2)]),
-                HashMap::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(2, 0, 3);
-
-        assert_eq!(
-            digraph,
-            vec![
-                HashMap::from([(1, 2), (2, 1)]),
-                HashMap::from([(2, 4), (0, -2)]),
-                HashMap::from([(0, 3)]),
-            ]
-        );
-    }
-
-    #[test]
-    fn slice_vec() {
-        let digraph: &mut [Vec<(usize, i32)>] = &mut [Vec::new(), Vec::new(), Vec::new()];
-
-        digraph.add_weighted_arc(0, 1, 2);
-
-        assert_eq!(digraph, [vec![(1, 2)], Vec::new(), Vec::new()]);
-
-        digraph.add_weighted_arc(0, 2, 1);
-
-        assert_eq!(digraph, [vec![(1, 2), (2, 1)], Vec::new(), Vec::new()]);
-
-        digraph.add_weighted_arc(1, 2, 4);
-
-        assert_eq!(digraph, [vec![(1, 2), (2, 1)], vec![(2, 4)], Vec::new()]);
-
-        digraph.add_weighted_arc(1, 0, -2);
-
-        assert_eq!(
-            digraph,
-            [vec![(1, 2), (2, 1)], vec![(2, 4), (0, -2)], Vec::new()]
-        );
-
-        digraph.add_weighted_arc(2, 0, 3);
-
-        assert_eq!(
-            digraph,
-            [vec![(1, 2), (2, 1)], vec![(2, 4), (0, -2)], vec![(0, 3)]]
-        );
-    }
-
-    #[test]
-    fn slice_btree_set() {
-        let digraph: &mut [BTreeSet<(usize, i32)>] =
-            &mut [BTreeSet::new(), BTreeSet::new(), BTreeSet::new()];
-
-        digraph.add_weighted_arc(0, 1, 2);
-
-        assert_eq!(
-            digraph,
-            [BTreeSet::from([(1, 2)]), BTreeSet::new(), BTreeSet::new()]
-        );
-
-        digraph.add_weighted_arc(0, 2, 1);
-
-        assert_eq!(
-            digraph,
-            [
-                BTreeSet::from([(1, 2), (2, 1)]),
-                BTreeSet::new(),
-                BTreeSet::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(1, 2, 4);
-
-        assert_eq!(
-            digraph,
-            [
-                BTreeSet::from([(1, 2), (2, 1)]),
-                BTreeSet::from([(2, 4)]),
-                BTreeSet::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(1, 0, -2);
-
-        assert_eq!(
-            digraph,
-            [
-                BTreeSet::from([(1, 2), (2, 1)]),
-                BTreeSet::from([(2, 4), (0, -2)]),
-                BTreeSet::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(2, 0, 3);
-
-        assert_eq!(
-            digraph,
-            [
-                BTreeSet::from([(1, 2), (2, 1)]),
-                BTreeSet::from([(2, 4), (0, -2)]),
-                BTreeSet::from([(0, 3)])
-            ]
-        );
-    }
-
-    #[test]
-    fn slice_hash_set() {
-        let digraph: &mut [HashSet<(usize, i32)>] =
-            &mut [HashSet::new(), HashSet::new(), HashSet::new()];
-
-        digraph.add_weighted_arc(0, 1, 2);
-
-        assert_eq!(
-            digraph,
-            [HashSet::from([(1, 2)]), HashSet::new(), HashSet::new()]
-        );
-
-        digraph.add_weighted_arc(0, 2, 1);
-
-        assert_eq!(
-            digraph,
-            [
-                HashSet::from([(1, 2), (2, 1)]),
-                HashSet::new(),
-                HashSet::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(1, 2, 4);
-
-        assert_eq!(
-            digraph,
-            [
-                HashSet::from([(1, 2), (2, 1)]),
-                HashSet::from([(2, 4)]),
-                HashSet::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(1, 0, -2);
-
-        assert_eq!(
-            digraph,
-            [
-                HashSet::from([(1, 2), (2, 1)]),
-                HashSet::from([(2, 4), (0, -2)]),
-                HashSet::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(2, 0, 3);
-
-        assert_eq!(
-            digraph,
-            [
-                HashSet::from([(1, 2), (2, 1)]),
-                HashSet::from([(2, 4), (0, -2)]),
-                HashSet::from([(0, 3)])
-            ]
-        );
-    }
-
-    #[test]
-    fn slice_btree_map() {
-        let digraph: &mut [BTreeMap<usize, i32>] =
-            &mut [BTreeMap::new(), BTreeMap::new(), BTreeMap::new()];
-
-        digraph.add_weighted_arc(0, 1, 2);
-
-        assert_eq!(
-            digraph,
-            [BTreeMap::from([(1, 2)]), BTreeMap::new(), BTreeMap::new()]
-        );
-
-        digraph.add_weighted_arc(0, 2, 1);
-
-        assert_eq!(
-            digraph,
-            [
-                BTreeMap::from([(1, 2), (2, 1)]),
-                BTreeMap::new(),
-                BTreeMap::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(1, 2, 4);
-
-        assert_eq!(
-            digraph,
-            [
-                BTreeMap::from([(1, 2), (2, 1)]),
-                BTreeMap::from([(2, 4)]),
-                BTreeMap::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(1, 0, -2);
-
-        assert_eq!(
-            digraph,
-            [
-                BTreeMap::from([(1, 2), (2, 1)]),
-                BTreeMap::from([(2, 4), (0, -2)]),
-                BTreeMap::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(2, 0, 3);
-
-        assert_eq!(
-            digraph,
-            [
-                BTreeMap::from([(1, 2), (2, 1)]),
-                BTreeMap::from([(2, 4), (0, -2)]),
-                BTreeMap::from([(0, 3)])
-            ]
-        );
-    }
-
-    #[test]
-    fn slice_hash_map() {
-        let digraph: &mut [HashMap<usize, i32>] =
-            &mut [HashMap::new(), HashMap::new(), HashMap::new()];
-
-        digraph.add_weighted_arc(0, 1, 2);
-
-        assert_eq!(
-            digraph,
-            [HashMap::from([(1, 2)]), HashMap::new(), HashMap::new()]
-        );
-
-        digraph.add_weighted_arc(0, 2, 1);
-
-        assert_eq!(
-            digraph,
-            [
-                HashMap::from([(1, 2), (2, 1)]),
-                HashMap::new(),
-                HashMap::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(1, 2, 4);
-
-        assert_eq!(
-            digraph,
-            [
-                HashMap::from([(1, 2), (2, 1)]),
-                HashMap::from([(2, 4)]),
-                HashMap::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(1, 0, -2);
-
-        assert_eq!(
-            digraph,
-            [
-                HashMap::from([(1, 2), (2, 1)]),
-                HashMap::from([(2, 4), (0, -2)]),
-                HashMap::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(2, 0, 3);
-
-        assert_eq!(
-            digraph,
-            [
-                HashMap::from([(1, 2), (2, 1)]),
-                HashMap::from([(2, 4), (0, -2)]),
-                HashMap::from([(0, 3)])
-            ]
-        );
+        test_add_weighted_arc_dynamic!(Vec::<HashMap<usize, i32>>);
     }
 
     #[test]
     fn arr_vec() {
-        let mut digraph = [Vec::new(), Vec::new(), Vec::new()];
-
-        digraph.add_weighted_arc(0, 1, 2);
-
-        assert_eq!(digraph, [vec![(1, 2)], Vec::new(), Vec::new()]);
-
-        digraph.add_weighted_arc(0, 2, 1);
-
-        assert_eq!(digraph, [vec![(1, 2), (2, 1)], Vec::new(), Vec::new()]);
-
-        digraph.add_weighted_arc(1, 2, 4);
-
-        assert_eq!(digraph, [vec![(1, 2), (2, 1)], vec![(2, 4)], Vec::new()]);
-
-        digraph.add_weighted_arc(1, 0, -2);
-
-        assert_eq!(
-            digraph,
-            [vec![(1, 2), (2, 1)], vec![(2, 4), (0, -2)], Vec::new()]
-        );
-
-        digraph.add_weighted_arc(2, 0, 3);
-
-        assert_eq!(
-            digraph,
-            [vec![(1, 2), (2, 1)], vec![(2, 4), (0, -2)], vec![(0, 3)]]
-        );
+        test_add_weighted_arc_const!([Vec<(usize, i32)>; 3]);
     }
 
     #[test]
     fn arr_btree_set() {
-        let mut digraph = [BTreeSet::new(), BTreeSet::new(), BTreeSet::new()];
-
-        digraph.add_weighted_arc(0, 1, 2);
-
-        assert_eq!(
-            digraph,
-            [BTreeSet::from([(1, 2)]), BTreeSet::new(), BTreeSet::new()]
-        );
-
-        digraph.add_weighted_arc(0, 2, 1);
-
-        assert_eq!(
-            digraph,
-            [
-                BTreeSet::from([(1, 2), (2, 1)]),
-                BTreeSet::new(),
-                BTreeSet::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(1, 2, 4);
-
-        assert_eq!(
-            digraph,
-            [
-                BTreeSet::from([(1, 2), (2, 1)]),
-                BTreeSet::from([(2, 4)]),
-                BTreeSet::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(1, 0, -2);
-
-        assert_eq!(
-            digraph,
-            [
-                BTreeSet::from([(1, 2), (2, 1)]),
-                BTreeSet::from([(2, 4), (0, -2)]),
-                BTreeSet::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(2, 0, 3);
-
-        assert_eq!(
-            digraph,
-            [
-                BTreeSet::from([(1, 2), (2, 1)]),
-                BTreeSet::from([(2, 4), (0, -2)]),
-                BTreeSet::from([(0, 3)])
-            ]
-        );
+        test_add_weighted_arc_const!([BTreeSet<(usize, i32)>; 3]);
     }
 
     #[test]
     fn arr_hash_set() {
-        let mut digraph = [HashSet::new(), HashSet::new(), HashSet::new()];
-
-        digraph.add_weighted_arc(0, 1, 2);
-
-        assert_eq!(
-            digraph,
-            [HashSet::from([(1, 2)]), HashSet::new(), HashSet::new()]
-        );
-
-        digraph.add_weighted_arc(0, 2, 1);
-
-        assert_eq!(
-            digraph,
-            [
-                HashSet::from([(1, 2), (2, 1)]),
-                HashSet::new(),
-                HashSet::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(1, 2, 4);
-
-        assert_eq!(
-            digraph,
-            [
-                HashSet::from([(1, 2), (2, 1)]),
-                HashSet::from([(2, 4)]),
-                HashSet::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(1, 0, -2);
-
-        assert_eq!(
-            digraph,
-            [
-                HashSet::from([(1, 2), (2, 1)]),
-                HashSet::from([(2, 4), (0, -2)]),
-                HashSet::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(2, 0, 3);
-
-        assert_eq!(
-            digraph,
-            [
-                HashSet::from([(1, 2), (2, 1)]),
-                HashSet::from([(2, 4), (0, -2)]),
-                HashSet::from([(0, 3)])
-            ]
-        );
+        test_add_weighted_arc_const!([HashSet<(usize, i32)>; 3]);
     }
 
     #[test]
     fn arr_btree_map() {
-        let mut digraph = [BTreeMap::new(), BTreeMap::new(), BTreeMap::new()];
-
-        digraph.add_weighted_arc(0, 1, 2);
-
-        assert_eq!(
-            digraph,
-            [BTreeMap::from([(1, 2)]), BTreeMap::new(), BTreeMap::new()]
-        );
-
-        digraph.add_weighted_arc(0, 2, 1);
-
-        assert_eq!(
-            digraph,
-            [
-                BTreeMap::from([(1, 2), (2, 1)]),
-                BTreeMap::new(),
-                BTreeMap::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(1, 2, 4);
-
-        assert_eq!(
-            digraph,
-            [
-                BTreeMap::from([(1, 2), (2, 1)]),
-                BTreeMap::from([(2, 4)]),
-                BTreeMap::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(1, 0, -2);
-
-        assert_eq!(
-            digraph,
-            [
-                BTreeMap::from([(1, 2), (2, 1)]),
-                BTreeMap::from([(2, 4), (0, -2)]),
-                BTreeMap::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(2, 0, 3);
-
-        assert_eq!(
-            digraph,
-            [
-                BTreeMap::from([(1, 2), (2, 1)]),
-                BTreeMap::from([(2, 4), (0, -2)]),
-                BTreeMap::from([(0, 3)])
-            ]
-        );
+        test_add_weighted_arc_const!([BTreeMap<usize, i32>; 3]);
     }
 
     #[test]
     fn arr_hash_map() {
-        let mut digraph = [HashMap::new(), HashMap::new(), HashMap::new()];
-
-        digraph.add_weighted_arc(0, 1, 2);
-
-        assert_eq!(
-            digraph,
-            [HashMap::from([(1, 2)]), HashMap::new(), HashMap::new()]
-        );
-
-        digraph.add_weighted_arc(0, 2, 1);
-
-        assert_eq!(
-            digraph,
-            [
-                HashMap::from([(1, 2), (2, 1)]),
-                HashMap::new(),
-                HashMap::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(1, 2, 4);
-
-        assert_eq!(
-            digraph,
-            [
-                HashMap::from([(1, 2), (2, 1)]),
-                HashMap::from([(2, 4)]),
-                HashMap::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(1, 0, -2);
-
-        assert_eq!(
-            digraph,
-            [
-                HashMap::from([(1, 2), (2, 1)]),
-                HashMap::from([(2, 4), (0, -2)]),
-                HashMap::new()
-            ]
-        );
-
-        digraph.add_weighted_arc(2, 0, 3);
-
-        assert_eq!(
-            digraph,
-            [
-                HashMap::from([(1, 2), (2, 1)]),
-                HashMap::from([(2, 4), (0, -2)]),
-                HashMap::from([(0, 3)])
-            ]
-        );
+        test_add_weighted_arc_const!([HashMap<usize, i32>; 3]);
     }
 
     #[test]
     fn btree_map_vec() {
-        let mut digraph = BTreeMap::from([(0, Vec::new()), (1, Vec::new()), (2, Vec::new())]);
-
-        digraph.add_weighted_arc(0, 1, 2);
-
-        assert_eq!(
-            digraph,
-            BTreeMap::from([(0, vec![(1, 2)]), (1, Vec::new()), (2, Vec::new())])
-        );
-
-        digraph.add_weighted_arc(0, 2, 1);
-
-        assert_eq!(
-            digraph,
-            BTreeMap::from([(0, vec![(1, 2), (2, 1)]), (1, Vec::new()), (2, Vec::new())])
-        );
-
-        digraph.add_weighted_arc(1, 2, 4);
-
-        assert_eq!(
-            digraph,
-            BTreeMap::from([
-                (0, vec![(1, 2), (2, 1)]),
-                (1, vec![(2, 4)]),
-                (2, Vec::new())
-            ])
-        );
-
-        digraph.add_weighted_arc(1, 0, -2);
-
-        assert_eq!(
-            digraph,
-            BTreeMap::from([
-                (0, vec![(1, 2), (2, 1)]),
-                (1, vec![(2, 4), (0, -2)]),
-                (2, Vec::new())
-            ])
-        );
-
-        digraph.add_weighted_arc(2, 0, 3);
-
-        assert_eq!(
-            digraph,
-            BTreeMap::from([
-                (0, vec![(1, 2), (2, 1)]),
-                (1, vec![(2, 4), (0, -2)]),
-                (2, vec![(0, 3)])
-            ])
-        );
+        test_add_weighted_arc_dynamic!(BTreeMap::<usize, Vec<(usize, i32)>>);
     }
 
     #[test]
     fn btree_map_btree_set() {
-        let mut digraph = BTreeMap::from([
-            (0, BTreeSet::new()),
-            (1, BTreeSet::new()),
-            (2, BTreeSet::new()),
-        ]);
-
-        digraph.add_weighted_arc(0, 1, 2);
-
-        assert_eq!(
-            digraph,
-            BTreeMap::from([
-                (0, BTreeSet::from([(1, 2)])),
-                (1, BTreeSet::new()),
-                (2, BTreeSet::new())
-            ])
-        );
-
-        digraph.add_weighted_arc(0, 2, 1);
-
-        assert_eq!(
-            digraph,
-            BTreeMap::from([
-                (0, BTreeSet::from([(1, 2), (2, 1)])),
-                (1, BTreeSet::new()),
-                (2, BTreeSet::new())
-            ])
-        );
-
-        digraph.add_weighted_arc(1, 2, 4);
-
-        assert_eq!(
-            digraph,
-            BTreeMap::from([
-                (0, BTreeSet::from([(1, 2), (2, 1)])),
-                (1, BTreeSet::from([(2, 4)])),
-                (2, BTreeSet::new())
-            ])
-        );
-
-        digraph.add_weighted_arc(1, 0, -2);
-
-        assert_eq!(
-            digraph,
-            BTreeMap::from([
-                (0, BTreeSet::from([(1, 2), (2, 1)])),
-                (1, BTreeSet::from([(2, 4), (0, -2)])),
-                (2, BTreeSet::new())
-            ])
-        );
-
-        digraph.add_weighted_arc(2, 0, 3);
-
-        assert_eq!(
-            digraph,
-            BTreeMap::from([
-                (0, BTreeSet::from([(1, 2), (2, 1)])),
-                (1, BTreeSet::from([(2, 4), (0, -2)])),
-                (2, BTreeSet::from([(0, 3)])),
-            ])
-        );
+        test_add_weighted_arc_dynamic!(BTreeMap::<usize, BTreeSet<(usize, i32)>>);
     }
 
     #[test]
     fn btree_map_btree_map() {
-        let mut digraph = BTreeMap::from([
-            (0, BTreeMap::new()),
-            (1, BTreeMap::new()),
-            (2, BTreeMap::new()),
-        ]);
-
-        digraph.add_weighted_arc(0, 1, 2);
-
-        assert_eq!(
-            digraph,
-            BTreeMap::from([
-                (0, BTreeMap::from([(1, 2)])),
-                (1, BTreeMap::new()),
-                (2, BTreeMap::new())
-            ])
-        );
-
-        digraph.add_weighted_arc(0, 2, 1);
-
-        assert_eq!(
-            digraph,
-            BTreeMap::from([
-                (0, BTreeMap::from([(1, 2), (2, 1)])),
-                (1, BTreeMap::new()),
-                (2, BTreeMap::new())
-            ])
-        );
-
-        digraph.add_weighted_arc(1, 2, 4);
-
-        assert_eq!(
-            digraph,
-            BTreeMap::from([
-                (0, BTreeMap::from([(1, 2), (2, 1)])),
-                (1, BTreeMap::from([(2, 4)])),
-                (2, BTreeMap::new())
-            ])
-        );
-
-        digraph.add_weighted_arc(1, 0, -2);
-
-        assert_eq!(
-            digraph,
-            BTreeMap::from([
-                (0, BTreeMap::from([(1, 2), (2, 1)])),
-                (1, BTreeMap::from([(2, 4), (0, -2)])),
-                (2, BTreeMap::new())
-            ])
-        );
-
-        digraph.add_weighted_arc(2, 0, 3);
-
-        assert_eq!(
-            digraph,
-            BTreeMap::from([
-                (0, BTreeMap::from([(1, 2), (2, 1)])),
-                (1, BTreeMap::from([(2, 4), (0, -2)])),
-                (2, BTreeMap::from([(0, 3)])),
-            ])
-        );
+        test_add_weighted_arc_dynamic!(BTreeMap::<usize, BTreeMap<usize, i32>>);
     }
 
     #[test]
     fn hash_map_vec() {
-        let mut digraph = HashMap::new();
-
-        digraph.add_weighted_arc(0, 1, 2);
-
-        assert_eq!(digraph, HashMap::from([(0, vec![(1, 2)])]));
-
-        digraph.add_weighted_arc(0, 2, 1);
-
-        assert_eq!(digraph, HashMap::from([(0, vec![(1, 2), (2, 1)])]));
-
-        digraph.add_weighted_arc(1, 2, 4);
-
-        assert_eq!(
-            digraph,
-            HashMap::from([(0, vec![(1, 2), (2, 1)]), (1, vec![(2, 4)])])
-        );
-
-        digraph.add_weighted_arc(1, 0, -2);
-
-        assert_eq!(
-            digraph,
-            HashMap::from([(0, vec![(1, 2), (2, 1)]), (1, vec![(2, 4), (0, -2)])])
-        );
-
-        digraph.add_weighted_arc(2, 0, 3);
-
-        assert_eq!(
-            digraph,
-            HashMap::from([
-                (0, vec![(1, 2), (2, 1)]),
-                (1, vec![(2, 4), (0, -2)]),
-                (2, vec![(0, 3)])
-            ])
-        );
+        test_add_weighted_arc_dynamic!(HashMap::<usize, Vec<(usize, i32)>>);
     }
 
     #[test]
     fn hash_map_hash_set() {
-        let mut digraph = HashMap::new();
-
-        digraph.add_weighted_arc(0, 1, 2);
-
-        assert_eq!(digraph, HashMap::from([(0, HashSet::from([(1, 2)]))]));
-
-        digraph.add_weighted_arc(0, 2, 1);
-
-        assert_eq!(
-            digraph,
-            HashMap::from([(0, HashSet::from([(1, 2), (2, 1)]))])
-        );
-
-        digraph.add_weighted_arc(1, 2, 4);
-
-        assert_eq!(
-            digraph,
-            HashMap::from([
-                (0, HashSet::from([(1, 2), (2, 1)])),
-                (1, HashSet::from([(2, 4)])),
-            ])
-        );
-
-        digraph.add_weighted_arc(1, 0, -2);
-
-        assert_eq!(
-            digraph,
-            HashMap::from([
-                (0, HashSet::from([(1, 2), (2, 1)])),
-                (1, HashSet::from([(2, 4), (0, -2)])),
-            ])
-        );
-
-        digraph.add_weighted_arc(2, 0, 3);
-
-        assert_eq!(
-            digraph,
-            HashMap::from([
-                (0, HashSet::from([(1, 2), (2, 1)])),
-                (1, HashSet::from([(2, 4), (0, -2)])),
-                (2, HashSet::from([(0, 3)])),
-            ])
-        );
+        test_add_weighted_arc_dynamic!(HashMap::<usize, HashSet<(usize, i32)>>);
     }
 
     #[test]
     fn hash_map_hash_map() {
-        let mut digraph = HashMap::from([
-            (0, HashMap::new()),
-            (1, HashMap::new()),
-            (2, HashMap::new()),
-        ]);
+        test_add_weighted_arc_dynamic!(HashMap::<usize, HashMap<usize, i32>>);
+    }
 
-        digraph.add_weighted_arc(0, 1, 2);
+    #[test]
+    fn vec_tuple() {
+        test_add_weighted_arc_dynamic!(Vec::<(usize, usize, i32)>);
+    }
 
-        assert_eq!(
-            digraph,
-            HashMap::from([
-                (0, HashMap::from([(1, 2)])),
-                (1, HashMap::new()),
-                (2, HashMap::new())
-            ])
-        );
+    #[test]
+    fn btree_set_tuple() {
+        test_add_weighted_arc_dynamic!(BTreeSet::<(usize, usize, i32)>);
+    }
 
-        digraph.add_weighted_arc(0, 2, 1);
-
-        assert_eq!(
-            digraph,
-            HashMap::from([
-                (0, HashMap::from([(1, 2), (2, 1)])),
-                (1, HashMap::new()),
-                (2, HashMap::new())
-            ])
-        );
-
-        digraph.add_weighted_arc(1, 2, 4);
-
-        assert_eq!(
-            digraph,
-            HashMap::from([
-                (0, HashMap::from([(1, 2), (2, 1)])),
-                (1, HashMap::from([(2, 4)])),
-                (2, HashMap::new())
-            ])
-        );
-
-        digraph.add_weighted_arc(1, 0, -2);
-
-        assert_eq!(
-            digraph,
-            HashMap::from([
-                (0, HashMap::from([(1, 2), (2, 1)])),
-                (1, HashMap::from([(2, 4), (0, -2)])),
-                (2, HashMap::new())
-            ])
-        );
-
-        digraph.add_weighted_arc(2, 0, 3);
-
-        assert_eq!(
-            digraph,
-            HashMap::from([
-                (0, HashMap::from([(1, 2), (2, 1)])),
-                (1, HashMap::from([(2, 4), (0, -2)])),
-                (2, HashMap::from([(0, 3)])),
-            ])
-        );
+    #[test]
+    fn hash_set_tuple() {
+        test_add_weighted_arc_dynamic!(HashSet::<(usize, usize, i32)>);
     }
 }

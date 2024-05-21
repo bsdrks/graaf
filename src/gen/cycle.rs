@@ -269,15 +269,24 @@ mod tests {
         proptest::prelude::*,
     };
 
-    fn prop_size<T: Cycle + Size>(v: usize) {
+    fn prop_size<T>(v: usize)
+    where
+        T: Cycle + Size,
+    {
         assert_eq!(T::cycle(v).size(), v);
     }
 
-    fn prop_order<T: Cycle + Order>(v: usize) {
+    fn prop_order<T>(v: usize)
+    where
+        T: Cycle + Order,
+    {
         assert_eq!(T::cycle(v).order(), v);
     }
 
-    fn prop_indegree<T: Cycle + Indegree>(v: usize) {
+    fn prop_indegree<T>(v: usize)
+    where
+        T: Cycle + Indegree,
+    {
         let digraph = T::cycle(v);
 
         for s in 0..v {
@@ -285,11 +294,17 @@ mod tests {
         }
     }
 
-    fn prop_is_simple<T: Cycle + IsSimple>(v: usize) {
+    fn prop_is_simple<T>(v: usize)
+    where
+        T: Cycle + IsSimple,
+    {
         assert!(T::cycle(v).is_simple());
     }
 
-    fn prop_outdegree<T: Cycle + Outdegree>(v: usize) {
+    fn prop_outdegree<T>(v: usize)
+    where
+        T: Cycle + Outdegree,
+    {
         let digraph = T::cycle(v);
 
         for s in 0..v {
@@ -297,9 +312,10 @@ mod tests {
         }
     }
 
-    fn prop_sum_indegrees_eq_sum_outdegrees<T: Cycle + Indegree + IterVertices + Outdegree>(
-        v: usize,
-    ) {
+    fn prop_sum_indegrees_eq_sum_outdegrees<T>(v: usize)
+    where
+        T: Cycle + Indegree + IterVertices + Outdegree,
+    {
         assert!(sum_indegrees_eq_sum_outdegrees(&T::cycle(v)));
     }
 

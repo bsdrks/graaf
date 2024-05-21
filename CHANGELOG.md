@@ -16,14 +16,91 @@
 - Benchmark against popular Rust graph libraries.
 - Benchmark against popular graph libraries in other languages.
 - Release via GitHub Actions.
+- Replace `Vec::new` with `Vec::with_capacity` where applicable.
 - Speed up GHA workflow.
 
-## [0.48.3] - 2024-05-20
+## [0.49.0] - 2024-05-21
+
+Changed
+
+- Clean up `Empty` bounds.
 
 Added
 
+- Add `Converse` trait.
+- Add `arr_btree_map_weighted` unit test for `Converse`.
+- Add `arr_btree_set_weighted` unit test for `Converse`.
+- Add `arr_btree_set` unit test for `Converse`.
+- Add `arr_hash_map_weighted` unit test for `Converse`.
+- Add `arr_hash_set_weighted` unit test for `Converse`.
+- Add `arr_hash_set` unit test for `Converse`.
+- Add `arr_tuple_weighted` unit test for `Converse`.
+- Add `arr_tuple` unit test for `Converse`.
+- Add `arr_vec_weighted` unit test for `Converse`.
+- Add `arr_vec` unit test for `Converse`.
+- Add `btree_map_btree_map_weighted` unit test for `Converse`.
+- Add `btree_map_btree_set_weighted` unit test for `Converse`.
+- Add `btree_map_btree_set` unit test for `Converse`.
+- Add `btree_map_vec_weighted` unit test for `Converse`.
+- Add `btree_map_vec` unit test for `Converse`.
+- Add `btree_set_tuple_weighted` unit test for `Converse`.
+- Add `btree_set_tuple` unit test for `Converse`.
+- Add `hash_map_hash_map_weighted` unit test for `Converse`.
+- Add `hash_map_hash_set_weighted` unit test for `Converse`.
+- Add `hash_map_hash_set` unit test for `Converse`.
+- Add `hash_map_vec_weighted` unit test for `Converse`.
+- Add `hash_map_vec` unit test for `Converse`.
+- Add `hash_set_tuple_weighted` unit test for `Converse`.
+- Add `hash_set_tuple` unit test for `Converse`.
 - Add `prop` module documentation example.
 - Add `repr` module documentation example.
+- Add `vec_btree_map_weighted` unit test for `Converse`.
+- Add `vec_btree_set_weighted` unit test for `Converse`.
+- Add `vec_btree_set` unit test for `Converse`.
+- Add `vec_hash_map_weighted` unit test for `Converse`.
+- Add `vec_hash_set_weighted` unit test for `Converse`.
+- Add `vec_hash_set` unit test for `Converse`.
+- Add `vec_tuple_weighted` unit test for `Converse`.
+- Add `vec_tuple` unit test for `Converse`.
+- Add `vec_vec_weighted` unit test for `Converse`.
+- Add `vec_vec` unit test for `Converse`.
+- Implement `AddArc` for `BTreeset<(usize, usize)>`.
+- Implement `AddArc` for `HashSet<(usize, usize)>`.
+- Implement `AddArc` for `Vec<(usize, usize)>`.
+- Implement `Converse` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement `Converse` for `BTreeMap<usize, BTreeSet<(usize, W)>>`.
+- Implement `Converse` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `Converse` for `BTreeMap<usize, Vec<(usize, W)>>`.
+- Implement `Converse` for `BTreeMap<usize, Vec<usize>>`.
+- Implement `Converse` for `BTreeSet<(usize, usize)>`.
+- Implement `Converse` for `BTreeSet<(usize, usize, W)>`.
+- Implement `Converse` for `HashMap<usize, HashMap<usize, W>>`.
+- Implement `Converse` for `HashMap<usize, HashSet<(usize, W)>>`.
+- Implement `Converse` for `HashMap<usize, HashSet<usize>>`.
+- Implement `Converse` for `HashMap<usize, Vec<(usize, W)>>`.
+- Implement `Converse` for `HashMap<usize, Vec<usize>>`.
+- Implement `Converse` for `HashSet<(usize, usize)>`.
+- Implement `Converse` for `HashSet<(usize, usize, W)>`.
+- Implement `Converse` for `Vec<(usize, usize)>`.
+- Implement `Converse` for `Vec<(usize, usize, W)>`.
+- Implement `Converse` for `Vec<BTreeMap<usize, W>>`.
+- Implement `Converse` for `Vec<BTreeSet<(usize, W)>>`.
+- Implement `Converse` for `Vec<BTreeSet<usize>>`.
+- Implement `Converse` for `Vec<HashMap<usize, W>>`.
+- Implement `Converse` for `Vec<HashSet<(usize, W)>>`.
+- Implement `Converse` for `Vec<HashSet<usize>>`.
+- Implement `Converse` for `Vec<Vec<(usize, W)>>`.
+- Implement `Converse` for `Vec<Vec<usize>>`.
+- Implement `Converse` for `[(usize, usize); V]`.
+- Implement `Converse` for `[(usize, usize, W); V]`.
+- Implement `Converse` for `[BTreeMap<usize, W>; V]`.
+- Implement `Converse` for `[BTreeSet<(usize, W)>; V]`.
+- Implement `Converse` for `[BTreeSet<usize>; V]`.
+- Implement `Converse` for `[HashMap<usize, W>; V]`.
+- Implement `Converse` for `[HashSet<(usize, W)>; V]`.
+- Implement `Converse` for `[HashSet<usize, H>; V]`.
+- Implement `Converse` for `[Vec<(usize, W)>; V]`.
+- Implement `Converse` for `[Vec<usize>; V]`.
 
 ## [0.48.2] - 2024-05-20
 

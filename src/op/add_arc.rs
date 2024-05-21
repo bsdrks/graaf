@@ -210,478 +210,134 @@ where
     }
 }
 
+impl AddArc for Vec<(usize, usize)> {
+    fn add_arc(&mut self, s: usize, t: usize) {
+        self.push((s, t));
+    }
+}
+
+impl AddArc for BTreeSet<(usize, usize)> {
+    fn add_arc(&mut self, s: usize, t: usize) {
+        let _ = self.insert((s, t));
+    }
+}
+
+impl<H> AddArc for HashSet<(usize, usize), H>
+where
+    H: BuildHasher,
+{
+    fn add_arc(&mut self, s: usize, t: usize) {
+        let _ = self.insert((s, t));
+    }
+}
+
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use {
+        super::*,
+        crate::{
+            gen::{
+                Empty,
+                EmptyConst,
+            },
+            op::IterAllArcs,
+        },
+    };
+
+    macro_rules! test_add_arc {
+        ($digraph:expr) => {
+            $digraph.add_arc(0, 1);
+            $digraph.add_arc(0, 2);
+            $digraph.add_arc(2, 1);
+
+            let mut iter = $digraph.iter_all_arcs();
+
+            assert!(matches!(iter.next(), Some((0, 1 | 2) | (2, 1))));
+            assert!(matches!(iter.next(), Some((0, 1 | 2) | (2, 1))));
+            assert!(matches!(iter.next(), Some((0, 1 | 2) | (2, 1))));
+
+            assert_eq!(iter.next(), None);
+        };
+    }
+
+    macro_rules! test_add_arc_const {
+        ($ty:ty) => {
+            let mut digraph = <$ty>::empty();
+
+            test_add_arc!(digraph);
+        };
+    }
+
+    macro_rules! test_add_arc_dynamic {
+        ($ty:ty) => {
+            let mut digraph = <$ty>::empty(3);
+
+            test_add_arc!(digraph);
+        };
+    }
 
     #[test]
     fn vec_vec() {
-        let mut digraph = vec![Vec::new(); 3];
-
-        digraph.add_arc(0, 1);
-
-        assert_eq!(digraph, vec![vec![1], Vec::new(), Vec::new()]);
-
-        digraph.add_arc(0, 2);
-
-        assert_eq!(digraph, vec![vec![1, 2], Vec::new(), Vec::new()]);
-
-        digraph.add_arc(1, 2);
-
-        assert_eq!(digraph, vec![vec![1, 2], vec![2], Vec::new()]);
-
-        digraph.add_arc(2, 0);
-        digraph.add_arc(2, 1);
-
-        assert_eq!(digraph, vec![vec![1, 2], vec![2], vec![0, 1]]);
+        test_add_arc_dynamic!(Vec<Vec<usize>>);
     }
 
     #[test]
     fn vec_btree_set() {
-        let mut digraph = vec![BTreeSet::new(); 3];
-
-        digraph.add_arc(0, 1);
-
-        assert_eq!(
-            digraph,
-            vec![BTreeSet::from([1]), BTreeSet::new(), BTreeSet::new()]
-        );
-
-        digraph.add_arc(0, 2);
-
-        assert_eq!(
-            digraph,
-            vec![BTreeSet::from([1, 2]), BTreeSet::new(), BTreeSet::new()]
-        );
-
-        digraph.add_arc(1, 2);
-
-        assert_eq!(
-            digraph,
-            vec![BTreeSet::from([1, 2]), BTreeSet::from([2]), BTreeSet::new()]
-        );
-
-        digraph.add_arc(2, 0);
-        digraph.add_arc(2, 1);
-
-        assert_eq!(
-            digraph,
-            vec![
-                BTreeSet::from([1, 2]),
-                BTreeSet::from([2]),
-                BTreeSet::from([0, 1])
-            ]
-        );
+        test_add_arc_dynamic!(Vec<BTreeSet<usize>>);
     }
 
     #[test]
     fn vec_hash_set() {
-        let mut digraph = vec![HashSet::new(); 3];
-
-        digraph.add_arc(0, 1);
-
-        assert_eq!(
-            digraph,
-            vec![HashSet::from([1]), HashSet::new(), HashSet::new()]
-        );
-
-        digraph.add_arc(0, 2);
-
-        assert_eq!(
-            digraph,
-            vec![HashSet::from([1, 2]), HashSet::new(), HashSet::new()]
-        );
-
-        digraph.add_arc(1, 2);
-
-        assert_eq!(
-            digraph,
-            vec![HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()]
-        );
-
-        digraph.add_arc(2, 0);
-        digraph.add_arc(2, 1);
-
-        assert_eq!(
-            digraph,
-            vec![
-                HashSet::from([1, 2]),
-                HashSet::from([2]),
-                HashSet::from([0, 1])
-            ]
-        );
-    }
-
-    #[test]
-    fn slice_vec() {
-        let digraph: &mut [Vec<usize>] = &mut [Vec::new(), Vec::new(), Vec::new()];
-
-        digraph.add_arc(0, 1);
-
-        assert_eq!(*digraph, [vec![1], Vec::new(), Vec::new()]);
-
-        digraph.add_arc(0, 2);
-
-        assert_eq!(*digraph, [vec![1, 2], Vec::new(), Vec::new()]);
-
-        digraph.add_arc(1, 2);
-
-        assert_eq!(*digraph, [vec![1, 2], vec![2], Vec::new()]);
-
-        digraph.add_arc(2, 0);
-        digraph.add_arc(2, 1);
-
-        assert_eq!(*digraph, [vec![1, 2], vec![2], vec![0, 1]]);
-    }
-
-    #[test]
-    fn slice_btree_set() {
-        let digraph: &mut [BTreeSet<usize>] =
-            &mut [BTreeSet::new(), BTreeSet::new(), BTreeSet::new()];
-
-        digraph.add_arc(0, 1);
-
-        assert_eq!(
-            *digraph,
-            [BTreeSet::from([1]), BTreeSet::new(), BTreeSet::new()]
-        );
-
-        digraph.add_arc(0, 2);
-
-        assert_eq!(
-            *digraph,
-            [BTreeSet::from([1, 2]), BTreeSet::new(), BTreeSet::new()]
-        );
-
-        digraph.add_arc(1, 2);
-
-        assert_eq!(
-            *digraph,
-            [BTreeSet::from([1, 2]), BTreeSet::from([2]), BTreeSet::new()]
-        );
-
-        digraph.add_arc(2, 0);
-        digraph.add_arc(2, 1);
-
-        assert_eq!(
-            *digraph,
-            [
-                BTreeSet::from([1, 2]),
-                BTreeSet::from([2]),
-                BTreeSet::from([0, 1])
-            ]
-        );
-    }
-
-    #[test]
-    fn slice_hash_set() {
-        let digraph: &mut [HashSet<usize>] = &mut [HashSet::new(), HashSet::new(), HashSet::new()];
-
-        digraph.add_arc(0, 1);
-
-        assert_eq!(
-            *digraph,
-            [HashSet::from([1]), HashSet::new(), HashSet::new()]
-        );
-
-        digraph.add_arc(0, 2);
-
-        assert_eq!(
-            *digraph,
-            [HashSet::from([1, 2]), HashSet::new(), HashSet::new()]
-        );
-
-        digraph.add_arc(1, 2);
-
-        assert_eq!(
-            *digraph,
-            [HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()]
-        );
-
-        digraph.add_arc(2, 0);
-        digraph.add_arc(2, 1);
-
-        assert_eq!(
-            *digraph,
-            [
-                HashSet::from([1, 2]),
-                HashSet::from([2]),
-                HashSet::from([0, 1])
-            ]
-        );
+        test_add_arc_dynamic!(Vec<HashSet<usize>>);
     }
 
     #[test]
     fn arr_vec() {
-        let mut digraph = [Vec::new(), Vec::new(), Vec::new()];
-
-        digraph.add_arc(0, 1);
-
-        assert_eq!(digraph, [vec![1], Vec::new(), Vec::new()]);
-
-        digraph.add_arc(0, 2);
-
-        assert_eq!(digraph, [vec![1, 2], Vec::new(), Vec::new()]);
-
-        digraph.add_arc(1, 2);
-
-        assert_eq!(digraph, [vec![1, 2], vec![2], Vec::new()]);
-
-        digraph.add_arc(2, 0);
-        digraph.add_arc(2, 1);
-
-        assert_eq!(digraph, [vec![1, 2], vec![2], vec![0, 1]]);
+        test_add_arc_const!([Vec<usize>; 3]);
     }
 
     #[test]
     fn arr_btree_set() {
-        let mut digraph = [BTreeSet::new(), BTreeSet::new(), BTreeSet::new()];
-
-        digraph.add_arc(0, 1);
-
-        assert_eq!(
-            digraph,
-            [BTreeSet::from([1]), BTreeSet::new(), BTreeSet::new()]
-        );
-
-        digraph.add_arc(0, 2);
-
-        assert_eq!(
-            digraph,
-            [BTreeSet::from([1, 2]), BTreeSet::new(), BTreeSet::new()]
-        );
-
-        digraph.add_arc(1, 2);
-
-        assert_eq!(
-            digraph,
-            [BTreeSet::from([1, 2]), BTreeSet::from([2]), BTreeSet::new()]
-        );
-
-        digraph.add_arc(2, 0);
-        digraph.add_arc(2, 1);
-
-        assert_eq!(
-            digraph,
-            [
-                BTreeSet::from([1, 2]),
-                BTreeSet::from([2]),
-                BTreeSet::from([0, 1])
-            ]
-        );
+        test_add_arc_const!([BTreeSet<usize>; 3]);
     }
 
     #[test]
     fn arr_hash_set() {
-        let mut digraph = [HashSet::new(), HashSet::new(), HashSet::new()];
-
-        digraph.add_arc(0, 1);
-
-        assert_eq!(
-            digraph,
-            [HashSet::from([1]), HashSet::new(), HashSet::new()]
-        );
-
-        digraph.add_arc(0, 2);
-
-        assert_eq!(
-            digraph,
-            [HashSet::from([1, 2]), HashSet::new(), HashSet::new()]
-        );
-
-        digraph.add_arc(1, 2);
-
-        assert_eq!(
-            digraph,
-            [HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()]
-        );
-
-        digraph.add_arc(2, 0);
-        digraph.add_arc(2, 1);
-
-        assert_eq!(
-            digraph,
-            [
-                HashSet::from([1, 2]),
-                HashSet::from([2]),
-                HashSet::from([0, 1])
-            ]
-        );
+        test_add_arc_const!([HashSet<usize>; 3]);
     }
 
     #[test]
     fn btree_map_vec() {
-        let mut digraph = BTreeMap::from([(0, Vec::new()), (1, Vec::new()), (2, Vec::new())]);
-
-        digraph.add_arc(0, 1);
-
-        assert_eq!(
-            digraph,
-            BTreeMap::from([(0, vec![1]), (1, Vec::new()), (2, Vec::new())])
-        );
-
-        digraph.add_arc(0, 2);
-
-        assert_eq!(
-            digraph,
-            BTreeMap::from([(0, vec![1, 2]), (1, Vec::new()), (2, Vec::new())])
-        );
-
-        digraph.add_arc(1, 2);
-
-        assert_eq!(
-            digraph,
-            BTreeMap::from([(0, vec![1, 2]), (1, vec![2]), (2, Vec::new())])
-        );
-
-        digraph.add_arc(2, 0);
-        digraph.add_arc(2, 1);
-
-        assert_eq!(
-            digraph,
-            BTreeMap::from([(0, vec![1, 2]), (1, vec![2]), (2, vec![0, 1])])
-        );
+        test_add_arc_dynamic!(BTreeMap < usize, Vec<usize>>);
     }
 
     #[test]
     fn btree_map_btree_set() {
-        let mut digraph = BTreeMap::from([
-            (0, BTreeSet::new()),
-            (1, BTreeSet::new()),
-            (2, BTreeSet::new()),
-        ]);
-
-        digraph.add_arc(0, 1);
-
-        assert_eq!(
-            digraph,
-            BTreeMap::from([
-                (0, BTreeSet::from([1])),
-                (1, BTreeSet::new()),
-                (2, BTreeSet::new())
-            ])
-        );
-
-        digraph.add_arc(0, 2);
-
-        assert_eq!(
-            digraph,
-            BTreeMap::from([
-                (0, BTreeSet::from([1, 2])),
-                (1, BTreeSet::new()),
-                (2, BTreeSet::new())
-            ])
-        );
-
-        digraph.add_arc(1, 2);
-
-        assert_eq!(
-            digraph,
-            BTreeMap::from([
-                (0, BTreeSet::from([1, 2])),
-                (1, BTreeSet::from([2])),
-                (2, BTreeSet::new())
-            ])
-        );
-
-        digraph.add_arc(2, 0);
-        digraph.add_arc(2, 1);
-
-        assert_eq!(
-            digraph,
-            BTreeMap::from([
-                (0, BTreeSet::from([1, 2])),
-                (1, BTreeSet::from([2])),
-                (2, BTreeSet::from([0, 1]))
-            ])
-        );
+        test_add_arc_dynamic!(BTreeMap < usize, BTreeSet<usize>>);
     }
 
     #[test]
     fn hash_map_vec() {
-        let mut digraph = HashMap::from([(0, Vec::new()), (1, Vec::new()), (2, Vec::new())]);
-
-        digraph.add_arc(0, 1);
-
-        assert_eq!(
-            digraph,
-            HashMap::from([(0, vec![1]), (1, Vec::new()), (2, Vec::new())])
-        );
-
-        digraph.add_arc(0, 2);
-
-        assert_eq!(
-            digraph,
-            HashMap::from([(0, vec![1, 2]), (1, Vec::new()), (2, Vec::new())])
-        );
-
-        digraph.add_arc(1, 2);
-
-        assert_eq!(
-            digraph,
-            HashMap::from([(0, vec![1, 2]), (1, vec![2]), (2, Vec::new())])
-        );
-
-        digraph.add_arc(2, 0);
-        digraph.add_arc(2, 1);
-
-        assert_eq!(
-            digraph,
-            HashMap::from([(0, vec![1, 2]), (1, vec![2]), (2, vec![0, 1])])
-        );
+        test_add_arc_dynamic!(HashMap < usize, Vec<usize>>);
     }
 
     #[test]
     fn hash_map_hash_set() {
-        let mut digraph = HashMap::from([
-            (0, HashSet::new()),
-            (1, HashSet::new()),
-            (2, HashSet::new()),
-        ]);
+        test_add_arc_dynamic!(HashMap < usize, HashSet<usize>>);
+    }
 
-        digraph.add_arc(0, 1);
+    #[test]
+    fn vec_tuple() {
+        test_add_arc_dynamic!(Vec<(usize, usize)>);
+    }
 
-        assert_eq!(
-            digraph,
-            HashMap::from([
-                (0, HashSet::from([1])),
-                (1, HashSet::new()),
-                (2, HashSet::new())
-            ])
-        );
+    #[test]
+    fn btree_set_tuple() {
+        test_add_arc_dynamic!(BTreeSet<(usize, usize)>);
+    }
 
-        digraph.add_arc(0, 2);
-
-        assert_eq!(
-            digraph,
-            HashMap::from([
-                (0, HashSet::from([1, 2])),
-                (1, HashSet::new()),
-                (2, HashSet::new())
-            ])
-        );
-
-        digraph.add_arc(1, 2);
-
-        assert_eq!(
-            digraph,
-            HashMap::from([
-                (0, HashSet::from([1, 2])),
-                (1, HashSet::from([2])),
-                (2, HashSet::new())
-            ])
-        );
-
-        digraph.add_arc(2, 0);
-        digraph.add_arc(2, 1);
-
-        assert_eq!(
-            digraph,
-            HashMap::from([
-                (0, HashSet::from([1, 2])),
-                (1, HashSet::from([2])),
-                (2, HashSet::from([0, 1]))
-            ])
-        );
+    #[test]
+    fn hash_set_tuple() {
+        test_add_arc_dynamic!(HashSet<(usize, usize)>);
     }
 }

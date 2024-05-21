@@ -239,7 +239,10 @@ mod tests {
         proptest::proptest,
     };
 
-    fn prop_degree<T: Degree + IterVertices + RandomTournament>(v: usize) {
+    fn prop_degree<T>(v: usize)
+    where
+        T: Degree + IterVertices + RandomTournament,
+    {
         let digraph = T::random_tournament(v);
         let degree = v - 1;
 
@@ -248,7 +251,10 @@ mod tests {
         }
     }
 
-    fn prop_indegree<T: Indegree + IterVertices + RandomTournament>(v: usize) {
+    fn prop_indegree<T>(v: usize)
+    where
+        T: Indegree + IterVertices + RandomTournament,
+    {
         let digraph = T::random_tournament(v);
 
         for s in digraph.iter_vertices() {
@@ -256,13 +262,19 @@ mod tests {
         }
     }
 
-    fn prop_order<T: Order + RandomTournament>(v: usize) {
+    fn prop_order<T>(v: usize)
+    where
+        T: Order + RandomTournament,
+    {
         let digraph = T::random_tournament(v);
 
         assert_eq!(digraph.order(), v);
     }
 
-    fn prop_outdegree<T: Outdegree + IterVertices + RandomTournament>(v: usize) {
+    fn prop_outdegree<T>(v: usize)
+    where
+        T: Outdegree + IterVertices + RandomTournament,
+    {
         let digraph = T::random_tournament(v);
 
         for s in digraph.iter_vertices() {
@@ -270,7 +282,10 @@ mod tests {
         }
     }
 
-    fn prop_size<T: RandomTournament + Size>(v: usize) {
+    fn prop_size<T>(v: usize)
+    where
+        T: RandomTournament + Size,
+    {
         let digraph = T::random_tournament(v);
 
         assert_eq!(digraph.size(), (0..v).sum::<usize>());

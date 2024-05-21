@@ -112,6 +112,7 @@
 pub mod add_arc;
 pub mod add_weighted_arc;
 pub mod arc_weight;
+pub mod converse;
 pub mod degree;
 pub mod has_arc;
 pub mod has_edge;
@@ -137,6 +138,7 @@ pub use {
     add_arc::AddArc,
     add_weighted_arc::AddWeightedArc,
     arc_weight::ArcWeight,
+    converse::Converse,
     degree::Degree,
     has_arc::HasArc,
     has_edge::HasEdge,
