@@ -6,7 +6,7 @@
 //! # Examples
 //!
 //! ```
-//! use graaf::algo::bellman_ford_moore;
+//! use graaf::algo::bellman_ford_moore::distances;
 //!
 //! let digraph = vec![
 //!     vec![(1, 1), (2, 2)],
@@ -15,10 +15,10 @@
 //!     vec![(1, -1)],
 //! ];
 //!
-//! assert!(bellman_ford_moore(&digraph, 0).eq(&[0, 1, 2, isize::MAX]));
-//! assert!(bellman_ford_moore(&digraph, 1).eq(&[isize::MAX, 0, 1, isize::MAX]));
-//! assert!(bellman_ford_moore(&digraph, 2).eq(&[isize::MAX, isize::MAX, 0, isize::MAX]));
-//! assert!(bellman_ford_moore(&digraph, 3).eq(&[isize::MAX, -1, 0, 0]));
+//! assert!(distances(&digraph, 0).eq(&[0, 1, 2, isize::MAX]));
+//! assert!(distances(&digraph, 1).eq(&[isize::MAX, 0, 1, isize::MAX]));
+//! assert!(distances(&digraph, 2).eq(&[isize::MAX, isize::MAX, 0, isize::MAX]));
+//! assert!(distances(&digraph, 3).eq(&[isize::MAX, -1, 0, 0]));
 //! ```
 
 use crate::op::{
@@ -37,7 +37,7 @@ use crate::op::{
 /// # Examples
 ///
 /// ```
-/// use graaf::algo::bellman_ford_moore;
+/// use graaf::algo::bellman_ford_moore::distances;
 ///
 /// let digraph = vec![
 ///     vec![(1, 1), (2, 2)],
@@ -46,12 +46,12 @@ use crate::op::{
 ///     vec![(1, -1)],
 /// ];
 ///
-/// assert!(bellman_ford_moore(&digraph, 0).eq(&[0, 1, 2, isize::MAX]));
-/// assert!(bellman_ford_moore(&digraph, 1).eq(&[isize::MAX, 0, 1, isize::MAX]));
-/// assert!(bellman_ford_moore(&digraph, 2).eq(&[isize::MAX, isize::MAX, 0, isize::MAX]));
-/// assert!(bellman_ford_moore(&digraph, 3).eq(&[isize::MAX, -1, 0, 0]));
+/// assert!(distances(&digraph, 0).eq(&[0, 1, 2, isize::MAX]));
+/// assert!(distances(&digraph, 1).eq(&[isize::MAX, 0, 1, isize::MAX]));
+/// assert!(distances(&digraph, 2).eq(&[isize::MAX, isize::MAX, 0, isize::MAX]));
+/// assert!(distances(&digraph, 3).eq(&[isize::MAX, -1, 0, 0]));
 /// ```
-pub fn bellman_ford_moore<D>(digraph: &D, s: usize) -> Vec<isize>
+pub fn distances<D>(digraph: &D, s: usize) -> Vec<isize>
 where
     D: IterAllWeightedArcs<isize> + Order,
 {
@@ -86,10 +86,10 @@ mod tests {
             vec![(1, -1)],
         ];
 
-        assert!(bellman_ford_moore(&digraph, 0).eq(&[0, 1, 2, isize::MAX]));
-        assert!(bellman_ford_moore(&digraph, 1).eq(&[isize::MAX, 0, 1, isize::MAX]));
-        assert!(bellman_ford_moore(&digraph, 2).eq(&[isize::MAX, isize::MAX, 0, isize::MAX]));
-        assert!(bellman_ford_moore(&digraph, 3).eq(&[isize::MAX, -1, 0, 0]));
+        assert!(distances(&digraph, 0).eq(&[0, 1, 2, isize::MAX]));
+        assert!(distances(&digraph, 1).eq(&[isize::MAX, 0, 1, isize::MAX]));
+        assert!(distances(&digraph, 2).eq(&[isize::MAX, isize::MAX, 0, isize::MAX]));
+        assert!(distances(&digraph, 3).eq(&[isize::MAX, -1, 0, 0]));
     }
 
     #[test]
@@ -103,7 +103,7 @@ mod tests {
             vec![(3, 2)],
         ];
 
-        assert!(bellman_ford_moore(&digraph, 0).eq(&[0, 5, 3, 6, 4, 7]));
+        assert!(distances(&digraph, 0).eq(&[0, 5, 3, 6, 4, 7]));
     }
 
     #[test]
@@ -117,6 +117,6 @@ mod tests {
             vec![(3, 4), (4, 8)],
         ];
 
-        assert!(bellman_ford_moore(&digraph, 5).eq(&[-4, -1, 1, 3, 8, 0]));
+        assert!(distances(&digraph, 5).eq(&[-4, -1, 1, 3, 8, 0]));
     }
 }

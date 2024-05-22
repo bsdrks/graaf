@@ -23,11 +23,11 @@
 
 Added
 
-- Add `algo::bellman_ford_moore`.
-- Add unit test `doctest` for `bellman_ford_moore`.
-- Add unit test `bang_jensen_96` for `bellman_ford_moore`.
-- Add unit test `bang_jensen_99` for `bellman_ford_moore`.
+- Add `algo::bellman_ford_moore::distances`.
 - Add module-level example for `predecessor`.
+- Add unit test `bang_jensen_96` for `bellman_ford_moore::distances`.
+- Add unit test `bang_jensen_99` for `bellman_ford_moore::distances`.
+- Add unit test `doctest` for `bellman_ford_moore::distances`.
 
 ## [0.49.1] - 2024-05-22
 
