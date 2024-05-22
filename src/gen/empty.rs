@@ -204,42 +204,6 @@ where
     }
 }
 
-impl Empty for Vec<(usize, usize)> {
-    /// # Panics
-    ///
-    /// Panics if `v` is 0.
-    fn empty(v: usize) -> Self {
-        assert!(v > 0, "a graph must have at least one vertex");
-
-        Self::new()
-    }
-}
-
-impl Empty for BTreeSet<(usize, usize)> {
-    /// # Panics
-    ///
-    /// Panics if `v` is 0.
-    fn empty(v: usize) -> Self {
-        assert!(v > 0, "a graph must have at least one vertex");
-
-        Self::new()
-    }
-}
-
-impl<H> Empty for HashSet<(usize, usize), H>
-where
-    H: BuildHasher + Default,
-{
-    /// # Panics
-    ///
-    /// Panics if `v` is 0.
-    fn empty(v: usize) -> Self {
-        assert!(v > 0, "a graph must have at least one vertex");
-
-        Self::with_hasher(H::default())
-    }
-}
-
 impl<W> Empty for Vec<Vec<(usize, W)>>
 where
     W: Clone,
@@ -403,7 +367,18 @@ where
     }
 }
 
-impl<W> Empty for Vec<(usize, usize, W)> {
+impl Empty for Vec<(usize, usize)> {
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
+    fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
+        Self::with_capacity(v)
+    }
+}
+
+impl Empty for BTreeSet<(usize, usize)> {
     /// # Panics
     ///
     /// Panics if `v` is 0.
@@ -411,6 +386,31 @@ impl<W> Empty for Vec<(usize, usize, W)> {
         assert!(v > 0, "a graph must have at least one vertex");
 
         Self::new()
+    }
+}
+
+impl<H> Empty for HashSet<(usize, usize), H>
+where
+    H: BuildHasher + Default,
+{
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
+    fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
+        Self::with_hasher(H::default())
+    }
+}
+
+impl<W> Empty for Vec<(usize, usize, W)> {
+    /// # Panics
+    ///
+    /// Panics if `v` is 0.
+    fn empty(v: usize) -> Self {
+        assert!(v > 0, "a graph must have at least one vertex");
+
+        Self::with_capacity(v)
     }
 }
 

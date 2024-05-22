@@ -3,11 +3,8 @@
 ## Provisional roadmap
 
 - Add DFS.
-- Add `IterAllArcsMut` trait.
-- Add `IterAllWeightedArcsMut` trait.
 - Add `bfs::shortest_paths`.
 - Add `bfs::single_pair_shortest_paths`.
-- Add `converse` trait.
 - Add `dijkstra::shortest_paths`.
 - Add `dijkstra::single_pair_shortest_paths`.
 - Add `reverse_arc` trait.
@@ -16,8 +13,14 @@
 - Benchmark against popular Rust graph libraries.
 - Benchmark against popular graph libraries in other languages.
 - Release via GitHub Actions.
-- Replace `Vec::new` with `Vec::with_capacity` where applicable.
 - Speed up GHA workflow.
+
+## [0.49.1] - 2024-05-22
+
+Changed
+
+- Use `Self::with_capacity` in `Empty for Vec<(usize, usize)>`.
+- Use `Self::with_capacity` in `Empty for Vec<(usize, usize, W)>`.
 
 ## [0.49.0] - 2024-05-21
 

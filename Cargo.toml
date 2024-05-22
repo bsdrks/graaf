@@ -1,10 +1,10 @@
 [package]
 name = "graaf"
-version = "0.49.0"
+version = "0.49.1"
 edition = "2021"
 authors = ["Bas Dirks <bas.dirks@protonmail.com>"]
 categories = ["algorithms", "data-structures", "mathematics"]
-description = "Functions and types for working with directed graphs"
+description = "Work with directed graphs."
 documentation = "https://docs.rs/graaf"
 keywords = ["bfs", "digraph", "dijkstra", "graph"]
 license = "MIT OR Apache-2.0"
