@@ -3,6 +3,9 @@
 ## Provisional roadmap
 
 - Add DFS.
+- Add `IsInTree` trait.
+- Add `IsOutTree` trait.
+- Add `IsTree` trait.
 - Add `bfs::shortest_paths`.
 - Add `bfs::single_pair_shortest_paths`.
 - Add `dijkstra::shortest_paths`.
@@ -10,10 +13,21 @@
 - Add `reverse_arc` trait.
 - Add a generator for single-sink complete digraphs.
 - Add a generator for single-source complete digraphs.
+- Add sources.
 - Benchmark against popular Rust graph libraries.
 - Benchmark against popular graph libraries in other languages.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.50.0] - 2024-05-22
+
+Added
+
+- Add `algo::bellman_ford_moore`.
+- Add unit test `doctest` for `bellman_ford_moore`.
+- Add unit test `bang_jensen_96` for `bellman_ford_moore`.
+- Add unit test `bang_jensen_99` for `bellman_ford_moore`.
+- Add module-level example for `predecessor`.
 
 ## [0.49.1] - 2024-05-22
 

@@ -3,6 +3,16 @@
 //! Predecessor trees are produced by many graph algorithms, e.g., those
 //! defined in [`bfs`] and [`dijkstra`].
 //!
+//! # Examples
+//!
+//! ```
+//! use graaf::algo::predecessor::search;
+//!
+//! let pred = [Some(1), Some(2), Some(3), None];
+//!
+//! assert_eq!(search(&pred, 0, 3), Some(vec![0, 1, 2, 3]));
+//! ```
+//!
 //! [`bfs`]: crate::algo::bfs
 //! [`dijkstra`]: crate::algo::dijkstra
 
@@ -22,14 +32,8 @@ use std::collections::HashSet;
 /// ```
 /// use graaf::algo::predecessor::search;
 ///
-/// let pred = [
-///     Some(1), // 0 -> 1
-///     Some(2), // 1 -> 2
-///     Some(3), // 2 -> 3
-///     None,    // 3 -> x
-/// ];
+/// let pred = [Some(1), Some(2), Some(3), None];
 ///
-/// // 0 -> 1 -> 2 -> 3
 /// assert_eq!(search(&pred, 0, 3), Some(vec![0, 1, 2, 3]));
 /// ```
 #[must_use]
@@ -51,29 +55,16 @@ pub fn search(pred: &[Option<usize>], s: usize, t: usize) -> Option<Vec<usize>> 
 /// ```
 /// use graaf::algo::predecessor::search_by;
 ///
-/// let pred = [
-///     Some(1), // 0 -> 1
-///     Some(2), // 1 -> 2
-///     Some(3), // 2 -> 3
-///     None,    // 3 -> x
-/// ];
+/// let pred = [Some(1), Some(2), Some(3), None];
 ///
-/// // 0 -> 1 -> 2
 /// assert_eq!(search_by(&pred, 0, |&v, _| v > 1), Some(vec![0, 1, 2]));
 /// ```
 ///
 /// ```
 /// use graaf::algo::predecessor::search_by;
 ///
-/// let pred = [
-///     Some(1), // 0 -> 1
-///     Some(2), // 1 -> 2
-///     Some(3), // 2 -> 3
-///     None,    // 3 -> x
-///     Some(0), // 4 -> 0
-/// ];
+/// let pred = [Some(1), Some(2), Some(3), None, Some(0)];
 ///
-/// // 0 -> 1 -> 2 -> 3
 /// assert_eq!(
 ///     search_by(&pred, 0, |_, u| u.is_none()),
 ///     Some(vec![0, 1, 2, 3])
@@ -140,53 +131,29 @@ mod tests {
 
     #[test]
     fn search_no_path() {
-        let pred = [
-            Some(1), // 0 -> 1
-            Some(2), // 1 -> 2
-            None,    // 2 -> x
-            None,    // 3 -> x
-        ];
+        let pred = [Some(1), Some(2), None, None];
 
-        // 0 -> 1 -> 2 -> x
         assert_eq!(search(&pred, 0, 3), None);
     }
 
     #[test]
     fn search_cycle() {
-        let pred = [
-            Some(1), // 0 -> 1
-            Some(2), // 1 -> 2
-            Some(0), // 2 -> 1
-            None,    // 3 -> x
-        ];
+        let pred = [Some(1), Some(2), Some(0), None];
 
-        // 0 -> 1 -> 2 -> 1 -> ... -> x
         assert_eq!(search(&pred, 0, 3), None);
     }
 
     #[test]
     fn search_path_s_eq_t() {
-        let pred = [
-            Some(1), // 0 -> 1
-            Some(2), // 1 -> 2
-            Some(0), // 2 -> 0
-            None,    // 3 -> x
-        ];
+        let pred = [Some(1), Some(2), Some(0), None];
 
-        // 0 -> 1 -> 2 -> 0
         assert_eq!(search(&pred, 0, 0), Some(vec![0]));
     }
 
     #[test]
     fn search_path_s_ne_t() {
-        let pred = [
-            Some(1), // 0 -> 1
-            Some(2), // 1 -> 2
-            Some(3), // 2 -> 3
-            None,    // 3 -> x
-        ];
+        let pred = [Some(1), Some(2), Some(3), None];
 
-        // 0 -> 1 -> 2 -> 3
         assert_eq!(search(&pred, 0, 3), Some(vec![0, 1, 2, 3]));
     }
 
@@ -216,53 +183,29 @@ mod tests {
 
     #[test]
     fn search_by_no_path() {
-        let pred = [
-            Some(1), // 0 -> 1
-            Some(2), // 1 -> 2
-            None,    // 2 -> x
-            None,    // 3 -> x
-        ];
+        let pred = [Some(1), Some(2), None, None];
 
-        // 0 -> 1 -> 2 -> x
         assert_eq!(search_by(&pred, 0, |&t, _| t == 3), None);
     }
 
     #[test]
     fn search_by_cycle() {
-        let pred = [
-            Some(1), // 0 -> 1
-            Some(2), // 1 -> 2
-            Some(0), // 2 -> 1
-            None,    // 3 -> x
-        ];
+        let pred = [Some(1), Some(2), Some(0), None];
 
-        // 0 -> 1 -> 2 -> 1 -> ... -> x
         assert_eq!(search_by(&pred, 0, |&t, _| t == 3), None);
     }
 
     #[test]
     fn search_by_path_s_eq_t() {
-        let pred = [
-            Some(1), // 0 -> 1
-            Some(2), // 1 -> 2
-            Some(0), // 2 -> 0
-            None,    // 3 -> x
-        ];
+        let pred = [Some(1), Some(2), Some(0), None];
 
-        // 0 -> 1 -> 2 -> 0
         assert_eq!(search_by(&pred, 0, |&t, _| t == 0), Some(vec![0]));
     }
 
     #[test]
     fn search_by_path_s_ne_t() {
-        let pred = [
-            Some(1), // 0 -> 1
-            Some(2), // 1 -> 2
-            Some(3), // 2 -> 3
-            None,    // 3 -> x
-        ];
+        let pred = [Some(1), Some(2), Some(3), None];
 
-        // 0 -> 1 -> 2 -> 3
         assert_eq!(search_by(&pred, 0, |&t, _| t == 3), Some(vec![0, 1, 2, 3]));
     }
 }
