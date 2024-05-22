@@ -19,6 +19,13 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.50.1] - 2024-05-22
+
+Changed
+
+- Re-use `IsBalanced` implementations with a macro.
+- Re-use `IsRegular` implementations with a macro.
+
 ## [0.50.0] - 2024-05-22
 
 Added

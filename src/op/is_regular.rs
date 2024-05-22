@@ -93,316 +93,112 @@ pub trait IsRegular {
     fn is_regular(&self) -> bool;
 }
 
+macro_rules! impl_is_regular {
+    () => {
+        /// # Panics
+        ///
+        /// Panics if the digraph has no vertices.
+        fn is_regular(&self) -> bool {
+            let mut vertices = self.iter_vertices();
+
+            let v = vertices
+                .next()
+                .expect("a graph must have at least one vertex");
+
+            let indegree = self.indegree(v);
+            let outdegree = self.outdegree(v);
+
+            vertices.all(|v| self.indegree(v) == indegree && self.outdegree(v) == outdegree)
+        }
+    };
+}
+
 impl IsRegular for Vec<BTreeSet<usize>> {
-    /// # Panics
-    ///
-    /// Panics if the digraph has no vertices.
-    fn is_regular(&self) -> bool {
-        let mut vertices = self.iter_vertices();
-
-        let v = vertices
-            .next()
-            .expect("a graph must have at least one vertex");
-
-        let indegree = self.indegree(v);
-        let outdegree = self.outdegree(v);
-
-        vertices.all(|v| self.indegree(v) == indegree && self.outdegree(v) == outdegree)
-    }
+    impl_is_regular!();
 }
 
 impl<H> IsRegular for Vec<HashSet<usize, H>>
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if the digraph has no vertices.
-    fn is_regular(&self) -> bool {
-        let mut vertices = self.iter_vertices();
-
-        let v = vertices
-            .next()
-            .expect("a graph must have at least one vertex");
-
-        let indegree = self.indegree(v);
-        let outdegree = self.outdegree(v);
-
-        vertices.all(|v| self.indegree(v) == indegree && self.outdegree(v) == outdegree)
-    }
+    impl_is_regular!();
 }
 
 impl IsRegular for [BTreeSet<usize>] {
-    /// # Panics
-    ///
-    /// Panics if the digraph has no vertices.
-    fn is_regular(&self) -> bool {
-        let mut vertices = self.iter_vertices();
-
-        let v = vertices
-            .next()
-            .expect("a graph must have at least one vertex");
-
-        let indegree = self.indegree(v);
-        let outdegree = self.outdegree(v);
-
-        vertices.all(|v| self.indegree(v) == indegree && self.outdegree(v) == outdegree)
-    }
+    impl_is_regular!();
 }
 
 impl<H> IsRegular for [HashSet<usize, H>]
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if the digraph has no vertices.
-    fn is_regular(&self) -> bool {
-        let mut vertices = self.iter_vertices();
-
-        let v = vertices
-            .next()
-            .expect("a graph must have at least one vertex");
-
-        let indegree = self.indegree(v);
-        let outdegree = self.outdegree(v);
-
-        vertices.all(|v| self.indegree(v) == indegree && self.outdegree(v) == outdegree)
-    }
+    impl_is_regular!();
 }
 
 impl<const V: usize> IsRegular for [BTreeSet<usize>; V] {
-    /// # Panics
-    ///
-    /// Panics if the digraph has no vertices.
-    fn is_regular(&self) -> bool {
-        let mut vertices = self.iter_vertices();
-
-        let v = vertices
-            .next()
-            .expect("a graph must have at least one vertex");
-
-        let indegree = self.indegree(v);
-        let outdegree = self.outdegree(v);
-
-        vertices.all(|v| self.indegree(v) == indegree && self.outdegree(v) == outdegree)
-    }
+    impl_is_regular!();
 }
 
 impl<const V: usize, H> IsRegular for [HashSet<usize, H>; V]
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if the digraph has no vertices.
-    fn is_regular(&self) -> bool {
-        let mut vertices = self.iter_vertices();
-
-        let v = vertices
-            .next()
-            .expect("a graph must have at least one vertex");
-
-        let indegree = self.indegree(v);
-        let outdegree = self.outdegree(v);
-
-        vertices.all(|v| self.indegree(v) == indegree && self.outdegree(v) == outdegree)
-    }
+    impl_is_regular!();
 }
 
 impl IsRegular for BTreeMap<usize, BTreeSet<usize>> {
-    /// # Panics
-    ///
-    /// Panics if the digraph has no vertices.
-    fn is_regular(&self) -> bool {
-        let mut vertices = self.iter_vertices();
-
-        let v = vertices
-            .next()
-            .expect("a graph must have at least one vertex");
-
-        let indegree = self.indegree(v);
-        let outdegree = self.outdegree(v);
-
-        vertices.all(|v| self.indegree(v) == indegree && self.outdegree(v) == outdegree)
-    }
+    impl_is_regular!();
 }
 
 impl<H> IsRegular for HashMap<usize, HashSet<usize, H>, H>
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if the digraph has no vertices.
-    fn is_regular(&self) -> bool {
-        let mut vertices = self.iter_vertices();
-
-        let v = vertices
-            .next()
-            .expect("a graph must have at least one vertex");
-
-        let indegree = self.indegree(v);
-        let outdegree = self.outdegree(v);
-
-        vertices.all(|v| self.indegree(v) == indegree && self.outdegree(v) == outdegree)
-    }
+    impl_is_regular!();
 }
 
 impl<W> IsRegular for Vec<BTreeMap<usize, W>> {
-    /// # Panics
-    ///
-    /// Panics if the digraph has no vertices.
-    fn is_regular(&self) -> bool {
-        let mut vertices = self.iter_vertices();
-
-        let v = vertices
-            .next()
-            .expect("a graph must have at least one vertex");
-
-        let indegree = self.indegree(v);
-        let outdegree = self.outdegree(v);
-
-        vertices.all(|v| self.indegree(v) == indegree && self.outdegree(v) == outdegree)
-    }
+    impl_is_regular!();
 }
 
 impl<W, H> IsRegular for Vec<HashMap<usize, W, H>>
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if the digraph has no vertices.
-    fn is_regular(&self) -> bool {
-        let mut vertices = self.iter_vertices();
-
-        let v = vertices
-            .next()
-            .expect("a graph must have at least one vertex");
-
-        let indegree = self.indegree(v);
-        let outdegree = self.outdegree(v);
-
-        vertices.all(|v| self.indegree(v) == indegree && self.outdegree(v) == outdegree)
-    }
+    impl_is_regular!();
 }
 
 impl<W> IsRegular for [BTreeMap<usize, W>] {
-    /// # Panics
-    ///
-    /// Panics if the digraph has no vertices.
-    fn is_regular(&self) -> bool {
-        let mut vertices = self.iter_vertices();
-
-        let v = vertices
-            .next()
-            .expect("a graph must have at least one vertex");
-
-        let indegree = self.indegree(v);
-        let outdegree = self.outdegree(v);
-
-        vertices.all(|v| self.indegree(v) == indegree && self.outdegree(v) == outdegree)
-    }
+    impl_is_regular!();
 }
 
 impl<W, H> IsRegular for [HashMap<usize, W, H>]
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if the digraph has no vertices.
-    fn is_regular(&self) -> bool {
-        let mut vertices = self.iter_vertices();
-
-        let v = vertices
-            .next()
-            .expect("a graph must have at least one vertex");
-
-        let indegree = self.indegree(v);
-        let outdegree = self.outdegree(v);
-
-        vertices.all(|v| self.indegree(v) == indegree && self.outdegree(v) == outdegree)
-    }
+    impl_is_regular!();
 }
 
 impl<const V: usize, W> IsRegular for [BTreeMap<usize, W>; V] {
-    /// # Panics
-    ///
-    /// Panics if the digraph has no vertices.
-    fn is_regular(&self) -> bool {
-        let mut vertices = self.iter_vertices();
-
-        let v = vertices
-            .next()
-            .expect("a graph must have at least one vertex");
-
-        let indegree = self.indegree(v);
-        let outdegree = self.outdegree(v);
-
-        vertices.all(|v| self.indegree(v) == indegree && self.outdegree(v) == outdegree)
-    }
+    impl_is_regular!();
 }
 
 impl<const V: usize, W, H> IsRegular for [HashMap<usize, W, H>; V]
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if the digraph has no vertices.
-    fn is_regular(&self) -> bool {
-        let mut vertices = self.iter_vertices();
-
-        let v = vertices
-            .next()
-            .expect("a graph must have at least one vertex");
-
-        let indegree = self.indegree(v);
-        let outdegree = self.outdegree(v);
-
-        vertices.all(|v| self.indegree(v) == indegree && self.outdegree(v) == outdegree)
-    }
+    impl_is_regular!();
 }
 
 impl<W> IsRegular for BTreeMap<usize, BTreeMap<usize, W>> {
-    /// # Panics
-    ///
-    /// Panics if the digraph has no vertices.
-    fn is_regular(&self) -> bool {
-        let mut vertices = self.iter_vertices();
-
-        let v = vertices
-            .next()
-            .expect("a graph must have at least one vertex");
-
-        let indegree = self.indegree(v);
-        let outdegree = self.outdegree(v);
-
-        vertices.all(|v| self.indegree(v) == indegree && self.outdegree(v) == outdegree)
-    }
+    impl_is_regular!();
 }
 
 impl<W, H> IsRegular for HashMap<usize, HashMap<usize, W, H>, H>
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if the digraph has no vertices.
-    fn is_regular(&self) -> bool {
-        let mut vertices = self.iter_vertices();
-
-        let v = vertices
-            .next()
-            .expect("a graph must have at least one vertex");
-
-        let indegree = self.indegree(v);
-        let outdegree = self.outdegree(v);
-
-        vertices.all(|v| self.indegree(v) == indegree && self.outdegree(v) == outdegree)
-    }
+    impl_is_regular!();
 }
 
 #[cfg(test)]
@@ -414,8 +210,12 @@ mod tests {
                 Cycle,
                 CycleConst,
                 Empty,
+                EmptyConst,
             },
-            op::RemoveArc,
+            op::{
+                AddWeightedArc,
+                RemoveArc,
+            },
         },
         proptest::proptest,
     };
@@ -544,90 +344,82 @@ mod tests {
         test_is_regular!(digraph);
     }
 
+    macro_rules! setup_weighted_cycle {
+        ($ty:ty) => {{
+            let mut digraph = <$ty>::empty(3);
+
+            digraph.add_weighted_arc(0, 1, 4);
+            digraph.add_weighted_arc(1, 2, 3);
+            digraph.add_weighted_arc(2, 0, 3);
+
+            digraph
+        }};
+    }
+
+    macro_rules! setup_weighted_cycle_const {
+        ($ty:ty) => {{
+            let mut digraph = <$ty>::empty();
+
+            digraph.add_weighted_arc(0, 1, 4);
+            digraph.add_weighted_arc(1, 2, 3);
+            digraph.add_weighted_arc(2, 0, 3);
+
+            digraph
+        }};
+    }
+
     #[test]
     fn vec_btree_map() {
-        let mut digraph = vec![
-            BTreeMap::from([(1, 4)]),
-            BTreeMap::from([(2, 3)]),
-            BTreeMap::from([(0, 3)]),
-        ];
+        let mut digraph = setup_weighted_cycle!(Vec<BTreeMap<usize, usize>>);
 
         test_is_regular!(digraph);
     }
 
     #[test]
     fn vec_hash_map() {
-        let mut digraph = vec![
-            HashMap::from([(1, 4)]),
-            HashMap::from([(2, 3)]),
-            HashMap::from([(0, 3)]),
-        ];
+        let mut digraph = setup_weighted_cycle!(Vec<HashMap<usize, usize>>);
 
         test_is_regular!(digraph);
     }
 
     #[test]
     fn slice_btree_map() {
-        let digraph: &mut [BTreeMap<usize, usize>] = &mut [
-            BTreeMap::from([(1, 4)]),
-            BTreeMap::from([(2, 3)]),
-            BTreeMap::from([(0, 3)]),
-        ];
+        let mut digraph = setup_weighted_cycle!(Vec<BTreeMap<usize, usize>>);
 
-        test_is_regular!(digraph);
+        test_is_regular!(digraph.as_mut_slice());
     }
 
     #[test]
     fn slice_hash_map() {
-        let digraph: &mut [HashMap<usize, usize>] = &mut [
-            HashMap::from([(1, 4)]),
-            HashMap::from([(2, 3)]),
-            HashMap::from([(0, 3)]),
-        ];
+        let mut digraph = setup_weighted_cycle!(Vec<HashMap<usize, usize>>);
 
-        test_is_regular!(digraph);
+        test_is_regular!(digraph.as_mut_slice());
     }
 
     #[test]
     fn arr_btree_map() {
-        let mut digraph = [
-            BTreeMap::from([(1, 4)]),
-            BTreeMap::from([(2, 3)]),
-            BTreeMap::from([(0, 3)]),
-        ];
+        let mut digraph = setup_weighted_cycle_const!([BTreeMap<usize, usize>; 3]);
 
         test_is_regular!(digraph);
     }
 
     #[test]
     fn arr_hash_map() {
-        let mut digraph = [
-            HashMap::from([(1, 4)]),
-            HashMap::from([(2, 3)]),
-            HashMap::from([(0, 3)]),
-        ];
+        let mut digraph = setup_weighted_cycle_const!([HashMap<usize, usize>; 3]);
 
         test_is_regular!(digraph);
     }
 
     #[test]
     fn btree_map_btree_map() {
-        let mut digraph = BTreeMap::from([
-            (0, BTreeMap::from([(1, 4)])),
-            (1, BTreeMap::from([(2, 3)])),
-            (2, BTreeMap::from([(0, 3)])),
-        ]);
+        let mut digraph = setup_weighted_cycle!(BTreeMap<usize, BTreeMap<usize, usize>>);
 
         test_is_regular!(digraph);
     }
 
     #[test]
     fn hash_map_hash_map() {
-        let mut digraph = HashMap::from([
-            (0, HashMap::from([(1, 4)])),
-            (1, HashMap::from([(2, 3)])),
-            (2, HashMap::from([(0, 3)])),
-        ]);
+        let mut digraph = setup_weighted_cycle!(HashMap<usize, HashMap<usize, usize>>);
 
         test_is_regular!(digraph);
     }

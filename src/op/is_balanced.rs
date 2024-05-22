@@ -116,106 +116,79 @@ pub trait IsBalanced {
     fn is_balanced(&self) -> bool;
 }
 
+macro_rules! impl_is_balanced {
+    () => {
+        fn is_balanced(&self) -> bool {
+            self.iter_vertices()
+                .all(|s| self.indegree(s) == self.outdegree(s))
+        }
+    };
+}
+
 impl IsBalanced for Vec<BTreeSet<usize>> {
-    fn is_balanced(&self) -> bool {
-        self.iter_vertices()
-            .all(|s| self.indegree(s) == self.outdegree(s))
-    }
+    impl_is_balanced!();
 }
 
 impl<H> IsBalanced for Vec<HashSet<usize, H>>
 where
     H: BuildHasher,
 {
-    fn is_balanced(&self) -> bool {
-        self.iter_vertices()
-            .all(|s| self.indegree(s) == self.outdegree(s))
-    }
+    impl_is_balanced!();
 }
 
 impl IsBalanced for [BTreeSet<usize>] {
-    fn is_balanced(&self) -> bool {
-        self.iter_vertices()
-            .all(|s| self.indegree(s) == self.outdegree(s))
-    }
+    impl_is_balanced!();
 }
 
 impl<H> IsBalanced for [HashSet<usize, H>]
 where
     H: BuildHasher,
 {
-    fn is_balanced(&self) -> bool {
-        self.iter_vertices()
-            .all(|s| self.indegree(s) == self.outdegree(s))
-    }
+    impl_is_balanced!();
 }
 
 impl<const V: usize> IsBalanced for [BTreeSet<usize>; V] {
-    fn is_balanced(&self) -> bool {
-        self.iter_vertices()
-            .all(|s| self.indegree(s) == self.outdegree(s))
-    }
+    impl_is_balanced!();
 }
 
 impl<const V: usize, H> IsBalanced for [HashSet<usize, H>; V]
 where
     H: BuildHasher,
 {
-    fn is_balanced(&self) -> bool {
-        self.iter_vertices()
-            .all(|s| self.indegree(s) == self.outdegree(s))
-    }
+    impl_is_balanced!();
 }
 
 impl<W> IsBalanced for Vec<BTreeMap<usize, W>> {
-    fn is_balanced(&self) -> bool {
-        self.iter_vertices()
-            .all(|s| self.indegree(s) == self.outdegree(s))
-    }
+    impl_is_balanced!();
 }
 
 impl<W, H> IsBalanced for Vec<HashMap<usize, W, H>>
 where
     H: BuildHasher,
 {
-    fn is_balanced(&self) -> bool {
-        self.iter_vertices()
-            .all(|s| self.indegree(s) == self.outdegree(s))
-    }
+    impl_is_balanced!();
 }
 
 impl<W> IsBalanced for [BTreeMap<usize, W>] {
-    fn is_balanced(&self) -> bool {
-        self.iter_vertices()
-            .all(|s| self.indegree(s) == self.outdegree(s))
-    }
+    impl_is_balanced!();
 }
 
 impl<W, H> IsBalanced for [HashMap<usize, W, H>]
 where
     H: BuildHasher,
 {
-    fn is_balanced(&self) -> bool {
-        self.iter_vertices()
-            .all(|s| self.indegree(s) == self.outdegree(s))
-    }
+    impl_is_balanced!();
 }
 
 impl<const V: usize, W> IsBalanced for [BTreeMap<usize, W>; V] {
-    fn is_balanced(&self) -> bool {
-        self.iter_vertices()
-            .all(|s| self.indegree(s) == self.outdegree(s))
-    }
+    impl_is_balanced!();
 }
 
 impl<const V: usize, W, H> IsBalanced for [HashMap<usize, W, H>; V]
 where
     H: BuildHasher,
 {
-    fn is_balanced(&self) -> bool {
-        self.iter_vertices()
-            .all(|s| self.indegree(s) == self.outdegree(s))
-    }
+    impl_is_balanced!();
 }
 
 #[cfg(test)]
