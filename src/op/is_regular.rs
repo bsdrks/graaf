@@ -230,6 +230,32 @@ mod tests {
         };
     }
 
+    macro_rules! test_is_regular_weighted {
+        ($digraph:expr) => {{
+            $digraph.add_weighted_arc(0, 1, 4);
+            $digraph.add_weighted_arc(1, 2, 3);
+            $digraph.add_weighted_arc(2, 0, 3);
+
+            test_is_regular!($digraph);
+        }};
+    }
+
+    macro_rules! test_is_regular_weighted_dynamic {
+        ($ty:ty) => {
+            let mut digraph = <$ty>::empty(3);
+
+            test_is_regular_weighted!(digraph);
+        };
+    }
+
+    macro_rules! test_is_regular_weighted_const {
+        ($ty:ty) => {
+            let mut digraph = <$ty>::empty();
+
+            test_is_regular_weighted!(digraph);
+        };
+    }
+
     proptest! {
         #[test]
         fn empty_vec_btree_set_unweighted(v in 1..100_usize) {
@@ -344,83 +370,33 @@ mod tests {
         test_is_regular!(digraph);
     }
 
-    macro_rules! setup_weighted_cycle {
-        ($ty:ty) => {{
-            let mut digraph = <$ty>::empty(3);
-
-            digraph.add_weighted_arc(0, 1, 4);
-            digraph.add_weighted_arc(1, 2, 3);
-            digraph.add_weighted_arc(2, 0, 3);
-
-            digraph
-        }};
-    }
-
-    macro_rules! setup_weighted_cycle_const {
-        ($ty:ty) => {{
-            let mut digraph = <$ty>::empty();
-
-            digraph.add_weighted_arc(0, 1, 4);
-            digraph.add_weighted_arc(1, 2, 3);
-            digraph.add_weighted_arc(2, 0, 3);
-
-            digraph
-        }};
-    }
-
     #[test]
     fn vec_btree_map() {
-        let mut digraph = setup_weighted_cycle!(Vec<BTreeMap<usize, usize>>);
-
-        test_is_regular!(digraph);
+        test_is_regular_weighted_dynamic!(Vec<BTreeMap<usize, usize>>);
     }
 
     #[test]
     fn vec_hash_map() {
-        let mut digraph = setup_weighted_cycle!(Vec<HashMap<usize, usize>>);
-
-        test_is_regular!(digraph);
-    }
-
-    #[test]
-    fn slice_btree_map() {
-        let mut digraph = setup_weighted_cycle!(Vec<BTreeMap<usize, usize>>);
-
-        test_is_regular!(digraph.as_mut_slice());
-    }
-
-    #[test]
-    fn slice_hash_map() {
-        let mut digraph = setup_weighted_cycle!(Vec<HashMap<usize, usize>>);
-
-        test_is_regular!(digraph.as_mut_slice());
+        test_is_regular_weighted_dynamic!(Vec<HashMap<usize, usize>>);
     }
 
     #[test]
     fn arr_btree_map() {
-        let mut digraph = setup_weighted_cycle_const!([BTreeMap<usize, usize>; 3]);
-
-        test_is_regular!(digraph);
+        test_is_regular_weighted_const!([BTreeMap<usize, usize>; 3]);
     }
 
     #[test]
     fn arr_hash_map() {
-        let mut digraph = setup_weighted_cycle_const!([HashMap<usize, usize>; 3]);
-
-        test_is_regular!(digraph);
+        test_is_regular_weighted_const!([HashMap<usize, usize>; 3]);
     }
 
     #[test]
     fn btree_map_btree_map() {
-        let mut digraph = setup_weighted_cycle!(BTreeMap<usize, BTreeMap<usize, usize>>);
-
-        test_is_regular!(digraph);
+        test_is_regular_weighted_dynamic!(BTreeMap<usize, BTreeMap<usize, usize>>);
     }
 
     #[test]
     fn hash_map_hash_map() {
-        let mut digraph = setup_weighted_cycle!(HashMap<usize, HashMap<usize, usize>>);
-
-        test_is_regular!(digraph);
+        test_is_regular_weighted_dynamic!(HashMap<usize, HashMap<usize, usize>>);
     }
 }

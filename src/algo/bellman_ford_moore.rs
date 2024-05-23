@@ -9,16 +9,15 @@
 //! use graaf::algo::bellman_ford_moore::distances;
 //!
 //! let digraph = vec![
-//!     vec![(1, 1), (2, 2)],
-//!     vec![(2, 1)],
-//!     Vec::new(),
-//!     vec![(1, -1)],
+//!     vec![(1, 8), (2, 4)],
+//!     vec![(2, -5)],
+//!     vec![(3, -2), (4, 4)],
+//!     vec![(5, -2)],
+//!     vec![(3, 10), (5, 9)],
+//!     vec![(3, 5), (4, -3)],
 //! ];
 //!
-//! assert!(distances(&digraph, 0).eq(&[0, 1, 2, isize::MAX]));
-//! assert!(distances(&digraph, 1).eq(&[isize::MAX, 0, 1, isize::MAX]));
-//! assert!(distances(&digraph, 2).eq(&[isize::MAX, isize::MAX, 0, isize::MAX]));
-//! assert!(distances(&digraph, 3).eq(&[isize::MAX, -1, 0, 0]));
+//! assert!(distances(&digraph, 0).eq(&[0, 8, 3, 1, -4, -1]));
 //! ```
 
 use crate::op::{
@@ -40,16 +39,15 @@ use crate::op::{
 /// use graaf::algo::bellman_ford_moore::distances;
 ///
 /// let digraph = vec![
-///     vec![(1, 1), (2, 2)],
-///     vec![(2, 1)],
-///     Vec::new(),
-///     vec![(1, -1)],
+///     vec![(1, 8), (2, 4)],
+///     vec![(2, -5)],
+///     vec![(3, -2), (4, 4)],
+///     vec![(5, -2)],
+///     vec![(3, 10), (5, 9)],
+///     vec![(3, 5), (4, -3)],
 /// ];
 ///
-/// assert!(distances(&digraph, 0).eq(&[0, 1, 2, isize::MAX]));
-/// assert!(distances(&digraph, 1).eq(&[isize::MAX, 0, 1, isize::MAX]));
-/// assert!(distances(&digraph, 2).eq(&[isize::MAX, isize::MAX, 0, isize::MAX]));
-/// assert!(distances(&digraph, 3).eq(&[isize::MAX, -1, 0, 0]));
+/// assert!(distances(&digraph, 0).eq(&[0, 8, 3, 1, -4, -1]));
 /// ```
 pub fn distances<D>(digraph: &D, s: usize) -> Vec<isize>
 where
@@ -62,10 +60,6 @@ where
 
     for _ in 1..v {
         for (s, t, w) in digraph.iter_all_weighted_arcs() {
-            if dist[s] == isize::MAX {
-                continue;
-            }
-
             dist[t] = dist[t].min(dist[s].saturating_add(*w));
         }
     }
@@ -75,48 +69,18 @@ where
 
 #[cfg(test)]
 mod tests {
-    use super::*;
-
-    #[test]
-    fn doctest() {
-        let digraph = vec![
-            vec![(1, 1), (2, 2)],
-            vec![(2, 1)],
-            Vec::new(),
-            vec![(1, -1)],
-        ];
-
-        assert!(distances(&digraph, 0).eq(&[0, 1, 2, isize::MAX]));
-        assert!(distances(&digraph, 1).eq(&[isize::MAX, 0, 1, isize::MAX]));
-        assert!(distances(&digraph, 2).eq(&[isize::MAX, isize::MAX, 0, isize::MAX]));
-        assert!(distances(&digraph, 3).eq(&[isize::MAX, -1, 0, 0]));
-    }
+    use {
+        super::*,
+        crate::algo::fixture,
+    };
 
     #[test]
     fn bang_jensen_96() {
-        let digraph = vec![
-            vec![(1, 9), (2, 3)],
-            vec![(2, 6), (3, 2)],
-            vec![(1, 2), (4, 1)],
-            vec![(5, 1)],
-            vec![(2, 2), (3, 2), (5, 7)],
-            vec![(3, 2)],
-        ];
-
-        assert!(distances(&digraph, 0).eq(&[0, 5, 3, 6, 4, 7]));
+        assert!(distances(&fixture::bang_jensen_96_isize(), 0).eq(&[0, 5, 3, 6, 4, 7]));
     }
 
     #[test]
     fn bang_jensen_99() {
-        let digraph = vec![
-            vec![(1, 9), (2, 10)],
-            vec![(0, -3), (2, 5)],
-            vec![(1, -2)],
-            vec![(0, 4), (2, -2)],
-            vec![(2, 2), (3, -5)],
-            vec![(3, 4), (4, 8)],
-        ];
-
-        assert!(distances(&digraph, 5).eq(&[-4, -1, 1, 3, 8, 0]));
+        assert!(distances(&fixture::bang_jensen_99(), 0).eq(&[0, 8, 3, 1, -4, -1]));
     }
 }

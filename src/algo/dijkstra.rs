@@ -458,487 +458,205 @@ where
 mod tests {
     use {
         super::*,
-        crate::op::AddWeightedArc,
+        crate::{
+            algo::fixture,
+            gen::Empty,
+        },
     };
 
-    const GRAPH_0: [&[(usize, usize)]; 0] = [];
+    macro_rules! test_distances {
+        ($digraph:expr, $dist:expr) => {
+            let mut dist = vec![usize::MAX; $dist.len()];
+            let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
-    const GRAPH_1: [&[(usize, usize)]; 9] = [
-        &[(1, 4), (7, 8)],
-        &[(0, 4), (2, 8), (7, 11)],
-        &[(1, 8), (3, 7), (5, 4), (8, 2)],
-        &[(2, 7), (4, 9), (5, 14)],
-        &[(3, 9), (5, 10)],
-        &[(2, 4), (3, 14), (4, 10), (6, 2)],
-        &[(5, 2), (7, 1), (8, 6)],
-        &[(0, 8), (1, 11), (6, 1), (8, 7)],
-        &[(2, 2), (6, 6), (7, 7)],
-    ];
+            dist[0] = 0;
 
-    const GRAPH_SHORTEST_PATH_1: [&[(usize, usize)]; 4] = [&[(1, 2)], &[(2, 2)], &[], &[(0, 2)]];
+            distances(&$digraph, |acc, w| acc + w, &mut dist, &mut heap);
 
-    const GRAPH_CROSS_COUNTRY: [&[(usize, usize)]; 4] = [
-        &[(1, 1), (2, 3), (3, 14)],
-        &[(0, 2), (2, 4), (3, 22)],
-        &[(0, 3), (1, 10), (3, 7)],
-        &[(0, 13), (1, 8), (2, 2)],
-    ];
+            assert!(dist.iter().eq($dist));
+        };
+    }
 
-    const EDGES_BRYR_1: [(usize, usize, usize); 3] = [(2, 0, 1), (0, 1, 1), (1, 2, 1)];
+    macro_rules! test_predecessors {
+        ($digraph:expr, $dist:expr, $pred:expr) => {
+            let mut pred = vec![None; $dist.len()];
+            let mut dist = vec![usize::MAX; $dist.len()];
+            let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
-    const EDGES_BRYR_2: [(usize, usize, usize); 6] = [
-        (4, 5, 1),
-        (4, 3, 1),
-        (1, 0, 1),
-        (1, 2, 1),
-        (3, 2, 1),
-        (0, 3, 1),
-    ];
+            dist[0] = 0;
 
-    const EDGES_BRYR_3: [(usize, usize, usize); 13] = [
-        (6, 2, 0),
-        (6, 9, 1),
-        (7, 1, 0),
-        (9, 1, 1),
-        (3, 5, 0),
-        (3, 0, 0),
-        (8, 4, 1),
-        (5, 8, 0),
-        (6, 5, 1),
-        (2, 9, 0),
-        (3, 4, 0),
-        (4, 6, 1),
-        (3, 7, 0),
-    ];
+            predecessors(&$digraph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
 
-    fn to_vec<T>(digraph: &[&[T]]) -> Vec<Vec<T>>
-    where
-        T: Clone,
-    {
-        digraph.iter().map(|v| v.to_vec()).collect()
+            assert!(dist.iter().eq($dist));
+            assert!(pred.iter().eq($pred));
+        };
+    }
+
+    macro_rules! test_shortest_path {
+        ($digraph:expr, $t:expr, $dist:expr, $pred:expr, $path:expr) => {
+            let mut pred = vec![None; $dist.len()];
+            let mut dist = vec![usize::MAX; $dist.len()];
+            let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+            dist[0] = 0;
+
+            let path = shortest_path(
+                &$digraph,
+                |acc, w| acc + w,
+                |v, _| v == $t,
+                &mut pred,
+                &mut dist,
+                &mut heap,
+            );
+
+            assert!(dist.iter().eq($dist));
+            assert!(pred.iter().eq($pred));
+            assert_eq!(path, $path);
+        };
     }
 
     #[test]
-    fn distances_digraph_0() {
-        let digraph = to_vec(&GRAPH_0);
-        let mut dist = Vec::new();
-        let mut heap = BinaryHeap::new();
-
-        distances(&digraph, |acc, w| acc + w, &mut dist, &mut heap);
-
-        assert!(dist.is_empty());
+    fn distances_trivial() {
+        test_distances!(Vec::<Vec<(usize, usize)>>::trivial(), &[0]);
     }
 
     #[test]
-    fn distances_digraph_1() {
-        let digraph = to_vec(&GRAPH_1);
-
-        let mut dist = [
-            0,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-        ];
-
-        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-
-        distances(&digraph, |acc, w| acc + w, &mut dist, &mut heap);
-
-        assert_eq!(dist, [0, 4, 12, 19, 21, 11, 9, 8, 14]);
+    fn distances_bang_jensen_96() {
+        test_distances!(fixture::bang_jensen_96(), &[0, 5, 3, 6, 4, 7]);
     }
 
     #[test]
-    fn distances_shortest_path_1() {
-        let digraph = to_vec(&GRAPH_SHORTEST_PATH_1);
-        let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
-        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-
-        distances(&digraph, |acc, w| acc + w, &mut dist, &mut heap);
-
-        assert_eq!(dist, [0, 2, 4, usize::MAX]);
+    fn distances_kattis_shortest_path_1() {
+        test_distances!(fixture::kattis_shortestpath1(), &[0, 2, 4, usize::MAX]);
     }
 
     #[test]
-    fn distances_cross_country() {
-        let digraph = to_vec(&GRAPH_CROSS_COUNTRY);
-        let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
-        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-
-        distances(&digraph, |acc, w| acc + w, &mut dist, &mut heap);
-
-        assert_eq!(dist, [0, 1, 3, 10]);
+    fn distances_kattis_cross_country() {
+        test_distances!(fixture::kattis_cross_country(), &[0, 1, 3, 10]);
     }
 
     #[test]
-    fn distances_bryr_1() {
-        let mut digraph = vec![Vec::new(); 3];
-
-        for (s, t, w) in EDGES_BRYR_1 {
-            digraph.add_weighted_arc(s, t, w);
-            digraph.add_weighted_arc(t, s, w);
-        }
-
-        let mut dist = [0, usize::MAX, usize::MAX];
-        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-
-        distances(&digraph, |acc, w| acc + w, &mut dist, &mut heap);
-
-        assert_eq!(dist, [0, 1, 1]);
+    fn distances_kattis_bryr_1() {
+        test_distances!(fixture::kattis_bryr_1(), &[0, 1, 1]);
     }
 
     #[test]
-    fn distances_bryr_2() {
-        let mut digraph = vec![Vec::new(); 6];
-
-        for (s, t, w) in EDGES_BRYR_2 {
-            digraph.add_weighted_arc(s, t, w);
-            digraph.add_weighted_arc(t, s, w);
-        }
-
-        let mut dist = [
-            0,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-        ];
-
-        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-
-        distances(&digraph, |acc, w| acc + w, &mut dist, &mut heap);
-
-        assert_eq!(dist, [0, 1, 2, 1, 2, 3]);
+    fn distances_kattis_bryr_2() {
+        test_distances!(fixture::kattis_bryr_2(), &[0, 1, 2, 1, 2, 3]);
     }
 
     #[test]
-    fn distances_bryr_3() {
-        let mut digraph = vec![Vec::new(); 10];
-
-        for (s, t, w) in EDGES_BRYR_3 {
-            digraph.add_weighted_arc(s, t, w);
-            digraph.add_weighted_arc(t, s, w);
-        }
-
-        let mut dist = [
-            0,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-        ];
-
-        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-
-        distances(&digraph, |acc, w| acc + w, &mut dist, &mut heap);
-
-        assert_eq!(dist, [0, 0, 1, 0, 0, 0, 1, 0, 0, 1]);
+    fn distances_kattis_bryr_3() {
+        test_distances!(fixture::kattis_bryr_3(), &[0, 0, 1, 0, 0, 0, 1, 0, 0, 1]);
     }
 
     #[test]
-    #[should_panic(expected = "index out of bounds: the len is 0 but the index is 0")]
-    fn single_source_distances_digraph_0() {
-        let digraph = to_vec(&GRAPH_0);
-        let _ = single_source_distances(&digraph, 0);
-    }
-
-    #[test]
-    fn single_source_distances_digraph_1() {
-        #[rustfmt::skip]
-        const EXPECTED: [[usize; 9]; 9] = [
-            [ 0,  4, 12, 19, 21, 11,  9,  8, 14],
-            [ 4,  0,  8, 15, 22, 12, 12, 11, 10],
-            [12,  8,  0,  7, 14,  4,  6,  7,  2],
-            [19, 15,  7,  0,  9, 11, 13, 14,  9],
-            [21, 22, 14,  9,  0, 10, 12, 13, 16],
-            [11, 12,  4, 11, 10,  0,  2,  3,  6],
-            [ 9, 12,  6, 13, 12,  2,  0,  1,  6],
-            [ 8, 11,  7, 14, 13,  3,  1,  0,  7],
-            [14, 10,  2,  9, 16,  6,  6,  7,  0],
-        ];
-
-        let digraph = to_vec(&GRAPH_1);
-
-        for (i, &d) in EXPECTED.iter().enumerate() {
-            assert_eq!(single_source_distances(&digraph, i), d);
-        }
-    }
-
-    #[test]
-    fn single_source_distances_shortest_path_1() {
-        const M: usize = usize::MAX;
-
-        #[rustfmt::skip]
-        const EXPECTED: [[usize; 4]; 4] = [
-            [0, 2, 4, M],
-            [M, 0, 2, M],
-            [M, M, 0, M],
-            [2, 4, 6, 0],
-        ];
-
-        let digraph = to_vec(&GRAPH_SHORTEST_PATH_1);
-
-        for (i, &d) in EXPECTED.iter().enumerate() {
-            assert_eq!(single_source_distances(&digraph, i), d);
-        }
-    }
-
-    #[test]
-    fn single_source_distances_cross_country() {
-        #[rustfmt::skip]
-        const EXPECTED: [[usize; 4]; 4] = [
-            [ 0,  1,  3, 10],
-            [ 2,  0,  4, 11],
-            [ 3,  4,  0,  7],
-            [ 5,  6,  2,  0],
-        ];
-
-        let digraph = to_vec(&GRAPH_CROSS_COUNTRY);
-
-        for (i, &d) in EXPECTED.iter().enumerate() {
-            assert_eq!(single_source_distances(&digraph, i), d);
-        }
-    }
-
-    #[test]
-    fn single_source_distances_bryr_1() {
-        #[rustfmt::skip]
-        const EXPECTED: [[usize; 3]; 3] = [
-            [0, 1, 1],
-            [1, 0, 1],
-            [1, 1, 0],
-        ];
-
-        let mut digraph = vec![Vec::new(); 3];
-
-        for (s, t, w) in EDGES_BRYR_1 {
-            digraph.add_weighted_arc(s, t, w);
-            digraph.add_weighted_arc(t, s, w);
-        }
-
-        for (s, dist) in EXPECTED.iter().enumerate() {
-            assert_eq!(single_source_distances(&digraph, s), dist);
-        }
-    }
-
-    #[test]
-    fn single_source_distances_bryr_2() {
-        #[rustfmt::skip]
-        const EXPECTED: [[usize; 6]; 6] = [
-            [0, 1, 2, 1, 2, 3],
-            [1, 0, 1, 2, 3, 4],
-            [2, 1, 0, 1, 2, 3],
-            [1, 2, 1, 0, 1, 2],
-            [2, 3, 2, 1, 0, 1],
-            [3, 4, 3, 2, 1, 0],
-        ];
-
-        let mut digraph = vec![Vec::new(); 6];
-
-        for (s, t, w) in EDGES_BRYR_2 {
-            digraph.add_weighted_arc(s, t, w);
-            digraph.add_weighted_arc(t, s, w);
-        }
-
-        for (s, dist) in EXPECTED.iter().enumerate() {
-            assert_eq!(single_source_distances(&digraph, s), dist);
-        }
-    }
-
-    #[test]
-    fn single_source_distances_bryr_3() {
-        #[rustfmt::skip]
-        const EXPECTED: [[usize; 10]; 10] = [
-            [0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
-            [0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
-            [1, 1, 0, 1, 1, 1, 0, 1, 1, 0],
-            [0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
-            [0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
-            [0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
-            [1, 1, 0, 1, 1, 1, 0, 1, 1, 0],
-            [0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
-            [0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
-            [1, 1, 0, 1, 1, 1, 0, 1, 1, 0],
-        ];
-
-        let mut digraph = vec![Vec::new(); 10];
-
-        for (s, t, w) in EDGES_BRYR_3 {
-            digraph.add_weighted_arc(s, t, w);
-            digraph.add_weighted_arc(t, s, w);
-        }
-
-        for (s, dist) in EXPECTED.iter().enumerate() {
-            assert_eq!(single_source_distances(&digraph, s), dist);
-        }
-    }
-
-    #[test]
-    fn predecessors_digraph_0() {
-        let digraph = to_vec(&GRAPH_0);
-        let mut pred = Vec::new();
-        let mut dist = Vec::new();
-        let mut heap = BinaryHeap::new();
-
-        predecessors(&digraph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
-
-        assert!(pred.is_empty());
-        assert!(dist.is_empty());
-    }
-
-    #[test]
-    fn predecessors_digraph_1() {
-        let digraph = to_vec(&GRAPH_1);
-        let mut pred = [None; 9];
-
-        let mut dist = [
-            0,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-        ];
-
-        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-
-        predecessors(&digraph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
-
-        assert_eq!(
-            pred,
-            [
-                None,
-                Some(0),
-                Some(1),
-                Some(2),
-                Some(5),
-                Some(6),
-                Some(7),
-                Some(0),
-                Some(2)
-            ]
+    fn single_source_distances_trivial() {
+        assert!(
+            single_source_distances(&Vec::<Vec<(usize, usize)>>::trivial(), 0)
+                .iter()
+                .eq(&[0])
         );
-
-        assert_eq!(dist, [0, 4, 12, 19, 21, 11, 9, 8, 14]);
     }
 
     #[test]
-    fn predecessors_shortest_path_1() {
-        let digraph = to_vec(&GRAPH_SHORTEST_PATH_1);
-        let mut pred = [None; 4];
-        let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
-        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-
-        predecessors(&digraph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
-
-        assert_eq!(pred, [None, Some(0), Some(1), None]);
-        assert_eq!(dist, [0, 2, 4, usize::MAX]);
+    fn single_source_distances_bang_jensen_96() {
+        assert!(single_source_distances(&fixture::bang_jensen_96(), 0)
+            .iter()
+            .eq(&[0, 5, 3, 6, 4, 7]));
     }
 
     #[test]
-    fn predecessors_cross_country() {
-        let digraph = to_vec(&GRAPH_CROSS_COUNTRY);
-        let mut pred = [None; 4];
-        let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
-        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-
-        predecessors(&digraph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
-
-        assert_eq!(pred, [None, Some(0), Some(0), Some(2)]);
-        assert_eq!(dist, [0, 1, 3, 10]);
+    fn single_source_distances_kattis_shortest_path_1() {
+        assert!(single_source_distances(&fixture::kattis_shortestpath1(), 0)
+            .iter()
+            .eq(&[0, 2, 4, usize::MAX]));
     }
 
     #[test]
-    fn predecessors_bryr_1() {
-        let mut digraph = vec![Vec::new(); 3];
-
-        for (s, t, w) in EDGES_BRYR_1 {
-            digraph.add_weighted_arc(s, t, w);
-            digraph.add_weighted_arc(t, s, w);
-        }
-
-        let mut pred = [None; 3];
-        let mut dist = [0, usize::MAX, usize::MAX];
-        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-
-        predecessors(&digraph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
-
-        assert_eq!(pred, [None, Some(0), Some(0)]);
-        assert_eq!(dist, [0, 1, 1]);
+    fn single_source_distances_kattis_cross_country() {
+        assert!(single_source_distances(&fixture::kattis_cross_country(), 0)
+            .iter()
+            .eq(&[0, 1, 3, 10]));
     }
 
     #[test]
-    fn predecessors_bryr_2() {
-        let mut digraph = vec![Vec::new(); 6];
-
-        for (s, t, w) in EDGES_BRYR_2 {
-            digraph.add_weighted_arc(s, t, w);
-            digraph.add_weighted_arc(t, s, w);
-        }
-
-        let mut pred = [None; 6];
-
-        let mut dist = [
-            0,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-        ];
-
-        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-
-        predecessors(&digraph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
-
-        assert_eq!(pred, [None, Some(0), Some(3), Some(0), Some(3), Some(4)]);
-        assert_eq!(dist, [0, 1, 2, 1, 2, 3]);
+    fn single_source_distances_kattis_bryr_1() {
+        assert!(single_source_distances(&fixture::kattis_bryr_1(), 0)
+            .iter()
+            .eq(&[0, 1, 1]));
     }
 
     #[test]
-    fn predecessors_bryr_3() {
-        let mut digraph = vec![Vec::new(); 10];
+    fn single_source_distances_kattis_bryr_2() {
+        assert!(single_source_distances(&fixture::kattis_bryr_2(), 0)
+            .iter()
+            .eq(&[0, 1, 2, 1, 2, 3]));
+    }
 
-        for (s, t, w) in EDGES_BRYR_3 {
-            digraph.add_weighted_arc(s, t, w);
-            digraph.add_weighted_arc(t, s, w);
-        }
+    #[test]
+    fn single_source_distances_kattis_bryr_3() {
+        assert!(single_source_distances(&fixture::kattis_bryr_3(), 0)
+            .iter()
+            .eq(&[0, 0, 1, 0, 0, 0, 1, 0, 0, 1]));
+    }
 
-        let mut pred = [None; 10];
+    #[test]
+    fn predecessors_trivial() {
+        test_predecessors!(Vec::<Vec<(usize, usize)>>::trivial(), &[0], &[None]);
+    }
 
-        let mut dist = [
-            0,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-        ];
+    #[test]
+    fn predecessors_bang_jensen_96() {
+        test_predecessors!(
+            fixture::bang_jensen_96(),
+            &[0, 5, 3, 6, 4, 7],
+            &[None, Some(2), Some(0), Some(4), Some(2), Some(3)]
+        );
+    }
 
-        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+    #[test]
+    fn predecessors_kattis_shortest_path_1() {
+        test_predecessors!(
+            fixture::kattis_shortestpath1(),
+            &[0, 2, 4, usize::MAX],
+            &[None, Some(0), Some(1), None]
+        );
+    }
 
-        predecessors(&digraph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
+    #[test]
+    fn predecessors_kattis_cross_country() {
+        test_predecessors!(
+            fixture::kattis_cross_country(),
+            &[0, 1, 3, 10],
+            &[None, Some(0), Some(0), Some(2)]
+        );
+    }
 
-        assert_eq!(
-            pred,
-            [
+    #[test]
+    fn predecessors_kattis_bryr_1() {
+        test_predecessors!(
+            fixture::kattis_bryr_1(),
+            &[0, 1, 1],
+            &[None, Some(0), Some(0)]
+        );
+    }
+
+    #[test]
+    fn predecessors_kattis_bryr_2() {
+        test_predecessors!(
+            fixture::kattis_bryr_2(),
+            &[0, 1, 2, 1, 2, 3],
+            &[None, Some(0), Some(3), Some(0), Some(3), Some(4)]
+        );
+    }
+
+    #[test]
+    fn predecessors_kattis_bryr_3() {
+        test_predecessors!(
+            fixture::kattis_bryr_3(),
+            &[0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
+            &[
                 None,
                 Some(7),
                 Some(9),
@@ -948,374 +666,150 @@ mod tests {
                 Some(5),
                 Some(3),
                 Some(5),
-                Some(1)
-            ],
-        );
-
-        assert_eq!(dist, [0, 0, 1, 0, 0, 0, 1, 0, 0, 1]);
-    }
-
-    #[test]
-    #[should_panic(expected = "index out of bounds: the len is 0 but the index is 0")]
-    fn single_source_predecessors_digraph_0() {
-        let digraph = to_vec(&GRAPH_0);
-        let _ = single_source_predecessors(&digraph, 0);
-    }
-
-    #[test]
-    fn single_source_predecessors_digraph_1() {
-        #[rustfmt::skip]
-        const EXPECTED: [[Option<usize>; 9]; 9] = [
-            [None,    Some(0), Some(1), Some(2), Some(5), Some(6), Some(7), Some(0), Some(2)],
-            [Some(1), None,    Some(1), Some(2), Some(5), Some(2), Some(7), Some(1), Some(2)],
-            [Some(1), Some(2), None,    Some(2), Some(5), Some(2), Some(5), Some(6), Some(2)],
-            [Some(1), Some(2), Some(3), None,    Some(3), Some(2), Some(5), Some(6), Some(2)],
-            [Some(7), Some(2), Some(5), Some(4), None,    Some(4), Some(5), Some(6), Some(2)],
-            [Some(7), Some(2), Some(5), Some(2), Some(5), None,    Some(5), Some(6), Some(2)],
-            [Some(7), Some(7), Some(5), Some(2), Some(5), Some(6), None,    Some(6), Some(6)],
-            [Some(7), Some(7), Some(5), Some(2), Some(5), Some(6), Some(7), None,    Some(7)],
-            [Some(1), Some(2), Some(8), Some(2), Some(5), Some(2), Some(8), Some(8), None   ],
-        ];
-
-        let digraph = to_vec(&GRAPH_1);
-
-        for (i, expected) in EXPECTED.iter().enumerate() {
-            let pred = single_source_predecessors(&digraph, i);
-
-            assert_eq!(pred, expected);
-        }
-    }
-
-    #[test]
-    fn single_source_predecessors_digraph_shortest_path_1() {
-        #[rustfmt::skip]
-        const EXPECTED: [[Option<usize>; 4]; 4] = [
-            [None,    Some(0), Some(1), None],
-            [None,    None,    Some(1), None],
-            [None,    None,    None,    None],
-            [Some(3), Some(0), Some(1), None],
-        ];
-
-        let digraph = to_vec(&GRAPH_SHORTEST_PATH_1);
-
-        for (i, expected) in EXPECTED.iter().enumerate() {
-            let pred = single_source_predecessors(&digraph, i);
-
-            assert_eq!(pred, expected);
-        }
-    }
-
-    #[test]
-    fn single_source_predecessors_digraph_cross_country() {
-        #[rustfmt::skip]
-        const EXPECTED: [[Option<usize>; 4]; 4] = [
-            [None,    Some(0), Some(0), Some(2)],
-            [Some(1), None,    Some(1), Some(2)],
-            [Some(2), Some(0), None,    Some(2)],
-            [Some(2), Some(0), Some(3), None   ],
-        ];
-
-        let digraph = to_vec(&GRAPH_CROSS_COUNTRY);
-
-        for (i, expected) in EXPECTED.iter().enumerate() {
-            let pred = single_source_predecessors(&digraph, i);
-
-            assert_eq!(pred, expected);
-        }
-    }
-
-    #[test]
-    fn single_source_predecessors_digraph_bryr_1() {
-        #[rustfmt::skip]
-        const EXPECTED: [[Option<usize>; 3]; 3] = [
-            [None,    Some(0), Some(0)],
-            [Some(1), None,    Some(1)],
-            [Some(2), Some(2), None   ],
-        ];
-
-        let mut digraph = vec![Vec::new(); 3];
-
-        for (s, t, w) in EDGES_BRYR_1 {
-            digraph.add_weighted_arc(s, t, w);
-            digraph.add_weighted_arc(t, s, w);
-        }
-
-        for (i, expected) in EXPECTED.iter().enumerate() {
-            let pred = single_source_predecessors(&digraph, i);
-
-            assert_eq!(pred, expected);
-        }
-    }
-
-    #[test]
-    fn single_source_predecessors_digraph_bryr_2() {
-        #[rustfmt::skip]
-        const EXPECTED: [[Option<usize>; 6]; 6] = [
-            [None,    Some(0), Some(3), Some(0), Some(3), Some(4)],
-            [Some(1), None,    Some(1), Some(2), Some(3), Some(4)],
-            [Some(3), Some(2), None,    Some(2), Some(3), Some(4)],
-            [Some(3), Some(2), Some(3), None,    Some(3), Some(4)],
-            [Some(3), Some(2), Some(3), Some(4), None,    Some(4)],
-            [Some(3), Some(2), Some(3), Some(4), Some(5), None   ],
-        ];
-
-        let mut digraph = vec![Vec::new(); 6];
-
-        for (s, t, w) in EDGES_BRYR_2 {
-            digraph.add_weighted_arc(s, t, w);
-            digraph.add_weighted_arc(t, s, w);
-        }
-
-        for (i, expected) in EXPECTED.iter().enumerate() {
-            let pred = single_source_predecessors(&digraph, i);
-
-            assert_eq!(pred, expected);
-        }
-    }
-
-    #[test]
-    fn single_source_predecessors_digraph_bryr_3() {
-        #[rustfmt::skip]
-        const EXPECTED: [[Option<usize>; 10]; 10] = [
-            [None,    Some(7), Some(9), Some(0), Some(3), Some(3), Some(5), Some(3), Some(5), Some(1)],
-            [Some(3), None,    Some(9), Some(7), Some(3), Some(3), Some(5), Some(1), Some(5), Some(1)],
-            [Some(3), Some(9), None,    Some(5), Some(6), Some(6), Some(2), Some(3), Some(5), Some(2)],
-            [Some(3), Some(7), Some(9), None,    Some(3), Some(3), Some(5), Some(3), Some(5), Some(1)],
-            [Some(3), Some(7), Some(9), Some(4), None,    Some(3), Some(4), Some(3), Some(5), Some(1)],
-            [Some(3), Some(7), Some(9), Some(5), Some(3), None,    Some(5), Some(3), Some(5), Some(1)],
-            [Some(3), Some(9), Some(6), Some(5), Some(6), Some(6), None,    Some(3), Some(5), Some(2)],
-            [Some(3), Some(7), Some(9), Some(7), Some(3), Some(3), Some(5), None,    Some(5), Some(1)],
-            [Some(3), Some(7), Some(9), Some(5), Some(3), Some(8), Some(5), Some(3), None,    Some(1)],
-            [Some(3), Some(9), Some(9), Some(5), Some(6), Some(6), Some(2), Some(3), Some(5), None   ],
-        ];
-
-        let mut digraph = vec![Vec::new(); 10];
-
-        for (s, t, w) in EDGES_BRYR_3 {
-            digraph.add_weighted_arc(s, t, w);
-            digraph.add_weighted_arc(t, s, w);
-        }
-
-        for (i, expected) in EXPECTED.iter().enumerate() {
-            let pred = single_source_predecessors(&digraph, i);
-
-            assert_eq!(pred, expected);
-        }
-    }
-
-    #[test]
-    fn shortest_path_digraph_0() {
-        let digraph = to_vec(&GRAPH_0);
-        let mut pred = Vec::new();
-        let mut dist = Vec::new();
-        let mut heap = BinaryHeap::new();
-
-        let path = shortest_path(
-            &digraph,
-            |acc, w| acc + w,
-            |_, _| false,
-            &mut pred,
-            &mut dist,
-            &mut heap,
-        );
-
-        assert!(pred.is_empty());
-        assert!(dist.is_empty());
-        assert!(path.is_none());
-    }
-
-    #[test]
-    fn shortest_path_digraph_1() {
-        let digraph = to_vec(&GRAPH_1);
-        let mut pred = [None; 9];
-
-        let mut dist = [
-            0,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-        ];
-
-        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-
-        let path = shortest_path(
-            &digraph,
-            |acc, w| acc + w,
-            |v, _| v == 8,
-            &mut pred,
-            &mut dist,
-            &mut heap,
-        );
-
-        assert_eq!(
-            pred,
-            [
-                None,
-                Some(0),
                 Some(1),
-                Some(2),
-                Some(5),
-                Some(6),
-                Some(7),
-                Some(0),
-                Some(2)
             ]
         );
-
-        assert_eq!(dist, [0, 4, 12, 19, 21, 11, 9, 8, 14]);
-        assert_eq!(path, Some(vec![0, 1, 2, 8]));
     }
 
     #[test]
-    fn shortest_path_shortest_path_1() {
-        let digraph = to_vec(&GRAPH_SHORTEST_PATH_1);
-        let mut pred = [None; 4];
-        let mut dist = [usize::MAX, usize::MAX, usize::MAX, 0];
-        let mut heap = BinaryHeap::from([(Reverse(0), 3)]);
-
-        let path = shortest_path(
-            &digraph,
-            |acc, w| acc + w,
-            |v, _| v == 2,
-            &mut pred,
-            &mut dist,
-            &mut heap,
+    fn single_source_predecessors_trivial() {
+        assert!(
+            single_source_predecessors(&Vec::<Vec<(usize, usize)>>::trivial(), 0)
+                .iter()
+                .eq(&[None])
         );
-
-        assert_eq!(pred, [Some(3), Some(0), Some(1), None]);
-        assert_eq!(dist, [2, 4, 6, 0]);
-        assert_eq!(path, Some(vec![3, 0, 1, 2]));
     }
 
     #[test]
-    fn shortest_path_cross_country() {
-        let digraph = to_vec(&GRAPH_CROSS_COUNTRY);
-        let mut pred = [None; 4];
-        let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
-        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+    fn single_source_predecessors_bang_jensen_96() {
+        assert!(single_source_predecessors(&fixture::bang_jensen_96(), 0)
+            .iter()
+            .eq(&[None, Some(2), Some(0), Some(4), Some(2), Some(3)]));
+    }
 
-        let path = shortest_path(
-            &digraph,
-            |acc, w| acc + w,
-            |v, _| v == 2,
-            &mut pred,
-            &mut dist,
-            &mut heap,
+    #[test]
+    fn single_source_predecessors_kattis_shortest_path_1() {
+        assert!(
+            single_source_predecessors(&fixture::kattis_shortestpath1(), 0)
+                .iter()
+                .eq(&[None, Some(0), Some(1), None])
         );
-
-        assert_eq!(path, Some(vec![0, 2]));
-        assert_eq!(pred, [None, Some(0), Some(0), Some(0)]);
-        assert_eq!(dist, [0, 1, 3, 14]);
     }
 
     #[test]
-    fn shortest_path_bryr_1() {
-        let mut digraph = vec![Vec::new(); 3];
-
-        for (s, t, w) in EDGES_BRYR_1 {
-            digraph.add_weighted_arc(s, t, w);
-            digraph.add_weighted_arc(t, s, w);
-        }
-
-        let mut pred = [None; 3];
-        let mut dist = [0, usize::MAX, usize::MAX];
-        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-
-        let path = shortest_path(
-            &digraph,
-            |acc, w| acc + w,
-            |v, _| v == 2,
-            &mut pred,
-            &mut dist,
-            &mut heap,
+    fn single_source_predecessors_kattis_cross_country() {
+        assert!(
+            single_source_predecessors(&fixture::kattis_cross_country(), 0)
+                .iter()
+                .eq(&[None, Some(0), Some(0), Some(2)])
         );
-
-        assert_eq!(path, Some(vec![0, 2]));
-        assert_eq!(pred, [None, Some(0), Some(0)]);
-        assert_eq!(dist, [0, 1, 1]);
     }
 
     #[test]
-    fn shortest_path_bryr_2() {
-        let mut digraph = vec![Vec::new(); 6];
+    fn single_source_predecessors_kattis_bryr_1() {
+        assert!(single_source_predecessors(&fixture::kattis_bryr_1(), 0)
+            .iter()
+            .eq(&[None, Some(0), Some(0)]));
+    }
 
-        for (s, t, w) in EDGES_BRYR_2 {
-            digraph.add_weighted_arc(s, t, w);
-            digraph.add_weighted_arc(t, s, w);
-        }
+    #[test]
+    fn single_source_predecessors_kattis_bryr_2() {
+        assert!(single_source_predecessors(&fixture::kattis_bryr_2(), 0)
+            .iter()
+            .eq(&[None, Some(0), Some(3), Some(0), Some(3), Some(4)]));
+    }
 
-        let mut pred = [None; 6];
+    #[test]
+    fn single_source_predecessors_kattis_bryr_3() {
+        assert!(single_source_predecessors(&fixture::kattis_bryr_3(), 0)
+            .iter()
+            .eq(&[
+                None,
+                Some(7),
+                Some(9),
+                Some(0),
+                Some(3),
+                Some(3),
+                Some(5),
+                Some(3),
+                Some(5),
+                Some(1),
+            ]));
+    }
 
-        let mut dist = [
+    #[test]
+    fn shortest_path_trivial() {
+        test_shortest_path!(
+            Vec::<Vec<(usize, usize)>>::trivial(),
             0,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-        ];
-
-        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-
-        let path = shortest_path(
-            &digraph,
-            |acc, w| acc + w,
-            |v, _| v == 5,
-            &mut pred,
-            &mut dist,
-            &mut heap,
+            &[0],
+            &[None],
+            Some(vec![0])
         );
-
-        assert_eq!(path, Some(vec![0, 3, 4, 5]));
-        assert_eq!(pred, [None, Some(0), Some(3), Some(0), Some(3), Some(4)]);
-        assert_eq!(dist, [0, 1, 2, 1, 2, 3]);
     }
 
     #[test]
-    fn shortest_path_bryr_3() {
-        let mut digraph = vec![Vec::new(); 10];
-
-        for (s, t, w) in EDGES_BRYR_3 {
-            digraph.add_weighted_arc(s, t, w);
-            digraph.add_weighted_arc(t, s, w);
-        }
-
-        let mut pred = [None; 10];
-
-        let mut dist = [
-            0,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-        ];
-
-        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-
-        let path = shortest_path(
-            &digraph,
-            |acc, w| acc + w,
-            |v, _| v == 9,
-            &mut pred,
-            &mut dist,
-            &mut heap,
+    fn shortest_path_bang_jensen_96() {
+        test_shortest_path!(
+            fixture::bang_jensen_96(),
+            5,
+            &[0, 5, 3, 6, 4, 7],
+            &[None, Some(2), Some(0), Some(4), Some(2), Some(3)],
+            Some(vec![0, 2, 4, 3, 5])
         );
+    }
 
-        assert_eq!(path, Some(vec![0, 3, 7, 1, 9]));
+    #[test]
+    fn shortest_path_kattis_shortest_path_1() {
+        test_shortest_path!(
+            fixture::kattis_shortestpath1(),
+            3,
+            &[0, 2, 4, usize::MAX],
+            &[None, Some(0), Some(1), None],
+            None
+        );
+    }
 
-        assert_eq!(
-            pred,
-            [
+    #[test]
+    fn shortest_path_kattis_cross_country() {
+        test_shortest_path!(
+            fixture::kattis_cross_country(),
+            2,
+            &[0, 1, 3, 14],
+            &[None, Some(0), Some(0), Some(0)],
+            Some(vec![0, 2])
+        );
+    }
+
+    #[test]
+    fn shortest_path_kattis_bryr_1() {
+        test_shortest_path!(
+            fixture::kattis_bryr_1(),
+            2,
+            &[0, 1, 1],
+            &[None, Some(0), Some(0)],
+            Some(vec![0, 2])
+        );
+    }
+
+    #[test]
+    fn shortest_path_kattis_bryr_2() {
+        test_shortest_path!(
+            fixture::kattis_bryr_2(),
+            5,
+            &[0, 1, 2, 1, 2, 3],
+            &[None, Some(0), Some(3), Some(0), Some(3), Some(4)],
+            Some(vec![0, 3, 4, 5])
+        );
+    }
+
+    #[test]
+    fn shortest_path_kattis_bryr_3() {
+        test_shortest_path!(
+            fixture::kattis_bryr_3(),
+            9,
+            &[0, 0, usize::MAX, 0, 0, 0, 1, 0, 0, 1],
+            &[
                 None,
                 Some(7),
                 None,
@@ -1325,83 +819,69 @@ mod tests {
                 Some(5),
                 Some(3),
                 Some(5),
-                Some(1)
+                Some(1),
             ],
+            Some(vec![0, 3, 7, 1, 9])
         );
-
-        assert_eq!(dist, [0, 0, usize::MAX, 0, 0, 0, 1, 0, 0, 1]);
     }
 
     #[test]
-    #[should_panic(expected = "index out of bounds: the len is 0 but the index is 0")]
-    fn single_pair_shortest_path_digraph_0() {
-        let digraph = to_vec(&GRAPH_0);
-        let _ = single_pair_shortest_path(&digraph, 0, 0);
+    fn single_pair_shortest_path_trivial() {
+        assert!(
+            single_pair_shortest_path(&Vec::<Vec<(usize, usize)>>::trivial(), 0, 0)
+                .unwrap()
+                .iter()
+                .eq(&[0])
+        );
     }
 
     #[test]
-    fn single_pair_shortest_path_digraph_1() {
-        let digraph = to_vec(&GRAPH_1);
-        let path = single_pair_shortest_path(&digraph, 0, 8);
-
-        assert_eq!(path, Some(vec![0, 1, 2, 8]));
+    fn single_pair_shortest_path_bang_jensen_96() {
+        assert!(single_pair_shortest_path(&fixture::bang_jensen_96(), 0, 5)
+            .unwrap()
+            .iter()
+            .eq(&[0, 2, 4, 3, 5]));
     }
 
     #[test]
-    fn single_pair_shortest_path_shortest_path_1() {
-        let digraph = to_vec(&GRAPH_SHORTEST_PATH_1);
-        let path = single_pair_shortest_path(&digraph, 0, 2);
-
-        assert_eq!(path, Some(vec![0, 1, 2]));
+    fn single_pair_shortest_path_kattis_shortest_path_1() {
+        assert_eq!(
+            single_pair_shortest_path(&fixture::kattis_shortestpath1(), 0, 3),
+            None
+        );
     }
 
     #[test]
-    fn single_pair_shortest_path_cross_country() {
-        let digraph = to_vec(&GRAPH_CROSS_COUNTRY);
-        let path = single_pair_shortest_path(&digraph, 0, 2);
-
-        assert_eq!(path, Some(vec![0, 2]));
+    fn single_pair_shortest_path_kattis_cross_country() {
+        assert!(
+            single_pair_shortest_path(&fixture::kattis_cross_country(), 0, 2)
+                .unwrap()
+                .iter()
+                .eq(&[0, 2])
+        );
     }
 
     #[test]
-    fn single_pair_shortest_path_bryr_1() {
-        let mut digraph = vec![Vec::new(); 3];
-
-        for (s, t, w) in EDGES_BRYR_1 {
-            digraph.add_weighted_arc(s, t, w);
-            digraph.add_weighted_arc(t, s, w);
-        }
-
-        let path = single_pair_shortest_path(&digraph, 0, 2);
-
-        assert_eq!(path, Some(vec![0, 2]));
+    fn single_pair_shortest_path_kattis_bryr_1() {
+        assert!(single_pair_shortest_path(&fixture::kattis_bryr_1(), 0, 2)
+            .unwrap()
+            .iter()
+            .eq(&[0, 2]));
     }
 
     #[test]
-    fn single_pair_shortest_path_bryr_2() {
-        let mut digraph = vec![Vec::new(); 6];
-
-        for (s, t, w) in EDGES_BRYR_2 {
-            digraph.add_weighted_arc(s, t, w);
-            digraph.add_weighted_arc(t, s, w);
-        }
-
-        let path = single_pair_shortest_path(&digraph, 0, 5);
-
-        assert_eq!(path, Some(vec![0, 3, 4, 5]));
+    fn single_pair_shortest_path_kattis_bryr_2() {
+        assert!(single_pair_shortest_path(&fixture::kattis_bryr_2(), 0, 5)
+            .unwrap()
+            .iter()
+            .eq(&[0, 3, 4, 5]));
     }
 
     #[test]
-    fn single_pair_shortest_path_bryr_3() {
-        let mut digraph = vec![Vec::new(); 10];
-
-        for (s, t, w) in EDGES_BRYR_3 {
-            digraph.add_weighted_arc(s, t, w);
-            digraph.add_weighted_arc(t, s, w);
-        }
-
-        let path = single_pair_shortest_path(&digraph, 0, 9);
-
-        assert_eq!(path, Some(vec![0, 3, 7, 1, 9]));
+    fn single_pair_shortest_path_kattis_bryr_3() {
+        assert!(single_pair_shortest_path(&fixture::kattis_bryr_3(), 0, 9)
+            .unwrap()
+            .iter()
+            .eq(&[0, 3, 7, 1, 9]));
     }
 }

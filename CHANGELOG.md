@@ -19,12 +19,22 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
-## [0.50.1] - 2024-05-22
+## [0.50.1] - 2024-05-23
 
-Changed
+Refactored
 
-- Re-use `IsBalanced` implementations with a macro.
-- Re-use `IsRegular` implementations with a macro.
+- Move fixtures to their own module.
+- Re-use `IsBalanced` implementation with a macro.
+- Re-use `IsRegular` implementation with a macro.
+- Simplify `bfs` tests.
+- Simplify `dijkstra` tests.
+- Simplify `is_regular` tests.
+
+Removed
+
+- Remove unit test `slice_btree_map` for `IsRegular`.
+- Remove unit test `slice_hash_map` for `IsRegular`.
+- Remove unused proptest regressions.
 
 ## [0.50.0] - 2024-05-22
 

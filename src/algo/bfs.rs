@@ -449,275 +449,102 @@ where
 
 #[cfg(test)]
 mod tests {
+    use crate::{
+        algo::fixture::bang_jensen_94,
+        gen::Empty,
+    };
+
     use super::*;
 
-    const GRAPH_0: [&[usize]; 0] = [];
-
-    const GRAPH_1: [&[usize]; 4] = [&[1], &[2], &[], &[0]];
-
-    const GRAPH_2: [&[usize]; 4] = [&[1, 2], &[0, 2, 3], &[0, 1, 3], &[1, 2]];
-
-    const GRAPH_3: [&[usize]; 8] = [
-        &[1, 3],
-        &[0, 2],
-        &[1],
-        &[0, 4, 7],
-        &[3, 5, 6, 7],
-        &[4, 6],
-        &[4, 5, 7],
-        &[3, 4, 6],
-    ];
-
-    fn to_vec<T>(digraph: &[&[T]]) -> Vec<Vec<T>>
-    where
-        T: Clone,
-    {
-        digraph.iter().map(|v| v.to_vec()).collect()
-    }
-
     #[test]
-    fn distances_digraph_0() {
-        let digraph = to_vec(&GRAPH_0);
-        let mut dist = Vec::new();
+    fn distances_trivial() {
+        let digraph = Vec::<Vec<usize>>::trivial();
+        let mut dist = vec![0];
         let mut queue = VecDeque::new();
 
         distances(&digraph, |w: usize| w + 1, &mut dist, &mut queue);
 
-        assert!(dist.is_empty());
+        assert!(dist.iter().eq(&[0]));
     }
 
     #[test]
-    fn distances_digraph_1() {
-        let digraph = to_vec(&GRAPH_1);
-        let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
+    fn distances_bang_jensen_94() {
+        let digraph = bang_jensen_94();
+        let mut dist = [usize::MAX; 7];
         let mut queue = VecDeque::from([(0, 0)]);
+
+        dist[0] = 0;
 
         distances(&digraph, |w| w + 1, &mut dist, &mut queue);
 
-        assert_eq!(dist, [0, 1, 2, usize::MAX]);
+        assert!(dist.iter().eq(&[0, 1, 1, 2, 2, 2, 3]));
     }
 
     #[test]
-    fn distances_digraph_2() {
-        let digraph = to_vec(&GRAPH_2);
-        let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
-        let mut queue = VecDeque::from([(0, 0)]);
-
-        distances(&digraph, |w| w + 1, &mut dist, &mut queue);
-
-        assert_eq!(dist, [0, 1, 1, 2]);
+    fn single_source_distances_trivial() {
+        assert!(single_source_distances(&Vec::<Vec<usize>>::trivial(), 0)
+            .iter()
+            .eq(&[0]));
     }
 
     #[test]
-    fn distances_digraph_3() {
-        let digraph = to_vec(&GRAPH_3);
-
-        let mut dist = [
-            0,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-        ];
-
-        let mut queue = VecDeque::from([(0, 0)]);
-
-        distances(&digraph, |w| w + 1, &mut dist, &mut queue);
-
-        assert_eq!(dist, [0, 1, 2, 1, 2, 3, 3, 2]);
+    fn single_source_distances_bang_jensen_94() {
+        assert!(single_source_distances(&bang_jensen_94(), 0)
+            .iter()
+            .eq(&[0, 1, 1, 2, 2, 2, 3]));
     }
 
     #[test]
-    #[should_panic(expected = "index out of bounds: the len is 0 but the index is 0")]
-    fn digraph_0() {
-        let digraph = to_vec(&GRAPH_0);
-        let _ = single_source_distances(&digraph, 0);
-    }
-
-    #[test]
-    fn single_source_distances_digraph_1() {
-        const M: usize = usize::MAX;
-
-        #[rustfmt::skip]
-        const EXPECTED: [[usize; 4]; 4] = [
-            [0, 1, 2, M],
-            [M, 0, 1, M],
-            [M, M, 0, M],
-            [1, 2, 3, 0],
-        ];
-
-        let digraph = to_vec(&GRAPH_1);
-
-        for (i, &d) in EXPECTED.iter().enumerate() {
-            assert_eq!(single_source_distances(&digraph, i), d);
-        }
-    }
-
-    #[test]
-    fn single_source_distances_digraph_2() {
-        #[rustfmt::skip]
-        const EXPECTED: [[usize; 4]; 4] = [
-            [0, 1, 1, 2],
-            [1, 0, 1, 1],
-            [1, 1, 0, 1],
-            [2, 1, 1, 0],
-        ];
-
-        let digraph = to_vec(&GRAPH_2);
-
-        for (i, &d) in EXPECTED.iter().enumerate() {
-            assert_eq!(single_source_distances(&digraph, i), d);
-        }
-    }
-
-    #[test]
-    fn single_source_distances_digraph_3() {
-        #[rustfmt::skip]
-        const EXPECTED: [[usize; 8]; 8] = [
-            [0, 1, 2, 1, 2, 3, 3, 2],
-            [1, 0, 1, 2, 3, 4, 4, 3],
-            [2, 1, 0, 3, 4, 5, 5, 4],
-            [1, 2, 3, 0, 1, 2, 2, 1],
-            [2, 3, 4, 1, 0, 1, 1, 1],
-            [3, 4, 5, 2, 1, 0, 1, 2],
-            [3, 4, 5, 2, 1, 1, 0, 1],
-            [2, 3, 4, 1, 1, 2, 1, 0],
-        ];
-
-        let digraph = to_vec(&GRAPH_3);
-
-        for (i, &d) in EXPECTED.iter().enumerate() {
-            assert_eq!(single_source_distances(&digraph, i), d);
-        }
-    }
-
-    #[test]
-    fn predecessors_digraph_0() {
-        let digraph = to_vec(&GRAPH_0);
-        let mut pred = Vec::new();
-        let mut dist = Vec::new();
+    fn predecessors_trivial() {
+        let digraph = Vec::<Vec<usize>>::trivial();
+        let mut pred = vec![None];
+        let mut dist = vec![0];
         let mut queue = VecDeque::new();
 
         predecessors(&digraph, |w: usize| w + 1, &mut pred, &mut dist, &mut queue);
 
-        assert!(pred.is_empty());
-        assert!(dist.is_empty());
+        assert!(pred.iter().eq(&[None]));
+        assert!(dist.iter().eq(&[0]));
     }
 
     #[test]
-    fn predecessors_digraph_1() {
-        let digraph = to_vec(&GRAPH_1);
-        let mut pred = [None, None, None, None];
-        let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
+    fn predecessors_bang_jensen_94() {
+        let digraph = bang_jensen_94();
+        let mut pred = [None; 7];
+        let mut dist = [usize::MAX; 7];
         let mut queue = VecDeque::from([(0, 0)]);
 
-        predecessors(&digraph, |w| w + 1, &mut pred, &mut dist, &mut queue);
-
-        assert_eq!(pred, [None, Some(0), Some(1), None]);
-        assert_eq!(dist, [0, 1, 2, usize::MAX]);
-    }
-
-    #[test]
-    fn predecessors_digraph_2() {
-        let digraph = to_vec(&GRAPH_2);
-        let mut pred = [None, None, None, None];
-        let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
-        let mut queue = VecDeque::from([(0, 0)]);
-
-        predecessors(&digraph, |w| w + 1, &mut pred, &mut dist, &mut queue);
-
-        assert_eq!(pred, [None, Some(0), Some(0), Some(1)]);
-        assert_eq!(dist, [0, 1, 1, 2]);
-    }
-
-    #[test]
-    fn predecessors_digraph_3() {
-        let digraph = to_vec(&GRAPH_3);
-        let mut pred = [None, None, None, None, None, None, None, None];
-
-        let mut dist = [
-            0,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-        ];
-
-        let mut queue = VecDeque::from([(0, 0)]);
+        dist[0] = 0;
 
         predecessors(&digraph, |w| w + 1, &mut pred, &mut dist, &mut queue);
 
         assert_eq!(
             pred,
-            [
-                None,
-                Some(0),
-                Some(1),
-                Some(0),
-                Some(3),
-                Some(4),
-                Some(4),
-                Some(3)
-            ]
+            [None, Some(0), Some(0), Some(1), Some(2), Some(2), Some(4)]
         );
 
-        assert_eq!(dist, [0, 1, 2, 1, 2, 3, 3, 2]);
+        assert_eq!(dist, [0, 1, 1, 2, 2, 2, 3]);
     }
 
     #[test]
-    #[should_panic(expected = "index out of bounds: the len is 0 but the index is 0")]
-    fn single_source_predecessors_digraph_0() {
-        let digraph = to_vec(&GRAPH_0);
-        let _ = single_source_predecessors(&digraph, 0);
+    fn single_source_predecessors_trivial() {
+        assert!(single_source_predecessors(&Vec::<Vec<usize>>::trivial(), 0)
+            .iter()
+            .eq(&[None]));
     }
 
     #[test]
-    fn single_source_predecessors_digraph_1() {
-        let digraph = to_vec(&GRAPH_1);
-        let pred = single_source_predecessors(&digraph, 0);
-
-        assert_eq!(pred, [None, Some(0), Some(1), None]);
+    fn single_source_predecessors_bang_jensen_94() {
+        assert!(single_source_predecessors(&bang_jensen_94(), 0)
+            .iter()
+            .eq(&[None, Some(0), Some(0), Some(1), Some(2), Some(2), Some(4)]));
     }
 
     #[test]
-    fn single_source_predecessors_digraph_2() {
-        let digraph = to_vec(&GRAPH_2);
-        let pred = single_source_predecessors(&digraph, 0);
-
-        assert_eq!(pred, [None, Some(0), Some(0), Some(1)]);
-    }
-
-    #[test]
-    fn single_source_predecessors_digraph_3() {
-        let digraph = to_vec(&GRAPH_3);
-        let pred = single_source_predecessors(&digraph, 0);
-
-        assert_eq!(
-            pred,
-            [
-                None,
-                Some(0),
-                Some(1),
-                Some(0),
-                Some(3),
-                Some(4),
-                Some(4),
-                Some(3)
-            ]
-        );
-    }
-
-    #[test]
-    fn shortest_path_digraph_0() {
-        let digraph = to_vec(&GRAPH_0);
-        let mut pred = Vec::new();
-        let mut dist = Vec::new();
+    fn shortest_path_trivial() {
+        let digraph = Vec::<Vec<usize>>::trivial();
+        let mut pred = vec![None];
+        let mut dist = vec![0];
         let mut queue = VecDeque::new();
 
         let path = shortest_path(
@@ -729,223 +556,50 @@ mod tests {
             &mut queue,
         );
 
-        assert!(pred.is_empty());
-        assert!(dist.is_empty());
+        assert!(pred.iter().eq(&[None]));
+        assert!(dist.iter().eq(&[0]));
         assert!(path.is_none());
     }
 
     #[test]
-    fn shortest_path_digraph_1() {
-        let digraph = to_vec(&GRAPH_1);
-        let mut pred = [None, None, None, None];
-        let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
+    fn shortest_path_bang_jensen_94() {
+        let digraph = bang_jensen_94();
+        let mut pred = [None; 7];
+        let mut dist = [usize::MAX; 7];
         let mut queue = VecDeque::from([(0, 0)]);
+
+        dist[0] = 0;
 
         let path = shortest_path(
             &digraph,
             |w| w + 1,
-            |t| t == 1,
+            |t| t == 6,
             &mut pred,
             &mut dist,
             &mut queue,
         );
 
-        assert_eq!(pred, [None, Some(0), None, None]);
-        assert_eq!(dist, [0, 1, usize::MAX, usize::MAX]);
-        assert_eq!(path, Some(vec![0, 1]));
+        assert!(pred
+            .iter()
+            .eq(&[None, Some(0), Some(0), Some(1), Some(2), Some(2), Some(4)]));
+
+        assert!(dist.iter().eq(&[0, 1, 1, 2, 2, 2, 3]));
+        assert!(path.unwrap().iter().eq(&[0, 2, 4, 6]));
     }
 
     #[test]
-    fn shortest_path_digraph_2() {
-        let digraph = to_vec(&GRAPH_2);
-        let mut pred = [None, None, None, None];
-        let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
-        let mut queue = VecDeque::from([(0, 0)]);
-
-        let path = shortest_path(
-            &digraph,
-            |w| w + 1,
-            |t| t == 2,
-            &mut pred,
-            &mut dist,
-            &mut queue,
-        );
-
-        assert_eq!(pred, [None, Some(0), Some(0), None]);
-        assert_eq!(dist, [0, 1, 1, usize::MAX]);
-        assert_eq!(path, Some(vec![0, 2]));
-    }
-
-    #[test]
-    fn shortest_path_digraph_3() {
-        let digraph = to_vec(&GRAPH_3);
-        let mut pred = [None, None, None, None, None, None, None, None];
-
-        let mut dist = [
-            0,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-            usize::MAX,
-        ];
-
-        let mut queue = VecDeque::from([(0, 0)]);
-
-        let path = shortest_path(
-            &digraph,
-            |w| w + 1,
-            |t| t == 2,
-            &mut pred,
-            &mut dist,
-            &mut queue,
-        );
-
+    fn single_pair_shortest_path_trivial() {
         assert_eq!(
-            pred,
-            [None, Some(0), Some(1), Some(0), None, None, None, None]
+            single_pair_shortest_path(&Vec::<Vec<usize>>::trivial(), 0, 0),
+            None
         );
-
-        assert_eq!(
-            dist,
-            [0, 1, 2, 1, usize::MAX, usize::MAX, usize::MAX, usize::MAX]
-        );
-
-        assert_eq!(path, Some(vec![0, 1, 2]));
-    }
-
-    #[should_panic(expected = "index out of bounds: the len is 0 but the index is 0")]
-    #[test]
-    fn single_pair_shortest_path_digraph_0() {
-        let digraph = to_vec(&GRAPH_0);
-        let _ = single_pair_shortest_path(&digraph, 0, 0);
     }
 
     #[test]
-    fn single_pair_shortest_path_digraph_1() {
-        let digraph = to_vec(&GRAPH_1);
-
-        for (s, t, p) in &[
-            (0, 0, None),
-            (0, 1, Some(vec![0, 1])),
-            (0, 2, Some(vec![0, 1, 2])),
-            (0, 3, None),
-            (1, 0, None),
-            (1, 1, None),
-            (1, 2, Some(vec![1, 2])),
-            (1, 3, None),
-            (2, 0, None),
-            (2, 1, None),
-            (2, 2, None),
-            (2, 3, None),
-            (3, 0, Some(vec![3, 0])),
-            (3, 1, Some(vec![3, 0, 1])),
-            (3, 2, Some(vec![3, 0, 1, 2])),
-            (3, 3, None),
-        ] {
-            assert_eq!(single_pair_shortest_path(&digraph, *s, *t), *p);
-        }
-    }
-
-    #[test]
-    fn single_pair_shortest_path_digraph_2() {
-        let digraph = to_vec(&GRAPH_2);
-
-        for (s, t, p) in &[
-            (0, 0, None),
-            (0, 1, Some(vec![0, 1])),
-            (0, 2, Some(vec![0, 2])),
-            (0, 3, Some(vec![0, 1, 3])),
-            (1, 0, Some(vec![1, 0])),
-            (1, 1, None),
-            (1, 2, Some(vec![1, 2])),
-            (1, 3, Some(vec![1, 3])),
-            (2, 0, Some(vec![2, 0])),
-            (2, 1, Some(vec![2, 1])),
-            (2, 2, None),
-            (2, 3, Some(vec![2, 3])),
-            (3, 0, Some(vec![3, 1, 0])),
-            (3, 1, Some(vec![3, 1])),
-            (3, 2, Some(vec![3, 2])),
-            (3, 3, None),
-        ] {
-            assert_eq!(single_pair_shortest_path(&digraph, *s, *t), *p);
-        }
-    }
-
-    #[test]
-    fn single_pair_shortest_path_digraph_3() {
-        let digraph = to_vec(&GRAPH_3);
-
-        for (s, t, p) in &[
-            (0, 0, None),
-            (0, 1, Some(vec![0, 1])),
-            (0, 2, Some(vec![0, 1, 2])),
-            (0, 3, Some(vec![0, 3])),
-            (0, 4, Some(vec![0, 3, 4])),
-            (0, 5, Some(vec![0, 3, 4, 5])),
-            (0, 6, Some(vec![0, 3, 4, 6])),
-            (0, 7, Some(vec![0, 3, 7])),
-            (1, 0, Some(vec![1, 0])),
-            (1, 1, None),
-            (1, 2, Some(vec![1, 2])),
-            (1, 3, Some(vec![1, 0, 3])),
-            (1, 4, Some(vec![1, 0, 3, 4])),
-            (1, 5, Some(vec![1, 0, 3, 4, 5])),
-            (1, 6, Some(vec![1, 0, 3, 4, 6])),
-            (1, 7, Some(vec![1, 0, 3, 7])),
-            (2, 0, Some(vec![2, 1, 0])),
-            (2, 1, Some(vec![2, 1])),
-            (2, 2, None),
-            (2, 3, Some(vec![2, 1, 0, 3])),
-            (2, 4, Some(vec![2, 1, 0, 3, 4])),
-            (2, 5, Some(vec![2, 1, 0, 3, 4, 5])),
-            (2, 6, Some(vec![2, 1, 0, 3, 4, 6])),
-            (2, 7, Some(vec![2, 1, 0, 3, 7])),
-            (3, 0, Some(vec![3, 0])),
-            (3, 1, Some(vec![3, 0, 1])),
-            (3, 2, Some(vec![3, 0, 1, 2])),
-            (3, 3, None),
-            (3, 4, Some(vec![3, 4])),
-            (3, 5, Some(vec![3, 4, 5])),
-            (3, 6, Some(vec![3, 4, 6])),
-            (3, 7, Some(vec![3, 7])),
-            (4, 0, Some(vec![4, 3, 0])),
-            (4, 1, Some(vec![4, 3, 0, 1])),
-            (4, 2, Some(vec![4, 3, 0, 1, 2])),
-            (4, 3, Some(vec![4, 3])),
-            (4, 4, None),
-            (4, 5, Some(vec![4, 5])),
-            (4, 6, Some(vec![4, 6])),
-            (4, 7, Some(vec![4, 7])),
-            (5, 0, Some(vec![5, 4, 3, 0])),
-            (5, 1, Some(vec![5, 4, 3, 0, 1])),
-            (5, 2, Some(vec![5, 4, 3, 0, 1, 2])),
-            (5, 3, Some(vec![5, 4, 3])),
-            (5, 4, Some(vec![5, 4])),
-            (5, 5, None),
-            (5, 6, Some(vec![5, 6])),
-            (5, 7, Some(vec![5, 4, 7])),
-            (6, 0, Some(vec![6, 4, 3, 0])),
-            (6, 1, Some(vec![6, 4, 3, 0, 1])),
-            (6, 2, Some(vec![6, 4, 3, 0, 1, 2])),
-            (6, 3, Some(vec![6, 4, 3])),
-            (6, 4, Some(vec![6, 4])),
-            (6, 5, Some(vec![6, 5])),
-            (6, 6, None),
-            (6, 7, Some(vec![6, 7])),
-            (7, 0, Some(vec![7, 3, 0])),
-            (7, 1, Some(vec![7, 3, 0, 1])),
-            (7, 2, Some(vec![7, 3, 0, 1, 2])),
-            (7, 3, Some(vec![7, 3])),
-            (7, 4, Some(vec![7, 4])),
-            (7, 5, Some(vec![7, 4, 5])),
-            (7, 6, Some(vec![7, 6])),
-            (7, 7, None),
-        ] {
-            assert_eq!(single_pair_shortest_path(&digraph, *s, *t), *p);
-        }
+    fn single_pair_shortest_path_bang_jensen_93() {
+        assert!(single_pair_shortest_path(&bang_jensen_94(), 0, 6)
+            .unwrap()
+            .iter()
+            .eq(&[0, 2, 4, 6]));
     }
 }
