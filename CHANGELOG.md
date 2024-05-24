@@ -19,6 +19,30 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.50.2] - 2024-05-24
+
+Added
+
+- Cite source for `fixture::bang_jensen_94`.
+- Cite source for `fixture::bang_jensen_96_isize`.
+- Cite source for `fixture::bang_jensen_96`.
+- Cite source for `fixture::bang_jensen_99`.
+- Cite source for `fixture::crosscountry`.
+- Cite source for `fixture::kattis_bryr_1`.
+- Cite source for `fixture::kattis_bryr_2`.
+- Cite source for `fixture::kattis_bryr_3`.
+- Cite source for `fixture::shortestpath1`.
+
+Changed
+
+- Move `benches/algo/distances_weighted/cross_country` to `benches/algo/crosscountry`.
+- Move `benches/algo/distances_weighted/shortest_path_1` to `benches/algo/shortest_path_1`.
+
+Removed
+
+- Remove `small_graph_1` benchmark.
+- Remove `graph_1` benchmark.
+
 ## [0.50.1] - 2024-05-23
 
 Refactored
@@ -1593,7 +1617,7 @@ Added
 
 Fixed
 
-- Fix `cross_country` benchmark.
+- Fix `crosscountry` benchmark.
 - Fix `shortest_path_1` benchmark.
 - Fix `small_graph_1` benchmark.
 

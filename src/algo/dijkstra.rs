@@ -531,8 +531,8 @@ mod tests {
     }
 
     #[test]
-    fn distances_kattis_cross_country() {
-        test_distances!(fixture::kattis_cross_country(), &[0, 1, 3, 10]);
+    fn distances_kattis_crosscountry() {
+        test_distances!(fixture::kattis_crosscountry(), &[0, 1, 3, 10]);
     }
 
     #[test]
@@ -574,8 +574,8 @@ mod tests {
     }
 
     #[test]
-    fn single_source_distances_kattis_cross_country() {
-        assert!(single_source_distances(&fixture::kattis_cross_country(), 0)
+    fn single_source_distances_kattis_crosscountry() {
+        assert!(single_source_distances(&fixture::kattis_crosscountry(), 0)
             .iter()
             .eq(&[0, 1, 3, 10]));
     }
@@ -625,9 +625,9 @@ mod tests {
     }
 
     #[test]
-    fn predecessors_kattis_cross_country() {
+    fn predecessors_kattis_crosscountry() {
         test_predecessors!(
-            fixture::kattis_cross_country(),
+            fixture::kattis_crosscountry(),
             &[0, 1, 3, 10],
             &[None, Some(0), Some(0), Some(2)]
         );
@@ -697,9 +697,9 @@ mod tests {
     }
 
     #[test]
-    fn single_source_predecessors_kattis_cross_country() {
+    fn single_source_predecessors_kattis_crosscountry() {
         assert!(
-            single_source_predecessors(&fixture::kattis_cross_country(), 0)
+            single_source_predecessors(&fixture::kattis_crosscountry(), 0)
                 .iter()
                 .eq(&[None, Some(0), Some(0), Some(2)])
         );
@@ -771,9 +771,9 @@ mod tests {
     }
 
     #[test]
-    fn shortest_path_kattis_cross_country() {
+    fn shortest_path_kattis_crosscountry() {
         test_shortest_path!(
-            fixture::kattis_cross_country(),
+            fixture::kattis_crosscountry(),
             2,
             &[0, 1, 3, 14],
             &[None, Some(0), Some(0), Some(0)],
@@ -852,9 +852,9 @@ mod tests {
     }
 
     #[test]
-    fn single_pair_shortest_path_kattis_cross_country() {
+    fn single_pair_shortest_path_kattis_crosscountry() {
         assert!(
-            single_pair_shortest_path(&fixture::kattis_cross_country(), 0, 2)
+            single_pair_shortest_path(&fixture::kattis_crosscountry(), 0, 2)
                 .unwrap()
                 .iter()
                 .eq(&[0, 2])

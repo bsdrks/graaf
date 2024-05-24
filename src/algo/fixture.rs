@@ -1,4 +1,4 @@
-#![cfg(test)]
+//! Digraph fixtures for testing and benchmarking.
 
 extern crate alloc;
 
@@ -12,6 +12,9 @@ use crate::{
     op::AddWeightedArc,
 };
 
+/// Bang-Jensen, J., & Gutin, G. Z. (2010). Digraphs theory, algorithms and
+/// applications (pp. 94). Springer.
+#[must_use]
 pub fn bang_jensen_94() -> Vec<BTreeSet<usize>> {
     vec![
         BTreeSet::from([1, 2]),
@@ -24,6 +27,9 @@ pub fn bang_jensen_94() -> Vec<BTreeSet<usize>> {
     ]
 }
 
+/// Bang-Jensen, J., & Gutin, G. Z. (2010). Digraphs theory, algorithms and
+/// applications (pp. 96). Springer.
+#[must_use]
 pub fn bang_jensen_96() -> Vec<Vec<(usize, usize)>> {
     vec![
         vec![(1, 9), (2, 3)],
@@ -35,6 +41,9 @@ pub fn bang_jensen_96() -> Vec<Vec<(usize, usize)>> {
     ]
 }
 
+/// Bang-Jensen, J., & Gutin, G. Z. (2010). Digraphs theory, algorithms and
+/// applications (pp. 96). Springer.
+#[must_use]
 pub fn bang_jensen_96_isize() -> Vec<Vec<(usize, isize)>> {
     vec![
         vec![(1, 9), (2, 3)],
@@ -46,6 +55,9 @@ pub fn bang_jensen_96_isize() -> Vec<Vec<(usize, isize)>> {
     ]
 }
 
+/// Bang-Jensen, J., & Gutin, G. Z. (2010). Digraphs theory, algorithms and
+/// applications (pp. 99). Springer.
+#[must_use]
 pub fn bang_jensen_99() -> Vec<Vec<(usize, isize)>> {
     vec![
         vec![(1, 8), (2, 4)],
@@ -57,6 +69,8 @@ pub fn bang_jensen_99() -> Vec<Vec<(usize, isize)>> {
     ]
 }
 
+/// Arnarson, A. B., & Erlendsson, U. F. (2019). Bridges (Sample Input 1). Kattis. [https://open.kattis.com/problems/bryr](https://open.kattis.com/problems/bridges).
+#[must_use]
 pub fn kattis_bryr_1() -> Vec<BTreeMap<usize, usize>> {
     let mut digraph = Vec::<BTreeMap<usize, usize>>::empty(3);
 
@@ -68,6 +82,8 @@ pub fn kattis_bryr_1() -> Vec<BTreeMap<usize, usize>> {
     digraph
 }
 
+/// Arnarson, A. B., & Erlendsson, U. F. (2019). Bridges (Sample Input 2). Kattis. [https://open.kattis.com/problems/bryr](https://open.kattis.com/problems/bridges).
+#[must_use]
 pub fn kattis_bryr_2() -> Vec<BTreeMap<usize, usize>> {
     let mut digraph = Vec::<BTreeMap<usize, usize>>::empty(6);
 
@@ -86,6 +102,8 @@ pub fn kattis_bryr_2() -> Vec<BTreeMap<usize, usize>> {
     digraph
 }
 
+/// Arnarson, A. B., & Erlendsson, U. F. (2019). Bridges (Sample Input 3). Kattis. [https://open.kattis.com/problems/bryr](https://open.kattis.com/problems/bridges).
+#[must_use]
 pub fn kattis_bryr_3() -> Vec<BTreeMap<usize, usize>> {
     let mut digraph = Vec::<BTreeMap<usize, usize>>::empty(10);
 
@@ -111,7 +129,9 @@ pub fn kattis_bryr_3() -> Vec<BTreeMap<usize, usize>> {
     digraph
 }
 
-pub fn kattis_cross_country() -> Vec<Vec<(usize, usize)>> {
+/// Heimark. K. J. S. (2018). Cross Country. Kattis. [https://open.kattis.com/problems/crosscountry](https://open.kattis.com/problems/crosscountry).
+#[must_use]
+pub fn kattis_crosscountry() -> Vec<Vec<(usize, usize)>> {
     vec![
         vec![(1, 1), (2, 3), (3, 14)],
         vec![(0, 2), (2, 4), (3, 22)],
@@ -120,6 +140,8 @@ pub fn kattis_cross_country() -> Vec<Vec<(usize, usize)>> {
     ]
 }
 
+/// Austrin. P. (2005). Single source shortest path, non-negative weights. Kattis. [https://open.kattis.com/problems/shortestpath1](https://open.kattis.com/problems/shortestpath1).
+#[must_use]
 pub fn kattis_shortestpath1() -> Vec<Vec<(usize, usize)>> {
     vec![vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]]
 }

@@ -1,6 +1,6 @@
 [package]
 name = "graaf"
-version = "0.50.1"
+version = "0.50.2"
 edition = "2021"
 authors = ["Bas Dirks <bas.dirks@protonmail.com>"]
 categories = ["algorithms", "data-structures", "mathematics"]
@@ -37,21 +37,11 @@ path = "benches/op/size.rs"
 harness = false
 
 [[bench]]
-name = "cross_country"
-path = "benches/algo/distances_weighted/cross_country.rs"
+name = "crosscountry"
+path = "benches/algo/crosscountry.rs"
 harness = false
 
 [[bench]]
-name = "shortest_path_1"
-path = "benches/algo/distances_weighted/shortest_path_1.rs"
-harness = false
-
-[[bench]]
-name = "small_graph_1"
-path = "benches/algo/distances_weighted/small_graph_1.rs"
-harness = false
-
-[[bench]]
-name = "distances_unweighted_graph_1"
-path = "benches/algo/distances_unweighted/graph_1.rs"
+name = "shortestpath1"
+path = "benches/algo/shortestpath1.rs"
 harness = false
