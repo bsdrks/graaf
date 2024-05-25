@@ -1,7 +1,9 @@
-//! The Bellman-Ford-Moore algorithm
+//! # The Bellman-Ford-Moore algorithm
 //!
 //! The Bellman-Ford-Moore algorithm is a single-source shortest path algorithm
-//! for weighted digraphs without negative cycles.
+//! for weighted digraphs.
+//!
+//! The time complexity is *O*(*ve*).
 //!
 //! # Examples
 //!
@@ -17,7 +19,11 @@
 //!     vec![(3, 5), (4, -3)],
 //! ];
 //!
-//! assert!(distances(&digraph, 0).eq(&[0, 8, 3, 1, -4, -1]));
+//! assert!(distances(&digraph, 0).unwrap().eq(&[0, 8, 3, 1, -4, -1]));
+//!
+//! let digraph = vec![vec![(1, -2)], vec![(2, -1)], vec![(0, -1)]];
+//!
+//! assert_eq!(distances(&digraph, 0), None);
 //! ```
 
 use crate::op::{
@@ -26,7 +32,7 @@ use crate::op::{
 };
 
 /// Computes the distances from a source vertex to all other vertices in a
-/// weighted digraph.
+/// weighted digraph. Returns `None` if the digraph contains a negative cycle.
 ///
 /// # Arguments
 ///
@@ -47,9 +53,13 @@ use crate::op::{
 ///     vec![(3, 5), (4, -3)],
 /// ];
 ///
-/// assert!(distances(&digraph, 0).eq(&[0, 8, 3, 1, -4, -1]));
+/// assert!(distances(&digraph, 0).unwrap().eq(&[0, 8, 3, 1, -4, -1]));
+///
+/// let digraph = vec![vec![(1, -2)], vec![(2, -1)], vec![(0, -1)]];
+///
+/// assert_eq!(distances(&digraph, 0), None);
 /// ```
-pub fn distances<D>(digraph: &D, s: usize) -> Vec<isize>
+pub fn distances<D>(digraph: &D, s: usize) -> Option<Vec<isize>>
 where
     D: IterAllWeightedArcs<isize> + Order,
 {
@@ -64,7 +74,13 @@ where
         }
     }
 
-    dist
+    for (s, t, w) in digraph.iter_all_weighted_arcs() {
+        if dist[t] > dist[s].saturating_add(*w) {
+            return None;
+        }
+    }
+
+    Some(dist)
 }
 
 #[cfg(test)]
@@ -76,11 +92,22 @@ mod tests {
 
     #[test]
     fn bang_jensen_96() {
-        assert!(distances(&fixture::bang_jensen_96_isize(), 0).eq(&[0, 5, 3, 6, 4, 7]));
+        assert!(distances(&fixture::bang_jensen_96_isize(), 0)
+            .unwrap()
+            .eq(&[0, 5, 3, 6, 4, 7]));
     }
 
     #[test]
     fn bang_jensen_99() {
-        assert!(distances(&fixture::bang_jensen_99(), 0).eq(&[0, 8, 3, 1, -4, -1]));
+        assert!(distances(&fixture::bang_jensen_99(), 0)
+            .unwrap()
+            .eq(&[0, 8, 3, 1, -4, -1]));
+    }
+
+    #[test]
+    fn test_negative_cycle() {
+        let digraph = vec![vec![(1, -2)], vec![(2, -1)], vec![(0, -1)]];
+
+        assert_eq!(distances(&digraph, 0), None);
     }
 }

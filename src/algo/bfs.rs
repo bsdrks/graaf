@@ -1,4 +1,4 @@
-//! Breadth-first search
+//! # Breadth-first search
 //!
 //! Breadth-first search is a graph traversal algorithm that visits
 //! vertices of an unweighted digraph in order of their distance from the source
@@ -7,6 +7,8 @@
 //! The implementations use distances instead of a set or boolean array to check
 //! if a vertex has been visited because we already calculate these distances
 //! during traversal.
+//!
+//! The time complexity is *O*(*v* + *e*).
 //!
 //! # Examples
 //!
@@ -18,14 +20,6 @@
 //!     single_source_distances,
 //!     single_source_predecessors,
 //! };
-//!
-//! // ╭───╮     ╭───╮
-//! // │ 0 │  →  │ 1 │
-//! // ╰───╯     ╰───╯
-//! //   ↑         ↓
-//! // ╭───╮     ╭───╮
-//! // │ 3 │     │ 2 │
-//! // ╰───╯     ╰───╯
 //!
 //! let digraph = [vec![1], vec![2], Vec::new(), vec![0]];
 //! let dist = single_source_distances(&digraph, 0);
@@ -91,14 +85,6 @@ use {
 ///     std::collections::VecDeque,
 /// };
 ///
-/// // ╭───╮     ╭───╮
-/// // │ 0 │  →  │ 1 │
-/// // ╰───╯     ╰───╯
-/// //   ↑         ↓
-/// // ╭───╮     ╭───╮
-/// // │ 3 │     │ 2 │
-/// // ╰───╯     ╰───╯
-///
 /// let digraph = [vec![1], vec![2], Vec::new(), vec![0]];
 /// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
 /// let mut queue = VecDeque::from(vec![(0, 0)]);
@@ -129,6 +115,10 @@ where
 
 /// Calculates all distances from a single source vertex.
 ///
+/// # Time complexity
+///
+/// O(V + E)
+///
 /// # Arguments
 ///
 /// * `digraph`: The digraph.
@@ -142,14 +132,6 @@ where
 ///
 /// ```
 /// use graaf::algo::bfs::single_source_distances;
-///
-/// // ╭───╮     ╭───╮
-/// // │ 0 │  →  │ 1 │
-/// // ╰───╯     ╰───╯
-/// //   ↑         ↓
-/// // ╭───╮     ╭───╮
-/// // │ 3 │     │ 2 │
-/// // ╰───╯     ╰───╯
 ///
 /// let digraph = [vec![1], vec![2], Vec::new(), vec![0]];
 ///
@@ -196,14 +178,6 @@ where
 ///     core::cmp::Reverse,
 ///     graaf::algo::bfs::predecessors,
 /// };
-///
-/// // ╭───╮     ╭───╮
-/// // │ 0 │  →  │ 1 │
-/// // ╰───╯     ╰───╯
-/// //   ↑         ↓
-/// // ╭───╮     ╭───╮
-/// // │ 3 │     │ 2 │
-/// // ╰───╯     ╰───╯
 ///
 /// let digraph = [vec![1], vec![2], Vec::new(), vec![0]];
 /// let mut pred = [None, None, None, None];
@@ -258,14 +232,6 @@ pub fn predecessors<D, S, W>(
 /// ```
 /// use graaf::algo::bfs::single_source_predecessors;
 ///
-/// // ╭───╮     ╭───╮
-/// // │ 0 │  →  │ 1 │
-/// // ╰───╯     ╰───╯
-/// //   ↑         ↓
-/// // ╭───╮     ╭───╮
-/// // │ 3 │     │ 2 │
-/// // ╰───╯     ╰───╯
-///
 /// let digraph = [vec![1], vec![2], Vec::new(), vec![0]];
 /// let pred = single_source_predecessors(&digraph, 0);
 ///
@@ -312,14 +278,6 @@ where
 ///     graaf::algo::bfs::shortest_path,
 ///     std::collections::VecDeque,
 /// };
-///
-/// // ╭───╮     ╭───╮
-/// // │ 0 │  →  │ 1 │
-/// // ╰───╯     ╰───╯
-/// //   ↑         ↓
-/// // ╭───╮     ╭───╮
-/// // │ 3 │     │ 2 │
-/// // ╰───╯     ╰───╯
 ///
 /// let digraph = [vec![1], vec![2], Vec::new(), vec![0]];
 /// let mut pred = [None, None, None, None];
@@ -398,26 +356,10 @@ where
 /// ```
 /// use graaf::algo::bfs::single_pair_shortest_path as spsp;
 ///
-/// // ╭───╮     ╭───╮
-/// // │ 0 │  →  │ 1 │
-/// // ╰───╯     ╰───╯
-/// //   ↑         ↓
-/// // ╭───╮     ╭───╮
-/// // │ 3 │     │ 2 │
-/// // ╰───╯     ╰───╯
-///
 /// let digraph = [vec![1], vec![2], Vec::new(), vec![0]];
 /// let path = spsp(&digraph, 3, 2);
 ///
 /// assert_eq!(path, Some(vec![3, 0, 1, 2]));
-///
-/// // ╭───╮     ╭───╮
-/// // │ 0 │  ←  │ 1 │
-/// // ╰───╯     ╰───╯
-/// //   ↑         ↑
-/// // ╭───╮     ╭───╮
-/// // │ 3 │  →  │ 2 │
-/// // ╰───╯     ╰───╯
 ///
 /// let digraph = [Vec::new(), vec![0], vec![1], vec![0, 2]];
 ///

@@ -1,4 +1,4 @@
-//! Predecessor trees
+//! # Predecessor trees utilities
 //!
 //! Predecessor trees are produced by many graph algorithms, e.g., those
 //! defined in [`bfs`] and [`dijkstra`].

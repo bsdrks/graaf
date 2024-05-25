@@ -32,10 +32,6 @@
 //! ```rust
 //! use graaf::algo::bfs::single_pair_shortest_path as spsp;
 //!
-//! // 0  ←  1
-//! // ↑     ↑
-//! // 3  →  2
-//!
 //! let digraph = [Vec::new(), vec![0], vec![1], vec![0, 2]];
 //!
 //! assert_eq!(spsp(&digraph, 3, 0), Some(vec![3, 0]));

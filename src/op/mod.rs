@@ -23,8 +23,6 @@
 //!
 //! let mut digraph = vec![BTreeSet::new(); 3];
 //!
-//! // 1 ← 0 → 2
-//!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(0, 2);
 //!

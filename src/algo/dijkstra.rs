@@ -1,7 +1,9 @@
-//! Dijkstra's algorithm with binary-heap
+//! # Dijkstra's algorithm
 //!
-//! Dijkstra's algorithm[^citation] finds the shortest path in a weighted
-//! digraph. Use [`bfs`] for unweighted digraphs.
+//! Dijkstra's algorithm[^citation] with binary heap finds the shortest path in
+//! a weighted digraph. Use [`bfs`] for unweighted digraphs.
+//!
+//! The time complexity is *O*(*v* log *v* + *e*).
 //!
 //! # Examples
 //!
@@ -13,14 +15,6 @@
 //!     single_source_distances,
 //!     single_source_predecessors,
 //! };
-//!
-//! // ╭───╮     ╭───╮
-//! // │ 0 │ 2 → │ 1 │
-//! // ╰───╯     ╰───╯
-//! //  ↑ 2       ↓ 2
-//! // ╭───╮     ╭───╮
-//! // │ 3 │     │ 2 │
-//! // ╰───╯     ╰───╯
 //!
 //! let digraph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
 //! let dist = single_source_distances(&digraph, 0);
@@ -90,14 +84,6 @@ use {
 ///     graaf::algo::dijkstra::distances,
 /// };
 ///
-/// // ╭───╮     ╭───╮
-/// // │ 0 │ 2 → │ 1 │
-/// // ╰───╯     ╰───╯
-/// //  ↑ 2       ↓ 2
-/// // ╭───╮     ╭───╮
-/// // │ 3 │     │ 2 │
-/// // ╰───╯     ╰───╯
-///
 /// let digraph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
 /// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
 /// let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
@@ -147,14 +133,6 @@ pub fn distances<D, S, W>(
 /// ```
 /// use graaf::algo::dijkstra::single_source_distances;
 ///
-/// // ╭───╮     ╭───╮
-/// // │ 0 │ 2 → │ 1 │
-/// // ╰───╯     ╰───╯
-/// //  ↑ 2       ↓ 2
-/// // ╭───╮     ╭───╮
-/// // │ 3 │     │ 2 │
-/// // ╰───╯     ╰───╯
-///
 /// let digraph: [Vec<(usize, usize)>; 4] = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
 ///
 /// assert_eq!(single_source_distances(&digraph, 0), [0, 2, 4, usize::MAX]);
@@ -201,14 +179,6 @@ where
 ///     core::cmp::Reverse,
 ///     graaf::algo::dijkstra::predecessors,
 /// };
-///
-/// // ╭───╮     ╭───╮
-/// // │ 0 │ 2 → │ 1 │
-/// // ╰───╯     ╰───╯
-/// //  ↑ 2       ↓ 2
-/// // ╭───╮     ╭───╮
-/// // │ 3 │     │ 2 │
-/// // ╰───╯     ╰───╯
 ///
 /// let digraph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
 /// let mut pred = [None, None, None, None];
@@ -262,14 +232,6 @@ pub fn predecessors<D, S, W>(
 ///
 /// ```
 /// use graaf::algo::dijkstra::single_source_predecessors;
-///
-/// // ╭───╮     ╭───╮
-/// // │ 0 │ 2 → │ 1 │
-/// // ╰───╯     ╰───╯
-/// //  ↑ 2       ↓ 2
-/// // ╭───╮     ╭───╮
-/// // │ 3 │     │ 2 │
-/// // ╰───╯     ╰───╯
 ///
 /// let digraph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
 /// let pred = single_source_predecessors(&digraph, 0);
@@ -325,14 +287,6 @@ where
 ///     core::cmp::Reverse,
 ///     graaf::algo::dijkstra::shortest_path,
 /// };
-///
-/// // ╭───╮     ╭───╮
-/// // │ 0 │ 2 → │ 1 │
-/// // ╰───╯     ╰───╯
-/// //  ↑ 2       ↓ 2
-/// // ╭───╮     ╭───╮
-/// // │ 3 │     │ 2 │
-/// // ╰───╯     ╰───╯
 ///
 /// let digraph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
 /// let mut pred = [None, None, None, None];
@@ -413,26 +367,10 @@ where
 /// ```
 /// use graaf::algo::dijkstra::single_pair_shortest_path as spsp;
 ///
-/// // ╭───╮     ╭───╮
-/// // │ 0 │ 2 → │ 1 │
-/// // ╰───╯     ╰───╯
-/// //  ↑ 2       ↓ 2
-/// // ╭───╮     ╭───╮
-/// // │ 3 │     │ 2 │
-/// // ╰───╯     ╰───╯
-///
 /// let digraph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
 /// let path = spsp(&digraph, 3, 2);
 ///
 /// assert_eq!(path, Some(vec![3, 0, 1, 2]));
-///
-/// // ╭───╮     ╭───╮
-/// // │ 0 │ ← 1 │ 1 │
-/// // ╰───╯     ╰───╯
-/// //  ↑ 4       ↑ 1
-/// // ╭───╮     ╭───╮
-/// // │ 3 │ 1 → │ 2 │
-/// // ╰───╯     ╰───╯
 ///
 /// let digraph = [Vec::new(), vec![(0, 1)], vec![(1, 1)], vec![(0, 4), (2, 1)]];
 /// let path = spsp(&digraph, 3, 0);

@@ -19,6 +19,20 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.51.0] - 2024-05-25
+
+Added
+
+- Add `bellman_ford_moore::distances` documentation examples with negative cycles.
+- Add `test_negative_cycle` unit test for `bellman_ford_moore::distances`.
+- Document the time complexity of `bellman_ford_moore`.
+- Document the time complexity of `bfs`.
+- Document the time complexity of `dijkstra`.
+
+Changed
+
+- Breaking: `bellman_ford_moore::distances` now returns an `Option` if a negative cycle is detected.
+
 ## [0.50.2] - 2024-05-24
 
 Added

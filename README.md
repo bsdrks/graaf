@@ -8,7 +8,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.50.2"
+graaf = "0.51.0"
 ```
 
 ## Overview
@@ -42,10 +42,6 @@ Search, traverse, and analyze digraphs.
 
 ```rust
 use graaf::algo::bfs::single_pair_shortest_path as spsp;
-
-// 0  ←  1
-// ↑     ↑
-// 3  →  2
 
 let digraph = [Vec::new(), vec![0], vec![1], vec![0, 2]];
 
