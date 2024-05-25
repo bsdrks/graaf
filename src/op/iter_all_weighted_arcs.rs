@@ -36,11 +36,11 @@ use {
 /// ```
 /// use graaf::op::IterAllWeightedArcs;
 ///
-/// struct Graph {
+/// struct Digraph {
 ///     arcs: Vec<(usize, usize, usize)>,
 /// }
 ///
-/// impl IterAllWeightedArcs<usize> for Graph {
+/// impl IterAllWeightedArcs<usize> for Digraph {
 ///     fn iter_all_weighted_arcs<'a>(&'a self) -> impl Iterator<Item = (usize, usize, &'a usize)>
 ///     where
 ///         usize: 'a,

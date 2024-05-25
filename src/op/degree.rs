@@ -56,11 +56,11 @@ use {
 ///     std::collections::HashSet,
 /// };
 ///
-/// struct Graph {
+/// struct Digraph {
 ///     arcs: Vec<HashSet<usize>>,
 /// }
 ///
-/// impl Degree for Graph {
+/// impl Degree for Digraph {
 ///     fn degree(&self, s: usize) -> usize {
 ///         self.arcs.indegree(s) + self.arcs.outdegree(s)
 ///     }

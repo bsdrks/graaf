@@ -45,11 +45,11 @@ use {
 ///     std::collections::HashMap,
 /// };
 ///
-/// struct Graph {
+/// struct Digraph {
 ///     arcs: Vec<HashMap<usize, usize>>,
 /// }
 ///
-/// impl ArcWeight<usize> for Graph {
+/// impl ArcWeight<usize> for Digraph {
 ///     fn arc_weight(&self, s: usize, t: usize) -> Option<&usize> {
 ///         self.arcs.get(s).and_then(|m| m.get(&t))
 ///     }

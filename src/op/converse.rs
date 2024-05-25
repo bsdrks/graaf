@@ -94,11 +94,11 @@ use {
 ///     std::collections::HashSet,
 /// };
 ///
-/// struct Graph {
+/// struct Digraph {
 ///     arcs: Vec<HashSet<usize>>,
 /// }
 ///
-/// impl Converse for Graph {
+/// impl Converse for Digraph {
 ///     fn converse(&self) -> Self {
 ///         let v = self.arcs.size();
 ///         let mut converse = Vec::<HashSet<usize>>::empty(v);
@@ -111,7 +111,7 @@ use {
 ///     }
 /// }
 ///
-/// let digraph = Graph {
+/// let digraph = Digraph {
 ///     arcs: vec![HashSet::from([1]), HashSet::from([2]), HashSet::from([0])],
 /// };
 ///

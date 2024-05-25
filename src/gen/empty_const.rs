@@ -1,5 +1,5 @@
 #![doc(alias = "edgeless")]
-//! A trait to generate empty const-sized digraphs
+//! A trait to generate empty constant-sized digraphs
 //!
 //! Empty graphs are also known as edgeless graphs. To generate empty
 //! variable-sized digraphs, see [`Empty`].
@@ -37,7 +37,7 @@ use {
     },
 };
 
-/// A trait to generate empty const-sized digraphs
+/// A trait to generate empty constant-sized digraphs
 ///
 /// # How can I implement `EmptyConst`?
 ///
@@ -57,14 +57,14 @@ use {
 ///     },
 /// };
 ///
-/// struct Graph<const V: usize, H>
+/// struct Digraph<const V: usize, H>
 /// where
 ///     H: BuildHasher,
 /// {
 ///     arcs: [HashSet<usize, H>; V],
 /// }
 ///
-/// impl<const V: usize, H> EmptyConst for Graph<V, H>
+/// impl<const V: usize, H> EmptyConst for Digraph<V, H>
 /// where
 ///     H: BuildHasher + Default,
 /// {
@@ -74,13 +74,13 @@ use {
 ///     fn empty() -> Self {
 ///         assert!(V > 0, "a graph must have at least one vertex");
 ///
-///         Graph {
+///         Digraph {
 ///             arcs: from_fn(|_| HashSet::with_hasher(H::default())),
 ///         }
 ///     }
 /// }
 ///
-/// let digraph = Graph::<3, RandomState>::empty();
+/// let digraph = Digraph::<3, RandomState>::empty();
 ///
 /// assert_eq!(
 ///     digraph.arcs,

@@ -1,4 +1,4 @@
-//! Graph generators
+//! Digraph generators
 //!
 //! Generate parametrics digraphs.
 //!
@@ -81,6 +81,7 @@ pub mod empty;
 pub mod empty_const;
 pub mod prng;
 pub mod random_tournament;
+pub mod random_tournament_const;
 
 pub use {
     complete::Complete,
@@ -90,4 +91,5 @@ pub use {
     empty::Empty,
     empty_const::EmptyConst,
     random_tournament::RandomTournament,
+    random_tournament_const::RandomTournamentConst,
 };

@@ -1,5 +1,5 @@
 #![doc(alias = "circular")]
-//! A trait to generate const-sized directed cycle digraphs
+//! A trait to generate constant-sized directed cycle digraphs
 //!
 //! Cycle graphs are also known as circular graphs. To generate variable-sized
 //! cycle digraphs, see [`Cycle`].
@@ -28,7 +28,7 @@ use {
     std::collections::HashSet,
 };
 
-/// A trait to generate const-sized directed cycle digraphs
+/// A trait to generate constant-sized directed cycle digraphs
 ///
 /// # How can I implement `CycleConst`?
 ///
@@ -48,14 +48,14 @@ use {
 ///     },
 /// };
 ///
-/// struct Graph<const V: usize, H>
+/// struct Digraph<const V: usize, H>
 /// where
 ///     H: BuildHasher,
 /// {
 ///     arcs: [HashSet<usize, H>; V],
 /// }
 ///
-/// impl<const V: usize, H> CycleConst for Graph<V, H>
+/// impl<const V: usize, H> CycleConst for Digraph<V, H>
 /// where
 ///     H: BuildHasher + Default,
 /// {
@@ -73,11 +73,11 @@ use {
 ///
 ///         let _ = arcs[V - 1].insert(0);
 ///
-///         Graph { arcs }
+///         Digraph { arcs }
 ///     }
 /// }
 ///
-/// let digraph = Graph::<3, RandomState>::cycle();
+/// let digraph = Digraph::<3, RandomState>::cycle();
 ///
 /// assert_eq!(
 ///     digraph.arcs,

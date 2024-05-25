@@ -68,11 +68,11 @@ use {
 ///     },
 /// };
 ///
-/// struct Graph {
+/// struct Digraph {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl IsSymmetric for Graph {
+/// impl IsSymmetric for Digraph {
 ///     fn is_symmetric(&self) -> bool {
 ///         self.arcs
 ///             .iter_all_arcs()
@@ -80,19 +80,19 @@ use {
 ///     }
 /// }
 ///
-/// let digraph = Graph {
+/// let digraph = Digraph {
 ///     arcs: vec![BTreeSet::from([1]), BTreeSet::from([0])],
 /// };
 ///
 /// assert!(digraph.is_symmetric());
 ///
-/// let digraph = Graph {
+/// let digraph = Digraph {
 ///     arcs: vec![BTreeSet::from([1]), BTreeSet::new()],
 /// };
 ///
 /// assert!(!digraph.is_symmetric());
 ///
-/// let digraph = Graph {
+/// let digraph = Digraph {
 ///     arcs: vec![
 ///         BTreeSet::from([1, 2]),
 ///         BTreeSet::from([2]),

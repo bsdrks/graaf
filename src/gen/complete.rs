@@ -1,7 +1,7 @@
 //! A trait to generate variable-sized complete symmetric digraphs
 //!
 //! The generated digraphs are simple; they contain no self-loops. To generate
-//! const-sized complete digraphs, see [`CompleteConst`].
+//! constant-sized complete digraphs, see [`CompleteConst`].
 //!
 //! # Examples
 //!
@@ -46,11 +46,11 @@ use {
 ///     std::collections::HashSet,
 /// };
 ///
-/// struct Graph {
+/// struct Digraph {
 ///     arcs: HashSet<(usize, usize)>,
 /// }
 ///
-/// impl Complete for Graph {
+/// impl Complete for Digraph {
 ///     /// # Panics
 ///     ///
 ///     /// Panics if `v` is 0.
@@ -68,11 +68,11 @@ use {
 ///             }
 ///         }
 ///
-///         Graph { arcs }
+///         Digraph { arcs }
 ///     }
 /// }
 ///
-/// let digraph = Graph::complete(3);
+/// let digraph = Digraph::complete(3);
 ///
 /// assert_eq!(
 ///     digraph.arcs,

@@ -120,6 +120,7 @@ pub mod is_isolated;
 pub mod is_pendant;
 pub mod is_regular;
 pub mod is_simple;
+pub mod is_subdigraph;
 pub mod is_symmetric;
 pub mod iter_all_arcs;
 pub mod iter_all_weighted_arcs;
@@ -146,6 +147,7 @@ pub use {
     is_pendant::IsPendant,
     is_regular::IsRegular,
     is_simple::IsSimple,
+    is_subdigraph::IsSubdigraph,
     is_symmetric::IsSymmetric,
     iter_all_arcs::IterAllArcs,
     iter_all_weighted_arcs::IterAllWeightedArcs,

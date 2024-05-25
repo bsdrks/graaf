@@ -57,11 +57,11 @@ use {
 ///     std::collections::HashSet,
 /// };
 ///
-/// struct Graph {
+/// struct Digraph {
 ///     arcs: Vec<HashSet<usize>>,
 /// }
 ///
-/// impl HasArc for Graph {
+/// impl HasArc for Digraph {
 ///     fn has_arc(&self, s: usize, t: usize) -> bool {
 ///         self.arcs.get(s).map_or(false, |set| set.contains(&t))
 ///     }
@@ -138,21 +138,6 @@ where
     }
 }
 
-impl<W> HasArc for Vec<BTreeMap<usize, W>> {
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.get(s).map_or(false, |map| map.contains_key(&t))
-    }
-}
-
-impl<W, H> HasArc for Vec<HashMap<usize, W, H>>
-where
-    H: BuildHasher,
-{
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.get(s).map_or(false, |map| map.contains_key(&t))
-    }
-}
-
 impl HasArc for [BTreeSet<usize>] {
     fn has_arc(&self, s: usize, t: usize) -> bool {
         self.get(s).map_or(false, |set| set.contains(&t))
@@ -165,21 +150,6 @@ where
 {
     fn has_arc(&self, s: usize, t: usize) -> bool {
         self.get(s).map_or(false, |set| set.contains(&t))
-    }
-}
-
-impl<W> HasArc for [BTreeMap<usize, W>] {
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.get(s).map_or(false, |map| map.contains_key(&t))
-    }
-}
-
-impl<W, H> HasArc for [HashMap<usize, W, H>]
-where
-    H: BuildHasher,
-{
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.get(s).map_or(false, |map| map.contains_key(&t))
     }
 }
 
@@ -198,36 +168,6 @@ where
     }
 }
 
-impl<const V: usize, W> HasArc for [BTreeMap<usize, W>; V] {
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.get(s).map_or(false, |map| map.contains_key(&t))
-    }
-}
-
-impl<const V: usize, W, H> HasArc for [HashMap<usize, W, H>; V]
-where
-    H: BuildHasher,
-{
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.get(s).map_or(false, |map| map.contains_key(&t))
-    }
-}
-
-impl HasArc for BTreeSet<(usize, usize)> {
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.contains(&(s, t))
-    }
-}
-
-impl<H> HasArc for HashSet<(usize, usize), H>
-where
-    H: BuildHasher,
-{
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.contains(&(s, t))
-    }
-}
-
 impl HasArc for BTreeMap<usize, BTreeSet<usize>> {
     fn has_arc(&self, s: usize, t: usize) -> bool {
         self.get(&s).map_or(false, |set| set.contains(&t))
@@ -240,6 +180,51 @@ where
 {
     fn has_arc(&self, s: usize, t: usize) -> bool {
         self.get(&s).map_or(false, |set| set.contains(&t))
+    }
+}
+
+impl<W> HasArc for Vec<BTreeMap<usize, W>> {
+    fn has_arc(&self, s: usize, t: usize) -> bool {
+        self.get(s).map_or(false, |map| map.contains_key(&t))
+    }
+}
+
+impl<W, H> HasArc for Vec<HashMap<usize, W, H>>
+where
+    H: BuildHasher,
+{
+    fn has_arc(&self, s: usize, t: usize) -> bool {
+        self.get(s).map_or(false, |map| map.contains_key(&t))
+    }
+}
+
+impl<W> HasArc for [BTreeMap<usize, W>] {
+    fn has_arc(&self, s: usize, t: usize) -> bool {
+        self.get(s).map_or(false, |map| map.contains_key(&t))
+    }
+}
+
+impl<W, H> HasArc for [HashMap<usize, W, H>]
+where
+    H: BuildHasher,
+{
+    fn has_arc(&self, s: usize, t: usize) -> bool {
+        self.get(s).map_or(false, |map| map.contains_key(&t))
+    }
+}
+
+impl<const V: usize, W> HasArc for [BTreeMap<usize, W>; V] {
+    fn has_arc(&self, s: usize, t: usize) -> bool {
+        self.get(s).map_or(false, |map| map.contains_key(&t))
+    }
+}
+
+impl<const V: usize, W, H> HasArc for [HashMap<usize, W, H>; V]
+where
+    H: BuildHasher,
+{
+    fn has_arc(&self, s: usize, t: usize) -> bool {
+        self.get(s).map_or(false, |map| map.contains_key(&t))
     }
 }
 
@@ -258,6 +243,20 @@ where
     }
 }
 
+impl HasArc for BTreeSet<(usize, usize)> {
+    fn has_arc(&self, s: usize, t: usize) -> bool {
+        self.contains(&(s, t))
+    }
+}
+
+impl<H> HasArc for HashSet<(usize, usize), H>
+where
+    H: BuildHasher,
+{
+    fn has_arc(&self, s: usize, t: usize) -> bool {
+        self.contains(&(s, t))
+    }
+}
 #[cfg(test)]
 mod tests {
     use super::*;

@@ -34,11 +34,11 @@ use {
 /// ```
 /// use graaf::op::IterVertices;
 ///
-/// struct Graph {
+/// struct Digraph {
 ///     vertices: Vec<usize>,
 /// }
 ///
-/// impl IterVertices for Graph {
+/// impl IterVertices for Digraph {
 ///     fn iter_vertices(&self) -> impl Iterator<Item = usize> {
 ///         0..self.vertices.len()
 ///     }

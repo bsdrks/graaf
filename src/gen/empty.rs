@@ -1,7 +1,7 @@
 #![doc(alias = "edgeless")]
 //! A trait to generate empty variable-sized digraphs
 //!
-//! To generate empty const-sized digraphs, see [`EmptyConst`].
+//! To generate empty constant-sized digraphs, see [`EmptyConst`].
 //!
 //! # Examples
 //!
@@ -47,26 +47,26 @@ use {
 /// };
 ///
 /// #[derive(Debug, PartialEq)]
-/// struct Graph {
+/// struct Digraph {
 ///     arcs: HashSet<(usize, usize)>,
 /// }
 ///
-/// impl Empty for Graph {
+/// impl Empty for Digraph {
 ///     /// # Panics
 ///     ///
 ///     /// Panics if `v` is 0.
 ///     fn empty(v: usize) -> Self {
 ///         assert!(v > 0, "a graph must have at least one vertex");
 ///
-///         Graph {
+///         Digraph {
 ///             arcs: HashSet::new(),
 ///         }
 ///     }
 /// }
 ///
 /// assert_eq!(
-///     Graph::empty(3),
-///     Graph {
+///     Digraph::empty(3),
+///     Digraph {
 ///         arcs: HashSet::new()
 ///     }
 /// );

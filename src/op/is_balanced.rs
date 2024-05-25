@@ -72,11 +72,11 @@ use {
 ///     },
 /// };
 ///
-/// struct Graph<const V: usize> {
+/// struct Digraph<const V: usize> {
 ///     pub arcs: [BTreeSet<usize>; V],
 /// }
 ///
-/// impl<const V: usize> IsBalanced for Graph<V> {
+/// impl<const V: usize> IsBalanced for Digraph<V> {
 ///     fn is_balanced(&self) -> bool {
 ///         self.arcs
 ///             .iter_vertices()

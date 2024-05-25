@@ -60,11 +60,11 @@ use {
 /// ```
 /// use graaf::op::IterOutNeighbors;
 ///
-/// struct Graph {
+/// struct Digraph {
 ///     arcs: Vec<Vec<usize>>,
 /// }
 ///
-/// impl IterOutNeighbors for Graph {
+/// impl IterOutNeighbors for Digraph {
 ///     fn iter_out_neighbors(&self, s: usize) -> impl Iterator<Item = usize> {
 ///         self.arcs[s].iter().copied()
 ///     }

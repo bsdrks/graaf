@@ -38,11 +38,11 @@ use {
 /// ```
 /// use graaf::op::AddArc;
 ///
-/// struct Graph {
+/// struct Digraph {
 ///     arcs: Vec<Vec<usize>>,
 /// }
 ///
-/// impl AddArc for Graph {
+/// impl AddArc for Digraph {
 ///     fn add_arc(&mut self, s: usize, t: usize) {
 ///         self.arcs[s].push(t);
 ///     }

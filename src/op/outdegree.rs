@@ -40,11 +40,11 @@ use {
 /// ```
 /// use graaf::op::Outdegree;
 ///
-/// struct Graph {
+/// struct Digraph {
 ///     arcs: Vec<Vec<usize>>,
 /// }
 ///
-/// impl Outdegree for Graph {
+/// impl Outdegree for Digraph {
 ///     fn outdegree(&self, s: usize) -> usize {
 ///         self.arcs.get(s).map_or(0, Vec::len)
 ///     }

@@ -34,11 +34,11 @@ use {
 /// ```
 /// use graaf::op::Order;
 ///
-/// struct Graph {
+/// struct Digraph {
 ///     vertices: Vec<usize>,
 /// }
 ///
-/// impl Order for Graph {
+/// impl Order for Digraph {
 ///     fn order(&self) -> usize {
 ///         self.vertices.len()
 ///     }

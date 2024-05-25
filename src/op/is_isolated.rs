@@ -58,17 +58,17 @@ use {
 ///     std::collections::HashSet,
 /// };
 ///
-/// struct Graph {
+/// struct Digraph {
 ///     arcs: Vec<HashSet<usize>>,
 /// }
 ///
-/// impl IsIsolated for Graph {
+/// impl IsIsolated for Digraph {
 ///     fn is_isolated(&self, s: usize) -> bool {
 ///         self.arcs.indegree(s) == 0 && self.arcs.outdegree(s) == 0
 ///     }
 /// }
 ///
-/// let digraph = Graph {
+/// let digraph = Digraph {
 ///     arcs: vec![
 ///         HashSet::from([1, 2]),
 ///         HashSet::from([0]),

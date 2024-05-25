@@ -45,11 +45,11 @@ use {
 ///     std::collections::HashSet,
 /// };
 ///
-/// struct Graph {
+/// struct Digraph {
 ///     arcs: Vec<HashSet<usize>>,
 /// }
 ///
-/// impl Indegree for Graph {
+/// impl Indegree for Digraph {
 ///     fn indegree(&self, t: usize) -> usize {
 ///         self.arcs.iter().filter(|set| set.contains(&t)).count()
 ///     }

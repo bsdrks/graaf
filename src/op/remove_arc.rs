@@ -70,11 +70,11 @@ use {
 ///     std::collections::HashSet,
 /// };
 ///
-/// struct Graph {
+/// struct Digraph {
 ///     arcs: Vec<HashSet<usize>>,
 /// }
 ///
-/// impl RemoveArc for Graph {
+/// impl RemoveArc for Digraph {
 ///     fn remove_arc(&mut self, s: usize, t: usize) -> bool {
 ///         self.arcs[s].remove(&t)
 ///     }

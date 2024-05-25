@@ -66,17 +66,17 @@ use {
 ///     graaf::op::HasEdge,
 /// };
 ///
-/// struct Graph {
+/// struct Digraph {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl HasEdge for Graph {
+/// impl HasEdge for Digraph {
 ///     fn has_edge(&self, s: usize, t: usize) -> bool {
 ///         self.arcs[s].contains(&t) && self.arcs[t].contains(&s)
 ///     }
 /// }
 ///
-/// let digraph = Graph {
+/// let digraph = Digraph {
 ///     arcs: vec![BTreeSet::from([1]), BTreeSet::from([0])],
 /// };
 ///

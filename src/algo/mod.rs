@@ -1,4 +1,4 @@
-//! Graph algorithms
+//! # Digraph algorithms
 //!
 //! Traverse and search digraphs.
 

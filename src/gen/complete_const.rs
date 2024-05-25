@@ -1,4 +1,4 @@
-//! A trait to generate const-sized symmetric complete digraphs
+//! A trait to generate constant-sized symmetric complete digraphs
 //!
 //! The generated digraphs are simple; they contain no self-loops. To generate
 //! variable-sized complete digraphs, see [`Complete`].
@@ -28,7 +28,7 @@ use {
     std::collections::HashSet,
 };
 
-/// A trait to generate const-sized symmetric complete digraphs
+/// A trait to generate constant-sized symmetric complete digraphs
 ///
 /// # How can I implement `CompleteConst`?
 ///
@@ -48,14 +48,14 @@ use {
 ///     },
 /// };
 ///
-/// struct Graph<const V: usize, H>
+/// struct Digraph<const V: usize, H>
 /// where
 ///     H: BuildHasher,
 /// {
 ///     arcs: [HashSet<usize, H>; V],
 /// }
 ///
-/// impl<const V: usize, H> CompleteConst for Graph<V, H>
+/// impl<const V: usize, H> CompleteConst for Digraph<V, H>
 /// where
 ///     H: BuildHasher + Default,
 /// {
@@ -75,11 +75,11 @@ use {
 ///             }
 ///         }
 ///
-///         Graph { arcs }
+///         Digraph { arcs }
 ///     }
 /// }
 ///
-/// let digraph = Graph::<3, RandomState>::complete();
+/// let digraph = Digraph::<3, RandomState>::complete();
 ///
 /// assert_eq!(
 ///     digraph.arcs,

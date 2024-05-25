@@ -56,17 +56,17 @@ use {
 ///     std::collections::HashSet,
 /// };
 ///
-/// struct Graph {
+/// struct Digraph {
 ///     arcs: Vec<HashSet<usize>>,
 /// }
 ///
-/// impl IsPendant for Graph {
+/// impl IsPendant for Digraph {
 ///     fn is_pendant(&self, s: usize) -> bool {
 ///         self.arcs.degree(s) == 1
 ///     }
 /// }
 ///
-/// let digraph = Graph {
+/// let digraph = Digraph {
 ///     arcs: vec![
 ///         HashSet::from([1, 2]),
 ///         HashSet::from([0]),

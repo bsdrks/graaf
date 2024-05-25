@@ -2,7 +2,8 @@
 //!
 //! A tournament is a digraph in which for every pair of distinct
 //! vertices `s` and `t`, exactly one of the arcs `(s, t)` and `(t, s)` is
-//! present.
+//! present. To generate constant-sized tournaments, see
+//! [`RandomTournamentConst`].
 //!
 //! # Examples
 //!
@@ -35,6 +36,8 @@
 //!     assert!((0..3).contains(&tournament.indegree(s)));
 //! }
 //! ```
+//!
+//! [`RandomTournamentConst`]: crate::gen::RandomTournamentConst
 
 extern crate alloc;
 
@@ -100,7 +103,7 @@ use {
 /// impl RandomTournament for Tournament {
 ///     fn random_tournament(v: usize) -> Self {
 ///         let mut rng = Xoshiro256StarStar::new(v as u64);
-///         let mut tournament = Tournament::empty(v);
+///         let mut tournament = Self::empty(v);
 ///
 ///         for s in 0..v {
 ///             for t in (s + 1)..v {

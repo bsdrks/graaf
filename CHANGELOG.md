@@ -19,6 +19,49 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.51.1] - 2024-05-25
+
+Added
+
+- Add trait `IsSubdigraph`.
+- Add trait `RandomTournamentConst`.
+- Implement and test `IsSubdigraph` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement and test `IsSubdigraph` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement and test `IsSubdigraph` for `HashMap<usize, HashMap<usize, W>>`.
+- Implement and test `IsSubdigraph` for `HashMap<usize, HashSet<usize>>`.
+- Implement and test `IsSubdigraph` for `Vec<BTreeMap<usize, W>>`.
+- Implement and test `IsSubdigraph` for `Vec<BTreeSet<usize>>`.
+- Implement and test `IsSubdigraph` for `Vec<HashMap<usize, W>>`.
+- Implement and test `IsSubdigraph` for `Vec<HashSet<usize>>`.
+- Implement and test `IsSubdigraph` for `[BTreeMap<usize, W>; V]`.
+- Implement and test `IsSubdigraph` for `[BTreeSet<usize>; V]`.
+- Implement and test `IsSubdigraph` for `[HashMap<usize, W>; V]`.
+- Implement and test `IsSubdigraph` for `[HashSet<usize>; V]`.
+- Implement and test `IterAllArcs` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement and test `IterAllArcs` for `BTreeMap<usize, BTreeSet<(usize, W)>>`.
+- Implement and test `IterAllArcs` for `BTreeMap<usize, Vec<(usize, W)>>`.
+- Implement and test `IterAllArcs` for `BTreeSet<(usize, usize, W)>`.
+- Implement and test `IterAllArcs` for `HashMap<usize, HashMap<usize, W>>`.
+- Implement and test `IterAllArcs` for `HashMap<usize, HashSet<(usize, W)>>`.
+- Implement and test `IterAllArcs` for `HashMap<usize, Vec<(usize, W)>>`.
+- Implement and test `IterAllArcs` for `HashSet<(usize, usize, W)>`.
+- Implement and test `IterAllArcs` for `Vec<(usize, usize, W)>`.
+- Implement and test `IterAllArcs` for `Vec<BTreeMap<usize, W>>`.
+- Implement and test `IterAllArcs` for `Vec<BTreeSet<(usize, W)>>`.
+- Implement and test `IterAllArcs` for `Vec<HashMap<usize, W>>`.
+- Implement and test `IterAllArcs` for `Vec<HashSet<(usize, W)>>`.
+- Implement and test `IterAllArcs` for `Vec<Vec<(usize, W)>>`.
+- Implement and test `IterAllArcs` for `[(usize, usize, W); V]`.
+- Implement and test `IterAllArcs` for `[(usize, usize, W)]`.
+- Implement and test `IterAllArcs` for `[BTreeMap<usize, W>; V]`.
+- Implement and test `IterAllArcs` for `[BTreeSet<(usize, W)>; V]`.
+- Implement and test `IterAllArcs` for `[HashMap<usize, W>; V]`.
+- Implement and test `IterAllArcs` for `[HashSet<(usize, W)>; V]`.
+- Implement and test `IterAllArcs` for `[Vec<(usize, W)>; V]`.
+- Implement and test `RandomTournamentConst` for `[BTreeSet<usize>; V]`.
+- Implement and test `RandomTournamentConst` for `[HashSet<usize>; V]`.
+- Implement and test `RandomTournamentConst` for `[Vec<usize>; V]`.
+
 ## [0.51.0] - 2024-05-25
 
 Added

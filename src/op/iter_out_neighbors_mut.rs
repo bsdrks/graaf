@@ -42,17 +42,17 @@ use {
 /// ```
 /// use graaf::op::IterOutNeighborsMut;
 ///
-/// struct Graph {
+/// struct Digraph {
 ///     arcs: Vec<Vec<usize>>,
 /// }
 ///
-/// impl IterOutNeighborsMut for Graph {
+/// impl IterOutNeighborsMut for Digraph {
 ///     fn iter_out_neighbors_mut(&mut self, s: usize) -> impl Iterator<Item = &mut usize> {
 ///         self.arcs[s].iter_mut()
 ///     }
 /// }
 ///
-/// let mut digraph = Graph {
+/// let mut digraph = Digraph {
 ///     arcs: vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]],
 /// };
 ///

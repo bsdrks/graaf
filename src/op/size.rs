@@ -34,11 +34,11 @@ use {
 /// ```
 /// use graaf::op::Size;
 ///
-/// struct Graph {
+/// struct Digraph {
 ///     arcs: Vec<Vec<usize>>,
 /// }
 ///
-/// impl Size for Graph {
+/// impl Size for Digraph {
 ///     fn size(&self) -> usize {
 ///         self.arcs.iter().map(Vec::len).sum()
 ///     }

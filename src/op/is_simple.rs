@@ -48,11 +48,11 @@ use {
 ///     std::collections::HashSet,
 /// };
 ///
-/// struct Graph {
+/// struct Digraph {
 ///     arcs: Vec<HashSet<usize>>,
 /// }
 ///
-/// impl IsSimple for Graph {
+/// impl IsSimple for Digraph {
 ///     fn is_simple(&self) -> bool {
 ///         self.arcs
 ///             .iter()

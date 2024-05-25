@@ -44,11 +44,11 @@ use {
 /// ```
 /// use graaf::op::AddWeightedArc;
 ///
-/// struct Graph {
+/// struct Digraph {
 ///     arcs: Vec<Vec<(usize, i32)>>,
 /// }
 ///
-/// impl AddWeightedArc<i32> for Graph {
+/// impl AddWeightedArc<i32> for Digraph {
 ///     fn add_weighted_arc(&mut self, s: usize, t: usize, w: i32) {
 ///         self.arcs[s].push((t, w));
 ///     }
