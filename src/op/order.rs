@@ -1,4 +1,4 @@
-//! A trait to count the number of vertices in a digraph
+//! Count the number of vertices in a digraph
 //!
 //! # Example
 //!
@@ -24,7 +24,7 @@ use {
     },
 };
 
-/// A trait to count the number of vertices in a digraph
+/// Count the number of vertices in a digraph
 ///
 /// # How can I implement `Order`?
 ///

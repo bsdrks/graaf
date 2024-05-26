@@ -1,4 +1,4 @@
-//! A trait to check if an edge exists between `s` and `t`
+//! Check if an edge exists between two vertices
 //!
 //! To check if an arc exists from `s` to `t`, see [`HasArc`].
 //!
@@ -51,7 +51,7 @@ use {
     },
 };
 
-/// A trait to check if an edge exists between `s` and `t`
+/// Check if an edge exists between two vertices
 ///
 /// # How can I implement `HasEdge`?
 ///

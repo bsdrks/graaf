@@ -1,4 +1,4 @@
-//! A trait to determine whether a vertex in a digraph is isolated
+//! Determine whether a vertex in a digraph is isolated
 //!
 //! A vertex is isolated if it has no incoming or outgoing arcs.
 //!
@@ -41,7 +41,7 @@ use {
     },
 };
 
-/// A trait to determine whether a vertex is isolated
+/// Determine whether a vertex is isolated
 ///
 /// # How can I implement `IsIsolated`?
 ///

@@ -1,4 +1,4 @@
-//! A trait to get the weight of a given arc
+//! Get the weight of a given arc
 //!
 //! # Examples
 //!
@@ -32,7 +32,7 @@ use {
     std::collections::HashMap,
 };
 
-/// A trait to get the weight of a given arc
+/// Get the weight of a given arc
 ///
 /// # How can I implement `ArcWeight`?
 ///

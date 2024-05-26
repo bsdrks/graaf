@@ -1,5 +1,5 @@
 #![doc(alias = "valency")]
-//! A trait to get the degree of a given vertex
+//! Get the degree of a given vertex
 //!
 //! For digraphs, the degree is the sum of the indegree and outdegree.
 //!
@@ -40,7 +40,7 @@ use {
     },
 };
 
-/// A trait to get the degree of a given vertex
+/// Get the degree of a given vertex
 ///
 /// # How can I implement `Degree`?
 ///

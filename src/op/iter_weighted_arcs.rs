@@ -1,4 +1,4 @@
-//! A trait to iterate over all arcs in a weighted digraph
+//! Iterate over all arcs in a weighted digraph
 //!
 //! # Examples
 //!
@@ -26,7 +26,7 @@ use {
     },
 };
 
-/// A trait to iterate over all arcs in a weighted digraph
+/// Iterate over all arcs in a weighted digraph
 ///
 /// # How can I implement `IterWeightedArcs`?
 ///

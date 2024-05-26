@@ -1,4 +1,4 @@
-//! A trait to generate variable-sized complete symmetric digraphs
+//! Generate variable-sized complete symmetric digraphs
 //!
 //! The generated digraphs are simple; they contain no self-loops. To generate
 //! constant-sized complete digraphs, see [`CompleteConst`].
@@ -33,7 +33,7 @@ use {
     },
 };
 
-/// A trait to generate variable-size symmetric complete digraphs
+/// Generate variable-size symmetric complete digraphs
 ///
 /// # How can I implement `Complete`?
 ///

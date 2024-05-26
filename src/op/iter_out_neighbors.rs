@@ -1,4 +1,4 @@
-//! A trait to iterate over the out-neighbors of a vertex in a digraph
+//! Iterate over the out-neighbors of a vertex in a digraph
 //!
 //! # Examples
 //!
@@ -50,7 +50,7 @@ use {
     },
 };
 
-/// A trait to iterate over the out-neighbors of a vertex in a digraph
+/// Iterate over the out-neighbors of a vertex in a digraph
 ///
 /// # How can I implement `IterOutNeighbors`?
 ///

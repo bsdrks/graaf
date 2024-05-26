@@ -1,4 +1,4 @@
-//! A trait to determine whether a digraph is symmetric
+//! Determine whether a digraph is symmetric
 //!
 //! A digraph is symmetric if for every arc `(s, t)` there is an arc
 //! `(t, s)`.
@@ -49,7 +49,7 @@ use {
     },
 };
 
-/// A trait to determine whether a digraph is symmetric
+/// Determine whether a digraph is symmetric
 ///
 /// # How can I implement `IsSymmetric`?
 ///

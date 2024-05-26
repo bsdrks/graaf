@@ -1,4 +1,4 @@
-//! A trait to determine whether a vertex in a digraph is a pendant
+//! Determine whether a vertex in a digraph is a pendant
 //! vertex
 //!
 //! A vertex is a pendant vertex if it has a degree of one.
@@ -40,7 +40,7 @@ use {
     },
 };
 
-/// A trait to determine whether a vertex is a pendant vertex
+/// Determine whether a vertex is a pendant vertex
 ///
 /// # How can I implement `IsPendant`?
 ///

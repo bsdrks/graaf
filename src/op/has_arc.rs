@@ -1,4 +1,4 @@
-//! A trait to check if an arc exists from one vertex to another
+//! Check if an arc exists from one vertex to another
 //!
 //! To check if an arc exists from `s` to `t` and from `t` to `s`, see
 //! [`HasEdge`].
@@ -44,7 +44,7 @@ use {
     },
 };
 
-/// A trait to check if an arc exists from one vertex to another
+/// Check if an arc exists from one vertex to another
 ///
 /// # How can I implement `HasArc`?
 ///

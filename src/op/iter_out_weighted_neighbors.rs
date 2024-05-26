@@ -1,4 +1,4 @@
-//! A trait to iterate over the out-neighbors of a vertex in a digraph,
+//! Iterate over the out-neighbors of a vertex in a digraph,
 //! including their weights.
 //!
 //! # Examples
@@ -39,7 +39,7 @@ use {
     },
 };
 
-/// A trait to iterate over all arcs with a given source vertex in a weighted
+/// Iterate over all arcs with a given source vertex in a weighted
 /// digraph
 ///
 /// # How can I implement `IterOutWeightedNeighbors`?

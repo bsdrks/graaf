@@ -1,4 +1,4 @@
-//! A trait to iterate over all vertices in a digraph
+//! Iterate over all vertices in a digraph
 //!
 //! # Example
 //!
@@ -24,7 +24,7 @@ use {
     },
 };
 
-/// A trait to iterate over all vertices in a digraph
+/// Iterate over all vertices in a digraph
 ///
 /// # How can I implement `IterVertices`?
 ///

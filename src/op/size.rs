@@ -1,4 +1,4 @@
-//! A trait to count the number of arcs in a digraph
+//! Count the number of arcs in a digraph
 //!
 //! # Examples
 //!
@@ -24,7 +24,7 @@ use {
     },
 };
 
-/// A trait to count the number of arcs in a digraph
+/// Count the number of arcs in a digraph
 ///
 /// # How can I implement `Size`?
 ///

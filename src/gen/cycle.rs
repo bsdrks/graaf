@@ -1,5 +1,5 @@
 #![doc(alias = "circular")]
-//! A trait to generate variable-sized directed cycle digraphs
+//! Generate variable-sized directed cycle digraphs
 //!
 //! Cycle graphs are also known as circular graphs. To generate constant-sized
 //! cycle digraphs, see [`CycleConst`].
@@ -31,7 +31,7 @@ use {
     },
 };
 
-/// A trait to generate variable-size directed cycle digraphs
+/// Generate variable-size directed cycle digraphs
 ///
 /// # How can I implement `Cycle`?
 ///

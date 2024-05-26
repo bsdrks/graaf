@@ -1,5 +1,5 @@
 #![doc(alias = "edgeless")]
-//! A trait to generate empty constant-sized digraphs
+//! Generate empty constant-sized digraphs
 //!
 //! Empty graphs are also known as edgeless graphs. To generate empty
 //! variable-sized digraphs, see [`Empty`].
@@ -37,7 +37,7 @@ use {
     },
 };
 
-/// A trait to generate empty constant-sized digraphs
+/// Generate empty constant-sized digraphs
 ///
 /// # How can I implement `EmptyConst`?
 ///

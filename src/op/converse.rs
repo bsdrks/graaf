@@ -1,4 +1,4 @@
-//! A trait to generate the converse of a digraph
+//! Generate the converse of a digraph
 //!
 //! The converse of a digraph is a digraph with all arcs reversed.
 //!
@@ -73,7 +73,7 @@ use {
     },
 };
 
-/// A trait to generate the converse of a digraph
+/// Generate the converse of a digraph
 ///
 /// # How do I implement `Converse`?
 ///

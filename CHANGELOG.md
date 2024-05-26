@@ -6,6 +6,7 @@
 - Add `IsInTree` trait.
 - Add `IsOutTree` trait.
 - Add `IsTree` trait.
+- Add `IsWalk` trait.
 - Add `bfs::shortest_paths`.
 - Add `bfs::single_pair_shortest_paths`.
 - Add `dijkstra::shortest_paths`.
@@ -18,6 +19,12 @@
 - Benchmark against popular graph libraries in other languages.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.52.1] - 2024-05-26
+
+Changed
+
+- Simplify `op` trait descriptions.
 
 ## [0.52.0] - 2024-05-26
 
