@@ -19,6 +19,40 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.52.0] - 2024-05-26
+
+Added
+
+- Implement `IterArcs` for `[BTreeMap<usize, W>]`.
+- Implement `IterArcs` for `[BTreeSet<(usize, W)>]`.
+- Implement `IterArcs` for `[HashMap<usize, W>]`.
+- Implement `IterArcs` for `[HashSet<(usize, W)>]`.
+- Implement `IterArcs` for `[Vec<usize, W>]`.
+- Implement `Size` for `[(usize, usize)]`.
+- Implement `Size` for `[(usize, usize, W)]`.
+
+Changed
+
+- Breaking: Rename `iter_all_arcs` to `iter_arcs`.
+- Breaking: Rename `iter_all_weighted_arcs` to `iter_weighted_arcs`.
+- Breaking: Rename `iter_weighted_arcs` to `iter_out_weighted_neighbors`.
+
+Refactored
+
+- Clean up `arc_weight` tests.
+- Clean up `has_arc` tests.
+- Clean up `has_edge` tests.
+- Clean up `is_simple` tests.
+- Clean up `is_symmetric` tests.
+- Clean up `iter_weighted_arcs` tests.
+- Clean up `iter_out_neighbors_mut` tests.
+- Clean up `iter_out_neighbors` tests.
+- Clean up `iter_vertices` tests.
+- Clean up `iter_weighted_arcs` tests.
+- Clean up `order` tests.
+- Clean up `remove_arc` tests.
+- Clean up `size` tests.
+
 ## [0.51.1] - 2024-05-25
 
 Added
@@ -37,27 +71,27 @@ Added
 - Implement and test `IsSubdigraph` for `[BTreeSet<usize>; V]`.
 - Implement and test `IsSubdigraph` for `[HashMap<usize, W>; V]`.
 - Implement and test `IsSubdigraph` for `[HashSet<usize>; V]`.
-- Implement and test `IterAllArcs` for `BTreeMap<usize, BTreeMap<usize, W>>`.
-- Implement and test `IterAllArcs` for `BTreeMap<usize, BTreeSet<(usize, W)>>`.
-- Implement and test `IterAllArcs` for `BTreeMap<usize, Vec<(usize, W)>>`.
-- Implement and test `IterAllArcs` for `BTreeSet<(usize, usize, W)>`.
-- Implement and test `IterAllArcs` for `HashMap<usize, HashMap<usize, W>>`.
-- Implement and test `IterAllArcs` for `HashMap<usize, HashSet<(usize, W)>>`.
-- Implement and test `IterAllArcs` for `HashMap<usize, Vec<(usize, W)>>`.
-- Implement and test `IterAllArcs` for `HashSet<(usize, usize, W)>`.
-- Implement and test `IterAllArcs` for `Vec<(usize, usize, W)>`.
-- Implement and test `IterAllArcs` for `Vec<BTreeMap<usize, W>>`.
-- Implement and test `IterAllArcs` for `Vec<BTreeSet<(usize, W)>>`.
-- Implement and test `IterAllArcs` for `Vec<HashMap<usize, W>>`.
-- Implement and test `IterAllArcs` for `Vec<HashSet<(usize, W)>>`.
-- Implement and test `IterAllArcs` for `Vec<Vec<(usize, W)>>`.
-- Implement and test `IterAllArcs` for `[(usize, usize, W); V]`.
-- Implement and test `IterAllArcs` for `[(usize, usize, W)]`.
-- Implement and test `IterAllArcs` for `[BTreeMap<usize, W>; V]`.
-- Implement and test `IterAllArcs` for `[BTreeSet<(usize, W)>; V]`.
-- Implement and test `IterAllArcs` for `[HashMap<usize, W>; V]`.
-- Implement and test `IterAllArcs` for `[HashSet<(usize, W)>; V]`.
-- Implement and test `IterAllArcs` for `[Vec<(usize, W)>; V]`.
+- Implement and test `IterArcs` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement and test `IterArcs` for `BTreeMap<usize, BTreeSet<(usize, W)>>`.
+- Implement and test `IterArcs` for `BTreeMap<usize, Vec<(usize, W)>>`.
+- Implement and test `IterArcs` for `BTreeSet<(usize, usize, W)>`.
+- Implement and test `IterArcs` for `HashMap<usize, HashMap<usize, W>>`.
+- Implement and test `IterArcs` for `HashMap<usize, HashSet<(usize, W)>>`.
+- Implement and test `IterArcs` for `HashMap<usize, Vec<(usize, W)>>`.
+- Implement and test `IterArcs` for `HashSet<(usize, usize, W)>`.
+- Implement and test `IterArcs` for `Vec<(usize, usize, W)>`.
+- Implement and test `IterArcs` for `Vec<BTreeMap<usize, W>>`.
+- Implement and test `IterArcs` for `Vec<BTreeSet<(usize, W)>>`.
+- Implement and test `IterArcs` for `Vec<HashMap<usize, W>>`.
+- Implement and test `IterArcs` for `Vec<HashSet<(usize, W)>>`.
+- Implement and test `IterArcs` for `Vec<Vec<(usize, W)>>`.
+- Implement and test `IterArcs` for `[(usize, usize, W); V]`.
+- Implement and test `IterArcs` for `[(usize, usize, W)]`.
+- Implement and test `IterArcs` for `[BTreeMap<usize, W>; V]`.
+- Implement and test `IterArcs` for `[BTreeSet<(usize, W)>; V]`.
+- Implement and test `IterArcs` for `[HashMap<usize, W>; V]`.
+- Implement and test `IterArcs` for `[HashSet<(usize, W)>; V]`.
+- Implement and test `IterArcs` for `[Vec<(usize, W)>; V]`.
 - Implement and test `RandomTournamentConst` for `[BTreeSet<usize>; V]`.
 - Implement and test `RandomTournamentConst` for `[HashSet<usize>; V]`.
 - Implement and test `RandomTournamentConst` for `[Vec<usize>; V]`.
@@ -179,7 +213,7 @@ Added
 - Add `vec_tuple` unit test for `Converse`.
 - Add `vec_vec_weighted` unit test for `Converse`.
 - Add `vec_vec` unit test for `Converse`.
-- Implement `AddArc` for `BTreeset<(usize, usize)>`.
+- Implement `AddArc` for `BTreeSet<(usize, usize)>`.
 - Implement `AddArc` for `HashSet<(usize, usize)>`.
 - Implement `AddArc` for `Vec<(usize, usize)>`.
 - Implement `Converse` for `BTreeMap<usize, BTreeMap<usize, W>>`.
@@ -265,7 +299,7 @@ Added
 - Add property test `sum_indegrees_eq_sum_outdegrees_vec_btree_set` for `Cycle::cycle`.
 - Add property test `sum_indegrees_eq_sum_outdegrees_vec_hash_set` for `Complete::complete`.
 - Add property test `sum_indegrees_eq_sum_outdegrees_vec_hash_set` for `Cycle::cycle`.
-- Add unit test `btree_set_tuple` for `iter_all_weighted_arcs`.
+- Add unit test `btree_set_tuple` for `iter_weighted_arcs`.
 
 Removed
 
@@ -560,7 +594,7 @@ Added
 - Implement `IsBalanced` for `AdjacencyMatrix<V>`.
 - Implement `IsIsolated` for `AdjacencyMatrix<V>`.
 - Implement `IsSymmetric` for `AdjacencyMatrix<V>`.
-- Implement `IterAllArcs` for `AdjacencyMatrix<V>`.
+- Implement `IterArcs` for `AdjacencyMatrix<V>`.
 
 Changed
 
@@ -731,11 +765,11 @@ Added
 - Implement `IsSymmetric` for `[HashMap<usize, W>]`.
 - Implement `IsSymmetric` for `[HashSet<usize>; V]`.
 - Implement `IsSymmetric` for `[HashSet<usize>]`.
-- Implement `IterAllWeightedArcs` for `[BTreeMap<usize, W>]`.
-- Implement `IterAllWeightedArcs` for `[BTreeSet<(usize, W)>]`.
-- Implement `IterAllWeightedArcs` for `[HashMap<usize, W>]`.
-- Implement `IterAllWeightedArcs` for `[HashSet<(usize, W)>]`.
-- Implement `IterAllWeightedArcs` for `[Vec<(usize, W)>]`.
+- Implement `IterWeightedArcs` for `[BTreeMap<usize, W>]`.
+- Implement `IterWeightedArcs` for `[BTreeSet<(usize, W)>]`.
+- Implement `IterWeightedArcs` for `[HashMap<usize, W>]`.
+- Implement `IterWeightedArcs` for `[HashSet<(usize, W)>]`.
+- Implement `IterWeightedArcs` for `[Vec<(usize, W)>]`.
 
 Changed
 
@@ -756,22 +790,22 @@ Added
 - Implement `IsBalanced` for `Vec<HashMap<usize, W>>`.
 - Implement `IsBalanced` for `[BTreeMap<usize, W>; V]`.
 - Implement `IsBalanced` for `[HashMap<usize, W>; V]`.
-- Implement `IterAllWeightedArcs` for `BTreeMap<usize, BTreeMap<usize, W>>`.
-- Implement `IterAllWeightedArcs` for `BTreeMap<usize, BTreeSet<(usize, W)>>`.
-- Implement `IterAllWeightedArcs` for `BTreeMap<usize, Vec<(usize, W)>>`.
-- Implement `IterAllWeightedArcs` for `HashMap<usize, HashMap<usize, W>>`.
-- Implement `IterAllWeightedArcs` for `HashMap<usize, HashSet<(usize, W)>>`.
-- Implement `IterAllWeightedArcs` for `HashMap<usize, Vec<(usize, W)>>`.
-- Implement `IterAllWeightedArcs` for `Vec<BTreeMap<usize, W>>`.
-- Implement `IterAllWeightedArcs` for `Vec<BTreeSet<(usize, W)>>`.
-- Implement `IterAllWeightedArcs` for `Vec<HashMap<usize, W>>`.
-- Implement `IterAllWeightedArcs` for `Vec<HashSet<(usize, W)>>`.
-- Implement `IterAllWeightedArcs` for `Vec<Vec<(usize, W)>>`.
-- Implement `IterAllWeightedArcs` for `[BTreeMap<usize, W>; V]`.
-- Implement `IterAllWeightedArcs` for `[BTreeSet<(usize, W)>; V]`.
-- Implement `IterAllWeightedArcs` for `[HashMap<usize, W>; V]`.
-- Implement `IterAllWeightedArcs` for `[HashSet<(usize, W)>; V]`.
-- Implement `IterAllWeightedArcs` for `[Vec<(usize, W)>; V]`.
+- Implement `IterWeightedArcs` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement `IterWeightedArcs` for `BTreeMap<usize, BTreeSet<(usize, W)>>`.
+- Implement `IterWeightedArcs` for `BTreeMap<usize, Vec<(usize, W)>>`.
+- Implement `IterWeightedArcs` for `HashMap<usize, HashMap<usize, W>>`.
+- Implement `IterWeightedArcs` for `HashMap<usize, HashSet<(usize, W)>>`.
+- Implement `IterWeightedArcs` for `HashMap<usize, Vec<(usize, W)>>`.
+- Implement `IterWeightedArcs` for `Vec<BTreeMap<usize, W>>`.
+- Implement `IterWeightedArcs` for `Vec<BTreeSet<(usize, W)>>`.
+- Implement `IterWeightedArcs` for `Vec<HashMap<usize, W>>`.
+- Implement `IterWeightedArcs` for `Vec<HashSet<(usize, W)>>`.
+- Implement `IterWeightedArcs` for `Vec<Vec<(usize, W)>>`.
+- Implement `IterWeightedArcs` for `[BTreeMap<usize, W>; V]`.
+- Implement `IterWeightedArcs` for `[BTreeSet<(usize, W)>; V]`.
+- Implement `IterWeightedArcs` for `[HashMap<usize, W>; V]`.
+- Implement `IterWeightedArcs` for `[HashSet<(usize, W)>; V]`.
+- Implement `IterWeightedArcs` for `[Vec<(usize, W)>; V]`.
 
 ## [0.36.0] - 2024-05-08
 
@@ -782,19 +816,19 @@ Added
 - Implement `IsBalanced` for `Vec<HashSet<usize>>`.
 - Implement `IsBalanced` for `[BTreeSet<usize>; V]`.
 - Implement `IsBalanced` for `[HashSet<usize>; V]`.
-- Implement `IterAllArcs` for `BTreeMap<usize, BTreeSet<usize>>`.
-- Implement `IterAllArcs` for `BTreeMap<usize, Vec<usize>>`.
-- Implement `IterAllArcs` for `HashMap<usize, HashSet<usize>>`.
-- Implement `IterAllArcs` for `HashMap<usize, Vec<usize>>`.
-- Implement `IterAllArcs` for `Vec<BTreeSet<usize>>`.
-- Implement `IterAllArcs` for `Vec<HashSet<usize>>`.
-- Implement `IterAllArcs` for `Vec<Vec<usize>>`.
-- Implement `IterAllArcs` for `[BTreeSet<usize>; V]`.
-- Implement `IterAllArcs` for `[BTreeSet<usize>]`.
-- Implement `IterAllArcs` for `[HashSet<usize>; V]`.
-- Implement `IterAllArcs` for `[HashSet<usize>]`.
-- Implement `IterAllArcs` for `[Vec<usize>; V]`.
-- Implement `IterAllArcs` for `[Vec<usize>]`.
+- Implement `IterArcs` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `IterArcs` for `BTreeMap<usize, Vec<usize>>`.
+- Implement `IterArcs` for `HashMap<usize, HashSet<usize>>`.
+- Implement `IterArcs` for `HashMap<usize, Vec<usize>>`.
+- Implement `IterArcs` for `Vec<BTreeSet<usize>>`.
+- Implement `IterArcs` for `Vec<HashSet<usize>>`.
+- Implement `IterArcs` for `Vec<Vec<usize>>`.
+- Implement `IterArcs` for `[BTreeSet<usize>; V]`.
+- Implement `IterArcs` for `[BTreeSet<usize>]`.
+- Implement `IterArcs` for `[HashSet<usize>; V]`.
+- Implement `IterArcs` for `[HashSet<usize>]`.
+- Implement `IterArcs` for `[Vec<usize>; V]`.
+- Implement `IterArcs` for `[Vec<usize>]`.
 
 ## [0.35.6] - 2024-05-07
 
@@ -821,7 +855,7 @@ Fixed
 
 Added
 
-- Add `btree_set` unit test for `iter_all_weighted_arcs`.
+- Add `btree_set` unit test for `iter_weighted_arcs`.
 
 Changed
 
@@ -1643,8 +1677,8 @@ Added
 - Implement `IsSimple` for `[BTreeSet<usize>; V]`.
 - Implement `IsSimple` for `BTreeSet<(usize, usize)>`.
 - Implement `IsSimple` for `BTreeSet<(usize, usize, W)>`.
-- Implement `IterAllArcs` for `BTreeSet<(usize, usize)>`.
-- Implement `IterAllWeightedArcs` for `BTreeSet<(usize, usize, W)>`.
+- Implement `IterArcs` for `BTreeSet<(usize, usize)>`.
+- Implement `IterWeightedArcs` for `BTreeSet<(usize, usize, W)>`.
 
 ## [0.14.0] - 2024-04-15
 
@@ -1806,10 +1840,10 @@ Added
 - Implement `IsSimple` for `[(usize, usize); V]`.
 - Implement `IsSimple` for `[(usize, usize, W); V]`.
 - Implement `IsSimple` for `[HashSet<usize>; V]`.
-- Implement `IterAllArcs` for `Vec<(usize, usize)>`.
-- Implement `IterAllArcs` for `[(usize, usize); V]`.
-- Implement `IterAllWeightedArcs` for `Vec<(usize, usize, W)>`.
-- Implement `IterAllWeightedArcs` for `[(usize, usize, W); V]`.
+- Implement `IterArcs` for `Vec<(usize, usize)>`.
+- Implement `IterArcs` for `[(usize, usize); V]`.
+- Implement `IterWeightedArcs` for `Vec<(usize, usize, W)>`.
+- Implement `IterWeightedArcs` for `[(usize, usize, W); V]`.
 - Implement `IterVertices` for `Vec<T>`.
 - Implement `IterVertices` for `[T; V]`.
 - Implement `Outdegree` for `Vec<HashMap<K, W>>`.
@@ -1905,8 +1939,8 @@ Removed
 
 Changed
 
-- Change `iter_all_arcs` return type to `impl Iterator<Item = (usize, usize)>`.
-- Change `iter_all_weighted_arcs` return type to `impl Iterator<Item = (usize, usize, &W)>`.
+- Change `iter_arcs` return type to `impl Iterator<Item = (usize, usize)>`.
+- Change `iter_weighted_arcs` return type to `impl Iterator<Item = (usize, usize, &W)>`.
 - Change `iter_weighted_arcs` return type to `impl Iterator<Item = (usize, &W)>`.
 
 ## [0.7.0] - 2024-04-07
@@ -1922,8 +1956,8 @@ Added
 - Implement `Indegree` for `[HashSet<usize>]`.
 - Implement `IsArc` for `[HashMap<usize, W>]`.
 - Implement `IsArc` for `[HashSet<usize>]`.
-- Implement `IterAllArcs` for `[(usize, usize)]`.
-- Implement `IterAllWeightedArcs` for `[(usize, usize, W)]`.
+- Implement `IterArcs` for `[(usize, usize)]`.
+- Implement `IterWeightedArcs` for `[(usize, usize, W)]`.
 - Implement `IterOutNeighbors` for `[HashSet<usize>]`.
 - Implement `IterOutNeighbors` for `[Vec<usize>]`.
 - Implement `IterVertices` for `&[T]`.
@@ -1956,10 +1990,10 @@ Removed
 - Remove `IsArc` for `Vec<HashSet<usize>>`.
 - Remove `IsArc` for `[HashMap<usize, W>; V]`.
 - Remove `IsArc` for `[HashSet<usize>; V]`.
-- Remove `IterAllArcs` for `Vec<(usize, usize)>`.
-- Remove `IterAllArcs` for `[(usize, usize); V]`.
-- Remove `IterAllWeightedArcs` for `Vec<(usize, usize, W)>`.
-- Remove `IterAllWeightedArcs` for `[(usize, usize, W); V]`.
+- Remove `IterArcs` for `Vec<(usize, usize)>`.
+- Remove `IterArcs` for `[(usize, usize); V]`.
+- Remove `IterWeightedArcs` for `Vec<(usize, usize, W)>`.
+- Remove `IterWeightedArcs` for `[(usize, usize, W); V]`.
 - Remove `IterVertices` for `Vec<T>`.
 - Remove `IterVertices` for `[T; V]`.
 - Remove `Outdegree` for `Vec<HashMap<usize, W>>`.
@@ -1990,8 +2024,8 @@ Added
 - Implement `AddWeightedArc` for `[HashMap<usize, W>]`.
 - Implement `AddWeightedArc` for `[HashSet<(usize, W)>]`.
 - Implement `AddWeightedArc` for `[Vec<(usize, W)>]`.
-- Implement `IterAllArcs` for `[(usize, usize)]`.
-- Implement `IterAllWeightedArcs` for `[(usize, usize, W)]`.
+- Implement `IterArcs` for `[(usize, usize)]`.
+- Implement `IterWeightedArcs` for `[(usize, usize, W)]`.
 
 ## [0.6.1] - 2024-04-06
 
@@ -2018,8 +2052,8 @@ Added
 - Add implementation documentation for `ArcWeight`.
 - Add implementation documentation for `Indegree`.
 - Add implementation documentation for `IsArc`.
-- Add implementation documentation for `IterAllArcs`.
-- Add implementation documentation for `IterAllWeightedArcs`.
+- Add implementation documentation for `IterArcs`.
+- Add implementation documentation for `IterWeightedArcs`.
 - Add implementation documentation for `IterOutNeighbors`.
 - Add implementation documentation for `IterWeightedArcs`.
 - Add implementation documentation for `Outdegree`.
@@ -2042,8 +2076,8 @@ Added
 - Add a doctest for `op::arc_weight::ArcWeight`.
 - Add a doctest for `op::indegree::Indegree`.
 - Add a doctest for `op::is_arc::IsArc`.
-- Add a doctest for `op::iter_all_arcs::IterAllArcs`.
-- Add a doctest for `op::iter_all_weighted_arcs::IterAllWeightedArcs`.
+- Add a doctest for `op::iter_arcs::IterArcs`.
+- Add a doctest for `op::iter_weighted_arcs::IterWeightedArcs`.
 - Add a doctest for `op::iter_out_neighbors::IterOutNeighbors`.
 - Add a doctest for `op::iter_vertices::IterVertices`.
 - Add a doctest for `op::iter_weighted_arcs::IterWeightedArcs`.
@@ -2055,8 +2089,8 @@ Added
 - Add documentation for `op::arc_weight`.
 - Add documentation for `op::indegree`.
 - Add documentation for `op::is_arc`.
-- Add documentation for `op::iter_all_arcs`.
-- Add documentation for `op::iter_all_weighted_arcs`.
+- Add documentation for `op::iter_arcs`.
+- Add documentation for `op::iter_weighted_arcs`.
 - Add documentation for `op::iter_out_neighbors`.
 - Add documentation for `op::iter_vertices`.
 - Add documentation for `op::iter_weighted_arcs`.

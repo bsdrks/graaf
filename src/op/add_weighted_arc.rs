@@ -358,7 +358,7 @@ mod tests {
                 Empty,
                 EmptyConst,
             },
-            op::IterAllWeightedArcs,
+            op::IterWeightedArcs,
         },
     };
 
@@ -369,7 +369,7 @@ mod tests {
             $digraph.add_weighted_arc(1, 0, -2);
             $digraph.add_weighted_arc(2, 0, 3);
 
-            let mut iter = $digraph.iter_all_weighted_arcs();
+            let mut iter = $digraph.iter_weighted_arcs();
 
             assert!(matches!(
                 iter.next(),

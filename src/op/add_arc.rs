@@ -240,7 +240,7 @@ mod tests {
                 Empty,
                 EmptyConst,
             },
-            op::IterAllArcs,
+            op::IterArcs,
         },
     };
 
@@ -250,7 +250,7 @@ mod tests {
             $digraph.add_arc(0, 2);
             $digraph.add_arc(2, 1);
 
-            let mut iter = $digraph.iter_all_arcs();
+            let mut iter = $digraph.iter_arcs();
 
             assert!(matches!(iter.next(), Some((0, 1 | 2) | (2, 1))));
             assert!(matches!(iter.next(), Some((0, 1 | 2) | (2, 1))));

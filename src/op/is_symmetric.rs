@@ -35,8 +35,8 @@ extern crate alloc;
 use {
     super::{
         HasArc,
-        IterAllArcs,
-        IterAllWeightedArcs,
+        IterArcs,
+        IterWeightedArcs,
     },
     alloc::collections::{
         BTreeMap,
@@ -64,7 +64,7 @@ use {
 ///     graaf::op::{
 ///         HasArc,
 ///         IsSymmetric,
-///         IterAllArcs,
+///         IterArcs,
 ///     },
 /// };
 ///
@@ -74,9 +74,7 @@ use {
 ///
 /// impl IsSymmetric for Digraph {
 ///     fn is_symmetric(&self) -> bool {
-///         self.arcs
-///             .iter_all_arcs()
-///             .all(|(s, t)| self.arcs.has_arc(t, s))
+///         self.arcs.iter_arcs().all(|(s, t)| self.arcs.has_arc(t, s))
 ///     }
 /// }
 ///
@@ -135,7 +133,7 @@ pub trait IsSymmetric {
 
 impl IsSymmetric for Vec<BTreeSet<usize>> {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_arcs().all(|(s, t)| self.has_arc(t, s))
+        self.iter_arcs().all(|(s, t)| self.has_arc(t, s))
     }
 }
 
@@ -144,13 +142,13 @@ where
     H: BuildHasher,
 {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_arcs().all(|(s, t)| self.has_arc(t, s))
+        self.iter_arcs().all(|(s, t)| self.has_arc(t, s))
     }
 }
 
 impl IsSymmetric for [BTreeSet<usize>] {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_arcs().all(|(s, t)| self.has_arc(t, s))
+        self.iter_arcs().all(|(s, t)| self.has_arc(t, s))
     }
 }
 
@@ -159,13 +157,13 @@ where
     H: BuildHasher,
 {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_arcs().all(|(s, t)| self.has_arc(t, s))
+        self.iter_arcs().all(|(s, t)| self.has_arc(t, s))
     }
 }
 
 impl<const V: usize> IsSymmetric for [BTreeSet<usize>; V] {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_arcs().all(|(s, t)| self.has_arc(t, s))
+        self.iter_arcs().all(|(s, t)| self.has_arc(t, s))
     }
 }
 
@@ -174,13 +172,13 @@ where
     H: BuildHasher + Default,
 {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_arcs().all(|(s, t)| self.has_arc(t, s))
+        self.iter_arcs().all(|(s, t)| self.has_arc(t, s))
     }
 }
 
 impl IsSymmetric for BTreeMap<usize, BTreeSet<usize>> {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_arcs().all(|(s, t)| self.has_arc(t, s))
+        self.iter_arcs().all(|(s, t)| self.has_arc(t, s))
     }
 }
 
@@ -189,13 +187,13 @@ where
     H: BuildHasher,
 {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_arcs().all(|(s, t)| self.has_arc(t, s))
+        self.iter_arcs().all(|(s, t)| self.has_arc(t, s))
     }
 }
 
 impl<W> IsSymmetric for Vec<BTreeMap<usize, W>> {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_weighted_arcs()
+        self.iter_weighted_arcs()
             .all(|(s, t, _)| self.has_arc(t, s))
     }
 }
@@ -205,14 +203,14 @@ where
     H: BuildHasher,
 {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_weighted_arcs()
+        self.iter_weighted_arcs()
             .all(|(s, t, _)| self.has_arc(t, s))
     }
 }
 
 impl<W> IsSymmetric for [BTreeMap<usize, W>] {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_weighted_arcs()
+        self.iter_weighted_arcs()
             .all(|(s, t, _)| self.has_arc(t, s))
     }
 }
@@ -222,14 +220,14 @@ where
     H: BuildHasher,
 {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_weighted_arcs()
+        self.iter_weighted_arcs()
             .all(|(s, t, _)| self.has_arc(t, s))
     }
 }
 
 impl<const V: usize, W> IsSymmetric for [BTreeMap<usize, W>; V] {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_weighted_arcs()
+        self.iter_weighted_arcs()
             .all(|(s, t, _)| self.has_arc(t, s))
     }
 }
@@ -239,14 +237,14 @@ where
     H: BuildHasher,
 {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_weighted_arcs()
+        self.iter_weighted_arcs()
             .all(|(s, t, _)| self.has_arc(t, s))
     }
 }
 
 impl<W> IsSymmetric for BTreeMap<usize, BTreeMap<usize, W>> {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_weighted_arcs()
+        self.iter_weighted_arcs()
             .all(|(s, t, _)| self.has_arc(t, s))
     }
 }
@@ -256,318 +254,357 @@ where
     H: BuildHasher,
 {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_weighted_arcs()
+        self.iter_weighted_arcs()
             .all(|(s, t, _)| self.has_arc(t, s))
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use {
+        super::*,
+        crate::{
+            gen::{
+                Cycle,
+                CycleConst,
+                Empty,
+                EmptyConst,
+            },
+            op::{
+                AddArc,
+                AddWeightedArc,
+            },
+        },
+    };
+
+    // #[test]
+    // fn vec_btree_set() {
+    // }
+
+    // #[test]
+    // fn vec_hash_set() {
+    // }
+
+    // #[test]
+    // fn slice_btree_set() {
+    // }
+
+    // #[test]
+    // fn slice_hash_set() {
+    // }
+
+    // #[test]
+    // fn arr_btree_set() {
+    // }
+
+    // #[test]
+    // fn arr_hash_set() {
+    // }
+
+    // #[test]
+    // fn btree_map_btree_set() {
+    // }
+
+    // #[test]
+    // fn hash_map_hash_set() {
+    // }
+
+    // #[test]
+    // fn vec_btree_map() {
+    // }
+
+    // #[test]
+    // fn vec_hash_map() {
+    // }
+
+    // #[test]
+    // fn slice_btree_map() {
+    // }
+
+    // #[test]
+    // fn slice_hash_map() {
+    // }
+
+    // #[test]
+    // fn arr_btree_map() {
+    // }
+
+    // #[test]
+    // fn arr_hash_map() {
+    // }
+
+    // #[test]
+    // fn btree_map_btree_map() {
+    // }
+
+    // #[test]
+    // fn hash_map_hash_map() {
+    // }
+
+    macro_rules! setup_two_cycle_weighted {
+        ($digraph:expr) => {
+            $digraph.add_weighted_arc(0, 1, 2);
+            $digraph.add_weighted_arc(1, 0, 1);
+        };
+    }
+
+    macro_rules! setup_asymmetric_unweighted {
+        ($digraph:expr) => {
+            $digraph.add_arc(0, 1);
+        };
+    }
+
+    macro_rules! setup_asymmetric_weighted {
+        ($digraph:expr) => {
+            $digraph.add_weighted_arc(0, 1, 2);
+        };
+    }
 
     #[test]
-    fn vec_btree_set() {
-        let digraph = vec![BTreeSet::from([1]), BTreeSet::from([0])];
+    fn vec_btree_set_two_cycle() {
+        let digraph = Vec::<BTreeSet<usize>>::cycle(2);
 
         assert!(digraph.is_symmetric());
+    }
 
-        let digraph = vec![BTreeSet::from([1]), BTreeSet::new()];
+    #[test]
+    fn vec_hash_set_two_cycle() {
+        let digraph = Vec::<HashSet<usize>>::cycle(2);
 
-        assert!(!digraph.is_symmetric());
+        assert!(digraph.is_symmetric());
+    }
 
-        let digraph = vec![
-            BTreeSet::from([1, 2]),
-            BTreeSet::from([2]),
-            BTreeSet::from([0]),
-        ];
+    #[test]
+    fn slice_btree_set_two_cycle() {
+        let digraph = Vec::<BTreeSet<usize>>::cycle(2);
 
+        assert!(digraph.as_slice().is_symmetric());
+    }
+
+    #[test]
+    fn slice_hash_set_two_cycle() {
+        let digraph = Vec::<HashSet<usize>>::cycle(2);
+
+        assert!(digraph.as_slice().is_symmetric());
+    }
+
+    #[test]
+    fn arr_btree_set_two_cycle() {
+        let digraph = <[BTreeSet<usize>; 2]>::cycle();
+
+        assert!(digraph.is_symmetric());
+    }
+
+    #[test]
+    fn arr_hash_set_two_cycle() {
+        let digraph = <[HashSet<usize>; 2]>::cycle();
+
+        assert!(digraph.is_symmetric());
+    }
+
+    #[test]
+    fn btree_map_btree_set_two_cycle() {
+        let digraph = BTreeMap::<usize, BTreeSet<usize>>::cycle(2);
+
+        assert!(digraph.is_symmetric());
+    }
+
+    #[test]
+    fn hash_map_hash_set_two_cycle() {
+        let digraph = HashMap::<usize, HashSet<usize>>::cycle(2);
+
+        assert!(digraph.is_symmetric());
+    }
+
+    #[test]
+    fn vec_btree_map_two_cycle() {
+        let mut digraph = Vec::<BTreeMap<usize, usize>>::empty(2);
+
+        setup_two_cycle_weighted!(digraph);
+        assert!(digraph.is_symmetric());
+    }
+
+    #[test]
+    fn vec_hash_map_two_cycle() {
+        let mut digraph = Vec::<HashMap<usize, usize>>::empty(2);
+
+        setup_two_cycle_weighted!(digraph);
+        assert!(digraph.is_symmetric());
+    }
+
+    #[test]
+    fn slice_btree_map_two_cycle() {
+        let mut digraph = Vec::<BTreeMap<usize, usize>>::empty(2);
+
+        setup_two_cycle_weighted!(digraph);
+        assert!(digraph.as_slice().is_symmetric());
+    }
+
+    #[test]
+    fn slice_hash_map_two_cycle() {
+        let mut digraph = Vec::<HashMap<usize, usize>>::empty(2);
+
+        setup_two_cycle_weighted!(digraph);
+        assert!(digraph.as_slice().is_symmetric());
+    }
+
+    #[test]
+    fn arr_btree_map_two_cycle() {
+        let mut digraph = <[BTreeMap<usize, usize>; 2]>::empty();
+
+        setup_two_cycle_weighted!(digraph);
+        assert!(digraph.is_symmetric());
+    }
+
+    #[test]
+    fn arr_hash_map_two_cycle() {
+        let mut digraph = <[HashMap<usize, usize>; 2]>::empty();
+
+        setup_two_cycle_weighted!(digraph);
+        assert!(digraph.is_symmetric());
+    }
+
+    #[test]
+    fn btree_map_btree_map_two_cycle() {
+        let mut digraph = BTreeMap::<usize, BTreeMap<usize, usize>>::empty(2);
+
+        setup_two_cycle_weighted!(digraph);
+        assert!(digraph.is_symmetric());
+    }
+
+    #[test]
+    fn hash_map_hash_map_two_cycle() {
+        let mut digraph = HashMap::<usize, HashMap<usize, usize>>::empty(2);
+
+        setup_two_cycle_weighted!(digraph);
+        assert!(digraph.is_symmetric());
+    }
+
+    #[test]
+    fn vec_btree_set_asymmetric() {
+        let mut digraph = Vec::<BTreeSet<usize>>::empty(2);
+
+        setup_asymmetric_unweighted!(digraph);
         assert!(!digraph.is_symmetric());
     }
 
     #[test]
-    fn vec_hash_set() {
-        let digraph = vec![HashSet::from([1]), HashSet::from([0])];
+    fn vec_hash_set_asymmetric() {
+        let mut digraph = Vec::<HashSet<usize>>::empty(2);
 
-        assert!(digraph.is_symmetric());
-
-        let digraph = vec![HashSet::from([1]), HashSet::new()];
-
-        assert!(!digraph.is_symmetric());
-
-        let digraph = vec![
-            HashSet::from([1, 2]),
-            HashSet::from([2]),
-            HashSet::from([0]),
-        ];
-
+        setup_asymmetric_unweighted!(digraph);
         assert!(!digraph.is_symmetric());
     }
 
     #[test]
-    fn slice_btree_set() {
-        let digraph: &[BTreeSet<usize>] = &[BTreeSet::from([1]), BTreeSet::from([0])];
+    fn slice_btree_set_asymmetric() {
+        let mut digraph = Vec::<BTreeSet<usize>>::empty(2);
 
-        assert!(digraph.is_symmetric());
+        setup_asymmetric_unweighted!(digraph);
+        assert!(!digraph.as_slice().is_symmetric());
+    }
 
-        let digraph: &[BTreeSet<usize>] = &[BTreeSet::from([1]), BTreeSet::new()];
+    #[test]
+    fn slice_hash_set_asymmetric() {
+        let mut digraph = Vec::<HashSet<usize>>::empty(2);
 
-        assert!(!digraph.is_symmetric());
+        setup_asymmetric_unweighted!(digraph);
+        assert!(!digraph.as_slice().is_symmetric());
+    }
 
-        let digraph: &[BTreeSet<usize>] = &[
-            BTreeSet::from([1, 2]),
-            BTreeSet::from([2]),
-            BTreeSet::from([0]),
-        ];
+    #[test]
+    fn arr_btree_set_asymmetric() {
+        let mut digraph = <[BTreeSet<usize>; 2]>::empty();
 
+        setup_asymmetric_unweighted!(digraph);
         assert!(!digraph.is_symmetric());
     }
 
     #[test]
-    fn slice_hash_set() {
-        let digraph: &[HashSet<usize>] = &[HashSet::from([1]), HashSet::from([0])];
+    fn arr_hash_set_asymmetric() {
+        let mut digraph = <[HashSet<usize>; 2]>::empty();
 
-        assert!(digraph.is_symmetric());
-
-        let digraph: &[HashSet<usize>] = &[HashSet::from([1]), HashSet::new()];
-
-        assert!(!digraph.is_symmetric());
-
-        let digraph: &[HashSet<usize>] = &[
-            HashSet::from([1, 2]),
-            HashSet::from([2]),
-            HashSet::from([0]),
-        ];
-
+        setup_asymmetric_unweighted!(digraph);
         assert!(!digraph.is_symmetric());
     }
 
     #[test]
-    fn arr_btree_set() {
-        let digraph = [BTreeSet::from([1]), BTreeSet::from([0])];
+    fn btree_map_btree_set_asymmetric() {
+        let mut digraph = BTreeMap::<usize, BTreeSet<usize>>::empty(2);
 
-        assert!(digraph.is_symmetric());
-
-        let digraph = [BTreeSet::from([1]), BTreeSet::new()];
-
-        assert!(!digraph.is_symmetric());
-
-        let digraph = [
-            BTreeSet::from([1, 2]),
-            BTreeSet::from([2]),
-            BTreeSet::from([0]),
-        ];
-
+        setup_asymmetric_unweighted!(digraph);
         assert!(!digraph.is_symmetric());
     }
 
     #[test]
-    fn arr_hash_set() {
-        let digraph = [HashSet::from([1]), HashSet::from([0])];
+    fn hash_map_hash_set_asymmetric() {
+        let mut digraph = HashMap::<usize, HashSet<usize>>::empty(2);
 
-        assert!(digraph.is_symmetric());
-
-        let digraph = [HashSet::from([1]), HashSet::new()];
-
-        assert!(!digraph.is_symmetric());
-
-        let digraph = [
-            HashSet::from([1, 2]),
-            HashSet::from([2]),
-            HashSet::from([0]),
-        ];
-
+        setup_asymmetric_unweighted!(digraph);
         assert!(!digraph.is_symmetric());
     }
 
     #[test]
-    fn btree_map_btree_set() {
-        let digraph = BTreeMap::from([(0, BTreeSet::from([1])), (1, BTreeSet::from([0]))]);
+    fn vec_btree_map_asymmetric() {
+        let mut digraph = Vec::<BTreeMap<usize, usize>>::empty(2);
 
-        assert!(digraph.is_symmetric());
-
-        let digraph = BTreeMap::from([(0, BTreeSet::from([1])), (1, BTreeSet::new())]);
-
-        assert!(!digraph.is_symmetric());
-
-        let digraph = BTreeMap::from([
-            (0, BTreeSet::from([1, 2])),
-            (1, BTreeSet::from([2])),
-            (2, BTreeSet::from([0])),
-        ]);
-
+        setup_asymmetric_weighted!(digraph);
         assert!(!digraph.is_symmetric());
     }
 
     #[test]
-    fn hash_map_hash_set() {
-        let digraph = HashMap::from([(0, HashSet::from([1])), (1, HashSet::from([0]))]);
+    fn vec_hash_map_asymmetric() {
+        let mut digraph = Vec::<HashMap<usize, usize>>::empty(2);
 
-        assert!(digraph.is_symmetric());
-
-        let digraph = HashMap::from([(0, HashSet::from([1])), (1, HashSet::new())]);
-
-        assert!(!digraph.is_symmetric());
-
-        let digraph = HashMap::from([
-            (0, HashSet::from([1, 2])),
-            (1, HashSet::from([2])),
-            (2, HashSet::from([0])),
-        ]);
-
+        setup_asymmetric_weighted!(digraph);
         assert!(!digraph.is_symmetric());
     }
 
     #[test]
-    fn vec_btree_map() {
-        let digraph = vec![BTreeMap::from([(1, 2)]), BTreeMap::from([(0, 1)])];
+    fn slice_btree_map_asymmetric() {
+        let mut digraph = Vec::<BTreeMap<usize, usize>>::empty(2);
 
-        assert!(digraph.is_symmetric());
+        setup_asymmetric_weighted!(digraph);
+        assert!(!digraph.as_slice().is_symmetric());
+    }
 
-        let digraph = vec![BTreeMap::from([(1, 2)]), BTreeMap::new()];
+    #[test]
+    fn slice_hash_map_asymmetric() {
+        let mut digraph = Vec::<HashMap<usize, usize>>::empty(2);
 
-        assert!(!digraph.is_symmetric());
+        setup_asymmetric_weighted!(digraph);
+        assert!(!digraph.as_slice().is_symmetric());
+    }
 
-        let digraph = vec![
-            BTreeMap::from([(1, 2), (2, 3)]),
-            BTreeMap::from([(0, 4)]),
-            BTreeMap::from([(0, 7), (1, 8)]),
-        ];
+    #[test]
+    fn arr_btree_map_asymmetric() {
+        let mut digraph = <[BTreeMap<usize, usize>; 2]>::empty();
 
+        setup_asymmetric_weighted!(digraph);
         assert!(!digraph.is_symmetric());
     }
 
     #[test]
-    fn vec_hash_map() {
-        let digraph = vec![HashMap::from([(1, 2)]), HashMap::from([(0, 1)])];
+    fn arr_hash_map_asymmetric() {
+        let mut digraph = <[HashMap<usize, usize>; 2]>::empty();
 
-        assert!(digraph.is_symmetric());
-
-        let digraph = vec![HashMap::from([(1, 2)]), HashMap::new()];
-
-        assert!(!digraph.is_symmetric());
-
-        let digraph = vec![
-            HashMap::from([(1, 2), (2, 3)]),
-            HashMap::from([(0, 4)]),
-            HashMap::from([(0, 7), (1, 8)]),
-        ];
-
+        setup_asymmetric_weighted!(digraph);
         assert!(!digraph.is_symmetric());
     }
 
     #[test]
-    fn slice_btree_map() {
-        let digraph: &[BTreeMap<usize, usize>] =
-            &[BTreeMap::from([(1, 2)]), BTreeMap::from([(0, 1)])];
+    fn btree_map_btree_map_asymmetric() {
+        let mut digraph = BTreeMap::<usize, BTreeMap<usize, usize>>::empty(2);
 
-        assert!(digraph.is_symmetric());
-
-        let digraph: &[BTreeMap<usize, usize>] = &[BTreeMap::from([(1, 2)]), BTreeMap::new()];
-
-        assert!(!digraph.is_symmetric());
-
-        let digraph: &[BTreeMap<usize, usize>] = &[
-            BTreeMap::from([(1, 2), (2, 3)]),
-            BTreeMap::from([(0, 4)]),
-            BTreeMap::from([(0, 7), (1, 8)]),
-        ];
-
+        setup_asymmetric_weighted!(digraph);
         assert!(!digraph.is_symmetric());
     }
 
     #[test]
-    fn slice_hash_map() {
-        let digraph: &[HashMap<usize, usize>] = &[HashMap::from([(1, 2)]), HashMap::from([(0, 1)])];
+    fn hash_map_hash_map_asymmetric() {
+        let mut digraph = HashMap::<usize, HashMap<usize, usize>>::empty(2);
 
-        assert!(digraph.is_symmetric());
-
-        let digraph: &[HashMap<usize, usize>] = &[HashMap::from([(1, 2)]), HashMap::new()];
-
-        assert!(!digraph.is_symmetric());
-
-        let digraph: &[HashMap<usize, usize>] = &[
-            HashMap::from([(1, 2), (2, 3)]),
-            HashMap::from([(0, 4)]),
-            HashMap::from([(0, 7), (1, 8)]),
-        ];
-
-        assert!(!digraph.is_symmetric());
-    }
-
-    #[test]
-    fn arr_btree_map() {
-        let digraph = [BTreeMap::from([(1, 2)]), BTreeMap::from([(0, 1)])];
-
-        assert!(digraph.is_symmetric());
-
-        let digraph = [BTreeMap::from([(1, 2)]), BTreeMap::new()];
-
-        assert!(!digraph.is_symmetric());
-
-        let digraph = [
-            BTreeMap::from([(1, 2), (2, 3)]),
-            BTreeMap::from([(0, 4)]),
-            BTreeMap::from([(0, 7), (1, 8)]),
-        ];
-
-        assert!(!digraph.is_symmetric());
-    }
-
-    #[test]
-    fn arr_hash_map() {
-        let digraph = [HashMap::from([(1, 2)]), HashMap::from([(0, 1)])];
-
-        assert!(digraph.is_symmetric());
-
-        let digraph = [HashMap::from([(1, 2)]), HashMap::new()];
-
-        assert!(!digraph.is_symmetric());
-
-        let digraph = [
-            HashMap::from([(1, 2), (2, 3)]),
-            HashMap::from([(0, 4)]),
-            HashMap::from([(0, 7), (1, 8)]),
-        ];
-
-        assert!(!digraph.is_symmetric());
-    }
-
-    #[test]
-    fn btree_map_btree_map() {
-        let digraph =
-            BTreeMap::from([(0, BTreeMap::from([(1, 2)])), (1, BTreeMap::from([(0, 1)]))]);
-
-        assert!(digraph.is_symmetric());
-
-        let digraph = BTreeMap::from([(0, BTreeMap::from([(1, 2)])), (1, BTreeMap::new())]);
-
-        assert!(!digraph.is_symmetric());
-
-        let digraph = BTreeMap::from([
-            (0, BTreeMap::from([(1, 2), (2, 3)])),
-            (1, BTreeMap::from([(0, 4)])),
-            (2, BTreeMap::from([(0, 7), (1, 8)])),
-        ]);
-
-        assert!(!digraph.is_symmetric());
-    }
-
-    #[test]
-    fn hash_map_hash_map() {
-        let digraph = HashMap::from([(0, HashMap::from([(1, 2)])), (1, HashMap::from([(0, 1)]))]);
-
-        assert!(digraph.is_symmetric());
-
-        let digraph = HashMap::from([(0, HashMap::from([(1, 2)])), (1, HashMap::new())]);
-
-        assert!(!digraph.is_symmetric());
-
-        let digraph = HashMap::from([
-            (0, HashMap::from([(1, 2), (2, 3)])),
-            (1, HashMap::from([(0, 4)])),
-            (2, HashMap::from([(0, 7), (1, 8)])),
-        ]);
-
+        setup_asymmetric_weighted!(digraph);
         assert!(!digraph.is_symmetric());
     }
 }

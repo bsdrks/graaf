@@ -248,9 +248,33 @@ where
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use {
+        super::*,
+        crate::{
+            gen::{
+                Empty,
+                EmptyConst,
+            },
+            op::AddArc,
+        },
+    };
 
-    macro_rules! test_iter_out_neighbors_stable {
+    macro_rules! setup {
+        ($digraph:expr) => {
+            $digraph.add_arc(0, 1);
+            $digraph.add_arc(0, 2);
+            $digraph.add_arc(1, 0);
+            $digraph.add_arc(1, 2);
+            $digraph.add_arc(1, 3);
+            $digraph.add_arc(2, 0);
+            $digraph.add_arc(2, 1);
+            $digraph.add_arc(2, 3);
+            $digraph.add_arc(3, 1);
+            $digraph.add_arc(3, 2);
+        };
+    }
+
+    macro_rules! test_stable {
         ($digraph:expr) => {
             assert!($digraph.iter_out_neighbors(0).eq([1, 2]));
             assert!($digraph.iter_out_neighbors(1).eq([0, 2, 3]));
@@ -259,7 +283,7 @@ mod tests {
         };
     }
 
-    macro_rules! test_iter_out_neighbors_unstable {
+    macro_rules! test_unstable {
         ($digraph:expr) => {
             let mut iter = $digraph.iter_out_neighbors(0);
 
@@ -291,142 +315,107 @@ mod tests {
 
     #[test]
     fn vec_vec() {
-        let digraph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let mut digraph = Vec::<Vec<usize>>::empty(4);
 
-        test_iter_out_neighbors_stable!(digraph);
+        setup!(digraph);
+        test_stable!(digraph);
     }
 
     #[test]
     fn vec_btree_set() {
-        let digraph = vec![
-            BTreeSet::from([1, 2]),
-            BTreeSet::from([0, 2, 3]),
-            BTreeSet::from([0, 1, 3]),
-            BTreeSet::from([1, 2]),
-        ];
+        let mut digraph = Vec::<BTreeSet<usize>>::empty(4);
 
-        test_iter_out_neighbors_stable!(digraph);
+        setup!(digraph);
+        test_stable!(digraph);
     }
 
     #[test]
     fn vec_hash_set() {
-        let digraph = vec![
-            HashSet::from([1, 2]),
-            HashSet::from([0, 2, 3]),
-            HashSet::from([0, 1, 3]),
-            HashSet::from([1, 2]),
-        ];
+        let mut digraph = Vec::<HashSet<usize>>::empty(4);
 
-        test_iter_out_neighbors_unstable!(digraph);
+        setup!(digraph);
+        test_unstable!(digraph);
     }
 
     #[test]
     fn slice_vec() {
-        let digraph: &[Vec<usize>] = &[vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let mut digraph = Vec::<Vec<usize>>::empty(4);
 
-        test_iter_out_neighbors_stable!(digraph);
+        setup!(digraph);
+        test_stable!(digraph.as_slice());
     }
 
     #[test]
     fn slice_btree_set() {
-        let digraph: &[BTreeSet<usize>] = &[
-            BTreeSet::from([1, 2]),
-            BTreeSet::from([0, 2, 3]),
-            BTreeSet::from([0, 1, 3]),
-            BTreeSet::from([1, 2]),
-        ];
+        let mut digraph = Vec::<BTreeSet<usize>>::empty(4);
 
-        test_iter_out_neighbors_stable!(digraph);
+        setup!(digraph);
+        test_stable!(digraph.as_slice());
     }
 
     #[test]
     fn slice_hash_set() {
-        let digraph: &[HashSet<usize>] = &[
-            HashSet::from([1, 2]),
-            HashSet::from([0, 2, 3]),
-            HashSet::from([0, 1, 3]),
-            HashSet::from([1, 2]),
-        ];
+        let mut digraph = Vec::<HashSet<usize>>::empty(4);
 
-        test_iter_out_neighbors_unstable!(digraph);
+        setup!(digraph);
+
+        let slice = digraph.as_slice();
+        test_unstable!(slice);
     }
 
     #[test]
     fn arr_vec() {
-        let digraph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let mut digraph = <[Vec<usize>; 4]>::empty();
 
-        test_iter_out_neighbors_stable!(digraph);
+        setup!(digraph);
+        test_stable!(digraph);
     }
 
     #[test]
     fn arr_btree_set() {
-        let digraph = [
-            BTreeSet::from([1, 2]),
-            BTreeSet::from([0, 2, 3]),
-            BTreeSet::from([0, 1, 3]),
-            BTreeSet::from([1, 2]),
-        ];
+        let mut digraph = <[BTreeSet<usize>; 4]>::empty();
 
-        test_iter_out_neighbors_stable!(digraph);
+        setup!(digraph);
+        test_stable!(digraph);
     }
 
     #[test]
     fn arr_hash_set() {
-        let digraph = [
-            HashSet::from([1, 2]),
-            HashSet::from([0, 2, 3]),
-            HashSet::from([0, 1, 3]),
-            HashSet::from([1, 2]),
-        ];
+        let mut digraph = <[HashSet<usize>; 4]>::empty();
 
-        test_iter_out_neighbors_unstable!(digraph);
+        setup!(digraph);
+        test_unstable!(digraph);
     }
 
     #[test]
     fn btree_map_vec() {
-        let digraph = BTreeMap::from([
-            (0, vec![1, 2]),
-            (1, vec![0, 2, 3]),
-            (2, vec![0, 1, 3]),
-            (3, vec![1, 2]),
-        ]);
+        let mut digraph = BTreeMap::<usize, Vec<usize>>::empty(4);
 
-        test_iter_out_neighbors_stable!(digraph);
+        setup!(digraph);
+        test_stable!(digraph);
     }
 
     #[test]
     fn hash_map_vec() {
-        let digraph = HashMap::from([
-            (0, vec![1, 2]),
-            (1, vec![0, 2, 3]),
-            (2, vec![0, 1, 3]),
-            (3, vec![1, 2]),
-        ]);
+        let mut digraph = HashMap::<usize, Vec<usize>>::empty(4);
 
-        test_iter_out_neighbors_stable!(digraph);
+        setup!(digraph);
+        test_stable!(digraph);
     }
 
     #[test]
     fn btree_map_btree_set() {
-        let digraph = BTreeMap::from([
-            (0, BTreeSet::from([1, 2])),
-            (1, BTreeSet::from([0, 2, 3])),
-            (2, BTreeSet::from([0, 1, 3])),
-            (3, BTreeSet::from([1, 2])),
-        ]);
+        let mut digraph = BTreeMap::<usize, BTreeSet<usize>>::empty(4);
 
-        test_iter_out_neighbors_stable!(digraph);
+        setup!(digraph);
+        test_stable!(digraph);
     }
 
     #[test]
     fn hash_map_hash_set() {
-        let digraph = HashMap::from([
-            (0, HashSet::from([1, 2])),
-            (1, HashSet::from([0, 2, 3])),
-            (2, HashSet::from([0, 1, 3])),
-            (3, HashSet::from([1, 2])),
-        ]);
+        let mut digraph = HashMap::<usize, HashSet<usize>>::empty(4);
 
-        test_iter_out_neighbors_unstable!(digraph);
+        setup!(digraph);
+        test_unstable!(digraph);
     }
 }

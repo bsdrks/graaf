@@ -122,10 +122,10 @@ pub mod is_regular;
 pub mod is_simple;
 pub mod is_subdigraph;
 pub mod is_symmetric;
-pub mod iter_all_arcs;
-pub mod iter_all_weighted_arcs;
+pub mod iter_arcs;
 pub mod iter_out_neighbors;
 pub mod iter_out_neighbors_mut;
+pub mod iter_out_weighted_neighbors;
 pub mod iter_vertices;
 pub mod iter_weighted_arcs;
 pub mod order;
@@ -149,10 +149,10 @@ pub use {
     is_simple::IsSimple,
     is_subdigraph::IsSubdigraph,
     is_symmetric::IsSymmetric,
-    iter_all_arcs::IterAllArcs,
-    iter_all_weighted_arcs::IterAllWeightedArcs,
+    iter_arcs::IterArcs,
     iter_out_neighbors::IterOutNeighbors,
     iter_out_neighbors_mut::IterOutNeighborsMut,
+    iter_out_weighted_neighbors::IterOutWeightedNeighbors,
     iter_vertices::IterVertices,
     iter_weighted_arcs::IterWeightedArcs,
     order::Order,

@@ -110,7 +110,7 @@ extern crate alloc;
 use {
     crate::op::{
         HasArc,
-        IterAllArcs,
+        IterArcs,
         IterVertices,
     },
     alloc::collections::{
@@ -139,7 +139,7 @@ use {
 ///     graaf::op::{
 ///         HasArc,
 ///         IsSubdigraph,
-///         IterAllArcs,
+///         IterArcs,
 ///         IterVertices,
 ///     },
 /// };
@@ -154,7 +154,7 @@ use {
 ///         let dv = d.arcs.iter_vertices().collect::<BTreeSet<_>>();
 ///
 ///         self.arcs
-///             .iter_all_arcs()
+///             .iter_arcs()
 ///             .all(|(s, t)| d.arcs.has_arc(s, t) && hv.contains(&s) && hv.contains(&t))
 ///             && hv.iter().all(|s| dv.contains(&s))
 ///     }
@@ -185,7 +185,7 @@ macro_rules! impl_is_subdigraph {
             let hv = self.iter_vertices().collect::<BTreeSet<_>>();
             let dv = d.iter_vertices().collect::<BTreeSet<_>>();
 
-            self.iter_all_arcs()
+            self.iter_arcs()
                 .all(|(s, t)| d.has_arc(s, t) && hv.contains(&s) && hv.contains(&t))
                 && hv.iter().all(|s| dv.contains(s))
         }

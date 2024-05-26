@@ -27,7 +27,7 @@
 //! ```
 
 use crate::op::{
-    IterAllWeightedArcs,
+    IterWeightedArcs,
     Order,
 };
 
@@ -61,7 +61,7 @@ use crate::op::{
 /// ```
 pub fn distances<D>(digraph: &D, s: usize) -> Option<Vec<isize>>
 where
-    D: IterAllWeightedArcs<isize> + Order,
+    D: IterWeightedArcs<isize> + Order,
 {
     let v = digraph.order();
     let mut dist = vec![isize::MAX; v];
@@ -69,12 +69,12 @@ where
     dist[s] = 0;
 
     for _ in 1..v {
-        for (s, t, w) in digraph.iter_all_weighted_arcs() {
+        for (s, t, w) in digraph.iter_weighted_arcs() {
             dist[t] = dist[t].min(dist[s].saturating_add(*w));
         }
     }
 
-    for (s, t, w) in digraph.iter_all_weighted_arcs() {
+    for (s, t, w) in digraph.iter_weighted_arcs() {
         if dist[t] > dist[s].saturating_add(*w) {
             return None;
         }

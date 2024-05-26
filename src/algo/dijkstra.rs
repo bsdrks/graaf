@@ -50,7 +50,7 @@ extern crate alloc;
 use {
     super::predecessor,
     crate::op::{
-        IterWeightedArcs,
+        IterOutWeightedNeighbors,
         Order,
     },
     alloc::collections::BinaryHeap,
@@ -98,12 +98,12 @@ pub fn distances<D, S, W>(
     dist: &mut [W],
     heap: &mut BinaryHeap<(Reverse<W>, usize)>,
 ) where
-    D: Order + IterWeightedArcs<W>,
+    D: Order + IterOutWeightedNeighbors<W>,
     S: Fn(W, &W) -> W,
     W: Copy + Ord,
 {
     while let Some((Reverse(acc), s)) = heap.pop() {
-        for (t, w) in digraph.iter_weighted_arcs(s) {
+        for (t, w) in digraph.iter_out_weighted_neighbors(s) {
             let w = step(acc, w);
 
             if w >= dist[t] {
@@ -139,7 +139,7 @@ pub fn distances<D, S, W>(
 /// ```
 pub fn single_source_distances<D>(digraph: &D, s: usize) -> Vec<usize>
 where
-    D: Order + IterWeightedArcs<usize>,
+    D: Order + IterOutWeightedNeighbors<usize>,
 {
     let mut dist = vec![usize::MAX; digraph.order()];
     let mut heap = BinaryHeap::from([(Reverse(0), s)]);
@@ -197,12 +197,12 @@ pub fn predecessors<D, S, W>(
     dist: &mut [W],
     heap: &mut BinaryHeap<(Reverse<W>, usize)>,
 ) where
-    D: Order + IterWeightedArcs<W>,
+    D: Order + IterOutWeightedNeighbors<W>,
     S: Fn(W, &W) -> W,
     W: Copy + Ord,
 {
     while let Some((Reverse(acc), s)) = heap.pop() {
-        for (t, w) in digraph.iter_weighted_arcs(s) {
+        for (t, w) in digraph.iter_out_weighted_neighbors(s) {
             let w = step(acc, w);
 
             if w >= dist[t] {
@@ -240,7 +240,7 @@ pub fn predecessors<D, S, W>(
 /// ```
 pub fn single_source_predecessors<D>(digraph: &D, s: usize) -> Vec<Option<usize>>
 where
-    D: Order + IterWeightedArcs<usize>,
+    D: Order + IterOutWeightedNeighbors<usize>,
 {
     let v = digraph.order();
     let mut pred = vec![None; v];
@@ -315,7 +315,7 @@ pub fn shortest_path<D, S, T, W>(
     heap: &mut BinaryHeap<(Reverse<W>, usize)>,
 ) -> Option<Vec<usize>>
 where
-    D: Order + IterWeightedArcs<W>,
+    D: Order + IterOutWeightedNeighbors<W>,
     S: Fn(W, &W) -> W,
     T: Fn(usize, &W) -> bool,
     W: Copy + Ord,
@@ -329,7 +329,7 @@ where
             });
         }
 
-        for (t, w) in digraph.iter_weighted_arcs(s) {
+        for (t, w) in digraph.iter_out_weighted_neighbors(s) {
             let w = step(acc, w);
 
             if w >= dist[t] {
@@ -380,7 +380,7 @@ where
 #[doc(alias = "spsp")]
 pub fn single_pair_shortest_path<D>(digraph: &D, s: usize, t: usize) -> Option<Vec<usize>>
 where
-    D: Order + IterWeightedArcs<usize>,
+    D: Order + IterOutWeightedNeighbors<usize>,
 {
     let v = digraph.order();
     let pred = &mut vec![None; v];

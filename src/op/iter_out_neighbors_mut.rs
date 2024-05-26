@@ -151,9 +151,33 @@ where
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use {
+        super::*,
+        crate::{
+            gen::{
+                Empty,
+                EmptyConst,
+            },
+            op::AddArc,
+        },
+    };
 
-    macro_rules! test_iter_out_neighbors_mut_stable {
+    macro_rules! setup {
+        ($digraph:expr) => {
+            $digraph.add_arc(0, 1);
+            $digraph.add_arc(0, 2);
+            $digraph.add_arc(1, 0);
+            $digraph.add_arc(1, 2);
+            $digraph.add_arc(1, 3);
+            $digraph.add_arc(2, 0);
+            $digraph.add_arc(2, 1);
+            $digraph.add_arc(2, 3);
+            $digraph.add_arc(3, 1);
+            $digraph.add_arc(3, 2);
+        };
+    }
+
+    macro_rules! test_iter_out_neighbors_mut {
         ($digraph:expr) => {
             assert!($digraph.iter_out_neighbors_mut(0).eq(&mut [1, 2]));
             assert!($digraph.iter_out_neighbors_mut(1).eq(&mut [0, 2, 3]));
@@ -173,47 +197,41 @@ mod tests {
 
     #[test]
     fn vec_vec() {
-        let digraph = &mut vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let mut digraph = Vec::<Vec<usize>>::empty(4);
 
-        test_iter_out_neighbors_mut_stable!(digraph);
+        setup!(digraph);
+        test_iter_out_neighbors_mut!(digraph);
     }
 
     #[test]
     fn slice_vec() {
-        let digraph: &mut [Vec<usize>] =
-            &mut [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let mut digraph = Vec::<Vec<usize>>::empty(4);
 
-        test_iter_out_neighbors_mut_stable!(digraph);
+        setup!(digraph);
+        test_iter_out_neighbors_mut!(digraph.as_mut_slice());
     }
 
     #[test]
     fn arr_vec() {
-        let digraph = &mut [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let mut digraph = <[Vec<usize>; 4]>::empty();
 
-        test_iter_out_neighbors_mut_stable!(digraph);
+        setup!(digraph);
+        test_iter_out_neighbors_mut!(digraph);
     }
 
     #[test]
     fn btree_map_vec() {
-        let digraph = &mut BTreeMap::from([
-            (0, vec![1, 2]),
-            (1, vec![0, 2, 3]),
-            (2, vec![0, 1, 3]),
-            (3, vec![1, 2]),
-        ]);
+        let mut digraph = BTreeMap::<usize, Vec<usize>>::empty(4);
 
-        test_iter_out_neighbors_mut_stable!(digraph);
+        setup!(digraph);
+        test_iter_out_neighbors_mut!(digraph);
     }
 
     #[test]
     fn hash_map_vec() {
-        let digraph = &mut HashMap::from([
-            (0, vec![1, 2]),
-            (1, vec![0, 2, 3]),
-            (2, vec![0, 1, 3]),
-            (3, vec![1, 2]),
-        ]);
+        let mut digraph = HashMap::<usize, Vec<usize>>::empty(4);
 
-        test_iter_out_neighbors_mut_stable!(digraph);
+        setup!(digraph);
+        test_iter_out_neighbors_mut!(digraph);
     }
 }

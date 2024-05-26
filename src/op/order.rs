@@ -232,248 +232,239 @@ where
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use {
+        super::*,
+        crate::{
+            gen::{
+                Empty,
+                EmptyConst,
+            },
+            op::{
+                AddArc,
+                AddWeightedArc,
+            },
+        },
+    };
+
+    macro_rules! setup_unweighted {
+        ($digraph:expr) => {
+            $digraph.add_arc(0, 1);
+            $digraph.add_arc(0, 2);
+            $digraph.add_arc(1, 0);
+            $digraph.add_arc(1, 2);
+            $digraph.add_arc(1, 3);
+            $digraph.add_arc(2, 0);
+            $digraph.add_arc(2, 1);
+            $digraph.add_arc(2, 3);
+            $digraph.add_arc(3, 1);
+            $digraph.add_arc(3, 2);
+        };
+    }
+
+    macro_rules! setup_weighted {
+        ($digraph:expr) => {
+            $digraph.add_weighted_arc(0, 1, 2);
+            $digraph.add_weighted_arc(0, 2, 3);
+            $digraph.add_weighted_arc(1, 0, 4);
+            $digraph.add_weighted_arc(1, 2, 5);
+            $digraph.add_weighted_arc(1, 3, 6);
+            $digraph.add_weighted_arc(2, 0, 7);
+            $digraph.add_weighted_arc(2, 1, 8);
+            $digraph.add_weighted_arc(2, 3, 9);
+            $digraph.add_weighted_arc(3, 1, 10);
+            $digraph.add_weighted_arc(3, 2, 11);
+        };
+    }
 
     #[test]
     fn vec_vec_unweighted() {
-        let digraph = vec![vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+        let mut digraph = Vec::<Vec<usize>>::empty(4);
 
+        setup_unweighted!(digraph);
+        assert_eq!(digraph.order(), 4);
+    }
+
+    #[test]
+    fn vec_btree_set_unweighted() {
+        let mut digraph = Vec::<BTreeSet<usize>>::empty(4);
+
+        setup_unweighted!(digraph);
+        assert_eq!(digraph.order(), 4);
+    }
+
+    #[test]
+    fn vec_hash_set_unweighted() {
+        let mut digraph = Vec::<HashSet<usize>>::empty(4);
+
+        setup_unweighted!(digraph);
+        assert_eq!(digraph.order(), 4);
+    }
+
+    #[test]
+    fn slice_vec_unweighted() {
+        let mut digraph = Vec::<Vec<usize>>::empty(4);
+
+        setup_unweighted!(digraph);
+        assert_eq!(digraph.as_slice().order(), 4);
+    }
+
+    #[test]
+    fn slice_btree_set_unweighted() {
+        let mut digraph = Vec::<BTreeSet<usize>>::empty(4);
+
+        setup_unweighted!(digraph);
+        assert_eq!(digraph.as_slice().order(), 4);
+    }
+
+    #[test]
+    fn slice_hash_set_unweighted() {
+        let mut digraph = Vec::<HashSet<usize>>::empty(4);
+
+        setup_unweighted!(digraph);
+        assert_eq!(digraph.as_slice().order(), 4);
+    }
+
+    #[test]
+    fn arr_vec_unweighted() {
+        let mut digraph = <[Vec<usize>; 4]>::empty();
+
+        setup_unweighted!(digraph);
+        assert_eq!(digraph.order(), 4);
+    }
+
+    #[test]
+    fn arr_btree_set_unweighted() {
+        let mut digraph = <[BTreeSet<usize>; 4]>::empty();
+
+        setup_unweighted!(digraph);
+        assert_eq!(digraph.order(), 4);
+    }
+
+    #[test]
+    fn arr_hash_set_unweighted() {
+        let mut digraph = <[HashSet<usize>; 4]>::empty();
+
+        setup_unweighted!(digraph);
         assert_eq!(digraph.order(), 4);
     }
 
     #[test]
     fn vec_vec_weighted() {
-        let digraph = vec![vec![(1, 2), (2, 3)], vec![(0, 4)], vec![(0, 7), (1, 8)]];
+        let mut digraph = Vec::<Vec<(usize, i32)>>::empty(4);
 
-        assert_eq!(digraph.order(), 3);
-    }
-
-    #[test]
-    fn vec_btree_set_unweighted() {
-        let digraph = vec![
-            BTreeSet::from([1, 2]),
-            BTreeSet::from([0, 2, 3]),
-            BTreeSet::from([0, 1, 3]),
-        ];
-
-        assert_eq!(digraph.order(), 3);
+        setup_weighted!(digraph);
+        assert_eq!(digraph.order(), 4);
     }
 
     #[test]
     fn vec_btree_set_weighted() {
-        let digraph = vec![
-            BTreeSet::from([(1, 2), (2, 3)]),
-            BTreeSet::from([(0, 4)]),
-            BTreeSet::from([(0, 7), (1, 8)]),
-        ];
+        let mut digraph = Vec::<BTreeSet<(usize, i32)>>::empty(4);
 
-        assert_eq!(digraph.order(), 3);
-    }
-
-    #[test]
-    fn vec_hash_set_unweighted() {
-        let digraph = vec![
-            HashSet::from([1, 2]),
-            HashSet::from([0, 2, 3]),
-            HashSet::from([0, 1, 3]),
-            HashSet::from([1, 2]),
-        ];
-
+        setup_weighted!(digraph);
         assert_eq!(digraph.order(), 4);
     }
 
     #[test]
     fn vec_hash_set_weighted() {
-        let digraph = vec![
-            HashSet::from([(1, 2), (2, 3)]),
-            HashSet::from([(0, 4)]),
-            HashSet::from([(0, 7), (1, 8)]),
-        ];
+        let mut digraph = Vec::<HashSet<(usize, i32)>>::empty(4);
 
-        assert_eq!(digraph.order(), 3);
+        setup_weighted!(digraph);
+        assert_eq!(digraph.order(), 4);
     }
 
     #[test]
     fn vec_btree_map() {
-        let digraph = vec![
-            BTreeMap::from([(1, 2), (2, 3)]),
-            BTreeMap::from([(0, 4)]),
-            BTreeMap::from([(0, 7), (1, 8)]),
-        ];
+        let mut digraph = Vec::<BTreeMap<usize, i32>>::empty(4);
 
-        assert_eq!(digraph.order(), 3);
+        setup_weighted!(digraph);
+        assert_eq!(digraph.order(), 4);
     }
 
     #[test]
     fn vec_hash_map() {
-        let digraph = vec![
-            HashMap::from([(1, 2), (2, 3)]),
-            HashMap::from([(0, 4)]),
-            HashMap::from([(0, 7), (1, 8)]),
-        ];
+        let mut digraph = Vec::<HashMap<usize, i32>>::empty(4);
 
-        assert_eq!(digraph.order(), 3);
-    }
-
-    #[test]
-    fn slice_vec_unweighted() {
-        let digraph: &[Vec<usize>] = &[vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
-
+        setup_weighted!(digraph);
         assert_eq!(digraph.order(), 4);
     }
 
     #[test]
     fn slice_vec_weighted() {
-        let digraph: &[Vec<(usize, i32)>] =
-            &[vec![(1, 2), (2, 3)], vec![(0, 4)], vec![(0, 7), (1, 8)]];
+        let mut digraph = Vec::<Vec<(usize, i32)>>::empty(4);
 
-        assert_eq!(digraph.order(), 3);
-    }
-
-    #[test]
-    fn slice_btree_set_unweighted() {
-        let digraph: &[BTreeSet<usize>] = &[
-            BTreeSet::from([1, 2]),
-            BTreeSet::from([0, 2, 3]),
-            BTreeSet::from([0, 1, 3]),
-        ];
-
-        assert_eq!(digraph.order(), 3);
+        setup_weighted!(digraph);
+        assert_eq!(digraph.as_slice().order(), 4);
     }
 
     #[test]
     fn slice_btree_set_weighted() {
-        let digraph: &[BTreeSet<(usize, i32)>] = &[
-            BTreeSet::from([(1, 2), (2, 3)]),
-            BTreeSet::from([(0, 4)]),
-            BTreeSet::from([(0, 7), (1, 8)]),
-        ];
+        let mut digraph = Vec::<BTreeSet<(usize, i32)>>::empty(4);
 
-        assert_eq!(digraph.order(), 3);
-    }
-
-    #[test]
-    fn slice_hash_set_unweighted() {
-        let digraph: &[HashSet<usize>] = &[
-            HashSet::from([1, 2]),
-            HashSet::from([0, 2, 3]),
-            HashSet::from([0, 1, 3]),
-            HashSet::from([1, 2]),
-        ];
-
-        assert_eq!(digraph.order(), 4);
+        setup_weighted!(digraph);
+        assert_eq!(digraph.as_slice().order(), 4);
     }
 
     #[test]
     fn slice_hash_set_weighted() {
-        let digraph: &[HashSet<(usize, i32)>] = &[
-            HashSet::from([(1, 2), (2, 3)]),
-            HashSet::from([(0, 4)]),
-            HashSet::from([(0, 7), (1, 8)]),
-        ];
+        let mut digraph = Vec::<HashSet<(usize, i32)>>::empty(4);
 
-        assert_eq!(digraph.order(), 3);
+        setup_weighted!(digraph);
+        assert_eq!(digraph.as_slice().order(), 4);
     }
 
     #[test]
     fn slice_btree_map() {
-        let digraph: &[BTreeMap<usize, i32>] = &[
-            BTreeMap::from([(1, 2), (2, 3)]),
-            BTreeMap::from([(0, 4)]),
-            BTreeMap::from([(0, 7), (1, 8)]),
-        ];
+        let mut digraph = Vec::<BTreeMap<usize, i32>>::empty(4);
 
-        assert_eq!(digraph.order(), 3);
+        setup_weighted!(digraph);
+        assert_eq!(digraph.as_slice().order(), 4);
     }
 
     #[test]
     fn slice_hash_map() {
-        let digraph: &[HashMap<usize, i32>] = &[
-            HashMap::from([(1, 2), (2, 3)]),
-            HashMap::from([(0, 4)]),
-            HashMap::from([(0, 7), (1, 8)]),
-        ];
+        let mut digraph = Vec::<HashMap<usize, i32>>::empty(4);
 
-        assert_eq!(digraph.order(), 3);
-    }
-
-    #[test]
-    fn arr_vec_unweighted() {
-        let digraph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
-
-        assert_eq!(digraph.order(), 4);
+        setup_weighted!(digraph);
+        assert_eq!(digraph.as_slice().order(), 4);
     }
 
     #[test]
     fn arr_vec_weighted() {
-        let digraph = [vec![(1, 2), (2, 3)], vec![(0, 4)], vec![(0, 7), (1, 8)]];
+        let mut digraph = <[Vec<(usize, i32)>; 4]>::empty();
 
-        assert_eq!(digraph.order(), 3);
-    }
-
-    #[test]
-    fn arr_btree_set_unweighted() {
-        let digraph = [
-            BTreeSet::from([1, 2]),
-            BTreeSet::from([0, 2, 3]),
-            BTreeSet::from([0, 1, 3]),
-        ];
-
-        assert_eq!(digraph.order(), 3);
+        setup_weighted!(digraph);
+        assert_eq!(digraph.order(), 4);
     }
 
     #[test]
     fn arr_btree_set_weighted() {
-        let digraph = [
-            BTreeSet::from([(1, 2), (2, 3)]),
-            BTreeSet::from([(0, 4)]),
-            BTreeSet::from([(0, 7), (1, 8)]),
-        ];
+        let mut digraph = <[BTreeSet<(usize, i32)>; 4]>::empty();
 
-        assert_eq!(digraph.order(), 3);
-    }
-
-    #[test]
-    fn arr_hash_set_unweighted() {
-        let digraph = [
-            HashSet::from([1, 2]),
-            HashSet::from([0, 2, 3]),
-            HashSet::from([0, 1, 3]),
-        ];
-
-        assert_eq!(digraph.order(), 3);
+        setup_weighted!(digraph);
+        assert_eq!(digraph.order(), 4);
     }
 
     #[test]
     fn arr_hash_set_weighted() {
-        let digraph = [
-            HashSet::from([(1, 2), (2, 3)]),
-            HashSet::from([(0, 4)]),
-            HashSet::from([(0, 7), (1, 8)]),
-        ];
+        let mut digraph = <[HashSet<(usize, i32)>; 4]>::empty();
 
-        assert_eq!(digraph.order(), 3);
+        setup_weighted!(digraph);
+        assert_eq!(digraph.order(), 4);
     }
 
     #[test]
     fn arr_btree_map() {
-        let digraph = [
-            BTreeMap::from([(1, 2), (2, 3)]),
-            BTreeMap::from([(0, 4)]),
-            BTreeMap::from([(0, 7), (1, 8)]),
-        ];
+        let mut digraph = <[BTreeMap<usize, i32>; 4]>::empty();
 
-        assert_eq!(digraph.order(), 3);
+        setup_weighted!(digraph);
+        assert_eq!(digraph.order(), 4);
     }
 
     #[test]
     fn arr_hash_map() {
-        let digraph = [
-            HashMap::from([(1, 2), (2, 3)]),
-            HashMap::from([(0, 4)]),
-            HashMap::from([(0, 7), (1, 8)]),
-        ];
+        let mut digraph = <[HashMap<usize, i32>; 4]>::empty();
 
-        assert_eq!(digraph.order(), 3);
+        setup_weighted!(digraph);
+        assert_eq!(digraph.order(), 4);
     }
 }

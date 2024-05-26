@@ -51,8 +51,8 @@ use {
         op::{
             AddArc,
             AddWeightedArc,
-            IterAllArcs,
-            IterAllWeightedArcs,
+            IterArcs,
+            IterWeightedArcs,
             Size,
         },
     },
@@ -87,7 +87,7 @@ use {
 ///         op::{
 ///             AddArc,
 ///             Converse,
-///             IterAllArcs,
+///             IterArcs,
 ///             Size,
 ///         },
 ///     },
@@ -103,7 +103,7 @@ use {
 ///         let v = self.arcs.size();
 ///         let mut converse = Vec::<HashSet<usize>>::empty(v);
 ///
-///         for (s, t) in self.arcs.iter_all_arcs() {
+///         for (s, t) in self.arcs.iter_arcs() {
 ///             converse.add_arc(t, s);
 ///         }
 ///
@@ -134,7 +134,7 @@ macro_rules! impl_converse {
             let v = self.size();
             let mut converse = Self::empty(v);
 
-            for (s, t) in self.iter_all_arcs() {
+            for (s, t) in self.iter_arcs() {
                 converse.add_arc(t, s);
             }
 
@@ -148,7 +148,7 @@ macro_rules! impl_converse_const {
         fn converse(&self) -> Self {
             let mut converse = Self::empty();
 
-            for (s, t) in self.iter_all_arcs() {
+            for (s, t) in self.iter_arcs() {
                 converse.add_arc(t, s);
             }
 
@@ -163,7 +163,7 @@ macro_rules! impl_converse_weighted {
             let v = self.size();
             let mut converse = Self::empty(v);
 
-            for (s, t, w) in self.iter_all_weighted_arcs() {
+            for (s, t, w) in self.iter_weighted_arcs() {
                 converse.add_weighted_arc(t, s, *w);
             }
 
@@ -177,7 +177,7 @@ macro_rules! impl_converse_weighted_const {
         fn converse(&self) -> Self {
             let mut converse = Self::empty();
 
-            for (s, t, w) in self.iter_all_weighted_arcs() {
+            for (s, t, w) in self.iter_weighted_arcs() {
                 converse.add_weighted_arc(t, s, *w);
             }
 
@@ -432,7 +432,7 @@ mod tests {
     macro_rules! test_converse {
         ($digraph:expr) => {
             let converse = $digraph.converse();
-            let mut arcs = converse.iter_all_arcs();
+            let mut arcs = converse.iter_arcs();
 
             assert!(matches!(arcs.next(), Some((0, 1) | (1 | 2, 0))));
             assert!(matches!(arcs.next(), Some((0, 1) | (1 | 2, 0))));
@@ -440,8 +440,8 @@ mod tests {
             assert_eq!(arcs.next(), None);
 
             assert_eq!(
-                $digraph.iter_all_arcs().collect::<BTreeSet<_>>(),
-                converse.converse().iter_all_arcs().collect::<BTreeSet<_>>()
+                $digraph.iter_arcs().collect::<BTreeSet<_>>(),
+                converse.converse().iter_arcs().collect::<BTreeSet<_>>()
             );
         };
     }
@@ -449,7 +449,7 @@ mod tests {
     macro_rules! test_converse_weighted {
         ($digraph:expr) => {
             let converse = $digraph.converse();
-            let mut arcs = converse.iter_all_weighted_arcs();
+            let mut arcs = converse.iter_weighted_arcs();
 
             assert!(matches!(
                 arcs.next(),
@@ -469,10 +469,10 @@ mod tests {
             assert_eq!(arcs.next(), None);
 
             assert_eq!(
-                $digraph.iter_all_weighted_arcs().collect::<BTreeSet<_>>(),
+                $digraph.iter_weighted_arcs().collect::<BTreeSet<_>>(),
                 converse
                     .converse()
-                    .iter_all_weighted_arcs()
+                    .iter_weighted_arcs()
                     .collect::<BTreeSet<_>>()
             );
         };

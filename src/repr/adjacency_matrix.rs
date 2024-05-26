@@ -36,7 +36,7 @@ use crate::op::{
     IsIsolated,
     IsSimple,
     IsSymmetric,
-    IterAllArcs,
+    IterArcs,
     IterOutNeighbors,
     IterVertices,
     Order,
@@ -261,15 +261,15 @@ where
     [(); blocks!(V)]:,
 {
     fn is_symmetric(&self) -> bool {
-        self.iter_all_arcs().all(|(s, t)| self.has_arc(t, s))
+        self.iter_arcs().all(|(s, t)| self.has_arc(t, s))
     }
 }
 
-impl<const V: usize> IterAllArcs for AdjacencyMatrix<V>
+impl<const V: usize> IterArcs for AdjacencyMatrix<V>
 where
     [(); blocks!(V)]:,
 {
-    fn iter_all_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
+    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
         self.iter_vertices().flat_map(move |s| {
             self.iter_vertices()
                 .filter_map(move |t| self.has_arc(s, t).then_some((s, t)))
@@ -611,14 +611,14 @@ mod tests {
     }
 
     #[test]
-    fn iter_all_arcs() {
+    fn iter_arcs() {
         let mut digraph = AdjacencyMatrix::<3>::new();
 
         digraph.add_arc(0, 1);
         digraph.add_arc(1, 2);
         digraph.add_arc(2, 0);
 
-        assert!(digraph.iter_all_arcs().eq([(0, 1), (1, 2), (2, 0)]));
+        assert!(digraph.iter_arcs().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]

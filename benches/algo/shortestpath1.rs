@@ -15,7 +15,7 @@ use {
         gen::EmptyConst,
         op::{
             AddWeightedArc,
-            IterAllWeightedArcs,
+            IterWeightedArcs,
         },
     },
     std::collections::HashSet,
@@ -64,7 +64,7 @@ fn arr_vec(bencher: Bencher<'_, '_>) {
     let mut dist = DIST;
     let mut heap = BinaryHeap::from(HEAP);
 
-    for (s, t, w) in fixture::kattis_shortestpath1().iter_all_weighted_arcs() {
+    for (s, t, w) in fixture::kattis_shortestpath1().iter_weighted_arcs() {
         digraph.add_weighted_arc(s, t, *w)
     }
 
@@ -81,7 +81,7 @@ fn arr_hash_set(bencher: Bencher<'_, '_>) {
     let mut dist = DIST;
     let mut heap = BinaryHeap::from(HEAP);
 
-    for (s, t, w) in fixture::kattis_shortestpath1().iter_all_weighted_arcs() {
+    for (s, t, w) in fixture::kattis_shortestpath1().iter_weighted_arcs() {
         digraph.add_weighted_arc(s, t, *w)
     }
 

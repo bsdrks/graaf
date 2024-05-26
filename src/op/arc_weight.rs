@@ -151,10 +151,25 @@ where
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use {
+        super::*,
+        crate::{
+            gen::{
+                Empty,
+                EmptyConst,
+            },
+            op::AddWeightedArc,
+        },
+    };
 
     macro_rules! test_arc_weight {
         ($digraph:expr) => {
+            $digraph.add_weighted_arc(0, 1, 2);
+            $digraph.add_weighted_arc(0, 2, 3);
+            $digraph.add_weighted_arc(1, 0, 4);
+            $digraph.add_weighted_arc(2, 0, 7);
+            $digraph.add_weighted_arc(2, 1, 8);
+
             assert_eq!($digraph.arc_weight(0, 1), Some(&2));
             assert_eq!($digraph.arc_weight(0, 2), Some(&3));
             assert_eq!($digraph.arc_weight(1, 0), Some(&4));
@@ -165,85 +180,56 @@ mod tests {
 
     #[test]
     fn vec_btree_map() {
-        let digraph = vec![
-            BTreeMap::from([(1, 2), (2, 3)]),
-            BTreeMap::from([(0, 4)]),
-            BTreeMap::from([(0, 7), (1, 8)]),
-        ];
+        let mut digraph = Vec::<BTreeMap<usize, i32>>::empty(3);
 
         test_arc_weight!(digraph);
     }
 
     #[test]
     fn vec_hash_map() {
-        let digraph = vec![
-            HashMap::from([(1, 2), (2, 3)]),
-            HashMap::from([(0, 4)]),
-            HashMap::from([(0, 7), (1, 8)]),
-        ];
+        let mut digraph = Vec::<HashMap<usize, i32>>::empty(3);
 
         test_arc_weight!(digraph);
     }
 
     #[test]
     fn slice_btree_map() {
-        let digraph: &[BTreeMap<usize, i32>] = &[
-            BTreeMap::from([(1, 2), (2, 3)]),
-            BTreeMap::from([(0, 4)]),
-            BTreeMap::from([(0, 7), (1, 8)]),
-        ];
+        let mut digraph = Vec::<BTreeMap<usize, i32>>::empty(3);
 
-        test_arc_weight!(digraph);
+        test_arc_weight!(digraph.as_mut_slice());
     }
 
     #[test]
     fn slice_hash_map() {
-        let digraph: &[HashMap<usize, i32>] = &[
-            HashMap::from([(1, 2), (2, 3)]),
-            HashMap::from([(0, 4)]),
-            HashMap::from([(0, 7), (1, 8)]),
-        ];
+        let mut digraph = Vec::<HashMap<usize, i32>>::empty(3);
 
-        test_arc_weight!(digraph);
+        test_arc_weight!(digraph.as_mut_slice());
     }
 
     #[test]
     fn arr_btree_map() {
-        let digraph = [
-            BTreeMap::from([(1, 2), (2, 3)]),
-            BTreeMap::from([(0, 4)]),
-            BTreeMap::from([(0, 7), (1, 8)]),
-        ];
+        let mut digraph = <[BTreeMap<usize, i32>; 3]>::empty();
 
         test_arc_weight!(digraph);
     }
 
     #[test]
     fn arr_hash_map() {
-        let digraph = [
-            HashMap::from([(1, 2), (2, 3)]),
-            HashMap::from([(0, 4)]),
-            HashMap::from([(0, 7), (1, 8)]),
-        ];
+        let mut digraph = <[HashMap<usize, i32>; 3]>::empty();
 
         test_arc_weight!(digraph);
     }
 
     #[test]
     fn btree_map_btree_map() {
-        let mut digraph = BTreeMap::new();
-        let _ = digraph.insert(0, BTreeMap::from([(1, 2), (2, 3)]));
-        let _ = digraph.insert(1, BTreeMap::from([(0, 4)]));
-        let _ = digraph.insert(2, BTreeMap::from([(0, 7), (1, 8)]));
+        let mut digraph = BTreeMap::<usize, BTreeMap<usize, i32>>::empty(3);
 
         test_arc_weight!(digraph);
     }
+
     #[test]
     fn hash_map_hash_map() {
-        let mut digraph = HashMap::new();
-        let _ = digraph.insert(0, HashMap::from([(1, 2), (2, 3)]));
-        let _ = digraph.insert(1, HashMap::from([(0, 4)]));
-        let _ = digraph.insert(2, HashMap::from([(0, 7), (1, 8)]));
+        let mut digraph = HashMap::<usize, HashMap<usize, i32>>::empty(3);
 
         test_arc_weight!(digraph);
     }
