@@ -11,13 +11,22 @@
 //! use {
 //!     alloc::collections::BTreeSet,
 //!     graaf::{
-//!         gen::Empty,
-//!         op::{
-//!             AddArc,
-//!             IsWalk,
-//!         },
+//!         gen::Cycle,
+//!         op::IsWalk,
 //!     },
 //! };
+//!
+//! let digraph = BTreeSet::<(usize, usize)>::cycle(2);
+//!
+//! assert!(digraph.is_walk(&[0, 1]));
+//! assert!(digraph.is_walk(&[1, 0]));
+//!
+//! assert!(!digraph.is_walk(&[0]));
+//! assert!(!digraph.is_walk(&[1]));
+//! assert!(!digraph.is_walk(&[2]));
+//! assert!(!digraph.is_walk(&[0, 0]));
+//! assert!(!digraph.is_walk(&[1, 1]));
+//! assert!(!digraph.is_walk(&[0, 2]));
 //! ```
 
 extern crate alloc;
