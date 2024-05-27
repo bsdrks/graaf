@@ -6,7 +6,6 @@
 - Add `IsInTree` trait.
 - Add `IsOutTree` trait.
 - Add `IsTree` trait.
-- Add `IsWalk` trait.
 - Add `bfs::shortest_paths`.
 - Add `bfs::single_pair_shortest_paths`.
 - Add `dijkstra::shortest_paths`.
@@ -19,6 +18,28 @@
 - Benchmark against popular graph libraries in other languages.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.52.2] - 2024-05-27
+
+Added
+
+- Add the `IsWalk` trait.
+- Implement and test `IsWalk` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement and test `IsWalk` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement and test `IsWalk` for `HashMap<usize, HashMap<usize, W>>`.
+- Implement and test `IsWalk` for `HashMap<usize, HashSet<usize>>`.
+- Implement and test `IsWalk` for `Vec<BTreeMap<usize, W>>`.
+- Implement and test `IsWalk` for `Vec<BTreeSet<usize>>`.
+- Implement and test `IsWalk` for `Vec<HashMap<usize, W>>`.
+- Implement and test `IsWalk` for `Vec<HashSet<usize>>`.
+- Implement and test `IsWalk` for `[BTreeMap<usize, W>; V]`.
+- Implement and test `IsWalk` for `[BTreeMap<usize, W>]`.
+- Implement and test `IsWalk` for `[BTreeSet<usize>; V]`.
+- Implement and test `IsWalk` for `[BTreeSet<usize>]`.
+- Implement and test `IsWalk` for `[HashMap<usize, W>; V]`.
+- Implement and test `IsWalk` for `[HashMap<usize, W>]`.
+- Implement and test `IsWalk` for `[HashSet<usize>; V]`.
+- Implement and test `IsWalk` for `[HashSet<usize>]`.
 
 ## [0.52.1] - 2024-05-26
 

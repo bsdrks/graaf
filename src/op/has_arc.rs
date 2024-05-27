@@ -17,14 +17,15 @@
 //!     HashSet::from([0, 1]),
 //! ];
 //!
-//! assert!(!digraph.has_arc(0, 0));
 //! assert!(digraph.has_arc(0, 1));
 //! assert!(digraph.has_arc(0, 2));
 //! assert!(digraph.has_arc(1, 0));
-//! assert!(!digraph.has_arc(1, 1));
-//! assert!(!digraph.has_arc(1, 2));
 //! assert!(digraph.has_arc(2, 0));
 //! assert!(digraph.has_arc(2, 1));
+//!
+//! assert!(!digraph.has_arc(0, 0));
+//! assert!(!digraph.has_arc(1, 1));
+//! assert!(!digraph.has_arc(1, 2));
 //! assert!(!digraph.has_arc(2, 2));
 //! ```
 //!
@@ -82,14 +83,15 @@ use {
 ///     HashSet::from([0, 1]),
 /// ];
 ///
-/// assert!(!digraph.has_arc(0, 0));
 /// assert!(digraph.has_arc(0, 1));
 /// assert!(digraph.has_arc(0, 2));
 /// assert!(digraph.has_arc(1, 0));
-/// assert!(!digraph.has_arc(1, 1));
-/// assert!(!digraph.has_arc(1, 2));
 /// assert!(digraph.has_arc(2, 0));
 /// assert!(digraph.has_arc(2, 1));
+///
+/// assert!(!digraph.has_arc(0, 0));
+/// assert!(!digraph.has_arc(1, 1));
+/// assert!(!digraph.has_arc(1, 2));
 /// assert!(!digraph.has_arc(2, 2));
 /// ```
 ///
