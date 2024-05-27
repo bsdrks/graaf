@@ -57,9 +57,12 @@ use {
 ///
 /// use {
 ///     alloc::collections::BTreeSet,
-///     graaf::op::{
-///         HasArc,
-///         IsWalk,
+///     graaf::{
+///         gen::Cycle,
+///         op::{
+///             HasArc,
+///             IsWalk,
+///         },
 ///     },
 /// };
 ///
@@ -74,6 +77,13 @@ use {
 ///         arcs.clone().count() > 0 && arcs.all(|(s, t)| self.arcs.has_arc(*s, *t))
 ///     }
 /// }
+///
+/// let digraph = Digraph {
+///     arcs: BTreeSet::<(usize, usize)>::cycle(2),
+/// };
+///
+/// assert!(digraph.is_walk(&[0, 1]));
+/// assert!(digraph.is_walk(&[1, 0]));
 /// ```
 ///
 /// # Examples
@@ -84,13 +94,22 @@ use {
 /// use {
 ///     alloc::collections::BTreeSet,
 ///     graaf::{
-///         gen::Empty,
-///         op::{
-///             AddArc,
-///             IsWalk,
-///         },
+///         gen::Cycle,
+///         op::IsWalk,
 ///     },
 /// };
+///
+/// let digraph = BTreeSet::<(usize, usize)>::cycle(2);
+///
+/// assert!(digraph.is_walk(&[0, 1]));
+/// assert!(digraph.is_walk(&[1, 0]));
+///
+/// assert!(!digraph.is_walk(&[0]));
+/// assert!(!digraph.is_walk(&[1]));
+/// assert!(!digraph.is_walk(&[2]));
+/// assert!(!digraph.is_walk(&[0, 0]));
+/// assert!(!digraph.is_walk(&[1, 1]));
+/// assert!(!digraph.is_walk(&[0, 2]));
 /// ```
 pub trait IsWalk {
     /// Returns whether the sequence of vertices is a walk in the digraph.

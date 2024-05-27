@@ -8,7 +8,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.52.3"
+graaf = "0.52.4"
 ```
 
 ## Overview

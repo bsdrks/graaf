@@ -19,6 +19,12 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.52.4] - 2024-05-27
+
+Fixed
+
+- Fix the `IsWalk` trait documentation example.
+
 ## [0.52.3] - 2024-05-27
 
 Fixed
