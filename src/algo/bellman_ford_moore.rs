@@ -32,12 +32,17 @@ use crate::op::{
 };
 
 /// Computes the distances from a source vertex to all other vertices in a
-/// weighted digraph. Returns `None` if the digraph contains a negative cycle.
+/// weighted digraph.
 ///
 /// # Arguments
 ///
 /// * `digraph`: The weighted digraph.
 /// * `s`: The source vertex.
+///
+/// # Returns
+///
+/// Returns the distances from the source vertex to all other vertices. Returns
+/// `None` if the digraph contains a negative cycle.
 ///
 /// # Examples
 ///
