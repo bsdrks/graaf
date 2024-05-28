@@ -117,6 +117,7 @@ pub mod has_edge;
 pub mod indegree;
 pub mod is_balanced;
 pub mod is_isolated;
+pub mod is_oriented;
 pub mod is_pendant;
 pub mod is_regular;
 pub mod is_simple;
@@ -145,6 +146,7 @@ pub use {
     indegree::Indegree,
     is_balanced::IsBalanced,
     is_isolated::IsIsolated,
+    is_oriented::IsOriented,
     is_pendant::IsPendant,
     is_regular::IsRegular,
     is_simple::IsSimple,

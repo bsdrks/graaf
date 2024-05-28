@@ -227,6 +227,21 @@ where
     impl_random_tournament!();
 }
 
+impl RandomTournament for Vec<(usize, usize)> {
+    impl_random_tournament!();
+}
+
+impl RandomTournament for BTreeSet<(usize, usize)> {
+    impl_random_tournament!();
+}
+
+impl<H> RandomTournament for HashSet<(usize, usize), H>
+where
+    H: BuildHasher + Default,
+{
+    impl_random_tournament!();
+}
+
 #[cfg(test)]
 mod tests {
     use {
@@ -418,6 +433,21 @@ mod tests {
         #[test]
         fn size_hash_map_hash_set(v in 1..100_usize) {
             prop_size::<HashMap<usize, HashSet<usize>>>(v);
+        }
+
+        #[test]
+        fn size_vec_tuple(v in 1..100_usize) {
+            prop_size::<Vec<(usize, usize)>>(v);
+        }
+
+        #[test]
+        fn size_btree_set_tuple(v in 1..100_usize) {
+            prop_size::<BTreeSet<(usize, usize)>>(v);
+        }
+
+        #[test]
+        fn size_hash_set_tuple(v in 1..100_usize) {
+            prop_size::<HashSet<(usize, usize)>>(v);
         }
     }
 }

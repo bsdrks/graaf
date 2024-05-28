@@ -3,21 +3,45 @@
 ## Provisional roadmap
 
 - Add DFS.
-- Add `IsInTree` trait.
-- Add `IsOutTree` trait.
-- Add `IsTree` trait.
-- Add `bfs::shortest_paths`.
-- Add `bfs::single_pair_shortest_paths`.
-- Add `dijkstra::shortest_paths`.
-- Add `dijkstra::single_pair_shortest_paths`.
-- Add `reverse_arc` trait.
-- Add a generator for single-sink complete digraphs.
-- Add a generator for single-source complete digraphs.
 - Add sources.
+- Add the `IsInTree` trait.
+- Add the `IsOutTree` trait.
+- Add the `IsTree` trait.
+- Add the `bfs::shortest_paths`.
+- Add the `bfs::single_pair_shortest_paths`.
+- Add the `dijkstra::shortest_paths`.
+- Add the `dijkstra::single_pair_shortest_paths`.
 - Benchmark against popular Rust graph libraries.
 - Benchmark against popular graph libraries in other languages.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.52.5] - 2024-05-28
+
+Added
+
+- Add `IsOriented` trait.
+- Implement and test `IsOriented` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement and test `IsOriented` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement and test `IsOriented` for `BTreeSet<(usize, usize)>`.
+- Implement and test `IsOriented` for `HashMap<usize, HashMap<usize, W>>`.
+- Implement and test `IsOriented` for `HashMap<usize, HashSet<usize>>`.
+- Implement and test `IsOriented` for `HashSet<(usize, usize)>`.
+- Implement and test `IsOriented` for `Vec<BTreeMap<usize, W>>`.
+- Implement and test `IsOriented` for `Vec<BTreeSet<usize>>`.
+- Implement and test `IsOriented` for `Vec<HashMap<usize, W>>`.
+- Implement and test `IsOriented` for `Vec<HashSet<usize>>`.
+- Implement and test `IsOriented` for `[BTreeMap<usize, W>; V]`.
+- Implement and test `IsOriented` for `[BTreeMap<usize, W>]`.
+- Implement and test `IsOriented` for `[BTreeSet<usize>; V]`.
+- Implement and test `IsOriented` for `[BTreeSet<usize>]`.
+- Implement and test `IsOriented` for `[HashMap<usize, W>; V]`.
+- Implement and test `IsOriented` for `[HashMap<usize, W>]`.
+- Implement and test `IsOriented` for `[HashSet<usize>; V]`.
+- Implement and test `IsOriented` for `[HashSet<usize>]`.
+- Implement and test `RandomTournament` for `BTreeSet<(usize, usize)>`.
+- Implement and test `RandomTournament` for `HashSet<(usize, usize)>`.
+- Implement and test `RandomTournament` for `Vec<(usize, usize)>`.
 
 ## [0.52.4] - 2024-05-27
 

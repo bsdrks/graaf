@@ -13,7 +13,6 @@
 //! use {
 //!     alloc::collections::BTreeSet,
 //!     graaf::op::IsBalanced,
-//!     std::collections::HashSet,
 //! };
 //!
 //! let digraph: [BTreeSet<usize>; 3] = [
