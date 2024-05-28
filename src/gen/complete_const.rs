@@ -1,4 +1,4 @@
-//! Generate constant-sized symmetric complete digraphs
+//! Generate constant-sized symmetric complete digraphs.
 //!
 //! The generated digraphs are simple; they contain no self-loops. To generate
 //! variable-sized complete digraphs, see [`Complete`].
@@ -28,7 +28,7 @@ use {
     std::collections::HashSet,
 };
 
-/// Generate constant-sized symmetric complete digraphs
+/// Generate constant-sized symmetric complete digraphs.
 ///
 /// # How can I implement `CompleteConst`?
 ///

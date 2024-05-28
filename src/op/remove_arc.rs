@@ -1,4 +1,4 @@
-//! Remove an arc from a digraph
+//! Remove an arc from a digraph.
 //!
 //! # Examples
 //!
@@ -57,7 +57,7 @@ use {
     },
 };
 
-/// Remove an arc from a digraph
+/// Remove an arc from a digraph.
 ///
 /// # How can I implement `RemoveArc`?
 ///

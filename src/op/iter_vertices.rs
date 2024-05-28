@@ -1,4 +1,4 @@
-//! Iterate over all vertices in a digraph
+//! Iterate over the vertices in a digraph.
 //!
 //! # Example
 //!
@@ -24,7 +24,7 @@ use {
     },
 };
 
-/// Iterate over all vertices in a digraph
+/// Iterate over the vertices in a digraph.
 ///
 /// # How can I implement `IterVertices`?
 ///

@@ -1,4 +1,4 @@
-//! Add an arc to a directed weighted digraph
+//! Add an arc to a directed weighted digraph.
 //!
 //! # Examples
 //!
@@ -34,7 +34,7 @@ use {
     },
 };
 
-/// Add an arc to a weighted digraph
+/// Add an arc to a weighted digraph.
 ///
 /// # How can I implement `AddWeightedArc`?
 ///

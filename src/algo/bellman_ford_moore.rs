@@ -1,4 +1,4 @@
-//! # The Bellman-Ford-Moore algorithm
+//! The Bellman-Ford-Moore algorithm
 //!
 //! The Bellman-Ford-Moore algorithm is a single-source shortest path algorithm
 //! for weighted digraphs.

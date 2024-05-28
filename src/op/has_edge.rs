@@ -1,4 +1,4 @@
-//! Check if an edge exists between two vertices
+//! Check if an edge exists between two vertices.
 //!
 //! To check if an arc exists from `s` to `t`, see [`HasArc`].
 //!
@@ -51,7 +51,7 @@ use {
     },
 };
 
-/// Check if an edge exists between two vertices
+/// Check if an edge exists between two vertices.
 ///
 /// # How can I implement `HasEdge`?
 ///

@@ -1,4 +1,4 @@
-//! Iterate over all arcs in a weighted digraph
+//! Iterate over the weighted arcs in a digraph.
 //!
 //! # Examples
 //!
@@ -26,7 +26,7 @@ use {
     },
 };
 
-/// Iterate over all arcs in a weighted digraph
+/// Iterate over the weighted arcs in a digraph.
 ///
 /// # How can I implement `IterWeightedArcs`?
 ///

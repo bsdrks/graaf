@@ -1,6 +1,6 @@
 #![doc(alias = "isograph")]
 #![doc(alias = "pseudosymmetric")]
-//! Determine whether a digraph is balanced
+//! Determine whether a digraph is balanced.
 //!
 //! A digraph is balanced if the indegree of each vertex is equal to its
 //! outdegree.
@@ -51,7 +51,7 @@ use {
     },
 };
 
-/// Determine whether a digraph is balanced
+/// Determine whether a digraph is balanced.
 ///
 /// # How can I implement `IsBalanced`?
 ///

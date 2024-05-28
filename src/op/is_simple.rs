@@ -1,4 +1,4 @@
-//! Determine whether a digraph is simple
+//! Determine whether a digraph is simple.
 //!
 //! A digraph is simple if it has no self-loops or parallel arcs.
 //!
@@ -35,7 +35,7 @@ use {
     std::collections::HashSet,
 };
 
-/// Determine whether a digraph is simple
+/// Determine whether a digraph is simple.
 ///
 /// # How can I implement `IsSimple`?
 ///

@@ -1,4 +1,4 @@
-//! Check if an arc exists from one vertex to another
+//! Check if an arc exists from one vertex to another.
 //!
 //! To check if an arc exists from `s` to `t` and from `t` to `s`, see
 //! [`HasEdge`].
@@ -45,7 +45,7 @@ use {
     },
 };
 
-/// Check if an arc exists from one vertex to another
+/// Check if an arc exists from one vertex to another.
 ///
 /// # How can I implement `HasArc`?
 ///

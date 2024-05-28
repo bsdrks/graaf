@@ -1,4 +1,4 @@
-//! # Dijkstra's algorithm
+//! Dijkstra's algorithm
 //!
 //! Dijkstra's algorithm[^citation] with binary heap finds the shortest path in
 //! a weighted digraph. Use [`bfs`] for unweighted digraphs.

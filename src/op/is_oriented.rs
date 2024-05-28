@@ -1,4 +1,4 @@
-//! Determine whether a digraph is oriented
+//! Determine whether a digraph is oriented.
 //!
 //! An oriented graph is a digraph with no cycle of length 2.
 //!
@@ -37,7 +37,7 @@ use {
     },
 };
 
-/// Determine whether a digraph is oriented
+/// Determine whether a digraph is oriented.
 ///
 /// # How can I implement `IsOriented`?
 ///

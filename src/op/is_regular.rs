@@ -1,4 +1,4 @@
-//! Determine whether a digraph is regular
+//! Determine whether a digraph is regular.
 //!
 //! A digraph is regular if all vertices have the same indegree and
 //! outdegree.
@@ -45,7 +45,7 @@ use {
     },
 };
 
-/// Determine whether a digraph is regular
+/// Determine whether a digraph is regular.
 ///
 /// # How can I implement `IsRegular`?
 ///

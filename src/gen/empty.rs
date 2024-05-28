@@ -1,5 +1,5 @@
 #![doc(alias = "edgeless")]
-//! Generate empty variable-sized digraphs
+//! Generate empty variable-sized digraphs.
 //!
 //! To generate empty constant-sized digraphs, see [`EmptyConst`].
 //!
@@ -33,7 +33,7 @@ use {
     },
 };
 
-/// Generate empty variable-sized digraphs
+/// Generate empty variable-sized digraphs.
 ///
 /// # How can I implement `Empty`?
 ///

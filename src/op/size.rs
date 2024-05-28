@@ -1,4 +1,4 @@
-//! Count the number of arcs in a digraph
+//! Count the arcs in a digraph.
 //!
 //! # Examples
 //!
@@ -24,7 +24,7 @@ use {
     },
 };
 
-/// Count the number of arcs in a digraph
+/// Count the arcs in a digraph.
 ///
 /// # How can I implement `Size`?
 ///

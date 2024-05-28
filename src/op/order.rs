@@ -1,4 +1,4 @@
-//! Count the number of vertices in a digraph
+//! Count the vertices in a digraph.
 //!
 //! # Example
 //!
@@ -24,7 +24,7 @@ use {
     },
 };
 
-/// Count the number of vertices in a digraph
+/// Count the vertices in a digraph.
 ///
 /// # How can I implement `Order`?
 ///

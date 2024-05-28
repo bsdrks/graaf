@@ -1,4 +1,4 @@
-//! Generate random constant-sized tournaments
+//! Generate random constant-sized tournaments.
 //!
 //! A tournament is a digraph in which for every pair of distinct
 //! vertices `s` and `t`, exactly one of the arcs `(s, t)` and `(t, s)` is
@@ -51,7 +51,7 @@ use {
     std::collections::HashSet,
 };
 
-/// Generate random constant-sized tournaments
+/// Generate random constant-sized tournaments.
 ///
 /// # How can I implement `RandomTournamentConst`?
 ///

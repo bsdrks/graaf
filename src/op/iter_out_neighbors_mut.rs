@@ -1,5 +1,4 @@
-//! Return an iterator to mutate the out-neighbors of a vertex in
-//! a digraph
+//! Mutably iterate the out-neighbors of a vertex in a digraph.
 //!
 //! # Examples
 //!
@@ -31,8 +30,7 @@ use {
     std::collections::HashMap,
 };
 
-/// Return an iterator to mutate the out-neighbors of a vertex in
-/// a digraph
+/// Mutably iterate the out-neighbors of a vertex in a digraph.
 ///
 /// # How can I implement `IterOutNeighborsMut`?
 ///

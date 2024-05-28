@@ -1,5 +1,4 @@
-//! Iterate over the out-neighbors of a vertex in a digraph,
-//! including their weights.
+//! Iterate over the weighted arcs going out from a vertex in a digraph.
 //!
 //! # Examples
 //!
@@ -39,8 +38,7 @@ use {
     },
 };
 
-/// Iterate over all arcs with a given source vertex in a weighted
-/// digraph
+/// Iterate over the weighted arcs going out from a vertex in a digraph.
 ///
 /// # How can I implement `IterOutWeightedNeighbors`?
 ///

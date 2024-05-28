@@ -1,4 +1,4 @@
-//! # Breadth-first search
+//! Breadth-first search
 //!
 //! Breadth-first search is a graph traversal algorithm that visits
 //! vertices of an unweighted digraph in order of their distance from the source

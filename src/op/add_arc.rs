@@ -1,4 +1,4 @@
-//! Add an arc to a unweighted digraph
+//! Add an arc to a unweighted digraph.
 //!
 //! # Examples
 //!
@@ -28,7 +28,7 @@ use {
     },
 };
 
-/// Add an arc to a unweighted digraph
+/// Add an arc to a unweighted digraph.
 ///
 /// # How can I implement `AddArc`?
 ///

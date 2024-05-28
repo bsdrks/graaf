@@ -1,7 +1,7 @@
 //! Determine whether a vertex in a digraph is a pendant
-//! vertex
+//! vertex.
 //!
-//! A vertex is a pendant vertex if it has a degree of one.
+//! A pendant vertex has a degree of one.
 //!
 //! # Examples
 //!
@@ -40,7 +40,7 @@ use {
     },
 };
 
-/// Determine whether a vertex is a pendant vertex
+/// Determine whether a vertex is a pendant vertex.
 ///
 /// # How can I implement `IsPendant`?
 ///
