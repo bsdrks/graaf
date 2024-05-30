@@ -1,6 +1,6 @@
 //! Count the vertices in a digraph.
 //!
-//! # Example
+//! # Examples
 //!
 //! ```
 //! use graaf::op::Order;
@@ -45,7 +45,7 @@ use {
 /// }
 /// ```
 ///
-/// # Example
+/// # Examples
 ///
 /// ```
 /// use graaf::op::Order;

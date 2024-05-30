@@ -8,7 +8,7 @@
 //! if a vertex has been visited because we already calculate these distances
 //! during traversal.
 //!
-//! The time complexity is *O*(*v* + *e*).
+//! The time complexity is *O*(*v* + *a*).
 //!
 //! # Examples
 //!
@@ -114,10 +114,6 @@ where
 }
 
 /// Calculates all distances from a single source vertex.
-///
-/// # Time complexity
-///
-/// O(V + E)
 ///
 /// # Arguments
 ///

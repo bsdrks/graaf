@@ -172,27 +172,6 @@ where
     }
 }
 
-impl<W> RemoveArc for Vec<BTreeMap<usize, W>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        self[s].remove(&t).is_some()
-    }
-}
-
-impl<W, H> RemoveArc for Vec<HashMap<usize, W, H>>
-where
-    H: BuildHasher,
-{
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        self[s].remove(&t).is_some()
-    }
-}
-
 impl RemoveArc for [BTreeSet<usize>] {
     /// # Panics
     ///
@@ -211,27 +190,6 @@ where
     /// Panics if `s` is not in the digraph.
     fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self[s].remove(&t)
-    }
-}
-
-impl<W> RemoveArc for [BTreeMap<usize, W>] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        self[s].remove(&t).is_some()
-    }
-}
-
-impl<W, H> RemoveArc for [HashMap<usize, W, H>]
-where
-    H: BuildHasher,
-{
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        self[s].remove(&t).is_some()
     }
 }
 
@@ -256,37 +214,9 @@ where
     }
 }
 
-impl<const V: usize, W> RemoveArc for [BTreeMap<usize, W>; V] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        self[s].remove(&t).is_some()
-    }
-}
-
-impl<const V: usize, W, H> RemoveArc for [HashMap<usize, W, H>; V]
-where
-    H: BuildHasher,
-{
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        self[s].remove(&t).is_some()
-    }
-}
-
 impl RemoveArc for BTreeMap<usize, BTreeSet<usize>> {
     fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self.get_mut(&s).map(|set| set.remove(&t)).unwrap()
-    }
-}
-
-impl<W> RemoveArc for BTreeMap<usize, BTreeMap<usize, W>> {
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        self.get_mut(&s)
-            .map_or(false, |map| map.remove(&t).is_some())
     }
 }
 
@@ -299,6 +229,58 @@ where
     }
 }
 
+impl<W> RemoveArc for Vec<BTreeMap<usize, W>> {
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
+        self[s].remove(&t).is_some()
+    }
+}
+
+impl<W, H> RemoveArc for Vec<HashMap<usize, W, H>>
+where
+    H: BuildHasher,
+{
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
+        self[s].remove(&t).is_some()
+    }
+}
+
+impl<W> RemoveArc for [BTreeMap<usize, W>] {
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
+        self[s].remove(&t).is_some()
+    }
+}
+
+impl<W, H> RemoveArc for [HashMap<usize, W, H>]
+where
+    H: BuildHasher,
+{
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
+        self[s].remove(&t).is_some()
+    }
+}
+
+impl<const V: usize, W> RemoveArc for [BTreeMap<usize, W>; V] {
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
+        self[s].remove(&t).is_some()
+    }
+}
+
+impl<const V: usize, W, H> RemoveArc for [HashMap<usize, W, H>; V]
+where
+    H: BuildHasher,
+{
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
+        self[s].remove(&t).is_some()
+    }
+}
+
+impl<W> RemoveArc for BTreeMap<usize, BTreeMap<usize, W>> {
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
+        self.get_mut(&s)
+            .map_or(false, |map| map.remove(&t).is_some())
+    }
+}
+
 impl<W, H> RemoveArc for HashMap<usize, HashMap<usize, W, H>, H>
 where
     H: BuildHasher,
@@ -306,6 +288,21 @@ where
     fn remove_arc(&mut self, s: usize, t: usize) -> bool {
         self.get_mut(&s)
             .map_or(false, |map| map.remove(&t).is_some())
+    }
+}
+
+impl RemoveArc for BTreeSet<(usize, usize)> {
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
+        self.remove(&(s, t))
+    }
+}
+
+impl<H> RemoveArc for HashSet<(usize, usize), H>
+where
+    H: BuildHasher,
+{
+    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
+        self.remove(&(s, t))
     }
 }
 
@@ -520,6 +517,20 @@ mod tests {
         let mut digraph = Vec::<HashMap<usize, usize>>::empty(3);
 
         setup_weighted!(digraph);
+        test_unstable!(digraph);
+    }
+
+    #[test]
+    fn btree_set_tuple() {
+        let mut digraph = BTreeSet::from([(0, 1), (0, 2), (1, 0), (2, 1)]);
+
+        test_stable!(digraph);
+    }
+
+    #[test]
+    fn hash_set_tuple() {
+        let mut digraph = HashSet::from([(0, 1), (0, 2), (1, 0), (2, 1)]);
+
         test_unstable!(digraph);
     }
 }

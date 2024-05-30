@@ -11,10 +11,27 @@
 - Add the `bfs::single_pair_shortest_paths`.
 - Add the `dijkstra::shortest_paths`.
 - Add the `dijkstra::single_pair_shortest_paths`.
+- Add the `RemoveWeightedArc` trait.
 - Benchmark against popular Rust graph libraries.
 - Benchmark against popular graph libraries in other languages.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.52.6] - 2024-05-30
+
+Added
+
+- Add `ReverseArc` trait.
+- Implement and test `ReverseArc` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement and test `ReverseArc` for `BTreeSet<(usize, usize)>`.
+- Implement and test `ReverseArc` for `HashMap<usize, HashSet<usize>>`.
+- Implement and test `ReverseArc` for `HashSet<(usize, usize)>`.
+- Implement and test `ReverseArc` for `Vec<BTreeSet<usize>>`.
+- Implement and test `ReverseArc` for `Vec<HashSet<usize>>`.
+- Implement and test `ReverseArc` for `[BTreeSet<usize>; V]`.
+- Implement and test `ReverseArc` for `[BTreeSet<usize>]`.
+- Implement and test `ReverseArc` for `[HashSet<usize>; V]`.
+- Implement and test `ReverseArc` for `[HashSet<usize>]`.
 
 ## [0.52.5] - 2024-05-28
 

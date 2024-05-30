@@ -133,6 +133,7 @@ pub mod iter_weighted_arcs;
 pub mod order;
 pub mod outdegree;
 pub mod remove_arc;
+pub mod reverse_arc;
 pub mod size;
 
 pub use {
@@ -162,5 +163,6 @@ pub use {
     order::Order,
     outdegree::Outdegree,
     remove_arc::RemoveArc,
+    reverse_arc::ReverseArc,
     size::Size,
 };
