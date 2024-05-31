@@ -13,18 +13,13 @@
 //! use {
 //!     alloc::collections::BTreeSet,
 //!     graaf::{
-//!         gen::Empty,
+//!         gen::Cycle,
 //!         op::IsSubdigraph,
 //!     },
 //! };
 //!
 //! let h = vec![BTreeSet::from([1]), BTreeSet::new()];
-//!
-//! let d = vec![
-//!     BTreeSet::from([1]),
-//!     BTreeSet::from([2]),
-//!     BTreeSet::from([0]),
-//! ];
+//! let d = Vec::<BTreeSet<usize>>::cycle(3);
 //!
 //! assert!(h.is_subdigraph(&d));
 //! ```
@@ -129,7 +124,7 @@ use {
 /// # How can I implement `IsSubdigraph`?
 ///
 /// Provide an implementation of `is_subdigraph` that returns `true` if the
-/// digraph is a subdigraph of the digraph `D` and `false` otherwise.
+/// digraph is a subdigraph of the digraph `d` and `false` otherwise.
 ///
 /// ```
 /// extern crate alloc;
@@ -203,6 +198,17 @@ where
     impl_is_subdigraph!();
 }
 
+impl IsSubdigraph for [BTreeSet<usize>] {
+    impl_is_subdigraph!();
+}
+
+impl<H> IsSubdigraph for [HashSet<usize, H>]
+where
+    H: BuildHasher,
+{
+    impl_is_subdigraph!();
+}
+
 impl<const V: usize> IsSubdigraph for [BTreeSet<usize>; V] {
     impl_is_subdigraph!();
 }
@@ -230,6 +236,17 @@ impl<W> IsSubdigraph for Vec<BTreeMap<usize, W>> {
 }
 
 impl<W, H> IsSubdigraph for Vec<HashMap<usize, W, H>>
+where
+    H: BuildHasher,
+{
+    impl_is_subdigraph!();
+}
+
+impl<W> IsSubdigraph for [BTreeMap<usize, W>] {
+    impl_is_subdigraph!();
+}
+
+impl<W, H> IsSubdigraph for [HashMap<usize, W, H>]
 where
     H: BuildHasher,
 {
@@ -289,6 +306,20 @@ mod tests {
             let tournament = Vec::<HashSet<usize>>::random_tournament(v);
 
             assert!(tournament.is_subdigraph(&tournament));
+        }
+
+        #[test]
+        fn random_tournament_slice_btree_set(v in 1..100_usize) {
+            let tournament = Vec::<BTreeSet<usize>>::random_tournament(v);
+
+            assert!(tournament.as_slice().is_subdigraph(tournament.as_slice()));
+        }
+
+        #[test]
+        fn random_tournament_slice_hash_set(v in 1..100_usize) {
+            let tournament = Vec::<HashSet<usize>>::random_tournament(v);
+
+            assert!(tournament.as_slice().is_subdigraph(tournament.as_slice()));
         }
 
         #[test]

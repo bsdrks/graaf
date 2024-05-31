@@ -17,6 +17,30 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.52.7] - 2024-05-31
+
+Added
+
+- Add trait `IsSuperdigraph`.
+- Implement `IsSubdigraph` for `[BTreeMap<usize, W>]`.
+- Implement `IsSubdigraph` for `[HashMap<usize, W>]`.
+- Implement and test `IsSubdigraph` for `[BTreeSet<usize>]`.
+- Implement and test `IsSubdigraph` for `[HashSet<usize>]`.
+- Implement and test `IsSuperdigraph` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement and test `IsSuperdigraph` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement and test `IsSuperdigraph` for `HashMap<usize, HashMap<usize, W>>`.
+- Implement and test `IsSuperdigraph` for `HashMap<usize, HashSet<usize>>`.
+- Implement and test `IsSuperdigraph` for `Vec<BTreeMap<usize, W>>`.
+- Implement and test `IsSuperdigraph` for `Vec<BTreeSet<usize>>`.
+- Implement and test `IsSuperdigraph` for `Vec<HashMap<usize, W>>`.
+- Implement and test `IsSuperdigraph` for `Vec<HashSet<usize>>`.
+- Implement and test `IsSuperdigraph` for `[BTreeMap<usize, W>; V]`.
+- Implement and test `IsSuperdigraph` for `[BTreeMap<usize, W>]`.
+- Implement and test `IsSuperdigraph` for `[BTreeSet<usize>; V]`.
+- Implement and test `IsSuperdigraph` for `[BTreeSet<usize>]`.
+- Implement and test `IsSuperdigraph` for `[HashMap<usize, W>; V]`.
+- Implement and test `IsSuperdigraph` for `[HashMap<usize, W>]`.
+
 ## [0.52.6] - 2024-05-30
 
 Added
