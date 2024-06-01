@@ -26,23 +26,10 @@
 //! assert!(!digraph.is_regular());
 //! ```
 
-extern crate alloc;
-
-use {
-    crate::op::{
-        Indegree,
-        IterVertices,
-        Outdegree,
-    },
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
-    core::hash::BuildHasher,
-    std::collections::{
-        HashMap,
-        HashSet,
-    },
+use crate::op::{
+    Indegree,
+    IterVertices,
+    Outdegree,
 };
 
 /// Determine whether a digraph is regular.
@@ -93,116 +80,31 @@ pub trait IsRegular {
     fn is_regular(&self) -> bool;
 }
 
-macro_rules! impl_is_regular {
-    () => {
-        /// # Panics
-        ///
-        /// Panics if the digraph has no vertices.
-        fn is_regular(&self) -> bool {
-            let mut vertices = self.iter_vertices();
-
-            let v = vertices
-                .next()
-                .expect("a graph must have at least one vertex");
-
-            let indegree = self.indegree(v);
-            let outdegree = self.outdegree(v);
-
-            vertices.all(|v| self.indegree(v) == indegree && self.outdegree(v) == outdegree)
-        }
-    };
-}
-
-impl IsRegular for Vec<BTreeSet<usize>> {
-    impl_is_regular!();
-}
-
-impl<H> IsRegular for Vec<HashSet<usize, H>>
+impl<T> IsRegular for T
 where
-    H: BuildHasher,
+    T: Indegree + IterVertices + Outdegree + ?Sized,
 {
-    impl_is_regular!();
-}
+    /// # Panics
+    ///
+    /// Panics if the digraph has no vertices.
+    fn is_regular(&self) -> bool {
+        let mut vertices = self.iter_vertices();
 
-impl IsRegular for [BTreeSet<usize>] {
-    impl_is_regular!();
-}
+        let v = vertices
+            .next()
+            .expect("a graph must have at least one vertex");
 
-impl<H> IsRegular for [HashSet<usize, H>]
-where
-    H: BuildHasher,
-{
-    impl_is_regular!();
-}
+        let indegree = self.indegree(v);
+        let outdegree = self.outdegree(v);
 
-impl<const V: usize> IsRegular for [BTreeSet<usize>; V] {
-    impl_is_regular!();
-}
-
-impl<const V: usize, H> IsRegular for [HashSet<usize, H>; V]
-where
-    H: BuildHasher,
-{
-    impl_is_regular!();
-}
-
-impl IsRegular for BTreeMap<usize, BTreeSet<usize>> {
-    impl_is_regular!();
-}
-
-impl<H> IsRegular for HashMap<usize, HashSet<usize, H>, H>
-where
-    H: BuildHasher,
-{
-    impl_is_regular!();
-}
-
-impl<W> IsRegular for Vec<BTreeMap<usize, W>> {
-    impl_is_regular!();
-}
-
-impl<W, H> IsRegular for Vec<HashMap<usize, W, H>>
-where
-    H: BuildHasher,
-{
-    impl_is_regular!();
-}
-
-impl<W> IsRegular for [BTreeMap<usize, W>] {
-    impl_is_regular!();
-}
-
-impl<W, H> IsRegular for [HashMap<usize, W, H>]
-where
-    H: BuildHasher,
-{
-    impl_is_regular!();
-}
-
-impl<const V: usize, W> IsRegular for [BTreeMap<usize, W>; V] {
-    impl_is_regular!();
-}
-
-impl<const V: usize, W, H> IsRegular for [HashMap<usize, W, H>; V]
-where
-    H: BuildHasher,
-{
-    impl_is_regular!();
-}
-
-impl<W> IsRegular for BTreeMap<usize, BTreeMap<usize, W>> {
-    impl_is_regular!();
-}
-
-impl<W, H> IsRegular for HashMap<usize, HashMap<usize, W, H>, H>
-where
-    H: BuildHasher,
-{
-    impl_is_regular!();
+        vertices.all(|v| self.indegree(v) == indegree && self.outdegree(v) == outdegree)
+    }
 }
 
 #[cfg(test)]
 mod tests {
+    extern crate alloc;
+
     use {
         super::*,
         crate::{
@@ -217,15 +119,21 @@ mod tests {
                 RemoveArc,
             },
         },
+        alloc::collections::{
+            BTreeMap,
+            BTreeSet,
+        },
         proptest::proptest,
+        std::collections::{
+            HashMap,
+            HashSet,
+        },
     };
 
     macro_rules! test_is_regular {
         ($digraph:expr) => {
             assert!($digraph.is_regular());
-
-            let _ = $digraph.remove_arc(2, 0);
-
+            assert!($digraph.remove_arc(2, 0));
             assert!(!$digraph.is_regular());
         };
     }

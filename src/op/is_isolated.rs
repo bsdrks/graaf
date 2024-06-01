@@ -23,22 +23,9 @@
 //! assert!(digraph.is_isolated(3));
 //! ```
 
-extern crate alloc;
-
-use {
-    super::{
-        Indegree,
-        Outdegree,
-    },
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
-    core::hash::BuildHasher,
-    std::collections::{
-        HashMap,
-        HashSet,
-    },
+use super::{
+    Indegree,
+    Outdegree,
 };
 
 /// Determine whether a vertex is isolated.
@@ -103,120 +90,9 @@ pub trait IsIsolated {
     fn is_isolated(&self, s: usize) -> bool;
 }
 
-impl IsIsolated for Vec<BTreeSet<usize>> {
-    fn is_isolated(&self, s: usize) -> bool {
-        self.indegree(s) == 0 && self.outdegree(s) == 0
-    }
-}
-
-impl<H> IsIsolated for Vec<HashSet<usize, H>>
+impl<T> IsIsolated for T
 where
-    H: BuildHasher,
-{
-    fn is_isolated(&self, s: usize) -> bool {
-        self.indegree(s) == 0 && self.outdegree(s) == 0
-    }
-}
-
-impl IsIsolated for [BTreeSet<usize>] {
-    fn is_isolated(&self, s: usize) -> bool {
-        self.indegree(s) == 0 && self.outdegree(s) == 0
-    }
-}
-
-impl<H> IsIsolated for [HashSet<usize, H>]
-where
-    H: BuildHasher,
-{
-    fn is_isolated(&self, s: usize) -> bool {
-        self.indegree(s) == 0 && self.outdegree(s) == 0
-    }
-}
-
-impl<const V: usize> IsIsolated for [BTreeSet<usize>; V] {
-    fn is_isolated(&self, s: usize) -> bool {
-        self.indegree(s) == 0 && self.outdegree(s) == 0
-    }
-}
-
-impl<const V: usize, H> IsIsolated for [HashSet<usize, H>; V]
-where
-    H: BuildHasher,
-{
-    fn is_isolated(&self, s: usize) -> bool {
-        self.indegree(s) == 0 && self.outdegree(s) == 0
-    }
-}
-
-impl IsIsolated for BTreeMap<usize, BTreeSet<usize>> {
-    fn is_isolated(&self, s: usize) -> bool {
-        self.indegree(s) == 0 && self.outdegree(s) == 0
-    }
-}
-
-impl<H> IsIsolated for HashMap<usize, HashSet<usize, H>, H>
-where
-    H: BuildHasher,
-{
-    fn is_isolated(&self, s: usize) -> bool {
-        self.indegree(s) == 0 && self.outdegree(s) == 0
-    }
-}
-
-impl<W> IsIsolated for Vec<BTreeMap<usize, W>> {
-    fn is_isolated(&self, s: usize) -> bool {
-        self.indegree(s) == 0 && self.outdegree(s) == 0
-    }
-}
-
-impl<W, H> IsIsolated for Vec<HashMap<usize, W, H>>
-where
-    H: BuildHasher,
-{
-    fn is_isolated(&self, s: usize) -> bool {
-        self.indegree(s) == 0 && self.outdegree(s) == 0
-    }
-}
-
-impl<W> IsIsolated for [BTreeMap<usize, W>] {
-    fn is_isolated(&self, s: usize) -> bool {
-        self.indegree(s) == 0 && self.outdegree(s) == 0
-    }
-}
-
-impl<W, H> IsIsolated for [HashMap<usize, W, H>]
-where
-    H: BuildHasher,
-{
-    fn is_isolated(&self, s: usize) -> bool {
-        self.indegree(s) == 0 && self.outdegree(s) == 0
-    }
-}
-
-impl<const V: usize, W> IsIsolated for [BTreeMap<usize, W>; V] {
-    fn is_isolated(&self, s: usize) -> bool {
-        self.indegree(s) == 0 && self.outdegree(s) == 0
-    }
-}
-
-impl<const V: usize, W, H> IsIsolated for [HashMap<usize, W, H>; V]
-where
-    H: BuildHasher,
-{
-    fn is_isolated(&self, s: usize) -> bool {
-        self.indegree(s) == 0 && self.outdegree(s) == 0
-    }
-}
-
-impl<W> IsIsolated for BTreeMap<usize, BTreeMap<usize, W>> {
-    fn is_isolated(&self, s: usize) -> bool {
-        self.indegree(s) == 0 && self.outdegree(s) == 0
-    }
-}
-
-impl<W, H> IsIsolated for HashMap<usize, HashMap<usize, W, H>, H>
-where
-    H: BuildHasher,
+    T: Indegree + Outdegree + ?Sized,
 {
     fn is_isolated(&self, s: usize) -> bool {
         self.indegree(s) == 0 && self.outdegree(s) == 0
@@ -225,6 +101,8 @@ where
 
 #[cfg(test)]
 mod tests {
+    extern crate alloc;
+
     use {
         super::*,
         crate::{
@@ -236,6 +114,14 @@ mod tests {
                 AddArc,
                 AddWeightedArc,
             },
+        },
+        alloc::collections::{
+            BTreeMap,
+            BTreeSet,
+        },
+        std::collections::{
+            HashMap,
+            HashSet,
         },
     };
 

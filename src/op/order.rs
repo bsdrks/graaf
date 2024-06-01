@@ -59,175 +59,143 @@ pub trait Order {
     fn order(&self) -> usize;
 }
 
+macro_rules! impl_len {
+    () => {
+        fn order(&self) -> usize {
+            self.len()
+        }
+    };
+}
+
+macro_rules! impl_const {
+    () => {
+        fn order(&self) -> usize {
+            V
+        }
+    };
+}
+
 impl Order for Vec<Vec<usize>> {
-    fn order(&self) -> usize {
-        self.len()
-    }
+    impl_len!();
 }
 
 impl<W> Order for Vec<Vec<(usize, W)>> {
-    fn order(&self) -> usize {
-        self.len()
-    }
+    impl_len!();
 }
 
 impl Order for Vec<BTreeSet<usize>> {
-    fn order(&self) -> usize {
-        self.len()
-    }
+    impl_len!();
 }
 
 impl<W> Order for Vec<BTreeSet<(usize, W)>> {
-    fn order(&self) -> usize {
-        self.len()
-    }
+    impl_len!();
 }
 
 impl<H> Order for Vec<HashSet<usize, H>>
 where
     H: BuildHasher,
 {
-    fn order(&self) -> usize {
-        self.len()
-    }
+    impl_len!();
 }
 
 impl<W, H> Order for Vec<HashSet<(usize, W), H>>
 where
     H: BuildHasher,
 {
-    fn order(&self) -> usize {
-        self.len()
-    }
+    impl_len!();
 }
 
 impl<W> Order for Vec<BTreeMap<usize, W>> {
-    fn order(&self) -> usize {
-        self.len()
-    }
+    impl_len!();
 }
 
 impl<W, H> Order for Vec<HashMap<usize, W, H>>
 where
     H: BuildHasher,
 {
-    fn order(&self) -> usize {
-        self.len()
-    }
+    impl_len!();
 }
 
 impl Order for [Vec<usize>] {
-    fn order(&self) -> usize {
-        self.len()
-    }
+    impl_len!();
 }
 
 impl<W> Order for [Vec<(usize, W)>] {
-    fn order(&self) -> usize {
-        self.len()
-    }
+    impl_len!();
 }
 
 impl Order for [BTreeSet<usize>] {
-    fn order(&self) -> usize {
-        self.len()
-    }
+    impl_len!();
 }
 
 impl<W> Order for [BTreeSet<(usize, W)>] {
-    fn order(&self) -> usize {
-        self.len()
-    }
+    impl_len!();
 }
 
 impl<H> Order for [HashSet<usize, H>]
 where
     H: BuildHasher,
 {
-    fn order(&self) -> usize {
-        self.len()
-    }
+    impl_len!();
 }
 
 impl<W, H> Order for [HashSet<(usize, W), H>]
 where
     H: BuildHasher,
 {
-    fn order(&self) -> usize {
-        self.len()
-    }
+    impl_len!();
 }
 
 impl<W> Order for [BTreeMap<usize, W>] {
-    fn order(&self) -> usize {
-        self.len()
-    }
+    impl_len!();
 }
 
 impl<W, H> Order for [HashMap<usize, W, H>]
 where
     H: BuildHasher,
 {
-    fn order(&self) -> usize {
-        self.len()
-    }
+    impl_len!();
 }
 
 impl<const V: usize> Order for [Vec<usize>; V] {
-    fn order(&self) -> usize {
-        V
-    }
+    impl_const!();
 }
 
 impl<const V: usize, W> Order for [Vec<(usize, W)>; V] {
-    fn order(&self) -> usize {
-        V
-    }
+    impl_const!();
 }
 
 impl<const V: usize> Order for [BTreeSet<usize>; V] {
-    fn order(&self) -> usize {
-        V
-    }
+    impl_const!();
 }
 
 impl<const V: usize, W> Order for [BTreeSet<(usize, W)>; V] {
-    fn order(&self) -> usize {
-        V
-    }
+    impl_const!();
 }
 
 impl<const V: usize, H> Order for [HashSet<usize, H>; V]
 where
     H: BuildHasher,
 {
-    fn order(&self) -> usize {
-        V
-    }
+    impl_const!();
 }
 
 impl<const V: usize, W, H> Order for [HashSet<(usize, W), H>; V]
 where
     H: BuildHasher,
 {
-    fn order(&self) -> usize {
-        V
-    }
+    impl_const!();
 }
 
 impl<const V: usize, W> Order for [BTreeMap<usize, W>; V] {
-    fn order(&self) -> usize {
-        V
-    }
+    impl_const!();
 }
 
 impl<const V: usize, W, H> Order for [HashMap<usize, W, H>; V]
 where
     H: BuildHasher,
 {
-    fn order(&self) -> usize {
-        V
-    }
+    impl_const!();
 }
 
 #[cfg(test)]

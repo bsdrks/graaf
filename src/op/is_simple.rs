@@ -26,10 +26,7 @@
 extern crate alloc;
 
 use {
-    super::{
-        IterArcs,
-        IterWeightedArcs,
-    },
+    super::IterArcs,
     alloc::collections::BTreeSet,
     core::hash::BuildHasher,
     std::collections::HashSet,
@@ -87,166 +84,125 @@ pub trait IsSimple {
     fn is_simple(&self) -> bool;
 }
 
-impl IsSimple for Vec<Vec<usize>> {
-    fn is_simple(&self) -> bool {
-        self.iter().enumerate().all(|(s, vec)| {
+macro_rules! impl_set {
+    () => {
+        fn is_simple(&self) -> bool {
+            self.iter().enumerate().all(|(s, set)| !set.contains(&s))
+        }
+    };
+}
+
+macro_rules! impl_vec {
+    () => {
+        fn is_simple(&self) -> bool {
+            self.iter().enumerate().all(|(s, vec)| {
+                let mut set = HashSet::new();
+
+                vec.iter().all(|&t| s != t && set.insert(t))
+            })
+        }
+    };
+}
+
+macro_rules! impl_tuple {
+    () => {
+        fn is_simple(&self) -> bool {
             let mut set = HashSet::new();
 
-            vec.iter().all(|&t| s != t && set.insert(t))
-        })
-    }
+            self.iter_arcs().all(|(s, t)| s != t && set.insert((s, t)))
+        }
+    };
+}
+
+impl IsSimple for Vec<Vec<usize>> {
+    impl_vec!();
 }
 
 impl IsSimple for Vec<BTreeSet<usize>> {
-    fn is_simple(&self) -> bool {
-        self.iter().enumerate().all(|(s, set)| !set.contains(&s))
-    }
+    impl_set!();
 }
 
 impl<H> IsSimple for Vec<HashSet<usize, H>>
 where
     H: BuildHasher,
 {
-    fn is_simple(&self) -> bool {
-        self.iter().enumerate().all(|(s, set)| !set.contains(&s))
-    }
+    impl_set!();
 }
 
 impl IsSimple for [Vec<usize>] {
-    fn is_simple(&self) -> bool {
-        self.iter().enumerate().all(|(s, vec)| {
-            let mut set = HashSet::new();
-
-            vec.iter().all(|&t| s != t && set.insert(t))
-        })
-    }
+    impl_vec!();
 }
 
 impl IsSimple for [BTreeSet<usize>] {
-    fn is_simple(&self) -> bool {
-        self.iter().enumerate().all(|(s, set)| !set.contains(&s))
-    }
+    impl_set!();
 }
 
 impl<H> IsSimple for [HashSet<usize, H>]
 where
     H: BuildHasher,
 {
-    fn is_simple(&self) -> bool {
-        self.iter().enumerate().all(|(s, set)| !set.contains(&s))
-    }
+    impl_set!();
 }
 
 impl<const V: usize> IsSimple for [Vec<usize>; V] {
-    fn is_simple(&self) -> bool {
-        self.iter().enumerate().all(|(s, vec)| {
-            let mut set = HashSet::new();
-
-            vec.iter().all(|&t| s != t && set.insert(t))
-        })
-    }
+    impl_vec!();
 }
 
 impl<const V: usize, H> IsSimple for [HashSet<usize, H>; V]
 where
     H: BuildHasher,
 {
-    fn is_simple(&self) -> bool {
-        self.iter().enumerate().all(|(s, set)| !set.contains(&s))
-    }
+    impl_set!();
 }
 
 impl<const V: usize> IsSimple for [BTreeSet<usize>; V] {
-    fn is_simple(&self) -> bool {
-        self.iter().enumerate().all(|(s, set)| !set.contains(&s))
-    }
+    impl_set!();
 }
 
 impl IsSimple for BTreeSet<(usize, usize)> {
-    fn is_simple(&self) -> bool {
-        self.iter_arcs().all(|(s, t)| s != t)
-    }
+    impl_tuple!();
 }
 
 impl<H> IsSimple for HashSet<(usize, usize), H>
 where
     H: BuildHasher,
 {
-    fn is_simple(&self) -> bool {
-        self.iter_arcs().all(|(s, t)| s != t)
-    }
+    impl_tuple!();
 }
 
 impl IsSimple for Vec<(usize, usize)> {
-    fn is_simple(&self) -> bool {
-        let mut set = HashSet::new();
-
-        self.iter_arcs().all(|(s, t)| s != t && set.insert((s, t)))
-    }
+    impl_tuple!();
 }
 
 impl IsSimple for [(usize, usize)] {
-    fn is_simple(&self) -> bool {
-        let mut set = HashSet::new();
-
-        self.iter_arcs().all(|(s, t)| s != t && set.insert((s, t)))
-    }
+    impl_tuple!();
 }
 
 impl<const V: usize> IsSimple for [(usize, usize); V] {
-    fn is_simple(&self) -> bool {
-        let mut set = HashSet::new();
-
-        self.iter_arcs().all(|(s, t)| s != t && set.insert((s, t)))
-    }
+    impl_tuple!();
 }
 
 impl<W> IsSimple for Vec<(usize, usize, W)> {
-    fn is_simple(&self) -> bool {
-        let mut set = HashSet::new();
-
-        self.iter_weighted_arcs()
-            .all(|(s, t, _)| s != t && set.insert((s, t)))
-    }
+    impl_tuple!();
 }
 
 impl<W> IsSimple for [(usize, usize, W)] {
-    fn is_simple(&self) -> bool {
-        let mut set = HashSet::new();
-
-        self.iter_weighted_arcs()
-            .all(|(s, t, _)| s != t && set.insert((s, t)))
-    }
+    impl_tuple!();
 }
 
 impl<const V: usize, W> IsSimple for [(usize, usize, W); V] {
-    fn is_simple(&self) -> bool {
-        let mut set = HashSet::new();
-
-        self.iter_weighted_arcs()
-            .all(|(s, t, _)| s != t && set.insert((s, t)))
-    }
+    impl_tuple!();
 }
 
 impl<W> IsSimple for BTreeSet<(usize, usize, W)> {
-    fn is_simple(&self) -> bool {
-        let mut set = HashSet::new();
-
-        self.iter_weighted_arcs()
-            .all(|(s, t, _)| s != t && set.insert((s, t)))
-    }
+    impl_tuple!();
 }
 
 impl<W, H> IsSimple for HashSet<(usize, usize, W), H>
 where
     H: BuildHasher,
 {
-    fn is_simple(&self) -> bool {
-        let mut set = HashSet::new();
-
-        self.iter_weighted_arcs()
-            .all(|(s, t, _)| s != t && set.insert((s, t)))
-    }
+    impl_tuple!();
 }
 
 #[cfg(test)]

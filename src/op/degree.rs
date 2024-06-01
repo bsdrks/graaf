@@ -22,22 +22,9 @@
 //! assert_eq!(digraph.degree(2), 3);
 //! ```
 
-extern crate alloc;
-
-use {
-    crate::op::{
-        Indegree,
-        Outdegree,
-    },
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
-    core::hash::BuildHasher,
-    std::collections::{
-        HashMap,
-        HashSet,
-    },
+use crate::op::{
+    Indegree,
+    Outdegree,
 };
 
 /// Get the degree of a vertex.
@@ -94,120 +81,9 @@ pub trait Degree {
     fn degree(&self, s: usize) -> usize;
 }
 
-impl Degree for Vec<BTreeSet<usize>> {
-    fn degree(&self, s: usize) -> usize {
-        self.indegree(s) + self.outdegree(s)
-    }
-}
-
-impl<H> Degree for Vec<HashSet<usize, H>>
+impl<T> Degree for T
 where
-    H: BuildHasher,
-{
-    fn degree(&self, s: usize) -> usize {
-        self.indegree(s) + self.outdegree(s)
-    }
-}
-
-impl Degree for [BTreeSet<usize>] {
-    fn degree(&self, s: usize) -> usize {
-        self.indegree(s) + self.outdegree(s)
-    }
-}
-
-impl<H> Degree for [HashSet<usize, H>]
-where
-    H: BuildHasher,
-{
-    fn degree(&self, s: usize) -> usize {
-        self.indegree(s) + self.outdegree(s)
-    }
-}
-
-impl<const V: usize> Degree for [BTreeSet<usize>; V] {
-    fn degree(&self, s: usize) -> usize {
-        self.indegree(s) + self.outdegree(s)
-    }
-}
-
-impl<const V: usize, H> Degree for [HashSet<usize, H>; V]
-where
-    H: BuildHasher,
-{
-    fn degree(&self, s: usize) -> usize {
-        self.indegree(s) + self.outdegree(s)
-    }
-}
-
-impl Degree for BTreeMap<usize, BTreeSet<usize>> {
-    fn degree(&self, s: usize) -> usize {
-        self.indegree(s) + self.outdegree(s)
-    }
-}
-
-impl<H> Degree for HashMap<usize, HashSet<usize, H>, H>
-where
-    H: BuildHasher,
-{
-    fn degree(&self, s: usize) -> usize {
-        self.indegree(s) + self.outdegree(s)
-    }
-}
-
-impl<W> Degree for Vec<BTreeMap<usize, W>> {
-    fn degree(&self, s: usize) -> usize {
-        self.indegree(s) + self.outdegree(s)
-    }
-}
-
-impl<W, H> Degree for Vec<HashMap<usize, W, H>>
-where
-    H: BuildHasher,
-{
-    fn degree(&self, s: usize) -> usize {
-        self.indegree(s) + self.outdegree(s)
-    }
-}
-
-impl<W> Degree for [BTreeMap<usize, W>] {
-    fn degree(&self, s: usize) -> usize {
-        self.indegree(s) + self.outdegree(s)
-    }
-}
-
-impl<W, H> Degree for [HashMap<usize, W, H>]
-where
-    H: BuildHasher,
-{
-    fn degree(&self, s: usize) -> usize {
-        self.indegree(s) + self.outdegree(s)
-    }
-}
-
-impl<const V: usize, W> Degree for [BTreeMap<usize, W>; V] {
-    fn degree(&self, s: usize) -> usize {
-        self.indegree(s) + self.outdegree(s)
-    }
-}
-
-impl<const V: usize, W, H> Degree for [HashMap<usize, W, H>; V]
-where
-    H: BuildHasher,
-{
-    fn degree(&self, s: usize) -> usize {
-        self.indegree(s) + self.outdegree(s)
-    }
-}
-
-impl<W> Degree for BTreeMap<usize, BTreeMap<usize, W>> {
-    fn degree(&self, s: usize) -> usize {
-        self.indegree(s) + self.outdegree(s)
-    }
-}
-
-impl<W, H> Degree for HashMap<usize, HashMap<usize, W, H>, H>
-where
-    H: BuildHasher,
+    T: Indegree + Outdegree + ?Sized,
 {
     fn degree(&self, s: usize) -> usize {
         self.indegree(s) + self.outdegree(s)
@@ -216,6 +92,8 @@ where
 
 #[cfg(test)]
 mod tests {
+    extern crate alloc;
+
     use {
         super::*,
         crate::{
@@ -227,6 +105,14 @@ mod tests {
                 AddArc,
                 AddWeightedArc,
             },
+        },
+        alloc::collections::{
+            BTreeMap,
+            BTreeSet,
+        },
+        std::collections::{
+            HashMap,
+            HashSet,
         },
     };
 

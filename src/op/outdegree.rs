@@ -95,202 +95,158 @@ pub trait Outdegree {
     }
 }
 
+macro_rules! impl_len {
+    ($ty:ident) => {
+        fn outdegree(&self, s: usize) -> usize {
+            self.get(s).map_or(0, $ty::len)
+        }
+    };
+}
+
+macro_rules! impl_map_len {
+    ($ty:ident) => {
+        fn outdegree(&self, s: usize) -> usize {
+            self.get(&s).map_or(0, $ty::len)
+        }
+    };
+}
+
 impl Outdegree for Vec<Vec<usize>> {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(s).map_or(0, Vec::len)
-    }
+    impl_len!(Vec);
 }
 
 impl<W> Outdegree for Vec<Vec<(usize, W)>> {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(s).map_or(0, Vec::len)
-    }
+    impl_len!(Vec);
 }
 
 impl Outdegree for Vec<BTreeSet<usize>> {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(s).map_or(0, BTreeSet::len)
-    }
+    impl_len!(BTreeSet);
 }
 
 impl<W> Outdegree for Vec<BTreeSet<(usize, W)>> {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(s).map_or(0, BTreeSet::len)
-    }
+    impl_len!(BTreeSet);
 }
 
 impl<H> Outdegree for Vec<HashSet<usize, H>> {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(s).map_or(0, HashSet::len)
-    }
+    impl_len!(HashSet);
 }
 
 impl<W, H> Outdegree for Vec<HashSet<(usize, W), H>> {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(s).map_or(0, HashSet::len)
-    }
+    impl_len!(HashSet);
 }
 
 impl<W> Outdegree for Vec<BTreeMap<usize, W>> {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(s).map_or(0, BTreeMap::len)
-    }
+    impl_len!(BTreeMap);
 }
 
 impl<W, H> Outdegree for Vec<HashMap<usize, W, H>>
 where
     H: BuildHasher,
 {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(s).map_or(0, HashMap::len)
-    }
+    impl_len!(HashMap);
 }
 
 impl Outdegree for [Vec<usize>] {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(s).map_or(0, Vec::len)
-    }
+    impl_len!(Vec);
 }
 
 impl<W> Outdegree for [Vec<(usize, W)>] {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(s).map_or(0, Vec::len)
-    }
+    impl_len!(Vec);
 }
 
 impl Outdegree for [BTreeSet<usize>] {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(s).map_or(0, BTreeSet::len)
-    }
+    impl_len!(BTreeSet);
 }
 
 impl<W> Outdegree for [BTreeSet<(usize, W)>] {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(s).map_or(0, BTreeSet::len)
-    }
+    impl_len!(BTreeSet);
 }
 
 impl<H> Outdegree for [HashSet<usize, H>] {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(s).map_or(0, HashSet::len)
-    }
+    impl_len!(HashSet);
 }
 
 impl<W, H> Outdegree for [HashSet<(usize, W), H>] {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(s).map_or(0, HashSet::len)
-    }
+    impl_len!(HashSet);
 }
 
 impl<W> Outdegree for [BTreeMap<usize, W>] {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(s).map_or(0, BTreeMap::len)
-    }
+    impl_len!(BTreeMap);
 }
 
 impl<W, H> Outdegree for [HashMap<usize, W, H>]
 where
     H: BuildHasher,
 {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(s).map_or(0, HashMap::len)
-    }
+    impl_len!(HashMap);
 }
 
 impl<const V: usize> Outdegree for [Vec<usize>; V] {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(s).map_or(0, Vec::len)
-    }
+    impl_len!(Vec);
 }
 
 impl<const V: usize, W> Outdegree for [Vec<(usize, W)>; V] {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(s).map_or(0, Vec::len)
-    }
+    impl_len!(Vec);
 }
 
 impl<const V: usize> Outdegree for [BTreeSet<usize>; V] {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(s).map_or(0, BTreeSet::len)
-    }
+    impl_len!(BTreeSet);
 }
 
 impl<const V: usize, W> Outdegree for [BTreeSet<(usize, W)>; V] {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(s).map_or(0, BTreeSet::len)
-    }
+    impl_len!(BTreeSet);
 }
 
 impl<const V: usize, H> Outdegree for [HashSet<usize, H>; V] {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(s).map_or(0, HashSet::len)
-    }
+    impl_len!(HashSet);
 }
 
 impl<const V: usize, W, H> Outdegree for [HashSet<(usize, W), H>; V] {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(s).map_or(0, HashSet::len)
-    }
+    impl_len!(HashSet);
 }
 
 impl<const V: usize, W> Outdegree for [BTreeMap<usize, W>; V] {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(s).map_or(0, BTreeMap::len)
-    }
+    impl_len!(BTreeMap);
 }
 
 impl<const V: usize, W, H> Outdegree for [HashMap<usize, W, H>; V]
 where
     H: BuildHasher,
 {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(s).map_or(0, HashMap::len)
-    }
+    impl_len!(HashMap);
 }
 
 impl Outdegree for BTreeMap<usize, Vec<usize>> {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(&s).map_or(0, Vec::len)
-    }
+    impl_map_len!(Vec);
 }
 
 impl<H> Outdegree for HashMap<usize, Vec<usize>, H>
 where
     H: BuildHasher,
 {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(&s).map_or(0, Vec::len)
-    }
+    impl_map_len!(Vec);
 }
 
 impl Outdegree for BTreeMap<usize, BTreeSet<usize>> {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(&s).map_or(0, BTreeSet::len)
-    }
+    impl_map_len!(BTreeSet);
 }
 
 impl<H> Outdegree for HashMap<usize, HashSet<usize, H>, H>
 where
     H: BuildHasher,
 {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(&s).map_or(0, HashSet::len)
-    }
+    impl_map_len!(HashSet);
 }
 
 impl<W> Outdegree for BTreeMap<usize, BTreeMap<usize, W>> {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(&s).map_or(0, BTreeMap::len)
-    }
+    impl_map_len!(BTreeMap);
 }
 
 impl<W, H> Outdegree for HashMap<usize, HashMap<usize, W, H>, H>
 where
     H: BuildHasher,
 {
-    fn outdegree(&self, s: usize) -> usize {
-        self.get(&s).map_or(0, HashMap::len)
-    }
+    impl_map_len!(HashMap);
 }
 
 #[cfg(test)]

@@ -36,7 +36,10 @@ mod tests {
 
     use {
         super::*,
-        crate::prop::strategy::binop_vertices,
+        crate::{
+            gen::Empty,
+            prop::strategy::binop_vertices,
+        },
         alloc::collections::{
             BTreeMap,
             BTreeSet,
@@ -72,9 +75,9 @@ mod tests {
 
         #[test]
         fn slice_hash_set((v, s, t) in binop_vertices(1, 100)) {
-            let digraph = &mut vec![HashSet::new(); v][..];
+            let mut digraph = Vec::<HashSet<usize>>::empty(v);
 
-            assert!(add_arc_has_arc(digraph, s, t));
+            assert!(add_arc_has_arc(digraph.as_mut_slice(), s, t));
         }
 
         #[test]

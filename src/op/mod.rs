@@ -30,7 +30,7 @@
 //! assert_eq!(digraph.indegree(1), 1);
 //! assert_eq!(digraph.indegree(2), 1);
 //!
-//! digraph.remove_arc(0, 1);
+//! assert!(digraph.remove_arc(0, 1));
 //!
 //! assert_eq!(digraph.outdegree(0), 1);
 //! assert_eq!(digraph.indegree(1), 0);

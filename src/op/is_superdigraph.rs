@@ -45,20 +45,7 @@
 //! assert!(tournament.is_superdigraph(&tournament));
 //! ```
 
-extern crate alloc;
-
-use {
-    crate::op::IsSubdigraph,
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
-    core::hash::BuildHasher,
-    std::collections::{
-        HashMap,
-        HashSet,
-    },
-};
+use crate::op::IsSubdigraph;
 
 /// Determine whether a digraph is a superdigraph of another digraph.
 ///
@@ -151,115 +138,34 @@ pub trait IsSuperdigraph {
     fn is_superdigraph(&self, d: &Self) -> bool;
 }
 
-macro_rules! impl_is_superdigraph {
-    () => {
-        fn is_superdigraph(&self, d: &Self) -> bool {
-            d.is_subdigraph(self)
-        }
-    };
-}
-
-impl IsSuperdigraph for Vec<BTreeSet<usize>> {
-    impl_is_superdigraph!();
-}
-
-impl<H> IsSuperdigraph for Vec<HashSet<usize, H>>
+impl<T> IsSuperdigraph for T
 where
-    H: BuildHasher,
+    T: IsSubdigraph + ?Sized,
 {
-    impl_is_superdigraph!();
-}
-
-impl IsSuperdigraph for [BTreeSet<usize>] {
-    impl_is_superdigraph!();
-}
-
-impl<H> IsSuperdigraph for [HashSet<usize, H>]
-where
-    H: BuildHasher,
-{
-    impl_is_superdigraph!();
-}
-
-impl<const V: usize> IsSuperdigraph for [BTreeSet<usize>; V] {
-    impl_is_superdigraph!();
-}
-
-impl<const V: usize, H> IsSuperdigraph for [HashSet<usize, H>; V]
-where
-    H: BuildHasher,
-{
-    impl_is_superdigraph!();
-}
-
-impl IsSuperdigraph for BTreeMap<usize, BTreeSet<usize>> {
-    impl_is_superdigraph!();
-}
-
-impl<H> IsSuperdigraph for HashMap<usize, HashSet<usize, H>, H>
-where
-    H: BuildHasher,
-{
-    impl_is_superdigraph!();
-}
-
-impl<W> IsSuperdigraph for Vec<BTreeMap<usize, W>> {
-    impl_is_superdigraph!();
-}
-
-impl<W, H> IsSuperdigraph for Vec<HashMap<usize, W, H>>
-where
-    H: BuildHasher,
-{
-    impl_is_superdigraph!();
-}
-
-impl<W> IsSuperdigraph for [BTreeMap<usize, W>] {
-    impl_is_superdigraph!();
-}
-
-impl<W, H> IsSuperdigraph for [HashMap<usize, W, H>]
-where
-    H: BuildHasher,
-{
-    impl_is_superdigraph!();
-}
-
-impl<const V: usize, W> IsSuperdigraph for [BTreeMap<usize, W>; V] {
-    impl_is_superdigraph!();
-}
-
-impl<const V: usize, W, H> IsSuperdigraph for [HashMap<usize, W, H>; V]
-where
-    H: BuildHasher,
-{
-    impl_is_superdigraph!();
-}
-
-impl<W> IsSuperdigraph for BTreeMap<usize, BTreeMap<usize, W>>
-where
-    W: Ord,
-{
-    impl_is_superdigraph!();
-}
-
-impl<W, H> IsSuperdigraph for HashMap<usize, HashMap<usize, W, H>, H>
-where
-    W: Ord,
-    H: BuildHasher,
-{
-    impl_is_superdigraph!();
+    fn is_superdigraph(&self, d: &Self) -> bool {
+        d.is_subdigraph(self)
+    }
 }
 
 #[cfg(test)]
 mod tests {
+    extern crate alloc;
+
     use {
         super::*,
         crate::gen::{
             RandomTournament,
             RandomTournamentConst,
         },
+        alloc::collections::{
+            BTreeMap,
+            BTreeSet,
+        },
         proptest::proptest,
+        std::collections::{
+            HashMap,
+            HashSet,
+        },
     };
 
     fn is_superdigraph_self<T>(digraph: &T)

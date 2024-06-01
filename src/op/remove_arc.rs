@@ -151,159 +151,145 @@ pub trait RemoveArc {
     fn remove_arc(&mut self, s: usize, t: usize) -> bool;
 }
 
+macro_rules! impl_set_usize {
+    () => {
+        fn remove_arc(&mut self, s: usize, t: usize) -> bool {
+            self.get_mut(s).map_or(false, |set| set.remove(&t))
+        }
+    };
+}
+
+macro_rules! impl_set_ref_usize {
+    () => {
+        fn remove_arc(&mut self, s: usize, t: usize) -> bool {
+            self.get_mut(&s).map_or(false, |set| set.remove(&t))
+        }
+    };
+}
+
+macro_rules! impl_map_usize {
+    () => {
+        fn remove_arc(&mut self, s: usize, t: usize) -> bool {
+            self.get_mut(s)
+                .map_or(false, |map| map.remove(&t).is_some())
+        }
+    };
+}
+
+macro_rules! impl_map_ref_usize {
+    () => {
+        fn remove_arc(&mut self, s: usize, t: usize) -> bool {
+            self.get_mut(&s)
+                .map_or(false, |map| map.remove(&t).is_some())
+        }
+    };
+}
+
+macro_rules! impl_tuple {
+    () => {
+        fn remove_arc(&mut self, s: usize, t: usize) -> bool {
+            self.remove(&(s, t))
+        }
+    };
+}
+
 impl RemoveArc for Vec<BTreeSet<usize>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        self[s].remove(&t)
-    }
+    impl_set_usize!();
 }
 
 impl<H> RemoveArc for Vec<HashSet<usize, H>>
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        self[s].remove(&t)
-    }
+    impl_set_usize!();
 }
 
 impl RemoveArc for [BTreeSet<usize>] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        self[s].remove(&t)
-    }
+    impl_set_usize!();
 }
 
 impl<H> RemoveArc for [HashSet<usize, H>]
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        self[s].remove(&t)
-    }
+    impl_set_usize!();
 }
 
 impl<const V: usize> RemoveArc for [BTreeSet<usize>; V] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        self[s].remove(&t)
-    }
+    impl_set_usize!();
 }
 
 impl<const V: usize, H> RemoveArc for [HashSet<usize, H>; V]
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        self[s].remove(&t)
-    }
+    impl_set_usize!();
 }
 
 impl RemoveArc for BTreeMap<usize, BTreeSet<usize>> {
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        self.get_mut(&s).map(|set| set.remove(&t)).unwrap()
-    }
+    impl_set_ref_usize!();
 }
 
 impl<H> RemoveArc for HashMap<usize, HashSet<usize, H>, H>
 where
     H: BuildHasher,
 {
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        self.get_mut(&s).map(|set| set.remove(&t)).unwrap()
-    }
+    impl_set_ref_usize!();
 }
 
 impl<W> RemoveArc for Vec<BTreeMap<usize, W>> {
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        self[s].remove(&t).is_some()
-    }
+    impl_map_usize!();
 }
 
 impl<W, H> RemoveArc for Vec<HashMap<usize, W, H>>
 where
     H: BuildHasher,
 {
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        self[s].remove(&t).is_some()
-    }
+    impl_map_usize!();
 }
 
 impl<W> RemoveArc for [BTreeMap<usize, W>] {
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        self[s].remove(&t).is_some()
-    }
+    impl_map_usize!();
 }
 
 impl<W, H> RemoveArc for [HashMap<usize, W, H>]
 where
     H: BuildHasher,
 {
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        self[s].remove(&t).is_some()
-    }
+    impl_map_usize!();
 }
 
 impl<const V: usize, W> RemoveArc for [BTreeMap<usize, W>; V] {
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        self[s].remove(&t).is_some()
-    }
+    impl_map_usize!();
 }
 
 impl<const V: usize, W, H> RemoveArc for [HashMap<usize, W, H>; V]
 where
     H: BuildHasher,
 {
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        self[s].remove(&t).is_some()
-    }
+    impl_map_usize!();
 }
 
 impl<W> RemoveArc for BTreeMap<usize, BTreeMap<usize, W>> {
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        self.get_mut(&s)
-            .map_or(false, |map| map.remove(&t).is_some())
-    }
+    impl_map_ref_usize!();
 }
 
 impl<W, H> RemoveArc for HashMap<usize, HashMap<usize, W, H>, H>
 where
     H: BuildHasher,
 {
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        self.get_mut(&s)
-            .map_or(false, |map| map.remove(&t).is_some())
-    }
+    impl_map_ref_usize!();
 }
 
 impl RemoveArc for BTreeSet<(usize, usize)> {
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        self.remove(&(s, t))
-    }
+    impl_tuple!();
 }
 
 impl<H> RemoveArc for HashSet<(usize, usize), H>
 where
     H: BuildHasher,
 {
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        self.remove(&(s, t))
-    }
+    impl_tuple!();
 }
 
 #[cfg(test)]

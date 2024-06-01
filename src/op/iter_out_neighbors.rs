@@ -114,136 +114,93 @@ pub trait IterOutNeighbors {
     fn iter_out_neighbors(&self, s: usize) -> impl Iterator<Item = usize>;
 }
 
+macro_rules! impl_usize {
+    () => {
+        /// # Panics
+        ///
+        /// Panics if `s` is not in the digraph.
+        fn iter_out_neighbors(&self, s: usize) -> impl Iterator<Item = usize> {
+            self[s].iter().copied()
+        }
+    };
+}
+
+macro_rules! impl_ref_usize {
+    () => {
+        /// # Panics
+        ///
+        /// Panics if `s` is not in the digraph.
+        fn iter_out_neighbors(&self, s: usize) -> impl Iterator<Item = usize> {
+            self[&s].iter().copied()
+        }
+    };
+}
+
 impl IterOutNeighbors for Vec<Vec<usize>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_neighbors(&self, s: usize) -> impl Iterator<Item = usize> {
-        self[s].iter().copied()
-    }
+    impl_usize!();
 }
 
 impl IterOutNeighbors for Vec<BTreeSet<usize>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_neighbors(&self, s: usize) -> impl Iterator<Item = usize> {
-        self[s].iter().copied()
-    }
+    impl_usize!();
 }
 
 impl<H> IterOutNeighbors for Vec<HashSet<usize, H>>
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_neighbors(&self, s: usize) -> impl Iterator<Item = usize> {
-        self[s].iter().copied()
-    }
+    impl_usize!();
 }
 
 impl IterOutNeighbors for [Vec<usize>] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_neighbors(&self, s: usize) -> impl Iterator<Item = usize> {
-        self[s].iter().copied()
-    }
+    impl_usize!();
 }
 
 impl IterOutNeighbors for [BTreeSet<usize>] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_neighbors(&self, s: usize) -> impl Iterator<Item = usize> {
-        self[s].iter().copied()
-    }
+    impl_usize!();
 }
 
 impl<H> IterOutNeighbors for [HashSet<usize, H>]
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_neighbors(&self, s: usize) -> impl Iterator<Item = usize> {
-        self[s].iter().copied()
-    }
+    impl_usize!();
 }
 
 impl<const V: usize> IterOutNeighbors for [Vec<usize>; V] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_neighbors(&self, s: usize) -> impl Iterator<Item = usize> {
-        self[s].iter().copied()
-    }
+    impl_usize!();
 }
 
 impl<const V: usize> IterOutNeighbors for [BTreeSet<usize>; V] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_neighbors(&self, s: usize) -> impl Iterator<Item = usize> {
-        self[s].iter().copied()
-    }
+    impl_usize!();
 }
 
 impl<const V: usize, H> IterOutNeighbors for [HashSet<usize, H>; V]
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_neighbors(&self, s: usize) -> impl Iterator<Item = usize> {
-        self[s].iter().copied()
-    }
+    impl_usize!();
 }
 
 impl IterOutNeighbors for BTreeMap<usize, Vec<usize>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_neighbors(&self, s: usize) -> impl Iterator<Item = usize> {
-        self[&s].iter().copied()
-    }
+    impl_ref_usize!();
 }
 
 impl<H> IterOutNeighbors for HashMap<usize, Vec<usize>, H>
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_neighbors(&self, s: usize) -> impl Iterator<Item = usize> {
-        self[&s].iter().copied()
-    }
+    impl_ref_usize!();
 }
 
 impl IterOutNeighbors for BTreeMap<usize, BTreeSet<usize>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_neighbors(&self, s: usize) -> impl Iterator<Item = usize> {
-        self[&s].iter().copied()
-    }
+    impl_ref_usize!();
 }
 
 impl<H> IterOutNeighbors for HashMap<usize, HashSet<usize, H>, H>
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_neighbors(&self, s: usize) -> impl Iterator<Item = usize> {
-        self[&s].iter().copied()
-    }
+    impl_ref_usize!();
 }
 
 #[cfg(test)]

@@ -59,211 +59,177 @@ pub trait Size {
     fn size(&self) -> usize;
 }
 
+macro_rules! impl_iter_sum {
+    ($ty:ident) => {
+        fn size(&self) -> usize {
+            self.iter().map($ty::len).sum()
+        }
+    };
+}
+
+macro_rules! impl_values_sum {
+    ($ty:ident) => {
+        fn size(&self) -> usize {
+            self.values().map($ty::len).sum()
+        }
+    };
+}
+
+macro_rules! impl_len {
+    () => {
+        fn size(&self) -> usize {
+            self.len()
+        }
+    };
+}
+
 impl<T> Size for Vec<Vec<T>> {
-    fn size(&self) -> usize {
-        self.iter().map(Vec::len).sum()
-    }
+    impl_iter_sum!(Vec);
 }
 
 impl<T> Size for Vec<BTreeSet<T>> {
-    fn size(&self) -> usize {
-        self.iter().map(BTreeSet::len).sum()
-    }
+    impl_iter_sum!(BTreeSet);
 }
 
 impl<T, H> Size for Vec<HashSet<T, H>>
 where
     H: BuildHasher,
 {
-    fn size(&self) -> usize {
-        self.iter().map(HashSet::len).sum()
-    }
+    impl_iter_sum!(HashSet);
 }
 
 impl<K, W> Size for Vec<BTreeMap<K, W>> {
-    fn size(&self) -> usize {
-        self.iter().map(BTreeMap::len).sum()
-    }
+    impl_iter_sum!(BTreeMap);
 }
 
 impl<K, W, H> Size for Vec<HashMap<K, W, H>>
 where
     H: BuildHasher,
 {
-    fn size(&self) -> usize {
-        self.iter().map(HashMap::len).sum()
-    }
+    impl_iter_sum!(HashMap);
 }
 
 impl<T> Size for [Vec<T>] {
-    fn size(&self) -> usize {
-        self.iter().map(Vec::len).sum()
-    }
+    impl_iter_sum!(Vec);
 }
 
 impl<T> Size for [BTreeSet<T>] {
-    fn size(&self) -> usize {
-        self.iter().map(BTreeSet::len).sum()
-    }
+    impl_iter_sum!(BTreeSet);
 }
 
 impl<T, H> Size for [HashSet<T, H>]
 where
     H: BuildHasher,
 {
-    fn size(&self) -> usize {
-        self.iter().map(HashSet::len).sum()
-    }
+    impl_iter_sum!(HashSet);
 }
 
 impl<K, W> Size for [BTreeMap<K, W>] {
-    fn size(&self) -> usize {
-        self.iter().map(BTreeMap::len).sum()
-    }
+    impl_iter_sum!(BTreeMap);
 }
 
 impl<K, W, H> Size for [HashMap<K, W, H>]
 where
     H: BuildHasher,
 {
-    fn size(&self) -> usize {
-        self.iter().map(HashMap::len).sum()
-    }
+    impl_iter_sum!(HashMap);
 }
 
 impl<const V: usize, T> Size for [Vec<T>; V] {
-    fn size(&self) -> usize {
-        self.iter().map(Vec::len).sum()
-    }
+    impl_iter_sum!(Vec);
 }
 
 impl<const V: usize, T> Size for [BTreeSet<T>; V] {
-    fn size(&self) -> usize {
-        self.iter().map(BTreeSet::len).sum()
-    }
+    impl_iter_sum!(BTreeSet);
 }
 
 impl<const V: usize, K, W> Size for [BTreeMap<K, W>; V] {
-    fn size(&self) -> usize {
-        self.iter().map(BTreeMap::len).sum()
-    }
+    impl_iter_sum!(BTreeMap);
 }
 
 impl<const V: usize, T, H> Size for [HashSet<T, H>; V]
 where
     H: BuildHasher,
 {
-    fn size(&self) -> usize {
-        self.iter().map(HashSet::len).sum()
-    }
+    impl_iter_sum!(HashSet);
 }
 
 impl<const V: usize, K, W, H> Size for [HashMap<K, W, H>; V]
 where
     H: BuildHasher,
 {
-    fn size(&self) -> usize {
-        self.iter().map(HashMap::len).sum()
-    }
+    impl_iter_sum!(HashMap);
 }
 
 impl<K, T> Size for BTreeMap<K, Vec<T>> {
-    fn size(&self) -> usize {
-        self.values().map(Vec::len).sum()
-    }
+    impl_values_sum!(Vec);
 }
 
 impl<K, T> Size for BTreeMap<K, BTreeSet<T>> {
-    fn size(&self) -> usize {
-        self.values().map(BTreeSet::len).sum()
-    }
+    impl_values_sum!(BTreeSet);
 }
 
 impl<K, W> Size for BTreeMap<K, BTreeMap<K, W>> {
-    fn size(&self) -> usize {
-        self.values().map(BTreeMap::len).sum()
-    }
+    impl_values_sum!(BTreeMap);
 }
 
 impl<K, T, H> Size for HashMap<K, Vec<T>, H>
 where
     H: BuildHasher,
 {
-    fn size(&self) -> usize {
-        self.values().map(Vec::len).sum()
-    }
+    impl_values_sum!(Vec);
 }
 
 impl<K, T, H> Size for HashMap<K, HashSet<T, H>, H>
 where
     H: BuildHasher,
 {
-    fn size(&self) -> usize {
-        self.values().map(HashSet::len).sum()
-    }
+    impl_values_sum!(HashSet);
 }
 
 impl<K, W, H> Size for HashMap<K, HashMap<K, W, H>, H>
 where
     H: BuildHasher,
 {
-    fn size(&self) -> usize {
-        self.values().map(HashMap::len).sum()
-    }
+    impl_values_sum!(HashMap);
 }
 
 impl Size for Vec<(usize, usize)> {
-    fn size(&self) -> usize {
-        self.len()
-    }
+    impl_len!();
 }
 
 impl<W> Size for Vec<(usize, usize, W)> {
-    fn size(&self) -> usize {
-        self.len()
-    }
+    impl_len!();
 }
 
 impl Size for [(usize, usize)] {
-    fn size(&self) -> usize {
-        self.len()
-    }
+    impl_len!();
 }
 
 impl<W> Size for [(usize, usize, W)] {
-    fn size(&self) -> usize {
-        self.len()
-    }
+    impl_len!();
 }
 
 impl Size for BTreeSet<(usize, usize)> {
-    fn size(&self) -> usize {
-        self.len()
-    }
+    impl_len!();
 }
 
 impl<W> Size for BTreeSet<(usize, usize, W)> {
-    fn size(&self) -> usize {
-        self.len()
-    }
+    impl_len!();
 }
 
 impl<H> Size for HashSet<(usize, usize), H>
 where
     H: BuildHasher,
 {
-    fn size(&self) -> usize {
-        self.len()
-    }
+    impl_len!();
 }
 
 impl<W, H> Size for HashSet<(usize, usize, W), H>
 where
     H: BuildHasher,
 {
-    fn size(&self) -> usize {
-        self.len()
-    }
+    impl_len!();
 }
 
 #[cfg(test)]

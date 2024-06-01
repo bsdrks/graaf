@@ -29,20 +29,7 @@
 //! assert!(!digraph.is_walk(&[0, 2]));
 //! ```
 
-extern crate alloc;
-
-use {
-    super::HasArc,
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
-    core::hash::BuildHasher,
-    std::collections::{
-        HashMap,
-        HashSet,
-    },
-};
+use super::HasArc;
 
 /// Check whether a sequence of vertices is a walk in a digraph.
 ///
@@ -116,118 +103,22 @@ pub trait IsWalk {
     fn is_walk(&self, walk: &[usize]) -> bool;
 }
 
-macro_rules! impl_is_walk {
-    () => {
-        fn is_walk(&self, walk: &[usize]) -> bool {
-            let mut arcs = walk.iter().zip(walk.iter().skip(1));
-
-            arcs.clone().count() > 0 && arcs.all(|(s, t)| self.has_arc(*s, *t))
-        }
-    };
-}
-
-impl IsWalk for Vec<BTreeSet<usize>> {
-    impl_is_walk!();
-}
-
-impl<H> IsWalk for Vec<HashSet<usize, H>>
+impl<T> IsWalk for T
 where
-    H: BuildHasher,
+    T: HasArc + ?Sized,
 {
-    impl_is_walk!();
-}
+    fn is_walk(&self, walk: &[usize]) -> bool {
+        let mut arcs = walk.iter().zip(walk.iter().skip(1));
 
-impl IsWalk for [BTreeSet<usize>] {
-    impl_is_walk!();
-}
-
-impl<H> IsWalk for [HashSet<usize, H>]
-where
-    H: BuildHasher,
-{
-    impl_is_walk!();
-}
-
-impl<const V: usize> IsWalk for [BTreeSet<usize>; V] {
-    impl_is_walk!();
-}
-
-impl<const V: usize, H> IsWalk for [HashSet<usize, H>; V]
-where
-    H: BuildHasher,
-{
-    impl_is_walk!();
-}
-
-impl IsWalk for BTreeMap<usize, BTreeSet<usize>> {
-    impl_is_walk!();
-}
-
-impl<H> IsWalk for HashMap<usize, HashSet<usize, H>, H>
-where
-    H: BuildHasher,
-{
-    impl_is_walk!();
-}
-
-impl<W> IsWalk for Vec<BTreeMap<usize, W>> {
-    impl_is_walk!();
-}
-
-impl<W, H> IsWalk for Vec<HashMap<usize, W, H>>
-where
-    H: BuildHasher,
-{
-    impl_is_walk!();
-}
-
-impl<W> IsWalk for [BTreeMap<usize, W>] {
-    impl_is_walk!();
-}
-
-impl<W, H> IsWalk for [HashMap<usize, W, H>]
-where
-    H: BuildHasher,
-{
-    impl_is_walk!();
-}
-
-impl<const V: usize, W> IsWalk for [BTreeMap<usize, W>; V] {
-    impl_is_walk!();
-}
-
-impl<const V: usize, W, H> IsWalk for [HashMap<usize, W, H>; V]
-where
-    H: BuildHasher,
-{
-    impl_is_walk!();
-}
-
-impl<W> IsWalk for BTreeMap<usize, BTreeMap<usize, W>> {
-    impl_is_walk!();
-}
-
-impl<W, H> IsWalk for HashMap<usize, HashMap<usize, W, H>, H>
-where
-    H: BuildHasher,
-{
-    impl_is_walk!();
-}
-
-impl IsWalk for BTreeSet<(usize, usize)> {
-    impl_is_walk!();
-}
-
-impl<H> IsWalk for HashSet<(usize, usize), H>
-where
-    H: BuildHasher,
-{
-    impl_is_walk!();
+        arcs.clone().count() > 0 && arcs.all(|(s, t)| self.has_arc(*s, *t))
+    }
 }
 
 #[allow(clippy::cognitive_complexity)]
 #[cfg(test)]
 mod tests {
+    extern crate alloc;
+
     use {
         super::*,
         crate::{
@@ -239,7 +130,14 @@ mod tests {
             },
             op::AddWeightedArc,
         },
-        std::collections::HashSet,
+        alloc::collections::{
+            BTreeMap,
+            BTreeSet,
+        },
+        std::collections::{
+            HashMap,
+            HashSet,
+        },
     };
 
     macro_rules! setup_weighted {

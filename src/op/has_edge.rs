@@ -36,20 +36,7 @@
 //!
 //! [`HasArc`]: crate::op::HasArc
 
-extern crate alloc;
-
-use {
-    super::HasArc,
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
-    core::hash::BuildHasher,
-    std::collections::{
-        HashMap,
-        HashSet,
-    },
-};
+use super::HasArc;
 
 /// Check if an edge exists between two vertices.
 ///
@@ -121,135 +108,9 @@ pub trait HasEdge {
     fn has_edge(&self, s: usize, t: usize) -> bool;
 }
 
-impl HasEdge for Vec<BTreeSet<usize>> {
-    fn has_edge(&self, s: usize, t: usize) -> bool {
-        self.has_arc(s, t) && self.has_arc(t, s)
-    }
-}
-
-impl<H> HasEdge for Vec<HashSet<usize, H>>
+impl<T> HasEdge for T
 where
-    H: BuildHasher,
-{
-    fn has_edge(&self, s: usize, t: usize) -> bool {
-        self.has_arc(s, t) && self.has_arc(t, s)
-    }
-}
-
-impl HasEdge for [BTreeSet<usize>] {
-    fn has_edge(&self, s: usize, t: usize) -> bool {
-        self.has_arc(s, t) && self.has_arc(t, s)
-    }
-}
-
-impl<H> HasEdge for [HashSet<usize, H>]
-where
-    H: BuildHasher,
-{
-    fn has_edge(&self, s: usize, t: usize) -> bool {
-        self.has_arc(s, t) && self.has_arc(t, s)
-    }
-}
-
-impl<const V: usize> HasEdge for [BTreeSet<usize>; V] {
-    fn has_edge(&self, s: usize, t: usize) -> bool {
-        self.has_arc(s, t) && self.has_arc(t, s)
-    }
-}
-
-impl<const V: usize, H> HasEdge for [HashSet<usize, H>; V]
-where
-    H: BuildHasher,
-{
-    fn has_edge(&self, s: usize, t: usize) -> bool {
-        self.has_arc(s, t) && self.has_arc(t, s)
-    }
-}
-
-impl HasEdge for BTreeMap<usize, BTreeSet<usize>> {
-    fn has_edge(&self, s: usize, t: usize) -> bool {
-        self.has_arc(s, t) && self.has_arc(t, s)
-    }
-}
-
-impl<H> HasEdge for HashMap<usize, HashSet<usize, H>, H>
-where
-    H: BuildHasher,
-{
-    fn has_edge(&self, s: usize, t: usize) -> bool {
-        self.has_arc(s, t) && self.has_arc(t, s)
-    }
-}
-
-impl<W> HasEdge for Vec<BTreeMap<usize, W>> {
-    fn has_edge(&self, s: usize, t: usize) -> bool {
-        self.has_arc(s, t) && self.has_arc(t, s)
-    }
-}
-
-impl<W, H> HasEdge for Vec<HashMap<usize, W, H>>
-where
-    H: BuildHasher,
-{
-    fn has_edge(&self, s: usize, t: usize) -> bool {
-        self.has_arc(s, t) && self.has_arc(t, s)
-    }
-}
-
-impl<W> HasEdge for [BTreeMap<usize, W>] {
-    fn has_edge(&self, s: usize, t: usize) -> bool {
-        self.has_arc(s, t) && self.has_arc(t, s)
-    }
-}
-
-impl<W, H> HasEdge for [HashMap<usize, W, H>]
-where
-    H: BuildHasher,
-{
-    fn has_edge(&self, s: usize, t: usize) -> bool {
-        self.has_arc(s, t) && self.has_arc(t, s)
-    }
-}
-
-impl<const V: usize, W> HasEdge for [BTreeMap<usize, W>; V] {
-    fn has_edge(&self, s: usize, t: usize) -> bool {
-        self.has_arc(s, t) && self.has_arc(t, s)
-    }
-}
-
-impl<const V: usize, W, H> HasEdge for [HashMap<usize, W, H>; V]
-where
-    H: BuildHasher,
-{
-    fn has_edge(&self, s: usize, t: usize) -> bool {
-        self.has_arc(s, t) && self.has_arc(t, s)
-    }
-}
-
-impl<W> HasEdge for BTreeMap<usize, BTreeMap<usize, W>> {
-    fn has_edge(&self, s: usize, t: usize) -> bool {
-        self.has_arc(s, t) && self.has_arc(t, s)
-    }
-}
-
-impl<W, H> HasEdge for HashMap<usize, HashMap<usize, W, H>, H>
-where
-    H: BuildHasher,
-{
-    fn has_edge(&self, s: usize, t: usize) -> bool {
-        self.has_arc(s, t) && self.has_arc(t, s)
-    }
-}
-
-impl HasEdge for BTreeSet<(usize, usize)> {
-    fn has_edge(&self, s: usize, t: usize) -> bool {
-        self.has_arc(s, t) && self.has_arc(t, s)
-    }
-}
-
-impl<H> HasEdge for HashSet<(usize, usize), H>
-where
-    H: BuildHasher,
+    T: HasArc,
 {
     fn has_edge(&self, s: usize, t: usize) -> bool {
         self.has_arc(s, t) && self.has_arc(t, s)
@@ -258,6 +119,8 @@ where
 
 #[cfg(test)]
 mod tests {
+    extern crate alloc;
+
     use {
         super::*,
         crate::{
@@ -269,6 +132,14 @@ mod tests {
                 AddArc,
                 AddWeightedArc,
             },
+        },
+        alloc::collections::{
+            BTreeMap,
+            BTreeSet,
+        },
+        std::collections::{
+            HashMap,
+            HashSet,
         },
     };
 

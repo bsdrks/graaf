@@ -30,23 +30,9 @@
 //! assert!(!digraph.is_symmetric());
 //! ```
 
-extern crate alloc;
-
-use {
-    super::{
-        HasArc,
-        IterArcs,
-        IterWeightedArcs,
-    },
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
-    core::hash::BuildHasher,
-    std::collections::{
-        HashMap,
-        HashSet,
-    },
+use super::{
+    HasArc,
+    IterArcs,
 };
 
 /// Determine whether a digraph is symmetric.
@@ -131,136 +117,19 @@ pub trait IsSymmetric {
     fn is_symmetric(&self) -> bool;
 }
 
-impl IsSymmetric for Vec<BTreeSet<usize>> {
-    fn is_symmetric(&self) -> bool {
-        self.iter_arcs().all(|(s, t)| self.has_arc(t, s))
-    }
-}
-
-impl<H> IsSymmetric for Vec<HashSet<usize, H>>
+impl<T> IsSymmetric for T
 where
-    H: BuildHasher,
+    T: HasArc + IterArcs + ?Sized,
 {
     fn is_symmetric(&self) -> bool {
         self.iter_arcs().all(|(s, t)| self.has_arc(t, s))
-    }
-}
-
-impl IsSymmetric for [BTreeSet<usize>] {
-    fn is_symmetric(&self) -> bool {
-        self.iter_arcs().all(|(s, t)| self.has_arc(t, s))
-    }
-}
-
-impl<H> IsSymmetric for [HashSet<usize, H>]
-where
-    H: BuildHasher,
-{
-    fn is_symmetric(&self) -> bool {
-        self.iter_arcs().all(|(s, t)| self.has_arc(t, s))
-    }
-}
-
-impl<const V: usize> IsSymmetric for [BTreeSet<usize>; V] {
-    fn is_symmetric(&self) -> bool {
-        self.iter_arcs().all(|(s, t)| self.has_arc(t, s))
-    }
-}
-
-impl<const V: usize, H> IsSymmetric for [HashSet<usize, H>; V]
-where
-    H: BuildHasher + Default,
-{
-    fn is_symmetric(&self) -> bool {
-        self.iter_arcs().all(|(s, t)| self.has_arc(t, s))
-    }
-}
-
-impl IsSymmetric for BTreeMap<usize, BTreeSet<usize>> {
-    fn is_symmetric(&self) -> bool {
-        self.iter_arcs().all(|(s, t)| self.has_arc(t, s))
-    }
-}
-
-impl<H> IsSymmetric for HashMap<usize, HashSet<usize, H>, H>
-where
-    H: BuildHasher,
-{
-    fn is_symmetric(&self) -> bool {
-        self.iter_arcs().all(|(s, t)| self.has_arc(t, s))
-    }
-}
-
-impl<W> IsSymmetric for Vec<BTreeMap<usize, W>> {
-    fn is_symmetric(&self) -> bool {
-        self.iter_weighted_arcs()
-            .all(|(s, t, _)| self.has_arc(t, s))
-    }
-}
-
-impl<W, H> IsSymmetric for Vec<HashMap<usize, W, H>>
-where
-    H: BuildHasher,
-{
-    fn is_symmetric(&self) -> bool {
-        self.iter_weighted_arcs()
-            .all(|(s, t, _)| self.has_arc(t, s))
-    }
-}
-
-impl<W> IsSymmetric for [BTreeMap<usize, W>] {
-    fn is_symmetric(&self) -> bool {
-        self.iter_weighted_arcs()
-            .all(|(s, t, _)| self.has_arc(t, s))
-    }
-}
-
-impl<W, H> IsSymmetric for [HashMap<usize, W, H>]
-where
-    H: BuildHasher,
-{
-    fn is_symmetric(&self) -> bool {
-        self.iter_weighted_arcs()
-            .all(|(s, t, _)| self.has_arc(t, s))
-    }
-}
-
-impl<const V: usize, W> IsSymmetric for [BTreeMap<usize, W>; V] {
-    fn is_symmetric(&self) -> bool {
-        self.iter_weighted_arcs()
-            .all(|(s, t, _)| self.has_arc(t, s))
-    }
-}
-
-impl<const V: usize, W, H> IsSymmetric for [HashMap<usize, W, H>; V]
-where
-    H: BuildHasher,
-{
-    fn is_symmetric(&self) -> bool {
-        self.iter_weighted_arcs()
-            .all(|(s, t, _)| self.has_arc(t, s))
-    }
-}
-
-impl<W> IsSymmetric for BTreeMap<usize, BTreeMap<usize, W>> {
-    fn is_symmetric(&self) -> bool {
-        self.iter_weighted_arcs()
-            .all(|(s, t, _)| self.has_arc(t, s))
-    }
-}
-
-impl<W, H> IsSymmetric for HashMap<usize, HashMap<usize, W, H>, H>
-where
-    H: BuildHasher,
-{
-    fn is_symmetric(&self) -> bool {
-        self.iter_weighted_arcs()
-            .all(|(s, t, _)| self.has_arc(t, s))
     }
 }
 
 #[cfg(test)]
 mod tests {
+    extern crate alloc;
+
     use {
         super::*,
         crate::{
@@ -275,71 +144,15 @@ mod tests {
                 AddWeightedArc,
             },
         },
+        alloc::collections::{
+            BTreeMap,
+            BTreeSet,
+        },
+        std::collections::{
+            HashMap,
+            HashSet,
+        },
     };
-
-    // #[test]
-    // fn vec_btree_set() {
-    // }
-
-    // #[test]
-    // fn vec_hash_set() {
-    // }
-
-    // #[test]
-    // fn slice_btree_set() {
-    // }
-
-    // #[test]
-    // fn slice_hash_set() {
-    // }
-
-    // #[test]
-    // fn arr_btree_set() {
-    // }
-
-    // #[test]
-    // fn arr_hash_set() {
-    // }
-
-    // #[test]
-    // fn btree_map_btree_set() {
-    // }
-
-    // #[test]
-    // fn hash_map_hash_set() {
-    // }
-
-    // #[test]
-    // fn vec_btree_map() {
-    // }
-
-    // #[test]
-    // fn vec_hash_map() {
-    // }
-
-    // #[test]
-    // fn slice_btree_map() {
-    // }
-
-    // #[test]
-    // fn slice_hash_map() {
-    // }
-
-    // #[test]
-    // fn arr_btree_map() {
-    // }
-
-    // #[test]
-    // fn arr_hash_map() {
-    // }
-
-    // #[test]
-    // fn btree_map_btree_map() {
-    // }
-
-    // #[test]
-    // fn hash_map_hash_map() {
-    // }
 
     macro_rules! setup_two_cycle_weighted {
         ($digraph:expr) => {

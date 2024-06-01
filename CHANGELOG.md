@@ -4,18 +4,70 @@
 
 - Add DFS.
 - Add sources.
+- Add the `CompleteBinaryTree` generator.
+- Add the `CompleteTernaryTree` generator.
 - Add the `IsInTree` trait.
 - Add the `IsOutTree` trait.
 - Add the `IsTree` trait.
+- Add the `RemoveWeightedArc` trait.
 - Add the `bfs::shortest_paths`.
 - Add the `bfs::single_pair_shortest_paths`.
 - Add the `dijkstra::shortest_paths`.
 - Add the `dijkstra::single_pair_shortest_paths`.
-- Add the `RemoveWeightedArc` trait.
+- Implement `IterOutNeighborsMut` for additional types.
 - Benchmark against popular Rust graph libraries.
 - Benchmark against popular graph libraries in other languages.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.53.0] - 2024-06-01
+
+Changed
+
+- Abstract the implementations of `HasArc` as macros.
+- Abstract the implementations of `Indegree` as macros.
+- Abstract the implementations of `IsSimple` as a macro.
+- Abstract the implementations of `IterArcs` as macros.
+- Abstract the implementations of `IterOutNeighborsMut` as macros.
+- Abstract the implementations of `IterOutNeighbors` as macros.
+- Abstract the implementations of `IterOutWeightedNeighbors` as macros.
+- Abstract the implementations of `IterVertices` as macros.
+- Abstract the implementations of `IterWeightedArcs` as macros.
+- Abstract the implementations of `Order` as macros.
+- Abstract the implementations of `Outdegree` as macros.
+- Abstract the implementations of `RemoveArc` as macros.
+- Abstract the implementations of `Size` as macros.
+- Breaking: `RemoveArc for BTreeMap<usize, BTreeMap<usize, W>>` no longer panics.
+- Breaking: `RemoveArc for BTreeMap<usize, BTreeSet<usize>>` no longer panics.
+- Breaking: `RemoveArc for HashMap<usize, HashMap<usize, W>>` no longer panics.
+- Breaking: `RemoveArc for HashMap<usize, HashSet<usize>>` no longer panics.
+- Breaking: `RemoveArc for Vec<BTreeMap<usize, W>>` no longer panics.
+- Breaking: `RemoveArc for Vec<BTreeSet<usize>>` no longer panics.
+- Breaking: `RemoveArc for Vec<HashMap<usize, W>>` no longer panics.
+- Breaking: `RemoveArc for Vec<HashSet<usize>>` no longer panics.
+- Breaking: `RemoveArc for [BTreeMap<usize, W>; V]` no longer panics.
+- Breaking: `RemoveArc for [BTreeMap<usize, W>]` no longer panics.
+- Breaking: `RemoveArc for [BTreeSet<usize>; V]` no longer panics.
+- Breaking: `RemoveArc for [BTreeSet<usize>]` no longer panics.
+- Breaking: `RemoveArc for [HashMap<usize, W>; V]` no longer panics.
+- Breaking: `RemoveArc for [HashMap<usize, W>]` no longer panics.
+- Breaking: `RemoveArc for [HashSet<usize>; V]` no longer panics.
+- Breaking: `RemoveArc for [HashSet<usize>]` no longer panics.
+- Change  `Converse` to blanket implementation.
+- Change  `Degree` to blanket implementation.
+- Change  `HasEdge` to blanket implementation.
+- Change  `IsBalanced` to blanket implementation.
+- Change  `IsIsolated` to blanket implementation.
+- Change  `IsOriented` to blanket implementation.
+- Change  `IsPendant` to blanket implementation.
+- Change  `IsRegular` to blanket implementation.
+- Change  `IsSubdigraph` to blanket implementation.
+- Change  `IsSuperdigraph` to blanket implementation.
+- Change  `IsSymmetric` to blanket implementation.
+- Change  `IsWalk` to blanket implementation.
+- Change  `ReverseArc` to blanket implementation.
+- Use const size in `IterVertices` implementations.
+- 
 
 ## [0.52.7] - 2024-05-31
 

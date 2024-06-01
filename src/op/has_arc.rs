@@ -125,139 +125,165 @@ pub trait HasArc {
     fn has_arc(&self, s: usize, t: usize) -> bool;
 }
 
+macro_rules! impl_set_usize {
+    () => {
+        fn has_arc(&self, s: usize, t: usize) -> bool {
+            self.get(s).map_or(false, |set| set.contains(&t))
+        }
+    };
+}
+
+macro_rules! impl_set_ref_usize {
+    () => {
+        fn has_arc(&self, s: usize, t: usize) -> bool {
+            self.get(&s).map_or(false, |set| set.contains(&t))
+        }
+    };
+}
+
+macro_rules! impl_map_usize {
+    () => {
+        fn has_arc(&self, s: usize, t: usize) -> bool {
+            self.get(s).map_or(false, |map| map.contains_key(&t))
+        }
+    };
+}
+
+macro_rules! impl_map_ref_usize {
+    () => {
+        fn has_arc(&self, s: usize, t: usize) -> bool {
+            self.get(&s).map_or(false, |map| map.contains_key(&t))
+        }
+    };
+}
+
+macro_rules! impl_tuple {
+    () => {
+        fn has_arc(&self, s: usize, t: usize) -> bool {
+            self.contains(&(s, t))
+        }
+    };
+}
+
 impl HasArc for Vec<BTreeSet<usize>> {
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.get(s).map_or(false, |set| set.contains(&t))
-    }
+    impl_set_usize!();
 }
 
 impl<H> HasArc for Vec<HashSet<usize, H>>
 where
     H: BuildHasher,
 {
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.get(s).map_or(false, |set| set.contains(&t))
-    }
+    impl_set_usize!();
 }
 
 impl HasArc for [BTreeSet<usize>] {
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.get(s).map_or(false, |set| set.contains(&t))
-    }
+    impl_set_usize!();
+}
+
+impl HasArc for &[BTreeSet<usize>] {
+    impl_set_usize!();
 }
 
 impl<H> HasArc for [HashSet<usize, H>]
 where
     H: BuildHasher,
 {
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.get(s).map_or(false, |set| set.contains(&t))
-    }
+    impl_set_usize!();
+}
+
+impl<H> HasArc for &[HashSet<usize, H>]
+where
+    H: BuildHasher,
+{
+    impl_set_usize!();
 }
 
 impl<const V: usize> HasArc for [BTreeSet<usize>; V] {
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.get(s).map_or(false, |set| set.contains(&t))
-    }
+    impl_set_usize!();
 }
 
 impl<const V: usize, H> HasArc for [HashSet<usize, H>; V]
 where
     H: BuildHasher,
 {
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.get(s).map_or(false, |set| set.contains(&t))
-    }
+    impl_set_usize!();
 }
 
 impl HasArc for BTreeMap<usize, BTreeSet<usize>> {
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.get(&s).map_or(false, |set| set.contains(&t))
-    }
+    impl_set_ref_usize!();
 }
 
 impl<H> HasArc for HashMap<usize, HashSet<usize, H>, H>
 where
     H: BuildHasher,
 {
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.get(&s).map_or(false, |set| set.contains(&t))
-    }
+    impl_set_ref_usize!();
 }
 
 impl<W> HasArc for Vec<BTreeMap<usize, W>> {
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.get(s).map_or(false, |map| map.contains_key(&t))
-    }
+    impl_map_usize!();
 }
 
 impl<W, H> HasArc for Vec<HashMap<usize, W, H>>
 where
     H: BuildHasher,
 {
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.get(s).map_or(false, |map| map.contains_key(&t))
-    }
+    impl_map_usize!();
 }
 
 impl<W> HasArc for [BTreeMap<usize, W>] {
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.get(s).map_or(false, |map| map.contains_key(&t))
-    }
+    impl_map_usize!();
+}
+
+impl<W> HasArc for &[BTreeMap<usize, W>] {
+    impl_map_usize!();
 }
 
 impl<W, H> HasArc for [HashMap<usize, W, H>]
 where
     H: BuildHasher,
 {
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.get(s).map_or(false, |map| map.contains_key(&t))
-    }
+    impl_map_usize!();
+}
+
+impl<W, H> HasArc for &[HashMap<usize, W, H>]
+where
+    H: BuildHasher,
+{
+    impl_map_usize!();
 }
 
 impl<const V: usize, W> HasArc for [BTreeMap<usize, W>; V] {
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.get(s).map_or(false, |map| map.contains_key(&t))
-    }
+    impl_map_usize!();
 }
 
 impl<const V: usize, W, H> HasArc for [HashMap<usize, W, H>; V]
 where
     H: BuildHasher,
 {
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.get(s).map_or(false, |map| map.contains_key(&t))
-    }
+    impl_map_usize!();
 }
 
 impl<W> HasArc for BTreeMap<usize, BTreeMap<usize, W>> {
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.get(&s).map_or(false, |map| map.contains_key(&t))
-    }
+    impl_map_ref_usize!();
 }
 
 impl<W, H> HasArc for HashMap<usize, HashMap<usize, W, H>, H>
 where
     H: BuildHasher,
 {
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.get(&s).map_or(false, |map| map.contains_key(&t))
-    }
+    impl_map_ref_usize!();
 }
 
 impl HasArc for BTreeSet<(usize, usize)> {
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.contains(&(s, t))
-    }
+    impl_tuple!();
 }
 
 impl<H> HasArc for HashSet<(usize, usize), H>
 where
     H: BuildHasher,
 {
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.contains(&(s, t))
-    }
+    impl_tuple!();
 }
 #[cfg(test)]
 mod tests {

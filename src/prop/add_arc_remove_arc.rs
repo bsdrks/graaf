@@ -31,9 +31,7 @@ where
 
     clone.add_arc(s, t);
 
-    let _ = clone.remove_arc(s, t);
-
-    *digraph == clone
+    clone.remove_arc(s, t) && *digraph == clone
 }
 
 #[cfg(test)]

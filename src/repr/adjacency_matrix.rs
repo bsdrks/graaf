@@ -30,12 +30,8 @@
 use crate::op::{
     AddArc,
     HasArc,
-    HasEdge,
     Indegree,
-    IsBalanced,
-    IsIsolated,
     IsSimple,
-    IsSymmetric,
     IterArcs,
     IterOutNeighbors,
     IterVertices,
@@ -205,15 +201,6 @@ where
     }
 }
 
-impl<const V: usize> HasEdge for AdjacencyMatrix<V>
-where
-    [(); blocks!(V)]:,
-{
-    fn has_edge(&self, s: usize, t: usize) -> bool {
-        self.has_arc(s, t) && self.has_arc(t, s)
-    }
-}
-
 impl<const V: usize> Indegree for AdjacencyMatrix<V>
 where
     [(); blocks!(V)]:,
@@ -228,40 +215,12 @@ where
     }
 }
 
-impl<const V: usize> IsBalanced for AdjacencyMatrix<V>
-where
-    [(); blocks!(V)]:,
-{
-    fn is_balanced(&self) -> bool {
-        self.iter_vertices()
-            .all(|s| self.indegree(s) == self.outdegree(s))
-    }
-}
-
-impl<const V: usize> IsIsolated for AdjacencyMatrix<V>
-where
-    [(); blocks!(V)]:,
-{
-    fn is_isolated(&self, s: usize) -> bool {
-        self.indegree(s) == 0 && self.outdegree(s) == 0
-    }
-}
-
 impl<const V: usize> IsSimple for AdjacencyMatrix<V>
 where
     [(); blocks!(V)]:,
 {
     fn is_simple(&self) -> bool {
         self.iter_vertices().all(|s| !self.has_arc(s, s))
-    }
-}
-
-impl<const V: usize> IsSymmetric for AdjacencyMatrix<V>
-where
-    [(); blocks!(V)]:,
-{
-    fn is_symmetric(&self) -> bool {
-        self.iter_arcs().all(|(s, t)| self.has_arc(t, s))
     }
 }
 
@@ -336,7 +295,15 @@ where
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use {
+        super::*,
+        crate::op::{
+            HasEdge,
+            IsBalanced,
+            IsIsolated,
+            IsSymmetric,
+        },
+    };
 
     #[test]
     fn new() {

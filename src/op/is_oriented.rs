@@ -19,22 +19,9 @@
 //! assert!(Vec::<BTreeSet<usize>>::cycle(3).is_oriented());
 //! ```
 
-extern crate alloc;
-
-use {
-    super::{
-        HasArc,
-        IterArcs,
-    },
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
-    core::hash::BuildHasher,
-    std::collections::{
-        HashMap,
-        HashSet,
-    },
+use super::{
+    HasArc,
+    IterArcs,
 };
 
 /// Determine whether a digraph is oriented.
@@ -102,111 +89,13 @@ pub trait IsOriented {
     fn is_oriented(&self) -> bool;
 }
 
-macro_rules! impl_is_oriented {
-    () => {
-        fn is_oriented(&self) -> bool {
-            self.iter_arcs().all(|(s, t)| !self.has_arc(t, s))
-        }
-    };
-}
-
-impl IsOriented for Vec<BTreeSet<usize>> {
-    impl_is_oriented!();
-}
-
-impl<H> IsOriented for Vec<HashSet<usize, H>>
+impl<T> IsOriented for T
 where
-    H: BuildHasher,
+    T: HasArc + IterArcs + ?Sized,
 {
-    impl_is_oriented!();
-}
-
-impl IsOriented for [BTreeSet<usize>] {
-    impl_is_oriented!();
-}
-
-impl<H> IsOriented for [HashSet<usize, H>]
-where
-    H: BuildHasher,
-{
-    impl_is_oriented!();
-}
-
-impl<const V: usize> IsOriented for [BTreeSet<usize>; V] {
-    impl_is_oriented!();
-}
-
-impl<const V: usize, H> IsOriented for [HashSet<usize, H>; V]
-where
-    H: BuildHasher,
-{
-    impl_is_oriented!();
-}
-
-impl IsOriented for BTreeMap<usize, BTreeSet<usize>> {
-    impl_is_oriented!();
-}
-
-impl<H> IsOriented for HashMap<usize, HashSet<usize, H>, H>
-where
-    H: BuildHasher,
-{
-    impl_is_oriented!();
-}
-
-impl<W> IsOriented for Vec<BTreeMap<usize, W>> {
-    impl_is_oriented!();
-}
-
-impl<W, H> IsOriented for Vec<HashMap<usize, W, H>>
-where
-    H: BuildHasher,
-{
-    impl_is_oriented!();
-}
-
-impl<W> IsOriented for [BTreeMap<usize, W>] {
-    impl_is_oriented!();
-}
-
-impl<W, H> IsOriented for [HashMap<usize, W, H>]
-where
-    H: BuildHasher,
-{
-    impl_is_oriented!();
-}
-
-impl<const V: usize, W> IsOriented for [BTreeMap<usize, W>; V] {
-    impl_is_oriented!();
-}
-
-impl<const V: usize, W, H> IsOriented for [HashMap<usize, W, H>; V]
-where
-    H: BuildHasher,
-{
-    impl_is_oriented!();
-}
-
-impl<W> IsOriented for BTreeMap<usize, BTreeMap<usize, W>> {
-    impl_is_oriented!();
-}
-
-impl<W, H> IsOriented for HashMap<usize, HashMap<usize, W, H>, H>
-where
-    H: BuildHasher,
-{
-    impl_is_oriented!();
-}
-
-impl IsOriented for BTreeSet<(usize, usize)> {
-    impl_is_oriented!();
-}
-
-impl<H> IsOriented for HashSet<(usize, usize), H>
-where
-    H: BuildHasher,
-{
-    impl_is_oriented!();
+    fn is_oriented(&self) -> bool {
+        self.iter_arcs().all(|(s, t)| !self.has_arc(t, s))
+    }
 }
 
 #[cfg(test)]
@@ -228,8 +117,14 @@ mod tests {
             },
             op::AddWeightedArc,
         },
-        alloc::collections::BTreeSet,
-        std::collections::HashSet,
+        alloc::collections::{
+            BTreeMap,
+            BTreeSet,
+        },
+        std::collections::{
+            HashMap,
+            HashSet,
+        },
     };
 
     macro_rules! test_unweighted_dynamic {

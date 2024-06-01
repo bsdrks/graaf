@@ -99,34 +99,52 @@ pub trait IterOutWeightedNeighbors<W> {
         W: 'a;
 }
 
+macro_rules! impl_usize {
+    () => {
+        /// # Panics
+        ///
+        /// Panics if `s` is not in the digraph.
+        fn iter_out_weighted_neighbors<'a>(
+            &'a self,
+            s: usize,
+        ) -> impl Iterator<Item = (usize, &'a W)>
+        where
+            W: 'a,
+        {
+            self[s].iter().map(|(t, w)| (*t, w))
+        }
+    };
+}
+
+macro_rules! impl_ref_usize {
+    () => {
+        /// # Panics
+        ///
+        /// Panics if `s` is not in the digraph.
+        fn iter_out_weighted_neighbors<'a>(
+            &'a self,
+            s: usize,
+        ) -> impl Iterator<Item = (usize, &'a W)>
+        where
+            W: 'a,
+        {
+            self[&s].iter().map(|(t, w)| (*t, w))
+        }
+    };
+}
+
 impl<W> IterOutWeightedNeighbors<W> for Vec<Vec<(usize, W)>>
 where
     W: Copy,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_weighted_neighbors<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a,
-    {
-        self[s].iter().map(|(t, w)| (*t, w))
-    }
+    impl_usize!();
 }
 
 impl<W> IterOutWeightedNeighbors<W> for Vec<BTreeSet<(usize, W)>>
 where
     W: Copy,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_weighted_neighbors<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a,
-    {
-        self[s].iter().map(|(t, w)| (*t, w))
-    }
+    impl_usize!();
 }
 
 impl<W, H> IterOutWeightedNeighbors<W> for Vec<HashSet<(usize, W), H>>
@@ -134,30 +152,14 @@ where
     W: Copy,
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_weighted_neighbors<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a,
-    {
-        self[s].iter().map(|(t, w)| (*t, w))
-    }
+    impl_usize!();
 }
 
 impl<W> IterOutWeightedNeighbors<W> for Vec<BTreeMap<usize, W>>
 where
     W: Copy,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_weighted_neighbors<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a,
-    {
-        self[s].iter().map(|(t, w)| (*t, w))
-    }
+    impl_usize!();
 }
 
 impl<W, H> IterOutWeightedNeighbors<W> for Vec<HashMap<usize, W, H>>
@@ -165,45 +167,21 @@ where
     W: Copy,
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_weighted_neighbors<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a,
-    {
-        self[s].iter().map(|(t, w)| (*t, w))
-    }
+    impl_usize!();
 }
 
 impl<W> IterOutWeightedNeighbors<W> for [Vec<(usize, W)>]
 where
     W: Copy,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_weighted_neighbors<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a,
-    {
-        self[s].iter().map(|(t, w)| (*t, w))
-    }
+    impl_usize!();
 }
 
 impl<W> IterOutWeightedNeighbors<W> for [BTreeSet<(usize, W)>]
 where
     W: Copy,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_weighted_neighbors<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a,
-    {
-        self[s].iter().map(|(t, w)| (*t, w))
-    }
+    impl_usize!();
 }
 
 impl<W, H> IterOutWeightedNeighbors<W> for [HashSet<(usize, W), H>]
@@ -211,30 +189,14 @@ where
     W: Copy,
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_weighted_neighbors<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a,
-    {
-        self[s].iter().map(|(t, w)| (*t, w))
-    }
+    impl_usize!();
 }
 
 impl<W> IterOutWeightedNeighbors<W> for [BTreeMap<usize, W>]
 where
     W: Copy,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_weighted_neighbors<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a,
-    {
-        self[s].iter().map(|(t, w)| (*t, w))
-    }
+    impl_usize!();
 }
 
 impl<W, H> IterOutWeightedNeighbors<W> for [HashMap<usize, W, H>]
@@ -242,39 +204,21 @@ where
     W: Copy,
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_weighted_neighbors<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a,
-    {
-        self[s].iter().map(|(t, w)| (*t, w))
-    }
+    impl_usize!();
 }
 
 impl<const V: usize, W> IterOutWeightedNeighbors<W> for [Vec<(usize, W)>; V]
 where
     W: Copy,
 {
-    fn iter_out_weighted_neighbors<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a,
-    {
-        self[s].iter().map(|(t, w)| (*t, w))
-    }
+    impl_usize!();
 }
 
 impl<const V: usize, W> IterOutWeightedNeighbors<W> for [BTreeSet<(usize, W)>; V]
 where
     W: Copy,
 {
-    fn iter_out_weighted_neighbors<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a,
-    {
-        self[s].iter().map(|(t, w)| (*t, w))
-    }
+    impl_usize!();
 }
 
 impl<const V: usize, W, H> IterOutWeightedNeighbors<W> for [HashSet<(usize, W), H>; V]
@@ -282,24 +226,14 @@ where
     W: Copy,
     H: BuildHasher,
 {
-    fn iter_out_weighted_neighbors<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a,
-    {
-        self[s].iter().map(|(t, w)| (*t, w))
-    }
+    impl_usize!();
 }
 
 impl<const V: usize, W> IterOutWeightedNeighbors<W> for [BTreeMap<usize, W>; V]
 where
     W: Copy,
 {
-    fn iter_out_weighted_neighbors<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a,
-    {
-        self[s].iter().map(|(t, w)| (*t, w))
-    }
+    impl_usize!();
 }
 
 impl<const V: usize, W, H> IterOutWeightedNeighbors<W> for [HashMap<usize, W, H>; V]
@@ -307,27 +241,14 @@ where
     W: Copy,
     H: BuildHasher,
 {
-    fn iter_out_weighted_neighbors<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a,
-    {
-        self[s].iter().map(|(t, w)| (*t, w))
-    }
+    impl_usize!();
 }
 
 impl<W> IterOutWeightedNeighbors<W> for BTreeMap<usize, Vec<(usize, W)>>
 where
     W: Copy,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_weighted_neighbors<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a,
-    {
-        self[&s].iter().map(|(t, w)| (*t, w))
-    }
+    impl_ref_usize!();
 }
 
 impl<W, H> IterOutWeightedNeighbors<W> for HashMap<usize, Vec<(usize, W)>, H>
@@ -335,30 +256,14 @@ where
     H: BuildHasher,
     W: Copy,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_weighted_neighbors<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a,
-    {
-        self[&s].iter().map(|(t, w)| (*t, w))
-    }
+    impl_ref_usize!();
 }
 
 impl<W> IterOutWeightedNeighbors<W> for BTreeMap<usize, BTreeSet<(usize, W)>>
 where
     W: Copy,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_weighted_neighbors<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a,
-    {
-        self[&s].iter().map(|(t, w)| (*t, w))
-    }
+    impl_ref_usize!();
 }
 
 impl<W, H> IterOutWeightedNeighbors<W> for HashMap<usize, HashSet<(usize, W), H>, H>
@@ -366,30 +271,14 @@ where
     H: BuildHasher,
     W: Copy,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_weighted_neighbors<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a,
-    {
-        self[&s].iter().map(|(t, w)| (*t, w))
-    }
+    impl_ref_usize!();
 }
 
 impl<W> IterOutWeightedNeighbors<W> for BTreeMap<usize, BTreeMap<usize, W>>
 where
     W: Copy,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_weighted_neighbors<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a,
-    {
-        self[&s].iter().map(|(t, w)| (*t, w))
-    }
+    impl_ref_usize!();
 }
 
 impl<W, H> IterOutWeightedNeighbors<W> for HashMap<usize, HashMap<usize, W, H>, H>
@@ -397,15 +286,7 @@ where
     H: BuildHasher,
     W: Copy,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_weighted_neighbors<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a,
-    {
-        self[&s].iter().map(|(t, w)| (*t, w))
-    }
+    impl_ref_usize!();
 }
 
 #[cfg(test)]

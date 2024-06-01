@@ -99,52 +99,49 @@ pub trait IterOutNeighborsMut {
     fn iter_out_neighbors_mut(&mut self, s: usize) -> impl Iterator<Item = &mut usize>;
 }
 
+macro_rules! impl_index_mut {
+    () => {
+        /// # Panics
+        ///
+        /// Panics if `s` is not in the digraph.
+        fn iter_out_neighbors_mut(&mut self, s: usize) -> impl Iterator<Item = &mut usize> {
+            self[s].iter_mut()
+        }
+    };
+}
+
+macro_rules! impl_get_mut {
+    () => {
+        /// # Panics
+        ///
+        /// Panics if `s` is not in the digraph.
+        fn iter_out_neighbors_mut(&mut self, s: usize) -> impl Iterator<Item = &mut usize> {
+            self.get_mut(&s).unwrap().iter_mut()
+        }
+    };
+}
+
 impl IterOutNeighborsMut for Vec<Vec<usize>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_neighbors_mut(&mut self, s: usize) -> impl Iterator<Item = &mut usize> {
-        self[s].iter_mut()
-    }
+    impl_index_mut!();
 }
 
 impl IterOutNeighborsMut for [Vec<usize>] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_neighbors_mut(&mut self, s: usize) -> impl Iterator<Item = &mut usize> {
-        self[s].iter_mut()
-    }
+    impl_index_mut!();
 }
 
 impl<const V: usize> IterOutNeighborsMut for [Vec<usize>; V] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_neighbors_mut(&mut self, s: usize) -> impl Iterator<Item = &mut usize> {
-        self[s].iter_mut()
-    }
+    impl_index_mut!();
 }
 
 impl IterOutNeighborsMut for BTreeMap<usize, Vec<usize>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_neighbors_mut(&mut self, s: usize) -> impl Iterator<Item = &mut usize> {
-        self.get_mut(&s).unwrap().iter_mut()
-    }
+    impl_get_mut!();
 }
 
 impl<H> IterOutNeighborsMut for HashMap<usize, Vec<usize>, H>
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn iter_out_neighbors_mut(&mut self, s: usize) -> impl Iterator<Item = &mut usize> {
-        self.get_mut(&s).unwrap().iter_mut()
-    }
+    impl_get_mut!();
 }
 
 #[cfg(test)]

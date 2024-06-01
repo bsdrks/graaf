@@ -33,9 +33,7 @@ where
 
     clone.add_weighted_arc(s, t, w);
 
-    let _ = clone.remove_arc(s, t);
-
-    *digraph == clone
+    clone.remove_arc(s, t) && *digraph == clone
 }
 
 #[cfg(test)]

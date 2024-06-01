@@ -108,15 +108,7 @@ use {
         IterArcs,
         IterVertices,
     },
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
-    core::hash::BuildHasher,
-    std::collections::{
-        HashMap,
-        HashSet,
-    },
+    alloc::collections::BTreeSet,
 };
 
 /// Determine whether a digraph is a subdigraph of another digraph.
@@ -174,105 +166,18 @@ pub trait IsSubdigraph {
     fn is_subdigraph(&self, d: &Self) -> bool;
 }
 
-macro_rules! impl_is_subdigraph {
-    () => {
-        fn is_subdigraph(&self, d: &Self) -> bool {
-            let hv = self.iter_vertices().collect::<BTreeSet<_>>();
-            let dv = d.iter_vertices().collect::<BTreeSet<_>>();
-
-            self.iter_arcs()
-                .all(|(s, t)| d.has_arc(s, t) && hv.contains(&s) && hv.contains(&t))
-                && hv.iter().all(|s| dv.contains(s))
-        }
-    };
-}
-
-impl IsSubdigraph for Vec<BTreeSet<usize>> {
-    impl_is_subdigraph!();
-}
-
-impl<H> IsSubdigraph for Vec<HashSet<usize, H>>
+impl<T> IsSubdigraph for T
 where
-    H: BuildHasher,
+    T: HasArc + IterArcs + IterVertices + ?Sized,
 {
-    impl_is_subdigraph!();
-}
+    fn is_subdigraph(&self, d: &Self) -> bool {
+        let hv = self.iter_vertices().collect::<BTreeSet<_>>();
+        let dv = d.iter_vertices().collect::<BTreeSet<_>>();
 
-impl IsSubdigraph for [BTreeSet<usize>] {
-    impl_is_subdigraph!();
-}
-
-impl<H> IsSubdigraph for [HashSet<usize, H>]
-where
-    H: BuildHasher,
-{
-    impl_is_subdigraph!();
-}
-
-impl<const V: usize> IsSubdigraph for [BTreeSet<usize>; V] {
-    impl_is_subdigraph!();
-}
-
-impl<const V: usize, H> IsSubdigraph for [HashSet<usize, H>; V]
-where
-    H: BuildHasher,
-{
-    impl_is_subdigraph!();
-}
-
-impl IsSubdigraph for BTreeMap<usize, BTreeSet<usize>> {
-    impl_is_subdigraph!();
-}
-
-impl<H> IsSubdigraph for HashMap<usize, HashSet<usize, H>, H>
-where
-    H: BuildHasher,
-{
-    impl_is_subdigraph!();
-}
-
-impl<W> IsSubdigraph for Vec<BTreeMap<usize, W>> {
-    impl_is_subdigraph!();
-}
-
-impl<W, H> IsSubdigraph for Vec<HashMap<usize, W, H>>
-where
-    H: BuildHasher,
-{
-    impl_is_subdigraph!();
-}
-
-impl<W> IsSubdigraph for [BTreeMap<usize, W>] {
-    impl_is_subdigraph!();
-}
-
-impl<W, H> IsSubdigraph for [HashMap<usize, W, H>]
-where
-    H: BuildHasher,
-{
-    impl_is_subdigraph!();
-}
-
-impl<const V: usize, W> IsSubdigraph for [BTreeMap<usize, W>; V] {
-    impl_is_subdigraph!();
-}
-
-impl<const V: usize, W, H> IsSubdigraph for [HashMap<usize, W, H>; V]
-where
-    H: BuildHasher,
-{
-    impl_is_subdigraph!();
-}
-
-impl<W> IsSubdigraph for BTreeMap<usize, BTreeMap<usize, W>> {
-    impl_is_subdigraph!();
-}
-
-impl<W, H> IsSubdigraph for HashMap<usize, HashMap<usize, W, H>, H>
-where
-    H: BuildHasher,
-{
-    impl_is_subdigraph!();
+        self.iter_arcs()
+            .all(|(s, t)| d.has_arc(s, t) && hv.contains(&s) && hv.contains(&t))
+            && hv.iter().all(|s| dv.contains(s))
+    }
 }
 
 #[cfg(test)]
@@ -283,7 +188,15 @@ mod tests {
             RandomTournament,
             RandomTournamentConst,
         },
+        alloc::collections::{
+            BTreeMap,
+            BTreeSet,
+        },
         proptest::proptest,
+        std::collections::{
+            HashMap,
+            HashSet,
+        },
     };
 
     fn is_subdigraph_self<T>(digraph: &T)

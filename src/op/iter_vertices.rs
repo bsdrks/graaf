@@ -59,290 +59,222 @@ pub trait IterVertices {
     fn iter_vertices(&self) -> impl Iterator<Item = usize>;
 }
 
+macro_rules! impl_len {
+    () => {
+        fn iter_vertices(&self) -> impl Iterator<Item = usize> {
+            0..self.len()
+        }
+    };
+}
+
+macro_rules! impl_const {
+    () => {
+        fn iter_vertices(&self) -> impl Iterator<Item = usize> {
+            0..V
+        }
+    };
+}
+
+macro_rules! impl_map_unweighted {
+    ($ty:ident) => {
+        fn iter_vertices(&self) -> impl Iterator<Item = usize> {
+            self.keys()
+                .copied()
+                .chain(self.values().flat_map(|v| v.iter().copied()))
+                .collect::<$ty<_>>()
+                .into_iter()
+        }
+    };
+}
+
+macro_rules! impl_map_weighted {
+    ($ty:ident) => {
+        fn iter_vertices(&self) -> impl Iterator<Item = usize> {
+            self.keys()
+                .copied()
+                .chain(self.values().flat_map(|v| v.iter().map(|(t, _)| *t)))
+                .collect::<$ty<_>>()
+                .into_iter()
+        }
+    };
+}
+
 impl IterVertices for Vec<Vec<usize>> {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.len()
-    }
+    impl_len!();
 }
 
 impl IterVertices for Vec<BTreeSet<usize>> {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.len()
-    }
+    impl_len!();
 }
 
 impl<H> IterVertices for Vec<HashSet<usize, H>>
 where
     H: BuildHasher,
 {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.len()
-    }
+    impl_len!();
 }
 
 impl IterVertices for [Vec<usize>] {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.len()
-    }
+    impl_len!();
 }
 
 impl IterVertices for [BTreeSet<usize>] {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.len()
-    }
+    impl_len!();
 }
 
 impl<H> IterVertices for [HashSet<usize, H>]
 where
     H: BuildHasher,
 {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.len()
-    }
+    impl_len!();
 }
 
 impl<const V: usize> IterVertices for [Vec<usize>; V] {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.len()
-    }
+    impl_const!();
 }
 
 impl<const V: usize> IterVertices for [BTreeSet<usize>; V] {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.len()
-    }
-}
-
-impl IterVertices for BTreeMap<usize, BTreeSet<usize>> {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        self.keys()
-            .copied()
-            .chain(self.values().flat_map(|set| set.iter().copied()))
-            .collect::<BTreeSet<_>>()
-            .into_iter()
-    }
+    impl_const!();
 }
 
 impl IterVertices for BTreeMap<usize, Vec<usize>> {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        self.keys()
-            .copied()
-            .chain(self.values().flat_map(|set| set.iter().copied()))
-            .collect::<BTreeSet<_>>()
-            .into_iter()
-    }
+    impl_map_unweighted!(BTreeSet);
 }
 
-impl<H> IterVertices for HashMap<usize, HashSet<usize, H>, H>
-where
-    H: BuildHasher,
-{
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        self.keys()
-            .copied()
-            .chain(self.values().flat_map(|set| set.iter().copied()))
-            .collect::<HashSet<_>>()
-            .into_iter()
-    }
+impl IterVertices for BTreeMap<usize, BTreeSet<usize>> {
+    impl_map_unweighted!(BTreeSet);
 }
 
 impl<H> IterVertices for HashMap<usize, Vec<usize>, H>
 where
     H: BuildHasher,
 {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        self.keys()
-            .copied()
-            .chain(self.values().flat_map(|set| set.iter().copied()))
-            .collect::<HashSet<_>>()
-            .into_iter()
-    }
+    impl_map_unweighted!(HashSet);
+}
+
+impl<H> IterVertices for HashMap<usize, HashSet<usize, H>, H>
+where
+    H: BuildHasher,
+{
+    impl_map_unweighted!(HashSet);
 }
 
 impl<W> IterVertices for Vec<Vec<(usize, W)>> {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.len()
-    }
+    impl_len!();
 }
 
 impl<W> IterVertices for Vec<BTreeSet<(usize, W)>> {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.len()
-    }
+    impl_len!();
 }
 
 impl<W> IterVertices for Vec<BTreeMap<usize, W>> {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.len()
-    }
+    impl_len!();
 }
 
 impl<W, H> IterVertices for Vec<HashSet<(usize, W), H>>
 where
     H: BuildHasher,
 {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.len()
-    }
+    impl_len!();
 }
 
 impl<W, H> IterVertices for Vec<HashMap<usize, W, H>>
 where
     H: BuildHasher,
 {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.len()
-    }
+    impl_len!();
 }
 
 impl<W> IterVertices for [Vec<(usize, W)>] {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.len()
-    }
+    impl_len!();
 }
 
 impl<W> IterVertices for [BTreeSet<(usize, W)>] {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.len()
-    }
+    impl_len!();
 }
 
 impl<W> IterVertices for [BTreeMap<usize, W>] {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.len()
-    }
+    impl_len!();
 }
 
 impl<W, H> IterVertices for [HashSet<(usize, W), H>]
 where
     H: BuildHasher,
 {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.len()
-    }
+    impl_len!();
 }
 
 impl<W, H> IterVertices for [HashMap<usize, W, H>]
 where
     H: BuildHasher,
 {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.len()
-    }
+    impl_len!();
 }
 
 impl<const V: usize, W> IterVertices for [Vec<(usize, W)>; V] {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.len()
-    }
+    impl_const!();
 }
 
 impl<const V: usize, W> IterVertices for [BTreeSet<(usize, W)>; V] {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.len()
-    }
+    impl_const!();
 }
 
 impl<const V: usize, W> IterVertices for [BTreeMap<usize, W>; V] {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.len()
-    }
+    impl_const!();
 }
 
 impl<const V: usize, H> IterVertices for [HashSet<usize, H>; V]
 where
     H: BuildHasher,
 {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.len()
-    }
+    impl_const!();
 }
 
 impl<const V: usize, W, H> IterVertices for [HashSet<(usize, W), H>; V]
 where
     H: BuildHasher,
 {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.len()
-    }
+    impl_const!();
 }
 
 impl<const V: usize, W, H> IterVertices for [HashMap<usize, W, H>; V]
 where
     H: BuildHasher,
 {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.len()
-    }
+    impl_const!();
 }
 
 impl<W> IterVertices for BTreeMap<usize, Vec<(usize, W)>> {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        self.keys()
-            .copied()
-            .chain(self.values().flat_map(|vec| vec.iter().map(|(t, _)| *t)))
-            .collect::<BTreeSet<_>>()
-            .into_iter()
-    }
+    impl_map_weighted!(BTreeSet);
 }
 
 impl<W> IterVertices for BTreeMap<usize, BTreeSet<(usize, W)>> {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        self.keys()
-            .copied()
-            .chain(self.values().flat_map(|set| set.iter().map(|(t, _)| *t)))
-            .collect::<BTreeSet<_>>()
-            .into_iter()
-    }
+    impl_map_weighted!(BTreeSet);
 }
 
 impl<W> IterVertices for BTreeMap<usize, BTreeMap<usize, W>> {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        self.keys()
-            .copied()
-            .chain(self.values().flat_map(|map| map.keys().copied()))
-            .collect::<BTreeSet<_>>()
-            .into_iter()
-    }
+    impl_map_weighted!(BTreeSet);
 }
 
 impl<W, H> IterVertices for HashMap<usize, Vec<(usize, W)>, H>
 where
     H: BuildHasher,
 {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        self.keys()
-            .copied()
-            .chain(self.values().flat_map(|vec| vec.iter().map(|(t, _)| *t)))
-            .collect::<HashSet<_>>()
-            .into_iter()
-    }
+    impl_map_weighted!(HashSet);
 }
 
 impl<W, H> IterVertices for HashMap<usize, HashSet<(usize, W), H>, H>
 where
     H: BuildHasher,
 {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        self.keys()
-            .copied()
-            .chain(self.values().flat_map(|set| set.iter().map(|(t, _)| *t)))
-            .collect::<HashSet<_>>()
-            .into_iter()
-    }
+    impl_map_weighted!(HashSet);
 }
 
 impl<W, H> IterVertices for HashMap<usize, HashMap<usize, W, H>, H>
 where
     H: BuildHasher,
 {
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        self.keys()
-            .copied()
-            .chain(self.values().flat_map(|map| map.keys().copied()))
-            .collect::<HashSet<_>>()
-            .into_iter()
-    }
+    impl_map_weighted!(HashSet);
 }
 
 #[cfg(test)]

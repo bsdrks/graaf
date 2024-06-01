@@ -59,374 +59,282 @@ pub trait IterArcs {
     fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)>;
 }
 
+macro_rules! impl_enumerate_unweighted {
+    () => {
+        fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
+            self.iter()
+                .enumerate()
+                .flat_map(|(s, v)| v.iter().map(move |t| (s, *t)))
+        }
+    };
+}
+
+macro_rules! impl_map_unweighted {
+    () => {
+        fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
+            self.iter()
+                .flat_map(|(s, v)| v.iter().map(move |t| (*s, *t)))
+        }
+    };
+}
+
+macro_rules! impl_tuple_unweighted {
+    () => {
+        fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
+            self.iter().copied()
+        }
+    };
+}
+
+macro_rules! impl_enumerate_weighted {
+    () => {
+        fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
+            self.iter()
+                .enumerate()
+                .flat_map(|(s, v)| v.iter().map(move |(t, _)| (s, *t)))
+        }
+    };
+}
+
+macro_rules! impl_map_weighted {
+    () => {
+        fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
+            self.iter()
+                .flat_map(|(s, v)| v.iter().map(move |(t, _)| (*s, *t)))
+        }
+    };
+}
+
+macro_rules! impl_tuple_weighted {
+    () => {
+        fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
+            self.iter().map(|(s, t, _)| (*s, *t))
+        }
+    };
+}
+
 impl IterArcs for Vec<Vec<usize>> {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .enumerate()
-            .flat_map(|(s, vec)| vec.iter().map(move |t| (s, *t)))
-    }
+    impl_enumerate_unweighted!();
 }
 
 impl IterArcs for Vec<BTreeSet<usize>> {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .enumerate()
-            .flat_map(|(s, set)| set.iter().map(move |t| (s, *t)))
-    }
+    impl_enumerate_unweighted!();
 }
 
 impl<H> IterArcs for Vec<HashSet<usize, H>>
 where
     H: BuildHasher,
 {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .enumerate()
-            .flat_map(|(s, set)| set.iter().map(move |t| (s, *t)))
-    }
+    impl_enumerate_unweighted!();
 }
 
 impl IterArcs for [Vec<usize>] {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .enumerate()
-            .flat_map(|(s, vec)| vec.iter().map(move |t| (s, *t)))
-    }
+    impl_enumerate_unweighted!();
 }
 
 impl IterArcs for [BTreeSet<usize>] {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .enumerate()
-            .flat_map(|(s, set)| set.iter().map(move |t| (s, *t)))
-    }
+    impl_enumerate_unweighted!();
 }
 
 impl<H> IterArcs for [HashSet<usize, H>]
 where
     H: BuildHasher,
 {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .enumerate()
-            .flat_map(|(s, set)| set.iter().map(move |t| (s, *t)))
-    }
+    impl_enumerate_unweighted!();
 }
 
 impl<const V: usize> IterArcs for [Vec<usize>; V] {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .enumerate()
-            .flat_map(|(s, vec)| vec.iter().map(move |t| (s, *t)))
-    }
+    impl_enumerate_unweighted!();
 }
 
 impl<const V: usize> IterArcs for [BTreeSet<usize>; V] {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .enumerate()
-            .flat_map(|(s, set)| set.iter().map(move |t| (s, *t)))
-    }
+    impl_enumerate_unweighted!();
 }
 
 impl<const V: usize, H> IterArcs for [HashSet<usize, H>; V]
 where
     H: BuildHasher,
 {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .enumerate()
-            .flat_map(|(s, set)| set.iter().map(move |t| (s, *t)))
-    }
+    impl_enumerate_unweighted!();
 }
 
 impl IterArcs for BTreeMap<usize, Vec<usize>> {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .flat_map(|(s, vec)| vec.iter().map(move |t| (*s, *t)))
-    }
+    impl_map_unweighted!();
 }
 
 impl IterArcs for BTreeMap<usize, BTreeSet<usize>> {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .flat_map(|(s, set)| set.iter().map(move |t| (*s, *t)))
-    }
+    impl_map_unweighted!();
 }
 
 impl<H> IterArcs for HashMap<usize, Vec<usize>, H>
 where
     H: BuildHasher,
 {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .flat_map(|(s, vec)| vec.iter().map(move |t| (*s, *t)))
-    }
+    impl_map_unweighted!();
 }
 
 impl<H> IterArcs for HashMap<usize, HashSet<usize, H>, H>
 where
     H: BuildHasher,
 {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .flat_map(|(s, set)| set.iter().map(move |t| (*s, *t)))
-    }
+    impl_map_unweighted!();
 }
 
 impl IterArcs for Vec<(usize, usize)> {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter().copied()
-    }
+    impl_tuple_unweighted!();
 }
 
 impl IterArcs for [(usize, usize)] {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter().copied()
-    }
+    impl_tuple_unweighted!();
 }
 
 impl<const V: usize> IterArcs for [(usize, usize); V] {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter().copied()
-    }
+    impl_tuple_unweighted!();
 }
 
 impl IterArcs for BTreeSet<(usize, usize)> {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter().copied()
-    }
+    impl_tuple_unweighted!();
 }
 
 impl<H> IterArcs for HashSet<(usize, usize), H>
 where
     H: BuildHasher,
 {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter().copied()
-    }
+    impl_tuple_unweighted!();
 }
 
 impl<W> IterArcs for Vec<Vec<(usize, W)>> {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .enumerate()
-            .flat_map(|(s, vec)| vec.iter().map(move |(t, _)| (s, *t)))
-    }
+    impl_enumerate_weighted!();
 }
 
 impl<W> IterArcs for Vec<BTreeSet<(usize, W)>> {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .enumerate()
-            .flat_map(|(s, set)| set.iter().map(move |(t, _)| (s, *t)))
-    }
+    impl_enumerate_weighted!();
 }
 
 impl<W> IterArcs for Vec<BTreeMap<usize, W>> {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .enumerate()
-            .flat_map(|(s, map)| map.iter().map(move |(t, _)| (s, *t)))
-    }
+    impl_enumerate_weighted!();
 }
 
 impl<W, H> IterArcs for Vec<HashSet<(usize, W), H>>
 where
     H: BuildHasher,
 {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .enumerate()
-            .flat_map(|(s, set)| set.iter().map(move |(t, _)| (s, *t)))
-    }
+    impl_enumerate_weighted!();
 }
 
 impl<W, H> IterArcs for Vec<HashMap<usize, W, H>>
 where
     H: BuildHasher,
 {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .enumerate()
-            .flat_map(|(s, map)| map.iter().map(move |(t, _)| (s, *t)))
-    }
+    impl_enumerate_weighted!();
 }
 
 impl<W> IterArcs for [Vec<(usize, W)>] {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .enumerate()
-            .flat_map(|(s, vec)| vec.iter().map(move |(t, _)| (s, *t)))
-    }
+    impl_enumerate_weighted!();
 }
 
 impl<W> IterArcs for [BTreeSet<(usize, W)>] {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .enumerate()
-            .flat_map(|(s, set)| set.iter().map(move |(t, _)| (s, *t)))
-    }
+    impl_enumerate_weighted!();
 }
 
 impl<W> IterArcs for [BTreeMap<usize, W>] {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .enumerate()
-            .flat_map(|(s, map)| map.iter().map(move |(t, _)| (s, *t)))
-    }
+    impl_enumerate_weighted!();
 }
 
 impl<W, H> IterArcs for [HashSet<(usize, W), H>]
 where
     H: BuildHasher,
 {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .enumerate()
-            .flat_map(|(s, set)| set.iter().map(move |(t, _)| (s, *t)))
-    }
+    impl_enumerate_weighted!();
 }
 
 impl<W, H> IterArcs for [HashMap<usize, W, H>]
 where
     H: BuildHasher,
 {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .enumerate()
-            .flat_map(|(s, map)| map.iter().map(move |(t, _)| (s, *t)))
-    }
+    impl_enumerate_weighted!();
 }
 
 impl<const V: usize, W> IterArcs for [Vec<(usize, W)>; V] {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .enumerate()
-            .flat_map(|(s, vec)| vec.iter().map(move |(t, _)| (s, *t)))
-    }
+    impl_enumerate_weighted!();
 }
 
 impl<const V: usize, W> IterArcs for [BTreeSet<(usize, W)>; V] {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .enumerate()
-            .flat_map(|(s, set)| set.iter().map(move |(t, _)| (s, *t)))
-    }
+    impl_enumerate_weighted!();
 }
 
 impl<const V: usize, W> IterArcs for [BTreeMap<usize, W>; V] {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .enumerate()
-            .flat_map(|(s, map)| map.iter().map(move |(t, _)| (s, *t)))
-    }
+    impl_enumerate_weighted!();
 }
 
 impl<const V: usize, W, H> IterArcs for [HashSet<(usize, W), H>; V]
 where
     H: BuildHasher,
 {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .enumerate()
-            .flat_map(|(s, set)| set.iter().map(move |(t, _)| (s, *t)))
-    }
+    impl_enumerate_weighted!();
 }
 
 impl<const V: usize, W, H> IterArcs for [HashMap<usize, W, H>; V]
 where
     H: BuildHasher,
 {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .enumerate()
-            .flat_map(|(s, map)| map.iter().map(move |(t, _)| (s, *t)))
-    }
+    impl_enumerate_weighted!();
 }
 
 impl<W> IterArcs for BTreeMap<usize, Vec<(usize, W)>> {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .flat_map(|(s, vec)| vec.iter().map(move |(t, _)| (*s, *t)))
-    }
+    impl_map_weighted!();
 }
 
 impl<W> IterArcs for BTreeMap<usize, BTreeSet<(usize, W)>> {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .flat_map(|(s, set)| set.iter().map(move |(t, _)| (*s, *t)))
-    }
+    impl_map_weighted!();
 }
 
 impl<W> IterArcs for BTreeMap<usize, BTreeMap<usize, W>> {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .flat_map(|(s, map)| map.iter().map(move |(t, _)| (*s, *t)))
-    }
+    impl_map_weighted!();
 }
 
 impl<W, H> IterArcs for HashMap<usize, Vec<(usize, W)>, H>
 where
     H: BuildHasher,
 {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .flat_map(|(s, vec)| vec.iter().map(move |(t, _)| (*s, *t)))
-    }
+    impl_map_weighted!();
 }
 
 impl<W, H> IterArcs for HashMap<usize, HashSet<(usize, W), H>, H>
 where
     H: BuildHasher,
 {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .flat_map(|(s, set)| set.iter().map(move |(t, _)| (*s, *t)))
-    }
+    impl_map_weighted!();
 }
 
 impl<W, H> IterArcs for HashMap<usize, HashMap<usize, W, H>, H>
 where
     H: BuildHasher,
 {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter()
-            .flat_map(|(s, map)| map.iter().map(move |(t, _)| (*s, *t)))
-    }
+    impl_map_weighted!();
 }
 
 impl<W> IterArcs for Vec<(usize, usize, W)> {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter().map(|(s, t, _)| (*s, *t))
-    }
+    impl_tuple_weighted!();
 }
 
 impl<W> IterArcs for [(usize, usize, W)] {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter().map(|(s, t, _)| (*s, *t))
-    }
+    impl_tuple_weighted!();
 }
 
 impl<const V: usize, W> IterArcs for [(usize, usize, W); V] {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter().map(|(s, t, _)| (*s, *t))
-    }
+    impl_tuple_weighted!();
 }
 
 impl<W> IterArcs for BTreeSet<(usize, usize, W)> {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter().map(|(s, t, _)| (*s, *t))
-    }
+    impl_tuple_weighted!();
 }
 
 impl<W, H> IterArcs for HashSet<(usize, usize, W), H>
 where
     H: BuildHasher,
 {
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter().map(|(s, t, _)| (*s, *t))
-    }
+    impl_tuple_weighted!();
 }
 
 #[cfg(test)]

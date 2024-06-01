@@ -105,126 +105,124 @@ pub trait Indegree {
     }
 }
 
+macro_rules! impl_iter_contains {
+    () => {
+        fn indegree(&self, t: usize) -> usize {
+            self.iter().filter(|set| set.contains(&t)).count()
+        }
+    };
+}
+
+macro_rules! impl_values_contains {
+    () => {
+        fn indegree(&self, t: usize) -> usize {
+            self.values().filter(|set| set.contains(&t)).count()
+        }
+    };
+}
+
+macro_rules! impl_iter_contains_key {
+    () => {
+        fn indegree(&self, t: usize) -> usize {
+            self.iter().filter(|map| map.contains_key(&t)).count()
+        }
+    };
+}
+
+macro_rules! impl_values_contains_key {
+    () => {
+        fn indegree(&self, t: usize) -> usize {
+            self.values().filter(|map| map.contains_key(&t)).count()
+        }
+    };
+}
+
 impl Indegree for Vec<BTreeSet<usize>> {
-    fn indegree(&self, t: usize) -> usize {
-        self.iter().filter(|set| set.contains(&t)).count()
-    }
+    impl_iter_contains!();
 }
 
 impl<H> Indegree for Vec<HashSet<usize, H>>
 where
     H: BuildHasher,
 {
-    fn indegree(&self, t: usize) -> usize {
-        self.iter().filter(|set| set.contains(&t)).count()
-    }
+    impl_iter_contains!();
 }
 
 impl Indegree for [BTreeSet<usize>] {
-    fn indegree(&self, t: usize) -> usize {
-        self.iter().filter(|set| set.contains(&t)).count()
-    }
+    impl_iter_contains!();
 }
 
 impl<H> Indegree for [HashSet<usize, H>]
 where
     H: BuildHasher,
 {
-    fn indegree(&self, t: usize) -> usize {
-        self.iter().filter(|set| set.contains(&t)).count()
-    }
+    impl_iter_contains!();
 }
 
 impl<const V: usize> Indegree for [BTreeSet<usize>; V] {
-    fn indegree(&self, t: usize) -> usize {
-        self.iter().filter(|set| set.contains(&t)).count()
-    }
+    impl_iter_contains!();
 }
 
 impl<const V: usize, H> Indegree for [HashSet<usize, H>; V]
 where
     H: BuildHasher,
 {
-    fn indegree(&self, t: usize) -> usize {
-        self.iter().filter(|set| set.contains(&t)).count()
-    }
+    impl_iter_contains!();
 }
 
 impl Indegree for BTreeMap<usize, BTreeSet<usize>> {
-    fn indegree(&self, t: usize) -> usize {
-        self.values().filter(|set| set.contains(&t)).count()
-    }
+    impl_values_contains!();
 }
 
 impl<H> Indegree for HashMap<usize, HashSet<usize, H>, H>
 where
     H: BuildHasher,
 {
-    fn indegree(&self, t: usize) -> usize {
-        self.values().filter(|set| set.contains(&t)).count()
-    }
+    impl_values_contains!();
 }
 
 impl<W> Indegree for Vec<BTreeMap<usize, W>> {
-    fn indegree(&self, t: usize) -> usize {
-        self.iter().filter(|map| map.contains_key(&t)).count()
-    }
+    impl_iter_contains_key!();
 }
 
 impl<W, H> Indegree for Vec<HashMap<usize, W, H>>
 where
     H: BuildHasher,
 {
-    fn indegree(&self, t: usize) -> usize {
-        self.iter().filter(|map| map.contains_key(&t)).count()
-    }
+    impl_iter_contains_key!();
 }
 
 impl<W> Indegree for [BTreeMap<usize, W>] {
-    fn indegree(&self, t: usize) -> usize {
-        self.iter().filter(|map| map.contains_key(&t)).count()
-    }
+    impl_iter_contains_key!();
 }
 
 impl<W, H> Indegree for [HashMap<usize, W, H>]
 where
     H: BuildHasher,
 {
-    fn indegree(&self, t: usize) -> usize {
-        self.iter().filter(|map| map.contains_key(&t)).count()
-    }
+    impl_iter_contains_key!();
 }
 
 impl<const V: usize, W> Indegree for [BTreeMap<usize, W>; V] {
-    fn indegree(&self, t: usize) -> usize {
-        self.iter().filter(|map| map.contains_key(&t)).count()
-    }
+    impl_iter_contains_key!();
 }
 
 impl<const V: usize, W, H> Indegree for [HashMap<usize, W, H>; V]
 where
     H: BuildHasher,
 {
-    fn indegree(&self, t: usize) -> usize {
-        self.iter().filter(|map| map.contains_key(&t)).count()
-    }
+    impl_iter_contains_key!();
 }
 
 impl<W> Indegree for BTreeMap<usize, BTreeMap<usize, W>> {
-    fn indegree(&self, t: usize) -> usize {
-        self.values().filter(|map| map.contains_key(&t)).count()
-    }
+    impl_values_contains_key!();
 }
 
 impl<W, H> Indegree for HashMap<usize, HashMap<usize, W, H>, H>
 where
     H: BuildHasher,
 {
-    fn indegree(&self, t: usize) -> usize {
-        self.values()
-            .map(|map| map.keys().filter(|&&u| u == t).count())
-            .sum()
-    }
+    impl_values_contains_key!();
 }
 
 #[cfg(test)]

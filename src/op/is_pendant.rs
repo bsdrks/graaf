@@ -25,20 +25,7 @@
 //! assert!(!digraph.is_pendant(4));
 //! ```
 
-extern crate alloc;
-
-use {
-    crate::op::Degree,
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
-    core::hash::BuildHasher,
-    std::collections::{
-        HashMap,
-        HashSet,
-    },
-};
+use crate::op::Degree;
 
 /// Determine whether a vertex is a pendant vertex.
 ///
@@ -86,120 +73,9 @@ pub trait IsPendant {
     fn is_pendant(&self, s: usize) -> bool;
 }
 
-impl IsPendant for Vec<BTreeSet<usize>> {
-    fn is_pendant(&self, s: usize) -> bool {
-        self.degree(s) == 1
-    }
-}
-
-impl<H> IsPendant for Vec<HashSet<usize, H>>
+impl<T> IsPendant for T
 where
-    H: BuildHasher,
-{
-    fn is_pendant(&self, s: usize) -> bool {
-        self.degree(s) == 1
-    }
-}
-
-impl IsPendant for [BTreeSet<usize>] {
-    fn is_pendant(&self, s: usize) -> bool {
-        self.degree(s) == 1
-    }
-}
-
-impl<H> IsPendant for [HashSet<usize, H>]
-where
-    H: BuildHasher,
-{
-    fn is_pendant(&self, s: usize) -> bool {
-        self.degree(s) == 1
-    }
-}
-
-impl<const V: usize> IsPendant for [BTreeSet<usize>; V] {
-    fn is_pendant(&self, s: usize) -> bool {
-        self.degree(s) == 1
-    }
-}
-
-impl<const V: usize, H> IsPendant for [HashSet<usize, H>; V]
-where
-    H: BuildHasher,
-{
-    fn is_pendant(&self, s: usize) -> bool {
-        self.degree(s) == 1
-    }
-}
-
-impl IsPendant for BTreeMap<usize, BTreeSet<usize>> {
-    fn is_pendant(&self, s: usize) -> bool {
-        self.degree(s) == 1
-    }
-}
-
-impl<H> IsPendant for HashMap<usize, HashSet<usize, H>, H>
-where
-    H: BuildHasher,
-{
-    fn is_pendant(&self, s: usize) -> bool {
-        self.degree(s) == 1
-    }
-}
-
-impl<W> IsPendant for Vec<BTreeMap<usize, W>> {
-    fn is_pendant(&self, s: usize) -> bool {
-        self.degree(s) == 1
-    }
-}
-
-impl<W, H> IsPendant for Vec<HashMap<usize, W, H>>
-where
-    H: BuildHasher,
-{
-    fn is_pendant(&self, s: usize) -> bool {
-        self.degree(s) == 1
-    }
-}
-
-impl<W> IsPendant for [BTreeMap<usize, W>] {
-    fn is_pendant(&self, s: usize) -> bool {
-        self.degree(s) == 1
-    }
-}
-
-impl<W, H> IsPendant for [HashMap<usize, W, H>]
-where
-    H: BuildHasher,
-{
-    fn is_pendant(&self, s: usize) -> bool {
-        self.degree(s) == 1
-    }
-}
-
-impl<const V: usize, W> IsPendant for [BTreeMap<usize, W>; V] {
-    fn is_pendant(&self, s: usize) -> bool {
-        self.degree(s) == 1
-    }
-}
-
-impl<const V: usize, W, H> IsPendant for [HashMap<usize, W, H>; V]
-where
-    H: BuildHasher,
-{
-    fn is_pendant(&self, s: usize) -> bool {
-        self.degree(s) == 1
-    }
-}
-
-impl<W> IsPendant for BTreeMap<usize, BTreeMap<usize, W>> {
-    fn is_pendant(&self, s: usize) -> bool {
-        self.degree(s) == 1
-    }
-}
-
-impl<W, H> IsPendant for HashMap<usize, HashMap<usize, W, H>, H>
-where
-    H: BuildHasher,
+    T: Degree + ?Sized,
 {
     fn is_pendant(&self, s: usize) -> bool {
         self.degree(s) == 1
@@ -208,6 +84,8 @@ where
 
 #[cfg(test)]
 mod tests {
+    extern crate alloc;
+
     use {
         super::*,
         crate::{
@@ -219,6 +97,14 @@ mod tests {
                 AddArc,
                 AddWeightedArc,
             },
+        },
+        alloc::collections::{
+            BTreeMap,
+            BTreeSet,
+        },
+        std::collections::{
+            HashMap,
+            HashSet,
         },
     };
 

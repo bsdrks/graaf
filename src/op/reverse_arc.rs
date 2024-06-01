@@ -23,22 +23,9 @@
 //! assert!(digraph.iter_arcs().eq([(1, 0), (1, 2), (2, 0)]));
 //! ```
 
-extern crate alloc;
-
-use {
-    super::{
-        AddArc,
-        RemoveArc,
-    },
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
-    core::hash::BuildHasher,
-    std::collections::{
-        HashMap,
-        HashSet,
-    },
+use super::{
+    AddArc,
+    RemoveArc,
 };
 
 /// Reverse an arc.
@@ -128,95 +115,25 @@ pub trait ReverseArc {
     fn reverse_arc(&mut self, s: usize, t: usize) -> bool;
 }
 
-macro_rules! impl_reverse_arc {
-    ($digraph:expr) => {
-        fn reverse_arc(&mut self, s: usize, t: usize) -> bool {
-            if self.remove_arc(s, t) {
-                self.add_arc(t, s);
+impl<T> ReverseArc for T
+where
+    T: AddArc + RemoveArc + ?Sized,
+{
+    fn reverse_arc(&mut self, s: usize, t: usize) -> bool {
+        if self.remove_arc(s, t) {
+            self.add_arc(t, s);
 
-                return true;
-            }
-
-            false
+            return true;
         }
-    };
-}
 
-macro_rules! impl_reverse_arc_panic {
-    ($digraph:expr) => {
-        /// # Panics
-        ///
-        /// Panics if `s` is not in the digraph.
-        fn reverse_arc(&mut self, s: usize, t: usize) -> bool {
-            if self.remove_arc(s, t) {
-                self.add_arc(t, s);
-
-                return true;
-            }
-
-            false
-        }
-    };
-}
-
-impl ReverseArc for Vec<BTreeSet<usize>> {
-    impl_reverse_arc_panic!(self);
-}
-
-impl<H> ReverseArc for Vec<HashSet<usize, H>>
-where
-    H: BuildHasher,
-{
-    impl_reverse_arc_panic!(self);
-}
-
-impl ReverseArc for [BTreeSet<usize>] {
-    impl_reverse_arc_panic!(self);
-}
-
-impl<H> ReverseArc for [HashSet<usize, H>]
-where
-    H: BuildHasher,
-{
-    impl_reverse_arc_panic!(self);
-}
-
-impl<const V: usize> ReverseArc for [BTreeSet<usize>; V] {
-    impl_reverse_arc_panic!(self);
-}
-
-impl<const V: usize, H> ReverseArc for [HashSet<usize, H>; V]
-where
-    H: BuildHasher,
-{
-    impl_reverse_arc_panic!(self);
-}
-
-impl ReverseArc for BTreeMap<usize, BTreeSet<usize>> {
-    impl_reverse_arc!(self);
-}
-
-impl<H> ReverseArc for HashMap<usize, HashSet<usize, H>, H>
-where
-    H: BuildHasher,
-    HashSet<usize, H>: Default,
-{
-    impl_reverse_arc!(self);
-}
-
-impl ReverseArc for BTreeSet<(usize, usize)> {
-    impl_reverse_arc!(self);
-}
-
-impl<H> ReverseArc for HashSet<(usize, usize), H>
-where
-    H: BuildHasher,
-{
-    impl_reverse_arc!(self);
+        false
+    }
 }
 
 #[cfg(test)]
 mod tests {
+    extern crate alloc;
+
     use {
         super::*,
         crate::{
@@ -225,6 +142,14 @@ mod tests {
                 CycleConst,
             },
             op::IterArcs,
+        },
+        alloc::collections::{
+            BTreeMap,
+            BTreeSet,
+        },
+        std::collections::{
+            HashMap,
+            HashSet,
         },
     };
 
