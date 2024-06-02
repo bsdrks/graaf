@@ -8,8 +8,18 @@
 //! ```
 //! use graaf::gen::Empty;
 //!
+//! // 0 -> {}
+//!
 //! assert_eq!(Vec::<Vec<usize>>::empty(1), vec![Vec::new()]);
+//!
+//! // 0 -> {}
+//! // 1 -> {}
+//!
 //! assert_eq!(Vec::<Vec<usize>>::empty(2), vec![Vec::new(), Vec::new()]);
+//!
+//! // 0 -> {}
+//! // 1 -> {}
+//! // 2 -> {}
 //!
 //! assert_eq!(
 //!     Vec::<Vec<usize>>::empty(3),
@@ -64,6 +74,10 @@ use {
 ///     }
 /// }
 ///
+/// // 0 -> {}
+/// // 1 -> {}
+/// // 2 -> {}
+///
 /// assert_eq!(
 ///     Digraph::empty(3),
 ///     Digraph {
@@ -77,8 +91,18 @@ use {
 /// ```
 /// use graaf::gen::Empty;
 ///
+/// // 0 -> {}
+///
 /// assert_eq!(Vec::<Vec<usize>>::empty(1), vec![Vec::new()]);
+///
+/// // 0 -> {}
+/// // 1 -> {}
+///
 /// assert_eq!(Vec::<Vec<usize>>::empty(2), vec![Vec::new(), Vec::new()]);
+///
+/// // 0 -> {}
+/// // 1 -> {}
+/// // 2 -> {}
 ///
 /// assert_eq!(
 ///     Vec::<Vec<usize>>::empty(3),
@@ -102,6 +126,8 @@ pub trait Empty {
     ///
     /// ```
     /// use graaf::gen::Empty;
+    ///
+    /// // 0 -> {}
     ///
     /// assert_eq!(Vec::<Vec<usize>>::trivial(), vec![Vec::new()]);
     /// ```

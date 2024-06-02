@@ -8,24 +8,23 @@
 //! ```
 //! use graaf::gen::CompleteConst;
 //!
-//! // 0 -> {1}
+//! // 0 -> {}
 //!
-//! assert!(<[Vec::<usize>; 1]>::complete().iter().eq([Vec::new()]));
+//! assert_eq!(<[Vec::<usize>; 1]>::complete(), [Vec::new()]);
 //!
 //! // 0 -> {1}
 //! // 1 -> {0}
 //!
-//! assert!(<[Vec::<usize>; 2]>::complete()
-//!     .iter()
-//!     .eq([vec![1], vec![0]]));
+//! assert_eq!(<[Vec::<usize>; 2]>::complete(), [vec![1], vec![0]]);
 //!
 //! // 0 -> {1, 2}
 //! // 1 -> {0, 2}
 //! // 2 -> {0, 1}
 //!
-//! assert!(<[Vec::<usize>; 3]>::complete()
-//!     .iter()
-//!     .eq([vec![1, 2], vec![0, 2], vec![0, 1]]));
+//! assert_eq!(
+//!     <[Vec::<usize>; 3]>::complete(),
+//!     [vec![1, 2], vec![0, 2], vec![0, 1]]
+//! );
 //! ```
 //!
 //! [`Complete`]: crate::gen::Complete
@@ -90,13 +89,35 @@ use {
 ///     }
 /// }
 ///
+/// // 0 -> {1, 2}
+/// // 1 -> {0, 2}
+/// // 2 -> {0, 1}
+///
 /// let digraph = Digraph::<3, RandomState>::complete();
 ///
-/// assert!(digraph.arcs.iter().eq([
-///     HashSet::from([1, 2]),
-///     HashSet::from([0, 2]),
-///     HashSet::from([0, 1])
-/// ]));
+/// assert_eq!(
+///     digraph.arcs,
+///     [
+///         HashSet::from([1, 2]),
+///         HashSet::from([0, 2]),
+///         HashSet::from([0, 1])
+///     ]
+/// );
+/// ```
+///
+/// # Examples
+///
+/// ```
+/// use graaf::gen::CompleteConst;
+///
+/// // 0 -> {1, 2}
+/// // 1 -> {0, 2}
+/// // 2 -> {0, 1}
+///
+/// assert_eq!(
+///     <[Vec<usize>; 3]>::complete(),
+///     [vec![1, 2], vec![0, 2], vec![0, 1]]
+/// );
 /// ```
 pub trait CompleteConst {
     /// Generates a complete digraph.

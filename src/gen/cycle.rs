@@ -9,8 +9,19 @@
 //! ```
 //! use graaf::gen::Cycle;
 //!
+//! // 0 -> {0}
+//!
 //! assert_eq!(Vec::<Vec<usize>>::cycle(1), vec![vec![0]]);
+//!
+//! // 0 -> {1}
+//! // 1 -> {0}
+//!
 //! assert_eq!(Vec::<Vec<usize>>::cycle(2), vec![vec![1], vec![0]]);
+//!
+//! // 0 -> {1}
+//! // 1 -> {2}
+//! // 2 -> {0}
+//!
 //! assert_eq!(Vec::<Vec<usize>>::cycle(3), vec![vec![1], vec![2], vec![0]]);
 //! ```
 //!
@@ -58,6 +69,10 @@ use {
 ///     }
 /// }
 ///
+/// // 0 -> {1}
+/// // 1 -> {2}
+/// // 2 -> {0}
+///
 /// let digraph = Digraph::cycle(3);
 ///
 /// assert_eq!(digraph.arcs, HashSet::from([(0, 1), (1, 2), (2, 0)]));
@@ -68,8 +83,19 @@ use {
 /// ```
 /// use graaf::gen::Cycle;
 ///
+/// // 0 -> {0}
+///
 /// assert_eq!(Vec::<Vec<usize>>::cycle(1), vec![vec![0]]);
+///
+/// // 0 -> {1}
+/// // 1 -> {0}
+///
 /// assert_eq!(Vec::<Vec<usize>>::cycle(2), vec![vec![1], vec![0]]);
+///
+/// // 0 -> {1}
+/// // 1 -> {2}
+/// // 2 -> {0}
+///
 /// assert_eq!(Vec::<Vec<usize>>::cycle(3), vec![vec![1], vec![2], vec![0]]);
 /// ```
 pub trait Cycle {

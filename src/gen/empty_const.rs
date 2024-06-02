@@ -9,8 +9,18 @@
 //! ```
 //! use graaf::gen::EmptyConst;
 //!
+//! // 0 -> {}
+//!
 //! assert_eq!(<[Vec::<usize>; 1]>::empty(), [Vec::new()]);
+//!
+//! // 0 -> {}
+//! // 1 -> {}
+//!
 //! assert_eq!(<[Vec::<usize>; 2]>::empty(), [Vec::new(), Vec::new()]);
+//!
+//! // 0 -> {}
+//! // 1 -> {}
+//! // 2 -> {}
 //!
 //! assert_eq!(
 //!     <[Vec::<usize>; 3]>::empty(),
@@ -85,6 +95,30 @@ use {
 /// assert_eq!(
 ///     digraph.arcs,
 ///     [HashSet::new(), HashSet::new(), HashSet::new()]
+/// );
+/// ```
+///
+/// # Examples
+///
+/// ```
+/// use graaf::gen::EmptyConst;
+///
+/// // 0 -> {}
+///
+/// assert_eq!(<[Vec::<usize>; 1]>::empty(), [Vec::new()]);
+///
+/// // 0 -> {}
+/// // 1 -> {}
+///
+/// assert_eq!(<[Vec::<usize>; 2]>::empty(), [Vec::new(), Vec::new()]);
+///
+/// // 0 -> {}
+/// // 1 -> {}
+/// // 2 -> {}
+///
+/// assert_eq!(
+///     <[Vec::<usize>; 3]>::empty(),
+///     [Vec::new(), Vec::new(), Vec::new()]
 /// );
 /// ```
 pub trait EmptyConst {

@@ -9,8 +9,19 @@
 //! ```
 //! use graaf::gen::CycleConst;
 //!
+//! // 0 -> {0}
+//!
 //! assert_eq!(<[Vec::<usize>; 1]>::cycle(), [vec![0]]);
+//!
+//! // 0 -> {1}
+//! // 1 -> {0}
+//!
 //! assert_eq!(<[Vec::<usize>; 2]>::cycle(), [vec![1], vec![0]]);
+//!
+//! // 0 -> {1}
+//! // 1 -> {2}
+//! // 2 -> {0}
+//!
 //! assert_eq!(<[Vec::<usize>; 3]>::cycle(), [vec![1], vec![2], vec![0]]);
 //! ```
 //!
@@ -77,12 +88,37 @@ use {
 ///     }
 /// }
 ///
+/// // 0 -> {1}
+/// // 1 -> {2}
+/// // 2 -> {0}
+///
 /// let digraph = Digraph::<3, RandomState>::cycle();
 ///
 /// assert_eq!(
 ///     digraph.arcs,
 ///     [HashSet::from([1]), HashSet::from([2]), HashSet::from([0])]
 /// );
+/// ```
+///
+/// # Examples
+///
+/// ```
+/// use graaf::gen::CycleConst;
+///
+/// // 0 -> {0}
+///
+/// assert_eq!(<[Vec::<usize>; 1]>::cycle(), [vec![0]]);
+///
+/// // 0 -> {1}
+/// // 1 -> {0}
+///
+/// assert_eq!(<[Vec::<usize>; 2]>::cycle(), [vec![1], vec![0]]);
+///
+/// // 0 -> {1}
+/// // 1 -> {2}
+/// // 2 -> {0}
+///
+/// assert_eq!(<[Vec::<usize>; 3]>::cycle(), [vec![1], vec![2], vec![0]]);
 /// ```
 pub trait CycleConst {
     /// Generates a cycle digraph.

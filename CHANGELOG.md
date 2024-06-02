@@ -19,10 +19,6 @@
 - Add the `IsInTree` trait.
 - Add the `IsOutTree` trait.
 - Add the `RemoveWeightedArc` trait.
-- Add the `bfs::shortest_paths`.
-- Add the `bfs::single_pair_shortest_paths`.
-- Add the `dijkstra::shortest_paths`.
-- Add the `dijkstra::single_pair_shortest_paths`.
 - Benchmark against popular Rust graph libraries.
 - Benchmark against popular graph libraries in other languages.
 - Implement `IterOutNeighborsMut` for additional types.
@@ -34,6 +30,11 @@
 Added
 
 - Add `floyd_warshall::distances`.
+- Add trait documentation example for `CompleteConst`.
+- Add trait documentation example for `Complete`.
+- Add trait documentation example for `CycleConst`.
+- Add trait documentation example for `Cycle`.
+- Add trait documentation example for `EmptyConst`.
 
 Removed
 
