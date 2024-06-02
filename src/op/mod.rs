@@ -3,8 +3,7 @@
 //! These operations are modeled as traits that can be implemented by types
 //! that represent digraphs. The traits are implemented for combinations of
 //! standard types like [`array`], [`slice`], [`Vec`], [`BTreeMap`],
-//! [`BTreeSet`], [`HashMap`], and [`HashSet`] when the implementation has a
-//! close-to-optimal complexity.
+//! [`BTreeSet`], [`HashMap`], and [`HashSet`].
 //!
 //! # Examples
 //!

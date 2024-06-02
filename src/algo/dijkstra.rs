@@ -124,6 +124,10 @@ pub fn distances<D, S, W>(
 /// * `digraph`: The digraph.
 /// * `s`: The source vertex.
 ///
+/// # Returns
+///
+/// Returns the distances from the source vertex to all other vertices.
+///
 /// # Panics
 ///
 /// Panics if `s` is out of bounds.
@@ -223,6 +227,10 @@ pub fn predecessors<D, S, W>(
 ///
 /// * `digraph`: The digraph.
 /// * `s`: The source vertex.
+///
+/// # Returns
+///
+/// Returns the predecessor tree.
 ///
 /// # Panics
 ///

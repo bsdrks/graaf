@@ -2,41 +2,59 @@
 
 ## Provisional roadmap
 
+- Add A*.
+- Add Boruvka.
 - Add DFS.
+- Add Dinic.
+- Add Edmonds-Karp.
+- Add Floyd-Warshall.
+- Add Ford-Fulkerson.
+- Add Held-Karp.
+- Add Kosaraju.
+- Add Kruksal.
+- Add Prim.
+- Add Tarjan.
 - Add sources.
-- Add the `CompleteBinaryTree` generator.
-- Add the `CompleteTernaryTree` generator.
+- Add the `IsBipartite` trait.
+- Add the `IsInTree` trait.
 - Add the `IsInTree` trait.
 - Add the `IsOutTree` trait.
-- Add the `IsTree` trait.
 - Add the `RemoveWeightedArc` trait.
 - Add the `bfs::shortest_paths`.
 - Add the `bfs::single_pair_shortest_paths`.
 - Add the `dijkstra::shortest_paths`.
 - Add the `dijkstra::single_pair_shortest_paths`.
-- Implement `IterOutNeighborsMut` for additional types.
 - Benchmark against popular Rust graph libraries.
 - Benchmark against popular graph libraries in other languages.
+- Implement `IterOutNeighborsMut` for additional types.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.53.1] - 2024-06-02
+
+Changed
+
+- Abstract the implementations of `AddArc` with macros.
+- Abstract the implementations of `AddWeightedArc` with macros.
+- Abstract the implementations of `ArcWeight` with macros.
 
 ## [0.53.0] - 2024-06-01
 
 Changed
 
-- Abstract the implementations of `HasArc` as macros.
-- Abstract the implementations of `Indegree` as macros.
-- Abstract the implementations of `IsSimple` as a macro.
-- Abstract the implementations of `IterArcs` as macros.
-- Abstract the implementations of `IterOutNeighborsMut` as macros.
-- Abstract the implementations of `IterOutNeighbors` as macros.
-- Abstract the implementations of `IterOutWeightedNeighbors` as macros.
-- Abstract the implementations of `IterVertices` as macros.
-- Abstract the implementations of `IterWeightedArcs` as macros.
-- Abstract the implementations of `Order` as macros.
-- Abstract the implementations of `Outdegree` as macros.
-- Abstract the implementations of `RemoveArc` as macros.
-- Abstract the implementations of `Size` as macros.
+- Abstract the implementations of `HasArc` with macros.
+- Abstract the implementations of `Indegree` with macros.
+- Abstract the implementations of `IsSimple` with a macro.
+- Abstract the implementations of `IterArcs` with macros.
+- Abstract the implementations of `IterOutNeighborsMut` with macros.
+- Abstract the implementations of `IterOutNeighbors` with macros.
+- Abstract the implementations of `IterOutWeightedNeighbors` with macros.
+- Abstract the implementations of `IterVertices` with macros.
+- Abstract the implementations of `IterWeightedArcs` with macros.
+- Abstract the implementations of `Order` with macros.
+- Abstract the implementations of `Outdegree` with macros.
+- Abstract the implementations of `RemoveArc` with macros.
+- Abstract the implementations of `Size` with macros.
 - Breaking: `RemoveArc for BTreeMap<usize, BTreeMap<usize, W>>` no longer panics.
 - Breaking: `RemoveArc for BTreeMap<usize, BTreeSet<usize>>` no longer panics.
 - Breaking: `RemoveArc for HashMap<usize, HashMap<usize, W>>` no longer panics.
@@ -67,7 +85,6 @@ Changed
 - Change  `IsWalk` to blanket implementation.
 - Change  `ReverseArc` to blanket implementation.
 - Use const size in `IterVertices` implementations.
-- 
 
 ## [0.52.7] - 2024-05-31
 

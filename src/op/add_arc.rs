@@ -89,115 +89,102 @@ pub trait AddArc {
     fn add_arc(&mut self, s: usize, t: usize);
 }
 
+macro_rules! impl_index_push {
+    () => {
+        /// # Panics
+        ///
+        /// Panics if `s` is not in the digraph.
+        fn add_arc(&mut self, s: usize, t: usize) {
+            self[s].push(t);
+        }
+    };
+}
+
+macro_rules! impl_index_insert {
+    () => {
+        /// # Panics
+        ///
+        /// Panics if `s` is not in the digraph.
+        fn add_arc(&mut self, s: usize, t: usize) {
+            let _ = self[s].insert(t);
+        }
+    };
+}
+
+macro_rules! impl_entry_push {
+    () => {
+        fn add_arc(&mut self, s: usize, t: usize) {
+            self.entry(s).or_default().push(t);
+        }
+    };
+}
+
+macro_rules! impl_entry_insert {
+    () => {
+        fn add_arc(&mut self, s: usize, t: usize) {
+            let _ = self.entry(s).or_default().insert(t);
+        }
+    };
+}
+
 impl AddArc for Vec<Vec<usize>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn add_arc(&mut self, s: usize, t: usize) {
-        self[s].push(t);
-    }
+    impl_index_push!();
 }
 
 impl AddArc for Vec<BTreeSet<usize>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn add_arc(&mut self, s: usize, t: usize) {
-        let _ = self[s].insert(t);
-    }
+    impl_index_insert!();
 }
 
 impl<H> AddArc for Vec<HashSet<usize, H>>
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn add_arc(&mut self, s: usize, t: usize) {
-        let _ = self[s].insert(t);
-    }
+    impl_index_insert!();
 }
 
 impl AddArc for [Vec<usize>] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn add_arc(&mut self, s: usize, t: usize) {
-        self[s].push(t);
-    }
+    impl_index_push!();
 }
 
 impl AddArc for [BTreeSet<usize>] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn add_arc(&mut self, s: usize, t: usize) {
-        let _ = self[s].insert(t);
-    }
+    impl_index_insert!();
 }
 
 impl<H> AddArc for [HashSet<usize, H>]
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn add_arc(&mut self, s: usize, t: usize) {
-        let _ = self[s].insert(t);
-    }
+    impl_index_insert!();
 }
 
 impl<const V: usize> AddArc for [Vec<usize>; V] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn add_arc(&mut self, s: usize, t: usize) {
-        self[s].push(t);
-    }
+    impl_index_push!();
 }
 
 impl<const V: usize> AddArc for [BTreeSet<usize>; V] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn add_arc(&mut self, s: usize, t: usize) {
-        let _ = self[s].insert(t);
-    }
+    impl_index_insert!();
 }
 
 impl<H, const V: usize> AddArc for [HashSet<usize, H>; V]
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn add_arc(&mut self, s: usize, t: usize) {
-        let _ = self[s].insert(t);
-    }
+    impl_index_insert!();
 }
 
 impl AddArc for BTreeMap<usize, Vec<usize>> {
-    fn add_arc(&mut self, s: usize, t: usize) {
-        self.entry(s).or_default().push(t);
-    }
+    impl_entry_push!();
 }
 
 impl AddArc for BTreeMap<usize, BTreeSet<usize>> {
-    fn add_arc(&mut self, s: usize, t: usize) {
-        let _ = self.entry(s).or_default().insert(t);
-    }
+    impl_entry_insert!();
 }
 
 impl<H> AddArc for HashMap<usize, Vec<usize>, H>
 where
     H: BuildHasher,
 {
-    fn add_arc(&mut self, s: usize, t: usize) {
-        self.entry(s).or_default().push(t);
-    }
+    impl_entry_push!();
 }
 
 impl<H> AddArc for HashMap<usize, HashSet<usize, H>, H>
@@ -205,9 +192,7 @@ where
     H: BuildHasher,
     HashSet<usize, H>: Default,
 {
-    fn add_arc(&mut self, s: usize, t: usize) {
-        let _ = self.entry(s).or_default().insert(t);
-    }
+    impl_entry_insert!();
 }
 
 impl AddArc for Vec<(usize, usize)> {

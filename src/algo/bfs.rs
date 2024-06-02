@@ -120,6 +120,10 @@ where
 /// * `digraph`: The digraph.
 /// * `s`: The source vertex.
 ///
+/// # Returns
+///
+/// Returns the BFS tree.
+///
 /// # Panics
 ///
 /// Panics if `s` is out of bounds.
@@ -219,6 +223,10 @@ pub fn predecessors<D, S, W>(
 /// * `digraph`: The digraph.
 /// * `s`: The source vertex.
 ///
+/// # Returns
+///
+/// Returns the predecessor tree.
+///
 /// # Panics
 ///
 /// Panics if `s` is out of bounds.
@@ -258,6 +266,11 @@ where
 /// * `pred`: The predecessors on the shortest paths from the source vertices.
 /// * `dist`: The distances from the source vertices.
 /// * `source`: The source vertices.
+///
+/// # Returns
+///
+/// If a target vertex is found, the function returns the shortest path from the
+/// source vertex to this target vertex. Otherwise, it returns `None`.
 ///
 /// # Panics
 ///
@@ -342,6 +355,11 @@ where
 /// * `digraph`: The digraph.
 /// * `s`: The source vertex.
 /// * `t`: The target vertex.
+///
+/// # Returns
+///
+/// If a path from `s` to `t` exists, the function returns the shortest path
+/// from `s` to `t`. Otherwise, it returns `None`.
 ///
 /// # Panics
 ///

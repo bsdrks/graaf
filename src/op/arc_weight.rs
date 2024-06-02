@@ -89,64 +89,64 @@ pub trait ArcWeight<W> {
     fn arc_weight(&self, s: usize, t: usize) -> Option<&W>;
 }
 
+macro_rules! impl_usize {
+    () => {
+        fn arc_weight(&self, s: usize, t: usize) -> Option<&W> {
+            self.get(s).and_then(|m| m.get(&t))
+        }
+    };
+}
+
+macro_rules! impl_ref_usize {
+    () => {
+        fn arc_weight(&self, s: usize, t: usize) -> Option<&W> {
+            self.get(&s).and_then(|m| m.get(&t))
+        }
+    };
+}
+
 impl<W> ArcWeight<W> for Vec<BTreeMap<usize, W>> {
-    fn arc_weight(&self, s: usize, t: usize) -> Option<&W> {
-        self.get(s).and_then(|m| m.get(&t))
-    }
+    impl_usize!();
 }
 
 impl<W, H> ArcWeight<W> for Vec<HashMap<usize, W, H>>
 where
     H: BuildHasher,
 {
-    fn arc_weight(&self, s: usize, t: usize) -> Option<&W> {
-        self.get(s).and_then(|m| m.get(&t))
-    }
+    impl_usize!();
 }
 
 impl<W> ArcWeight<W> for [BTreeMap<usize, W>] {
-    fn arc_weight(&self, s: usize, t: usize) -> Option<&W> {
-        self.get(s).and_then(|m| m.get(&t))
-    }
+    impl_usize!();
 }
 
 impl<W, H> ArcWeight<W> for [HashMap<usize, W, H>]
 where
     H: BuildHasher,
 {
-    fn arc_weight(&self, s: usize, t: usize) -> Option<&W> {
-        self.get(s).and_then(|m| m.get(&t))
-    }
+    impl_usize!();
 }
 
 impl<const V: usize, W> ArcWeight<W> for [BTreeMap<usize, W>; V] {
-    fn arc_weight(&self, s: usize, t: usize) -> Option<&W> {
-        self.get(s).and_then(|m| m.get(&t))
-    }
+    impl_usize!();
 }
 
 impl<const V: usize, W, H> ArcWeight<W> for [HashMap<usize, W, H>; V]
 where
     H: BuildHasher,
 {
-    fn arc_weight(&self, s: usize, t: usize) -> Option<&W> {
-        self.get(s).and_then(|m| m.get(&t))
-    }
+    impl_usize!();
 }
 
 impl<W> ArcWeight<W> for BTreeMap<usize, BTreeMap<usize, W>> {
-    fn arc_weight(&self, s: usize, t: usize) -> Option<&W> {
-        self.get(&s).and_then(|m| m.get(&t))
-    }
+    impl_ref_usize!();
 }
 
 impl<W, H> ArcWeight<W> for HashMap<usize, HashMap<usize, W, H>, H>
 where
     H: BuildHasher,
 {
-    fn arc_weight(&self, s: usize, t: usize) -> Option<&W> {
-        self.get(&s).and_then(|m| m.get(&t))
-    }
+    impl_ref_usize!();
 }
 
 #[cfg(test)]

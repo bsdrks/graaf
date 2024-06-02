@@ -27,6 +27,11 @@ use std::collections::HashSet;
 /// * `s`: The source vertex of the path.
 /// * `t`: The target vertex of the path.
 ///
+/// # Returns
+///
+/// If a path from `s` to `t` is found, returns the path. Otherwise, returns
+/// `None`.
+///
 /// # Examples
 ///
 /// ```
@@ -49,6 +54,11 @@ pub fn search(pred: &[Option<usize>], s: usize, t: usize) -> Option<Vec<usize>> 
 /// * `pred`: The predecessor tree.
 /// * `s`: The source vertex of the path.
 /// * `is_target`: A predicate that determines whether a vertex is the target.
+///
+/// # Returns
+///
+/// If a target is found, returns the path from the source to the target.
+/// Otherwise, returns `None`.
 ///
 /// # Examples
 ///

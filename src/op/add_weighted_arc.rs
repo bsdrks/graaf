@@ -99,37 +99,95 @@ pub trait AddWeightedArc<W> {
     fn add_weighted_arc(&mut self, s: usize, t: usize, w: W);
 }
 
+macro_rules! impl_index_vec {
+    () => {
+        /// # Panics
+        ///
+        /// Panics if `s` is not in the digraph.
+        fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
+            self[s].push((t, w));
+        }
+    };
+}
+
+macro_rules! impl_index_set {
+    () => {
+        /// # Panics
+        ///
+        /// Panics if `s` is not in the digraph.
+        fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
+            let _ = self[s].insert((t, w));
+        }
+    };
+}
+
+macro_rules! impl_index_map {
+    () => {
+        /// # Panics
+        ///
+        /// Panics if `s` is not in the digraph.
+        fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
+            let _ = self[s].insert(t, w);
+        }
+    };
+}
+
+macro_rules! impl_entry_vec {
+    () => {
+        fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
+            self.entry(s).or_default().push((t, w));
+        }
+    };
+}
+
+macro_rules! impl_entry_set {
+    () => {
+        fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
+            let _ = self.entry(s).or_default().insert((t, w));
+        }
+    };
+}
+
+macro_rules! impl_entry_map {
+    () => {
+        fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
+            let _ = self.entry(s).or_default().insert(t, w);
+        }
+    };
+}
+
+macro_rules! impl_vec_tuple {
+    () => {
+        fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
+            self.push((s, t, w));
+        }
+    };
+}
+
+macro_rules! impl_set_tuple {
+    () => {
+        fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
+            let _ = self.insert((s, t, w));
+        }
+    };
+}
+
 impl<W> AddWeightedArc<W> for Vec<Vec<(usize, W)>> {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
-        self[s].push((t, w));
-    }
+    impl_index_vec!();
 }
 
 impl<W> AddWeightedArc<W> for Vec<BTreeSet<(usize, W)>>
 where
     W: Ord,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
-        let _ = self[s].insert((t, w));
-    }
+    impl_index_set!();
 }
 
 impl<W> AddWeightedArc<W> for Vec<BTreeMap<usize, W>>
 where
     W: Ord,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
-        let _ = self[s].insert(t, w);
-    }
+    impl_index_map!();
 }
 
 impl<W, H> AddWeightedArc<W> for Vec<HashSet<(usize, W), H>>
@@ -137,57 +195,32 @@ where
     H: BuildHasher,
     W: Eq + Hash,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
-        let _ = self[s].insert((t, w));
-    }
+    impl_index_set!();
 }
 
 impl<W, H> AddWeightedArc<W> for Vec<HashMap<usize, W, H>>
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
-        let _ = self[s].insert(t, w);
-    }
+    impl_index_map!();
 }
 
 impl<W> AddWeightedArc<W> for [Vec<(usize, W)>] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
-        self[s].push((t, w));
-    }
+    impl_index_vec!();
 }
 
 impl<W> AddWeightedArc<W> for [BTreeSet<(usize, W)>]
 where
     W: Ord,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
-        let _ = self[s].insert((t, w));
-    }
+    impl_index_set!();
 }
 
 impl<W> AddWeightedArc<W> for [BTreeMap<usize, W>]
 where
     W: Ord,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
-        let _ = self[s].insert(t, w);
-    }
+    impl_index_map!();
 }
 
 impl<W, H> AddWeightedArc<W> for [HashSet<(usize, W), H>]
@@ -195,57 +228,32 @@ where
     H: BuildHasher,
     W: Eq + Hash,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
-        let _ = self[s].insert((t, w));
-    }
+    impl_index_set!();
 }
 
 impl<W, H> AddWeightedArc<W> for [HashMap<usize, W, H>]
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
-        let _ = self[s].insert(t, w);
-    }
+    impl_index_map!();
 }
 
 impl<const V: usize, W> AddWeightedArc<W> for [Vec<(usize, W)>; V] {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
-        self[s].push((t, w));
-    }
+    impl_index_vec!();
 }
 
 impl<const V: usize, W> AddWeightedArc<W> for [BTreeSet<(usize, W)>; V]
 where
     W: Ord,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
-        let _ = self[s].insert((t, w));
-    }
+    impl_index_set!();
 }
 
 impl<const V: usize, W> AddWeightedArc<W> for [BTreeMap<usize, W>; V]
 where
     W: Ord,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
-        let _ = self[s].insert(t, w);
-    }
+    impl_index_map!();
 }
 
 impl<const V: usize, W, H> AddWeightedArc<W> for [HashSet<(usize, W), H>; V]
@@ -253,54 +261,36 @@ where
     H: BuildHasher,
     W: Eq + Hash,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
-        let _ = self[s].insert((t, w));
-    }
+    impl_index_set!();
 }
 
 impl<const V: usize, W, H> AddWeightedArc<W> for [HashMap<usize, W, H>; V]
 where
     H: BuildHasher,
 {
-    /// # Panics
-    ///
-    /// Panics if `s` is not in the digraph.
-    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
-        let _ = self[s].insert(t, w);
-    }
+    impl_index_map!();
 }
 
 impl<W> AddWeightedArc<W> for BTreeMap<usize, Vec<(usize, W)>> {
-    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
-        self.entry(s).or_default().push((t, w));
-    }
+    impl_entry_vec!();
 }
 
 impl<W> AddWeightedArc<W> for BTreeMap<usize, BTreeSet<(usize, W)>>
 where
     W: Ord,
 {
-    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
-        let _ = self.entry(s).or_default().insert((t, w));
-    }
+    impl_entry_set!();
 }
 
 impl<W> AddWeightedArc<W> for BTreeMap<usize, BTreeMap<usize, W>> {
-    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
-        let _ = self.entry(s).or_default().insert(t, w);
-    }
+    impl_entry_map!();
 }
 
 impl<W, H> AddWeightedArc<W> for HashMap<usize, Vec<(usize, W)>, H>
 where
     H: BuildHasher,
 {
-    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
-        self.entry(s).or_default().push((t, w));
-    }
+    impl_entry_vec!();
 }
 
 impl<W, H> AddWeightedArc<W> for HashMap<usize, HashSet<(usize, W), H>, H>
@@ -309,9 +299,7 @@ where
     H: BuildHasher,
     HashSet<(usize, W), H>: Default,
 {
-    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
-        let _ = self.entry(s).or_default().insert((t, w));
-    }
+    impl_entry_set!();
 }
 
 impl<W, H> AddWeightedArc<W> for HashMap<usize, HashMap<usize, W, H>, H>
@@ -319,24 +307,18 @@ where
     H: BuildHasher,
     HashMap<usize, W, H>: Default,
 {
-    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
-        let _ = self.entry(s).or_default().insert(t, w);
-    }
+    impl_entry_map!();
 }
 
 impl<W> AddWeightedArc<W> for Vec<(usize, usize, W)> {
-    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
-        self.push((s, t, w));
-    }
+    impl_vec_tuple!();
 }
 
 impl<W> AddWeightedArc<W> for BTreeSet<(usize, usize, W)>
 where
     W: Ord,
 {
-    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
-        let _ = self.insert((s, t, w));
-    }
+    impl_set_tuple!();
 }
 
 impl<W, H> AddWeightedArc<W> for HashSet<(usize, usize, W), H>
@@ -344,9 +326,7 @@ where
     W: Eq + Hash,
     H: BuildHasher,
 {
-    fn add_weighted_arc(&mut self, s: usize, t: usize, w: W) {
-        let _ = self.insert((s, t, w));
-    }
+    impl_set_tuple!();
 }
 
 #[cfg(test)]
