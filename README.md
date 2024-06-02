@@ -18,7 +18,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.53.3"
+graaf = "0.53.4"
 ```
 
 ## Example
@@ -57,7 +57,9 @@ let digraph = [Vec::new(), vec![0], vec![1], vec![0, 2]];
 assert_eq!(spsp(&digraph, 3, 0), Some(vec![3, 0]));
 assert_eq!(spsp(&digraph, 3, 1), Some(vec![3, 2, 1]));
 
-// ..
+// 0 -> {}
+// 1 -> {}
+// 2 -> {}
 
 assert!(Vec::<Vec<usize>>::empty(3)
     .iter()
@@ -86,8 +88,8 @@ assert_eq!(tournament.order(), 4);
 
 for s in tournament.iter_vertices() {
     assert_eq!(tournament.degree(s), 3);
-    assert!((0..3).contains(&tournament.outdegree(s)));
-    assert!((0..3).contains(&tournament.indegree(s)));
+    assert!((0..=2).contains(&tournament.outdegree(s)));
+    assert!((0..=2).contains(&tournament.indegree(s)));
 }
 
 let mut digraph = AdjacencyMatrix::<3>::new();

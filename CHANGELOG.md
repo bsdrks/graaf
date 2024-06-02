@@ -25,6 +25,12 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.53.4] - 2024-06-02
+
+Changed
+
+- Fix `README` adjacency list in the comments.
+
 ## [0.53.3] - 2024-06-02
 
 Added
