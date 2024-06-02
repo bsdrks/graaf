@@ -92,8 +92,19 @@ where
 mod tests {
     use {
         super::*,
-        crate::algo::fixture,
+        crate::{
+            algo::fixture,
+            gen::Empty,
+        },
     };
+
+    #[test]
+    fn trivial() {
+        assert!(distances(&Vec::<Vec<(usize, isize)>>::trivial(), 0)
+            .unwrap()
+            .iter()
+            .eq(&[0]));
+    }
 
     #[test]
     fn bang_jensen_96() {

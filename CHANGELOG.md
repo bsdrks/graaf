@@ -7,7 +7,6 @@
 - Add DFS.
 - Add Dinic.
 - Add Edmonds-Karp.
-- Add Floyd-Warshall.
 - Add Ford-Fulkerson.
 - Add Held-Karp.
 - Add Kosaraju.
@@ -29,6 +28,16 @@
 - Implement `IterOutNeighborsMut` for additional types.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.53.3] - 2024-06-02
+
+Added
+
+- Add `floyd_warshall::distances`.
+
+Removed
+
+- Remove logo.
 
 ## [0.53.2] - 2024-06-02
 

@@ -8,13 +8,24 @@
 //! ```
 //! use graaf::gen::Complete;
 //!
-//! assert_eq!(Vec::<Vec<usize>>::complete(1), vec![Vec::new()]);
-//! assert_eq!(Vec::<Vec<usize>>::complete(2), vec![vec![1], vec![0]]);
+//! // 0 -> {}
 //!
-//! assert_eq!(
-//!     Vec::<Vec<usize>>::complete(3),
-//!     vec![vec![1, 2], vec![0, 2], vec![0, 1]]
-//! );
+//! assert!(Vec::<Vec<usize>>::complete(1).iter().eq(&[Vec::new()]));
+//!
+//! // 0 -> {1}
+//! // 1 -> {0}
+//!
+//! assert!(Vec::<Vec<usize>>::complete(2)
+//!     .iter()
+//!     .eq(&[vec![1], vec![0]]));
+//!
+//! // 0 -> {1, 2}
+//! // 1 -> {0, 2}
+//! // 2 -> {0, 1}
+//!
+//! assert!(Vec::<Vec<usize>>::complete(3)
+//!     .iter()
+//!     .eq(&[vec![1, 2], vec![0, 2], vec![0, 1]]));
 //! ```
 //!
 //! [`CompleteConst`]: crate::gen::CompleteConst
@@ -41,13 +52,15 @@ use {
 /// digraph with `v` vertices.
 ///
 /// ```
+/// extern crate alloc;
+///
 /// use {
 ///     graaf::gen::Complete,
-///     std::collections::HashSet,
+///     std::collections::BTreeSet,
 /// };
 ///
 /// struct Digraph {
-///     arcs: HashSet<(usize, usize)>,
+///     arcs: BTreeSet<(usize, usize)>,
 /// }
 ///
 /// impl Complete for Digraph {
@@ -57,7 +70,7 @@ use {
 ///     fn complete(v: usize) -> Self {
 ///         assert!(v > 0, "a graph must have at least one vertex");
 ///
-///         let mut arcs = HashSet::new();
+///         let mut arcs = BTreeSet::new();
 ///
 ///         for s in 0..v {
 ///             for t in 0..v {
@@ -74,10 +87,10 @@ use {
 ///
 /// let digraph = Digraph::complete(3);
 ///
-/// assert_eq!(
-///     digraph.arcs,
-///     HashSet::from([(0, 1), (1, 0), (0, 2), (2, 0), (1, 2), (2, 1)])
-/// );
+/// assert!(digraph
+///     .arcs
+///     .iter()
+///     .eq(&[(0, 1), (0, 2), (1, 0), (1, 2), (2, 0), (2, 1)]));
 /// ```
 pub trait Complete {
     /// Generates a complete digraph.
