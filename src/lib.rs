@@ -9,8 +9,10 @@
 //! ```rust
 //! use {
 //!     graaf::{
-//!         gen::EmptyConst,
+//!         algo::bfs::single_pair_shortest_path as spsp,
+//!         gen::*,
 //!         op::*,
+//!         repr::*,
 //!     },
 //!     std::collections::BTreeSet,
 //! };
@@ -20,71 +22,47 @@
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(0, 2);
 //!
+//! // 0 -> 1
+//! // 0 -> 2
+//!
 //! assert_eq!(digraph.degree(0), 2);
 //! assert_eq!(digraph.degree(1), 1);
 //! assert_eq!(digraph.degree(2), 1);
-//! ```
 //!
-//! ## Algorithms
-//!
-//! Search, traverse, and analyze digraphs.
-//!
-//! ```rust
-//! use graaf::algo::bfs::single_pair_shortest_path as spsp;
+//! // 1 -> 0
+//! // 2 -> 1
+//! // 3 -> 0
+//! // 3 -> 2
 //!
 //! let digraph = [Vec::new(), vec![0], vec![1], vec![0, 2]];
 //!
 //! assert_eq!(spsp(&digraph, 3, 0), Some(vec![3, 0]));
 //! assert_eq!(spsp(&digraph, 3, 1), Some(vec![3, 2, 1]));
-//! assert_eq!(spsp(&digraph, 3, 2), Some(vec![3, 2]));
-//! assert_eq!(spsp(&digraph, 0, 3), None);
-//! ```
 //!
-//! ## Representations
+//! // ..
 //!
-//! An adjacency matrix representation is available with the `adjacency_matrix`
-//! feature.
+//! assert!(Vec::<Vec<usize>>::empty(3)
+//!     .iter()
+//!     .eq(&[Vec::new(), Vec::new(), Vec::new()]));
 //!
-//! ```rust
-//! use graaf::{
-//!     op::*,
-//!     repr::AdjacencyMatrix,
-//! };
+//! // 0 -> 1
+//! // 1 -> 2
+//! // 2 -> 0
 //!
-//! let mut digraph = AdjacencyMatrix::<3>::new();
+//! assert!(Vec::<Vec<usize>>::cycle(3)
+//!     .iter()
+//!     .eq(&[vec![1], vec![2], vec![0]]));
 //!
-//! digraph.add_arc(0, 1);
-//! digraph.add_arc(1, 1);
+//! // 0 -> 1
+//! // 0 -> 2
+//! // 1 -> 0
+//! // 1 -> 2
+//! // 2 -> 0
+//! // 2 -> 1
 //!
-//! assert!(!digraph.is_simple());
-//! ```
-//!
-//! ## Generators
-//!
-//! Generate parameterized digraphs.
-//!
-//! ```rust
-//! use graaf::gen::*;
-//!
-//! assert_eq!(Vec::<Vec<usize>>::empty(2), vec![Vec::new(), Vec::new()]);
-//! assert_eq!(Vec::<Vec<usize>>::cycle(3), vec![vec![1], vec![2], vec![0]]);
-//!
-//! assert_eq!(
-//!     <[Vec::<usize>; 3]>::complete(),
-//!     [vec![1, 2], vec![0, 2], vec![0, 1]]
-//! );
-//! ```
-//!
-//! Generate random digraphs.
-//!
-//! ```rust
-//! use {
-//!     graaf::{
-//!         gen::RandomTournament,
-//!         op::*,
-//!     },
-//!     std::collections::BTreeSet,
-//! };
+//! assert!(<[Vec::<usize>; 3]>::complete()
+//!     .iter()
+//!     .eq(&[vec![1, 2], vec![0, 2], vec![0, 1]]));
 //!
 //! let tournament = Vec::<BTreeSet<usize>>::random_tournament(4);
 //!
@@ -96,6 +74,16 @@
 //!     assert!((0..3).contains(&tournament.outdegree(s)));
 //!     assert!((0..3).contains(&tournament.indegree(s)));
 //! }
+//!
+//! let mut digraph = AdjacencyMatrix::<3>::new();
+//!
+//! // 0 -> 1
+//! // 1 -> 1
+//!
+//! digraph.add_arc(0, 1);
+//! digraph.add_arc(1, 1);
+//!
+//! assert!(!digraph.is_simple());
 //! ```
 
 // Clippy lint groups

@@ -30,6 +30,13 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.53.2] - 2024-06-02
+
+Changed
+
+- Compress `README` example.
+- Move project goals up in `README`.
+
 ## [0.53.1] - 2024-06-02
 
 Changed
