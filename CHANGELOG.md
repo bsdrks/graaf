@@ -21,9 +21,24 @@
 - Add the `RemoveWeightedArc` trait.
 - Benchmark against popular Rust graph libraries.
 - Benchmark against popular graph libraries in other languages.
+- Describe `IsSuperdigraph` without mentioning `IsSubdigraph`, except in passing.
 - Implement `IterOutNeighborsMut` for additional types.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.53.5] - 2024-06-02
+
+Added
+
+- Add unit test `kattis_bryr_1` for `floyd_warshall::distances`.
+- Add unit test `kattis_bryr_2` for `floyd_warshall::distances`.
+- Add unit test `kattis_bryr_3` for `floyd_warshall::distances`.
+- Add unit test `kattis_crosscountry` for `floyd_warshall::distances`.
+- Add unit test `kattis_shortestpath1` for `floyd_warshall::distances`.
+
+Changed
+
+- Simplify `floyd_warshall::distances` implementation.
 
 ## [0.53.4] - 2024-06-02
 
@@ -324,7 +339,7 @@ Added
 Changed
 
 - Move `benches/algo/distances_weighted/cross_country` to `benches/algo/crosscountry`.
-- Move `benches/algo/distances_weighted/shortest_path_1` to `benches/algo/shortest_path_1`.
+- Move `benches/algo/distances_weighted/shortestpath1` to `benches/algo/shortestpath1`.
 
 Removed
 
@@ -1906,7 +1921,7 @@ Added
 Fixed
 
 - Fix `crosscountry` benchmark.
-- Fix `shortest_path_1` benchmark.
+- Fix `shortestpath1` benchmark.
 - Fix `small_graph_1` benchmark.
 
 ## [0.13.1] - 2024-04-15

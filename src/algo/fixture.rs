@@ -125,6 +125,25 @@ pub fn kattis_bryr_1() -> Vec<BTreeMap<usize, usize>> {
     digraph
 }
 
+/// Arnarson, A. B., & Erlendsson, U. F. (2019). Bridges (Sample Input 1). Kattis. [https://open.kattis.com/problems/bryr](https://open.kattis.com/problems/bridges).
+///
+/// ```text
+/// 0 -> {1 (1), 2 (1)}
+/// 1 -> {0 (1), 2 (1)}
+/// 2 -> {0 (1), 1 (1)}
+/// ```
+#[must_use]
+pub fn kattis_bryr_1_isize() -> Vec<BTreeMap<usize, isize>> {
+    let mut digraph = Vec::<BTreeMap<usize, isize>>::empty(3);
+
+    for (s, t, w) in &[(0, 1, 1), (1, 2, 1), (2, 0, 1)] {
+        digraph.add_weighted_arc(*s, *t, *w);
+        digraph.add_weighted_arc(*t, *s, *w);
+    }
+
+    digraph
+}
+
 /// Arnarson, A. B., & Erlendsson, U. F. (2019). Bridges (Sample Input 2). Kattis. [https://open.kattis.com/problems/bryr](https://open.kattis.com/problems/bridges).
 ///
 /// ```text
@@ -154,6 +173,34 @@ pub fn kattis_bryr_2() -> Vec<BTreeMap<usize, usize>> {
     digraph
 }
 
+/// Arnarson, A. B., & Erlendsson, U. F. (2019). Bridges (Sample Input 2). Kattis. [https://open.kattis.com/problems/bryr](https://open.kattis.com/problems/bridges).
+///
+/// ```text
+/// 0 -> {3 (1), 1 (1)}
+/// 1 -> {0 (1), 2 (1)}
+/// 2 -> {1 (1), 3 (1)}
+/// 3 -> {0 (1), 2 (1), 4 (1)}
+/// 4 -> {3 (1), 5 (1)}
+/// 5 -> {4 (1)}
+/// ```
+#[must_use]
+pub fn kattis_bryr_2_isize() -> Vec<BTreeMap<usize, isize>> {
+    let mut digraph = Vec::<BTreeMap<usize, isize>>::empty(6);
+
+    for (s, t, w) in &[
+        (0, 3, 1),
+        (1, 0, 1),
+        (1, 2, 1),
+        (3, 2, 1),
+        (4, 3, 1),
+        (4, 5, 1),
+    ] {
+        digraph.add_weighted_arc(*s, *t, *w);
+        digraph.add_weighted_arc(*t, *s, *w);
+    }
+
+    digraph
+}
 /// Arnarson, A. B., & Erlendsson, U. F. (2019). Bridges (Sample Input 3). Kattis. [https://open.kattis.com/problems/bryr](https://open.kattis.com/problems/bridges).
 ///
 /// ```text
@@ -171,6 +218,46 @@ pub fn kattis_bryr_2() -> Vec<BTreeMap<usize, usize>> {
 #[must_use]
 pub fn kattis_bryr_3() -> Vec<BTreeMap<usize, usize>> {
     let mut digraph = Vec::<BTreeMap<usize, usize>>::empty(10);
+
+    for (s, t, w) in &[
+        (2, 9, 0),
+        (3, 0, 0),
+        (3, 4, 0),
+        (3, 5, 0),
+        (3, 7, 0),
+        (4, 6, 1),
+        (5, 8, 0),
+        (6, 2, 0),
+        (6, 5, 1),
+        (6, 9, 1),
+        (7, 1, 0),
+        (8, 4, 1),
+        (9, 1, 1),
+    ] {
+        digraph.add_weighted_arc(*s, *t, *w);
+        digraph.add_weighted_arc(*t, *s, *w);
+    }
+
+    digraph
+}
+
+/// Arnarson, A. B., & Erlendsson, U. F. (2019). Bridges (Sample Input 3). Kattis. [https://open.kattis.com/problems/bryr](https://open.kattis.com/problems/bridges).
+///
+/// ```text
+/// 0 -> {3 (0)}
+/// 1 -> {7 (0), 9 (1)}
+/// 2 -> {6 (0)}
+/// 3 -> {0 (0), 4 (0), 5 (0), 7 (0)}
+/// 4 -> {3 (0), 6 (1), 8 (1)}
+/// 5 -> {3 (0), 6 (1), 8 (0)}
+/// 6 -> {2 (0), 4 (1), 5 (1), 9 (1)}
+/// 7 -> {1 (0), 3 (0)}
+/// 8 -> {4 (1), 5 (0)}
+/// 9 -> {1 (1), 2 (0), 6 (1)}
+/// ```
+#[must_use]
+pub fn kattis_bryr_3_isize() -> Vec<BTreeMap<usize, isize>> {
+    let mut digraph = Vec::<BTreeMap<usize, isize>>::empty(10);
 
     for (s, t, w) in &[
         (2, 9, 0),
@@ -212,6 +299,24 @@ pub fn kattis_crosscountry() -> Vec<Vec<(usize, usize)>> {
     ]
 }
 
+/// Heimark. K. J. S. (2018). Cross Country. Kattis. [https://open.kattis.com/problems/crosscountry](https://open.kattis.com/problems/crosscountry).
+///
+/// ```text
+/// 0 -> {1 (1), 2 (3), 3 (14)}
+/// 1 -> {0 (2), 2 (4), 3 (22)}
+/// 2 -> {0 (3), 1 (10), 3 (7)}
+/// 3 -> {0 (13), 1 (8), 2 (2)}
+/// ```
+#[must_use]
+pub fn kattis_crosscountry_isize() -> Vec<Vec<(usize, isize)>> {
+    vec![
+        vec![(1, 1), (2, 3), (3, 14)],
+        vec![(0, 2), (2, 4), (3, 22)],
+        vec![(0, 3), (1, 10), (3, 7)],
+        vec![(0, 13), (1, 8), (2, 2)],
+    ]
+}
+
 /// Austrin. P. (2005). Single source shortest path, non-negative weights. Kattis. [https://open.kattis.com/problems/shortestpath1](https://open.kattis.com/problems/shortestpath1).
 ///
 /// ```text
@@ -222,5 +327,18 @@ pub fn kattis_crosscountry() -> Vec<Vec<(usize, usize)>> {
 /// ```
 #[must_use]
 pub fn kattis_shortestpath1() -> Vec<Vec<(usize, usize)>> {
+    vec![vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]]
+}
+
+/// Austrin. P. (2005). Single source shortest path, non-negative weights. Kattis. [https://open.kattis.com/problems/shortestpath1](https://open.kattis.com/problems/shortestpath1).
+///
+/// ```text
+/// 0 -> {1 (2)}
+/// 1 -> {2 (2)}
+/// 2 -> {}
+/// 3 -> {0 (2)}
+/// ```
+#[must_use]
+pub fn kattis_shortestpath1_isize() -> Vec<Vec<(usize, isize)>> {
     vec![vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]]
 }

@@ -85,13 +85,9 @@ where
         vec[i] = 0;
     }
 
-    for k in 0..v {
-        for i in 0..v {
-            for j in 0..v {
-                if dist[i][k] == isize::MAX || dist[k][j] == isize::MAX {
-                    continue;
-                }
-
+    for k in digraph.iter_vertices() {
+        for i in digraph.iter_vertices() {
+            for j in digraph.iter_vertices() {
                 let w = dist[i][k].saturating_add(dist[k][j]);
 
                 if dist[i][j] > w {
@@ -149,5 +145,40 @@ mod tests {
         assert!(distances(&fixture::bang_jensen_99())[0]
             .iter()
             .eq(&[0, 8, 3, 1, -4, -1]));
+    }
+
+    #[test]
+    fn kattis_bryr_1() {
+        assert!(distances(&fixture::kattis_bryr_1_isize())[0]
+            .iter()
+            .eq(&[0, 1, 1]));
+    }
+
+    #[test]
+    fn kattis_bryr_2() {
+        assert!(distances(&fixture::kattis_bryr_2_isize())[0]
+            .iter()
+            .eq(&[0, 1, 2, 1, 2, 3]));
+    }
+
+    #[test]
+    fn kattis_bryr_3() {
+        assert!(distances(&fixture::kattis_bryr_3_isize())[0]
+            .iter()
+            .eq(&[0, 0, 1, 0, 0, 0, 1, 0, 0, 1]));
+    }
+
+    #[test]
+    fn kattis_crosscountry() {
+        assert!(distances(&fixture::kattis_crosscountry_isize())[0]
+            .iter()
+            .eq(&[0, 1, 3, 10]));
+    }
+
+    #[test]
+    fn kattis_shortestpath1() {
+        assert!(distances(&fixture::kattis_shortestpath1_isize())[0]
+            .iter()
+            .eq(&[0, 2, 4, isize::MAX]));
     }
 }

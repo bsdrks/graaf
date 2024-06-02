@@ -512,16 +512,6 @@ mod tests {
     }
 
     #[test]
-    fn distances_kattis_shortest_path_1() {
-        test_distances!(fixture::kattis_shortestpath1(), &[0, 2, 4, usize::MAX]);
-    }
-
-    #[test]
-    fn distances_kattis_crosscountry() {
-        test_distances!(fixture::kattis_crosscountry(), &[0, 1, 3, 10]);
-    }
-
-    #[test]
     fn distances_kattis_bryr_1() {
         test_distances!(fixture::kattis_bryr_1(), &[0, 1, 1]);
     }
@@ -534,6 +524,16 @@ mod tests {
     #[test]
     fn distances_kattis_bryr_3() {
         test_distances!(fixture::kattis_bryr_3(), &[0, 0, 1, 0, 0, 0, 1, 0, 0, 1]);
+    }
+
+    #[test]
+    fn distances_kattis_crosscountry() {
+        test_distances!(fixture::kattis_crosscountry(), &[0, 1, 3, 10]);
+    }
+
+    #[test]
+    fn distances_kattis_shortestpath1() {
+        test_distances!(fixture::kattis_shortestpath1(), &[0, 2, 4, usize::MAX]);
     }
 
     #[test]
@@ -553,7 +553,7 @@ mod tests {
     }
 
     #[test]
-    fn single_source_distances_kattis_shortest_path_1() {
+    fn single_source_distances_kattis_shortestpath1() {
         assert!(single_source_distances(&fixture::kattis_shortestpath1(), 0)
             .iter()
             .eq(&[0, 2, 4, usize::MAX]));
@@ -602,7 +602,7 @@ mod tests {
     }
 
     #[test]
-    fn predecessors_kattis_shortest_path_1() {
+    fn predecessors_kattis_shortestpath1() {
         test_predecessors!(
             fixture::kattis_shortestpath1(),
             &[0, 2, 4, usize::MAX],
@@ -674,7 +674,7 @@ mod tests {
     }
 
     #[test]
-    fn single_source_predecessors_kattis_shortest_path_1() {
+    fn single_source_predecessors_kattis_shortestpath1() {
         assert!(
             single_source_predecessors(&fixture::kattis_shortestpath1(), 0)
                 .iter()
@@ -746,7 +746,7 @@ mod tests {
     }
 
     #[test]
-    fn shortest_path_kattis_shortest_path_1() {
+    fn shortest_path_kattis_shortestpath1() {
         test_shortest_path!(
             fixture::kattis_shortestpath1(),
             3,
@@ -830,7 +830,7 @@ mod tests {
     }
 
     #[test]
-    fn single_pair_shortest_path_kattis_shortest_path_1() {
+    fn single_pair_shortest_path_kattis_shortestpath1() {
         assert_eq!(
             single_pair_shortest_path(&fixture::kattis_shortestpath1(), 0, 3),
             None
