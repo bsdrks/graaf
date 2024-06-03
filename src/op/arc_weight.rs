@@ -80,7 +80,8 @@ use {
 /// assert_eq!(digraph.arc_weight(2, 2), None);
 /// ```
 pub trait ArcWeight<W> {
-    /// Returns the weight of the arc from `s` to `t`.
+    /// Returns the weight of the arc from `s` to `t` if it exists in the
+    /// digraph.
     ///
     /// # Arguments
     ///

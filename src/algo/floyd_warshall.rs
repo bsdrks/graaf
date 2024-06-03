@@ -1,9 +1,9 @@
 //! The Floyd-Warshall algorithm
 //!
-//! The Floyd-Warshall algorithm finds the shortest paths between all pairs of
-//! vertices in a weighted digraph.
+//! The Floyd[^citation]-Warshall algorithm finds the shortest paths between all
+//! pairs of vertices in a weighted digraph.
 //!
-//! The time complexity is *O*(*v*³).
+//! The time complexity is *O*(*v³*).
 //!
 //! # Examples
 //!
@@ -29,6 +29,8 @@
 //!     vec![3, -1, 1, 0],
 //! ]));
 //! ```
+//!
+//! [^citation]: Robert W. Floyd. 1962. Algorithm 97: Shortest path. Commun. ACM 5, 6 (June 1962), 345. <https://doi.org/10.1145/367766.368168>
 
 use crate::op::{
     IterVertices,
@@ -70,6 +72,7 @@ use crate::op::{
 ///     vec![3, -1, 1, 0],
 /// ]));
 /// ```
+#[doc(alias = "apsp")]
 pub fn distances<D>(digraph: &D) -> Vec<Vec<isize>>
 where
     D: IterVertices + IterWeightedArcs<isize> + Order,
@@ -85,13 +88,25 @@ where
         vec[i] = 0;
     }
 
-    for k in digraph.iter_vertices() {
-        for i in digraph.iter_vertices() {
-            for j in digraph.iter_vertices() {
-                let w = dist[i][k].saturating_add(dist[k][j]);
+    for i in digraph.iter_vertices() {
+        for j in digraph.iter_vertices() {
+            let a = dist[j][i];
 
-                if dist[i][j] > w {
-                    dist[i][j] = w;
+            if a == isize::MAX {
+                continue;
+            }
+
+            for k in digraph.iter_vertices() {
+                let b = dist[i][k];
+
+                if b == isize::MAX {
+                    continue;
+                }
+
+                let s = a + b;
+
+                if s < dist[j][k] {
+                    dist[j][k] = s;
                 }
             }
         }

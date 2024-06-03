@@ -112,7 +112,7 @@ use {
 /// [`add_arc_has_arc`]: crate::prop::add_arc_has_arc
 /// [`add_weighted_arc_has_arc`]: crate::prop::add_weighted_arc_has_arc
 pub trait HasArc {
-    /// Returns whether an arc exists from `s` to `t`.
+    /// Returns whether an arc exists from `s` to `t` in the digraph.
     ///
     /// # Arguments
     ///

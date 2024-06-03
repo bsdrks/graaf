@@ -55,7 +55,7 @@ use {
 /// assert_eq!(digraph.size(), 10);
 /// ```
 pub trait Size {
-    /// Counts all arcs.
+    /// Counts the arcs in the digraph.
     fn size(&self) -> usize;
 }
 

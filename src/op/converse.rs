@@ -123,7 +123,7 @@ use {
 /// );
 /// ```
 pub trait Converse {
-    /// Returns the converse of the digraph
+    /// Generates the converse of the digraph
     #[must_use]
     fn converse(&self) -> Self;
 }

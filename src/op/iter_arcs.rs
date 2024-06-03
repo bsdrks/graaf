@@ -24,7 +24,7 @@ use {
     },
 };
 
-/// Iterate the all arcs in a digraph.
+/// Iterate the arcs in a digraph.
 ///
 /// # How can I implement `IterArcs`?
 ///
@@ -55,7 +55,7 @@ use {
 /// assert!(digraph.iter_arcs().eq([(0, 1), (1, 2), (2, 0)]));
 /// ```
 pub trait IterArcs {
-    /// Returns an iterator over all arcs in a digraph.
+    /// Returns an iterator over the arcs in the digraph.
     fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)>;
 }
 

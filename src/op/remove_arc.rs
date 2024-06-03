@@ -141,7 +141,7 @@ use {
 /// [`add_arc_remove_arc`]: crate::prop::add_arc_remove_arc
 /// [`add_weighted_arc_remove_arc`]: crate::prop::add_weighted_arc_remove_arc
 pub trait RemoveArc {
-    /// Removes the arc from `s` to `t` from a digraph. Returns whether the
+    /// Removes the arc from `s` to `t` from the digraph. Returns whether the
     /// arc was removed.
     ///
     /// # Arguments

@@ -134,7 +134,7 @@ use crate::op::IsSubdigraph;
 /// assert!(tournament.is_superdigraph(&tournament));
 /// ```
 pub trait IsSuperdigraph {
-    /// Determines whether the digraph is a subdigraph of another digraph.
+    /// Determines whether the digraph is a superdigraph of another digraph.
     fn is_superdigraph(&self, d: &Self) -> bool;
 }
 

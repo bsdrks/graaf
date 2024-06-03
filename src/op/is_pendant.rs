@@ -69,7 +69,8 @@ use crate::op::Degree;
 /// assert!(!digraph.is_pendant(4));
 /// ```
 pub trait IsPendant {
-    /// Returns `true` if the vertex is a pendant vertex and `false` otherwise
+    /// Returns `true` if the vertex is a pendant vertex in the digraph and
+    /// `false` otherwise
     fn is_pendant(&self, s: usize) -> bool;
 }
 

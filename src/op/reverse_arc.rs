@@ -1,4 +1,4 @@
-//! Reverse an arc.
+//! Reverse an arc in a digraph.
 //!
 //! # Examples
 //!
@@ -28,7 +28,7 @@ use super::{
     RemoveArc,
 };
 
-/// Reverse an arc.
+/// Reverse an arc in a digraph.
 ///
 /// If the arc does not exist, this operation has no effect.
 ///
@@ -111,7 +111,7 @@ use super::{
 /// assert!(digraph.iter_arcs().eq([(1, 0), (1, 2), (2, 0)]));
 /// ```
 pub trait ReverseArc {
-    /// Reverse an arc.
+    /// Reverses an arc in the digraph.
     fn reverse_arc(&mut self, s: usize, t: usize) -> bool;
 }
 

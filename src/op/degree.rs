@@ -73,7 +73,7 @@ use crate::op::{
 /// assert_eq!(digraph.degree(2), 3);
 /// ```
 pub trait Degree {
-    /// Returns the degree of a vertex.
+    /// Returns the degree of a vertex in the digraph.
     ///
     /// # Arguments
     ///

@@ -1,4 +1,4 @@
-//! Add an arc to a unweighted digraph.
+//! Add an arc to an unweighted digraph.
 //!
 //! # Examples
 //!
@@ -28,7 +28,7 @@ use {
     },
 };
 
-/// Add an arc to a unweighted digraph.
+/// Add an arc to an unweighted digraph.
 ///
 /// # How can I implement `AddArc`?
 ///
@@ -80,7 +80,7 @@ use {
 /// [`add_arc_has_arc`]: crate::prop::add_arc_has_arc
 /// [`add_arc_remove_arc`]: crate::prop::add_arc_remove_arc
 pub trait AddArc {
-    /// Adds an arc from `s` to `t`.
+    /// Adds an arc from `s` to `t` to the digraph.
     ///
     /// # Arguments
     ///

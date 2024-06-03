@@ -86,7 +86,7 @@ use super::{
 /// assert!(digraph.is_isolated(3));
 /// ```
 pub trait IsIsolated {
-    /// Returns whether the vertex is isolated.
+    /// Returns whether the vertex is isolated in the digraph.
     fn is_isolated(&self, s: usize) -> bool;
 }
 

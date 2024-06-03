@@ -55,7 +55,7 @@ use {
 /// assert_eq!(digraph.order(), 4);
 /// ```
 pub trait Order {
-    /// Count all vertices.
+    /// Count the vertices in the digraph.
     fn order(&self) -> usize;
 }
 

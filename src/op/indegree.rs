@@ -71,7 +71,7 @@ use {
 /// assert_eq!(digraph.indegree(2), 2);
 /// ```
 pub trait Indegree {
-    /// Returns the indegree of a vertex.
+    /// Returns the indegree of a vertex in the digraph.
     ///
     /// # Arguments
     ///

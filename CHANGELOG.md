@@ -13,7 +13,7 @@
 - Add Kruksal.
 - Add Prim.
 - Add Tarjan.
-- Add sources.
+- Add source for Floyd-Warshall.
 - Add the `IsBipartite` trait.
 - Add the `IsInTree` trait.
 - Add the `IsInTree` trait.
@@ -25,6 +25,18 @@
 - Implement `IterOutNeighborsMut` for additional types.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.53.7] - 2024-06-03
+
+Changed
+
+- Improve documentation.
+
+## [0.53.6] - 2024-06-02
+
+Added
+
+- Add documentation alias `asps` for `flyod_warshall::distances`.
 
 ## [0.53.5] - 2024-06-02
 

@@ -64,7 +64,7 @@ use {
 /// assert_eq!(digraph.outdegree(3), 0);
 /// ```
 pub trait Outdegree {
-    /// Returns the outdegree of a vertex.
+    /// Returns the outdegree of a vertex in the digraph.
     ///
     /// # Arguments
     ///

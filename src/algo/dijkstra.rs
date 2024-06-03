@@ -3,7 +3,7 @@
 //! Dijkstra's algorithm[^citation] with binary heap finds the shortest path in
 //! a weighted digraph. Use [`bfs`] for unweighted digraphs.
 //!
-//! The time complexity is *O*(*v* log *v* + *e*).
+//! The time complexity is *O*(*v* log *v* + *a*).
 //!
 //! # Examples
 //!

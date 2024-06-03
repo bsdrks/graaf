@@ -106,7 +106,7 @@ use {
 /// assert_eq!(iter.next(), None);
 /// ```
 pub trait IterOutNeighbors {
-    /// Returns an iterator over the out-neighbors of a vertex.
+    /// Returns an iterator over the out-neighbors of a vertex in the digrpah.
     ///
     /// # Arguments
     ///

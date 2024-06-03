@@ -51,8 +51,8 @@ use {
 ///
 /// # How can I implement `EmptyConst`?
 ///
-/// Provide an implementation of `empty` that generates a empty digraph with `V`
-/// vertices.
+/// Provide an implementation of `empty` that generates an empty digraph with
+/// `V` vertices.
 ///
 /// ```
 /// use {
@@ -122,7 +122,7 @@ use {
 /// );
 /// ```
 pub trait EmptyConst {
-    /// Generates a empty digraph.
+    /// Generates an empty digraph.
     #[must_use]
     fn empty() -> Self;
 }

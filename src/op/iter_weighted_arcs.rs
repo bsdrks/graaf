@@ -62,7 +62,7 @@ use {
 ///     .eq([(0, 1, &2), (1, 2, &3), (2, 0, &4)]));
 /// ```
 pub trait IterWeightedArcs<W> {
-    /// Returns an iterator over all arcs in a digraph.
+    /// Returns an iterator over the weighted arcs in the digraph.
     fn iter_weighted_arcs<'a>(&'a self) -> impl Iterator<Item = (usize, usize, &'a W)>
     where
         W: 'a;

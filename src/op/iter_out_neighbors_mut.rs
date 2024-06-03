@@ -91,7 +91,8 @@ use {
 /// assert!(digraph.iter_out_neighbors_mut(3).eq(&mut [1, 2]));
 /// ```
 pub trait IterOutNeighborsMut {
-    /// Returns an iterator to mutate the out-neighbors of a vertex.
+    /// Returns an iterator to mutate the out-neighbors of a vertex in the
+    /// digraph.
     ///
     /// # Arguments
     ///

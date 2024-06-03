@@ -89,7 +89,8 @@ use {
 ///     .eq([(3, &4), (4, &5), (5, &6)]));
 /// ```
 pub trait IterOutWeightedNeighbors<W> {
-    /// Returns an iterator over the arcs with the source vertex `s`.
+    /// Returns an iterator over the out-neighbors of the head vertex and their
+    /// weights.
     ///
     /// # Arguments
     ///

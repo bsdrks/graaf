@@ -89,7 +89,7 @@ use {
 /// [`add_weighted_arc_has_arc`]: crate::prop::add_weighted_arc_has_arc
 /// [`add_weighted_arc_remove_arc`]: crate::prop::add_weighted_arc_remove_arc
 pub trait AddWeightedArc<W> {
-    /// Adds an arc from `s` to `t` with weight `w`.
+    /// Adds an arc from `s` to `t` with weight `w` to the digraph.
     ///
     /// # Arguments
     ///
