@@ -80,6 +80,10 @@ use {
 /// * `dist`: The distances from the source vertices.
 /// * `heap`: The source vertices.
 ///
+/// # Returns
+///
+/// Returns the distances from the source vertices to all other vertices.
+///
 /// # Panics
 ///
 /// * Panics if `step` panics.
@@ -403,6 +407,10 @@ where
 /// * `digraph`: The digraph.
 /// * `s`: The source vertex.
 /// * `t`: The target vertex.
+///
+/// # Returns
+///
+/// Returns the shortest path from the source vertex to the target vertex.
 ///
 /// # Panics
 ///

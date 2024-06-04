@@ -26,6 +26,12 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.53.9] - 2024-06-03
+
+Added
+
+- Add `Returns` sections to `dijkstra` documentation.
+
 ## [0.53.8] - 2024-06-03
 
 Changed
