@@ -1,14 +1,15 @@
-//! Dijkstra's algorithm
+//! Dijkstra's algorithm[^citation] with binary heap
 //!
-//! Dijkstra's algorithm[^citation] with binary heap finds the shortest path in
-//! a weighted digraph. Use [`bfs`] for unweighted digraphs.
+//! Dijkstra's algorithm with binary heap finds the shortest path in a weighted
+//! digraph.
 //!
 //! The time complexity is *O*(*v* log *v* + *a*).
 //!
 //! # Examples
 //!
-//! This is for illustrative purposes only; use [`predecessors`] if you need the
-//! predecessor tree *and* distances.
+//! The separate calls to `single_source_distances` and
+//! `single_source_predecessors` in the example are for illustrative purposes
+//! only; use [`predecessors`] if you need the predecessor tree *and* distances.
 //!
 //! ```
 //! use graaf::algo::dijkstra::{
@@ -47,7 +48,14 @@
 //! assert_eq!(dist, [2, 4, 6, 0]);
 //! ```
 //!
+//! # Related
+//!
+//! * Use [`bfs`] to find the shortest path in an unweighted digraph.
+//! * Use [`floyd_warshall`] to find the shortest path between all pairs of
+//!  vertices in small, dense, weighted digraphs.
+//!
 //! [`bfs`]: crate::algo::bfs
+//! [`floyd_warshall`]: crate::algo::floyd_warshall
 //! [^citation]: Dijkstra, E.W. A note on two problems in connexion with graphs. Numer. Math. 1, 269–271 (1959)
 
 extern crate alloc;
@@ -297,7 +305,7 @@ where
 ///
 /// * `digraph`: The digraph.
 /// * `step`: The function that calculates the accumulated weight.
-/// * `is_target`: The function that determines if the vertex is a target.
+/// * `is_target`: The function determining whether the vertex is a target.
 /// * `pred`: The predecessors on the shortest paths from the source vertices.
 /// * `dist`: The distances from the source vertices.
 /// * `heap`: The source vertices and their initial distances.

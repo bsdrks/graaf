@@ -1,6 +1,6 @@
 //! Generate random variable-sized tournaments.
 //!
-//! A tournament is a digraph in which for every pair of distinct
+//! A tournament is a digraph in which, for every pair of distinct
 //! vertices `s` and `t`, exactly one of the arcs `(s, t)` and `(t, s)` is
 //! present. To generate constant-sized tournaments, see
 //! [`RandomTournamentConst`].

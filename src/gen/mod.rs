@@ -1,6 +1,6 @@
 //! Digraph generators
 //!
-//! Generate parametrics digraphs.
+//! Generate parameterized and random digraphs.
 //!
 //! # Examples
 //!

@@ -1,6 +1,6 @@
 //! The Bellman-Ford-Moore algorithm
 //!
-//! The Bellman-Ford-Moore algorithm is a single-source shortest path algorithm
+//! The Bellman-Ford-Moore algorithm is a single-source shortest-path algorithm
 //! for weighted digraphs.
 //!
 //! The time complexity is *O*(*ve*).

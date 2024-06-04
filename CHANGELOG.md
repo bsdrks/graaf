@@ -26,6 +26,12 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.53.8] - 2024-06-03
+
+Changed
+
+- Improve documentation.
+
 ## [0.53.7] - 2024-06-03
 
 Changed
@@ -56,7 +62,7 @@ Changed
 
 Changed
 
-- Fix `README` adjacency list in the comments.
+- Fix the `README` adjacency list in the comments.
 
 ## [0.53.3] - 2024-06-02
 
@@ -362,7 +368,7 @@ Removed
 
 Refactored
 
-- Move fixtures to their own module.
+- Move fixtures to their module.
 - Re-use `IsBalanced` implementation with a macro.
 - Re-use `IsRegular` implementation with a macro.
 - Simplify `bfs` tests.
@@ -479,7 +485,7 @@ Added
 
 Changed
 
-- Shorten `README` example.
+- Shorten the `README` example.
 
 ## [0.48.1] - 2024-05-19
 
@@ -606,7 +612,7 @@ Removed
 Changed
 
 - Rename `graph` to `digraph` internally.
-- Raname `G` to `D` internally.
+- Rename `G` to `D` internally.
 
 ## [0.47.2] - 2024-05-19
 
@@ -617,7 +623,7 @@ Added
 
 Removed
 
-- Remove testing from `publish` script.
+- Remove testing from the `publish` script.
 
 ## [0.47.1] - 2024-05-18
 
@@ -890,7 +896,7 @@ Added
 
 Changed
 
-- Restrict existing documentation aliases to module level.
+- Restrict existing documentation aliases to the module level.
 - Simplify `AddArc` "Panics" sections.
 - Simplify `Indegree` tests.
 - Simplify `IsBalanced` tests.
@@ -1554,11 +1560,11 @@ Added
 
 Changed
 
-- Breaking: Return immediately in `bfs::shortest_path` when it finds the target, before pushing the target to the queue.
+- Breaking: Return immediately in `bfs::shortest_path` when it finds the target before pushing the target to the queue.
 - Compress textual diagrams.
 - Cross-link `bfs` and `dijkstra` in module documentation.
 - Document panics in `bfs` and `dijkstra`.
-- Link to `op` in the documentation of `repr`.
+- Link to the `op` module inside the documentation of the `repr` module.
 - Remove `min_time` from benches.
 
 ## [0.27.1] - 2024-04-26
@@ -2030,7 +2036,7 @@ Added
 
 ## [0.11.0] - 2024-04-14
 
-Added back `op` implementations for `Vec` and arrays to simplify use cases.
+Added back the `op` implementations for `Vec` and arrays to simplify use cases.
 
 Added
 

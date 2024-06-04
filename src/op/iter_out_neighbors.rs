@@ -13,8 +13,8 @@
 //! assert!(digraph.iter_out_neighbors(3).eq([1, 2]));
 //! ```
 //!
-//! The order of the out-neighbors is not guaranteed for, e.g.,
-//! `Vec<HashSet<_>>`:
+//! The function does not guarantee the order of the out-neighbors, for, e.g.,
+//! `Vec<HashSet<_>>`.
 //!
 //! ```
 //! use {
@@ -106,7 +106,7 @@ use {
 /// assert_eq!(iter.next(), None);
 /// ```
 pub trait IterOutNeighbors {
-    /// Returns an iterator over the out-neighbors of a vertex in the digrpah.
+    /// Returns an iterator over the out-neighbors of a vertex in the digraph.
     ///
     /// # Arguments
     ///

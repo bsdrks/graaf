@@ -73,7 +73,7 @@ pub trait Outdegree {
 
     /// Returns whether a vertex is a sink of the digraph.
     ///
-    /// A sink is a vertex with outdegree 0.
+    /// A sink is a vertex with an outdegree of 0.
     ///
     /// # Arguments
     ///

@@ -1,7 +1,7 @@
 //! Predecessor trees utilities
 //!
-//! Predecessor trees are produced by many graph algorithms, e.g., those
-//! defined in [`bfs`] and [`dijkstra`].
+//! Many graph algorithms produce predecessor trees, e.g., those defined in
+//! [`bfs`] and [`dijkstra`].
 //!
 //! # Examples
 //!
@@ -29,8 +29,8 @@ use std::collections::HashSet;
 ///
 /// # Returns
 ///
-/// If a path from `s` to `t` is found, returns the path. Otherwise, returns
-/// `None`.
+/// If a path from `s` to `t` is found, the function returns it. Otherwise,
+/// returns `None`.
 ///
 /// # Examples
 ///
@@ -53,12 +53,12 @@ pub fn search(pred: &[Option<usize>], s: usize, t: usize) -> Option<Vec<usize>> 
 ///
 /// * `pred`: The predecessor tree.
 /// * `s`: The source vertex of the path.
-/// * `is_target`: A predicate that determines whether a vertex is the target.
+/// * `is_target`: A predicate determining whether a vertex is the target.
 ///
 /// # Returns
 ///
-/// If a target is found, returns the path from the source to the target.
-/// Otherwise, returns `None`.
+/// If it finds a target, it returns the path from the source to the target.
+/// Otherwise, it returns `None`.
 ///
 /// # Examples
 ///

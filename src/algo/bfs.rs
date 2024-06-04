@@ -5,15 +5,16 @@
 //! vertex. Use [`dijkstra`] for weighted digraphs.
 //!
 //! The implementations use distances instead of a set or boolean array to check
-//! if a vertex has been visited because we already calculate these distances
-//! during traversal.
+//! if it has already visited a vertex because it already calculates these
+//! distances during traversal.
 //!
 //! The time complexity is *O*(*v* + *a*).
 //!
 //! # Examples
 //!
-//! This is for illustrative purposes only; use [`predecessors`] if you need the
-//! predecessor tree *and* distances.
+//! The separate calls to `single_source_distances` and
+//! `single_source_predecessors` in the example are for illustrative purposes
+//! only; use [`predecessors`] if you need the predecessor tree *and* distances.
 //!
 //! ```
 //! use graaf::algo::bfs::{
@@ -287,14 +288,14 @@ where
 ///
 /// * `digraph`: The digraph.
 /// * `step`: The function that calculates the accumulated distance.
-/// * `is_target`: The function that determines if the vertex is a target.
+/// * `is_target`: The function determining whether the vertex is a target.
 /// * `pred`: The predecessors on the shortest paths from the source vertices.
 /// * `dist`: The distances from the source vertices.
 /// * `source`: The source vertices.
 ///
 /// # Returns
 ///
-/// If a target vertex is found, the function returns the shortest path from the
+/// If it finds a target vertex, the function returns the shortest path from the
 /// source vertex to this target vertex. Otherwise, it returns `None`.
 ///
 /// # Panics
