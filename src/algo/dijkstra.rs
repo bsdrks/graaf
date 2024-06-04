@@ -52,7 +52,7 @@
 //!
 //! * Use [`bfs`] to find the shortest path in an unweighted digraph.
 //! * Use [`floyd_warshall`] to find the shortest path between all pairs of
-//!  vertices in small, dense, weighted digraphs.
+//!   vertices in small, dense, weighted digraphs.
 //!
 //! [`bfs`]: crate::algo::bfs
 //! [`floyd_warshall`]: crate::algo::floyd_warshall
