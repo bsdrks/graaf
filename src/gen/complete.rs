@@ -29,18 +29,9 @@
 //!
 //! [`CompleteConst`]: crate::gen::CompleteConst
 
-extern crate alloc;
-
 use {
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
-    core::hash::BuildHasher,
-    std::collections::{
-        HashMap,
-        HashSet,
-    },
+    super::Empty,
+    crate::op::AddArc,
 };
 
 /// Generate variable-size symmetric complete digraphs.
@@ -70,11 +61,9 @@ use {
 ///         let mut arcs = HashSet::new();
 ///
 ///         for s in 0..v {
-///             for t in 0..v {
-///                 if s != t {
-///                     let _ = arcs.insert((s, t));
-///                     let _ = arcs.insert((t, s));
-///                 }
+///             for t in (s + 1)..v {
+///                 let _ = arcs.insert((s, t));
+///                 let _ = arcs.insert((t, s));
 ///             }
 ///         }
 ///
@@ -102,151 +91,31 @@ pub trait Complete {
     fn complete(v: usize) -> Self;
 }
 
-impl Complete for Vec<Vec<usize>> {
-    /// # Panics
-    ///
-    /// Panics if `v` is 0.
-    fn complete(v: usize) -> Self {
-        assert!(v > 0, "a graph must have at least one vertex");
-
-        (0..v)
-            .map(|s| (0..v).filter(|&t| s != t).collect())
-            .collect()
-    }
-}
-
-impl Complete for Vec<BTreeSet<usize>> {
-    /// # Panics
-    ///
-    /// Panics if `v` is 0.
-    fn complete(v: usize) -> Self {
-        assert!(v > 0, "a graph must have at least one vertex");
-
-        (0..v)
-            .map(|s| (0..v).filter(|&t| s != t).collect())
-            .collect()
-    }
-}
-
-impl<H> Complete for Vec<HashSet<usize, H>>
+impl<D> Complete for D
 where
-    H: BuildHasher + Default,
-    HashSet<usize, H>: Clone,
+    D: AddArc + Empty,
 {
     /// # Panics
     ///
     /// Panics if `v` is 0.
     fn complete(v: usize) -> Self {
-        assert!(v > 0, "a graph must have at least one vertex");
+        let mut digraph = D::empty(v);
 
-        (0..v)
-            .map(|s| (0..v).filter(|&t| s != t).collect())
-            .collect()
-    }
-}
+        for s in 0..v {
+            for t in (s + 1)..v {
+                digraph.add_arc(s, t);
+                digraph.add_arc(t, s);
+            }
+        }
 
-impl Complete for BTreeMap<usize, Vec<usize>> {
-    /// # Panics
-    ///
-    /// Panics if `v` is 0.
-    fn complete(v: usize) -> Self {
-        assert!(v > 0, "a graph must have at least one vertex");
-
-        (0..v)
-            .map(|s| (s, (0..v).filter(|&t| s != t).collect()))
-            .collect()
-    }
-}
-
-impl Complete for BTreeMap<usize, BTreeSet<usize>> {
-    /// # Panics
-    ///
-    /// Panics if `v` is 0.
-    fn complete(v: usize) -> Self {
-        assert!(v > 0, "a graph must have at least one vertex");
-
-        (0..v)
-            .map(|s| (s, (0..v).filter(|&t| s != t).collect()))
-            .collect()
-    }
-}
-
-impl<H> Complete for HashMap<usize, Vec<usize>, H>
-where
-    H: BuildHasher + Default,
-{
-    /// # Panics
-    ///
-    /// Panics if `v` is 0.
-    fn complete(v: usize) -> Self {
-        assert!(v > 0, "a graph must have at least one vertex");
-
-        (0..v)
-            .map(|s| (s, (0..v).filter(|&t| s != t).collect()))
-            .collect()
-    }
-}
-
-impl<H> Complete for HashMap<usize, HashSet<usize, H>, H>
-where
-    H: BuildHasher + Default,
-{
-    /// # Panics
-    ///
-    /// Panics if `v` is 0.
-    fn complete(v: usize) -> Self {
-        assert!(v > 0, "a graph must have at least one vertex");
-
-        (0..v)
-            .map(|s| (s, (0..v).filter(|&t| s != t).collect()))
-            .collect()
-    }
-}
-
-impl Complete for Vec<(usize, usize)> {
-    /// # Panics
-    ///
-    /// Panics if `v` is 0.
-    fn complete(v: usize) -> Self {
-        assert!(v > 0, "a graph must have at least one vertex");
-
-        (0..v)
-            .flat_map(|s| (0..v).filter(move |&t| s != t).map(move |t| (s, t)))
-            .collect()
-    }
-}
-
-impl Complete for BTreeSet<(usize, usize)> {
-    /// # Panics
-    ///
-    /// Panics if `v` is 0.
-    fn complete(v: usize) -> Self {
-        assert!(v > 0, "a graph must have at least one vertex");
-
-        (0..v)
-            .flat_map(|s| (0..v).filter(move |&t| s != t).map(move |t| (s, t)))
-            .collect()
-    }
-}
-
-impl<H> Complete for HashSet<(usize, usize), H>
-where
-    H: BuildHasher + Default,
-{
-    /// # Panics
-    ///
-    /// Panics if `v` is 0.
-    fn complete(v: usize) -> Self {
-        assert!(v > 0, "a graph must have at least one vertex");
-
-        (0..v)
-            .flat_map(|s| (0..v).filter(move |&t| s != t).map(move |t| (s, t)))
-            .collect()
+        digraph
     }
 }
 
 #[cfg(test)]
 mod tests {
+    extern crate alloc;
+
     use {
         super::*,
         crate::{
@@ -260,7 +129,15 @@ mod tests {
             },
             prop::sum_indegrees_eq_sum_outdegrees,
         },
+        alloc::collections::{
+            BTreeMap,
+            BTreeSet,
+        },
         proptest::prelude::*,
+        std::collections::{
+            HashMap,
+            HashSet,
+        },
     };
 
     fn prop_indegree<T>(v: usize)
@@ -616,7 +493,7 @@ mod tests {
 
         assert_eq!(
             Vec::<(usize, usize)>::complete(3),
-            vec![(0, 1), (0, 2), (1, 0), (1, 2), (2, 0), (2, 1)]
+            vec![(0, 1), (1, 0), (0, 2), (2, 0), (1, 2), (2, 1)]
         );
     }
 

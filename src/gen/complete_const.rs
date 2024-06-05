@@ -29,13 +29,9 @@
 //!
 //! [`Complete`]: crate::gen::Complete
 
-extern crate alloc;
-
 use {
     super::EmptyConst,
-    alloc::collections::BTreeSet,
-    core::hash::BuildHasher,
-    std::collections::HashSet,
+    crate::op::AddArc,
 };
 
 /// Generate constant-sized symmetric complete digraphs.
@@ -124,59 +120,20 @@ pub trait CompleteConst {
     fn complete() -> Self;
 }
 
-impl<const V: usize> CompleteConst for [Vec<usize>; V] {
-    /// # Panics
-    ///
-    /// Panics if `V` is zero.
-    fn complete() -> Self {
-        let mut digraph = Self::empty();
-
-        for (s, vec) in digraph.iter_mut().enumerate().take(V) {
-            for t in 0..V {
-                if s != t {
-                    vec.push(t);
-                }
-            }
-        }
-
-        digraph
-    }
-}
-
-impl<const V: usize> CompleteConst for [BTreeSet<usize>; V] {
-    /// # Panics
-    ///
-    /// Panics if `V` is zero.
-    fn complete() -> Self {
-        let mut digraph = Self::empty();
-
-        for (s, set) in digraph.iter_mut().enumerate().take(V) {
-            for t in 0..V {
-                if s != t {
-                    let _ = set.insert(t);
-                }
-            }
-        }
-
-        digraph
-    }
-}
-
-impl<const V: usize, H> CompleteConst for [HashSet<usize, H>; V]
+impl<const V: usize, D> CompleteConst for [D; V]
 where
-    H: BuildHasher + Default,
+    [D; V]: AddArc + EmptyConst,
 {
     /// # Panics
     ///
-    /// Panics if `V` is zero.
+    /// Panics if `v` is 0.
     fn complete() -> Self {
-        let mut digraph = Self::empty();
+        let mut digraph = <[D; V]>::empty();
 
-        for (s, set) in digraph.iter_mut().enumerate().take(V) {
-            for t in 0..V {
-                if s != t {
-                    let _ = set.insert(t);
-                }
+        for s in 0..V {
+            for t in (s + 1)..V {
+                digraph.add_arc(s, t);
+                digraph.add_arc(t, s);
             }
         }
 
@@ -186,6 +143,8 @@ where
 
 #[cfg(test)]
 mod tests {
+    extern crate alloc;
+
     use {
         super::*,
         crate::{
@@ -198,6 +157,8 @@ mod tests {
             },
             prop::sum_indegrees_eq_sum_outdegrees,
         },
+        alloc::collections::BTreeSet,
+        std::collections::HashSet,
     };
 
     #[test]

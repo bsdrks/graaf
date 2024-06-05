@@ -27,16 +27,12 @@
 //!
 //! [`Cycle`]: crate::gen::Cycle
 
-extern crate alloc;
-
 use {
-    crate::gen::EmptyConst,
-    alloc::collections::BTreeSet,
-    core::{
-        array::from_fn,
-        hash::BuildHasher,
+    crate::{
+        gen::EmptyConst,
+        op::AddArc,
     },
-    std::collections::HashSet,
+    core::array::from_fn,
 };
 
 /// Generate constant-sized directed cycle digraphs.
@@ -126,61 +122,21 @@ pub trait CycleConst {
     fn cycle() -> Self;
 }
 
-impl<const V: usize> CycleConst for [Vec<usize>; V] {
-    /// # Panics
-    ///
-    /// Panics if `V` is zero.
-    fn cycle() -> Self {
-        assert!(V > 0, "a graph must have at least one vertex");
-
-        let mut digraph = Self::empty();
-
-        for (s, vec) in digraph.iter_mut().enumerate().take(V - 1) {
-            vec.push(s + 1);
-        }
-
-        digraph[V - 1].push(0);
-
-        digraph
-    }
-}
-
-impl<const V: usize> CycleConst for [BTreeSet<usize>; V] {
-    /// # Panics
-    ///
-    /// Panics if `V` is zero.
-    fn cycle() -> Self {
-        assert!(V > 0, "a graph must have at least one vertex");
-
-        let mut digraph = Self::empty();
-
-        for (s, set) in digraph.iter_mut().enumerate().take(V - 1) {
-            let _ = set.insert(s + 1);
-        }
-
-        let _ = digraph[V - 1].insert(0);
-
-        digraph
-    }
-}
-
-impl<const V: usize, H> CycleConst for [HashSet<usize, H>; V]
+impl<const V: usize, D> CycleConst for [D; V]
 where
-    H: BuildHasher + Default,
+    [D; V]: AddArc + EmptyConst,
 {
     /// # Panics
     ///
     /// Panics if `V` is zero.
     fn cycle() -> Self {
-        assert!(V > 0, "a graph must have at least one vertex");
+        let mut digraph = <[D; V]>::empty();
 
-        let mut digraph = Self::empty();
-
-        for (s, set) in digraph.iter_mut().enumerate().take(V - 1) {
-            let _ = set.insert(s + 1);
+        for i in 0..V - 1 {
+            digraph.add_arc(i, i + 1);
         }
 
-        let _ = digraph[V - 1].insert(0);
+        digraph.add_arc(V - 1, 0);
 
         digraph
     }
@@ -199,12 +155,19 @@ impl<const V: usize> CycleConst for [(usize, usize); V] {
 
 #[cfg(test)]
 mod tests {
+    extern crate alloc;
+
     use {
         super::*,
         crate::{
             op::IsSimple,
             prop::sum_indegrees_eq_sum_outdegrees,
         },
+        alloc::{
+            collections::BTreeSet,
+            vec,
+        },
+        std::collections::HashSet,
     };
 
     #[test]

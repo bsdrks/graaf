@@ -27,19 +27,9 @@
 //!
 //! [`CycleConst`]: crate::gen::CycleConst
 
-extern crate alloc;
-
-use {
-    crate::gen::Empty,
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
-    core::hash::BuildHasher,
-    std::collections::{
-        HashMap,
-        HashSet,
-    },
+use crate::{
+    gen::Empty,
+    op::AddArc,
 };
 
 /// Generate variable-size directed cycle digraphs.
@@ -108,177 +98,30 @@ pub trait Cycle {
     fn cycle(v: usize) -> Self;
 }
 
-impl Cycle for Vec<Vec<usize>> {
-    /// # Panics
-    ///
-    /// Panics if `v` is 0.
-    fn cycle(v: usize) -> Self {
-        let mut digraph = Self::empty(v);
-
-        for (s, vec) in digraph.iter_mut().enumerate().take(v - 1) {
-            vec.push(s + 1);
-        }
-
-        digraph[v - 1].push(0);
-
-        digraph
-    }
-}
-
-impl Cycle for Vec<BTreeSet<usize>> {
-    /// # Panics
-    ///
-    /// Panics if `v` is 0.
-    fn cycle(v: usize) -> Self {
-        let mut digraph = Self::empty(v);
-
-        for (s, set) in digraph.iter_mut().enumerate().take(v - 1) {
-            let _ = set.insert(s + 1);
-        }
-
-        let _ = digraph[v - 1].insert(0);
-
-        digraph
-    }
-}
-
-impl<H> Cycle for Vec<HashSet<usize, H>>
+impl<D> Cycle for D
 where
-    H: BuildHasher + Default,
-    HashSet<usize, H>: Clone,
+    D: AddArc + Empty,
 {
     /// # Panics
     ///
-    /// Panics if `v` is 0.
+    /// Panics if `V` is zero.
     fn cycle(v: usize) -> Self {
-        let mut digraph = Self::empty(v);
+        let mut digraph = D::empty(v);
 
-        for (s, set) in digraph.iter_mut().enumerate().take(v - 1) {
-            let _ = set.insert(s + 1);
+        for i in 0..v - 1 {
+            digraph.add_arc(i, i + 1);
         }
 
-        let _ = digraph[v - 1].insert(0);
+        digraph.add_arc(v - 1, 0);
 
         digraph
-    }
-}
-
-impl Cycle for BTreeMap<usize, Vec<usize>> {
-    /// # Panics
-    ///
-    /// Panics if `v` is 0.
-    fn cycle(v: usize) -> Self {
-        let mut digraph = Self::empty(v);
-
-        for s in 0..v - 1 {
-            let _ = digraph.insert(s, vec![s + 1]);
-        }
-
-        let _ = digraph.insert(v - 1, vec![0]);
-
-        digraph
-    }
-}
-
-impl Cycle for BTreeMap<usize, BTreeSet<usize>> {
-    /// # Panics
-    ///
-    /// Panics if `v` is 0.
-    fn cycle(v: usize) -> Self {
-        let mut digraph = Self::empty(v);
-
-        for s in 0..v - 1 {
-            let _ = digraph.insert(s, BTreeSet::from([s + 1]));
-        }
-
-        let _ = digraph.insert(v - 1, BTreeSet::from([0]));
-
-        digraph
-    }
-}
-
-impl<H> Cycle for HashMap<usize, Vec<usize>, H>
-where
-    H: BuildHasher + Default,
-{
-    /// # Panics
-    ///
-    /// Panics if `v` is 0.
-    fn cycle(v: usize) -> Self {
-        let mut digraph = Self::empty(v);
-
-        for s in 0..v - 1 {
-            let _ = digraph.insert(s, vec![s + 1]);
-        }
-
-        let _ = digraph.insert(v - 1, vec![0]);
-
-        digraph
-    }
-}
-
-impl<H> Cycle for HashMap<usize, HashSet<usize, H>, H>
-where
-    H: BuildHasher + Default,
-{
-    /// # Panics
-    ///
-    /// Panics if `v` is 0.
-    fn cycle(v: usize) -> Self {
-        let mut digraph = Self::empty(v);
-
-        for s in 0..v - 1 {
-            let mut set = HashSet::with_hasher(H::default());
-            let _ = set.insert(s + 1);
-            let _ = digraph.insert(s, set);
-        }
-
-        let mut set = HashSet::with_hasher(H::default());
-        let _ = set.insert(0);
-        let _ = digraph.insert(v - 1, set);
-
-        digraph
-    }
-}
-
-impl Cycle for Vec<(usize, usize)> {
-    /// # Panics
-    ///
-    /// Panics if `v` is 0.
-    fn cycle(v: usize) -> Self {
-        assert!(v > 0, "a graph must have at least one vertex");
-
-        (0..v).map(|s| (s, (s + 1) % v)).collect()
-    }
-}
-
-impl Cycle for BTreeSet<(usize, usize)> {
-    /// # Panics
-    ///
-    /// Panics if `v` is 0.
-    fn cycle(v: usize) -> Self {
-        assert!(v > 0, "a graph must have at least one vertex");
-
-        (0..v).map(|s| (s, (s + 1) % v)).collect()
-    }
-}
-
-impl<H> Cycle for HashSet<(usize, usize), H>
-where
-    H: BuildHasher + Default,
-{
-    /// # Panics
-    ///
-    /// Panics if `v` is 0.
-    fn cycle(v: usize) -> Self {
-        assert!(v > 0, "a graph must have at least one vertex");
-
-        (0..v).map(|s| (s, (s + 1) % v)).collect()
     }
 }
 
 #[cfg(test)]
 mod tests {
+    extern crate alloc;
+
     use {
         super::*,
         crate::{
@@ -292,7 +135,15 @@ mod tests {
             },
             prop::sum_indegrees_eq_sum_outdegrees,
         },
+        alloc::collections::{
+            BTreeMap,
+            BTreeSet,
+        },
         proptest::prelude::*,
+        std::collections::{
+            HashMap,
+            HashSet,
+        },
     };
 
     fn prop_size<T>(v: usize)

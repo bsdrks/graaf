@@ -127,106 +127,71 @@ pub trait EmptyConst {
     fn empty() -> Self;
 }
 
-impl<const V: usize> EmptyConst for [Vec<usize>; V] {
-    /// # Panics
-    ///
-    /// Panics if `V` is zero.
-    fn empty() -> Self {
-        assert!(V > 0, "a graph must have at least one vertex");
+macro_rules! impl_new {
+    ($ty:ident) => {
+        /// # Panics
+        ///
+        /// Panics if `V` is zero.
+        fn empty() -> Self {
+            assert!(V > 0, "a graph must have at least one vertex");
 
-        from_fn(|_| Vec::new())
-    }
+            from_fn(|_| $ty::new())
+        }
+    };
+}
+
+macro_rules! impl_with_hasher {
+    ($ty:ident) => {
+        /// # Panics
+        ///
+        /// Panics if `V` is zero.
+        fn empty() -> Self {
+            assert!(V > 0, "a graph must have at least one vertex");
+
+            from_fn(|_| $ty::with_hasher(H::default()))
+        }
+    };
+}
+
+impl<const V: usize> EmptyConst for [Vec<usize>; V] {
+    impl_new!(Vec);
 }
 
 impl<const V: usize> EmptyConst for [BTreeSet<usize>; V] {
-    /// # Panics
-    ///
-    /// Panics if `V` is zero.
-    fn empty() -> Self {
-        assert!(V > 0, "a graph must have at least one vertex");
-
-        from_fn(|_| BTreeSet::new())
-    }
+    impl_new!(BTreeSet);
 }
 
 impl<const V: usize, H> EmptyConst for [HashSet<usize, H>; V]
 where
     H: BuildHasher + Default,
 {
-    /// # Panics
-    ///
-    /// Panics if `V` is zero.
-    fn empty() -> Self {
-        assert!(V > 0, "a graph must have at least one vertex");
-
-        from_fn(|_| HashSet::with_hasher(H::default()))
-    }
+    impl_with_hasher!(HashSet);
 }
 
 impl<const V: usize, W> EmptyConst for [Vec<(usize, W)>; V] {
-    /// # Panics
-    ///
-    /// Panics if `V` is zero.
-    fn empty() -> Self {
-        assert!(V > 0, "a graph must have at least one vertex");
-
-        from_fn(|_| Vec::new())
-    }
+    impl_new!(Vec);
 }
 
 impl<const V: usize, W> EmptyConst for [BTreeSet<(usize, W)>; V] {
-    /// # Panics
-    ///
-    /// Panics if `V` is zero.
-    fn empty() -> Self {
-        assert!(V > 0, "a graph must have at least one vertex");
-
-        from_fn(|_| BTreeSet::new())
-    }
+    impl_new!(BTreeSet);
 }
 
 impl<const V: usize, W, H> EmptyConst for [HashSet<(usize, W), H>; V]
 where
-    W: Default,
     H: BuildHasher + Default,
 {
-    /// # Panics
-    ///
-    /// Panics if `V` is zero.
-    fn empty() -> Self {
-        assert!(V > 0, "a graph must have at least one vertex");
-
-        from_fn(|_| HashSet::with_hasher(H::default()))
-    }
+    impl_with_hasher!(HashSet);
 }
 
-impl<const V: usize, W> EmptyConst for [BTreeMap<usize, W>; V]
-where
-    W: Default,
-{
-    /// # Panics
-    ///
-    /// Panics if `V` is zero.
-    fn empty() -> Self {
-        assert!(V > 0, "a graph must have at least one vertex");
-
-        from_fn(|_| BTreeMap::new())
-    }
+impl<const V: usize, W> EmptyConst for [BTreeMap<usize, W>; V] {
+    impl_new!(BTreeMap);
 }
 
 impl<const V: usize, W, H> EmptyConst for [HashMap<usize, W, H>; V]
 where
-    W: Default,
     H: BuildHasher + Default,
 {
-    /// # Panics
-    ///
-    /// Panics if `V` is zero.
-    fn empty() -> Self {
-        assert!(V > 0, "a graph must have at least one vertex");
-
-        from_fn(|_| HashMap::with_hasher(H::default()))
-    }
+    impl_with_hasher!(HashMap);
 }
 
 #[cfg(test)]

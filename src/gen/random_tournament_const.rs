@@ -38,17 +38,12 @@
 //!
 //! [`RandomTournament`]: crate::gen::RandomTournament
 
-extern crate alloc;
-
 use {
     super::prng::Xoshiro256StarStar,
     crate::{
         gen::EmptyConst,
         op::AddArc,
     },
-    alloc::collections::BTreeSet,
-    core::hash::BuildHasher,
-    std::collections::HashSet,
 };
 
 /// Generate random constant-sized tournaments.
@@ -161,45 +156,32 @@ pub trait RandomTournamentConst {
     fn random_tournament() -> Self;
 }
 
-macro_rules! impl_random_tournament {
-    () => {
-        fn random_tournament() -> Self {
-            let mut rng = Xoshiro256StarStar::new(V as u64);
-            let mut arcs = Self::empty();
+impl<const V: usize, D> RandomTournamentConst for [D; V]
+where
+    [D; V]: AddArc + EmptyConst,
+{
+    fn random_tournament() -> Self {
+        let mut rng = Xoshiro256StarStar::new(V as u64);
+        let mut arcs = Self::empty();
 
-            for s in 0..V {
-                for t in (s + 1)..V {
-                    if rng.next_bool() {
-                        arcs.add_arc(s, t);
-                    } else {
-                        arcs.add_arc(t, s);
-                    }
+        for s in 0..V {
+            for t in (s + 1)..V {
+                if rng.next_bool() {
+                    arcs.add_arc(s, t);
+                } else {
+                    arcs.add_arc(t, s);
                 }
             }
-
-            arcs
         }
-    };
-}
 
-impl<const V: usize> RandomTournamentConst for [Vec<usize>; V] {
-    impl_random_tournament!();
-}
-
-impl<const V: usize> RandomTournamentConst for [BTreeSet<usize>; V] {
-    impl_random_tournament!();
-}
-
-impl<const V: usize, H> RandomTournamentConst for [HashSet<usize, H>; V]
-where
-    H: BuildHasher + Default,
-    HashSet<usize, H>: Clone,
-{
-    impl_random_tournament!();
+        arcs
+    }
 }
 
 #[cfg(test)]
 mod tests {
+    extern crate alloc;
+
     use {
         super::*,
         crate::op::{
@@ -210,6 +192,8 @@ mod tests {
             Outdegree,
             Size,
         },
+        alloc::collections::BTreeSet,
+        std::collections::HashSet,
     };
 
     macro_rules! prop_arr_vec {

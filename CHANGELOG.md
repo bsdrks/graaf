@@ -26,6 +26,21 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.53.10] - 2024-06-05
+
+Changed
+
+- Change `CompleteConst` to blanket implementation.
+- Change `Complete` to blanket implementation.
+- Change `CycleConst` to blanket implementation.
+- Change `Cycle` to blanket implementation.
+- Change `EmptyConst` to blanket implementation.
+- Change `RandomTournamentConst` to blanket implementation.
+- Change `RandomTournament` to blanket implementation.
+- Removed `W: Default` bound on `EmptyConst for [BTreeMap<usize, W>; V]`.
+- Removed `W: Default` bound on `EmptyConst for [HashMap<usize, W>; V]`.
+- Removed `W: Default` bound on `EmptyConst for [HashSet<(usize, W)>; V]`.
+
 ## [0.53.9] - 2024-06-03
 
 Added

@@ -39,22 +39,11 @@
 //!
 //! [`RandomTournamentConst`]: crate::gen::RandomTournamentConst
 
-extern crate alloc;
-
 use {
     super::prng::Xoshiro256StarStar,
     crate::{
         gen::Empty,
         op::AddArc,
-    },
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
-    core::hash::BuildHasher,
-    std::collections::{
-        HashMap,
-        HashSet,
     },
 };
 
@@ -168,82 +157,32 @@ pub trait RandomTournament {
     fn random_tournament(v: usize) -> Self;
 }
 
-macro_rules! impl_random_tournament {
-    () => {
-        fn random_tournament(v: usize) -> Self {
-            let mut rng = Xoshiro256StarStar::new(v as u64);
-            let mut arcs = Self::empty(v);
+impl<D> RandomTournament for D
+where
+    D: AddArc + Empty,
+{
+    fn random_tournament(v: usize) -> Self {
+        let mut rng = Xoshiro256StarStar::new(v as u64);
+        let mut arcs = Self::empty(v);
 
-            for s in 0..v {
-                for t in (s + 1)..v {
-                    if rng.next_bool() {
-                        arcs.add_arc(s, t);
-                    } else {
-                        arcs.add_arc(t, s);
-                    }
+        for s in 0..v {
+            for t in (s + 1)..v {
+                if rng.next_bool() {
+                    arcs.add_arc(s, t);
+                } else {
+                    arcs.add_arc(t, s);
                 }
             }
-
-            arcs
         }
-    };
-}
 
-impl RandomTournament for Vec<Vec<usize>> {
-    impl_random_tournament!();
-}
-
-impl RandomTournament for Vec<BTreeSet<usize>> {
-    impl_random_tournament!();
-}
-
-impl<H> RandomTournament for Vec<HashSet<usize, H>>
-where
-    H: BuildHasher + Default,
-    HashSet<usize, H>: Clone,
-{
-    impl_random_tournament!();
-}
-
-impl RandomTournament for BTreeMap<usize, Vec<usize>> {
-    impl_random_tournament!();
-}
-
-impl RandomTournament for BTreeMap<usize, BTreeSet<usize>> {
-    impl_random_tournament!();
-}
-
-impl<H> RandomTournament for HashMap<usize, Vec<usize>, H>
-where
-    H: BuildHasher + Default,
-{
-    impl_random_tournament!();
-}
-
-impl<H> RandomTournament for HashMap<usize, HashSet<usize, H>, H>
-where
-    H: BuildHasher + Default,
-{
-    impl_random_tournament!();
-}
-
-impl RandomTournament for Vec<(usize, usize)> {
-    impl_random_tournament!();
-}
-
-impl RandomTournament for BTreeSet<(usize, usize)> {
-    impl_random_tournament!();
-}
-
-impl<H> RandomTournament for HashSet<(usize, usize), H>
-where
-    H: BuildHasher + Default,
-{
-    impl_random_tournament!();
+        arcs
+    }
 }
 
 #[cfg(test)]
 mod tests {
+    extern crate alloc;
+
     use {
         super::*,
         crate::op::{
@@ -254,7 +193,15 @@ mod tests {
             Outdegree,
             Size,
         },
+        alloc::collections::{
+            BTreeMap,
+            BTreeSet,
+        },
         proptest::proptest,
+        std::collections::{
+            HashMap,
+            HashSet,
+        },
     };
 
     fn prop_degree<T>(v: usize)
