@@ -8,7 +8,7 @@
 //! # Examples
 //!
 //! ```
-//! use graaf::algo::bellman_ford_moore::distances;
+//! use graaf::algo::bellman_ford_moore::single_source_distances;
 //!
 //! let digraph = vec![
 //!     vec![(1, 8), (2, 4)],
@@ -19,11 +19,13 @@
 //!     vec![(3, 5), (4, -3)],
 //! ];
 //!
-//! assert!(distances(&digraph, 0).unwrap().eq(&[0, 8, 3, 1, -4, -1]));
+//! assert!(single_source_distances(&digraph, 0)
+//!     .unwrap()
+//!     .eq(&[0, 8, 3, 1, -4, -1]));
 //!
 //! let digraph = vec![vec![(1, -2)], vec![(2, -1)], vec![(0, -1)]];
 //!
-//! assert_eq!(distances(&digraph, 0), None);
+//! assert_eq!(single_source_distances(&digraph, 0), None);
 //! ```
 
 use crate::op::{
@@ -47,7 +49,7 @@ use crate::op::{
 /// # Examples
 ///
 /// ```
-/// use graaf::algo::bellman_ford_moore::distances;
+/// use graaf::algo::bellman_ford_moore::single_source_distances;
 ///
 /// let digraph = vec![
 ///     vec![(1, 8), (2, 4)],
@@ -58,13 +60,15 @@ use crate::op::{
 ///     vec![(3, 5), (4, -3)],
 /// ];
 ///
-/// assert!(distances(&digraph, 0).unwrap().eq(&[0, 8, 3, 1, -4, -1]));
+/// assert!(single_source_distances(&digraph, 0)
+///     .unwrap()
+///     .eq(&[0, 8, 3, 1, -4, -1]));
 ///
 /// let digraph = vec![vec![(1, -2)], vec![(2, -1)], vec![(0, -1)]];
 ///
-/// assert_eq!(distances(&digraph, 0), None);
+/// assert_eq!(single_source_distances(&digraph, 0), None);
 /// ```
-pub fn distances<D>(digraph: &D, s: usize) -> Option<Vec<isize>>
+pub fn single_source_distances<D>(digraph: &D, s: usize) -> Option<Vec<isize>>
 where
     D: IterWeightedArcs<isize> + Order,
 {
@@ -100,22 +104,24 @@ mod tests {
 
     #[test]
     fn trivial() {
-        assert!(distances(&Vec::<Vec<(usize, isize)>>::trivial(), 0)
-            .unwrap()
-            .iter()
-            .eq(&[0]));
+        assert!(
+            single_source_distances(&Vec::<Vec<(usize, isize)>>::trivial(), 0)
+                .unwrap()
+                .iter()
+                .eq(&[0])
+        );
     }
 
     #[test]
     fn bang_jensen_96() {
-        assert!(distances(&fixture::bang_jensen_96_isize(), 0)
+        assert!(single_source_distances(&fixture::bang_jensen_96_isize(), 0)
             .unwrap()
             .eq(&[0, 5, 3, 6, 4, 7]));
     }
 
     #[test]
     fn bang_jensen_99() {
-        assert!(distances(&fixture::bang_jensen_99(), 0)
+        assert!(single_source_distances(&fixture::bang_jensen_99(), 0)
             .unwrap()
             .eq(&[0, 8, 3, 1, -4, -1]));
     }
@@ -124,6 +130,6 @@ mod tests {
     fn test_negative_cycle() {
         let digraph = vec![vec![(1, -2)], vec![(2, -1)], vec![(0, -1)]];
 
-        assert_eq!(distances(&digraph, 0), None);
+        assert_eq!(single_source_distances(&digraph, 0), None);
     }
 }

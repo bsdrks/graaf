@@ -1,6 +1,6 @@
 [package]
 name = "graaf"
-version = "0.53.10"
+version = "0.54.0"
 edition = "2021"
 authors = ["Bas Dirks <bas.dirks@protonmail.com>"]
 categories = ["algorithms", "data-structures", "mathematics"]
@@ -34,6 +34,11 @@ harness = false
 [[bench]]
 name = "size"
 path = "benches/op/size.rs"
+harness = false
+
+[[bench]]
+name = "single_source_distances"
+path = "benches/algo/single_source_distances.rs"
 harness = false
 
 [[bench]]

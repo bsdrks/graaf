@@ -13,7 +13,6 @@
 - Add Kruksal.
 - Add Prim.
 - Add Tarjan.
-- Add source for Floyd-Warshall.
 - Add the `IsBipartite` trait.
 - Add the `IsInTree` trait.
 - Add the `IsOutTree` trait.
@@ -24,6 +23,16 @@
 - Implement `IterOutNeighborsMut` for additional types.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.54.0] - 2024-06-05
+
+Added
+
+- Add benchmark `algo::single_source_distances`.
+
+Changed
+
+- Breaking: Rename `bellman_ford_moore::distances` to `bellman_ford_moore::single_source_distances`.
 
 ## [0.53.10] - 2024-06-05
 

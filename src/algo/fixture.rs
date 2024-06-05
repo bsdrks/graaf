@@ -38,6 +38,56 @@ pub fn bang_jensen_94() -> Vec<BTreeSet<usize>> {
 }
 
 /// Bang-Jensen, J., & Gutin, G. Z. (2010). Digraphs theory, algorithms and
+/// applications (pp. 94). Springer.
+///
+/// ```text
+/// 0 -> {1, 2}
+/// 1 -> {3}
+/// 2 -> {1, 3, 4, 5}
+/// 3 -> {5}
+/// 4 -> {6}
+/// 5 -> {}
+/// 6 -> {}
+/// ```
+#[must_use]
+pub fn bang_jensen_94_weighted_usize() -> Vec<BTreeMap<usize, usize>> {
+    vec![
+        BTreeMap::from([(1, 1), (2, 1)]),
+        BTreeMap::from([(3, 1)]),
+        BTreeMap::from([(1, 1), (3, 1), (4, 1), (5, 1)]),
+        BTreeMap::from([(5, 1)]),
+        BTreeMap::from([(6, 1)]),
+        BTreeMap::new(),
+        BTreeMap::new(),
+    ]
+}
+
+/// Bang-Jensen, J., & Gutin, G. Z. (2010). Digraphs theory, algorithms and
+/// applications (pp. 94). Springer.
+///
+/// ```text
+/// 0 -> {1, 2}
+/// 1 -> {3}
+/// 2 -> {1, 3, 4, 5}
+/// 3 -> {5}
+/// 4 -> {6}
+/// 5 -> {}
+/// 6 -> {}
+/// ```
+#[must_use]
+pub fn bang_jensen_94_weighted_isize() -> Vec<BTreeMap<usize, isize>> {
+    vec![
+        BTreeMap::from([(1, 1), (2, 1)]),
+        BTreeMap::from([(3, 1)]),
+        BTreeMap::from([(1, 1), (3, 1), (4, 1), (5, 1)]),
+        BTreeMap::from([(5, 1)]),
+        BTreeMap::from([(6, 1)]),
+        BTreeMap::new(),
+        BTreeMap::new(),
+    ]
+}
+
+/// Bang-Jensen, J., & Gutin, G. Z. (2010). Digraphs theory, algorithms and
 /// applications (pp. 96). Springer.
 ///
 /// ```text
