@@ -16,7 +16,6 @@
 - Add source for Floyd-Warshall.
 - Add the `IsBipartite` trait.
 - Add the `IsInTree` trait.
-- Add the `IsInTree` trait.
 - Add the `IsOutTree` trait.
 - Add the `RemoveWeightedArc` trait.
 - Benchmark against popular Rust graph libraries.
