@@ -523,6 +523,14 @@ mod tests {
     }
 
     #[test]
+    fn distances_bang_jensen_94() {
+        test_distances!(
+            fixture::bang_jensen_94_weighted_usize(),
+            &[0, 1, 1, 2, 2, 2, 3]
+        );
+    }
+
+    #[test]
     fn distances_bang_jensen_96() {
         test_distances!(fixture::bang_jensen_96(), &[0, 5, 3, 6, 4, 7]);
     }
@@ -562,24 +570,19 @@ mod tests {
     }
 
     #[test]
+    fn single_source_distances_bang_jensen_94() {
+        assert!(
+            single_source_distances(&fixture::bang_jensen_94_weighted_usize(), 0)
+                .iter()
+                .eq(&[0, 1, 1, 2, 2, 2, 3])
+        );
+    }
+
+    #[test]
     fn single_source_distances_bang_jensen_96() {
         assert!(single_source_distances(&fixture::bang_jensen_96(), 0)
             .iter()
             .eq(&[0, 5, 3, 6, 4, 7]));
-    }
-
-    #[test]
-    fn single_source_distances_kattis_shortestpath1() {
-        assert!(single_source_distances(&fixture::kattis_shortestpath1(), 0)
-            .iter()
-            .eq(&[0, 2, 4, usize::MAX]));
-    }
-
-    #[test]
-    fn single_source_distances_kattis_crosscountry() {
-        assert!(single_source_distances(&fixture::kattis_crosscountry(), 0)
-            .iter()
-            .eq(&[0, 1, 3, 10]));
     }
 
     #[test]
@@ -604,8 +607,31 @@ mod tests {
     }
 
     #[test]
+    fn single_source_distances_kattis_crosscountry() {
+        assert!(single_source_distances(&fixture::kattis_crosscountry(), 0)
+            .iter()
+            .eq(&[0, 1, 3, 10]));
+    }
+
+    #[test]
+    fn single_source_distances_kattis_shortestpath1() {
+        assert!(single_source_distances(&fixture::kattis_shortestpath1(), 0)
+            .iter()
+            .eq(&[0, 2, 4, usize::MAX]));
+    }
+
+    #[test]
     fn predecessors_trivial() {
         test_predecessors!(Vec::<Vec<(usize, usize)>>::trivial(), &[0], &[None]);
+    }
+
+    #[test]
+    fn predecessors_bang_jensen_94() {
+        test_predecessors!(
+            fixture::bang_jensen_94_weighted_usize(),
+            &[0, 1, 1, 2, 2, 2, 3],
+            &[None, Some(0), Some(0), Some(2), Some(2), Some(2), Some(4)]
+        );
     }
 
     #[test]
@@ -614,24 +640,6 @@ mod tests {
             fixture::bang_jensen_96(),
             &[0, 5, 3, 6, 4, 7],
             &[None, Some(2), Some(0), Some(4), Some(2), Some(3)]
-        );
-    }
-
-    #[test]
-    fn predecessors_kattis_shortestpath1() {
-        test_predecessors!(
-            fixture::kattis_shortestpath1(),
-            &[0, 2, 4, usize::MAX],
-            &[None, Some(0), Some(1), None]
-        );
-    }
-
-    #[test]
-    fn predecessors_kattis_crosscountry() {
-        test_predecessors!(
-            fixture::kattis_crosscountry(),
-            &[0, 1, 3, 10],
-            &[None, Some(0), Some(0), Some(2)]
         );
     }
 
@@ -674,6 +682,24 @@ mod tests {
     }
 
     #[test]
+    fn predecessors_kattis_crosscountry() {
+        test_predecessors!(
+            fixture::kattis_crosscountry(),
+            &[0, 1, 3, 10],
+            &[None, Some(0), Some(0), Some(2)]
+        );
+    }
+
+    #[test]
+    fn predecessors_kattis_shortestpath1() {
+        test_predecessors!(
+            fixture::kattis_shortestpath1(),
+            &[0, 2, 4, usize::MAX],
+            &[None, Some(0), Some(1), None]
+        );
+    }
+
+    #[test]
     fn single_source_predecessors_trivial() {
         assert!(
             single_source_predecessors(&Vec::<Vec<(usize, usize)>>::trivial(), 0)
@@ -683,28 +709,19 @@ mod tests {
     }
 
     #[test]
+    fn single_source_predecessors_bang_jensen_94() {
+        assert!(
+            single_source_predecessors(&fixture::bang_jensen_94_weighted_usize(), 0)
+                .iter()
+                .eq(&[None, Some(0), Some(0), Some(2), Some(2), Some(2), Some(4)])
+        );
+    }
+
+    #[test]
     fn single_source_predecessors_bang_jensen_96() {
         assert!(single_source_predecessors(&fixture::bang_jensen_96(), 0)
             .iter()
             .eq(&[None, Some(2), Some(0), Some(4), Some(2), Some(3)]));
-    }
-
-    #[test]
-    fn single_source_predecessors_kattis_shortestpath1() {
-        assert!(
-            single_source_predecessors(&fixture::kattis_shortestpath1(), 0)
-                .iter()
-                .eq(&[None, Some(0), Some(1), None])
-        );
-    }
-
-    #[test]
-    fn single_source_predecessors_kattis_crosscountry() {
-        assert!(
-            single_source_predecessors(&fixture::kattis_crosscountry(), 0)
-                .iter()
-                .eq(&[None, Some(0), Some(0), Some(2)])
-        );
     }
 
     #[test]
@@ -740,6 +757,24 @@ mod tests {
     }
 
     #[test]
+    fn single_source_predecessors_kattis_crosscountry() {
+        assert!(
+            single_source_predecessors(&fixture::kattis_crosscountry(), 0)
+                .iter()
+                .eq(&[None, Some(0), Some(0), Some(2)])
+        );
+    }
+
+    #[test]
+    fn single_source_predecessors_kattis_shortestpath1() {
+        assert!(
+            single_source_predecessors(&fixture::kattis_shortestpath1(), 0)
+                .iter()
+                .eq(&[None, Some(0), Some(1), None])
+        );
+    }
+
+    #[test]
     fn shortest_path_trivial() {
         test_shortest_path!(
             Vec::<Vec<(usize, usize)>>::trivial(),
@@ -751,6 +786,17 @@ mod tests {
     }
 
     #[test]
+    fn shortest_path_bang_jensen_94() {
+        test_shortest_path!(
+            fixture::bang_jensen_94_weighted_usize(),
+            6,
+            &[0, 1, 1, 2, 2, 2, 3],
+            &[None, Some(0), Some(0), Some(2), Some(2), Some(2), Some(4)],
+            Some(vec![0, 2, 4, 6])
+        );
+    }
+
+    #[test]
     fn shortest_path_bang_jensen_96() {
         test_shortest_path!(
             fixture::bang_jensen_96(),
@@ -758,28 +804,6 @@ mod tests {
             &[0, 5, 3, 6, 4, 7],
             &[None, Some(2), Some(0), Some(4), Some(2), Some(3)],
             Some(vec![0, 2, 4, 3, 5])
-        );
-    }
-
-    #[test]
-    fn shortest_path_kattis_shortestpath1() {
-        test_shortest_path!(
-            fixture::kattis_shortestpath1(),
-            3,
-            &[0, 2, 4, usize::MAX],
-            &[None, Some(0), Some(1), None],
-            None
-        );
-    }
-
-    #[test]
-    fn shortest_path_kattis_crosscountry() {
-        test_shortest_path!(
-            fixture::kattis_crosscountry(),
-            2,
-            &[0, 1, 3, 14],
-            &[None, Some(0), Some(0), Some(0)],
-            Some(vec![0, 2])
         );
     }
 
@@ -828,6 +852,28 @@ mod tests {
     }
 
     #[test]
+    fn shortest_path_kattis_crosscountry() {
+        test_shortest_path!(
+            fixture::kattis_crosscountry(),
+            2,
+            &[0, 1, 3, 14],
+            &[None, Some(0), Some(0), Some(0)],
+            Some(vec![0, 2])
+        );
+    }
+
+    #[test]
+    fn shortest_path_kattis_shortestpath1() {
+        test_shortest_path!(
+            fixture::kattis_shortestpath1(),
+            3,
+            &[0, 2, 4, usize::MAX],
+            &[None, Some(0), Some(1), None],
+            None
+        );
+    }
+
+    #[test]
     fn single_pair_shortest_path_trivial() {
         assert!(
             single_pair_shortest_path(&Vec::<Vec<(usize, usize)>>::trivial(), 0, 0)
@@ -838,29 +884,21 @@ mod tests {
     }
 
     #[test]
+    fn single_pair_shortest_path_bang_jensen_94() {
+        assert!(
+            single_pair_shortest_path(&fixture::bang_jensen_94_weighted_usize(), 0, 6)
+                .unwrap()
+                .iter()
+                .eq(&[0, 2, 4, 6])
+        );
+    }
+
+    #[test]
     fn single_pair_shortest_path_bang_jensen_96() {
         assert!(single_pair_shortest_path(&fixture::bang_jensen_96(), 0, 5)
             .unwrap()
             .iter()
             .eq(&[0, 2, 4, 3, 5]));
-    }
-
-    #[test]
-    fn single_pair_shortest_path_kattis_shortestpath1() {
-        assert_eq!(
-            single_pair_shortest_path(&fixture::kattis_shortestpath1(), 0, 3),
-            None
-        );
-    }
-
-    #[test]
-    fn single_pair_shortest_path_kattis_crosscountry() {
-        assert!(
-            single_pair_shortest_path(&fixture::kattis_crosscountry(), 0, 2)
-                .unwrap()
-                .iter()
-                .eq(&[0, 2])
-        );
     }
 
     #[test]
@@ -885,5 +923,23 @@ mod tests {
             .unwrap()
             .iter()
             .eq(&[0, 3, 7, 1, 9]));
+    }
+
+    #[test]
+    fn single_pair_shortest_path_kattis_crosscountry() {
+        assert!(
+            single_pair_shortest_path(&fixture::kattis_crosscountry(), 0, 2)
+                .unwrap()
+                .iter()
+                .eq(&[0, 2])
+        );
+    }
+
+    #[test]
+    fn single_pair_shortest_path_kattis_shortestpath1() {
+        assert_eq!(
+            single_pair_shortest_path(&fixture::kattis_shortestpath1(), 0, 3),
+            None
+        );
     }
 }

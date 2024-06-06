@@ -442,7 +442,7 @@ where
 #[cfg(test)]
 mod tests {
     use crate::{
-        algo::fixture::bang_jensen_94,
+        algo::fixture,
         gen::Empty,
     };
 
@@ -461,7 +461,7 @@ mod tests {
 
     #[test]
     fn distances_bang_jensen_94() {
-        let digraph = bang_jensen_94();
+        let digraph = fixture::bang_jensen_94();
         let mut dist = [usize::MAX; 7];
         let mut queue = VecDeque::from([(0, 0)]);
 
@@ -480,8 +480,8 @@ mod tests {
     }
 
     #[test]
-    fn single_source_distances_bang_jensen_94() {
-        assert!(single_source_distances(&bang_jensen_94(), 0)
+    fn single_source_distancesbang_jensen_94() {
+        assert!(single_source_distances(&fixture::bang_jensen_94(), 0)
             .iter()
             .eq(&[0, 1, 1, 2, 2, 2, 3]));
     }
@@ -501,7 +501,7 @@ mod tests {
 
     #[test]
     fn predecessors_bang_jensen_94() {
-        let digraph = bang_jensen_94();
+        let digraph = fixture::bang_jensen_94();
         let mut pred = [None; 7];
         let mut dist = [usize::MAX; 7];
         let mut queue = VecDeque::from([(0, 0)]);
@@ -527,7 +527,7 @@ mod tests {
 
     #[test]
     fn single_source_predecessors_bang_jensen_94() {
-        assert!(single_source_predecessors(&bang_jensen_94(), 0)
+        assert!(single_source_predecessors(&fixture::bang_jensen_94(), 0)
             .iter()
             .eq(&[None, Some(0), Some(0), Some(1), Some(2), Some(2), Some(4)]));
     }
@@ -555,7 +555,7 @@ mod tests {
 
     #[test]
     fn shortest_path_bang_jensen_94() {
-        let digraph = bang_jensen_94();
+        let digraph = fixture::bang_jensen_94();
         let mut pred = [None; 7];
         let mut dist = [usize::MAX; 7];
         let mut queue = VecDeque::from([(0, 0)]);
@@ -588,8 +588,8 @@ mod tests {
     }
 
     #[test]
-    fn single_pair_shortest_path_bang_jensen_93() {
-        assert!(single_pair_shortest_path(&bang_jensen_94(), 0, 6)
+    fn single_pair_shortest_path_bang_jensen_94() {
+        assert!(single_pair_shortest_path(&fixture::bang_jensen_94(), 0, 6)
             .unwrap()
             .iter()
             .eq(&[0, 2, 4, 6]));

@@ -113,6 +113,15 @@ mod tests {
     }
 
     #[test]
+    fn bang_jensen_94() {
+        assert!(
+            single_source_distances(&fixture::bang_jensen_94_weighted_isize(), 0)
+                .unwrap()
+                .eq(&[0, 8, 3, 1, -4, -1])
+        );
+    }
+
+    #[test]
     fn bang_jensen_96() {
         assert!(single_source_distances(&fixture::bang_jensen_96_isize(), 0)
             .unwrap()
@@ -124,6 +133,45 @@ mod tests {
         assert!(single_source_distances(&fixture::bang_jensen_99(), 0)
             .unwrap()
             .eq(&[0, 8, 3, 1, -4, -1]));
+    }
+
+    #[test]
+    fn kattis_bryr_1() {
+        assert!(single_source_distances(&fixture::kattis_bryr_1_isize(), 0)
+            .unwrap()
+            .eq(&[0, 1, 1]));
+    }
+
+    #[test]
+    fn kattis_bryr_2() {
+        assert!(single_source_distances(&fixture::kattis_bryr_2_isize(), 0)
+            .unwrap()
+            .eq(&[0, 1, 2, 1, 2, 3]));
+    }
+
+    #[test]
+    fn kattis_bryr_3() {
+        assert!(single_source_distances(&fixture::kattis_bryr_3_isize(), 0)
+            .unwrap()
+            .eq(&[0, 0, 1, 0, 0, 0, 1, 0, 0, 1]));
+    }
+
+    #[test]
+    fn kattis_crosscountry() {
+        assert!(
+            single_source_distances(&fixture::kattis_crosscountry_isize(), 0)
+                .unwrap()
+                .eq(&[0, 1, 3, 10])
+        );
+    }
+
+    #[test]
+    fn kattis_shortestpath1() {
+        assert!(
+            single_source_distances(&fixture::kattis_shortestpath1_isize(), 0)
+                .unwrap()
+                .eq(&[0, 2, 4, isize::MAX])
+        );
     }
 
     #[test]

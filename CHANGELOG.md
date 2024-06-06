@@ -24,6 +24,28 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.54.1] - 2024-06-06
+
+Added
+
+- Add unit test `bang_jensen_94` for `bellman_ford_moore::single_source_distances`.
+- Add unit test `bang_jensen_94` for `floyd_warshall::distances`.
+- Add unit test `kattis_bryr_1` for `bellman_ford_moore::single_source_distances`.
+- Add unit test `kattis_bryr_2` for `bellman_ford_moore::single_source_distances`.
+- Add unit test `kattis_bryr_3` for `bellman_ford_moore::single_source_distances`.
+- Add unit test `kattis_crosscountry` for `bellman_ford_moore::single_source_distances`.
+- Add unit test `kattis_shortestpath1` for `bellman_ford_moore::single_source_distances`.
+- Add unit test `predecessors_kattis_crosscountry` for `dijkstra`.
+- Add unit test `predecessors_kattis_shortestpath1` for `dijkstra`.
+- Add unit test `shortest_path_bang_jensen_94` for `dijkstra`.
+- Add unit test `shortest_path_kattis_crosscountry` for `dijkstra`.
+- Add unit test `shortest_path_kattis_shortestpath1` for `dijkstra`.
+- Add unit test `single_pair_shortest_path_kattis_bang_jensen_94` for `dijkstra`.
+- Add unit test `single_pair_shortest_path_kattis_crosscountry` for `dijkstra`.
+- Add unit test `single_pair_shortest_path_kattis_shortestpath1` for `dijkstra`.
+- Add unit test `single_source_predecessors_kattis_crosscountry` for `dijkstra`.
+- Add unit test `single_source_predecessors_kattis_shortestpath1` for `dijkstra`.
+
 ## [0.54.0] - 2024-06-05
 
 Added

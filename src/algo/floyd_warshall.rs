@@ -149,6 +149,13 @@ mod tests {
     }
 
     #[test]
+    fn bang_jensen_94() {
+        assert!(distances(&fixture::bang_jensen_94_weighted_isize())[0]
+            .iter()
+            .eq(&[0, 1, 1, 2, 2, 2, 3]));
+    }
+
+    #[test]
     fn bang_jensen_96() {
         assert!(distances(&fixture::bang_jensen_96_isize())[0]
             .iter()
