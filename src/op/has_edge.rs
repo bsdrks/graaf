@@ -161,7 +161,7 @@ mod tests {
         };
     }
 
-    macro_rules! test_has_arc {
+    macro_rules! test_has_edge {
         ($digraph:expr) => {
             assert!(!$digraph.has_edge(0, 1));
             assert!($digraph.has_edge(0, 2));
@@ -177,7 +177,7 @@ mod tests {
         let mut digraph = Vec::<BTreeSet<usize>>::empty(3);
 
         setup_unweighted!(digraph);
-        test_has_arc!(digraph);
+        test_has_edge!(digraph);
     }
 
     #[test]
@@ -185,7 +185,7 @@ mod tests {
         let mut digraph = Vec::<HashSet<usize>>::empty(3);
 
         setup_unweighted!(digraph);
-        test_has_arc!(digraph);
+        test_has_edge!(digraph);
     }
 
     #[test]
@@ -193,7 +193,7 @@ mod tests {
         let mut digraph = Vec::<BTreeSet<usize>>::empty(3);
 
         setup_unweighted!(digraph);
-        test_has_arc!(digraph.as_slice());
+        test_has_edge!(digraph.as_slice());
     }
 
     #[test]
@@ -201,7 +201,7 @@ mod tests {
         let mut digraph = Vec::<HashSet<usize>>::empty(3);
 
         setup_unweighted!(digraph);
-        test_has_arc!(digraph.as_slice());
+        test_has_edge!(digraph.as_slice());
     }
 
     #[test]
@@ -209,7 +209,7 @@ mod tests {
         let mut digraph = <[BTreeSet<usize>; 3]>::empty();
 
         setup_unweighted!(digraph);
-        test_has_arc!(digraph);
+        test_has_edge!(digraph);
     }
 
     #[test]
@@ -217,7 +217,7 @@ mod tests {
         let mut digraph = <[HashSet<usize>; 3]>::empty();
 
         setup_unweighted!(digraph);
-        test_has_arc!(digraph);
+        test_has_edge!(digraph);
     }
 
     #[test]
@@ -225,7 +225,7 @@ mod tests {
         let mut digraph = Vec::<BTreeMap<usize, usize>>::empty(3);
 
         setup_weighted!(digraph);
-        test_has_arc!(digraph);
+        test_has_edge!(digraph);
     }
 
     #[test]
@@ -233,7 +233,7 @@ mod tests {
         let mut digraph = Vec::<HashMap<usize, usize>>::empty(3);
 
         setup_weighted!(digraph);
-        test_has_arc!(digraph);
+        test_has_edge!(digraph);
     }
 
     #[test]
@@ -241,7 +241,7 @@ mod tests {
         let mut digraph = Vec::<BTreeMap<usize, usize>>::empty(3);
 
         setup_weighted!(digraph);
-        test_has_arc!(digraph.as_slice());
+        test_has_edge!(digraph.as_slice());
     }
 
     #[test]
@@ -249,7 +249,7 @@ mod tests {
         let mut digraph = Vec::<HashMap<usize, usize>>::empty(3);
 
         setup_weighted!(digraph);
-        test_has_arc!(digraph.as_slice());
+        test_has_edge!(digraph.as_slice());
     }
 
     #[test]
@@ -257,7 +257,7 @@ mod tests {
         let mut digraph = <[BTreeMap<usize, usize>; 3]>::empty();
 
         setup_weighted!(digraph);
-        test_has_arc!(digraph);
+        test_has_edge!(digraph);
     }
 
     #[test]
@@ -265,7 +265,7 @@ mod tests {
         let mut digraph = <[HashMap<usize, usize>; 3]>::empty();
 
         setup_weighted!(digraph);
-        test_has_arc!(digraph);
+        test_has_edge!(digraph);
     }
 
     #[test]
@@ -273,7 +273,7 @@ mod tests {
         let mut digraph = BTreeMap::<usize, BTreeSet<usize>>::empty(3);
 
         setup_unweighted!(digraph);
-        test_has_arc!(digraph);
+        test_has_edge!(digraph);
     }
 
     #[test]
@@ -281,7 +281,7 @@ mod tests {
         let mut digraph = HashMap::<usize, HashSet<usize>>::empty(3);
 
         setup_unweighted!(digraph);
-        test_has_arc!(digraph);
+        test_has_edge!(digraph);
     }
 
     #[test]
@@ -289,7 +289,7 @@ mod tests {
         let mut digraph = BTreeMap::<usize, BTreeMap<usize, usize>>::empty(3);
 
         setup_weighted!(digraph);
-        test_has_arc!(digraph);
+        test_has_edge!(digraph);
     }
 
     #[test]
@@ -297,7 +297,7 @@ mod tests {
         let mut digraph = HashMap::<usize, HashMap<usize, usize>>::empty(3);
 
         setup_weighted!(digraph);
-        test_has_arc!(digraph);
+        test_has_edge!(digraph);
     }
 
     #[test]
@@ -305,7 +305,7 @@ mod tests {
         let mut digraph = BTreeSet::<(usize, usize)>::empty(3);
 
         setup_unweighted!(digraph);
-        test_has_arc!(digraph);
+        test_has_edge!(digraph);
     }
 
     #[test]
@@ -313,6 +313,6 @@ mod tests {
         let mut digraph = HashSet::<(usize, usize)>::empty(3);
 
         setup_unweighted!(digraph);
-        test_has_arc!(digraph);
+        test_has_edge!(digraph);
     }
 }

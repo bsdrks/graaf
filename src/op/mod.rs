@@ -115,6 +115,7 @@ pub mod has_arc;
 pub mod has_edge;
 pub mod indegree;
 pub mod is_balanced;
+pub mod is_complete;
 pub mod is_isolated;
 pub mod is_oriented;
 pub mod is_pendant;
@@ -146,6 +147,7 @@ pub use {
     has_edge::HasEdge,
     indegree::Indegree,
     is_balanced::IsBalanced,
+    is_complete::IsComplete,
     is_isolated::IsIsolated,
     is_oriented::IsOriented,
     is_pendant::IsPendant,

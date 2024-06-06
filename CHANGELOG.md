@@ -24,6 +24,20 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.54.2] - 2024-06-06
+
+Added
+
+- Add `IsComplete` trait.
+- Add unit test `arr_btree_set_complete` for `IsComplete`.
+- Add unit test `arr_btree_set_cycle` for `IsComplete`.
+- Add unit test `arr_hash_set_complete` for `IsComplete`.
+- Add unit test `arr_hash_set_cycle` for `IsComplete`.
+- Add unit test `vec_btree_set_complete` for `IsComplete`.
+- Add unit test `vec_btree_set_cycle` for `IsComplete`.
+- Add unit test `vec_hash_set_complete` for `IsComplete`.
+- Add unit test `vec_hash_set_cycle` for `IsComplete`.
+
 ## [0.54.1] - 2024-06-06
 
 Added
