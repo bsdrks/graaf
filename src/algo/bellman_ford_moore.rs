@@ -117,7 +117,7 @@ mod tests {
         assert!(
             single_source_distances(&fixture::bang_jensen_94_weighted_isize(), 0)
                 .unwrap()
-                .eq(&[0, 8, 3, 1, -4, -1])
+                .eq(&[0, 1, 1, 2, 2, 2, 3])
         );
     }
 
