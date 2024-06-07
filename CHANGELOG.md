@@ -28,26 +28,26 @@
 
 Added
 
-- Assert that `Empty` digraphs are not complete in `is_complete` doctest.
-- Assert that `RandomTournament` digraphs are not complete in `is_complete` doctest.
-- Add assertions to `IsComplete` implementation doctest.
-- Add unit test `arr_btree_set_empty` for `IsSemicomplete`.
-- Add unit test `arr_btree_set_random_tournament` for `IsSemicomplete`.
-- Add unit test `arr_hash_set_empty` for `IsSemicomplete`.
-- Add unit test `arr_hash_set_random_tournament` for `IsSemicomplete`.
-- Add unit test `vec_btree_set_empty` for `IsSemicomplete`.
-- Add unit test `vec_btree_set_random_tournament` for `IsSemicomplete`.
-- Add unit test `vec_hash_set_empty` for `IsSemicomplete`.
-- Add unit test `vec_hash_set_random_tournament` for `IsSemicomplete`.
+- Add assertions to the `IsComplete` implementation documentation test.
 - Add the `IsSemicomplete` trait.
 - Add unit test `arr_btree_set_complete` for `IsSemicomplete`.
 - Add unit test `arr_btree_set_cycle` for `IsSemicomplete`.
+- Add unit test `arr_btree_set_empty` for `IsSemicomplete`.
+- Add unit test `arr_btree_set_random_tournament` for `IsSemicomplete`.
 - Add unit test `arr_hash_set_complete` for `IsSemicomplete`.
 - Add unit test `arr_hash_set_cycle` for `IsSemicomplete`.
+- Add unit test `arr_hash_set_empty` for `IsSemicomplete`.
+- Add unit test `arr_hash_set_random_tournament` for `IsSemicomplete`.
 - Add unit test `vec_btree_set_complete` for `IsSemicomplete`.
 - Add unit test `vec_btree_set_cycle` for `IsSemicomplete`.
+- Add unit test `vec_btree_set_empty` for `IsSemicomplete`.
+- Add unit test `vec_btree_set_random_tournament` for `IsSemicomplete`.
 - Add unit test `vec_hash_set_complete` for `IsSemicomplete`.
 - Add unit test `vec_hash_set_cycle` for `IsSemicomplete`.
+- Add unit test `vec_hash_set_empty` for `IsSemicomplete`.
+- Add unit test `vec_hash_set_random_tournament` for `IsSemicomplete`.
+- Assert that `Empty` digraphs are not complete in the `is_complete` documentation test.
+- Assert that `RandomTournament` digraphs are not complete in the `is_complete` documentation test.
 
 ## [0.54.3] - 2024-06-06
 
@@ -1740,7 +1740,7 @@ Fixed
 
 Added
 
-- Add a doctest for `gen::Linear`.
+- Add a documentation test for `gen::Linear`.
 
 ## [0.24.0] - 2024-04-23
 
@@ -2376,8 +2376,8 @@ Removed
 Added
 
 - Add `authors` to `README.md`.
-- Add a doctest for `AdjacencyMatrix::new`.
-- Add a doctest for `AdjacencyMatrix::toggle`.
+- Add a documentation test for `AdjacencyMatrix::new`.
+- Add a documentation test for `AdjacencyMatrix::toggle`.
 - Add implementation documentation for `AddArc`.
 - Add implementation documentation for `AddWeightedArc`.
 - Add implementation documentation for `Size`.
@@ -2396,26 +2396,26 @@ Changed
 
 - Move `ops` to `op`.
 - Adapt benchmark code to linting rules.
-- Move the doctest trait properties to `op::prop`.
+- Move the documentation test trait properties to `op::prop`.
 - Move the lints from `lib.rs` to `Cargo.toml`.
 
 ## [0.5.3] - 2024-04-05
 
 Added
 
-- Add a doctest for `op::add_weighted_arc::AddWeightedArc`.
-- Add a doctest for `op::size::Size`.
-- Add a doctest for `op::order::Order`.
-- Add a doctest for `op::arc_weight::ArcWeight`.
-- Add a doctest for `op::indegree::Indegree`.
-- Add a doctest for `op::is_arc::IsArc`.
-- Add a doctest for `op::iter_arcs::IterArcs`.
-- Add a doctest for `op::iter_weighted_arcs::IterWeightedArcs`.
-- Add a doctest for `op::iter_out_neighbors::IterOutNeighbors`.
-- Add a doctest for `op::iter_vertices::IterVertices`.
-- Add a doctest for `op::iter_weighted_arcs::IterWeightedArcs`.
-- Add a doctest for `op::outdegree::OutDegree`.
-- Add a doctest for `op::remove_arc::RemoveArc`.
+- Add a documentation test for `op::add_weighted_arc::AddWeightedArc`.
+- Add a documentation test for `op::size::Size`.
+- Add a documentation test for `op::order::Order`.
+- Add a documentation test for `op::arc_weight::ArcWeight`.
+- Add a documentation test for `op::indegree::Indegree`.
+- Add a documentation test for `op::is_arc::IsArc`.
+- Add a documentation test for `op::iter_arcs::IterArcs`.
+- Add a documentation test for `op::iter_weighted_arcs::IterWeightedArcs`.
+- Add a documentation test for `op::iter_out_neighbors::IterOutNeighbors`.
+- Add a documentation test for `op::iter_vertices::IterVertices`.
+- Add a documentation test for `op::iter_weighted_arcs::IterWeightedArcs`.
+- Add a documentation test for `op::outdegree::OutDegree`.
+- Add a documentation test for `op::remove_arc::RemoveArc`.
 - Add documentation for `op::add_weighted_arc`.
 - Add documentation for `op::size`.
 - Add documentation for `op::order`.
@@ -2434,10 +2434,10 @@ Added
 
 Added
 
-- Add doctest for `op::add_arc::AddArc`.
+- Add a documentation test for `op::add_arc::AddArc`.
 - Add documentation for `op::add_arc`.
-- Add module-level doctest for `algo::bfs`.
-- Add module-level doctest for `algo::dijkstra`.
+- Add a module-level documentation test for `algo::bfs`.
+- Add a module-level documentation test for `algo::dijkstra`.
 
 ## [0.5.1] - 2024-04-04
 
@@ -2512,9 +2512,9 @@ Changed
 Added
 
 - Add `algo::dijkstra::unweighted::min_distances_single_source`.
-- Add a doctest example for `algo::dijkstra::unweighted::min_distances_single_source`
-- Add a doctest example for `algo::dijkstra::unweighted::min_distances`
-- Add a doctest example for `algo::dijkstra::weighted::min_distances_single_source`.
+- Add a documentation test example for `algo::dijkstra::unweighted::min_distances_single_source`
+- Add a documentation test example for `algo::dijkstra::unweighted::min_distances`
+- Add a documentation test example for `algo::dijkstra::weighted::min_distances_single_source`.
 
 Changed
 
@@ -2542,7 +2542,7 @@ Changed
 
 Added
 
-- Add doctest example for `Weighted.dijkstra`.
+- Add a documentation test example for `Weighted.dijkstra`.
 
 Fixed
 
