@@ -14,6 +14,8 @@
 //!         gen::{
 //!             Complete,
 //!             Cycle,
+//!             Empty,
+//!             RandomTournament,
 //!         },
 //!         op::IsComplete,
 //!     },
@@ -21,6 +23,8 @@
 //!
 //! assert!(Vec::<BTreeSet<usize>>::complete(3).is_complete());
 //! assert!(!Vec::<BTreeSet<usize>>::cycle(3).is_complete());
+//! assert!(!Vec::<BTreeSet<usize>>::empty(3).is_complete());
+//! assert!(!Vec::<BTreeSet<usize>>::random_tournament(3).is_complete());
 //! ```
 
 use crate::op::{
@@ -45,6 +49,8 @@ use crate::op::{
 ///         gen::{
 ///             Complete,
 ///             Cycle,
+///             Empty,
+///             RandomTournament,
 ///         },
 ///         op::{
 ///             HasEdge,
@@ -73,6 +79,26 @@ use crate::op::{
 ///         true
 ///     }
 /// }
+///
+/// assert!(Digraph {
+///     arcs: Vec::<BTreeSet<usize>>::complete(3)
+/// }
+/// .is_complete());
+///
+/// assert!(!Digraph {
+///     arcs: Vec::<BTreeSet<usize>>::cycle(3)
+/// }
+/// .is_complete());
+///
+/// assert!(!Digraph {
+///     arcs: Vec::<BTreeSet<usize>>::empty(3)
+/// }
+/// .is_complete());
+///
+/// assert!(!Digraph {
+///     arcs: Vec::<BTreeSet<usize>>::random_tournament(3)
+/// }
+/// .is_complete());
 /// ```
 pub trait IsComplete {
     /// Determines whether the digraph is complete.

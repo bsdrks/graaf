@@ -24,6 +24,31 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.54.4] - 2024-06-06
+
+Added
+
+- Assert that `Empty` digraphs are not complete in `is_complete` doctest.
+- Assert that `RandomTournament` digraphs are not complete in `is_complete` doctest.
+- Add assertions to `IsComplete` implementation doctest.
+- Add unit test `arr_btree_set_empty` for `IsSemicomplete`.
+- Add unit test `arr_btree_set_random_tournament` for `IsSemicomplete`.
+- Add unit test `arr_hash_set_empty` for `IsSemicomplete`.
+- Add unit test `arr_hash_set_random_tournament` for `IsSemicomplete`.
+- Add unit test `vec_btree_set_empty` for `IsSemicomplete`.
+- Add unit test `vec_btree_set_random_tournament` for `IsSemicomplete`.
+- Add unit test `vec_hash_set_empty` for `IsSemicomplete`.
+- Add unit test `vec_hash_set_random_tournament` for `IsSemicomplete`.
+- Add the `IsSemicomplete` trait.
+- Add unit test `arr_btree_set_complete` for `IsSemicomplete`.
+- Add unit test `arr_btree_set_cycle` for `IsSemicomplete`.
+- Add unit test `arr_hash_set_complete` for `IsSemicomplete`.
+- Add unit test `arr_hash_set_cycle` for `IsSemicomplete`.
+- Add unit test `vec_btree_set_complete` for `IsSemicomplete`.
+- Add unit test `vec_btree_set_cycle` for `IsSemicomplete`.
+- Add unit test `vec_hash_set_complete` for `IsSemicomplete`.
+- Add unit test `vec_hash_set_cycle` for `IsSemicomplete`.
+
 ## [0.54.3] - 2024-06-06
 
 Added
@@ -41,7 +66,7 @@ Added
 
 Added
 
-- Add `IsComplete` trait.
+- Add the `IsComplete` trait.
 - Add unit test `arr_btree_set_complete` for `IsComplete`.
 - Add unit test `arr_btree_set_cycle` for `IsComplete`.
 - Add unit test `arr_hash_set_complete` for `IsComplete`.

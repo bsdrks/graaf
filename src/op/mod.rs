@@ -120,6 +120,7 @@ pub mod is_isolated;
 pub mod is_oriented;
 pub mod is_pendant;
 pub mod is_regular;
+pub mod is_semicomplete;
 pub mod is_simple;
 pub mod is_subdigraph;
 pub mod is_superdigraph;
@@ -152,6 +153,7 @@ pub use {
     is_oriented::IsOriented,
     is_pendant::IsPendant,
     is_regular::IsRegular,
+    is_semicomplete::IsSemicomplete,
     is_simple::IsSimple,
     is_subdigraph::IsSubdigraph,
     is_superdigraph::IsSuperdigraph,
