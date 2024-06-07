@@ -24,6 +24,19 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.54.3] - 2024-06-06
+
+Added
+
+- Add unit test `arr_btree_set_empty` for `IsComplete`.
+- Add unit test `arr_btree_set_random_tournament` for `IsComplete`.
+- Add unit test `arr_hash_set_empty` for `IsComplete`.
+- Add unit test `arr_hash_set_random_tournament` for `IsComplete`.
+- Add unit test `vec_btree_set_empty` for `IsComplete`.
+- Add unit test `vec_btree_set_random_tournament` for `IsComplete`.
+- Add unit test `vec_hash_set_empty` for `IsComplete`.
+- Add unit test `vec_hash_set_random_tournament` for `IsComplete`.
+
 ## [0.54.2] - 2024-06-06
 
 Added

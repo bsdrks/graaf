@@ -109,6 +109,10 @@ mod tests {
             CompleteConst,
             Cycle,
             CycleConst,
+            Empty,
+            EmptyConst,
+            RandomTournament,
+            RandomTournamentConst,
         },
         alloc::collections::BTreeSet,
         std::collections::HashSet,
@@ -152,5 +156,45 @@ mod tests {
     #[test]
     fn arr_hash_set_cycle() {
         assert!(!<[HashSet<usize>; 3]>::cycle().is_complete());
+    }
+
+    #[test]
+    fn vec_btree_set_empty() {
+        assert!(!Vec::<BTreeSet<usize>>::empty(3).is_complete());
+    }
+
+    #[test]
+    fn vec_hash_set_empty() {
+        assert!(!Vec::<HashSet<usize>>::empty(3).is_complete());
+    }
+
+    #[test]
+    fn arr_btree_set_empty() {
+        assert!(!<[BTreeSet<usize>; 3]>::empty().is_complete());
+    }
+
+    #[test]
+    fn arr_hash_set_empty() {
+        assert!(!<[HashSet<usize>; 3]>::empty().is_complete());
+    }
+
+    #[test]
+    fn vec_btree_set_random_tournament() {
+        assert!(!Vec::<BTreeSet<usize>>::random_tournament(3).is_complete());
+    }
+
+    #[test]
+    fn vec_hash_set_random_tournament() {
+        assert!(!Vec::<HashSet<usize>>::random_tournament(3).is_complete());
+    }
+
+    #[test]
+    fn arr_btree_set_random_tournament() {
+        assert!(!<[BTreeSet<usize>; 3]>::random_tournament().is_complete());
+    }
+
+    #[test]
+    fn arr_hash_set_random_tournament() {
+        assert!(!<[HashSet<usize>; 3]>::random_tournament().is_complete());
     }
 }
