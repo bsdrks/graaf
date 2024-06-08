@@ -17,12 +17,22 @@
 - Add the `IsInTree` trait.
 - Add the `IsOutTree` trait.
 - Add the `RemoveWeightedArc` trait.
-- Benchmark against popular Rust graph libraries.
 - Benchmark against popular graph libraries in other languages.
+- Benchmark traits for `AdjacencyMatrix` against adjacency lists.
 - Describe `IsSuperdigraph` without mentioning `IsSubdigraph`, except in passing.
+- Implement `ArcWeight` for `AdjacencyMatrix`.
+- Implement `ArcWeight` for unweighted adjacency lists.
 - Implement `IterOutNeighborsMut` for additional types.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.54.5] - 2024-06-08
+
+Added
+
+- Implement and test `ArcWeight` for `AdjacencyMatrix`.
+- Implement and test `CycleConst` for `AdjacencyMatrix`.
+- Implement and test `EmptyConst` for `AdjacencyMatrix`.
 
 ## [0.54.4] - 2024-06-06
 
