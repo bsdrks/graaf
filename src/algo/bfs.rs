@@ -55,8 +55,6 @@
 //!
 //! [`dijkstra`]: crate::algo::dijkstra
 
-extern crate alloc;
-
 use {
     crate::{
         algo::predecessor,
@@ -65,7 +63,7 @@ use {
             Order,
         },
     },
-    alloc::collections::VecDeque,
+    std::collections::VecDeque,
 };
 
 /// Calculates all distances from the source vertices.
@@ -187,12 +185,10 @@ where
 /// # Examples
 ///
 /// ```
-/// extern crate alloc;
-///
 /// use {
-///     alloc::collections::VecDeque,
 ///     core::cmp::Reverse,
 ///     graaf::algo::bfs::predecessors,
+///     std::collections::VecDeque,
 /// };
 ///
 /// // 0 -> {1}

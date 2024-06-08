@@ -88,7 +88,7 @@
 #![deny(clippy::all, clippy::cargo, clippy::pedantic, clippy::nursery)]
 // Clippy restriction lints
 #![deny(
-    clippy::alloc_instead_of_core,
+    clippy::std_instead_of_core,
     clippy::get_unwrap,
     clippy::if_then_some_else_none,
     clippy::impl_trait_in_params,
@@ -98,8 +98,6 @@
     clippy::redundant_type_annotations,
     clippy::rest_pat_in_fully_bound_structs,
     clippy::self_named_module_files,
-    clippy::std_instead_of_alloc,
-    clippy::std_instead_of_core,
     clippy::unnecessary_self_imports,
     clippy::unneeded_field_pattern,
     clippy::unseparated_literal_suffix,

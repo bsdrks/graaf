@@ -17,18 +17,14 @@
 //! );
 //! ```
 
-extern crate alloc;
-
 use {
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
     core::hash::{
         BuildHasher,
         Hash,
     },
     std::collections::{
+        BTreeMap,
+        BTreeSet,
         HashMap,
         HashSet,
     },
@@ -375,114 +371,136 @@ mod tests {
         };
     }
 
-    macro_rules! test_add_weighted_arc_const {
-        ($ty:ty) => {
-            let mut digraph = <$ty>::empty();
-
-            test_add_weighted_arc!(digraph);
-        };
-    }
-
-    macro_rules! test_add_weighted_arc_dynamic {
-        ($ty:ty) => {
-            let mut digraph = <$ty>::empty(3);
-
-            test_add_weighted_arc!(digraph);
-        };
-    }
-
     #[test]
     fn vec_vec() {
-        test_add_weighted_arc_dynamic!(Vec::<Vec<(usize, i32)>>);
+        let mut digraph = Vec::<Vec<(usize, i32)>>::empty(3);
+
+        test_add_weighted_arc!(digraph);
     }
 
     #[test]
     fn vec_btree_set() {
-        test_add_weighted_arc_dynamic!(Vec::<BTreeSet<(usize, i32)>>);
+        let mut digraph = Vec::<BTreeSet<(usize, i32)>>::empty(3);
+
+        test_add_weighted_arc!(digraph);
     }
 
     #[test]
     fn vec_hash_set() {
-        test_add_weighted_arc_dynamic!(Vec::<HashSet<(usize, i32)>>);
+        let mut digraph = Vec::<HashSet<(usize, i32)>>::empty(3);
+
+        test_add_weighted_arc!(digraph);
     }
 
     #[test]
     fn vec_btree_map() {
-        test_add_weighted_arc_dynamic!(Vec::<BTreeMap<usize, i32>>);
+        let mut digraph = Vec::<BTreeMap<usize, i32>>::empty(3);
+
+        test_add_weighted_arc!(digraph);
     }
 
     #[test]
     fn vec_hash_map() {
-        test_add_weighted_arc_dynamic!(Vec::<HashMap<usize, i32>>);
+        let mut digraph = Vec::<HashMap<usize, i32>>::empty(3);
+
+        test_add_weighted_arc!(digraph);
     }
 
     #[test]
     fn arr_vec() {
-        test_add_weighted_arc_const!([Vec<(usize, i32)>; 3]);
+        let mut digraph = <[Vec<(usize, i32)>; 3]>::empty();
+
+        test_add_weighted_arc!(digraph);
     }
 
     #[test]
     fn arr_btree_set() {
-        test_add_weighted_arc_const!([BTreeSet<(usize, i32)>; 3]);
+        let mut digraph = <[BTreeSet<(usize, i32)>; 3]>::empty();
+
+        test_add_weighted_arc!(digraph);
     }
 
     #[test]
     fn arr_hash_set() {
-        test_add_weighted_arc_const!([HashSet<(usize, i32)>; 3]);
+        let mut digraph = <[HashSet<(usize, i32)>; 3]>::empty();
+
+        test_add_weighted_arc!(digraph);
     }
 
     #[test]
     fn arr_btree_map() {
-        test_add_weighted_arc_const!([BTreeMap<usize, i32>; 3]);
+        let mut digraph = <[BTreeMap<usize, i32>; 3]>::empty();
+
+        test_add_weighted_arc!(digraph);
     }
 
     #[test]
     fn arr_hash_map() {
-        test_add_weighted_arc_const!([HashMap<usize, i32>; 3]);
+        let mut digraph = <[HashMap<usize, i32>; 3]>::empty();
+
+        test_add_weighted_arc!(digraph);
     }
 
     #[test]
     fn btree_map_vec() {
-        test_add_weighted_arc_dynamic!(BTreeMap::<usize, Vec<(usize, i32)>>);
+        let mut digraph = BTreeMap::<usize, Vec<(usize, i32)>>::empty(3);
+
+        test_add_weighted_arc!(digraph);
     }
 
     #[test]
     fn btree_map_btree_set() {
-        test_add_weighted_arc_dynamic!(BTreeMap::<usize, BTreeSet<(usize, i32)>>);
+        let mut digraph = BTreeMap::<usize, BTreeSet<(usize, i32)>>::empty(3);
+
+        test_add_weighted_arc!(digraph);
     }
 
     #[test]
     fn btree_map_btree_map() {
-        test_add_weighted_arc_dynamic!(BTreeMap::<usize, BTreeMap<usize, i32>>);
+        let mut digraph = BTreeMap::<usize, BTreeMap<usize, i32>>::empty(3);
+
+        test_add_weighted_arc!(digraph);
     }
 
     #[test]
     fn hash_map_vec() {
-        test_add_weighted_arc_dynamic!(HashMap::<usize, Vec<(usize, i32)>>);
+        let mut digraph = HashMap::<usize, Vec<(usize, i32)>>::empty(3);
+
+        test_add_weighted_arc!(digraph);
     }
 
     #[test]
     fn hash_map_hash_set() {
-        test_add_weighted_arc_dynamic!(HashMap::<usize, HashSet<(usize, i32)>>);
+        let mut digraph = HashMap::<usize, HashSet<(usize, i32)>>::empty(3);
+
+        test_add_weighted_arc!(digraph);
     }
 
     #[test]
     fn hash_map_hash_map() {
-        test_add_weighted_arc_dynamic!(HashMap::<usize, HashMap<usize, i32>>);
+        let mut digraph = HashMap::<usize, HashMap<usize, i32>>::empty(3);
+
+        test_add_weighted_arc!(digraph);
     }
 
     #[test]
     fn vec_tuple() {
-        test_add_weighted_arc_dynamic!(Vec::<(usize, usize, i32)>);
+        let mut digraph = Vec::<(usize, usize, i32)>::empty(3);
+
+        test_add_weighted_arc!(digraph);
     }
 
     #[test]
     fn btree_set_tuple() {
-        test_add_weighted_arc_dynamic!(BTreeSet::<(usize, usize, i32)>);
+        let mut digraph = BTreeSet::<(usize, usize, i32)>::empty(3);
+
+        test_add_weighted_arc!(digraph);
     }
 
     #[test]
     fn hash_set_tuple() {
-        test_add_weighted_arc_dynamic!(HashSet::<(usize, usize, i32)>);
+        let mut digraph = HashSet::<(usize, usize, i32)>::empty(3);
+
+        test_add_weighted_arc!(digraph);
     }
 }

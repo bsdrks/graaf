@@ -40,16 +40,14 @@ use crate::op::{
 /// is regular and `false` otherwise.
 ///
 /// ```
-/// extern crate alloc;
-///
 /// use {
-///     alloc::collections::BTreeSet,
 ///     graaf::op::{
 ///         Indegree,
 ///         IsRegular,
 ///         IterVertices,
 ///         Outdegree,
 ///     },
+///     std::collections::BTreeSet,
 /// };
 ///
 /// struct Digraph {
@@ -103,8 +101,6 @@ where
 
 #[cfg(test)]
 mod tests {
-    extern crate alloc;
-
     use {
         super::*,
         crate::{
@@ -119,12 +115,10 @@ mod tests {
                 RemoveArc,
             },
         },
-        alloc::collections::{
-            BTreeMap,
-            BTreeSet,
-        },
         proptest::proptest,
         std::collections::{
+            BTreeMap,
+            BTreeSet,
             HashMap,
             HashSet,
         },

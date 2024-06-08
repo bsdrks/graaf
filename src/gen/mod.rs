@@ -14,11 +14,9 @@
 //! ```
 //!
 //! ```
-//! extern crate alloc;
-//!
 //! use {
-//!     alloc::collections::BTreeSet,
 //!     graaf::gen::CompleteConst,
+//!     std::collections::BTreeSet,
 //! };
 //!
 //! assert_eq!(
@@ -33,21 +31,16 @@
 //! ```
 //!
 //! ```
-//! extern crate alloc;
-//!
 //! use {
-//!     alloc::collections::BTreeSet,
 //!     graaf::gen::Empty,
+//!     std::collections::BTreeSet,
 //! };
 //!
 //! assert_eq!(Vec::<BTreeSet<usize>>::empty(3), vec![BTreeSet::new(); 3]);
 //! ```
 //!
 //! ```
-//! extern crate alloc;
-//!
 //! use {
-//!     alloc::collections::BTreeSet,
 //!     graaf::{
 //!         gen::RandomTournament,
 //!         op::{
@@ -59,6 +52,7 @@
 //!             Size,
 //!         },
 //!     },
+//!     std::collections::BTreeSet,
 //! };
 //!
 //! let tournament = Vec::<BTreeSet<usize>>::random_tournament(4);

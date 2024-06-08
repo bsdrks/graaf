@@ -8,10 +8,7 @@
 //! # Examples
 //!
 //! ```
-//! extern crate alloc;
-//!
 //! use {
-//!     alloc::collections::BTreeSet,
 //!     graaf::{
 //!         gen::{
 //!             Cycle,
@@ -19,6 +16,7 @@
 //!         },
 //!         op::IsSuperdigraph,
 //!     },
+//!     std::collections::BTreeSet,
 //! };
 //!
 //! let h = vec![BTreeSet::from([1]), BTreeSet::new()];
@@ -30,14 +28,12 @@
 //! Every digraph is a superdigraph of itself.
 //!
 //! ```
-//! extern crate alloc;
-//!
 //! use {
-//!     alloc::collections::BTreeSet,
 //!     graaf::{
 //!         gen::RandomTournament,
 //!         op::IsSuperdigraph,
 //!     },
+//!     std::collections::BTreeSet,
 //! };
 //!
 //! let tournament = Vec::<BTreeSet<usize>>::random_tournament(4);
@@ -60,10 +56,7 @@ use crate::op::IsSubdigraph;
 /// digraph is a superdigraph of the digraph `d` and `false` otherwise.
 ///
 /// ```
-/// extern crate alloc;
-///
 /// use {
-///     alloc::collections::BTreeSet,
 ///     graaf::{
 ///         gen::Cycle,
 ///         op::{
@@ -71,6 +64,7 @@ use crate::op::IsSubdigraph;
 ///             IsSuperdigraph,
 ///         },
 ///     },
+///     std::collections::BTreeSet,
 /// };
 ///
 /// struct Digraph {
@@ -97,10 +91,7 @@ use crate::op::IsSubdigraph;
 /// # Examples
 ///
 /// ```
-/// extern crate alloc;
-///
 /// use {
-///     alloc::collections::BTreeSet,
 ///     graaf::{
 ///         gen::{
 ///             Cycle,
@@ -108,6 +99,7 @@ use crate::op::IsSubdigraph;
 ///         },
 ///         op::IsSuperdigraph,
 ///     },
+///     std::collections::BTreeSet,
 /// };
 ///
 /// let h = vec![BTreeSet::from([1]), BTreeSet::new()];
@@ -119,14 +111,12 @@ use crate::op::IsSubdigraph;
 /// Every digraph is a superdigraph of itself.
 ///
 /// ```
-/// extern crate alloc;
-///
 /// use {
-///     alloc::collections::BTreeSet,
 ///     graaf::{
 ///         gen::RandomTournament,
 ///         op::IsSuperdigraph,
 ///     },
+///     std::collections::BTreeSet,
 /// };
 ///
 /// let tournament = Vec::<BTreeSet<usize>>::random_tournament(4);
@@ -149,20 +139,16 @@ where
 
 #[cfg(test)]
 mod tests {
-    extern crate alloc;
-
     use {
         super::*,
         crate::gen::{
             RandomTournament,
             RandomTournamentConst,
         },
-        alloc::collections::{
-            BTreeMap,
-            BTreeSet,
-        },
         proptest::proptest,
         std::collections::{
+            BTreeMap,
+            BTreeSet,
             HashMap,
             HashSet,
         },

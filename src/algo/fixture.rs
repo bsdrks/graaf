@@ -1,15 +1,14 @@
 //! Digraph fixtures for testing and benchmarking.
 
-extern crate alloc;
-
-use alloc::collections::{
-    BTreeMap,
-    BTreeSet,
-};
-
-use crate::{
-    gen::Empty,
-    op::AddWeightedArc,
+use {
+    crate::{
+        gen::Empty,
+        op::AddWeightedArc,
+    },
+    std::collections::{
+        BTreeMap,
+        BTreeSet,
+    },
 };
 
 /// Bang-Jensen, J., & Gutin, G. Z. (2010). Digraphs theory, algorithms and

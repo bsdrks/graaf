@@ -14,15 +14,11 @@
 //! assert_eq!(digraph, vec![vec![1, 2], Vec::new(), vec![0]]);
 //! ```
 
-extern crate alloc;
-
 use {
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
     core::hash::BuildHasher,
     std::collections::{
+        BTreeMap,
+        BTreeSet,
         HashMap,
         HashSet,
     },
@@ -245,84 +241,94 @@ mod tests {
         };
     }
 
-    macro_rules! test_add_arc_const {
-        ($ty:ty) => {
-            let mut digraph = <$ty>::empty();
-
-            test_add_arc!(digraph);
-        };
-    }
-
-    macro_rules! test_add_arc_dynamic {
-        ($ty:ty) => {
-            let mut digraph = <$ty>::empty(3);
-
-            test_add_arc!(digraph);
-        };
-    }
-
     #[test]
     fn vec_vec() {
-        test_add_arc_dynamic!(Vec<Vec<usize>>);
+        let mut digraph = Vec::<Vec<usize>>::empty(3);
+
+        test_add_arc!(digraph);
     }
 
     #[test]
     fn vec_btree_set() {
-        test_add_arc_dynamic!(Vec<BTreeSet<usize>>);
+        let mut digraph = Vec::<BTreeSet<usize>>::empty(3);
+
+        test_add_arc!(digraph);
     }
 
     #[test]
     fn vec_hash_set() {
-        test_add_arc_dynamic!(Vec<HashSet<usize>>);
+        let mut digraph = Vec::<HashSet<usize>>::empty(3);
+
+        test_add_arc!(digraph);
     }
 
     #[test]
     fn arr_vec() {
-        test_add_arc_const!([Vec<usize>; 3]);
+        let mut digraph = <[Vec<usize>; 3]>::empty();
+
+        test_add_arc!(digraph);
     }
 
     #[test]
     fn arr_btree_set() {
-        test_add_arc_const!([BTreeSet<usize>; 3]);
+        let mut digraph = <[BTreeSet<usize>; 3]>::empty();
+
+        test_add_arc!(digraph);
     }
 
     #[test]
     fn arr_hash_set() {
-        test_add_arc_const!([HashSet<usize>; 3]);
+        let mut digraph = <[HashSet<usize>; 3]>::empty();
+
+        test_add_arc!(digraph);
     }
 
     #[test]
     fn btree_map_vec() {
-        test_add_arc_dynamic!(BTreeMap < usize, Vec<usize>>);
+        let mut digraph = BTreeMap::<usize, Vec<usize>>::empty(3);
+
+        test_add_arc!(digraph);
     }
 
     #[test]
     fn btree_map_btree_set() {
-        test_add_arc_dynamic!(BTreeMap < usize, BTreeSet<usize>>);
+        let mut digraph = BTreeMap::<usize, BTreeSet<usize>>::empty(3);
+
+        test_add_arc!(digraph);
     }
 
     #[test]
     fn hash_map_vec() {
-        test_add_arc_dynamic!(HashMap < usize, Vec<usize>>);
+        let mut digraph = HashMap::<usize, Vec<usize>>::empty(3);
+
+        test_add_arc!(digraph);
     }
 
     #[test]
     fn hash_map_hash_set() {
-        test_add_arc_dynamic!(HashMap < usize, HashSet<usize>>);
+        let mut digraph = HashMap::<usize, HashSet<usize>>::empty(3);
+
+        test_add_arc!(digraph);
     }
 
     #[test]
     fn vec_tuple() {
-        test_add_arc_dynamic!(Vec<(usize, usize)>);
+        let mut digraph = Vec::<(usize, usize)>::empty(3);
+
+        test_add_arc!(digraph);
     }
 
     #[test]
     fn btree_set_tuple() {
-        test_add_arc_dynamic!(BTreeSet<(usize, usize)>);
+        let mut digraph = BTreeSet::<(usize, usize)>::empty(3);
+
+        test_add_arc!(digraph);
     }
 
     #[test]
     fn hash_set_tuple() {
-        test_add_arc_dynamic!(HashSet<(usize, usize)>);
+        let mut digraph = HashSet::<(usize, usize)>::empty(3);
+
+        test_add_arc!(digraph);
     }
 }

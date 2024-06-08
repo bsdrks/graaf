@@ -155,19 +155,19 @@ impl<const V: usize> CycleConst for [(usize, usize); V] {
 
 #[cfg(test)]
 mod tests {
-    extern crate alloc;
-
     use {
         super::*,
         crate::{
             op::IsSimple,
             prop::sum_indegrees_eq_sum_outdegrees,
         },
-        alloc::{
-            collections::BTreeSet,
+        std::{
+            collections::{
+                BTreeSet,
+                HashSet,
+            },
             vec,
         },
-        std::collections::HashSet,
     };
 
     #[test]

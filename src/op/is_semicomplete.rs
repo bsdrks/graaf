@@ -6,10 +6,7 @@
 //! # Examples
 //!
 //! ```
-//! extern crate alloc;
-//!
 //! use {
-//!     alloc::collections::BTreeSet,
 //!     graaf::{
 //!         gen::{
 //!             Complete,
@@ -19,6 +16,7 @@
 //!         },
 //!         op::IsSemicomplete,
 //!     },
+//!     std::collections::BTreeSet,
 //! };
 //!
 //! assert!(!Vec::<BTreeSet<usize>>::empty(3).is_semicomplete());
@@ -40,10 +38,7 @@ use crate::op::{
 /// is an arc between every pair `s`, `t` of distinct vertices.
 ///
 /// ```
-/// extern crate alloc;
-///
 /// use {
-///     alloc::collections::BTreeSet,
 ///     graaf::{
 ///         gen::{
 ///             Complete,
@@ -57,6 +52,7 @@ use crate::op::{
 ///             Order,
 ///         },
 ///     },
+///     std::collections::BTreeSet,
 /// };
 ///
 /// struct Digraph {
@@ -103,10 +99,7 @@ use crate::op::{
 /// # Examples
 ///
 /// ```
-/// extern crate alloc;
-///
 /// use {
-///     alloc::collections::BTreeSet,
 ///     graaf::{
 ///         gen::{
 ///             Complete,
@@ -116,6 +109,7 @@ use crate::op::{
 ///         },
 ///         op::IsSemicomplete,
 ///     },
+///     std::collections::BTreeSet,
 /// };
 ///
 /// assert!(!Vec::<BTreeSet<usize>>::empty(3).is_semicomplete());
@@ -149,8 +143,6 @@ where
 
 #[cfg(test)]
 mod tests {
-    extern crate alloc;
-
     use {
         super::*,
         crate::gen::{
@@ -163,8 +155,10 @@ mod tests {
             RandomTournament,
             RandomTournamentConst,
         },
-        alloc::collections::BTreeSet,
-        std::collections::HashSet,
+        std::collections::{
+            BTreeSet,
+            HashSet,
+        },
     };
 
     #[test]

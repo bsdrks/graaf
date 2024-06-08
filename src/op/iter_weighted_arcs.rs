@@ -12,15 +12,11 @@
 //!     .eq([(0, 1, &2), (1, 2, &3), (2, 0, &4)]));
 //! ```
 
-extern crate alloc;
-
 use {
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
     core::hash::BuildHasher,
     std::collections::{
+        BTreeMap,
+        BTreeSet,
         HashMap,
         HashSet,
     },

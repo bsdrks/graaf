@@ -3,10 +3,7 @@
 //! # Examples
 //!
 //! ```
-//! extern crate alloc;
-//!
 //! use {
-//!     alloc::collections::BTreeSet,
 //!     graaf::{
 //!         gen::Cycle,
 //!         op::{
@@ -14,6 +11,7 @@
 //!             ReverseArc,
 //!         },
 //!     },
+//!     std::collections::BTreeSet,
 //! };
 //!
 //! let mut digraph = BTreeSet::<(usize, usize)>::cycle(3);
@@ -47,10 +45,7 @@ use super::{
 /// `t` with an arc from `t` to `s`.
 ///
 /// ```
-/// extern crate alloc;
-///
 /// use {
-///     alloc::collections::BTreeSet,
 ///     graaf::{
 ///         gen::Cycle,
 ///         op::{
@@ -60,6 +55,7 @@ use super::{
 ///             ReverseArc,
 ///         },
 ///     },
+///     std::collections::BTreeSet,
 /// };
 ///
 /// struct Digraph {
@@ -91,10 +87,7 @@ use super::{
 /// # Examples
 ///
 /// ```
-/// extern crate alloc;
-///
 /// use {
-///     alloc::collections::BTreeSet,
 ///     graaf::{
 ///         gen::Cycle,
 ///         op::{
@@ -102,6 +95,7 @@ use super::{
 ///             ReverseArc,
 ///         },
 ///     },
+///     std::collections::BTreeSet,
 /// };
 ///
 /// let mut digraph = BTreeSet::<(usize, usize)>::cycle(3);
@@ -132,8 +126,6 @@ where
 
 #[cfg(test)]
 mod tests {
-    extern crate alloc;
-
     use {
         super::*,
         crate::{
@@ -143,11 +135,9 @@ mod tests {
             },
             op::IterArcs,
         },
-        alloc::collections::{
+        std::collections::{
             BTreeMap,
             BTreeSet,
-        },
-        std::collections::{
             HashMap,
             HashSet,
         },

@@ -8,16 +8,14 @@
 //! # Examples
 //!
 //! ```
-//! extern crate alloc;
-//!
 //! use {
-//!     alloc::collections::BTreeSet,
 //!     graaf::op::{
 //!         AddArc,
 //!         Indegree,
 //!         Outdegree,
 //!         RemoveArc,
 //!     },
+//!     std::collections::BTreeSet,
 //! };
 //!
 //! let mut digraph = vec![BTreeSet::new(); 3];

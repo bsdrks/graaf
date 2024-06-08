@@ -20,10 +20,17 @@
 - Benchmark against popular graph libraries in other languages.
 - Benchmark traits for `AdjacencyMatrix` against adjacency lists.
 - Describe `IsSuperdigraph` without mentioning `IsSubdigraph`, except in passing.
-- Implement `ArcWeight` for unweighted adjacency lists.
 - Implement `IterOutNeighborsMut` for additional types.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.55.2] - 2024-06-08
+
+Changed
+
+- Unit tests for `AddArc`: pass ident to macros.
+- Unit tests for `AddWeightedArc`: pass ident to macros.
+- Use `std` instead of `alloc`.
 
 ## [0.55.1] - 2024-06-08
 

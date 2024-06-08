@@ -6,14 +6,12 @@
 //! # Examples
 //!
 //! ```
-//! extern crate alloc;
-//!
 //! use {
-//!     alloc::collections::BTreeSet,
 //!     graaf::{
 //!         gen::Cycle,
 //!         op::IsWalk,
 //!     },
+//!     std::collections::BTreeSet,
 //! };
 //!
 //! let digraph = BTreeSet::<(usize, usize)>::cycle(2);
@@ -40,10 +38,7 @@ use super::HasArc;
 /// otherwise.
 ///
 /// ```
-/// extern crate alloc;
-///
 /// use {
-///     alloc::collections::BTreeSet,
 ///     graaf::{
 ///         gen::Cycle,
 ///         op::{
@@ -51,6 +46,7 @@ use super::HasArc;
 ///             IsWalk,
 ///         },
 ///     },
+///     std::collections::BTreeSet,
 /// };
 ///
 /// struct Digraph {
@@ -76,14 +72,12 @@ use super::HasArc;
 /// # Examples
 ///
 /// ```
-/// extern crate alloc;
-///
 /// use {
-///     alloc::collections::BTreeSet,
 ///     graaf::{
 ///         gen::Cycle,
 ///         op::IsWalk,
 ///     },
+///     std::collections::BTreeSet,
 /// };
 ///
 /// let digraph = BTreeSet::<(usize, usize)>::cycle(2);
@@ -117,8 +111,6 @@ where
 #[allow(clippy::cognitive_complexity)]
 #[cfg(test)]
 mod tests {
-    extern crate alloc;
-
     use {
         super::*,
         crate::{
@@ -130,11 +122,9 @@ mod tests {
             },
             op::AddWeightedArc,
         },
-        alloc::collections::{
+        std::collections::{
             BTreeMap,
             BTreeSet,
-        },
-        std::collections::{
             HashMap,
             HashSet,
         },

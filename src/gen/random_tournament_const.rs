@@ -7,10 +7,7 @@
 //! # Examples
 //!
 //! ```
-//! extern crate alloc;
-//!
 //! use {
-//!     alloc::collections::BTreeSet,
 //!     graaf::{
 //!         gen::RandomTournamentConst,
 //!         op::{
@@ -22,6 +19,7 @@
 //!             Size,
 //!         },
 //!     },
+//!     std::collections::BTreeSet,
 //! };
 //!
 //! let tournament = <[BTreeSet<usize>; 4]>::random_tournament();
@@ -54,10 +52,7 @@ use {
 /// tournament.
 ///
 /// ```
-/// extern crate alloc;
-///
 /// use {
-///     alloc::collections::BTreeSet,
 ///     graaf::{
 ///         gen::{
 ///             prng::Xoshiro256StarStar,
@@ -74,6 +69,7 @@ use {
 ///             Size,
 ///         },
 ///     },
+///     std::collections::BTreeSet,
 /// };
 ///
 /// pub struct Tournament<const V: usize> {
@@ -122,10 +118,7 @@ use {
 /// # Examples
 ///
 /// ```
-/// extern crate alloc;
-///
 /// use {
-///     alloc::collections::BTreeSet,
 ///     graaf::{
 ///         gen::RandomTournamentConst,
 ///         op::{
@@ -137,6 +130,7 @@ use {
 ///             Size,
 ///         },
 ///     },
+///     std::collections::BTreeSet,
 /// };
 ///
 /// let tournament = <[BTreeSet<usize>; 4]>::random_tournament();
@@ -180,8 +174,6 @@ where
 
 #[cfg(test)]
 mod tests {
-    extern crate alloc;
-
     use {
         super::*,
         crate::op::{
@@ -192,8 +184,10 @@ mod tests {
             Outdegree,
             Size,
         },
-        alloc::collections::BTreeSet,
-        std::collections::HashSet,
+        std::collections::{
+            BTreeSet,
+            HashSet,
+        },
     };
 
     macro_rules! prop_arr_vec {

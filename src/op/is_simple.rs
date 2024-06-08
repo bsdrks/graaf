@@ -23,13 +23,13 @@
 //! assert!(!digraph.is_simple());
 //! ```
 
-extern crate alloc;
-
 use {
-    super::IterArcs,
-    alloc::collections::BTreeSet,
+    crate::op::IterArcs,
     core::hash::BuildHasher,
-    std::collections::HashSet,
+    std::collections::{
+        BTreeSet,
+        HashSet,
+    },
 };
 
 /// Determine whether a digraph is simple.

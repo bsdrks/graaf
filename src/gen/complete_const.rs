@@ -143,8 +143,6 @@ where
 
 #[cfg(test)]
 mod tests {
-    extern crate alloc;
-
     use {
         super::*,
         crate::{
@@ -157,8 +155,10 @@ mod tests {
             },
             prop::sum_indegrees_eq_sum_outdegrees,
         },
-        alloc::collections::BTreeSet,
-        std::collections::HashSet,
+        std::collections::{
+            BTreeSet,
+            HashSet,
+        },
     };
 
     #[test]

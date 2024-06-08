@@ -178,3 +178,24 @@ mod kattis_shortestpath1 {
         let _ = graaf::algo::floyd_warshall::distances(&fixture::kattis_shortestpath1_isize())[0];
     }
 }
+
+#[divan::bench_group(sample_size = 1000)]
+mod random_tournament {
+    use {
+        divan::Bencher,
+        graaf::{
+            algo::bfs,
+            gen::RandomTournament,
+        },
+        std::collections::BTreeSet,
+    };
+
+    #[divan::bench]
+    fn bfs(bencher: Bencher<'_, '_>) {
+        let digraph = Vec::<BTreeSet<usize>>::random_tournament(100);
+
+        bencher.bench_local(|| {
+            let _ = bfs::single_source_distances(&digraph, 0);
+        });
+    }
+}

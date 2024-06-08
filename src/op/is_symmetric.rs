@@ -6,11 +6,9 @@
 //! # Examples
 //!
 //! ```
-//! extern crate alloc;
-//!
 //! use {
-//!     alloc::collections::BTreeSet,
 //!     graaf::op::IsSymmetric,
+//!     std::collections::BTreeSet,
 //! };
 //!
 //! let digraph = vec![BTreeSet::from([1]), BTreeSet::from([0])];
@@ -43,15 +41,13 @@ use super::{
 /// digraph is symmetric and `false` otherwise.
 ///
 /// ```
-/// extern crate alloc;
-///
 /// use {
-///     alloc::collections::BTreeSet,
 ///     graaf::op::{
 ///         HasArc,
 ///         IsSymmetric,
 ///         IterArcs,
 ///     },
+///     std::collections::BTreeSet,
 /// };
 ///
 /// struct Digraph {
@@ -89,11 +85,9 @@ use super::{
 ///
 /// # Examples
 /// ```
-/// extern crate alloc;
-///
 /// use {
-///     alloc::collections::BTreeSet,
 ///     graaf::op::IsSymmetric,
+///     std::collections::BTreeSet,
 /// };
 ///
 /// let digraph = vec![BTreeSet::from([1]), BTreeSet::from([0])];
@@ -128,8 +122,6 @@ where
 
 #[cfg(test)]
 mod tests {
-    extern crate alloc;
-
     use {
         super::*,
         crate::{
@@ -144,11 +136,9 @@ mod tests {
                 AddWeightedArc,
             },
         },
-        alloc::collections::{
+        std::collections::{
             BTreeMap,
             BTreeSet,
-        },
-        std::collections::{
             HashMap,
             HashSet,
         },

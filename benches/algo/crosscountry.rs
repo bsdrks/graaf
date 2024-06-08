@@ -1,10 +1,7 @@
 //! Benchmark [`graaf::algo::dijkstra::min_distances`] for different digraph
 //! representations.
 
-extern crate alloc;
-
 use {
-    alloc::collections::BinaryHeap,
     core::cmp::Reverse,
     divan::Bencher,
     graaf::{
@@ -18,7 +15,10 @@ use {
             IterWeightedArcs,
         },
     },
-    std::collections::HashSet,
+    std::collections::{
+        BinaryHeap,
+        HashSet,
+    },
 };
 
 fn main() {

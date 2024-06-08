@@ -30,18 +30,14 @@
 //!
 //! [`Empty`]: crate::gen::Empty
 
-extern crate alloc;
-
 use {
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
     core::{
         array::from_fn,
         hash::BuildHasher,
     },
     std::collections::{
+        BTreeMap,
+        BTreeSet,
         HashMap,
         HashSet,
     },

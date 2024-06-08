@@ -46,11 +46,9 @@ use super::HasArc;
 /// digraph has an arc between `s` and `t` and `false` otherwise.
 ///
 /// ```
-/// extern crate alloc;
-///
 /// use {
-///     alloc::collections::BTreeSet,
 ///     graaf::op::HasEdge,
+///     std::collections::BTreeSet,
 /// };
 ///
 /// struct Digraph {
@@ -119,8 +117,6 @@ where
 
 #[cfg(test)]
 mod tests {
-    extern crate alloc;
-
     use {
         super::*,
         crate::{
@@ -133,11 +129,9 @@ mod tests {
                 AddWeightedArc,
             },
         },
-        alloc::collections::{
+        std::collections::{
             BTreeMap,
             BTreeSet,
-        },
-        std::collections::{
             HashMap,
             HashSet,
         },

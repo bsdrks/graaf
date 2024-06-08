@@ -6,10 +6,7 @@
 //! # Examples
 //!
 //! ```
-//! extern crate alloc;
-//!
 //! use {
-//!     alloc::collections::BTreeSet,
 //!     graaf::{
 //!         gen::{
 //!             Complete,
@@ -19,6 +16,7 @@
 //!         },
 //!         op::IsComplete,
 //!     },
+//!     std::collections::BTreeSet,
 //! };
 //!
 //! assert!(Vec::<BTreeSet<usize>>::complete(3).is_complete());
@@ -41,10 +39,7 @@ use crate::op::{
 /// arc from `t` to `s`.
 ///
 /// ```
-/// extern crate alloc;
-///
 /// use {
-///     alloc::collections::BTreeSet,
 ///     graaf::{
 ///         gen::{
 ///             Complete,
@@ -58,6 +53,7 @@ use crate::op::{
 ///             Order,
 ///         },
 ///     },
+///     std::collections::BTreeSet,
 /// };
 ///
 /// struct Digraph {
@@ -126,8 +122,6 @@ where
 
 #[cfg(test)]
 mod tests {
-    extern crate alloc;
-
     use {
         super::*,
         crate::gen::{
@@ -140,8 +134,10 @@ mod tests {
             RandomTournament,
             RandomTournamentConst,
         },
-        alloc::collections::BTreeSet,
-        std::collections::HashSet,
+        std::collections::{
+            BTreeSet,
+            HashSet,
+        },
     };
 
     #[test]

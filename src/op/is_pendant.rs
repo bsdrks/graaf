@@ -85,8 +85,6 @@ where
 
 #[cfg(test)]
 mod tests {
-    extern crate alloc;
-
     use {
         super::*,
         crate::{
@@ -99,11 +97,9 @@ mod tests {
                 AddWeightedArc,
             },
         },
-        alloc::collections::{
+        std::collections::{
             BTreeMap,
             BTreeSet,
-        },
-        std::collections::{
             HashMap,
             HashSet,
         },

@@ -15,15 +15,11 @@
 //! assert_eq!(digraph.outdegree(2), 1);
 //! ```
 
-extern crate alloc;
-
 use {
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
     core::hash::BuildHasher,
     std::collections::{
+        BTreeMap,
+        BTreeSet,
         HashMap,
         HashSet,
     },

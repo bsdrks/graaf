@@ -5,14 +5,12 @@
 //! Properties test the combined behavior of multiple traits.
 //!
 //! ```
-//! extern crate alloc;
-//!
 //! use {
-//!     alloc::collections::BTreeSet,
 //!     graaf::{
 //!         gen::RandomTournament,
 //!         prop::sum_indegrees_eq_sum_outdegrees,
 //!     },
+//!     std::collections::BTreeSet,
 //! };
 //!
 //! for v in 1..10 {

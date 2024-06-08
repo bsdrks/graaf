@@ -32,20 +32,16 @@ where
 
 #[cfg(test)]
 mod tests {
-    extern crate alloc;
-
     use {
         super::*,
         crate::{
             gen::Empty,
             prop::strategy::binop_vertices,
         },
-        alloc::collections::{
-            BTreeMap,
-            BTreeSet,
-        },
         proptest::prelude::*,
         std::collections::{
+            BTreeMap,
+            BTreeSet,
             HashMap,
             HashSet,
         },

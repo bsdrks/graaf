@@ -22,12 +22,12 @@
 //! assert!(digraph.iter_out_neighbors_mut(3).eq(&mut [1, 2]));
 //! ```
 
-extern crate alloc;
-
 use {
-    alloc::collections::BTreeMap,
     core::hash::BuildHasher,
-    std::collections::HashMap,
+    std::collections::{
+        BTreeMap,
+        HashMap,
+    },
 };
 
 /// Mutably iterate the out-neighbors of a vertex in a digraph.

@@ -1,12 +1,6 @@
 //! Benchmark implementations of [`graaf::op::Size`].
 
-extern crate alloc;
-
 use {
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
     core::array::from_fn,
     divan::Bencher,
     graaf::op::{
@@ -15,6 +9,8 @@ use {
         Size,
     },
     std::collections::{
+        BTreeMap,
+        BTreeSet,
         HashMap,
         HashSet,
     },

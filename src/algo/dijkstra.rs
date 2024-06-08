@@ -58,16 +58,14 @@
 //! [`floyd_warshall`]: crate::algo::floyd_warshall
 //! [^citation]: Dijkstra, E.W. A note on two problems in connexion with graphs. Numer. Math. 1, 269–271 (1959)
 
-extern crate alloc;
-
 use {
     super::predecessor,
     crate::op::{
         IterOutWeightedNeighbors,
         Order,
     },
-    alloc::collections::BinaryHeap,
     core::cmp::Reverse,
+    std::collections::BinaryHeap,
 };
 
 /// Calculates the distances from the source vertices to all vertices in a
@@ -93,12 +91,10 @@ use {
 /// # Examples
 ///
 /// ```
-/// extern crate alloc;
-///
 /// use {
-///     alloc::collections::BinaryHeap,
 ///     core::cmp::Reverse,
 ///     graaf::algo::dijkstra::distances,
+///     std::collections::BinaryHeap,
 /// };
 ///
 /// // 0 -> {1 (2)}
@@ -203,12 +199,10 @@ where
 /// # Examples
 ///
 /// ```
-/// extern crate alloc;
-///
 /// use {
-///     alloc::collections::BinaryHeap,
 ///     core::cmp::Reverse,
 ///     graaf::algo::dijkstra::predecessors,
+///     std::collections::BinaryHeap,
 /// };
 ///
 /// // 0 -> {1 (2)}
@@ -325,12 +319,10 @@ where
 /// # Examples
 ///
 /// ```
-/// extern crate alloc;
-///
 /// use {
-///     alloc::collections::BinaryHeap,
 ///     core::cmp::Reverse,
 ///     graaf::algo::dijkstra::shortest_path,
+///     std::collections::BinaryHeap,
 /// };
 ///
 /// // 0 -> {1 (2)}

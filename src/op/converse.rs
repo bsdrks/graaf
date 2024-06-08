@@ -5,14 +5,12 @@
 //! # Examples
 //!
 //! ```
-//! extern crate alloc;
-//!
 //! use {
-//!     alloc::collections::BTreeSet,
 //!     graaf::{
 //!         gen::CycleConst,
 //!         op::Converse,
 //!     },
+//!     std::collections::BTreeSet,
 //! };
 //!
 //! let digraph: [BTreeSet<usize>; 4] = <[BTreeSet<usize>; 4]>::cycle();
@@ -40,8 +38,6 @@
 //! );
 //! ```
 
-extern crate alloc;
-
 use {
     crate::{
         gen::{
@@ -56,10 +52,6 @@ use {
             Size,
         },
     },
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
     core::{
         array::from_fn,
         hash::{
@@ -68,6 +60,8 @@ use {
         },
     },
     std::collections::{
+        BTreeMap,
+        BTreeSet,
         HashMap,
         HashSet,
     },

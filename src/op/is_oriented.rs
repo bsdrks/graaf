@@ -5,14 +5,12 @@
 //! # Examples
 //!
 //! ```
-//! extern crate alloc;
-//!
 //! use {
-//!     alloc::collections::BTreeSet,
 //!     graaf::{
 //!         gen::Cycle,
 //!         op::IsOriented,
 //!     },
+//!     std::collections::BTreeSet,
 //! };
 //!
 //! assert!(!Vec::<BTreeSet<usize>>::cycle(2).is_oriented());
@@ -32,10 +30,7 @@ use super::{
 /// digraph is oriented and `false` otherwise.
 ///
 /// ```
-/// extern crate alloc;
-///
 /// use {
-///     alloc::collections::BTreeSet,
 ///     graaf::{
 ///         gen::CycleConst,
 ///         op::{
@@ -44,6 +39,7 @@ use super::{
 ///             IterArcs,
 ///         },
 ///     },
+///     std::collections::BTreeSet,
 /// };
 ///
 /// struct Digraph<const V: usize> {
@@ -72,10 +68,8 @@ use super::{
 /// # Examples
 ///
 /// ```
-/// extern crate alloc;
-///
 /// use {
-///     alloc::collections::BTreeSet,
+///     std::collections::BTreeSet,
 ///     graaf::{
 ///         gen::Cycle,
 ///         op::IsOriented,
@@ -100,8 +94,6 @@ where
 
 #[cfg(test)]
 mod tests {
-    extern crate alloc;
-
     use {
         super::*,
         crate::{
@@ -117,11 +109,9 @@ mod tests {
             },
             op::AddWeightedArc,
         },
-        alloc::collections::{
+        std::collections::{
             BTreeMap,
             BTreeSet,
-        },
-        std::collections::{
             HashMap,
             HashSet,
         },

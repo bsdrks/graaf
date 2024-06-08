@@ -24,16 +24,12 @@
 //! assert_eq!(digraph.arc_weight(2, 2), None);
 //! ```
 
-extern crate alloc;
-
 use {
     crate::op::HasArc,
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
     core::hash::BuildHasher,
     std::collections::{
+        BTreeMap,
+        BTreeSet,
         HashMap,
         HashSet,
     },

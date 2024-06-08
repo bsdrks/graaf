@@ -8,11 +8,9 @@
 //! # Examples
 //!
 //! ```
-//! extern crate alloc;
-//!
 //! use {
-//!     alloc::collections::BTreeSet,
 //!     graaf::op::IsBalanced,
+//!     std::collections::BTreeSet,
 //! };
 //!
 //! let digraph: [BTreeSet<usize>; 3] = [
@@ -46,16 +44,14 @@ use super::{
 /// digraph is balanced and `false` otherwise.
 ///
 /// ```
-/// extern crate alloc;
-///
 /// use {
-///     alloc::collections::BTreeSet,
 ///     graaf::op::{
 ///         Indegree,
 ///         IsBalanced,
 ///         IterVertices,
 ///         Outdegree,
 ///     },
+///     std::collections::BTreeSet,
 /// };
 ///
 /// struct Digraph<const V: usize> {
@@ -74,11 +70,9 @@ use super::{
 /// # Examples
 ///
 /// ```
-/// extern crate alloc;
-///
 /// use {
-///     alloc::collections::BTreeSet,
 ///     graaf::op::IsBalanced,
+///     std::collections::BTreeSet,
 /// };
 ///
 /// let digraph: [BTreeSet<usize>; 3] = [
@@ -114,8 +108,6 @@ where
 
 #[cfg(test)]
 mod tests {
-    extern crate alloc;
-
     use {
         super::*,
         crate::{
@@ -128,11 +120,9 @@ mod tests {
                 AddWeightedArc,
             },
         },
-        alloc::collections::{
+        std::collections::{
             BTreeMap,
             BTreeSet,
-        },
-        std::collections::{
             HashMap,
             HashSet,
         },

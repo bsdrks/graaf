@@ -8,14 +8,12 @@
 //! # Examples
 //!
 //! ```
-//! extern crate alloc;
-//!
 //! use {
-//!     alloc::collections::BTreeSet,
 //!     graaf::{
 //!         gen::Cycle,
 //!         op::IsSubdigraph,
 //!     },
+//!     std::collections::BTreeSet,
 //! };
 //!
 //! let h = vec![BTreeSet::from([1]), BTreeSet::new()];
@@ -27,14 +25,12 @@
 //! Every digraph is a subdigraph of itself.
 //!
 //! ```
-//! extern crate alloc;
-//!
 //! use {
-//!     alloc::collections::BTreeSet,
 //!     graaf::{
 //!         gen::RandomTournament,
 //!         op::IsSubdigraph,
 //!     },
+//!     std::collections::BTreeSet,
 //! };
 //!
 //! let tournament = Vec::<BTreeSet<usize>>::random_tournament(4);
@@ -46,11 +42,9 @@
 //! subdigraph of `D`.
 //!
 //! ```
-//! extern crate alloc;
-//!
 //! use {
-//!     alloc::collections::BTreeSet,
 //!     graaf::op::IsSubdigraph,
+//!     std::collections::BTreeSet,
 //! };
 //!
 //! let h = vec![BTreeSet::from([1]), BTreeSet::from([0])];
@@ -63,14 +57,12 @@
 //! subdigraph of `D`.
 //!
 //! ```
-//! extern crate alloc;
-//!
 //! use {
-//!     alloc::collections::BTreeSet,
 //!     graaf::{
 //!         gen::Empty,
 //!         op::IsSubdigraph,
 //!     },
+//!     std::collections::BTreeSet,
 //! };
 //!
 //! let h = Vec::<BTreeSet<usize>>::empty(2);
@@ -83,14 +75,12 @@
 //! is not a subdigraph of a digraph `D`.
 //!
 //! ```
-//! extern crate alloc;
-//!
 //! use {
-//!     alloc::collections::BTreeSet,
 //!     graaf::{
 //!         gen::Empty,
 //!         op::IsSubdigraph,
 //!     },
+//!     std::collections::BTreeSet,
 //! };
 //!
 //! // The arc (0, 2) has end-vertex `2` which is not in the vertex set of `H`.
@@ -100,15 +90,13 @@
 //! assert!(!h.is_subdigraph(&d));
 //! ```
 
-extern crate alloc;
-
 use {
     crate::op::{
         HasArc,
         IterArcs,
         IterVertices,
     },
-    alloc::collections::BTreeSet,
+    std::collections::BTreeSet,
 };
 
 /// Determine whether a digraph is a subdigraph of another digraph.
@@ -119,16 +107,14 @@ use {
 /// digraph is a subdigraph of the digraph `d` and `false` otherwise.
 ///
 /// ```
-/// extern crate alloc;
-///
 /// use {
-///     alloc::collections::BTreeSet,
 ///     graaf::op::{
 ///         HasArc,
 ///         IsSubdigraph,
 ///         IterArcs,
 ///         IterVertices,
 ///     },
+///     std::collections::BTreeSet,
 /// };
 ///
 /// struct Digraph {
@@ -188,12 +174,10 @@ mod tests {
             RandomTournament,
             RandomTournamentConst,
         },
-        alloc::collections::{
-            BTreeMap,
-            BTreeSet,
-        },
         proptest::proptest,
         std::collections::{
+            BTreeMap,
+            BTreeSet,
             HashMap,
             HashSet,
         },

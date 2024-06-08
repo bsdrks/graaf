@@ -10,15 +10,11 @@
 //! assert!(digraph.iter_arcs().eq([(0, 1), (1, 2), (2, 0)]));
 //! ```
 
-extern crate alloc;
-
 use {
-    alloc::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
     core::hash::BuildHasher,
     std::collections::{
+        BTreeMap,
+        BTreeSet,
         HashMap,
         HashSet,
     },
