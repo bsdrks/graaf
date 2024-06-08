@@ -199,7 +199,12 @@ impl<const V: usize> EmptyConst for AdjacencyMatrix<V>
 where
     [(); blocks!(V)]:,
 {
+    /// # Panics
+    ///
+    /// Panics if `V` is zero.
     fn empty() -> Self {
+        assert!(V > 0, "a graph must have at least one vertex");
+
         Self::new()
     }
 }
@@ -458,6 +463,12 @@ mod tests {
         assert_eq!(AdjacencyMatrix::<1>::empty().blocks, [0]);
         assert_eq!(AdjacencyMatrix::<2>::empty().blocks, [0]);
         assert_eq!(AdjacencyMatrix::<3>::empty().blocks, [0]);
+    }
+
+    #[test]
+    #[should_panic(expected = "a graph must have at least one vertex")]
+    fn empty_panic() {
+        let _ = AdjacencyMatrix::<0>::empty();
     }
 
     #[test]

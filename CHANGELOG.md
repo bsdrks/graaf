@@ -20,11 +20,16 @@
 - Benchmark against popular graph libraries in other languages.
 - Benchmark traits for `AdjacencyMatrix` against adjacency lists.
 - Describe `IsSuperdigraph` without mentioning `IsSubdigraph`, except in passing.
-- Implement `ArcWeight` for `AdjacencyMatrix`.
 - Implement `ArcWeight` for unweighted adjacency lists.
 - Implement `IterOutNeighborsMut` for additional types.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.55.0] - 2024-06-08
+
+Changed
+
+- Breaking: `AdjacencyMatrix::empty` now panics if `V` is zero.
 
 ## [0.54.5] - 2024-06-08
 
