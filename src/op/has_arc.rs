@@ -285,6 +285,7 @@ where
 {
     impl_tuple!();
 }
+
 #[cfg(test)]
 mod tests {
     use {

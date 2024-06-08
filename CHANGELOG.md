@@ -25,6 +25,21 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.55.1] - 2024-06-08
+
+Added
+
+- Implement and test `ArcWeight` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement and test `ArcWeight` for `BTreeSet<(usize, usize)>`.
+- Implement and test `ArcWeight` for `HashMap<usize, HashSet<usize>>`.
+- Implement and test `ArcWeight` for `HashSet<(usize, usize)>`.
+- Implement and test `ArcWeight` for `Vec<BTreeSet<usize>>`.
+- Implement and test `ArcWeight` for `Vec<HashSet<usize>>`.
+- Implement and test `ArcWeight` for `[BTreeSet<usize>; V]`.
+- Implement and test `ArcWeight` for `[BTreeSet<usize>]`.
+- Implement and test `ArcWeight` for `[HashSet<usize>; V]`.
+- Implement and test `ArcWeight` for `[HashSet<usize>]`.
+
 ## [0.55.0] - 2024-06-08
 
 Changed
