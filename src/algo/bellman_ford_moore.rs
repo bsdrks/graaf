@@ -11,7 +11,7 @@
 //! use graaf::{
 //!     algo::bellman_ford_moore::single_source_distances,
 //!     gen::Empty,
-//!     op::IterWeightedArcs,
+//!     op::AddWeightedArc,
 //! };
 //!
 //! // 0 -> {1 (8), 2 (4)}
@@ -75,7 +75,7 @@ use crate::op::{
 /// use graaf::{
 ///     algo::bellman_ford_moore::single_source_distances,
 ///     gen::Empty,
-///     op::IterWeightedArcs,
+///     op::AddWeightedArc,
 /// };
 ///
 /// // 0 -> {1 (8), 2 (4)}

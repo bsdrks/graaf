@@ -215,7 +215,7 @@ where
 ///     core::cmp::Reverse,
 ///     graaf::{
 ///         algo::bfs::predecessors,
-///         gen::Empty,
+///         gen::EmptyConst,
 ///         op::AddArc,
 ///     },
 ///     std::collections::VecDeque,

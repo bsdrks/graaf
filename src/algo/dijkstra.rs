@@ -17,7 +17,7 @@
 //!         single_source_distances,
 //!         single_source_predecessors,
 //!     },
-//!     gen::EmptyConst,
+//!     gen::Empty,
 //!     op::AddWeightedArc,
 //! };
 //!
