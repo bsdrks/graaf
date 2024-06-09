@@ -94,7 +94,11 @@ use {
 ///
 /// ```
 /// use {
-///     graaf::algo::bfs::distances,
+///     graaf::{
+///         algo::bfs::distances,
+///         gen::Empty,
+///         op::AddArc,
+///     },
 ///     std::collections::VecDeque,
 /// };
 ///
@@ -103,7 +107,12 @@ use {
 /// // 2 -> {}
 /// // 3 -> {0}
 ///
-/// let digraph = [vec![1], vec![2], Vec::new(), vec![0]];
+/// let mut digraph = Vec::<Vec<usize>>::empty(4);
+///
+/// digraph.add_arc(0, 1);
+/// digraph.add_arc(1, 2);
+/// digraph.add_arc(3, 0);
+///
 /// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
 /// let mut queue = VecDeque::from(vec![(0, 0)]);
 ///
@@ -149,14 +158,22 @@ where
 /// # Examples
 ///
 /// ```
-/// use graaf::algo::bfs::single_source_distances;
+/// use graaf::{
+///     algo::bfs::single_source_distances,
+///     gen::EmptyConst,
+///     op::AddArc,
+/// };
 ///
 /// // 0 -> {1}
 /// // 1 -> {2}
 /// // 2 -> {}
 /// // 3 -> {0}
 ///
-/// let digraph = [vec![1], vec![2], Vec::new(), vec![0]];
+/// let mut digraph = <[Vec<usize>; 4]>::empty();
+///
+/// digraph.add_arc(0, 1);
+/// digraph.add_arc(1, 2);
+/// digraph.add_arc(3, 0);
 ///
 /// assert_eq!(single_source_distances(&digraph, 0), [0, 1, 2, usize::MAX]);
 /// ```
@@ -196,7 +213,11 @@ where
 /// ```
 /// use {
 ///     core::cmp::Reverse,
-///     graaf::algo::bfs::predecessors,
+///     graaf::{
+///         algo::bfs::predecessors,
+///         gen::Empty,
+///         op::AddArc,
+///     },
 ///     std::collections::VecDeque,
 /// };
 ///
@@ -205,7 +226,12 @@ where
 /// // 2 -> {}
 /// // 3 -> {0}
 ///
-/// let digraph = [vec![1], vec![2], Vec::new(), vec![0]];
+/// let mut digraph = <[Vec<usize>; 4]>::empty();
+///
+/// digraph.add_arc(0, 1);
+/// digraph.add_arc(1, 2);
+/// digraph.add_arc(3, 0);
+///
 /// let mut pred = [None, None, None, None];
 /// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
 /// let mut queue = VecDeque::from([(0, 0)]);
@@ -260,14 +286,23 @@ pub fn predecessors<D, S, W>(
 /// # Examples
 ///
 /// ```
-/// use graaf::algo::bfs::single_source_predecessors;
+/// use graaf::{
+///     algo::bfs::single_source_predecessors,
+///     gen::EmptyConst,
+///     op::AddArc,
+/// };
 ///
 /// // 0 -> {1}
 /// // 1 -> {2}
 /// // 2 -> {}
 /// // 3 -> {0}
 ///
-/// let digraph = [vec![1], vec![2], Vec::new(), vec![0]];
+/// let mut digraph = <[Vec<usize>; 4]>::empty();
+///
+/// digraph.add_arc(0, 1);
+/// digraph.add_arc(1, 2);
+/// digraph.add_arc(3, 0);
+///
 /// let pred = single_source_predecessors(&digraph, 0);
 ///
 /// assert_eq!(pred, [None, Some(0), Some(1), None]);
@@ -316,7 +351,11 @@ where
 ///
 /// ```
 /// use {
-///     graaf::algo::bfs::shortest_path,
+///     graaf::{
+///         algo::bfs::shortest_path,
+///         gen::EmptyConst,
+///         op::AddArc,
+///     },
 ///     std::collections::VecDeque,
 /// };
 ///
@@ -325,7 +364,12 @@ where
 /// // 2 -> {}
 /// // 3 -> {0}
 ///
-/// let digraph = [vec![1], vec![2], Vec::new(), vec![0]];
+/// let mut digraph = <[Vec<usize>; 4]>::empty();
+///
+/// digraph.add_arc(0, 1);
+/// digraph.add_arc(1, 2);
+/// digraph.add_arc(3, 0);
+///
 /// let mut pred = [None, None, None, None];
 /// let mut dist = [usize::MAX, usize::MAX, usize::MAX, 0];
 /// let mut queue = VecDeque::from([(3, 0)]);
@@ -405,19 +449,38 @@ where
 /// # Examples
 ///
 /// ```
-/// use graaf::algo::bfs::single_pair_shortest_path as spsp;
+/// use graaf::{
+///     algo::bfs::single_pair_shortest_path as spsp,
+///     gen::EmptyConst,
+///     op::AddArc,
+/// };
 ///
 /// // 0 -> {1}
 /// // 1 -> {2}
 /// // 2 -> {}
 /// // 3 -> {0}
 ///
-/// let digraph = [vec![1], vec![2], Vec::new(), vec![0]];
+/// let mut digraph = <[Vec<usize>; 4]>::empty();
+///
+/// digraph.add_arc(0, 1);
+/// digraph.add_arc(1, 2);
+/// digraph.add_arc(3, 0);
+///
 /// let path = spsp(&digraph, 3, 2);
 ///
 /// assert_eq!(path, Some(vec![3, 0, 1, 2]));
 ///
-/// let digraph = [Vec::new(), vec![0], vec![1], vec![0, 2]];
+/// // 0 -> {}
+/// // 1 -> {0}
+/// // 2 -> {1}
+/// // 3 -> {0, 2}
+///
+/// let mut digraph = <[Vec<usize>; 4]>::empty();
+///
+/// digraph.add_arc(1, 0);
+/// digraph.add_arc(2, 1);
+/// digraph.add_arc(3, 0);
+/// digraph.add_arc(3, 2);
 ///
 /// assert_eq!(spsp(&digraph, 3, 0), Some(vec![3, 0]));
 /// assert_eq!(spsp(&digraph, 3, 1), Some(vec![3, 2, 1]));

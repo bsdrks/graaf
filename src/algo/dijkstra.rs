@@ -12,9 +12,13 @@
 //! only; use [`predecessors`] if you need the predecessor tree *and* distances.
 //!
 //! ```
-//! use graaf::algo::dijkstra::{
-//!     single_source_distances,
-//!     single_source_predecessors,
+//! use graaf::{
+//!     algo::dijkstra::{
+//!         single_source_distances,
+//!         single_source_predecessors,
+//!     },
+//!     gen::EmptyConst,
+//!     op::AddWeightedArc,
 //! };
 //!
 //! // 0 -> {1 (2)}
@@ -22,7 +26,12 @@
 //! // 2 -> {}
 //! // 3 -> {0 (2)}
 //!
-//! let digraph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
+//! let mut digraph = Vec::<Vec<(usize, usize)>>::empty(4);
+//!
+//! digraph.add_weighted_arc(0, 1, 2);
+//! digraph.add_weighted_arc(1, 2, 2);
+//! digraph.add_weighted_arc(3, 0, 2);
+//!
 //! let dist = single_source_distances(&digraph, 0);
 //! let pred = single_source_predecessors(&digraph, 0);
 //!
@@ -93,7 +102,11 @@ use {
 /// ```
 /// use {
 ///     core::cmp::Reverse,
-///     graaf::algo::dijkstra::distances,
+///     graaf::{
+///         algo::dijkstra::distances,
+///         gen::Empty,
+///         op::AddWeightedArc,
+///     },
 ///     std::collections::BinaryHeap,
 /// };
 ///
@@ -102,7 +115,12 @@ use {
 /// // 2 -> {}
 /// // 3 -> {0 (2)}
 ///
-/// let digraph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
+/// let mut digraph = Vec::<Vec<(usize, usize)>>::empty(4);
+///
+/// digraph.add_weighted_arc(0, 1, 2);
+/// digraph.add_weighted_arc(1, 2, 2);
+/// digraph.add_weighted_arc(3, 0, 2);
+///
 /// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
 /// let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 ///
@@ -153,14 +171,22 @@ pub fn distances<D, S, W>(
 /// # Examples
 ///
 /// ```
-/// use graaf::algo::dijkstra::single_source_distances;
+/// use graaf::{
+///     algo::dijkstra::single_source_distances,
+///     gen::Empty,
+///     op::AddWeightedArc,
+/// };
 ///
 /// // 0 -> {1 (2)}
 /// // 1 -> {2 (2)}
 /// // 2 -> {}
 /// // 3 -> {0 (2)}
 ///
-/// let digraph: [Vec<(usize, usize)>; 4] = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
+/// let mut digraph = Vec::<Vec<(usize, usize)>>::empty(4);
+///
+/// digraph.add_weighted_arc(0, 1, 2);
+/// digraph.add_weighted_arc(1, 2, 2);
+/// digraph.add_weighted_arc(3, 0, 2);
 ///
 /// assert_eq!(single_source_distances(&digraph, 0), [0, 2, 4, usize::MAX]);
 /// ```
@@ -201,7 +227,11 @@ where
 /// ```
 /// use {
 ///     core::cmp::Reverse,
-///     graaf::algo::dijkstra::predecessors,
+///     graaf::{
+///         algo::dijkstra::predecessors,
+///         gen::Empty,
+///         op::AddWeightedArc,
+///     },
 ///     std::collections::BinaryHeap,
 /// };
 ///
@@ -210,7 +240,12 @@ where
 /// // 2 -> {}
 /// // 3 -> {0 (2)}
 ///
-/// let digraph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
+/// let mut digraph = Vec::<Vec<(usize, usize)>>::empty(4);
+///
+/// digraph.add_weighted_arc(0, 1, 2);
+/// digraph.add_weighted_arc(1, 2, 2);
+/// digraph.add_weighted_arc(3, 0, 2);
+///
 /// let mut pred = [None, None, None, None];
 /// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
 /// let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
@@ -265,14 +300,23 @@ pub fn predecessors<D, S, W>(
 /// # Examples
 ///
 /// ```
-/// use graaf::algo::dijkstra::single_source_predecessors;
+/// use graaf::{
+///     algo::dijkstra::single_source_predecessors,
+///     gen::Empty,
+///     op::AddWeightedArc,
+/// };
 ///
 /// // 0 -> {1 (2)}
 /// // 1 -> {2 (2)}
 /// // 2 -> {}
 /// // 3 -> {0 (2)}
 ///
-/// let digraph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
+/// let mut digraph = Vec::<Vec<(usize, usize)>>::empty(4);
+///
+/// digraph.add_weighted_arc(0, 1, 2);
+/// digraph.add_weighted_arc(1, 2, 2);
+/// digraph.add_weighted_arc(3, 0, 2);
+///
 /// let pred = single_source_predecessors(&digraph, 0);
 ///
 /// assert_eq!(pred, [None, Some(0), Some(1), None]);
@@ -321,7 +365,11 @@ where
 /// ```
 /// use {
 ///     core::cmp::Reverse,
-///     graaf::algo::dijkstra::shortest_path,
+///     graaf::{
+///         algo::dijkstra::shortest_path,
+///         gen::EmptyConst,
+///         op::AddWeightedArc,
+///     },
 ///     std::collections::BinaryHeap,
 /// };
 ///
@@ -330,7 +378,12 @@ where
 /// // 2 -> {}
 /// // 3 -> {0 (2)}
 ///
-/// let digraph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
+/// let mut digraph = <[Vec<(usize, usize)>; 4]>::empty();
+///
+/// digraph.add_weighted_arc(0, 1, 2);
+/// digraph.add_weighted_arc(1, 2, 2);
+/// digraph.add_weighted_arc(3, 0, 2);
+///
 /// let mut pred = [None, None, None, None];
 /// let mut dist = [usize::MAX, usize::MAX, usize::MAX, 0];
 /// let mut heap = BinaryHeap::from([(Reverse(0), 3)]);
@@ -411,14 +464,23 @@ where
 /// # Examples
 ///
 /// ```
-/// use graaf::algo::dijkstra::single_pair_shortest_path as spsp;
+/// use graaf::{
+///     algo::dijkstra::single_pair_shortest_path as spsp,
+///     gen::EmptyConst,
+///     op::AddWeightedArc,
+/// };
 ///
 /// // 0 -> {1 (2)}
 /// // 1 -> {2 (2)}
 /// // 2 -> {}
 /// // 3 -> {0 (2)}
 ///
-/// let digraph = [vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]];
+/// let mut digraph = <[Vec<(usize, usize)>; 4]>::empty();
+///
+/// digraph.add_weighted_arc(0, 1, 2);
+/// digraph.add_weighted_arc(1, 2, 2);
+/// digraph.add_weighted_arc(3, 0, 2);
+///
 /// let path = spsp(&digraph, 3, 2);
 ///
 /// assert_eq!(path, Some(vec![3, 0, 1, 2]));

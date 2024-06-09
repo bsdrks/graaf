@@ -8,22 +8,45 @@
 //! # Examples
 //!
 //! ```
-//! use graaf::algo::bellman_ford_moore::single_source_distances;
+//! use graaf::{
+//!     algo::bellman_ford_moore::single_source_distances,
+//!     gen::Empty,
+//!     op::IterWeightedArcs,
+//! };
 //!
-//! let digraph = vec![
-//!     vec![(1, 8), (2, 4)],
-//!     vec![(2, -5)],
-//!     vec![(3, -2), (4, 4)],
-//!     vec![(5, -2)],
-//!     vec![(3, 10), (5, 9)],
-//!     vec![(3, 5), (4, -3)],
-//! ];
+//! // 0 -> {1 (8), 2 (4)}
+//! // 1 -> {2 (-5)}
+//! // 2 -> {3 (-2), 4 (4)}
+//! // 3 -> {5 (-2)}
+//! // 4 -> {3 (10), 5 (9)}
+//! // 5 -> {3 (5), 4 (-3)}
+//!
+//! let mut digraph = Vec::<Vec<(usize, isize)>>::empty(6);
+//!
+//! digraph.add_weighted_arc(0, 1, 8);
+//! digraph.add_weighted_arc(0, 2, 4);
+//! digraph.add_weighted_arc(1, 2, -5);
+//! digraph.add_weighted_arc(2, 3, -2);
+//! digraph.add_weighted_arc(2, 4, 4);
+//! digraph.add_weighted_arc(3, 5, -2);
+//! digraph.add_weighted_arc(4, 3, 10);
+//! digraph.add_weighted_arc(4, 5, 9);
+//! digraph.add_weighted_arc(5, 3, 5);
+//! digraph.add_weighted_arc(5, 4, -3);
 //!
 //! assert!(single_source_distances(&digraph, 0)
 //!     .unwrap()
 //!     .eq(&[0, 8, 3, 1, -4, -1]));
 //!
-//! let digraph = vec![vec![(1, -2)], vec![(2, -1)], vec![(0, -1)]];
+//! // 0 -> {1 (-2)}
+//! // 1 -> {2 (-1)}
+//! // 2 -> {0 (-1)}
+//!
+//! let mut digraph = Vec::<Vec<(usize, isize)>>::empty(3);
+//!
+//! digraph.add_weighted_arc(0, 1, -2);
+//! digraph.add_weighted_arc(1, 2, -1);
+//! digraph.add_weighted_arc(2, 0, -1);
 //!
 //! assert_eq!(single_source_distances(&digraph, 0), None);
 //! ```
@@ -49,22 +72,45 @@ use crate::op::{
 /// # Examples
 ///
 /// ```
-/// use graaf::algo::bellman_ford_moore::single_source_distances;
+/// use graaf::{
+///     algo::bellman_ford_moore::single_source_distances,
+///     gen::Empty,
+///     op::IterWeightedArcs,
+/// };
 ///
-/// let digraph = vec![
-///     vec![(1, 8), (2, 4)],
-///     vec![(2, -5)],
-///     vec![(3, -2), (4, 4)],
-///     vec![(5, -2)],
-///     vec![(3, 10), (5, 9)],
-///     vec![(3, 5), (4, -3)],
-/// ];
+/// // 0 -> {1 (8), 2 (4)}
+/// // 1 -> {2 (-5)}
+/// // 2 -> {3 (-2), 4 (4)}
+/// // 3 -> {5 (-2)}
+/// // 4 -> {3 (10), 5 (9)}
+/// // 5 -> {3 (5), 4 (-3)}
+///
+/// let mut digraph = Vec::<Vec<(usize, isize)>>::empty(6);
+///
+/// digraph.add_weighted_arc(0, 1, 8);
+/// digraph.add_weighted_arc(0, 2, 4);
+/// digraph.add_weighted_arc(1, 2, -5);
+/// digraph.add_weighted_arc(2, 3, -2);
+/// digraph.add_weighted_arc(2, 4, 4);
+/// digraph.add_weighted_arc(3, 5, -2);
+/// digraph.add_weighted_arc(4, 3, 10);
+/// digraph.add_weighted_arc(4, 5, 9);
+/// digraph.add_weighted_arc(5, 3, 5);
+/// digraph.add_weighted_arc(5, 4, -3);
 ///
 /// assert!(single_source_distances(&digraph, 0)
 ///     .unwrap()
 ///     .eq(&[0, 8, 3, 1, -4, -1]));
 ///
-/// let digraph = vec![vec![(1, -2)], vec![(2, -1)], vec![(0, -1)]];
+/// // 0 -> {1 (-2)}
+/// // 1 -> {2 (-1)}
+/// // 2 -> {0 (-1)}
+///
+/// let mut digraph = Vec::<Vec<(usize, isize)>>::empty(3);
+///
+/// digraph.add_weighted_arc(0, 1, -2);
+/// digraph.add_weighted_arc(1, 2, -1);
+/// digraph.add_weighted_arc(2, 0, -1);
 ///
 /// assert_eq!(single_source_distances(&digraph, 0), None);
 /// ```

@@ -35,6 +35,7 @@ Changed
 
 - Calculate order once in `bfs::single_pair_shortest_path`.
 - Calculate order once in `bfs::single_source_predecessors`.
+- Clean up and unify the `algo` documentation examples.
 
 ## [0.55.2] - 2024-06-08
 

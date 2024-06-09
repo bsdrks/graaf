@@ -8,19 +8,24 @@
 //! # Examples
 //!
 //! ```
-//! use graaf::algo::floyd_warshall::distances;
+//! use graaf::{
+//!     algo::floyd_warshall::distances,
+//!     gen::Empty,
+//!     op::AddWeightedArc,
+//! };
 //!
 //! // 0 -> {2 (-2)}
 //! // 1 -> {0 (4), 2 (3)}
 //! // 2 -> {3 (2)}
 //! // 3 -> {1 (-1)}
 //!
-//! let digraph = vec![
-//!     vec![(2, -2)],
-//!     vec![(0, 4), (2, 3)],
-//!     vec![(3, 2)],
-//!     vec![(1, -1)],
-//! ];
+//! let mut digraph = Vec::<Vec<(usize, isize)>>::empty(4);
+//!
+//! digraph.add_weighted_arc(0, 2, -2);
+//! digraph.add_weighted_arc(1, 0, 4);
+//! digraph.add_weighted_arc(1, 2, 3);
+//! digraph.add_weighted_arc(2, 3, 2);
+//! digraph.add_weighted_arc(3, 1, -1);
 //!
 //! assert!(distances(&digraph).eq(&[
 //!     vec![0, -1, -2, 0],
@@ -51,19 +56,24 @@ use crate::op::{
 /// # Examples
 ///
 /// ```
-/// use graaf::algo::floyd_warshall::distances;
+/// use graaf::{
+///     algo::floyd_warshall::distances,
+///     gen::Empty,
+///     op::AddWeightedArc,
+/// };
 ///
 /// // 0 -> {2 (-2)}
 /// // 1 -> {0 (4), 2 (3)}
 /// // 2 -> {3 (2)}
 /// // 3 -> {1 (-1)}
 ///
-/// let digraph = vec![
-///     vec![(2, -2)],
-///     vec![(0, 4), (2, 3)],
-///     vec![(3, 2)],
-///     vec![(1, -1)],
-/// ];
+/// let mut digraph = Vec::<Vec<(usize, isize)>>::empty(4);
+///
+/// digraph.add_weighted_arc(0, 2, -2);
+/// digraph.add_weighted_arc(1, 0, 4);
+/// digraph.add_weighted_arc(1, 2, 3);
+/// digraph.add_weighted_arc(2, 3, 2);
+/// digraph.add_weighted_arc(3, 1, -1);
 ///
 /// assert!(distances(&digraph).eq(&[
 ///     vec![0, -1, -2, 0],

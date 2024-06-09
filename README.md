@@ -34,11 +34,11 @@ use {
     std::collections::BTreeSet,
 };
 
-let mut digraph = <[BTreeSet<usize>; 3]>::empty();
-
 // 0 -> {1, 2}
 // 1 -> {}
 // 2 -> {}
+
+let mut digraph = <[BTreeSet<usize>; 3]>::empty();
 
 digraph.add_arc(0, 1);
 digraph.add_arc(0, 2);
@@ -92,10 +92,10 @@ for s in tournament.iter_vertices() {
     assert!((0..=2).contains(&tournament.indegree(s)));
 }
 
-let mut digraph = AdjacencyMatrix::<3>::new();
-
 // 0 -> {1}
 // 1 -> {1}
+
+let mut digraph = AdjacencyMatrix::<3>::new();
 
 digraph.add_arc(0, 1);
 digraph.add_arc(1, 1);
