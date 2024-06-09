@@ -17,9 +17,13 @@
 //! only; use [`predecessors`] if you need the predecessor tree *and* distances.
 //!
 //! ```
-//! use graaf::algo::bfs::{
-//!     single_source_distances,
-//!     single_source_predecessors,
+//! use graaf::{
+//!     algo::bfs::{
+//!         single_source_distances,
+//!         single_source_predecessors,
+//!     },
+//!     gen::EmptyConst,
+//!     op::AddArc,
 //! };
 //!
 //! // 0 -> {1}
@@ -27,7 +31,12 @@
 //! // 2 -> {}
 //! // 3 -> {0}
 //!
-//! let digraph = [vec![1], vec![2], Vec::new(), vec![0]];
+//! let mut digraph = <[Vec<usize>; 4]>::empty();
+//!
+//! digraph.add_arc(0, 1);
+//! digraph.add_arc(1, 2);
+//! digraph.add_arc(3, 0);
+//!
 //! let dist = single_source_distances(&digraph, 0);
 //! let pred = single_source_predecessors(&digraph, 0);
 //!
@@ -267,8 +276,9 @@ pub fn single_source_predecessors<D>(digraph: &D, s: usize) -> Vec<Option<usize>
 where
     D: Order + IterOutNeighbors,
 {
-    let mut pred = vec![None; digraph.order()];
-    let mut dist = vec![usize::MAX; digraph.order()];
+    let v = digraph.order();
+    let mut pred = vec![None; v];
+    let mut dist = vec![usize::MAX; v];
     let mut queue = VecDeque::from(vec![(s, 0)]);
 
     dist[s] = 0;
@@ -419,8 +429,9 @@ pub fn single_pair_shortest_path<D>(digraph: &D, s: usize, t: usize) -> Option<V
 where
     D: Order + IterOutNeighbors,
 {
-    let mut pred = vec![None; digraph.order()];
-    let mut dist = vec![usize::MAX; digraph.order()];
+    let v = digraph.order();
+    let mut pred = vec![None; v];
+    let mut dist = vec![usize::MAX; v];
     let mut queue = VecDeque::from(vec![(s, 0)]);
 
     dist[s] = 0;

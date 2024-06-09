@@ -12,6 +12,29 @@ use {
 };
 
 /// Bang-Jensen, J., & Gutin, G. Z. (2010). Digraphs theory, algorithms and
+/// applications (pp. 34). Springer.
+///
+/// ```text
+/// 0 -> {4}
+/// 1 -> {0}
+/// 2 -> {1, 3, 5}
+/// 3 -> {}
+/// 4 -> {}
+/// 5 -> {4}
+/// ```
+#[must_use]
+pub fn bang_jensen_34() -> Vec<BTreeSet<usize>> {
+    vec![
+        BTreeSet::from([4]),
+        BTreeSet::from([0]),
+        BTreeSet::from([1, 3, 5]),
+        BTreeSet::new(),
+        BTreeSet::new(),
+        BTreeSet::from([4]),
+    ]
+}
+
+/// Bang-Jensen, J., & Gutin, G. Z. (2010). Digraphs theory, algorithms and
 /// applications (pp. 94). Springer.
 ///
 /// ```text

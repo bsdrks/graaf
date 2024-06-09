@@ -4,7 +4,6 @@
 
 - Add A*.
 - Add Boruvka.
-- Add DFS.
 - Add Dinic.
 - Add Edmonds-Karp.
 - Add Ford-Fulkerson.
@@ -23,6 +22,19 @@
 - Implement `IterOutNeighborsMut` for additional types.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.55.3] - 2024-06-08
+
+Added
+
+- Add `dfs::acyclic_ordering`.
+- Add `dfs::dfsa_predecessors`.
+- Add `dfs::dfsa`.
+
+Changed
+
+- Calculate order once in `bfs::single_pair_shortest_path`.
+- Calculate order once in `bfs::single_source_predecessors`.
 
 ## [0.55.2] - 2024-06-08
 
