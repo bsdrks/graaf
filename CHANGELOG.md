@@ -23,7 +23,20 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
-## [0.55.3] - 2024-06-08
+## [0.55.4] - 2024-06-09
+
+Added
+
+- Add `fixture::kattis_builddeps`.
+- Add unit test `acyclic_ordering_kattis_builddeps` for `dfs::acyclic_ordering`.
+- Add unit test `dfsa_kattis_builddeps` for `dfs::acyclic_ordering`.
+- Add unit test `dfsa_predecessors_kattis_builddeps` for `dfs::acyclic_ordering`.
+
+Fixed
+
+- Fix citations.
+
+## [0.55.3] - 2024-06-09
 
 Added
 
@@ -41,8 +54,8 @@ Changed
 
 Changed
 
-- Unit tests for `AddArc`: pass ident to macros.
-- Unit tests for `AddWeightedArc`: pass ident to macros.
+- Pass ident to macros in unit tests for `AddArc`.
+- Pass ident to macros in unit tests for `AddWeightedArc`.
 - Use `std` instead of `alloc`.
 
 ## [0.55.1] - 2024-06-08
@@ -213,7 +226,7 @@ Changed
 
 ## [0.53.4] - 2024-06-02
 
-Changed
+Fixed
 
 - Fix the `README` adjacency list in the comments.
 
@@ -1102,7 +1115,7 @@ Added
 
 ## [0.38.1] - 2024-05-09
 
-Changed
+Fixed
 
 - Fix formatting
 

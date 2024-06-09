@@ -11,8 +11,8 @@ use {
     },
 };
 
-/// Bang-Jensen, J., & Gutin, G. Z. (2010). Digraphs theory, algorithms and
-/// applications (pp. 34). Springer.
+/// Bang-Jensen, J., & Gutin, G. Z. (2008). Digraphs: Theory, Algorithms and
+/// Applications (pp. 34). Springer London.
 ///
 /// ```text
 /// 0 -> {4}
@@ -34,8 +34,8 @@ pub fn bang_jensen_34() -> Vec<BTreeSet<usize>> {
     ]
 }
 
-/// Bang-Jensen, J., & Gutin, G. Z. (2010). Digraphs theory, algorithms and
-/// applications (pp. 94). Springer.
+/// Bang-Jensen, J., & Gutin, G. Z. (2008). Digraphs: Theory, Algorithms and
+/// Applications (pp. 94). Springer London.
 ///
 /// ```text
 /// 0 -> {1, 2}
@@ -59,8 +59,8 @@ pub fn bang_jensen_94() -> Vec<BTreeSet<usize>> {
     ]
 }
 
-/// Bang-Jensen, J., & Gutin, G. Z. (2010). Digraphs theory, algorithms and
-/// applications (pp. 94). Springer.
+/// Bang-Jensen, J., & Gutin, G. Z. (2008). Digraphs: Theory, Algorithms and
+/// Applications (pp. 94). Springer London.
 ///
 /// ```text
 /// 0 -> {1, 2}
@@ -84,8 +84,8 @@ pub fn bang_jensen_94_weighted_usize() -> Vec<BTreeMap<usize, usize>> {
     ]
 }
 
-/// Bang-Jensen, J., & Gutin, G. Z. (2010). Digraphs theory, algorithms and
-/// applications (pp. 94). Springer.
+/// Bang-Jensen, J., & Gutin, G. Z. (2008). Digraphs: Theory, Algorithms and
+/// Applications (pp. 94). Springer London.
 ///
 /// ```text
 /// 0 -> {1, 2}
@@ -109,8 +109,8 @@ pub fn bang_jensen_94_weighted_isize() -> Vec<BTreeMap<usize, isize>> {
     ]
 }
 
-/// Bang-Jensen, J., & Gutin, G. Z. (2010). Digraphs theory, algorithms and
-/// applications (pp. 96). Springer.
+/// Bang-Jensen, J., & Gutin, G. Z. (2008). Digraphs: Theory, Algorithms and
+/// Applications (pp. 96). Springer London.
 ///
 /// ```text
 /// 0 -> {1 (9), 2 (3)}
@@ -132,8 +132,8 @@ pub fn bang_jensen_96() -> Vec<Vec<(usize, usize)>> {
     ]
 }
 
-/// Bang-Jensen, J., & Gutin, G. Z. (2010). Digraphs theory, algorithms and
-/// applications (pp. 96). Springer.
+/// Bang-Jensen, J., & Gutin, G. Z. (2008). Digraphs: Theory, Algorithms and
+/// Applications (pp. 96). Springer London.
 ///
 /// ```text
 /// 0 -> {1 (9), 2 (3)}
@@ -155,8 +155,8 @@ pub fn bang_jensen_96_isize() -> Vec<Vec<(usize, isize)>> {
     ]
 }
 
-/// Bang-Jensen, J., & Gutin, G. Z. (2010). Digraphs theory, algorithms and
-/// applications (pp. 99). Springer.
+/// Bang-Jensen, J., & Gutin, G. Z. (2008). Digraphs: Theory, Algorithms and
+/// Applications (pp. 99). Springer London.
 ///
 /// ```text
 /// 0 -> {1 (8), 2 (4)}
@@ -353,7 +353,38 @@ pub fn kattis_bryr_3_isize() -> Vec<BTreeMap<usize, isize>> {
     digraph
 }
 
-/// Heimark. K. J. S. (2018). Cross Country. Kattis. [https://open.kattis.com/problems/crosscountry](https://open.kattis.com/problems/crosscountry).
+/// Bransen, J. (2015). Build Dependencies. Kattis. [https://open.kattis.com/problems/builddeps](https://open.kattis.com/problems/builddeps).
+///
+/// ```text
+/// 0 = gmp
+/// 1 = solution
+/// 2 = base
+/// 3 = set
+/// 4 = map
+/// 5 = queue
+/// ```
+///
+/// ```text
+/// 0 -> {3, 4}
+/// 1 -> {}
+/// 2 -> {3, 4, 5}
+/// 3 -> {1}
+/// 4 -> {1}
+/// 5 -> {1}
+/// ```
+#[must_use]
+pub fn kattis_builddeps() -> Vec<BTreeSet<usize>> {
+    vec![
+        BTreeSet::from([3, 4]),
+        BTreeSet::new(),
+        BTreeSet::from([3, 4, 5]),
+        BTreeSet::from([1]),
+        BTreeSet::from([1]),
+        BTreeSet::from([1]),
+    ]
+}
+
+/// Heimark, K. J. S. (2018). Cross Country. Kattis. [https://open.kattis.com/problems/crosscountry](https://open.kattis.com/problems/crosscountry).
 ///
 /// ```text
 /// 0 -> {1 (1), 2 (3), 3 (14)}
@@ -371,7 +402,7 @@ pub fn kattis_crosscountry() -> Vec<Vec<(usize, usize)>> {
     ]
 }
 
-/// Heimark. K. J. S. (2018). Cross Country. Kattis. [https://open.kattis.com/problems/crosscountry](https://open.kattis.com/problems/crosscountry).
+/// Heimark, K. J. S. (2018). Cross Country. Kattis. [https://open.kattis.com/problems/crosscountry](https://open.kattis.com/problems/crosscountry).
 ///
 /// ```text
 /// 0 -> {1 (1), 2 (3), 3 (14)}
@@ -389,7 +420,7 @@ pub fn kattis_crosscountry_isize() -> Vec<Vec<(usize, isize)>> {
     ]
 }
 
-/// Austrin. P. (2005). Single source shortest path, non-negative weights. Kattis. [https://open.kattis.com/problems/shortestpath1](https://open.kattis.com/problems/shortestpath1).
+/// Austrin, P. (2005). Single source shortest path, non-negative weights. Kattis. [https://open.kattis.com/problems/shortestpath1](https://open.kattis.com/problems/shortestpath1).
 ///
 /// ```text
 /// 0 -> {1 (2)}
@@ -402,7 +433,7 @@ pub fn kattis_shortestpath1() -> Vec<Vec<(usize, usize)>> {
     vec![vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]]
 }
 
-/// Austrin. P. (2005). Single source shortest path, non-negative weights. Kattis. [https://open.kattis.com/problems/shortestpath1](https://open.kattis.com/problems/shortestpath1).
+/// Austrin, P. (2005). Single source shortest path, non-negative weights. Kattis. [https://open.kattis.com/problems/shortestpath1](https://open.kattis.com/problems/shortestpath1).
 ///
 /// ```text
 /// 0 -> {1 (2)}

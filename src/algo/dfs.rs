@@ -94,8 +94,8 @@ fn dfsa_visit<D>(
     }
 
     *t += 1;
-    t_expl[u] = *t;
     *i -= 1;
+    t_expl[u] = *t;
     ordering[*i] = u;
 }
 
@@ -285,6 +285,24 @@ mod tests {
     }
 
     #[test]
+    fn dfsa_kattis_builddeps() {
+        let digraph = fixture::kattis_builddeps();
+        let v = digraph.order();
+        let mut ordering = vec![0; v];
+        let mut t_visit = vec![0; v];
+        let mut t_expl = vec![0; v];
+
+        dfsa(&digraph, &mut ordering, &mut t_visit, &mut t_expl);
+
+        let dependencies = ordering
+            .into_iter()
+            .skip_while(|&u| u != 0)
+            .collect::<Vec<usize>>();
+
+        assert!(dependencies.iter().eq(&[0, 4, 3, 1]));
+    }
+
+    #[test]
     fn dfsa_predecessors_bang_jensen_34() {
         let digraph = fixture::bang_jensen_34();
         let v = digraph.order();
@@ -309,9 +327,55 @@ mod tests {
     }
 
     #[test]
+    fn dfsa_predecessors_kattis_builddeps() {
+        let digraph = fixture::kattis_builddeps();
+        let v = digraph.order();
+        let mut ordering = vec![0; v];
+        let mut pred = vec![None; v];
+        let mut t_visit = vec![0; v];
+        let mut t_expl = vec![0; v];
+
+        dfsa_predecessors(
+            &digraph,
+            &mut ordering,
+            &mut pred,
+            &mut t_visit,
+            &mut t_expl,
+        );
+
+        let dependencies = ordering
+            .into_iter()
+            .skip_while(|&u| u != 0)
+            .collect::<Vec<usize>>();
+
+        assert!(dependencies.iter().eq(&[0, 4, 3, 1]));
+
+        assert!(pred
+            .iter()
+            .eq(&[None, Some(3), None, Some(0), Some(0), Some(2)]));
+    }
+
+    #[test]
     fn acyclic_ordering_bang_jensen_34() {
         assert!(acyclic_ordering(&fixture::bang_jensen_34())
             .iter()
             .eq(&[2, 5, 3, 1, 0, 4]));
+    }
+
+    #[test]
+    fn acycling_ordering_kattis_builddeps() {
+        let ordering = acyclic_ordering(&fixture::kattis_builddeps());
+
+        let dependencies = ordering
+            .into_iter()
+            .skip_while(|&u| u != 0)
+            .collect::<Vec<usize>>();
+
+        // gmp
+        // map
+        // set
+        // solution
+
+        assert!(dependencies.iter().eq(&[0, 4, 3, 1]));
     }
 }
