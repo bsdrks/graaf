@@ -299,6 +299,11 @@ mod tests {
             .skip_while(|&u| u != 0)
             .collect::<Vec<usize>>();
 
+        // 0 = gmp
+        // 4 = map
+        // 3 = set
+        // 1 = solution
+
         assert!(dependencies.iter().eq(&[0, 4, 3, 1]));
     }
 
@@ -348,6 +353,11 @@ mod tests {
             .skip_while(|&u| u != 0)
             .collect::<Vec<usize>>();
 
+        // 0 = gmp
+        // 4 = map
+        // 3 = set
+        // 1 = solution
+
         assert!(dependencies.iter().eq(&[0, 4, 3, 1]));
 
         assert!(pred
@@ -371,10 +381,10 @@ mod tests {
             .skip_while(|&u| u != 0)
             .collect::<Vec<usize>>();
 
-        // gmp
-        // map
-        // set
-        // solution
+        // 0 = gmp
+        // 4 = map
+        // 3 = set
+        // 1 = solution
 
         assert!(dependencies.iter().eq(&[0, 4, 3, 1]));
     }
