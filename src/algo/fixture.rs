@@ -11,8 +11,9 @@ use {
     },
 };
 
-/// Bang-Jensen, J., & Gutin, G. Z. (2008). Digraphs: Theory, Algorithms and
-/// Applications (pp. 34). Springer London.
+/// Jørgen Bang-Jensen and Gregory Z. Gutin. 2009. Digraphs: Theory, Algorithms
+/// and Applications (2nd ed.). Springer, London, 34.
+/// <https://doi.org/10.1007/978-1-84800-998-1>
 ///
 /// ```text
 /// 0 -> {4}
@@ -34,8 +35,9 @@ pub fn bang_jensen_34() -> Vec<BTreeSet<usize>> {
     ]
 }
 
-/// Bang-Jensen, J., & Gutin, G. Z. (2008). Digraphs: Theory, Algorithms and
-/// Applications (pp. 94). Springer London.
+/// Jørgen Bang-Jensen and Gregory Z. Gutin. 2009. Digraphs: Theory, Algorithms
+/// and Applications (2nd ed.). Springer, London, 94.
+/// <https://doi.org/10.1007/978-1-84800-998-1>
 ///
 /// ```text
 /// 0 -> {1, 2}
@@ -59,8 +61,9 @@ pub fn bang_jensen_94() -> Vec<BTreeSet<usize>> {
     ]
 }
 
-/// Bang-Jensen, J., & Gutin, G. Z. (2008). Digraphs: Theory, Algorithms and
-/// Applications (pp. 94). Springer London.
+/// Jørgen Bang-Jensen and Gregory Z. Gutin. 2009. Digraphs: Theory, Algorithms
+/// and Applications (2nd ed.). Springer, London, 94.
+/// <https://doi.org/10.1007/978-1-84800-998-1>
 ///
 /// ```text
 /// 0 -> {1, 2}
@@ -84,8 +87,9 @@ pub fn bang_jensen_94_weighted_usize() -> Vec<BTreeMap<usize, usize>> {
     ]
 }
 
-/// Bang-Jensen, J., & Gutin, G. Z. (2008). Digraphs: Theory, Algorithms and
-/// Applications (pp. 94). Springer London.
+/// Jørgen Bang-Jensen and Gregory Z. Gutin. 2009. Digraphs: Theory, Algorithms
+/// and Applications (2nd ed.). Springer, London, 94.
+/// <https://doi.org/10.1007/978-1-84800-998-1>
 ///
 /// ```text
 /// 0 -> {1, 2}
@@ -109,8 +113,9 @@ pub fn bang_jensen_94_weighted_isize() -> Vec<BTreeMap<usize, isize>> {
     ]
 }
 
-/// Bang-Jensen, J., & Gutin, G. Z. (2008). Digraphs: Theory, Algorithms and
-/// Applications (pp. 96). Springer London.
+/// Jørgen Bang-Jensen and Gregory Z. Gutin. 2009. Digraphs: Theory, Algorithms
+/// and Applications (2nd ed.). Springer, London, 96.
+/// <https://doi.org/10.1007/978-1-84800-998-1>
 ///
 /// ```text
 /// 0 -> {1 (9), 2 (3)}
@@ -132,8 +137,9 @@ pub fn bang_jensen_96() -> Vec<Vec<(usize, usize)>> {
     ]
 }
 
-/// Bang-Jensen, J., & Gutin, G. Z. (2008). Digraphs: Theory, Algorithms and
-/// Applications (pp. 96). Springer London.
+/// Jørgen Bang-Jensen and Gregory Z. Gutin. 2009. Digraphs: Theory, Algorithms
+/// and Applications (2nd ed.). Springer, London, 96.
+/// <https://doi.org/10.1007/978-1-84800-998-1>
 ///
 /// ```text
 /// 0 -> {1 (9), 2 (3)}
@@ -155,8 +161,9 @@ pub fn bang_jensen_96_isize() -> Vec<Vec<(usize, isize)>> {
     ]
 }
 
-/// Bang-Jensen, J., & Gutin, G. Z. (2008). Digraphs: Theory, Algorithms and
-/// Applications (pp. 99). Springer London.
+/// Jørgen Bang-Jensen and Gregory Z. Gutin. 2009. Digraphs: Theory, Algorithms
+/// and Applications (2nd ed.). Springer, London, 99.
+/// <https://doi.org/10.1007/978-1-84800-998-1>
 ///
 /// ```text
 /// 0 -> {1 (8), 2 (4)}
@@ -178,7 +185,8 @@ pub fn bang_jensen_99() -> Vec<Vec<(usize, isize)>> {
     ]
 }
 
-/// Arnarson, A. B., & Erlendsson, U. F. (2019). Bridges (Sample Input 1). Kattis. [https://open.kattis.com/problems/bryr](https://open.kattis.com/problems/bridges).
+/// Arnar Bjarni Arnarson and Unnar Freyr Erlendsson. 2019. Bridges (Sample
+/// Input 1). Kattis. <https://open.kattis.com/problems/bryr>
 ///
 /// ```text
 /// 0 -> {1 (1), 2 (1)}
@@ -197,7 +205,8 @@ pub fn kattis_bryr_1() -> Vec<BTreeMap<usize, usize>> {
     digraph
 }
 
-/// Arnarson, A. B., & Erlendsson, U. F. (2019). Bridges (Sample Input 1). Kattis. [https://open.kattis.com/problems/bryr](https://open.kattis.com/problems/bridges).
+/// Arnar Bjarni Arnarson and Unnar Freyr Erlendsson. 2019. Bridges (Sample
+/// Input 1). Kattis. <https://open.kattis.com/problems/bryr>
 ///
 /// ```text
 /// 0 -> {1 (1), 2 (1)}
@@ -216,7 +225,8 @@ pub fn kattis_bryr_1_isize() -> Vec<BTreeMap<usize, isize>> {
     digraph
 }
 
-/// Arnarson, A. B., & Erlendsson, U. F. (2019). Bridges (Sample Input 2). Kattis. [https://open.kattis.com/problems/bryr](https://open.kattis.com/problems/bridges).
+/// Arnar Bjarni Arnarson and Unnar Freyr Erlendsson. 2019. Bridges (Sample
+/// Input 2). Kattis. <https://open.kattis.com/problems/bryr>
 ///
 /// ```text
 /// 0 -> {3 (1), 1 (1)}
@@ -245,7 +255,8 @@ pub fn kattis_bryr_2() -> Vec<BTreeMap<usize, usize>> {
     digraph
 }
 
-/// Arnarson, A. B., & Erlendsson, U. F. (2019). Bridges (Sample Input 2). Kattis. [https://open.kattis.com/problems/bryr](https://open.kattis.com/problems/bridges).
+/// Arnar Bjarni Arnarson and Unnar Freyr Erlendsson. 2019. Bridges (Sample
+/// Input 2). Kattis. <https://open.kattis.com/problems/bryr>
 ///
 /// ```text
 /// 0 -> {3 (1), 1 (1)}
@@ -273,7 +284,9 @@ pub fn kattis_bryr_2_isize() -> Vec<BTreeMap<usize, isize>> {
 
     digraph
 }
-/// Arnarson, A. B., & Erlendsson, U. F. (2019). Bridges (Sample Input 3). Kattis. [https://open.kattis.com/problems/bryr](https://open.kattis.com/problems/bridges).
+
+/// Arnar Bjarni Arnarson and Unnar Freyr Erlendsson. 2019. Bridges (Sample
+/// Input 3). Kattis. <https://open.kattis.com/problems/bryr>
 ///
 /// ```text
 /// 0 -> {3 (0)}
@@ -313,7 +326,8 @@ pub fn kattis_bryr_3() -> Vec<BTreeMap<usize, usize>> {
     digraph
 }
 
-/// Arnarson, A. B., & Erlendsson, U. F. (2019). Bridges (Sample Input 3). Kattis. [https://open.kattis.com/problems/bryr](https://open.kattis.com/problems/bridges).
+/// Arnar Bjarni Arnarson and Unnar Freyr Erlendsson. 2019. Bridges (Sample
+/// Input 3). Kattis. <https://open.kattis.com/problems/bryr>
 ///
 /// ```text
 /// 0 -> {3 (0)}
@@ -353,7 +367,8 @@ pub fn kattis_bryr_3_isize() -> Vec<BTreeMap<usize, isize>> {
     digraph
 }
 
-/// Bransen, J. (2015). Build Dependencies. Kattis. [https://open.kattis.com/problems/builddeps](https://open.kattis.com/problems/builddeps).
+/// Jeroen Bransen. 2015. Build Dependencies. Kattis.
+/// <https://open.kattis.com/problems/builddeps>
 ///
 /// ```text
 /// 0 = gmp
@@ -384,7 +399,8 @@ pub fn kattis_builddeps() -> Vec<BTreeSet<usize>> {
     ]
 }
 
-/// Heimark, K. J. S. (2018). Cross Country. Kattis. [https://open.kattis.com/problems/crosscountry](https://open.kattis.com/problems/crosscountry).
+/// Karl Johan Sande Heimark. 2018. Cross Country. Kattis.
+/// <https://open.kattis.com/problems/crosscountry>
 ///
 /// ```text
 /// 0 -> {1 (1), 2 (3), 3 (14)}
@@ -402,7 +418,8 @@ pub fn kattis_crosscountry() -> Vec<Vec<(usize, usize)>> {
     ]
 }
 
-/// Heimark, K. J. S. (2018). Cross Country. Kattis. [https://open.kattis.com/problems/crosscountry](https://open.kattis.com/problems/crosscountry).
+/// Karl Johan Sande Heimark. 2018. Cross Country. Kattis.
+/// <https://open.kattis.com/problems/crosscountry>
 ///
 /// ```text
 /// 0 -> {1 (1), 2 (3), 3 (14)}
@@ -420,7 +437,8 @@ pub fn kattis_crosscountry_isize() -> Vec<Vec<(usize, isize)>> {
     ]
 }
 
-/// Austrin, P. (2005). Single source shortest path, non-negative weights. Kattis. [https://open.kattis.com/problems/shortestpath1](https://open.kattis.com/problems/shortestpath1).
+/// Per Austrin. 2005. Single source shortest path, non-negative weights.
+/// Kattis. <https://open.kattis.com/problems/shortestpath1>
 ///
 /// ```text
 /// 0 -> {1 (2)}
@@ -433,7 +451,8 @@ pub fn kattis_shortestpath1() -> Vec<Vec<(usize, usize)>> {
     vec![vec![(1, 2)], vec![(2, 2)], Vec::new(), vec![(0, 2)]]
 }
 
-/// Austrin, P. (2005). Single source shortest path, non-negative weights. Kattis. [https://open.kattis.com/problems/shortestpath1](https://open.kattis.com/problems/shortestpath1).
+/// Per Austrin. 2005. Single source shortest path, non-negative weights.
+/// Kattis. <https://open.kattis.com/problems/shortestpath1>
 ///
 /// ```text
 /// 0 -> {1 (2)}

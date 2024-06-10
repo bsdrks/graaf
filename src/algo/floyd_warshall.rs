@@ -1,6 +1,6 @@
 //! The Floyd-Warshall algorithm
 //!
-//! The Floyd[^citation]-Warshall algorithm finds the shortest paths between all
+//! The Floyd[^1]-Warshall algorithm finds the shortest paths between all
 //! pairs of vertices in a weighted digraph.
 //!
 //! The time complexity is *O*(*v³*).
@@ -35,7 +35,8 @@
 //! ]));
 //! ```
 //!
-//! [^citation]: Robert W. Floyd. 1962. Algorithm 97: Shortest path. Commun. ACM 5, 6 (June 1962), 345. <https://doi.org/10.1145/367766.368168>
+//! [^1]: Robert W. Floyd. 1962. Algorithm 97: Shortest path. Commun.
+//!   ACM 5, 6 (June 1962), 345. <https://doi.org/10.1145/367766.368168>
 
 use crate::op::{
     IterVertices,
@@ -43,7 +44,8 @@ use crate::op::{
     Order,
 };
 
-/// Computes the distances between all pairs of vertices in a weighted digraph.
+/// Computes the distances between all pairs of vertices in a weighted
+/// digraph.[^1]
 ///
 /// # Arguments
 ///
@@ -82,6 +84,9 @@ use crate::op::{
 ///     vec![3, -1, 1, 0],
 /// ]));
 /// ```
+///
+/// [^1]: Robert W. Floyd. 1962. Algorithm 97: Shortest path. Commun.
+///   ACM 5, 6 (June 1962), 345. <https://doi.org/10.1145/367766.368168>
 #[doc(alias = "apsp")]
 pub fn distances<D>(digraph: &D) -> Vec<Vec<isize>>
 where

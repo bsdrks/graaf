@@ -1,7 +1,7 @@
-//! Dijkstra's algorithm[^citation] with binary heap
+//! Dijkstra's algorithm with binary heap
 //!
 //! Dijkstra's algorithm with binary heap finds the shortest path in a weighted
-//! digraph.
+//! digraph.[^1]
 //!
 //! The time complexity is *O*(*v* log *v* + *a*).
 //!
@@ -65,7 +65,9 @@
 //!
 //! [`bfs`]: crate::algo::bfs
 //! [`floyd_warshall`]: crate::algo::floyd_warshall
-//! [^citation]: Dijkstra, E.W. A note on two problems in connexion with graphs. Numer. Math. 1, 269–271 (1959)
+//! [^1]: Edsger Wybe Dijkstra. 1959. A note on two problems in connexion
+//!   with graphs. Numer. Math. 1, 1 (December 1959), 269–271.
+//!   <https://doi.org/10.1007/BF01386390>
 
 use {
     super::predecessor,
@@ -78,7 +80,7 @@ use {
 };
 
 /// Calculates the distances from the source vertices to all vertices in a
-/// weighted digraph.
+/// weighted digraph.[^1]
 ///
 /// # Arguments
 ///
@@ -128,6 +130,10 @@ use {
 ///
 /// assert_eq!(dist, [0, 2, 4, usize::MAX]);
 /// ```
+///
+/// [^1]: Edsger Wybe Dijkstra. 1959. A note on two problems in connexion
+///   with graphs. Numer. Math. 1, 1 (December 1959), 269–271.
+///   <https://doi.org/10.1007/BF01386390>
 pub fn distances<D, S, W>(
     digraph: &D,
     step: S,

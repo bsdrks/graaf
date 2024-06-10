@@ -23,6 +23,13 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.55.5] - 2024-06-10
+
+Changed
+
+- Use ACM citation style for fixture titles.
+- Use ACM citation style for citations.
+
 ## [0.55.4] - 2024-06-09
 
 Added
