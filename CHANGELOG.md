@@ -23,6 +23,13 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.55.6] - 2024-06-11
+
+Added
+
+- Add benchmark `add_arc::btree_set_tuple`.
+- Add benchmark `add_arc::hash_set_tuple`.
+
 ## [0.55.5] - 2024-06-10
 
 Changed

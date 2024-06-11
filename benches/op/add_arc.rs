@@ -137,3 +137,21 @@ fn hash_map_hash_set<const V: usize>(bencher: Bencher<'_, '_>) {
 
     let _ = adj;
 }
+
+#[divan::bench(consts = ARGS)]
+fn btree_set_tuple<const V: usize>(bencher: Bencher<'_, '_>) {
+    let mut adj = BTreeSet::<(usize, usize)>::new();
+
+    bench!(bencher, V, adj);
+
+    let _ = adj;
+}
+
+#[divan::bench(consts = ARGS)]
+fn hash_set_tuple<const V: usize>(bencher: Bencher<'_, '_>) {
+    let mut adj = HashSet::<(usize, usize)>::new();
+
+    bench!(bencher, V, adj);
+
+    let _ = adj;
+}
