@@ -117,24 +117,6 @@ mod tests {
         },
     };
 
-    macro_rules! test_unweighted_dynamic {
-        ($ty:ty) => {
-            assert!(<$ty>::empty(1).is_oriented());
-            assert!(<$ty>::empty(2).is_oriented());
-            assert!(<$ty>::empty(3).is_oriented());
-            assert!(<$ty>::cycle(3).is_oriented());
-            assert!(<$ty>::cycle(4).is_oriented());
-            assert!(<$ty>::random_tournament(2).is_oriented());
-            assert!(<$ty>::random_tournament(3).is_oriented());
-            assert!(<$ty>::random_tournament(4).is_oriented());
-
-            assert!(!<$ty>::cycle(2).is_oriented());
-            assert!(!<$ty>::complete(2).is_oriented());
-            assert!(!<$ty>::complete(3).is_oriented());
-            assert!(!<$ty>::complete(4).is_oriented());
-        };
-    }
-
     macro_rules! test_unweighted_const {
         ($ty:ty) => {
             assert!(<[$ty; 1]>::empty().is_oriented());
@@ -153,70 +135,22 @@ mod tests {
         };
     }
 
-    macro_rules! test_weighted_dynamic {
+    macro_rules! test_unweighted_dynamic {
         ($ty:ty) => {
             assert!(<$ty>::empty(1).is_oriented());
             assert!(<$ty>::empty(2).is_oriented());
             assert!(<$ty>::empty(3).is_oriented());
+            assert!(<$ty>::cycle(3).is_oriented());
+            assert!(<$ty>::cycle(4).is_oriented());
+            assert!(<$ty>::random_tournament(2).is_oriented());
+            assert!(<$ty>::random_tournament(3).is_oriented());
+            assert!(<$ty>::random_tournament(4).is_oriented());
 
-            let mut cycle2 = <$ty>::empty(2);
-
-            cycle2.add_weighted_arc(0, 1, 1);
-            cycle2.add_weighted_arc(1, 0, 1);
-
-            assert!(!cycle2.is_oriented());
-
-            let mut cycle3 = <$ty>::empty(3);
-
-            cycle3.add_weighted_arc(0, 1, 1);
-            cycle3.add_weighted_arc(1, 2, 1);
-            cycle3.add_weighted_arc(2, 0, 1);
-
-            assert!(cycle3.is_oriented());
-
-            let mut cycle4 = <$ty>::empty(4);
-
-            cycle4.add_weighted_arc(0, 1, 1);
-            cycle4.add_weighted_arc(1, 2, 1);
-            cycle4.add_weighted_arc(2, 3, 1);
-            cycle4.add_weighted_arc(3, 0, 1);
-
-            assert!(cycle4.is_oriented());
-
-            let mut complete2 = <$ty>::empty(2);
-
-            complete2.add_weighted_arc(0, 1, 1);
-            complete2.add_weighted_arc(1, 0, 1);
-
-            assert!(!complete2.is_oriented());
-
-            let mut complete3 = <$ty>::empty(3);
-
-            complete3.add_weighted_arc(0, 1, 1);
-            complete3.add_weighted_arc(0, 2, 1);
-            complete3.add_weighted_arc(1, 0, 1);
-            complete3.add_weighted_arc(1, 2, 1);
-            complete3.add_weighted_arc(2, 0, 1);
-            complete3.add_weighted_arc(2, 1, 1);
-
-            assert!(!complete3.is_oriented());
-
-            let mut complete4 = <$ty>::empty(4);
-
-            complete4.add_weighted_arc(0, 1, 1);
-            complete4.add_weighted_arc(0, 2, 1);
-            complete4.add_weighted_arc(0, 3, 1);
-            complete4.add_weighted_arc(1, 0, 1);
-            complete4.add_weighted_arc(1, 2, 1);
-            complete4.add_weighted_arc(1, 3, 1);
-            complete4.add_weighted_arc(2, 0, 1);
-            complete4.add_weighted_arc(2, 1, 1);
-            complete4.add_weighted_arc(2, 3, 1);
-            complete4.add_weighted_arc(3, 0, 1);
-            complete4.add_weighted_arc(3, 1, 1);
-            complete4.add_weighted_arc(3, 2, 1);
-
-            assert!(!complete4.is_oriented());
+            assert!(!<$ty>::cycle(1).is_oriented());
+            assert!(!<$ty>::cycle(2).is_oriented());
+            assert!(!<$ty>::complete(2).is_oriented());
+            assert!(!<$ty>::complete(3).is_oriented());
+            assert!(!<$ty>::complete(4).is_oriented());
         };
     }
 
@@ -269,6 +203,73 @@ mod tests {
             assert!(!complete3.is_oriented());
 
             let mut complete4 = <[$ty; 4]>::empty();
+
+            complete4.add_weighted_arc(0, 1, 1);
+            complete4.add_weighted_arc(0, 2, 1);
+            complete4.add_weighted_arc(0, 3, 1);
+            complete4.add_weighted_arc(1, 0, 1);
+            complete4.add_weighted_arc(1, 2, 1);
+            complete4.add_weighted_arc(1, 3, 1);
+            complete4.add_weighted_arc(2, 0, 1);
+            complete4.add_weighted_arc(2, 1, 1);
+            complete4.add_weighted_arc(2, 3, 1);
+            complete4.add_weighted_arc(3, 0, 1);
+            complete4.add_weighted_arc(3, 1, 1);
+            complete4.add_weighted_arc(3, 2, 1);
+
+            assert!(!complete4.is_oriented());
+        };
+    }
+
+    macro_rules! test_weighted_dynamic {
+        ($ty:ty) => {
+            assert!(<$ty>::empty(1).is_oriented());
+            assert!(<$ty>::empty(2).is_oriented());
+            assert!(<$ty>::empty(3).is_oriented());
+
+            let mut cycle2 = <$ty>::empty(2);
+
+            cycle2.add_weighted_arc(0, 1, 1);
+            cycle2.add_weighted_arc(1, 0, 1);
+
+            assert!(!cycle2.is_oriented());
+
+            let mut cycle3 = <$ty>::empty(3);
+
+            cycle3.add_weighted_arc(0, 1, 1);
+            cycle3.add_weighted_arc(1, 2, 1);
+            cycle3.add_weighted_arc(2, 0, 1);
+
+            assert!(cycle3.is_oriented());
+
+            let mut cycle4 = <$ty>::empty(4);
+
+            cycle4.add_weighted_arc(0, 1, 1);
+            cycle4.add_weighted_arc(1, 2, 1);
+            cycle4.add_weighted_arc(2, 3, 1);
+            cycle4.add_weighted_arc(3, 0, 1);
+
+            assert!(cycle4.is_oriented());
+
+            let mut complete2 = <$ty>::empty(2);
+
+            complete2.add_weighted_arc(0, 1, 1);
+            complete2.add_weighted_arc(1, 0, 1);
+
+            assert!(!complete2.is_oriented());
+
+            let mut complete3 = <$ty>::empty(3);
+
+            complete3.add_weighted_arc(0, 1, 1);
+            complete3.add_weighted_arc(0, 2, 1);
+            complete3.add_weighted_arc(1, 0, 1);
+            complete3.add_weighted_arc(1, 2, 1);
+            complete3.add_weighted_arc(2, 0, 1);
+            complete3.add_weighted_arc(2, 1, 1);
+
+            assert!(!complete3.is_oriented());
+
+            let mut complete4 = <$ty>::empty(4);
 
             complete4.add_weighted_arc(0, 1, 1);
             complete4.add_weighted_arc(0, 2, 1);

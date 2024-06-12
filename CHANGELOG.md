@@ -23,6 +23,12 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.55.7] - 2024-06-12
+
+Changed
+
+- Unify test setup.
+
 ## [0.55.6] - 2024-06-11
 
 Added

@@ -338,13 +338,17 @@ mod tests {
         },
     };
 
-    macro_rules! test_add_weighted_arc {
+    macro_rules! setup {
         ($digraph:expr) => {
             $digraph.add_weighted_arc(0, 1, 2);
             $digraph.add_weighted_arc(0, 2, 1);
             $digraph.add_weighted_arc(1, 0, -2);
             $digraph.add_weighted_arc(2, 0, 3);
+        };
+    }
 
+    macro_rules! test_add_weighted_arc {
+        ($digraph:expr) => {
             let mut iter = $digraph.iter_weighted_arcs();
 
             assert!(matches!(
@@ -375,6 +379,7 @@ mod tests {
     fn vec_vec() {
         let mut digraph = Vec::<Vec<(usize, i32)>>::empty(3);
 
+        setup!(digraph);
         test_add_weighted_arc!(digraph);
     }
 
@@ -382,6 +387,7 @@ mod tests {
     fn vec_btree_set() {
         let mut digraph = Vec::<BTreeSet<(usize, i32)>>::empty(3);
 
+        setup!(digraph);
         test_add_weighted_arc!(digraph);
     }
 
@@ -389,6 +395,7 @@ mod tests {
     fn vec_hash_set() {
         let mut digraph = Vec::<HashSet<(usize, i32)>>::empty(3);
 
+        setup!(digraph);
         test_add_weighted_arc!(digraph);
     }
 
@@ -396,6 +403,7 @@ mod tests {
     fn vec_btree_map() {
         let mut digraph = Vec::<BTreeMap<usize, i32>>::empty(3);
 
+        setup!(digraph);
         test_add_weighted_arc!(digraph);
     }
 
@@ -403,6 +411,7 @@ mod tests {
     fn vec_hash_map() {
         let mut digraph = Vec::<HashMap<usize, i32>>::empty(3);
 
+        setup!(digraph);
         test_add_weighted_arc!(digraph);
     }
 
@@ -410,6 +419,7 @@ mod tests {
     fn arr_vec() {
         let mut digraph = <[Vec<(usize, i32)>; 3]>::empty();
 
+        setup!(digraph);
         test_add_weighted_arc!(digraph);
     }
 
@@ -417,6 +427,7 @@ mod tests {
     fn arr_btree_set() {
         let mut digraph = <[BTreeSet<(usize, i32)>; 3]>::empty();
 
+        setup!(digraph);
         test_add_weighted_arc!(digraph);
     }
 
@@ -424,6 +435,7 @@ mod tests {
     fn arr_hash_set() {
         let mut digraph = <[HashSet<(usize, i32)>; 3]>::empty();
 
+        setup!(digraph);
         test_add_weighted_arc!(digraph);
     }
 
@@ -431,6 +443,7 @@ mod tests {
     fn arr_btree_map() {
         let mut digraph = <[BTreeMap<usize, i32>; 3]>::empty();
 
+        setup!(digraph);
         test_add_weighted_arc!(digraph);
     }
 
@@ -438,6 +451,7 @@ mod tests {
     fn arr_hash_map() {
         let mut digraph = <[HashMap<usize, i32>; 3]>::empty();
 
+        setup!(digraph);
         test_add_weighted_arc!(digraph);
     }
 
@@ -445,6 +459,7 @@ mod tests {
     fn btree_map_vec() {
         let mut digraph = BTreeMap::<usize, Vec<(usize, i32)>>::empty(3);
 
+        setup!(digraph);
         test_add_weighted_arc!(digraph);
     }
 
@@ -452,6 +467,7 @@ mod tests {
     fn btree_map_btree_set() {
         let mut digraph = BTreeMap::<usize, BTreeSet<(usize, i32)>>::empty(3);
 
+        setup!(digraph);
         test_add_weighted_arc!(digraph);
     }
 
@@ -459,6 +475,7 @@ mod tests {
     fn btree_map_btree_map() {
         let mut digraph = BTreeMap::<usize, BTreeMap<usize, i32>>::empty(3);
 
+        setup!(digraph);
         test_add_weighted_arc!(digraph);
     }
 
@@ -466,6 +483,7 @@ mod tests {
     fn hash_map_vec() {
         let mut digraph = HashMap::<usize, Vec<(usize, i32)>>::empty(3);
 
+        setup!(digraph);
         test_add_weighted_arc!(digraph);
     }
 
@@ -473,6 +491,7 @@ mod tests {
     fn hash_map_hash_set() {
         let mut digraph = HashMap::<usize, HashSet<(usize, i32)>>::empty(3);
 
+        setup!(digraph);
         test_add_weighted_arc!(digraph);
     }
 
@@ -480,6 +499,7 @@ mod tests {
     fn hash_map_hash_map() {
         let mut digraph = HashMap::<usize, HashMap<usize, i32>>::empty(3);
 
+        setup!(digraph);
         test_add_weighted_arc!(digraph);
     }
 
@@ -487,6 +507,7 @@ mod tests {
     fn vec_tuple() {
         let mut digraph = Vec::<(usize, usize, i32)>::empty(3);
 
+        setup!(digraph);
         test_add_weighted_arc!(digraph);
     }
 
@@ -494,6 +515,7 @@ mod tests {
     fn btree_set_tuple() {
         let mut digraph = BTreeSet::<(usize, usize, i32)>::empty(3);
 
+        setup!(digraph);
         test_add_weighted_arc!(digraph);
     }
 
@@ -501,6 +523,7 @@ mod tests {
     fn hash_set_tuple() {
         let mut digraph = HashSet::<(usize, usize, i32)>::empty(3);
 
+        setup!(digraph);
         test_add_weighted_arc!(digraph);
     }
 }

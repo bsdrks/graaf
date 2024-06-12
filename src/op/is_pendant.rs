@@ -115,25 +115,21 @@ mod tests {
         };
     }
 
-    macro_rules! test_is_pendant_unweighted {
+    macro_rules! setup_unweighted {
         ($digraph:expr) => {
             $digraph.add_arc(0, 1);
             $digraph.add_arc(0, 2);
             $digraph.add_arc(1, 0);
             $digraph.add_arc(3, 0);
-
-            test_is_pendant!($digraph);
         };
     }
 
-    macro_rules! test_is_pendant_weighted {
+    macro_rules! setup_weighted {
         ($digraph:expr) => {
             $digraph.add_weighted_arc(0, 1, 1);
             $digraph.add_weighted_arc(0, 2, 1);
             $digraph.add_weighted_arc(1, 0, 1);
             $digraph.add_weighted_arc(3, 0, 1);
-
-            test_is_pendant!($digraph);
         };
     }
 
@@ -141,111 +137,127 @@ mod tests {
     fn vec_btree_set() {
         let digraph = &mut <Vec<BTreeSet<usize>>>::empty(4);
 
-        test_is_pendant_unweighted!(digraph);
+        setup_unweighted!(digraph);
+        test_is_pendant!(digraph);
     }
 
     #[test]
     fn vec_hash_set() {
         let digraph = &mut <Vec<HashSet<usize>>>::empty(4);
 
-        test_is_pendant_unweighted!(digraph);
+        setup_unweighted!(digraph);
+        test_is_pendant!(digraph);
     }
 
     #[test]
     fn slice_btree_set() {
         let digraph: &mut [BTreeSet<usize>] = &mut Vec::<BTreeSet<usize>>::empty(4);
 
-        test_is_pendant_unweighted!(digraph);
+        setup_unweighted!(digraph);
+        test_is_pendant!(digraph);
     }
 
     #[test]
     fn slice_hash_set() {
         let digraph: &mut [HashSet<usize>] = &mut Vec::<HashSet<usize>>::empty(4);
 
-        test_is_pendant_unweighted!(digraph);
+        setup_unweighted!(digraph);
+        test_is_pendant!(digraph);
     }
 
     #[test]
     fn arr_btree_set() {
         let digraph = &mut <[BTreeSet<usize>; 4]>::empty();
 
-        test_is_pendant_unweighted!(digraph);
+        setup_unweighted!(digraph);
+        test_is_pendant!(digraph);
     }
 
     #[test]
     fn arr_hash_set() {
         let digraph = &mut <[HashSet<usize>; 4]>::empty();
 
-        test_is_pendant_unweighted!(digraph);
+        setup_unweighted!(digraph);
+        test_is_pendant!(digraph);
     }
 
     #[test]
     fn vec_btree_map() {
         let digraph = &mut <Vec<BTreeMap<usize, usize>>>::empty(4);
 
-        test_is_pendant_weighted!(digraph);
+        setup_weighted!(digraph);
+        test_is_pendant!(digraph);
     }
 
     #[test]
     fn vec_hash_map() {
         let digraph = &mut <Vec<HashMap<usize, usize>>>::empty(4);
 
-        test_is_pendant_weighted!(digraph);
+        setup_weighted!(digraph);
+        test_is_pendant!(digraph);
     }
 
     #[test]
     fn slice_btree_map() {
         let digraph: &mut [BTreeMap<usize, usize>] = &mut Vec::<BTreeMap<usize, usize>>::empty(4);
 
-        test_is_pendant_weighted!(digraph);
+        setup_weighted!(digraph);
+        test_is_pendant!(digraph);
     }
 
     #[test]
     fn slice_hash_map() {
         let digraph: &mut [HashMap<usize, usize>] = &mut Vec::<HashMap<usize, usize>>::empty(4);
 
-        test_is_pendant_weighted!(digraph);
+        setup_weighted!(digraph);
+        test_is_pendant!(digraph);
     }
 
     #[test]
     fn arr_btree_map() {
         let digraph = &mut <[BTreeMap<usize, usize>; 4]>::empty();
 
-        test_is_pendant_weighted!(digraph);
+        setup_weighted!(digraph);
+        test_is_pendant!(digraph);
     }
 
     #[test]
     fn arr_hash_map() {
         let digraph = &mut <[HashMap<usize, usize>; 4]>::empty();
 
-        test_is_pendant_weighted!(digraph);
+        setup_weighted!(digraph);
+        test_is_pendant!(digraph);
     }
 
     #[test]
     fn btree_map_btree_set() {
         let digraph = &mut BTreeMap::<usize, BTreeSet<usize>>::empty(4);
 
-        test_is_pendant_unweighted!(digraph);
+        setup_unweighted!(digraph);
+        test_is_pendant!(digraph);
     }
 
     #[test]
     fn btree_map_btree_map() {
         let digraph = &mut BTreeMap::<usize, BTreeMap<usize, usize>>::empty(4);
 
-        test_is_pendant_weighted!(digraph);
+        setup_weighted!(digraph);
+        test_is_pendant!(digraph);
     }
 
     #[test]
     fn hash_map_hash_set() {
         let digraph = &mut HashMap::<usize, HashSet<usize>>::empty(4);
 
-        test_is_pendant_unweighted!(digraph);
+        setup_unweighted!(digraph);
+        test_is_pendant!(digraph);
     }
 
     #[test]
     fn hash_map_hash_map() {
         let digraph = &mut HashMap::<usize, HashMap<usize, usize>>::empty(4);
 
-        test_is_pendant_weighted!(digraph);
+        setup_weighted!(digraph);
+        test_is_pendant!(digraph);
     }
 }

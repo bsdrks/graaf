@@ -151,7 +151,7 @@ mod tests {
         };
     }
 
-    macro_rules! test_reverse_arc_stable {
+    macro_rules! test_stable {
         ($digraph:expr) => {
             reverse_arcs!($digraph);
 
@@ -159,7 +159,7 @@ mod tests {
         };
     }
 
-    macro_rules! test_reverse_arc_unstable {
+    macro_rules! test_unstable {
         ($digraph:expr) => {
             reverse_arcs!($digraph);
 
@@ -176,69 +176,69 @@ mod tests {
     fn vec_btree_set() {
         let mut digraph = Vec::<BTreeSet<usize>>::cycle(3);
 
-        test_reverse_arc_stable!(digraph);
+        test_stable!(digraph);
     }
 
     #[test]
     fn vec_hash_set() {
         let mut digraph = Vec::<HashSet<usize>>::cycle(3);
 
-        test_reverse_arc_unstable!(digraph);
+        test_unstable!(digraph);
     }
 
     #[test]
     fn slice_btree_set() {
         let mut digraph = Vec::<BTreeSet<usize>>::cycle(3);
 
-        test_reverse_arc_stable!(digraph.as_mut_slice());
+        test_stable!(digraph.as_mut_slice());
     }
 
     #[test]
     fn slice_hash_set() {
         let mut digraph = Vec::<HashSet<usize>>::cycle(3);
 
-        test_reverse_arc_unstable!(digraph.as_mut_slice());
+        test_unstable!(digraph.as_mut_slice());
     }
 
     #[test]
     fn arr_btree_set() {
         let mut digraph = <[BTreeSet<usize>; 3]>::cycle();
 
-        test_reverse_arc_stable!(digraph);
+        test_stable!(digraph);
     }
 
     #[test]
     fn arr_hash_set() {
         let mut digraph = <[HashSet<usize>; 3]>::cycle();
 
-        test_reverse_arc_unstable!(digraph);
+        test_unstable!(digraph);
     }
 
     #[test]
     fn btree_map_btree_set() {
         let mut digraph = BTreeMap::<usize, BTreeSet<usize>>::cycle(3);
 
-        test_reverse_arc_stable!(digraph);
+        test_stable!(digraph);
     }
 
     #[test]
     fn hash_map_hash_set() {
         let mut digraph = HashMap::<usize, HashSet<usize>>::cycle(3);
 
-        test_reverse_arc_unstable!(digraph);
+        test_unstable!(digraph);
     }
 
     #[test]
     fn btree_set_tuple() {
         let mut digraph = BTreeSet::<(usize, usize)>::cycle(3);
 
-        test_reverse_arc_stable!(digraph);
+        test_stable!(digraph);
     }
 
     #[test]
     fn hash_set_tuple() {
         let mut digraph = HashSet::<(usize, usize)>::cycle(3);
 
-        test_reverse_arc_unstable!(digraph);
+        test_unstable!(digraph);
     }
 }

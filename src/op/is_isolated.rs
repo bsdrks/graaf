@@ -130,23 +130,19 @@ mod tests {
         };
     }
 
-    macro_rules! test_is_isolated_unweighted {
+    macro_rules! setup_unweighted {
         ($digraph:expr) => {
             $digraph.add_arc(0, 1);
             $digraph.add_arc(0, 2);
             $digraph.add_arc(1, 2);
-
-            test_is_isolated!($digraph);
         };
     }
 
-    macro_rules! test_is_isolated_weighted {
+    macro_rules! setup_weighted {
         ($digraph:expr) => {
             $digraph.add_weighted_arc(0, 1, 1);
             $digraph.add_weighted_arc(0, 2, 1);
             $digraph.add_weighted_arc(1, 2, 1);
-
-            test_is_isolated!($digraph);
         };
     }
 
@@ -154,111 +150,127 @@ mod tests {
     fn vec_btree_set() {
         let digraph = &mut Vec::<BTreeSet<usize>>::empty(4);
 
-        test_is_isolated_unweighted!(digraph);
+        setup_unweighted!(digraph);
+        test_is_isolated!(digraph);
     }
 
     #[test]
     fn vec_hash_set() {
         let digraph = &mut Vec::<HashSet<usize>>::empty(4);
 
-        test_is_isolated_unweighted!(digraph);
+        setup_unweighted!(digraph);
+        test_is_isolated!(digraph);
     }
 
     #[test]
     fn slice_btree_set() {
         let digraph: &mut [BTreeSet<usize>] = &mut Vec::<BTreeSet<usize>>::empty(4);
 
-        test_is_isolated_unweighted!(digraph);
+        setup_unweighted!(digraph);
+        test_is_isolated!(digraph);
     }
 
     #[test]
     fn slice_hash_set() {
         let digraph: &mut [HashSet<usize>] = &mut Vec::<HashSet<usize>>::empty(4);
 
-        test_is_isolated_unweighted!(digraph);
+        setup_unweighted!(digraph);
+        test_is_isolated!(digraph);
     }
 
     #[test]
     fn arr_btree_set() {
         let digraph: &mut [BTreeSet<usize>; 4] = &mut <[BTreeSet<usize>; 4]>::empty();
 
-        test_is_isolated_unweighted!(digraph);
+        setup_unweighted!(digraph);
+        test_is_isolated!(digraph);
     }
 
     #[test]
     fn arr_hash_set() {
         let digraph: &mut [HashSet<usize>; 4] = &mut <[HashSet<usize>; 4]>::empty();
 
-        test_is_isolated_unweighted!(digraph);
+        setup_unweighted!(digraph);
+        test_is_isolated!(digraph);
     }
 
     #[test]
     fn btree_map_btree_set() {
         let digraph = &mut BTreeMap::<usize, BTreeSet<usize>>::empty(4);
 
-        test_is_isolated_unweighted!(digraph);
+        setup_unweighted!(digraph);
+        test_is_isolated!(digraph);
     }
 
     #[test]
     fn hash_map_hash_set() {
         let digraph = &mut HashMap::<usize, HashSet<usize>>::empty(4);
 
-        test_is_isolated_unweighted!(digraph);
+        setup_unweighted!(digraph);
+        test_is_isolated!(digraph);
     }
 
     #[test]
     fn vec_btree_map() {
         let digraph = &mut Vec::<BTreeMap<usize, i32>>::empty(4);
 
-        test_is_isolated_weighted!(digraph);
+        setup_weighted!(digraph);
+        test_is_isolated!(digraph);
     }
 
     #[test]
     fn vec_hash_map() {
         let digraph = &mut Vec::<HashMap<usize, i32>>::empty(4);
 
-        test_is_isolated_weighted!(digraph);
+        setup_weighted!(digraph);
+        test_is_isolated!(digraph);
     }
 
     #[test]
     fn slice_btree_map() {
         let digraph: &mut [BTreeMap<usize, i32>] = &mut Vec::<BTreeMap<usize, i32>>::empty(4);
 
-        test_is_isolated_weighted!(digraph);
+        setup_weighted!(digraph);
+        test_is_isolated!(digraph);
     }
 
     #[test]
     fn slice_hash_map() {
         let digraph: &mut [HashMap<usize, i32>] = &mut Vec::<HashMap<usize, i32>>::empty(4);
 
-        test_is_isolated_weighted!(digraph);
+        setup_weighted!(digraph);
+        test_is_isolated!(digraph);
     }
 
     #[test]
     fn arr_btree_map() {
         let digraph = &mut <[BTreeMap<usize, i32>; 4]>::empty();
 
-        test_is_isolated_weighted!(digraph);
+        setup_weighted!(digraph);
+        test_is_isolated!(digraph);
     }
 
     #[test]
     fn arr_hash_map() {
         let digraph = &mut <[HashMap<usize, i32>; 4]>::empty();
 
-        test_is_isolated_weighted!(digraph);
+        setup_weighted!(digraph);
+        test_is_isolated!(digraph);
     }
 
     #[test]
     fn btree_map_btree_map() {
         let digraph = &mut BTreeMap::<usize, BTreeMap<usize, i32>>::empty(4);
 
-        test_is_isolated_weighted!(digraph);
+        setup_weighted!(digraph);
+        test_is_isolated!(digraph);
     }
 
     #[test]
     fn hash_map_hash_map() {
         let digraph = &mut HashMap::<usize, HashMap<usize, i32>>::empty(4);
 
-        test_is_isolated_weighted!(digraph);
+        setup_weighted!(digraph);
+        test_is_isolated!(digraph);
     }
 }

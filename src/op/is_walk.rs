@@ -138,7 +138,7 @@ mod tests {
         };
     }
 
-    macro_rules! test {
+    macro_rules! test_is_walk {
         ($digraph:expr) => {
             assert!($digraph.is_walk(&[0, 1]));
             assert!($digraph.is_walk(&[1, 2]));
@@ -232,56 +232,56 @@ mod tests {
     fn vec_btree_set() {
         let digraph = Vec::<BTreeSet<usize>>::cycle(3);
 
-        test!(digraph);
+        test_is_walk!(digraph);
     }
 
     #[test]
     fn vec_hash_set() {
         let digraph = Vec::<HashSet<usize>>::cycle(3);
 
-        test!(digraph);
+        test_is_walk!(digraph);
     }
 
     #[test]
     fn slice_btree_set() {
         let digraph = Vec::<BTreeSet<usize>>::cycle(3);
 
-        test!(digraph.as_slice());
+        test_is_walk!(digraph.as_slice());
     }
 
     #[test]
     fn slice_hash_set() {
         let digraph = Vec::<HashSet<usize>>::cycle(3);
 
-        test!(digraph.as_slice());
+        test_is_walk!(digraph.as_slice());
     }
 
     #[test]
     fn arr_btree_set() {
         let digraph = <[BTreeSet<usize>; 3]>::cycle();
 
-        test!(digraph);
+        test_is_walk!(digraph);
     }
 
     #[test]
     fn arr_hash_set() {
         let digraph = <[HashSet<usize>; 3]>::cycle();
 
-        test!(digraph);
+        test_is_walk!(digraph);
     }
 
     #[test]
     fn btree_map_btree_set() {
         let digraph = BTreeMap::<usize, BTreeSet<usize>>::cycle(3);
 
-        test!(digraph);
+        test_is_walk!(digraph);
     }
 
     #[test]
     fn hash_map_hash_set() {
         let digraph = HashMap::<usize, HashSet<usize>>::cycle(3);
 
-        test!(digraph);
+        test_is_walk!(digraph);
     }
 
     #[test]
@@ -289,7 +289,7 @@ mod tests {
         let mut digraph = Vec::<BTreeMap<usize, usize>>::empty(3);
 
         setup_weighted!(digraph);
-        test!(digraph);
+        test_is_walk!(digraph);
     }
 
     #[test]
@@ -297,7 +297,7 @@ mod tests {
         let mut digraph = Vec::<HashMap<usize, usize>>::empty(3);
 
         setup_weighted!(digraph);
-        test!(digraph);
+        test_is_walk!(digraph);
     }
 
     #[test]
@@ -305,7 +305,7 @@ mod tests {
         let mut digraph = Vec::<BTreeMap<usize, usize>>::empty(3);
 
         setup_weighted!(digraph);
-        test!(digraph.as_slice());
+        test_is_walk!(digraph.as_slice());
     }
 
     #[test]
@@ -313,7 +313,7 @@ mod tests {
         let mut digraph = Vec::<HashMap<usize, usize>>::empty(3);
 
         setup_weighted!(digraph);
-        test!(digraph.as_slice());
+        test_is_walk!(digraph.as_slice());
     }
 
     #[test]
@@ -321,7 +321,7 @@ mod tests {
         let mut digraph = <[BTreeMap<usize, usize>; 3]>::empty();
 
         setup_weighted!(digraph);
-        test!(digraph);
+        test_is_walk!(digraph);
     }
 
     #[test]
@@ -329,7 +329,7 @@ mod tests {
         let mut digraph = <[HashMap<usize, usize>; 3]>::empty();
 
         setup_weighted!(digraph);
-        test!(digraph);
+        test_is_walk!(digraph);
     }
 
     #[test]
@@ -337,7 +337,7 @@ mod tests {
         let mut digraph = BTreeMap::<usize, BTreeMap<usize, usize>>::empty(3);
 
         setup_weighted!(digraph);
-        test!(digraph);
+        test_is_walk!(digraph);
     }
 
     #[test]
@@ -345,20 +345,20 @@ mod tests {
         let mut digraph = HashMap::<usize, HashMap<usize, usize>>::empty(3);
 
         setup_weighted!(digraph);
-        test!(digraph);
+        test_is_walk!(digraph);
     }
 
     #[test]
     fn btree_set_tuple() {
         let digraph = BTreeSet::<(usize, usize)>::cycle(3);
 
-        test!(digraph);
+        test_is_walk!(digraph);
     }
 
     #[test]
     fn hash_set_tuple() {
         let digraph = HashSet::<(usize, usize)>::cycle(3);
 
-        test!(digraph);
+        test_is_walk!(digraph);
     }
 }

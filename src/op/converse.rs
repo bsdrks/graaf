@@ -423,7 +423,7 @@ mod tests {
         };
     }
 
-    macro_rules! test_converse {
+    macro_rules! test_unweighted {
         ($digraph:expr) => {
             let converse = $digraph.converse();
             let mut arcs = converse.iter_arcs();
@@ -440,7 +440,7 @@ mod tests {
         };
     }
 
-    macro_rules! test_converse_weighted {
+    macro_rules! test_weighted {
         ($digraph:expr) => {
             let converse = $digraph.converse();
             let mut arcs = converse.iter_weighted_arcs();
@@ -477,7 +477,7 @@ mod tests {
         let mut digraph = Vec::<Vec<usize>>::empty(3);
 
         setup!(digraph);
-        test_converse!(digraph);
+        test_unweighted!(digraph);
     }
 
     #[test]
@@ -485,7 +485,7 @@ mod tests {
         let mut digraph = Vec::<BTreeSet<usize>>::empty(3);
 
         setup!(digraph);
-        test_converse!(digraph);
+        test_unweighted!(digraph);
     }
 
     #[test]
@@ -493,7 +493,7 @@ mod tests {
         let mut digraph = Vec::<HashSet<usize>>::empty(3);
 
         setup!(digraph);
-        test_converse!(digraph);
+        test_unweighted!(digraph);
     }
 
     #[test]
@@ -501,7 +501,7 @@ mod tests {
         let mut digraph: [Vec<usize>; 3] = <[Vec<usize>; 3]>::empty();
 
         setup!(digraph);
-        test_converse!(digraph);
+        test_unweighted!(digraph);
     }
 
     #[test]
@@ -509,7 +509,7 @@ mod tests {
         let mut digraph: [BTreeSet<usize>; 3] = <[BTreeSet<usize>; 3]>::empty();
 
         setup!(digraph);
-        test_converse!(digraph);
+        test_unweighted!(digraph);
     }
 
     #[test]
@@ -517,7 +517,7 @@ mod tests {
         let mut digraph: [HashSet<usize>; 3] = <[HashSet<usize>; 3]>::empty();
 
         setup!(digraph);
-        test_converse!(digraph);
+        test_unweighted!(digraph);
     }
 
     #[test]
@@ -525,7 +525,7 @@ mod tests {
         let mut digraph = BTreeMap::<usize, Vec<usize>>::empty(3);
 
         setup!(digraph);
-        test_converse!(digraph);
+        test_unweighted!(digraph);
     }
 
     #[test]
@@ -533,7 +533,7 @@ mod tests {
         let mut digraph = BTreeMap::<usize, BTreeSet<usize>>::empty(3);
 
         setup!(digraph);
-        test_converse!(digraph);
+        test_unweighted!(digraph);
     }
 
     #[test]
@@ -541,7 +541,7 @@ mod tests {
         let mut digraph = HashMap::<usize, Vec<usize>>::empty(3);
 
         setup!(digraph);
-        test_converse!(digraph);
+        test_unweighted!(digraph);
     }
 
     #[test]
@@ -549,7 +549,7 @@ mod tests {
         let mut digraph = HashMap::<usize, HashSet<usize>>::empty(3);
 
         setup!(digraph);
-        test_converse!(digraph);
+        test_unweighted!(digraph);
     }
 
     #[test]
@@ -557,7 +557,7 @@ mod tests {
         let mut digraph = Vec::<Vec<(usize, usize)>>::empty(3);
 
         setup_weighted!(digraph);
-        test_converse_weighted!(digraph);
+        test_weighted!(digraph);
     }
 
     #[test]
@@ -565,7 +565,7 @@ mod tests {
         let mut digraph = Vec::<BTreeSet<(usize, usize)>>::empty(3);
 
         setup_weighted!(digraph);
-        test_converse_weighted!(digraph);
+        test_weighted!(digraph);
     }
 
     #[test]
@@ -573,7 +573,7 @@ mod tests {
         let mut digraph = Vec::<BTreeMap<usize, usize>>::empty(3);
 
         setup_weighted!(digraph);
-        test_converse_weighted!(digraph);
+        test_weighted!(digraph);
     }
 
     #[test]
@@ -581,7 +581,7 @@ mod tests {
         let mut digraph = Vec::<HashSet<(usize, usize)>>::empty(3);
 
         setup_weighted!(digraph);
-        test_converse_weighted!(digraph);
+        test_weighted!(digraph);
     }
 
     #[test]
@@ -589,7 +589,7 @@ mod tests {
         let mut digraph = Vec::<HashMap<usize, usize>>::empty(3);
 
         setup_weighted!(digraph);
-        test_converse_weighted!(digraph);
+        test_weighted!(digraph);
     }
 
     #[test]
@@ -597,7 +597,7 @@ mod tests {
         let mut digraph: [Vec<(usize, usize)>; 3] = <[Vec<(usize, usize)>; 3]>::empty();
 
         setup_weighted!(digraph);
-        test_converse_weighted!(digraph);
+        test_weighted!(digraph);
     }
 
     #[test]
@@ -605,7 +605,7 @@ mod tests {
         let mut digraph: [BTreeSet<(usize, usize)>; 3] = <[BTreeSet<(usize, usize)>; 3]>::empty();
 
         setup_weighted!(digraph);
-        test_converse_weighted!(digraph);
+        test_weighted!(digraph);
     }
 
     #[test]
@@ -613,7 +613,7 @@ mod tests {
         let mut digraph: [BTreeMap<usize, usize>; 3] = <[BTreeMap<usize, usize>; 3]>::empty();
 
         setup_weighted!(digraph);
-        test_converse_weighted!(digraph);
+        test_weighted!(digraph);
     }
 
     #[test]
@@ -621,7 +621,7 @@ mod tests {
         let mut digraph: [HashSet<(usize, usize)>; 3] = <[HashSet<(usize, usize)>; 3]>::empty();
 
         setup_weighted!(digraph);
-        test_converse_weighted!(digraph);
+        test_weighted!(digraph);
     }
 
     #[test]
@@ -629,7 +629,7 @@ mod tests {
         let mut digraph: [HashMap<usize, usize>; 3] = <[HashMap<usize, usize>; 3]>::empty();
 
         setup_weighted!(digraph);
-        test_converse_weighted!(digraph);
+        test_weighted!(digraph);
     }
 
     #[test]
@@ -637,7 +637,7 @@ mod tests {
         let mut digraph = BTreeMap::<usize, Vec<(usize, usize)>>::empty(3);
 
         setup_weighted!(digraph);
-        test_converse_weighted!(digraph);
+        test_weighted!(digraph);
     }
 
     #[test]
@@ -645,7 +645,7 @@ mod tests {
         let mut digraph = BTreeMap::<usize, BTreeSet<(usize, usize)>>::empty(3);
 
         setup_weighted!(digraph);
-        test_converse_weighted!(digraph);
+        test_weighted!(digraph);
     }
 
     #[test]
@@ -653,7 +653,7 @@ mod tests {
         let mut digraph = BTreeMap::<usize, BTreeMap<usize, usize>>::empty(3);
 
         setup_weighted!(digraph);
-        test_converse_weighted!(digraph);
+        test_weighted!(digraph);
     }
 
     #[test]
@@ -661,7 +661,7 @@ mod tests {
         let mut digraph = HashMap::<usize, Vec<(usize, usize)>>::empty(3);
 
         setup_weighted!(digraph);
-        test_converse_weighted!(digraph);
+        test_weighted!(digraph);
     }
 
     #[test]
@@ -669,7 +669,7 @@ mod tests {
         let mut digraph = HashMap::<usize, HashSet<(usize, usize)>>::empty(3);
 
         setup_weighted!(digraph);
-        test_converse_weighted!(digraph);
+        test_weighted!(digraph);
     }
 
     #[test]
@@ -677,7 +677,7 @@ mod tests {
         let mut digraph = HashMap::<usize, HashMap<usize, usize>>::empty(3);
 
         setup_weighted!(digraph);
-        test_converse_weighted!(digraph);
+        test_weighted!(digraph);
     }
 
     #[test]
@@ -685,14 +685,14 @@ mod tests {
         let mut digraph = Vec::<(usize, usize)>::empty(3);
 
         setup!(digraph);
-        test_converse!(digraph);
+        test_unweighted!(digraph);
     }
 
     #[test]
     fn arr_tuple() {
         let digraph: [(usize, usize); 3] = [(0, 1), (0, 2), (1, 0)];
 
-        test_converse!(digraph);
+        test_unweighted!(digraph);
     }
 
     #[test]
@@ -700,7 +700,7 @@ mod tests {
         let mut digraph = BTreeSet::<(usize, usize)>::new();
 
         setup!(digraph);
-        test_converse!(digraph);
+        test_unweighted!(digraph);
     }
 
     #[test]
@@ -708,7 +708,7 @@ mod tests {
         let mut digraph = HashSet::<(usize, usize)>::new();
 
         setup!(digraph);
-        test_converse!(digraph);
+        test_unweighted!(digraph);
     }
 
     #[test]
@@ -716,14 +716,14 @@ mod tests {
         let mut digraph = Vec::<(usize, usize, usize)>::empty(3);
 
         setup_weighted!(digraph);
-        test_converse_weighted!(digraph);
+        test_weighted!(digraph);
     }
 
     #[test]
     fn arr_tuple_weighted() {
         let digraph: [(usize, usize, usize); 3] = [(0, 1, 1), (0, 2, 2), (1, 0, 3)];
 
-        test_converse_weighted!(digraph);
+        test_weighted!(digraph);
     }
 
     #[test]
@@ -731,7 +731,7 @@ mod tests {
         let mut digraph = BTreeSet::<(usize, usize, usize)>::new();
 
         setup_weighted!(digraph);
-        test_converse_weighted!(digraph);
+        test_weighted!(digraph);
     }
 
     #[test]
@@ -739,6 +739,6 @@ mod tests {
         let mut digraph = HashSet::<(usize, usize, usize)>::new();
 
         setup_weighted!(digraph);
-        test_converse_weighted!(digraph);
+        test_weighted!(digraph);
     }
 }

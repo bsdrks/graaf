@@ -140,83 +140,61 @@ mod tests {
         },
     };
 
-    #[test]
-    fn vec_btree_set_complete() {
-        assert!(Vec::<BTreeSet<usize>>::complete(3).is_complete());
+    macro_rules! test_const {
+        ($ty:ty) => {
+            assert!(<[$ty; 1]>::empty().is_complete());
+            assert!(<[$ty; 1]>::cycle().is_complete());
+            assert!(<[$ty; 2]>::cycle().is_complete());
+            assert!(<[$ty; 2]>::complete().is_complete());
+            assert!(<[$ty; 3]>::complete().is_complete());
+            assert!(<[$ty; 4]>::complete().is_complete());
+
+            assert!(!<[$ty; 2]>::empty().is_complete());
+            assert!(!<[$ty; 3]>::empty().is_complete());
+            assert!(!<[$ty; 3]>::cycle().is_complete());
+            assert!(!<[$ty; 4]>::cycle().is_complete());
+            assert!(!<[$ty; 2]>::random_tournament().is_complete());
+            assert!(!<[$ty; 3]>::random_tournament().is_complete());
+            assert!(!<[$ty; 4]>::random_tournament().is_complete());
+        };
+    }
+
+    macro_rules! test_dynamic {
+        ($ty:ty) => {
+            assert!(<$ty>::empty(1).is_complete());
+            assert!(<$ty>::cycle(1).is_complete());
+            assert!(<$ty>::cycle(2).is_complete());
+            assert!(<$ty>::complete(2).is_complete());
+            assert!(<$ty>::complete(3).is_complete());
+            assert!(<$ty>::complete(4).is_complete());
+
+            assert!(!<$ty>::empty(2).is_complete());
+            assert!(!<$ty>::empty(3).is_complete());
+            assert!(!<$ty>::cycle(3).is_complete());
+            assert!(!<$ty>::cycle(4).is_complete());
+            assert!(!<$ty>::random_tournament(2).is_complete());
+            assert!(!<$ty>::random_tournament(3).is_complete());
+            assert!(!<$ty>::random_tournament(4).is_complete());
+        };
     }
 
     #[test]
-    fn vec_hash_set_complete() {
-        assert!(Vec::<HashSet<usize>>::complete(3).is_complete());
+    fn vec_btree_set() {
+        test_dynamic!(Vec::<BTreeSet<usize>>);
     }
 
     #[test]
-    fn arr_btree_set_complete() {
-        assert!(<[BTreeSet<usize>; 3]>::complete().is_complete());
+    fn vec_hash_set() {
+        test_dynamic!(Vec::<HashSet<usize>>);
     }
 
     #[test]
-    fn arr_hash_set_complete() {
-        assert!(<[HashSet<usize>; 3]>::complete().is_complete());
+    fn arr_btree_set() {
+        test_const!(BTreeSet<usize>);
     }
 
     #[test]
-    fn vec_btree_set_cycle() {
-        assert!(!Vec::<BTreeSet<usize>>::cycle(3).is_complete());
-    }
-
-    #[test]
-    fn vec_hash_set_cycle() {
-        assert!(!Vec::<HashSet<usize>>::cycle(3).is_complete());
-    }
-
-    #[test]
-    fn arr_btree_set_cycle() {
-        assert!(!<[BTreeSet<usize>; 3]>::cycle().is_complete());
-    }
-
-    #[test]
-    fn arr_hash_set_cycle() {
-        assert!(!<[HashSet<usize>; 3]>::cycle().is_complete());
-    }
-
-    #[test]
-    fn vec_btree_set_empty() {
-        assert!(!Vec::<BTreeSet<usize>>::empty(3).is_complete());
-    }
-
-    #[test]
-    fn vec_hash_set_empty() {
-        assert!(!Vec::<HashSet<usize>>::empty(3).is_complete());
-    }
-
-    #[test]
-    fn arr_btree_set_empty() {
-        assert!(!<[BTreeSet<usize>; 3]>::empty().is_complete());
-    }
-
-    #[test]
-    fn arr_hash_set_empty() {
-        assert!(!<[HashSet<usize>; 3]>::empty().is_complete());
-    }
-
-    #[test]
-    fn vec_btree_set_random_tournament() {
-        assert!(!Vec::<BTreeSet<usize>>::random_tournament(3).is_complete());
-    }
-
-    #[test]
-    fn vec_hash_set_random_tournament() {
-        assert!(!Vec::<HashSet<usize>>::random_tournament(3).is_complete());
-    }
-
-    #[test]
-    fn arr_btree_set_random_tournament() {
-        assert!(!<[BTreeSet<usize>; 3]>::random_tournament().is_complete());
-    }
-
-    #[test]
-    fn arr_hash_set_random_tournament() {
-        assert!(!<[HashSet<usize>; 3]>::random_tournament().is_complete());
+    fn arr_hash_set() {
+        test_const!(HashSet<usize>);
     }
 }

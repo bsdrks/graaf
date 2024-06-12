@@ -225,18 +225,21 @@ mod tests {
         },
     };
 
-    macro_rules! test_add_arc {
+    macro_rules! setup {
         ($digraph:expr) => {
             $digraph.add_arc(0, 1);
             $digraph.add_arc(0, 2);
             $digraph.add_arc(2, 1);
+        };
+    }
 
+    macro_rules! test_add_arc {
+        ($digraph:expr) => {
             let mut iter = $digraph.iter_arcs();
 
             assert!(matches!(iter.next(), Some((0, 1 | 2) | (2, 1))));
             assert!(matches!(iter.next(), Some((0, 1 | 2) | (2, 1))));
             assert!(matches!(iter.next(), Some((0, 1 | 2) | (2, 1))));
-
             assert_eq!(iter.next(), None);
         };
     }
@@ -245,6 +248,7 @@ mod tests {
     fn vec_vec() {
         let mut digraph = Vec::<Vec<usize>>::empty(3);
 
+        setup!(digraph);
         test_add_arc!(digraph);
     }
 
@@ -252,6 +256,7 @@ mod tests {
     fn vec_btree_set() {
         let mut digraph = Vec::<BTreeSet<usize>>::empty(3);
 
+        setup!(digraph);
         test_add_arc!(digraph);
     }
 
@@ -259,6 +264,7 @@ mod tests {
     fn vec_hash_set() {
         let mut digraph = Vec::<HashSet<usize>>::empty(3);
 
+        setup!(digraph);
         test_add_arc!(digraph);
     }
 
@@ -266,6 +272,7 @@ mod tests {
     fn arr_vec() {
         let mut digraph = <[Vec<usize>; 3]>::empty();
 
+        setup!(digraph);
         test_add_arc!(digraph);
     }
 
@@ -273,6 +280,7 @@ mod tests {
     fn arr_btree_set() {
         let mut digraph = <[BTreeSet<usize>; 3]>::empty();
 
+        setup!(digraph);
         test_add_arc!(digraph);
     }
 
@@ -280,6 +288,7 @@ mod tests {
     fn arr_hash_set() {
         let mut digraph = <[HashSet<usize>; 3]>::empty();
 
+        setup!(digraph);
         test_add_arc!(digraph);
     }
 
@@ -287,6 +296,7 @@ mod tests {
     fn btree_map_vec() {
         let mut digraph = BTreeMap::<usize, Vec<usize>>::empty(3);
 
+        setup!(digraph);
         test_add_arc!(digraph);
     }
 
@@ -294,6 +304,7 @@ mod tests {
     fn btree_map_btree_set() {
         let mut digraph = BTreeMap::<usize, BTreeSet<usize>>::empty(3);
 
+        setup!(digraph);
         test_add_arc!(digraph);
     }
 
@@ -301,6 +312,7 @@ mod tests {
     fn hash_map_vec() {
         let mut digraph = HashMap::<usize, Vec<usize>>::empty(3);
 
+        setup!(digraph);
         test_add_arc!(digraph);
     }
 
@@ -308,6 +320,7 @@ mod tests {
     fn hash_map_hash_set() {
         let mut digraph = HashMap::<usize, HashSet<usize>>::empty(3);
 
+        setup!(digraph);
         test_add_arc!(digraph);
     }
 
@@ -315,6 +328,7 @@ mod tests {
     fn vec_tuple() {
         let mut digraph = Vec::<(usize, usize)>::empty(3);
 
+        setup!(digraph);
         test_add_arc!(digraph);
     }
 
@@ -322,6 +336,7 @@ mod tests {
     fn btree_set_tuple() {
         let mut digraph = BTreeSet::<(usize, usize)>::empty(3);
 
+        setup!(digraph);
         test_add_arc!(digraph);
     }
 
@@ -329,6 +344,7 @@ mod tests {
     fn hash_set_tuple() {
         let mut digraph = HashSet::<(usize, usize)>::empty(3);
 
+        setup!(digraph);
         test_add_arc!(digraph);
     }
 }

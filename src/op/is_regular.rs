@@ -132,30 +132,12 @@ mod tests {
         };
     }
 
-    macro_rules! test_is_regular_weighted {
+    macro_rules! setup_weighted {
         ($digraph:expr) => {{
             $digraph.add_weighted_arc(0, 1, 4);
             $digraph.add_weighted_arc(1, 2, 3);
             $digraph.add_weighted_arc(2, 0, 3);
-
-            test_is_regular!($digraph);
         }};
-    }
-
-    macro_rules! test_is_regular_weighted_dynamic {
-        ($ty:ty) => {
-            let mut digraph = <$ty>::empty(3);
-
-            test_is_regular_weighted!(digraph);
-        };
-    }
-
-    macro_rules! test_is_regular_weighted_const {
-        ($ty:ty) => {
-            let mut digraph = <$ty>::empty();
-
-            test_is_regular_weighted!(digraph);
-        };
     }
 
     proptest! {
@@ -274,31 +256,49 @@ mod tests {
 
     #[test]
     fn vec_btree_map() {
-        test_is_regular_weighted_dynamic!(Vec<BTreeMap<usize, usize>>);
+        let mut digraph = Vec::<BTreeMap<usize, usize>>::empty(3);
+
+        setup_weighted!(digraph);
+        test_is_regular!(digraph);
     }
 
     #[test]
     fn vec_hash_map() {
-        test_is_regular_weighted_dynamic!(Vec<HashMap<usize, usize>>);
+        let mut digraph = Vec::<HashMap<usize, usize>>::empty(3);
+
+        setup_weighted!(digraph);
+        test_is_regular!(digraph);
     }
 
     #[test]
     fn arr_btree_map() {
-        test_is_regular_weighted_const!([BTreeMap<usize, usize>; 3]);
+        let mut digraph = <[BTreeMap<usize, usize>; 3]>::empty();
+
+        setup_weighted!(digraph);
+        test_is_regular!(digraph);
     }
 
     #[test]
     fn arr_hash_map() {
-        test_is_regular_weighted_const!([HashMap<usize, usize>; 3]);
+        let mut digraph = <[HashMap<usize, usize>; 3]>::empty();
+
+        setup_weighted!(digraph);
+        test_is_regular!(digraph);
     }
 
     #[test]
     fn btree_map_btree_map() {
-        test_is_regular_weighted_dynamic!(BTreeMap<usize, BTreeMap<usize, usize>>);
+        let mut digraph = BTreeMap::<usize, BTreeMap<usize, usize>>::empty(3);
+
+        setup_weighted!(digraph);
+        test_is_regular!(digraph);
     }
 
     #[test]
     fn hash_map_hash_map() {
-        test_is_regular_weighted_dynamic!(HashMap<usize, HashMap<usize, usize>>);
+        let mut digraph = HashMap::<usize, HashMap<usize, usize>>::empty(3);
+
+        setup_weighted!(digraph);
+        test_is_regular!(digraph);
     }
 }
