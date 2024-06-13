@@ -30,6 +30,12 @@ Added
 - Add fixture `kattis_escapewallmaria_1`.
 - Add fixture `kattis_escapewallmaria_2`.
 - Add fixture `kattis_escapewallmaria_3`.
+- Add unit test `distances_kattis_escapewallmaria_1`.
+- Add unit test `distances_kattis_escapewallmaria_2`.
+- Add unit test `distances_kattis_escapewallmaria_3`.
+- Add unit test `predecessors_kattis_escapewallmaria_1`.
+- Add unit test `predecessors_kattis_escapewallmaria_2`.
+- Add unit test `predecessors_kattis_escapewallmaria_3`.
 - Add unit test `shortest_path_kattis_escapewallmaria_1`.
 - Add unit test `shortest_path_kattis_escapewallmaria_2`.
 - Add unit test `shortest_path_kattis_escapewallmaria_3`.

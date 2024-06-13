@@ -553,6 +553,69 @@ mod tests {
     }
 
     #[test]
+    fn distances_kattis_escapewallmaria_1() {
+        let digraph = fixture::kattis_escapewallmaria_1();
+        let mut dist = [usize::MAX; 16];
+        let mut queue = VecDeque::from([(5, 0)]);
+
+        dist[5] = 0;
+
+        distances(&digraph, |w| w + 1, &mut dist, &mut queue);
+
+        let mut dist_expected = [usize::MAX; 16];
+
+        dist_expected[5] = 0;
+        dist_expected[6] = 1;
+        dist_expected[9] = 1;
+        dist_expected[12] = 3;
+        dist_expected[13] = 2;
+
+        assert!(dist.iter().eq(&dist_expected));
+    }
+
+    #[test]
+    fn distances_kattis_escapewallmaria_2() {
+        let digraph = fixture::kattis_escapewallmaria_2();
+        let mut dist = [usize::MAX; 16];
+        let mut queue = VecDeque::from([(5, 0)]);
+
+        dist[5] = 0;
+
+        distances(&digraph, |w| w + 1, &mut dist, &mut queue);
+
+        let mut dist_expected = [usize::MAX; 16];
+
+        dist_expected[5] = 0;
+        dist_expected[6] = 1;
+        dist_expected[9] = 1;
+
+        assert!(dist.iter().eq(&dist_expected));
+    }
+
+    #[test]
+    fn distances_kattis_escapewallmaria_3() {
+        let digraph = fixture::kattis_escapewallmaria_3();
+        let mut dist = [usize::MAX; 16];
+        let mut queue = VecDeque::from([(1, 0)]);
+
+        dist[1] = 0;
+
+        distances(&digraph, |w| w + 1, &mut dist, &mut queue);
+
+        let mut dist_expected = [usize::MAX; 16];
+
+        dist_expected[1] = 0;
+        dist_expected[2] = 1;
+        dist_expected[5] = 1;
+        dist_expected[6] = 2;
+        dist_expected[9] = 2;
+        dist_expected[12] = 4;
+        dist_expected[13] = 3;
+
+        assert!(dist.iter().eq(&dist_expected));
+    }
+
+    #[test]
     fn single_source_distances_trivial() {
         assert!(single_source_distances(&Vec::<Vec<usize>>::trivial(), 0)
             .iter()
