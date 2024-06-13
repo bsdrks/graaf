@@ -23,6 +23,22 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.56.0] - 2024-06-13
+
+Added
+
+- Add fixture `kattis_escapewallmaria_1`.
+- Add fixture `kattis_escapewallmaria_2`.
+- Add fixture `kattis_escapewallmaria_3`.
+- Add unit test `shortest_path_kattis_escapewallmaria_1`.
+- Add unit test `shortest_path_kattis_escapewallmaria_2`.
+- Add unit test `shortest_path_kattis_escapewallmaria_3`.
+
+Fixed
+
+- Breaking: Return early in `bfs::shortest_path` if the source is the target.
+- Breaking: Return early in `bfs::single_pair_shortest_path` if the source is the target.
+
 ## [0.55.7] - 2024-06-12
 
 Changed

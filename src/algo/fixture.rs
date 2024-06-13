@@ -3,7 +3,10 @@
 use {
     crate::{
         gen::Empty,
-        op::AddWeightedArc,
+        op::{
+            AddArc,
+            AddWeightedArc,
+        },
     },
     std::collections::{
         BTreeMap,
@@ -435,6 +438,85 @@ pub fn kattis_crosscountry_isize() -> Vec<Vec<(usize, isize)>> {
         vec![(0, 3), (1, 10), (3, 7)],
         vec![(0, 13), (1, 8), (2, 2)],
     ]
+}
+
+/// Arash Behpour. 2019. Escape Wall Maria. Kattis. (Sample Input 1)
+/// <https://open.kattis.com/problems/escapewallmaria>
+///
+/// ```text
+/// 5  -> {6, 9}
+/// 6  -> {5}
+/// 9  -> {5, 13}
+/// 13 -> {9, 12}
+/// ```
+#[must_use]
+pub fn kattis_escapewallmaria_1() -> Vec<BTreeSet<usize>> {
+    let mut digraph = Vec::<BTreeSet<usize>>::empty(14);
+
+    for (s, t) in &[(5, 6), (5, 9), (6, 5), (9, 5), (9, 13), (13, 9), (13, 12)] {
+        digraph.add_arc(*s, *t);
+    }
+
+    digraph
+}
+
+/// Arash Behpour. 2019. Escape Wall Maria. Kattis. (Sample Input 2)
+/// <https://open.kattis.com/problems/escapewallmaria>
+///
+/// ```text
+/// 5  -> {6, 9}
+/// 6  -> {5}
+/// 9  -> {5}
+/// 13 -> {9, 12}
+/// 12 -> {13}
+/// ```
+#[must_use]
+pub fn kattis_escapewallmaria_2() -> Vec<BTreeSet<usize>> {
+    let mut digraph = Vec::<BTreeSet<usize>>::empty(14);
+
+    for (s, t) in &[(5, 6), (5, 9), (6, 5), (9, 5), (13, 9), (13, 12), (12, 13)] {
+        digraph.add_arc(*s, *t);
+    }
+
+    digraph
+}
+
+/// Arash Behpour. 2019. Escape Wall Maria. Kattis. (Sample Input 3)
+/// <https://open.kattis.com/problems/escapewallmaria>
+///
+/// ```text
+/// 1  -> {2, 5}
+/// 2  -> {1, 6}
+/// 5  -> {1, 6, 9}
+/// 6  -> {2, 5}
+/// 9  -> {5, 13}
+/// 12 -> {13}
+/// 13 -> {9, 12}
+/// ```
+#[must_use]
+pub fn kattis_escapewallmaria_3() -> Vec<BTreeSet<usize>> {
+    let mut digraph = Vec::<BTreeSet<usize>>::empty(14);
+
+    for (s, t) in &[
+        (1, 2),
+        (1, 5),
+        (2, 1),
+        (2, 6),
+        (5, 1),
+        (5, 6),
+        (5, 9),
+        (6, 2),
+        (6, 5),
+        (9, 5),
+        (9, 13),
+        (12, 13),
+        (13, 9),
+        (13, 12),
+    ] {
+        digraph.add_arc(*s, *t);
+    }
+
+    digraph
 }
 
 /// Per Austrin. 2005. Single source shortest path, non-negative weights.

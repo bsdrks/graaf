@@ -399,6 +399,14 @@ where
     T: Fn(usize) -> bool,
 {
     while let Some((s, w)) = queue.pop_front() {
+        if is_target(s) {
+            return predecessor::search_by(pred, s, |_, b| b.is_none()).map(|mut path| {
+                path.reverse();
+
+                path
+            });
+        }
+
         let w = step(w);
 
         for t in digraph.iter_out_neighbors(s) {
@@ -511,6 +519,8 @@ where
 
 #[cfg(test)]
 mod tests {
+    use std::collections::BTreeSet;
+
     use crate::{
         algo::fixture,
         gen::Empty,
@@ -589,6 +599,99 @@ mod tests {
     }
 
     #[test]
+    fn predecessors_kattis_escapewallmaria_1() {
+        let digraph = fixture::kattis_escapewallmaria_1();
+        let mut pred = [None; 16];
+        let mut dist = [usize::MAX; 16];
+        let mut queue = VecDeque::from([(5, 0)]);
+
+        dist[5] = 0;
+
+        predecessors(&digraph, |w| w + 1, &mut pred, &mut dist, &mut queue);
+
+        let mut pred_expected = [None; 16];
+
+        pred_expected[6] = Some(5);
+        pred_expected[9] = Some(5);
+        pred_expected[12] = Some(13);
+        pred_expected[13] = Some(9);
+
+        assert!(pred.iter().eq(&pred_expected));
+
+        let mut dist_expected = [usize::MAX; 16];
+
+        dist_expected[5] = 0;
+        dist_expected[6] = 1;
+        dist_expected[9] = 1;
+        dist_expected[12] = 3;
+        dist_expected[13] = 2;
+
+        assert!(dist.iter().eq(&dist_expected));
+    }
+
+    #[test]
+    fn predecessors_kattis_escapewallmaria_2() {
+        let digraph = fixture::kattis_escapewallmaria_2();
+        let mut pred = [None; 16];
+        let mut dist = [usize::MAX; 16];
+        let mut queue = VecDeque::from([(5, 0)]);
+
+        dist[5] = 0;
+
+        predecessors(&digraph, |w| w + 1, &mut pred, &mut dist, &mut queue);
+
+        let mut pred_expected = [None; 16];
+
+        pred_expected[6] = Some(5);
+        pred_expected[9] = Some(5);
+
+        assert!(pred.iter().eq(&pred_expected));
+
+        let mut dist_expected = [usize::MAX; 16];
+
+        dist_expected[5] = 0;
+        dist_expected[6] = 1;
+        dist_expected[9] = 1;
+
+        assert!(dist.iter().eq(&dist_expected));
+    }
+
+    #[test]
+    fn predecessors_kattis_escapewallmaria_3() {
+        let digraph = fixture::kattis_escapewallmaria_3();
+        let mut pred = [None; 16];
+        let mut dist = [usize::MAX; 16];
+        let mut queue = VecDeque::from([(1, 0)]);
+
+        dist[1] = 0;
+
+        predecessors(&digraph, |w| w + 1, &mut pred, &mut dist, &mut queue);
+
+        let mut pred_expected = [None; 16];
+
+        pred_expected[2] = Some(1);
+        pred_expected[5] = Some(1);
+        pred_expected[6] = Some(2);
+        pred_expected[9] = Some(5);
+        pred_expected[12] = Some(13);
+        pred_expected[13] = Some(9);
+
+        assert!(pred.iter().eq(&pred_expected));
+
+        let mut dist_expected = [usize::MAX; 16];
+
+        dist_expected[1] = 0;
+        dist_expected[2] = 1;
+        dist_expected[5] = 1;
+        dist_expected[6] = 2;
+        dist_expected[9] = 2;
+        dist_expected[12] = 4;
+        dist_expected[13] = 3;
+
+        assert!(dist.iter().eq(&dist_expected));
+    }
+
+    #[test]
     fn single_source_predecessors_trivial() {
         assert!(single_source_predecessors(&Vec::<Vec<usize>>::trivial(), 0)
             .iter()
@@ -650,10 +753,113 @@ mod tests {
     }
 
     #[test]
+    fn shortest_path_kattis_escapewallmaria_1() {
+        let digraph = fixture::kattis_escapewallmaria_1();
+        let border = BTreeSet::from([0, 1, 2, 3, 4, 7, 8, 11, 12, 13, 14, 15]);
+        let mut pred = [None; 16];
+        let mut dist = [usize::MAX; 16];
+        let mut queue = VecDeque::from([(5, 0)]);
+
+        dist[5] = 0;
+
+        let path = shortest_path(
+            &digraph,
+            |w| w + 1,
+            |t| border.contains(&t),
+            &mut pred,
+            &mut dist,
+            &mut queue,
+        );
+
+        let mut pred_expected = [None; 16];
+
+        pred_expected[6] = Some(5);
+        pred_expected[9] = Some(5);
+        pred_expected[13] = Some(9);
+
+        assert!(pred.iter().eq(&pred_expected));
+
+        let mut dist_expected = [usize::MAX; 16];
+
+        dist_expected[5] = 0;
+        dist_expected[6] = 1;
+        dist_expected[9] = 1;
+        dist_expected[13] = 2;
+
+        assert!(dist.iter().eq(&dist_expected));
+        assert!(path.unwrap().iter().eq(&[5, 9, 13]));
+    }
+
+    #[test]
+    fn shortest_path_kattis_escapewallmaria_2() {
+        let digraph = fixture::kattis_escapewallmaria_2();
+        let border = BTreeSet::from([0, 1, 2, 3, 4, 7, 8, 11, 12, 13, 14, 15]);
+        let mut pred = [None; 16];
+        let mut dist = [usize::MAX; 16];
+        let mut queue = VecDeque::from([(5, 0)]);
+
+        dist[5] = 0;
+
+        let path = shortest_path(
+            &digraph,
+            |w| w + 1,
+            |t| border.contains(&t),
+            &mut pred,
+            &mut dist,
+            &mut queue,
+        );
+
+        let mut pred_expected = [None; 16];
+
+        pred_expected[6] = Some(5);
+        pred_expected[9] = Some(5);
+
+        assert!(pred.iter().eq(&pred_expected));
+
+        let mut dist_expected = [usize::MAX; 16];
+
+        dist_expected[5] = 0;
+        dist_expected[6] = 1;
+        dist_expected[9] = 1;
+
+        assert!(dist.iter().eq(&dist_expected));
+        assert_eq!(path, None);
+    }
+
+    #[test]
+    fn shortest_path_kattis_escapewallmaria_3() {
+        let digraph = fixture::kattis_escapewallmaria_3();
+        let border = BTreeSet::from([0, 1, 2, 3, 4, 7, 8, 11, 12, 13, 14, 15]);
+        let mut pred = [None; 16];
+        let mut dist = [usize::MAX; 16];
+        let mut queue = VecDeque::from([(1, 0)]);
+
+        dist[1] = 0;
+
+        let path = shortest_path(
+            &digraph,
+            |w| w + 1,
+            |t| border.contains(&t),
+            &mut pred,
+            &mut dist,
+            &mut queue,
+        );
+
+        assert!(pred.iter().eq(&[None; 16]));
+
+        let mut dist_expected = [usize::MAX; 16];
+
+        dist_expected[1] = 0;
+
+        assert!(dist.iter().eq(&dist_expected));
+        assert_eq!(path, Some(vec![1]));
+    }
+
+    #[test]
     fn single_pair_shortest_path_trivial() {
         assert_eq!(
             single_pair_shortest_path(&Vec::<Vec<usize>>::trivial(), 0, 0),
-            None
+            Some(vec![0])
         );
     }
 
