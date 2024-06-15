@@ -352,7 +352,7 @@ where
 }
 
 impl Converse for Vec<(usize, usize)> {
-    impl_converse!();
+    impl_converse_const!();
 }
 
 impl<const V: usize> Converse for [(usize, usize); V] {
@@ -362,21 +362,21 @@ impl<const V: usize> Converse for [(usize, usize); V] {
 }
 
 impl Converse for BTreeSet<(usize, usize)> {
-    impl_converse!();
+    impl_converse_const!();
 }
 
 impl<H> Converse for HashSet<(usize, usize), H>
 where
     H: BuildHasher + Default,
 {
-    impl_converse!();
+    impl_converse_const!();
 }
 
 impl<W> Converse for Vec<(usize, usize, W)>
 where
     W: Copy,
 {
-    impl_converse_weighted!();
+    impl_converse_weighted_const!();
 }
 
 impl<const V: usize, W> Converse for [(usize, usize, W); V]
@@ -392,7 +392,7 @@ impl<W> Converse for BTreeSet<(usize, usize, W)>
 where
     W: Copy + Ord,
 {
-    impl_converse_weighted!();
+    impl_converse_weighted_const!();
 }
 
 impl<W, H> Converse for HashSet<(usize, usize, W), H>
@@ -400,7 +400,7 @@ where
     W: Copy + Eq + Hash,
     H: BuildHasher + Default,
 {
-    impl_converse_weighted!();
+    impl_converse_weighted_const!();
 }
 
 #[cfg(test)]
@@ -682,7 +682,7 @@ mod tests {
 
     #[test]
     fn vec_tuple() {
-        let mut digraph = Vec::<(usize, usize)>::empty(3);
+        let mut digraph = Vec::<(usize, usize)>::empty();
 
         setup!(digraph);
         test_unweighted!(digraph);
@@ -713,7 +713,7 @@ mod tests {
 
     #[test]
     fn vec_tuple_weighted() {
-        let mut digraph = Vec::<(usize, usize, usize)>::empty(3);
+        let mut digraph = Vec::<(usize, usize, usize)>::empty();
 
         setup_weighted!(digraph);
         test_weighted!(digraph);

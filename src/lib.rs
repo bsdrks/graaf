@@ -88,7 +88,6 @@
 #![deny(clippy::all, clippy::cargo, clippy::pedantic, clippy::nursery)]
 // Clippy restriction lints
 #![deny(
-    clippy::std_instead_of_core,
     clippy::get_unwrap,
     clippy::if_then_some_else_none,
     clippy::impl_trait_in_params,

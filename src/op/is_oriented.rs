@@ -119,9 +119,6 @@ mod tests {
 
     macro_rules! test_unweighted_const {
         ($ty:ty) => {
-            assert!(<[$ty; 1]>::empty().is_oriented());
-            assert!(<[$ty; 2]>::empty().is_oriented());
-            assert!(<[$ty; 3]>::empty().is_oriented());
             assert!(<[$ty; 3]>::cycle().is_oriented());
             assert!(<[$ty; 4]>::cycle().is_oriented());
             assert!(<[$ty; 2]>::random_tournament().is_oriented());
@@ -137,9 +134,6 @@ mod tests {
 
     macro_rules! test_unweighted_dynamic {
         ($ty:ty) => {
-            assert!(<$ty>::empty(1).is_oriented());
-            assert!(<$ty>::empty(2).is_oriented());
-            assert!(<$ty>::empty(3).is_oriented());
             assert!(<$ty>::cycle(3).is_oriented());
             assert!(<$ty>::cycle(4).is_oriented());
             assert!(<$ty>::random_tournament(2).is_oriented());

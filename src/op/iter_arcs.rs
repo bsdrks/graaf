@@ -494,7 +494,7 @@ mod tests {
 
     #[test]
     fn vec_tuple() {
-        let mut digraph = Vec::<(usize, usize)>::empty(3);
+        let mut digraph = Vec::<(usize, usize)>::empty();
 
         setup_unweighted!(digraph);
         test_stable!(digraph);
@@ -516,7 +516,7 @@ mod tests {
 
     #[test]
     fn btree_set() {
-        let mut digraph = BTreeSet::<(usize, usize)>::empty(3);
+        let mut digraph = BTreeSet::<(usize, usize)>::empty();
 
         setup_unweighted!(digraph);
         test_stable!(digraph);
@@ -524,7 +524,7 @@ mod tests {
 
     #[test]
     fn hash_set() {
-        let mut digraph = HashSet::<(usize, usize)>::empty(3);
+        let mut digraph = HashSet::<(usize, usize)>::empty();
 
         setup_unweighted!(digraph);
         test_unstable!(digraph);
@@ -700,7 +700,7 @@ mod tests {
 
     #[test]
     fn vec_tuple_weighted() {
-        let mut digraph = Vec::<(usize, usize, usize)>::empty(3);
+        let mut digraph = Vec::<(usize, usize, usize)>::empty();
 
         setup_weighted!(digraph);
         test_stable!(digraph);
@@ -708,7 +708,7 @@ mod tests {
 
     #[test]
     fn slice_tuple_weighted() {
-        let mut digraph = Vec::<(usize, usize, usize)>::empty(3);
+        let mut digraph = Vec::<(usize, usize, usize)>::empty();
 
         setup_weighted!(digraph);
         test_stable!(digraph.as_slice());
@@ -723,7 +723,7 @@ mod tests {
 
     #[test]
     fn btree_set_weighted() {
-        let mut digraph = BTreeSet::<(usize, usize, usize)>::empty(3);
+        let mut digraph = BTreeSet::<(usize, usize, usize)>::empty();
 
         setup_weighted!(digraph);
         test_stable!(digraph);
@@ -731,7 +731,7 @@ mod tests {
 
     #[test]
     fn hash_set_weighted() {
-        let mut digraph = HashSet::<(usize, usize, usize)>::empty(3);
+        let mut digraph = HashSet::<(usize, usize, usize)>::empty();
 
         setup_weighted!(digraph);
         test_unstable!(digraph);

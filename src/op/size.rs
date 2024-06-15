@@ -432,7 +432,7 @@ mod tests {
 
     #[test]
     fn vec_tuple_unweighted() {
-        let mut digraph = Vec::<(usize, usize)>::empty(4);
+        let mut digraph = Vec::<(usize, usize)>::empty();
 
         setup_unweighted!(digraph);
         assert_eq!(digraph.size(), 4);
@@ -440,7 +440,7 @@ mod tests {
 
     #[test]
     fn vec_tuple_weighted() {
-        let mut digraph = Vec::<(usize, usize, usize)>::empty(4);
+        let mut digraph = Vec::<(usize, usize, usize)>::empty();
 
         setup_weighted!(digraph);
         assert_eq!(digraph.size(), 4);
@@ -448,7 +448,7 @@ mod tests {
 
     #[test]
     fn slice_tuple_unweighted() {
-        let mut digraph = Vec::<(usize, usize)>::empty(4);
+        let mut digraph = Vec::<(usize, usize)>::empty();
 
         setup_unweighted!(digraph);
         assert_eq!(digraph.as_slice().size(), 4);
@@ -456,7 +456,7 @@ mod tests {
 
     #[test]
     fn slice_tuple_weighted() {
-        let mut digraph = Vec::<(usize, usize, usize)>::empty(4);
+        let mut digraph = Vec::<(usize, usize, usize)>::empty();
 
         setup_weighted!(digraph);
         assert_eq!(digraph.as_slice().size(), 4);
@@ -464,7 +464,7 @@ mod tests {
 
     #[test]
     fn btree_set_tuple_unweighted() {
-        let mut digraph = BTreeSet::<(usize, usize)>::empty(4);
+        let mut digraph = BTreeSet::<(usize, usize)>::empty();
 
         setup_unweighted!(digraph);
         assert_eq!(digraph.size(), 4);
@@ -472,7 +472,7 @@ mod tests {
 
     #[test]
     fn btree_set_tuple_weighted() {
-        let mut digraph = BTreeSet::<(usize, usize, usize)>::empty(4);
+        let mut digraph = BTreeSet::<(usize, usize, usize)>::empty();
 
         setup_weighted!(digraph);
         assert_eq!(digraph.size(), 4);
@@ -480,7 +480,7 @@ mod tests {
 
     #[test]
     fn hash_set_tuple_unweighted() {
-        let mut digraph = HashSet::<(usize, usize)>::empty(4);
+        let mut digraph = HashSet::<(usize, usize)>::empty();
 
         setup_unweighted!(digraph);
         assert_eq!(digraph.size(), 4);
@@ -488,7 +488,7 @@ mod tests {
 
     #[test]
     fn hash_set_tuple_weighted() {
-        let mut digraph = HashSet::<(usize, usize, usize)>::empty(4);
+        let mut digraph = HashSet::<(usize, usize, usize)>::empty();
 
         setup_weighted!(digraph);
         assert_eq!(digraph.size(), 4);

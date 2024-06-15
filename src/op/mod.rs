@@ -125,6 +125,7 @@ pub mod is_superdigraph;
 pub mod is_symmetric;
 pub mod is_walk;
 pub mod iter_arcs;
+pub mod iter_in_neighbors;
 pub mod iter_out_neighbors;
 pub mod iter_out_neighbors_mut;
 pub mod iter_out_weighted_neighbors;
@@ -158,6 +159,7 @@ pub use {
     is_symmetric::IsSymmetric,
     is_walk::IsWalk,
     iter_arcs::IterArcs,
+    iter_in_neighbors::IterInNeighbors,
     iter_out_neighbors::IterOutNeighbors,
     iter_out_neighbors_mut::IterOutNeighborsMut,
     iter_out_weighted_neighbors::IterOutWeightedNeighbors,

@@ -190,6 +190,48 @@ where
     impl_with_hasher!(HashMap);
 }
 
+impl EmptyConst for Vec<(usize, usize)> {
+    fn empty() -> Self {
+        Self::new()
+    }
+}
+
+impl EmptyConst for BTreeSet<(usize, usize)> {
+    fn empty() -> Self {
+        Self::new()
+    }
+}
+
+impl<H> EmptyConst for HashSet<(usize, usize), H>
+where
+    H: BuildHasher + Default,
+{
+    fn empty() -> Self {
+        Self::with_hasher(H::default())
+    }
+}
+
+impl<W> EmptyConst for Vec<(usize, usize, W)> {
+    fn empty() -> Self {
+        Self::new()
+    }
+}
+
+impl<W> EmptyConst for BTreeSet<(usize, usize, W)> {
+    fn empty() -> Self {
+        Self::new()
+    }
+}
+
+impl<W, H> EmptyConst for HashSet<(usize, usize, W), H>
+where
+    H: BuildHasher + Default,
+{
+    fn empty() -> Self {
+        Self::with_hasher(H::default())
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use {
@@ -474,5 +516,35 @@ mod tests {
     #[should_panic(expected = "a graph must have at least one vertex")]
     fn arr_hash_map_panic() {
         let _ = <[HashMap<usize, usize>; 0]>::empty();
+    }
+
+    #[test]
+    fn vec_tuple_unweighted() {
+        assert_eq!(Vec::<(usize, usize)>::empty(), Vec::new());
+    }
+
+    #[test]
+    fn btree_set_tuple_unweighted() {
+        assert_eq!(BTreeSet::<(usize, usize)>::empty(), BTreeSet::new());
+    }
+
+    #[test]
+    fn hash_set_tuple_unweighted() {
+        assert_eq!(HashSet::<(usize, usize)>::empty(), HashSet::new());
+    }
+
+    #[test]
+    fn vec_tuple_weighted() {
+        assert_eq!(Vec::<(usize, usize, usize)>::empty(), Vec::new());
+    }
+
+    #[test]
+    fn btree_set_tuple_weighted() {
+        assert_eq!(BTreeSet::<(usize, usize, usize)>::empty(), BTreeSet::new());
+    }
+
+    #[test]
+    fn hash_set_tuple_weighted() {
+        assert_eq!(HashSet::<(usize, usize, usize)>::empty(), HashSet::new());
     }
 }

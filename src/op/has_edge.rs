@@ -296,7 +296,7 @@ mod tests {
 
     #[test]
     fn btree_set_tuple() {
-        let mut digraph = BTreeSet::<(usize, usize)>::empty(3);
+        let mut digraph = BTreeSet::<(usize, usize)>::empty();
 
         setup_unweighted!(digraph);
         test_has_edge!(digraph);
@@ -304,7 +304,7 @@ mod tests {
 
     #[test]
     fn hash_set_tuple() {
-        let mut digraph = HashSet::<(usize, usize)>::empty(3);
+        let mut digraph = HashSet::<(usize, usize)>::empty();
 
         setup_unweighted!(digraph);
         test_has_edge!(digraph);

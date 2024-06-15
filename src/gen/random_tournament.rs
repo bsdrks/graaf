@@ -40,8 +40,18 @@
 use {
     super::prng::Xoshiro256StarStar,
     crate::{
-        gen::Empty,
+        gen::{
+            Empty,
+            EmptyConst,
+        },
         op::AddArc,
+    },
+    std::{
+        collections::{
+            BTreeSet,
+            HashSet,
+        },
+        hash::BuildHasher,
     },
 };
 
@@ -151,26 +161,60 @@ pub trait RandomTournament {
     fn random_tournament(v: usize) -> Self;
 }
 
+macro_rules! build_random_tournament {
+    ($digraph:expr, $v:expr) => {
+        let mut rng = Xoshiro256StarStar::new($v as u64);
+
+        for s in 0..$v {
+            for t in (s + 1)..$v {
+                if rng.next_bool() {
+                    $digraph.add_arc(s, t);
+                } else {
+                    $digraph.add_arc(t, s);
+                }
+            }
+        }
+    };
+}
+
+macro_rules! impl_tuple {
+    () => {
+        fn random_tournament(v: usize) -> Self {
+            let mut digraph = Self::empty();
+
+            build_random_tournament!(digraph, v);
+
+            digraph
+        }
+    };
+}
+
 impl<D> RandomTournament for D
 where
     D: AddArc + Empty,
 {
     fn random_tournament(v: usize) -> Self {
-        let mut rng = Xoshiro256StarStar::new(v as u64);
-        let mut arcs = Self::empty(v);
+        let mut digraph = Self::empty(v);
 
-        for s in 0..v {
-            for t in (s + 1)..v {
-                if rng.next_bool() {
-                    arcs.add_arc(s, t);
-                } else {
-                    arcs.add_arc(t, s);
-                }
-            }
-        }
+        build_random_tournament!(digraph, v);
 
-        arcs
+        digraph
     }
+}
+
+impl RandomTournament for Vec<(usize, usize)> {
+    impl_tuple!();
+}
+
+impl RandomTournament for BTreeSet<(usize, usize)> {
+    impl_tuple!();
+}
+
+impl<H> RandomTournament for HashSet<(usize, usize), H>
+where
+    H: BuildHasher + Default,
+{
+    impl_tuple!();
 }
 
 #[cfg(test)]

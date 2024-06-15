@@ -29,9 +29,20 @@
 //!
 //! [`CompleteConst`]: crate::gen::CompleteConst
 
-use {
-    super::Empty,
-    crate::op::AddArc,
+use std::{
+    collections::{
+        BTreeSet,
+        HashSet,
+    },
+    hash::BuildHasher,
+};
+
+use crate::{
+    gen::{
+        Empty,
+        EmptyConst,
+    },
+    op::AddArc,
 };
 
 /// Generate variable-size symmetric complete digraphs.
@@ -91,6 +102,34 @@ pub trait Complete {
     fn complete(v: usize) -> Self;
 }
 
+macro_rules! build_complete {
+    ($digraph:expr, $v:expr) => {
+        for s in 0..$v {
+            for t in (s + 1)..$v {
+                $digraph.add_arc(s, t);
+                $digraph.add_arc(t, s);
+            }
+        }
+    };
+}
+
+macro_rules! impl_tuple {
+    () => {
+        /// # Panics
+        ///
+        /// Panics if `v` is 0.
+        fn complete(v: usize) -> Self {
+            assert!(v > 0, "a graph must have at least one vertex");
+
+            let mut digraph = Self::empty();
+
+            build_complete!(digraph, v);
+
+            digraph
+        }
+    };
+}
+
 impl<D> Complete for D
 where
     D: AddArc + Empty,
@@ -101,15 +140,25 @@ where
     fn complete(v: usize) -> Self {
         let mut digraph = D::empty(v);
 
-        for s in 0..v {
-            for t in (s + 1)..v {
-                digraph.add_arc(s, t);
-                digraph.add_arc(t, s);
-            }
-        }
+        build_complete!(digraph, v);
 
         digraph
     }
+}
+
+impl Complete for Vec<(usize, usize)> {
+    impl_tuple!();
+}
+
+impl Complete for BTreeSet<(usize, usize)> {
+    impl_tuple!();
+}
+
+impl<H> Complete for HashSet<(usize, usize), H>
+where
+    H: BuildHasher + Default,
+{
+    impl_tuple!();
 }
 
 #[cfg(test)]

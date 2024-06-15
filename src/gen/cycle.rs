@@ -27,8 +27,19 @@
 //!
 //! [`CycleConst`]: crate::gen::CycleConst
 
+use std::{
+    collections::{
+        BTreeSet,
+        HashSet,
+    },
+    hash::BuildHasher,
+};
+
 use crate::{
-    gen::Empty,
+    gen::{
+        Empty,
+        EmptyConst,
+    },
     op::AddArc,
 };
 
@@ -98,6 +109,33 @@ pub trait Cycle {
     fn cycle(v: usize) -> Self;
 }
 
+macro_rules! build_cycle {
+    ($digraph:expr, $v:expr) => {
+        for i in 0..$v - 1 {
+            $digraph.add_arc(i, i + 1);
+        }
+
+        $digraph.add_arc($v - 1, 0);
+    };
+}
+
+macro_rules! impl_tuple {
+    () => {
+        /// # Panics
+        ///
+        /// Panics if `v` is zero.
+        fn cycle(v: usize) -> Self {
+            assert!(v > 0, "a graph must have at least one vertex");
+
+            let mut digraph = Self::empty();
+
+            build_cycle!(digraph, v);
+
+            digraph
+        }
+    };
+}
+
 impl<D> Cycle for D
 where
     D: AddArc + Empty,
@@ -108,14 +146,25 @@ where
     fn cycle(v: usize) -> Self {
         let mut digraph = D::empty(v);
 
-        for i in 0..v - 1 {
-            digraph.add_arc(i, i + 1);
-        }
-
-        digraph.add_arc(v - 1, 0);
+        build_cycle!(digraph, v);
 
         digraph
     }
+}
+
+impl Cycle for Vec<(usize, usize)> {
+    impl_tuple!();
+}
+
+impl Cycle for BTreeSet<(usize, usize)> {
+    impl_tuple!();
+}
+
+impl<H> Cycle for HashSet<(usize, usize), H>
+where
+    H: BuildHasher + Default,
+{
+    impl_tuple!();
 }
 
 #[cfg(test)]

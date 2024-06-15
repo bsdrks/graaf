@@ -37,6 +37,7 @@
 //! ```
 
 use {
+    crate::op::IterArcs,
     core::hash::BuildHasher,
     std::collections::{
         BTreeMap,
@@ -65,6 +66,15 @@ use {
 ///         self.arcs[s].iter().copied()
 ///     }
 /// }
+///
+/// let digraph = Digraph {
+///     arcs: vec![vec![1, 2], vec![0], vec![0, 1, 3], vec![0]],
+/// };
+///
+/// assert!(digraph.iter_out_neighbors(0).eq([1, 2]));
+/// assert!(digraph.iter_out_neighbors(1).eq([0]));
+/// assert!(digraph.iter_out_neighbors(2).eq([0, 1, 3]));
+/// assert!(digraph.iter_out_neighbors(3).eq([0]));
 /// ```
 ///
 /// # Examples
@@ -72,12 +82,12 @@ use {
 /// ```
 /// use graaf::op::IterOutNeighbors;
 ///
-/// let digraph = [vec![1, 2], vec![0, 2, 3], vec![0, 1, 3], vec![1, 2]];
+/// let digraph = [vec![1, 2], vec![0], vec![0, 1, 3], vec![0]];
 ///
 /// assert!(digraph.iter_out_neighbors(0).eq([1, 2]));
-/// assert!(digraph.iter_out_neighbors(1).eq([0, 2, 3]));
+/// assert!(digraph.iter_out_neighbors(1).eq([0]));
 /// assert!(digraph.iter_out_neighbors(2).eq([0, 1, 3]));
-/// assert!(digraph.iter_out_neighbors(3).eq([1, 2]));
+/// assert!(digraph.iter_out_neighbors(3).eq([0]));
 /// ```
 ///
 /// The order of the out-neighbors is not guaranteed for, e.g.,
@@ -90,9 +100,9 @@ use {
 ///
 /// let digraph = vec![
 ///     HashSet::from([1, 2]),
-///     HashSet::from([0, 2, 3]),
+///     HashSet::from([0]),
 ///     HashSet::from([0, 1, 3]),
-///     HashSet::from([1, 2]),
+///     HashSet::from([0]),
 /// ];
 ///
 /// let mut iter = digraph.iter_out_neighbors(0);
@@ -128,6 +138,15 @@ macro_rules! impl_ref_usize {
         /// Panics if `s` is not in the digraph.
         fn iter_out_neighbors(&self, s: usize) -> impl Iterator<Item = usize> {
             self[&s].iter().copied()
+        }
+    };
+}
+
+macro_rules! impl_iter_arc {
+    () => {
+        fn iter_out_neighbors(&self, s: usize) -> impl Iterator<Item = usize> {
+            self.iter_arcs()
+                .filter_map(move |(s_, t)| (s == s_).then_some(t))
         }
     };
 }
@@ -199,6 +218,29 @@ where
     impl_ref_usize!();
 }
 
+impl IterOutNeighbors for Vec<(usize, usize)> {
+    impl_iter_arc!();
+}
+
+impl IterOutNeighbors for [(usize, usize)] {
+    impl_iter_arc!();
+}
+
+impl<const V: usize> IterOutNeighbors for [(usize, usize); V] {
+    impl_iter_arc!();
+}
+
+impl IterOutNeighbors for BTreeSet<(usize, usize)> {
+    impl_iter_arc!();
+}
+
+impl<H> IterOutNeighbors for HashSet<(usize, usize), H>
+where
+    H: BuildHasher,
+{
+    impl_iter_arc!();
+}
+
 #[cfg(test)]
 mod tests {
     use {
@@ -217,22 +259,19 @@ mod tests {
             $digraph.add_arc(0, 1);
             $digraph.add_arc(0, 2);
             $digraph.add_arc(1, 0);
-            $digraph.add_arc(1, 2);
-            $digraph.add_arc(1, 3);
             $digraph.add_arc(2, 0);
             $digraph.add_arc(2, 1);
             $digraph.add_arc(2, 3);
-            $digraph.add_arc(3, 1);
-            $digraph.add_arc(3, 2);
+            $digraph.add_arc(3, 0);
         };
     }
 
     macro_rules! test_stable {
         ($digraph:expr) => {
             assert!($digraph.iter_out_neighbors(0).eq([1, 2]));
-            assert!($digraph.iter_out_neighbors(1).eq([0, 2, 3]));
+            assert!($digraph.iter_out_neighbors(1).eq([0]));
             assert!($digraph.iter_out_neighbors(2).eq([0, 1, 3]));
-            assert!($digraph.iter_out_neighbors(3).eq([1, 2]));
+            assert!($digraph.iter_out_neighbors(3).eq([0]));
         };
     }
 
@@ -246,9 +285,7 @@ mod tests {
 
             let mut iter = $digraph.iter_out_neighbors(1);
 
-            assert!(matches!(iter.next(), Some(0 | 2 | 3)));
-            assert!(matches!(iter.next(), Some(0 | 2 | 3)));
-            assert!(matches!(iter.next(), Some(0 | 2 | 3)));
+            assert_eq!(iter.next(), Some(0));
             assert_eq!(iter.next(), None);
 
             let mut iter = $digraph.iter_out_neighbors(2);
@@ -260,8 +297,7 @@ mod tests {
 
             let mut iter = $digraph.iter_out_neighbors(3);
 
-            assert!(matches!(iter.next(), Some(1 | 2)));
-            assert!(matches!(iter.next(), Some(1 | 2)));
+            assert_eq!(iter.next(), Some(0));
             assert_eq!(iter.next(), None);
         };
     }
@@ -370,5 +406,36 @@ mod tests {
 
         setup!(digraph);
         test_unstable!(digraph);
+    }
+
+    #[test]
+    fn vec_tuple() {
+        let mut digraph = Vec::<(usize, usize)>::empty();
+
+        setup!(digraph);
+        test_stable!(digraph);
+    }
+
+    #[test]
+    fn slice_tuple() {
+        let mut digraph = Vec::<(usize, usize)>::empty();
+
+        setup!(digraph);
+        test_stable!(digraph.as_slice());
+    }
+
+    #[test]
+    fn arr_tuple() {
+        let digraph = [(0, 1), (0, 2), (1, 0), (2, 0), (2, 1), (2, 3), (3, 0)];
+
+        test_stable!(digraph);
+    }
+
+    #[test]
+    fn btree_set_tuple() {
+        let mut digraph = BTreeSet::<(usize, usize)>::empty();
+
+        setup!(digraph);
+        test_stable!(digraph);
     }
 }

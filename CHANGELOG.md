@@ -12,16 +12,84 @@
 - Add Kruksal.
 - Add Prim.
 - Add Tarjan.
+- Add the `Difference` trait.
+- Add the `Intersection` trait.
 - Add the `IsBipartite` trait.
 - Add the `IsInTree` trait.
 - Add the `IsOutTree` trait.
 - Add the `RemoveWeightedArc` trait.
+- Add the `RemoveVertex` trait.
+- Add the `Union` trait.
 - Benchmark against popular graph libraries in other languages.
 - Benchmark traits for `AdjacencyMatrix` against adjacency lists.
 - Describe `IsSuperdigraph` without mentioning `IsSubdigraph`, except in passing.
 - Implement `IterOutNeighborsMut` for additional types.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.57.0] - 2024-06-15
+
+Added
+
+- Add example usage in the implementation example for `IterOutNeighbors`.
+- Add the `IterInNeighbors` trait.
+- Add unit test `arr_btree_set` for `IterInNeighbors`.
+- Add unit test `arr_hash_set` for `IterInNeighbors`.
+- Add unit test `arr_vec` for `IterInNeighbors`.
+- Add unit test `btree_map_btree_set` for `IterInNeighbors`.
+- Add unit test `btree_map_vec` for `IterInNeighbors`.
+- Add unit test `btree_set_tuple` for `IterInNeighbors`.
+- Add unit test `hash_map_hash_set` for `IterInNeighbors`.
+- Add unit test `hash_map_vec` for `IterInNeighbors`.
+- Add unit test `hash_set_tuple` for `IterInNeighbors`.
+- Add unit test `slice_btree_set` for `IterInNeighbors`.
+- Add unit test `slice_hash_set` for `IterInNeighbors`.
+- Add unit test `slice_tuple` for `IterInNeighbors`.
+- Add unit test `slice_vec` for `IterInNeighbors`.
+- Add unit test `vec_btree_set` for `IterInNeighbors`.
+- Add unit test `vec_hash_set` for `IterInNeighbors`.
+- Add unit test `vec_tuple` for `IterInNeighbors`.
+- Add unit test `vec_vec` for `IterInNeighbors`.
+- Implement `IterInNeighbors` for `IterArcs + ?Sized`.
+- Implement and test `EmptyConst` for `BTreeSet<(usize, usize)>`.
+- Implement and test `EmptyConst` for `BTreeSet<(usize, usize, W)>`.
+- Implement and test `EmptyConst` for `HashSet<(usize, usize)>`.
+- Implement and test `EmptyConst` for `HashSet<(usize, usize, W)>`.
+- Implement and test `EmptyConst` for `Vec<(usize, usize)>`.
+- Implement and test `EmptyConst` for `Vec<(usize, usize, W)>`.
+- Implement and test `IterOutNeighbors` for `BTreeSet<(usize, usize)>`.
+- Implement and test `IterOutNeighbors` for `BTreeSet<(usize, usize, W)>`.
+- Implement and test `IterOutNeighbors` for `HashSet<(usize, usize)>`.
+- Implement and test `IterOutNeighbors` for `HashSet<(usize, usize, W)>`.
+- Implement and test `IterOutNeighbors` for `Vec<(usize, usize)>`.
+- Implement and test `IterOutNeighbors` for `Vec<(usize, usize, W)>`.
+- Implement and test `IterOutNeighbors` for `[(usize, usize); V]`.
+- Implement and test `IterOutNeighbors` for `[(usize, usize)]`.
+- Implement and test `IterOutNeighbors` for `[(usize, usize, W); V]`.
+- Implement and test `IterOutNeighbors` for `[(usize, usize, W)]`.
+
+Changed
+
+- Implement `Complete` for `HashSet<(usize, usize)>` with `EmptyConst`.
+- Implement `Complete` for `Vec<(usize, usize)>` with `EmptyConst`.
+- Implement `Complete` for `Vec<(usize, usize)>` with `EmptyConst`.
+- Implement `Cycle` for `BTreeSet<(usize, usize)>` with `EmptyConst`.
+- Implement `Cycle` for `BTreeSet<(usize, usize)>` with `EmptyConst`.
+- Implement `Cycle` for `HashSet<(usize, usize)>` with `EmptyConst`.
+- Implement `RandomTournament` for `BTreeSet<(usize, usize)>` with `EmptyConst`.
+- Implement `RandomTournament` for `BTreeSet<(usize, usize)>` with `EmptyConst`.
+- Implement `RandomTournament` for `HashSet<(usize, usize)>` with `EmptyConst`.
+- Use digraphs in `iter_out_neighbors` tests that better demonstrate the trait.
+
+Removed
+
+- Breaking: Remove `Empty` implementation for `BTreeSet<(usize, usize)>`.
+- Breaking: Remove `Empty` implementation for `BTreeSet<(usize, usize, W)>`.
+- Breaking: Remove `Empty` implementation for `HashSet<(usize, usize)>`.
+- Breaking: Remove `Empty` implementation for `HashSet<(usize, usize, W)>`.
+- Breaking: Remove `Empty` implementation for `Vec<(usize, usize)>`.
+- Breaking: Remove `Empty` implementation for `Vec<(usize, usize, W)>`.
+- Remove `clippy::std_instead_of_core` lint.
 
 ## [0.56.0] - 2024-06-13
 

@@ -326,7 +326,7 @@ mod tests {
 
     #[test]
     fn vec_tuple() {
-        let mut digraph = Vec::<(usize, usize)>::empty(3);
+        let mut digraph = Vec::<(usize, usize)>::empty();
 
         setup!(digraph);
         test_add_arc!(digraph);
@@ -334,7 +334,7 @@ mod tests {
 
     #[test]
     fn btree_set_tuple() {
-        let mut digraph = BTreeSet::<(usize, usize)>::empty(3);
+        let mut digraph = BTreeSet::<(usize, usize)>::empty();
 
         setup!(digraph);
         test_add_arc!(digraph);
@@ -342,7 +342,7 @@ mod tests {
 
     #[test]
     fn hash_set_tuple() {
-        let mut digraph = HashSet::<(usize, usize)>::empty(3);
+        let mut digraph = HashSet::<(usize, usize)>::empty();
 
         setup!(digraph);
         test_add_arc!(digraph);

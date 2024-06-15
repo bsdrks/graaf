@@ -439,7 +439,7 @@ mod tests {
 
     #[test]
     fn vec_tuple_unweighted_simple() {
-        let mut digraph = Vec::<(usize, usize)>::empty(3);
+        let mut digraph = Vec::<(usize, usize)>::empty();
 
         setup_simple_unweighted!(digraph);
         assert!(digraph.is_simple());
@@ -447,7 +447,7 @@ mod tests {
 
     #[test]
     fn vec_tuple_unweighted_self_loop() {
-        let mut digraph = Vec::<(usize, usize)>::empty(3);
+        let mut digraph = Vec::<(usize, usize)>::empty();
 
         setup_self_loop_unweighted!(digraph);
         assert!(!digraph.is_simple());
@@ -455,7 +455,7 @@ mod tests {
 
     #[test]
     fn vec_tuple_unweighted_parallel_arcs() {
-        let mut digraph = Vec::<(usize, usize)>::empty(3);
+        let mut digraph = Vec::<(usize, usize)>::empty();
 
         setup_parallel_arcs_unweighted!(digraph);
         assert!(!digraph.is_simple());
@@ -463,7 +463,7 @@ mod tests {
 
     #[test]
     fn slice_tuple_unweighted_simple() {
-        let mut digraph = Vec::<(usize, usize)>::empty(3);
+        let mut digraph = Vec::<(usize, usize)>::empty();
 
         setup_simple_unweighted!(digraph);
         assert!(digraph.as_slice().is_simple());
@@ -471,7 +471,7 @@ mod tests {
 
     #[test]
     fn slice_tuple_unweighted_self_loop() {
-        let mut digraph = Vec::<(usize, usize)>::empty(3);
+        let mut digraph = Vec::<(usize, usize)>::empty();
 
         setup_self_loop_unweighted!(digraph);
         assert!(!digraph.as_slice().is_simple());
@@ -479,7 +479,7 @@ mod tests {
 
     #[test]
     fn slice_tuple_unweighted_parallel_arcs() {
-        let mut digraph = Vec::<(usize, usize)>::empty(3);
+        let mut digraph = Vec::<(usize, usize)>::empty();
 
         setup_parallel_arcs_unweighted!(digraph);
         assert!(!digraph.as_slice().is_simple());
@@ -508,7 +508,7 @@ mod tests {
 
     #[test]
     fn btree_set_tuple_unweighted_simple() {
-        let mut digraph = BTreeSet::<(usize, usize)>::empty(3);
+        let mut digraph = BTreeSet::<(usize, usize)>::empty();
 
         setup_simple_unweighted!(digraph);
         assert!(digraph.is_simple());
@@ -516,7 +516,7 @@ mod tests {
 
     #[test]
     fn btree_set_tuple_unweighted_self_loop() {
-        let mut digraph = BTreeSet::<(usize, usize)>::empty(3);
+        let mut digraph = BTreeSet::<(usize, usize)>::empty();
 
         setup_self_loop_unweighted!(digraph);
         assert!(!digraph.is_simple());
@@ -524,7 +524,7 @@ mod tests {
 
     #[test]
     fn hash_set_tuple_unweighted_simple() {
-        let mut digraph = HashSet::<(usize, usize)>::empty(3);
+        let mut digraph = HashSet::<(usize, usize)>::empty();
 
         setup_simple_unweighted!(digraph);
         assert!(digraph.is_simple());
@@ -532,7 +532,7 @@ mod tests {
 
     #[test]
     fn hash_set_tuple_unweighted_self_loop() {
-        let mut digraph = HashSet::<(usize, usize)>::empty(3);
+        let mut digraph = HashSet::<(usize, usize)>::empty();
 
         setup_self_loop_unweighted!(digraph);
         assert!(!digraph.is_simple());
@@ -540,7 +540,7 @@ mod tests {
 
     #[test]
     fn vec_tuple_weighted_simple() {
-        let mut digraph = Vec::<(usize, usize, usize)>::empty(3);
+        let mut digraph = Vec::<(usize, usize, usize)>::empty();
 
         setup_simple_weighted!(digraph);
         assert!(digraph.is_simple());
@@ -548,7 +548,7 @@ mod tests {
 
     #[test]
     fn vec_tuple_weighted_self_loop() {
-        let mut digraph = Vec::<(usize, usize, usize)>::empty(3);
+        let mut digraph = Vec::<(usize, usize, usize)>::empty();
 
         setup_self_loop_weighted!(digraph);
         assert!(!digraph.is_simple());
@@ -556,7 +556,7 @@ mod tests {
 
     #[test]
     fn vec_tuple_weighted_parallel_arcs() {
-        let mut digraph = Vec::<(usize, usize, usize)>::empty(3);
+        let mut digraph = Vec::<(usize, usize, usize)>::empty();
 
         setup_parallel_arcs_weighted!(digraph);
         assert!(!digraph.is_simple());
@@ -564,7 +564,7 @@ mod tests {
 
     #[test]
     fn slice_tuple_weighted_simple() {
-        let mut digraph = Vec::<(usize, usize, usize)>::empty(3);
+        let mut digraph = Vec::<(usize, usize, usize)>::empty();
 
         setup_simple_weighted!(digraph);
         assert!(digraph.as_slice().is_simple());
@@ -572,7 +572,7 @@ mod tests {
 
     #[test]
     fn slice_tuple_weighted_self_loop() {
-        let mut digraph = Vec::<(usize, usize, usize)>::empty(3);
+        let mut digraph = Vec::<(usize, usize, usize)>::empty();
 
         setup_self_loop_weighted!(digraph);
         assert!(!digraph.as_slice().is_simple());
@@ -580,7 +580,7 @@ mod tests {
 
     #[test]
     fn slice_tuple_weighted_parallel_arcs() {
-        let mut digraph = Vec::<(usize, usize, usize)>::empty(3);
+        let mut digraph = Vec::<(usize, usize, usize)>::empty();
 
         setup_parallel_arcs_weighted!(digraph);
         assert!(!digraph.as_slice().is_simple());
@@ -609,7 +609,7 @@ mod tests {
 
     #[test]
     fn btree_set_tuple_weighted_simple() {
-        let mut digraph = BTreeSet::<(usize, usize, usize)>::empty(3);
+        let mut digraph = BTreeSet::<(usize, usize, usize)>::empty();
 
         setup_simple_weighted!(digraph);
         assert!(digraph.is_simple());
@@ -617,7 +617,7 @@ mod tests {
 
     #[test]
     fn btree_set_tuple_weighted_self_loop() {
-        let mut digraph = BTreeSet::<(usize, usize, usize)>::empty(3);
+        let mut digraph = BTreeSet::<(usize, usize, usize)>::empty();
 
         setup_self_loop_weighted!(digraph);
         assert!(!digraph.is_simple());
@@ -625,7 +625,7 @@ mod tests {
 
     #[test]
     fn hash_set_tuple_weighted_simple() {
-        let mut digraph = HashSet::<(usize, usize, usize)>::empty(3);
+        let mut digraph = HashSet::<(usize, usize, usize)>::empty();
 
         setup_simple_weighted!(digraph);
         assert!(digraph.is_simple());
@@ -633,7 +633,7 @@ mod tests {
 
     #[test]
     fn hash_set_tuple_weighted_self_loop() {
-        let mut digraph = HashSet::<(usize, usize, usize)>::empty(3);
+        let mut digraph = HashSet::<(usize, usize, usize)>::empty();
 
         setup_self_loop_weighted!(digraph);
         assert!(!digraph.is_simple());
