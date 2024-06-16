@@ -1,4 +1,6 @@
-//! Benchmark implementations of [`graaf::op::AddArc`].
+//! Benchmark the implementations of [`AddArc`]
+//!
+//! [`AddArc`]: graaf::op::AddArc
 
 use {
     divan::Bencher,

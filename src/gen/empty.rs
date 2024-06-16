@@ -656,21 +656,6 @@ mod tests {
         }
 
         #[test]
-        fn size_vec_vec_weighted(v in 1..100_usize) {
-            prop_size::<Vec<Vec<(usize, usize)>>>(v);
-        }
-
-        #[test]
-        fn size_vec_btree_set_weighted(v in 1..100_usize) {
-            prop_size::<Vec<BTreeSet<(usize, usize)>>>(v);
-        }
-
-        #[test]
-        fn size_vec_hash_set_weighted(v in 1..100_usize) {
-            prop_size::<Vec<HashSet<(usize, usize)>>>(v);
-        }
-
-        #[test]
         fn size_vec_btree_map_weighted(v in 1..100_usize) {
             prop_size::<Vec<BTreeMap<usize, usize>>>(v);
         }
@@ -681,28 +666,8 @@ mod tests {
         }
 
         #[test]
-        fn size_btree_map_vec_weighted(v in 1..100_usize) {
-            prop_size::<BTreeMap<usize, Vec<(usize, usize)>>>(v);
-        }
-
-        #[test]
-        fn size_btree_map_btree_set_weighted(v in 1..100_usize) {
-            prop_size::<BTreeMap<usize, BTreeSet<(usize, usize)>>>(v);
-        }
-
-        #[test]
         fn size_btree_map_btree_map(v in 1..100_usize) {
             prop_size::<BTreeMap<usize, BTreeMap<usize, usize>>>(v);
-        }
-
-        #[test]
-        fn size_hash_map_vec_weighted(v in 1..100_usize) {
-            prop_size::<HashMap<usize, Vec<(usize, usize)>>>(v);
-        }
-
-        #[test]
-        fn size_hash_map_hash_set_weighted(v in 1..100_usize) {
-            prop_size::<HashMap<usize, HashSet<(usize, usize)>>>(v);
         }
 
         #[test]

@@ -232,31 +232,9 @@ where
     impl_converse!();
 }
 
-impl<W> Converse for Vec<Vec<(usize, W)>>
-where
-    W: Copy,
-{
-    impl_converse_weighted!();
-}
-
-impl<W> Converse for Vec<BTreeSet<(usize, W)>>
-where
-    W: Copy + Ord,
-{
-    impl_converse_weighted!();
-}
-
 impl<W> Converse for Vec<BTreeMap<usize, W>>
 where
     W: Copy + Ord,
-{
-    impl_converse_weighted!();
-}
-
-impl<W, H> Converse for Vec<HashSet<(usize, W), H>>
-where
-    W: Copy + Eq + Hash,
-    H: BuildHasher + Clone + Default,
 {
     impl_converse_weighted!();
 }
@@ -306,39 +284,9 @@ where
     impl_converse_weighted_const!();
 }
 
-impl<W> Converse for BTreeMap<usize, Vec<(usize, W)>>
-where
-    W: Copy,
-{
-    impl_converse_weighted!();
-}
-
-impl<W> Converse for BTreeMap<usize, BTreeSet<(usize, W)>>
-where
-    W: Copy + Ord,
-{
-    impl_converse_weighted!();
-}
-
 impl<W> Converse for BTreeMap<usize, BTreeMap<usize, W>>
 where
     W: Copy + Ord,
-{
-    impl_converse_weighted!();
-}
-
-impl<W, H> Converse for HashMap<usize, Vec<(usize, W)>, H>
-where
-    W: Copy,
-    H: BuildHasher + Default,
-{
-    impl_converse_weighted!();
-}
-
-impl<W, H> Converse for HashMap<usize, HashSet<(usize, W), H>, H>
-where
-    W: Copy + Eq + Hash,
-    H: BuildHasher + Default,
 {
     impl_converse_weighted!();
 }
@@ -553,32 +501,8 @@ mod tests {
     }
 
     #[test]
-    fn vec_vec_weighted() {
-        let mut digraph = Vec::<Vec<(usize, usize)>>::empty(3);
-
-        setup_weighted!(digraph);
-        test_weighted!(digraph);
-    }
-
-    #[test]
-    fn vec_btree_set_weighted() {
-        let mut digraph = Vec::<BTreeSet<(usize, usize)>>::empty(3);
-
-        setup_weighted!(digraph);
-        test_weighted!(digraph);
-    }
-
-    #[test]
     fn vec_btree_map_weighted() {
         let mut digraph = Vec::<BTreeMap<usize, usize>>::empty(3);
-
-        setup_weighted!(digraph);
-        test_weighted!(digraph);
-    }
-
-    #[test]
-    fn vec_hash_set_weighted() {
-        let mut digraph = Vec::<HashSet<(usize, usize)>>::empty(3);
 
         setup_weighted!(digraph);
         test_weighted!(digraph);
@@ -633,40 +557,8 @@ mod tests {
     }
 
     #[test]
-    fn btree_map_vec_weighted() {
-        let mut digraph = BTreeMap::<usize, Vec<(usize, usize)>>::empty(3);
-
-        setup_weighted!(digraph);
-        test_weighted!(digraph);
-    }
-
-    #[test]
-    fn btree_map_btree_set_weighted() {
-        let mut digraph = BTreeMap::<usize, BTreeSet<(usize, usize)>>::empty(3);
-
-        setup_weighted!(digraph);
-        test_weighted!(digraph);
-    }
-
-    #[test]
     fn btree_map_btree_map_weighted() {
         let mut digraph = BTreeMap::<usize, BTreeMap<usize, usize>>::empty(3);
-
-        setup_weighted!(digraph);
-        test_weighted!(digraph);
-    }
-
-    #[test]
-    fn hash_map_vec_weighted() {
-        let mut digraph = HashMap::<usize, Vec<(usize, usize)>>::empty(3);
-
-        setup_weighted!(digraph);
-        test_weighted!(digraph);
-    }
-
-    #[test]
-    fn hash_map_hash_set_weighted() {
-        let mut digraph = HashMap::<usize, HashSet<(usize, usize)>>::empty(3);
 
         setup_weighted!(digraph);
         test_weighted!(digraph);

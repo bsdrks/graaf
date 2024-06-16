@@ -9,6 +9,14 @@
 //!
 //! assert_eq!(digraph.size(), 10);
 //! ```
+//!
+//! # Benchmarks
+//!
+//! To run the benchmarks for this operation, use:
+//!
+//! ```sh
+//! cargo bench --bench size
+//! ```
 
 use {
     core::hash::BuildHasher,
@@ -79,111 +87,111 @@ macro_rules! impl_len {
     };
 }
 
-impl<T> Size for Vec<Vec<T>> {
+impl Size for Vec<Vec<usize>> {
     impl_iter_sum!(Vec);
 }
 
-impl<T> Size for Vec<BTreeSet<T>> {
+impl Size for Vec<BTreeSet<usize>> {
     impl_iter_sum!(BTreeSet);
 }
 
-impl<T, H> Size for Vec<HashSet<T, H>>
+impl<H> Size for Vec<HashSet<usize, H>>
 where
     H: BuildHasher,
 {
     impl_iter_sum!(HashSet);
 }
 
-impl<K, W> Size for Vec<BTreeMap<K, W>> {
+impl<W> Size for Vec<BTreeMap<usize, W>> {
     impl_iter_sum!(BTreeMap);
 }
 
-impl<K, W, H> Size for Vec<HashMap<K, W, H>>
+impl<W, H> Size for Vec<HashMap<usize, W, H>>
 where
     H: BuildHasher,
 {
     impl_iter_sum!(HashMap);
 }
 
-impl<T> Size for [Vec<T>] {
+impl Size for [Vec<usize>] {
     impl_iter_sum!(Vec);
 }
 
-impl<T> Size for [BTreeSet<T>] {
+impl Size for [BTreeSet<usize>] {
     impl_iter_sum!(BTreeSet);
 }
 
-impl<T, H> Size for [HashSet<T, H>]
+impl<H> Size for [HashSet<usize, H>]
 where
     H: BuildHasher,
 {
     impl_iter_sum!(HashSet);
 }
 
-impl<K, W> Size for [BTreeMap<K, W>] {
+impl<W> Size for [BTreeMap<usize, W>] {
     impl_iter_sum!(BTreeMap);
 }
 
-impl<K, W, H> Size for [HashMap<K, W, H>]
+impl<W, H> Size for [HashMap<usize, W, H>]
 where
     H: BuildHasher,
 {
     impl_iter_sum!(HashMap);
 }
 
-impl<const V: usize, T> Size for [Vec<T>; V] {
+impl<const V: usize> Size for [Vec<usize>; V] {
     impl_iter_sum!(Vec);
 }
 
-impl<const V: usize, T> Size for [BTreeSet<T>; V] {
+impl<const V: usize> Size for [BTreeSet<usize>; V] {
     impl_iter_sum!(BTreeSet);
 }
 
-impl<const V: usize, K, W> Size for [BTreeMap<K, W>; V] {
+impl<const V: usize, W> Size for [BTreeMap<usize, W>; V] {
     impl_iter_sum!(BTreeMap);
 }
 
-impl<const V: usize, T, H> Size for [HashSet<T, H>; V]
+impl<const V: usize, H> Size for [HashSet<usize, H>; V]
 where
     H: BuildHasher,
 {
     impl_iter_sum!(HashSet);
 }
 
-impl<const V: usize, K, W, H> Size for [HashMap<K, W, H>; V]
+impl<const V: usize, W, H> Size for [HashMap<usize, W, H>; V]
 where
     H: BuildHasher,
 {
     impl_iter_sum!(HashMap);
 }
 
-impl<K, T> Size for BTreeMap<K, Vec<T>> {
+impl Size for BTreeMap<usize, Vec<usize>> {
     impl_values_sum!(Vec);
 }
 
-impl<K, T> Size for BTreeMap<K, BTreeSet<T>> {
+impl Size for BTreeMap<usize, BTreeSet<usize>> {
     impl_values_sum!(BTreeSet);
 }
 
-impl<K, W> Size for BTreeMap<K, BTreeMap<K, W>> {
+impl<W> Size for BTreeMap<usize, BTreeMap<usize, W>> {
     impl_values_sum!(BTreeMap);
 }
 
-impl<K, T, H> Size for HashMap<K, Vec<T>, H>
+impl<H> Size for HashMap<usize, Vec<usize>, H>
 where
     H: BuildHasher,
 {
     impl_values_sum!(Vec);
 }
 
-impl<K, T, H> Size for HashMap<K, HashSet<T, H>, H>
+impl<H> Size for HashMap<usize, HashSet<usize, H>, H>
 where
     H: BuildHasher,
 {
     impl_values_sum!(HashSet);
 }
 
-impl<K, W, H> Size for HashMap<K, HashMap<K, W, H>, H>
+impl<W, H> Size for HashMap<usize, HashMap<usize, W, H>, H>
 where
     H: BuildHasher,
 {

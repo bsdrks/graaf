@@ -26,10 +26,78 @@
 - Benchmark traits for `AdjacencyMatrix` against adjacency lists.
 - Describe `IsSuperdigraph` without mentioning `IsSubdigraph`, except in passing.
 - Implement `IterOutNeighborsMut` for additional types.
-- Mention the `add_arc` benchmark in `op::add_arc` documentation.
 - Mention the `size` benchmark in `op::size` documentation.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.58.0] - 2024-06-16
+
+Added
+
+- Implement `Size` for `BTreeMap<usize, BTreeMap<usize, W>>`.
+- Implement `Size` for `BTreeMap<usize, BTreeSet<usize>>`.
+- Implement `Size` for `BTreeMap<usize, Vec<usize>>`.
+- Implement `Size` for `HashMap<usize, HashMap<usize, W>>`.
+- Implement `Size` for `HashMap<usize, HashSet<usize>>`.
+- Implement `Size` for `HashMap<usize, Vec<usize>>`.
+- Implement `Size` for `Vec<BTreeMap<usize, W>>`.
+- Implement `Size` for `Vec<BTreeSet<usize>>`.
+- Implement `Size` for `Vec<HashMap<usize, W>>`.
+- Implement `Size` for `Vec<HashSet<usize>>`.
+- Implement `Size` for `Vec<Vec<usize>>`.
+- Implement `Size` for `[BTreeMap<usize, W>; V]`.
+- Implement `Size` for `[BTreeMap<usize, W>]`.
+- Implement `Size` for `[BTreeSet<usize>; V]`.
+- Implement `Size` for `[BTreeSet<usize>]`.
+- Implement `Size` for `[HashMap<usize, W>; V]`.
+- Implement `Size` for `[HashMap<usize, W>]`.
+- Implement `Size` for `[HashSet<usize>; V]`.
+- Implement `Size` for `[HashSet<usize>]`.
+- Implement `Size` for `[Vec<usize>; V]`.
+- Implement `Size` for `[Vec<usize>]`.
+
+Removed
+
+- Breaking: Remove the implementation of `Converse` for `BTreeMap<usize, BTreeSet<(usize, W)>>`.
+- Breaking: Remove the implementation of `Converse` for `BTreeMap<usize, Vec<(usize, W)>>`.
+- Breaking: Remove the implementation of `Converse` for `HashMap<usize, HashSet<(usize, W)>>`.
+- Breaking: Remove the implementation of `Converse` for `HashMap<usize, Vec<(usize, W)>>`.
+- Breaking: Remove the implementation of `Converse` for `Vec<BTreeSet<(usize, W)>>`.
+- Breaking: Remove the implementation of `Converse` for `Vec<HashSet<(usize, W)>>`.
+- Breaking: Remove the implementation of `Converse` for `Vec<Vec<(usize, W)>>`.
+- Breaking: Remove the implementation of `Size` for `BTreeMap<K, BTreeMap<K, W>>`.
+- Breaking: Remove the implementation of `Size` for `BTreeMap<K, BTreeSet<W>>`.
+- Breaking: Remove the implementation of `Size` for `BTreeMap<K, Vec<T>>`.
+- Breaking: Remove the implementation of `Size` for `HashMap<K, HashMap<K, W>>`.
+- Breaking: Remove the implementation of `Size` for `HashMap<K, HashSet<W>>`.
+- Breaking: Remove the implementation of `Size` for `HashMap<K, Vec<T>>`.
+- Breaking: Remove the implementation of `Size` for `Vec<BTreeMap<K, W>>`.
+- Breaking: Remove the implementation of `Size` for `Vec<BTreeSet<T>>`.
+- Breaking: Remove the implementation of `Size` for `Vec<HashMap<K, W>>`.
+- Breaking: Remove the implementation of `Size` for `Vec<HashSet<T>>`.
+- Breaking: Remove the implementation of `Size` for `Vec<Vec<T>>`.
+- Breaking: Remove the implementation of `Size` for `[BTreeMap<K, W>; V]`.
+- Breaking: Remove the implementation of `Size` for `[BTreeMap<K, W>]`.
+- Breaking: Remove the implementation of `Size` for `[BTreeSet<T>; V]`.
+- Breaking: Remove the implementation of `Size` for `[BTreeSet<T>]`.
+- Breaking: Remove the implementation of `Size` for `[HashMap<K, W>; V]`.
+- Breaking: Remove the implementation of `Size` for `[HashMap<K, W>]`.
+- Breaking: Remove the implementation of `Size` for `[HashSet<T>; V]`.
+- Breaking: Remove the implementation of `Size` for `[HashSet<T>]`.
+- Breaking: Remove the implementation of `Size` for `[Vec<T>; V]`.
+- Breaking: Remove the implementation of `Size` for `[Vec<T>]`.
+- Remove property test `size_btree_map_btree_set_weighted` for `empty`.
+- Remove property test `size_btree_map_vec_weighted` for `empty`.
+- Remove property test `size_hash_map_hash_set_weighted` for `empty`.
+- Remove property test `size_hash_map_vec_weighted` for `empty`.
+- Remove property test `size_vec_btree_set_weighted` for `empty`.
+- Remove property test `size_vec_hash_set_weighted` for `empty`.
+- Remove property test `size_vec_vec_weighted` for `empty`.
+- Remove the `crosscountry` benchmark.
+- Remove the `shortestpath1` benchmark.
+- Remove unit test `size_arr_btree_set_weighted` for `empty_const`.
+- Remove unit test `size_arr_hash_set_weighted` for `empty_const`.
+- Remove unit test `size_arr_vec_weighted` for `empty_const`.
 
 ## [0.57.2] - 2024-06-16
 
