@@ -36,6 +36,7 @@
 //! assert!(matches!(iter.next(), Some(1 | 2 | 3)));
 //! assert_eq!(iter.next(), None);
 //! ```
+#![doc(alias = "iter_in_neighbours")]
 
 use super::IterArcs;
 
@@ -109,6 +110,7 @@ use super::IterArcs;
 /// assert!(matches!(iter.next(), Some(1 | 2 | 3)));
 /// assert_eq!(iter.next(), None);
 /// ```
+#[doc(alias = "IterInNeighbours")]
 pub trait IterInNeighbors {
     /// Returns an iterator over the in-neighbors of a vertex in the digraph.
     ///

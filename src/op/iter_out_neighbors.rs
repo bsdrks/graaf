@@ -35,6 +35,7 @@
 //! assert!(matches!(iter.next(), Some(1 | 2)));
 //! assert_eq!(iter.next(), None);
 //! ```
+#![doc(alias = "iter_out_neighbours")]
 
 use {
     crate::op::IterArcs,
@@ -111,6 +112,7 @@ use {
 /// assert!(matches!(iter.next(), Some(1 | 2)));
 /// assert_eq!(iter.next(), None);
 /// ```
+#[doc(alias = "IterOutNeighbours")]
 pub trait IterOutNeighbors {
     /// Returns an iterator over the out-neighbors of a vertex in the digraph.
     ///

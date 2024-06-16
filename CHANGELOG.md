@@ -16,16 +16,34 @@
 - Add the `Intersection` trait.
 - Add the `IsBipartite` trait.
 - Add the `IsInTree` trait.
+- Add the `IsIsomorphic` trait.
 - Add the `IsOutTree` trait.
-- Add the `RemoveWeightedArc` trait.
+- Add the `JoinVertices` trait.
 - Add the `RemoveVertex` trait.
+- Add the `RemoveWeightedArc` trait.
 - Add the `Union` trait.
 - Benchmark against popular graph libraries in other languages.
 - Benchmark traits for `AdjacencyMatrix` against adjacency lists.
 - Describe `IsSuperdigraph` without mentioning `IsSubdigraph`, except in passing.
 - Implement `IterOutNeighborsMut` for additional types.
+- Mention the `add_arc` benchmark in `op::add_arc` documentation.
+- Mention the `size` benchmark in `op::size` documentation.
 - Release via GitHub Actions.
 - Speed up GHA workflow.
+
+## [0.57.1] - 2024-06-16
+
+Added
+
+- Add documentation alias `IterInNeighbors` for `IterInNeighbours`.
+- Add documentation alias `IterOutNeighborsMut` for `IterOutNeighboursMut`.
+- Add documentation alias `IterOutNeighbors` for `IterOutNeighbours`.
+- Add documentation alias `IterWeightedOutNeighbors` for `IterWeightedOutNeighbours`.
+- Add documentation alias `iter_in_neighbors` for `iter_in_neighbours`.
+- Add documentation alias `iter_out_neighbors_mut` for `iter_out_neighbours_mut`.
+- Add documentation alias `iter_out_neighbors` for `iter_out_neighbours`.
+- Add documentation alias `iter_weighted_out_neighbors` for `iter_weighted_out_neighbours`.
+- Add script `version.sh` to change the version in `Cargo.toml` and `README.md`.
 
 ## [0.57.0] - 2024-06-15
 

@@ -1,8 +1,8 @@
 #!/bin/sh
 
-# Version check
+# Check the versions.
 
-# Version check: Cargo.toml
+## Check the version in `Cargo.toml`.
 
 CARGO_TOML_VERSION_REGEX='name = "graaf"
 version = "([0-9]*\.[0-9]*\.[0-9]*)"'
@@ -19,10 +19,9 @@ fi
 
 echo "✓ Version in \`Cargo.toml\`: $VERSION"
 
-# Version check: README.md
+## Check the version in the `README.md` example.
 
 DEPENDENCY_SIMPLE_VERSION_REGEX='graaf = "([0-9]*\.[0-9]*\.[0-9]*)"'
-DEPENDENCY_OBJECT_VERSION_REGEX='graaf = { version = "([0-9]*\.[0-9]*\.[0-9]*)"'
 
 readme=$(cat README.md)
 
@@ -34,19 +33,12 @@ while IFS= read -r line || [[ -n $line ]]; do
             echo "Error: expected dependency example version $VERSION, found $DEPENDENCY_VERSION"
             exit 1
         fi
-    elif [[ $line =~ $DEPENDENCY_OBJECT_VERSION_REGEX ]]; then
-        DEPENDENCY_VERSION=${BASH_REMATCH[1]}
-
-        if [[ $DEPENDENCY_VERSION != $VERSION ]]; then
-            echo "Error: expected dependency example version $VERSION, found $DEPENDENCY_VERSION"
-            exit 1
-        fi
     fi
 done <<< "$readme"
 
 echo "✓ Version in \`README.md\`: $VERSION"
 
-# Version check: CHANGELOG.md
+## Check version in latest the `CHANGELOG.md` entry.
 
 CHANGELOG_VERSION_REGEX="## \[([0-9]*\.[0-9]*\.[0-9]*)\] - [0-9]{4}-[0-9]{2}-[0-9]{2}"
 
@@ -66,7 +58,7 @@ fi
 
 echo "︎✓ Version in latest changelog entry: $VERSION"
 
-# Static analysis
+# Run static analysis
 
 cargo fmt --check --all
 cargo doc --all-features

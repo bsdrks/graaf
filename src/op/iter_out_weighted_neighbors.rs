@@ -23,6 +23,7 @@
 //!     .iter_out_weighted_neighbors(2)
 //!     .eq([(3, &4), (4, &5), (5, &6)]));
 //! ```
+#![doc(alias = "iter_out_weighted_neighbours")]
 
 use {
     core::hash::BuildHasher,
@@ -84,6 +85,7 @@ use {
 ///     .iter_out_weighted_neighbors(2)
 ///     .eq([(3, &4), (4, &5), (5, &6)]));
 /// ```
+#[doc(alias = "IterOutWeightedNeighbours")]
 pub trait IterOutWeightedNeighbors<W> {
     /// Returns an iterator over the out-neighbors of the head vertex and their
     /// weights.

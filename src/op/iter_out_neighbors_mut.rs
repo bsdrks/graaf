@@ -21,6 +21,7 @@
 //! assert!(digraph.iter_out_neighbors_mut(2).eq(&mut [0, 1, 3]));
 //! assert!(digraph.iter_out_neighbors_mut(3).eq(&mut [1, 2]));
 //! ```
+#![doc(alias = "iter_out_neighbours_mut")]
 
 use {
     core::hash::BuildHasher,
@@ -90,6 +91,7 @@ use {
 /// assert!(digraph.iter_out_neighbors_mut(2).eq(&mut [0, 1, 3]));
 /// assert!(digraph.iter_out_neighbors_mut(3).eq(&mut [1, 2]));
 /// ```
+#[doc(alias = "IterOurNeighboursMut")]
 pub trait IterOutNeighborsMut {
     /// Returns an iterator to mutate the out-neighbors of a vertex in the
     /// digraph.
