@@ -13,6 +13,14 @@
 //!
 //! assert_eq!(digraph, vec![vec![1, 2], Vec::new(), vec![0]]);
 //! ```
+//!
+//! # Benchmarks
+//!
+//! To run the benchmarks for this operation, use:
+//!
+//! ```sh
+//! cargo bench --bench add_arc
+//! ```
 
 use {
     core::hash::BuildHasher,

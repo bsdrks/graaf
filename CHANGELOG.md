@@ -31,6 +31,20 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.57.2] - 2024-06-16
+
+Added
+
+- Add benchmark `add_arc::slice_btree_set`.
+- Add benchmark `add_arc::slice_hash_set`.
+- Add benchmark `add_arc::slice_vec`.
+- Add benchmark `add_arc::vec_tuple`.
+- Mention `add_arc` benchmark in `op::add_arc` documentation.
+
+Changed
+
+- Use randomly generated arcs in `add_arc` benchmarks.
+
 ## [0.57.1] - 2024-06-16
 
 Added

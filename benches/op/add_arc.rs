@@ -1,9 +1,15 @@
 //! Benchmark implementations of [`graaf::op::AddArc`].
 
 use {
-    core::array::from_fn,
     divan::Bencher,
-    graaf::op::AddArc,
+    graaf::{
+        gen::{
+            prng::Xoshiro256StarStar,
+            Empty,
+            EmptyConst,
+        },
+        op::AddArc,
+    },
     std::collections::{
         BTreeMap,
         BTreeSet,
@@ -16,142 +22,215 @@ fn main() {
     divan::main();
 }
 
-macro_rules! bench {
-    ($bencher:ident, $v:ident, $adj:ident) => {
-        $bencher.bench_local(|| {
-            for s in 0..$v {
-                for t in 0..$v {
-                    if s != t {
-                        $adj.add_arc(s, t);
-                    }
-                }
-            }
-        });
-    };
+fn gen_arcs(v: usize) -> Vec<(usize, usize)> {
+    let mut prng = Xoshiro256StarStar::new(0);
+    let mut arcs = Vec::<(usize, usize)>::empty();
+
+    for _ in 0..v {
+        let s = prng.next().unwrap() as usize % v;
+        let mut t = prng.next().unwrap() as usize % v;
+
+        while t == s {
+            t = prng.next().unwrap() as usize % v;
+        }
+
+        arcs.add_arc(s, t);
+    }
+
+    arcs
 }
 
-const ARGS: [usize; 3] = [10, 100, 1000];
-
-#[divan::bench(args = ARGS)]
+#[divan::bench(args = [10, 100, 1000, 10000])]
 fn vec_vec(bencher: Bencher<'_, '_>, v: usize) {
-    let mut adj = vec![Vec::<usize>::new(); v];
+    let mut adj = Vec::<Vec<usize>>::empty(v);
+    let arcs = gen_arcs(v);
 
-    bench!(bencher, v, adj);
-
-    let _ = adj;
+    bencher.bench_local(move || {
+        for (s, t) in &arcs {
+            adj.add_arc(*s, *t);
+        }
+    });
 }
 
-#[divan::bench(args = ARGS)]
+#[divan::bench(args = [10, 100, 1000, 10000])]
 fn vec_btree_set(bencher: Bencher<'_, '_>, v: usize) {
-    let mut adj = vec![BTreeSet::<usize>::new(); v];
+    let mut adj = Vec::<BTreeSet<usize>>::empty(v);
+    let arcs = gen_arcs(v);
 
-    bench!(bencher, v, adj);
-
-    let _ = adj;
+    bencher.bench_local(move || {
+        for (s, t) in &arcs {
+            adj.add_arc(*s, *t);
+        }
+    });
 }
 
-#[divan::bench(args = ARGS)]
+#[divan::bench(args = [10, 100, 1000, 10000])]
 fn vec_hash_set(bencher: Bencher<'_, '_>, v: usize) {
-    let mut adj = vec![HashSet::<usize>::new(); v];
+    let mut adj = Vec::<HashSet<usize>>::empty(v);
+    let arcs = gen_arcs(v);
 
-    bench!(bencher, v, adj);
-
-    let _ = adj;
+    bencher.bench_local(move || {
+        for (s, t) in &arcs {
+            adj.add_arc(*s, *t);
+        }
+    });
 }
 
-#[divan::bench(consts = ARGS)]
+#[divan::bench(args = [10, 100, 1000, 10000])]
+fn slice_vec(bencher: Bencher<'_, '_>, v: usize) {
+    let mut adj = Vec::<HashSet<usize>>::empty(v);
+    let adj = adj.as_mut_slice();
+    let arcs = gen_arcs(v);
+
+    bencher.bench_local(move || {
+        for (s, t) in &arcs {
+            adj.add_arc(*s, *t);
+        }
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000, 10000])]
+fn slice_btree_set(bencher: Bencher<'_, '_>, v: usize) {
+    let mut adj = Vec::<BTreeSet<usize>>::empty(v);
+    let adj = adj.as_mut_slice();
+    let arcs = gen_arcs(v);
+
+    bencher.bench_local(move || {
+        for (s, t) in &arcs {
+            adj.add_arc(*s, *t);
+        }
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000, 10000])]
+fn slice_hash_set(bencher: Bencher<'_, '_>, v: usize) {
+    let mut adj = Vec::<HashSet<usize>>::empty(v);
+    let adj = adj.as_mut_slice();
+    let arcs = gen_arcs(v);
+
+    bencher.bench_local(move || {
+        for (s, t) in &arcs {
+            adj.add_arc(*s, *t);
+        }
+    });
+}
+
+#[divan::bench(consts = [10, 100, 1000, 10000])]
 fn arr_vec<const V: usize>(bencher: Bencher<'_, '_>) {
-    let mut adj = from_fn::<Vec<usize>, V, _>(|_| Vec::new());
+    let mut adj = <[Vec<usize>; V]>::empty();
+    let arcs = gen_arcs(V);
 
-    bench!(bencher, V, adj);
-
-    let _ = adj;
+    bencher.bench_local(move || {
+        for (s, t) in &arcs {
+            adj.add_arc(*s, *t);
+        }
+    });
 }
 
-#[divan::bench(consts = ARGS)]
+#[divan::bench(consts = [10, 100, 1000, 10000])]
 fn arr_btree_set<const V: usize>(bencher: Bencher<'_, '_>) {
-    let mut adj = from_fn::<BTreeSet<usize>, V, _>(|_| BTreeSet::new());
+    let mut adj = <[BTreeSet<usize>; V]>::empty();
+    let arcs = gen_arcs(V);
 
-    bench!(bencher, V, adj);
-
-    let _ = adj;
+    bencher.bench_local(move || {
+        for (s, t) in &arcs {
+            adj.add_arc(*s, *t);
+        }
+    });
 }
 
-#[divan::bench(consts = ARGS)]
+#[divan::bench(consts = [10, 100, 1000, 10000])]
 fn arr_hash_set<const V: usize>(bencher: Bencher<'_, '_>) {
-    let mut adj = from_fn::<HashSet<usize>, V, _>(|_| HashSet::new());
+    let mut adj = <[HashSet<usize>; V]>::empty();
+    let arcs = gen_arcs(V);
 
-    bench!(bencher, V, adj);
-
-    let _ = adj;
+    bencher.bench_local(move || {
+        for (s, t) in &arcs {
+            adj.add_arc(*s, *t);
+        }
+    });
 }
 
-#[divan::bench(args = ARGS)]
+#[divan::bench(args = [10, 100, 1000, 10000])]
 fn btree_map_vec(bencher: Bencher<'_, '_>, v: usize) {
-    let mut adj = BTreeMap::<usize, Vec<usize>>::new();
+    let mut adj = BTreeMap::<usize, Vec<usize>>::empty(v);
+    let arcs = gen_arcs(v);
 
-    for s in 0..v {
-        let _ = adj.insert(s, Vec::new());
-    }
-
-    bench!(bencher, v, adj);
-
-    let _ = adj;
+    bencher.bench_local(move || {
+        for (s, t) in &arcs {
+            adj.add_arc(*s, *t);
+        }
+    });
 }
 
-#[divan::bench(consts = ARGS)]
-fn btree_map_btree_set<const V: usize>(bencher: Bencher<'_, '_>) {
-    let mut adj = BTreeMap::<usize, BTreeSet<usize>>::new();
+#[divan::bench(args = [10, 100, 1000, 10000])]
+fn btree_map_btree_set(bencher: Bencher<'_, '_>, v: usize) {
+    let mut adj = BTreeMap::<usize, BTreeSet<usize>>::empty(v);
+    let arcs = gen_arcs(v);
 
-    for s in 0..V {
-        let _ = adj.insert(s, BTreeSet::new());
-    }
-
-    bench!(bencher, V, adj);
-
-    let _ = adj;
+    bencher.bench_local(move || {
+        for (s, t) in &arcs {
+            adj.add_arc(*s, *t);
+        }
+    });
 }
 
-#[divan::bench(consts = ARGS)]
-fn hash_map_vec<const V: usize>(bencher: Bencher<'_, '_>) {
-    let mut adj = HashMap::<usize, Vec<usize>>::new();
+#[divan::bench(args = [10, 100, 1000, 10000])]
+fn hash_map_vec(bencher: Bencher<'_, '_>, v: usize) {
+    let mut adj = HashMap::<usize, Vec<usize>>::empty(v);
+    let arcs = gen_arcs(v);
 
-    for s in 0..V {
-        let _ = adj.insert(s, Vec::new());
-    }
-
-    bench!(bencher, V, adj);
-
-    let _ = adj;
+    bencher.bench_local(move || {
+        for (s, t) in &arcs {
+            adj.add_arc(*s, *t);
+        }
+    });
 }
 
-#[divan::bench(consts = ARGS)]
-fn hash_map_hash_set<const V: usize>(bencher: Bencher<'_, '_>) {
-    let mut adj = HashMap::<usize, HashSet<usize>>::new();
+#[divan::bench(args = [10, 100, 1000, 10000])]
+fn hash_map_hash_set(bencher: Bencher<'_, '_>, v: usize) {
+    let mut adj = HashMap::<usize, HashSet<usize>>::empty(v);
+    let arcs = gen_arcs(v);
 
-    for s in 0..V {
-        let _ = adj.insert(s, HashSet::new());
-    }
-
-    bench!(bencher, V, adj);
-
-    let _ = adj;
+    bencher.bench_local(move || {
+        for (s, t) in &arcs {
+            adj.add_arc(*s, *t);
+        }
+    });
 }
 
-#[divan::bench(consts = ARGS)]
-fn btree_set_tuple<const V: usize>(bencher: Bencher<'_, '_>) {
-    let mut adj = BTreeSet::<(usize, usize)>::new();
+#[divan::bench(args = [10, 100, 1000, 10000])]
+fn vec_tuple(bencher: Bencher<'_, '_>, v: usize) {
+    let mut adj = Vec::<(usize, usize)>::empty();
+    let arcs = gen_arcs(v);
 
-    bench!(bencher, V, adj);
-
-    let _ = adj;
+    bencher.bench_local(move || {
+        for (s, t) in &arcs {
+            adj.add_arc(*s, *t);
+        }
+    });
 }
 
-#[divan::bench(consts = ARGS)]
-fn hash_set_tuple<const V: usize>(bencher: Bencher<'_, '_>) {
+#[divan::bench(args = [10, 100, 1000, 10000])]
+fn btree_set_tuple(bencher: Bencher<'_, '_>, v: usize) {
+    let mut adj = BTreeSet::<(usize, usize)>::empty();
+    let arcs = gen_arcs(v);
+
+    bencher.bench_local(move || {
+        for (s, t) in &arcs {
+            adj.add_arc(*s, *t);
+        }
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000, 10000])]
+fn hash_set_tuple(bencher: Bencher<'_, '_>, v: usize) {
     let mut adj = HashSet::<(usize, usize)>::new();
+    let arcs = gen_arcs(v);
 
-    bench!(bencher, V, adj);
-
-    let _ = adj;
+    bencher.bench_local(move || {
+        for (s, t) in &arcs {
+            adj.add_arc(*s, *t);
+        }
+    });
 }
