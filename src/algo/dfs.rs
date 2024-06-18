@@ -99,14 +99,14 @@ fn dfsa_visit<D>(
     ordering[*i] = u;
 }
 
-/// Generates the predecessor tree and an acyclic ordering of the vertices of an
+/// Generates the breadth-first tree and an acyclic ordering of the vertices of an
 /// unweighted digraph.
 ///
 /// # Arguments
 ///
 /// * `digraph`: The digraph.
 /// * `ordering`: The ordering.
-/// * `pred`: The predecessor tree.
+/// * `pred`: The breadth-first tree.
 /// * `t_visit`: The time of the first visit of each vertex.
 /// * `t_expl`: The time of the last exploration of each vertex.
 ///

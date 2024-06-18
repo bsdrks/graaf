@@ -30,6 +30,32 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.59.0] - 2024-06-18
+
+Added
+
+- Add `BfsTree` data structure.
+- Implement `BfsTree::new`.
+- Implement `BfsTree::search_by`.
+- Implement `BfsTree::search`.
+- Implement `From<Vec<Option<usize>>>` for `BfsTree`.
+- Implement `Index<usize>` for `BfsTree`.
+- Implement `IndexMut<usize>` for `BfsTree`.
+- Implement `IntoIterator` for `BfsTree`.
+
+Changed
+
+- Breaking: `bfs::predecessors` now accepts a `BfsTree` instead of a `Vec<Option<usize>>`.
+- Breaking: `bfs::shortest_path` now accepts a `BfsTree` instead of a `Vec<Option<usize>>`.
+- Breaking: `bfs::single_source_predecessors` now returns a `BfsTree`.
+- Breaking: `dijkstra::predecessors` now accepts a `BfsTree` instead of a `Vec<Option<usize>>`.
+- Breaking: `dijkstra::shortest_path` now accepts a `BfsTree` instead of a `Vec<Option<usize>>`.
+- Breaking: `dijkstra::single_source_predecessors` now returns a `BfsTree`.
+
+Removed
+
+- Breaking: Remove `algo::predecessor`.
+
 ## [0.58.0] - 2024-06-16
 
 Added
@@ -2111,8 +2137,8 @@ Changed
 
 Changed
 
-- Breaking: `bfs::predecessors_single_source` now only returns the predecessor tree.
-- Breaking: `dijkstra::predecessors_single_source` now only returns the predecessor tree.
+- Breaking: `bfs::predecessors_single_source` now only returns the breadth-first tree.
+- Breaking: `dijkstra::predecessors_single_source` now only returns the breadth-first tree.
 
 ## [0.18.0] - 2024-04-20
 

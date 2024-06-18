@@ -9,7 +9,8 @@
 //!
 //! The separate calls to `single_source_distances` and
 //! `single_source_predecessors` in the example are for illustrative purposes
-//! only; use [`predecessors`] if you need the predecessor tree *and* distances.
+//! only; use [`predecessors`] if you need the breadth-first tree *and*
+//! distances.
 //!
 //! ```
 //! use graaf::{
@@ -35,25 +36,25 @@
 //! let dist = single_source_distances(&digraph, 0);
 //! let pred = single_source_predecessors(&digraph, 0);
 //!
-//! assert_eq!(pred, [None, Some(0), Some(1), None]);
+//! assert!(pred.into_iter().eq([None, Some(0), Some(1), None]));
 //! assert_eq!(dist, [0, 2, 4, usize::MAX]);
 //!
 //! let dist = single_source_distances(&digraph, 1);
 //! let pred = single_source_predecessors(&digraph, 1);
 //!
-//! assert_eq!(pred, [None, None, Some(1), None]);
+//! assert!(pred.into_iter().eq([None, None, Some(1), None]));
 //! assert_eq!(dist, [usize::MAX, 0, 2, usize::MAX]);
 //!
 //! let dist = single_source_distances(&digraph, 2);
 //! let pred = single_source_predecessors(&digraph, 2);
 //!
-//! assert_eq!(pred, [None, None, None, None]);
+//! assert!(pred.into_iter().eq([None, None, None, None]));
 //! assert_eq!(dist, [usize::MAX, usize::MAX, 0, usize::MAX]);
 //!
 //! let dist = single_source_distances(&digraph, 3);
 //! let pred = single_source_predecessors(&digraph, 3);
 //!
-//! assert_eq!(pred, [Some(3), Some(0), Some(1), None]);
+//! assert!(pred.into_iter().eq([Some(3), Some(0), Some(1), None]));
 //! assert_eq!(dist, [2, 4, 6, 0]);
 //! ```
 //!
@@ -70,10 +71,12 @@
 //!   <https://doi.org/10.1007/BF01386390>
 
 use {
-    super::predecessor,
-    crate::op::{
-        IterOutWeightedNeighbors,
-        Order,
+    crate::{
+        algo::bfs_tree::BfsTree,
+        op::{
+            IterOutWeightedNeighbors,
+            Order,
+        },
     },
     core::cmp::Reverse,
     std::collections::BinaryHeap,
@@ -210,8 +213,8 @@ where
     dist
 }
 
-/// Calculates the predecessor tree and distances of the shortest paths from the
-/// source vertices to all vertices in a weighted digraph.
+/// Calculates the breadth-first tree and distances of the shortest paths from
+/// the source vertices to all vertices in a weighted digraph.
 ///
 /// # Arguments
 ///
@@ -234,7 +237,10 @@ where
 /// use {
 ///     core::cmp::Reverse,
 ///     graaf::{
-///         algo::dijkstra::predecessors,
+///         algo::{
+///             bfs_tree::BfsTree,
+///             dijkstra::predecessors,
+///         },
 ///         gen::Empty,
 ///         op::AddWeightedArc,
 ///     },
@@ -252,19 +258,19 @@ where
 /// digraph.add_weighted_arc(1, 2, 2);
 /// digraph.add_weighted_arc(3, 0, 2);
 ///
-/// let mut pred = [None, None, None, None];
+/// let mut pred = BfsTree::new(4);
 /// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
 /// let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 ///
 /// predecessors(&digraph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
 ///
-/// assert_eq!(pred, [None, Some(0), Some(1), None]);
+/// assert!(pred.into_iter().eq([None, Some(0), Some(1), None]));
 /// assert_eq!(dist, [0, 2, 4, usize::MAX]);
 /// ```
 pub fn predecessors<D, S, W>(
     digraph: &D,
     step: S,
-    pred: &mut [Option<usize>],
+    pred: &mut BfsTree,
     dist: &mut [W],
     heap: &mut BinaryHeap<(Reverse<W>, usize)>,
 ) where
@@ -287,8 +293,8 @@ pub fn predecessors<D, S, W>(
     }
 }
 
-/// Calculates the predecessor tree for the shortest paths from a single source
-/// vertex in a weighted digraph.
+/// Calculates the breadth-first tree for the shortest paths from a single
+/// source vertex in a weighted digraph.
 ///
 /// # Arguments
 ///
@@ -297,7 +303,7 @@ pub fn predecessors<D, S, W>(
 ///
 /// # Returns
 ///
-/// Returns the predecessor tree.
+/// Returns the breadth-first tree.
 ///
 /// # Panics
 ///
@@ -325,14 +331,14 @@ pub fn predecessors<D, S, W>(
 ///
 /// let pred = single_source_predecessors(&digraph, 0);
 ///
-/// assert_eq!(pred, [None, Some(0), Some(1), None]);
+/// assert!(pred.into_iter().eq([None, Some(0), Some(1), None]));
 /// ```
-pub fn single_source_predecessors<D>(digraph: &D, s: usize) -> Vec<Option<usize>>
+pub fn single_source_predecessors<D>(digraph: &D, s: usize) -> BfsTree
 where
     D: Order + IterOutWeightedNeighbors<usize>,
 {
     let v = digraph.order();
-    let mut pred = vec![None; v];
+    let mut pred = BfsTree::new(v);
     let mut dist = vec![usize::MAX; v];
     let mut heap = BinaryHeap::from([(Reverse(0), s)]);
 
@@ -372,7 +378,10 @@ where
 /// use {
 ///     core::cmp::Reverse,
 ///     graaf::{
-///         algo::dijkstra::shortest_path,
+///         algo::{
+///             bfs_tree::BfsTree,
+///             dijkstra::shortest_path,
+///         },
 ///         gen::EmptyConst,
 ///         op::AddWeightedArc,
 ///     },
@@ -390,7 +399,7 @@ where
 /// digraph.add_weighted_arc(1, 2, 2);
 /// digraph.add_weighted_arc(3, 0, 2);
 ///
-/// let mut pred = [None, None, None, None];
+/// let mut pred = BfsTree::new(4);
 /// let mut dist = [usize::MAX, usize::MAX, usize::MAX, 0];
 /// let mut heap = BinaryHeap::from([(Reverse(0), 3)]);
 ///
@@ -403,7 +412,7 @@ where
 ///     &mut heap,
 /// );
 ///
-/// assert_eq!(pred, [Some(3), Some(0), Some(1), None]);
+/// assert!(pred.into_iter().eq([Some(3), Some(0), Some(1), None]));
 /// assert_eq!(dist, [2, 4, 6, 0]);
 /// assert_eq!(path, Some(vec![3, 0, 1, 2]));
 /// ```
@@ -411,7 +420,7 @@ pub fn shortest_path<D, S, T, W>(
     digraph: &D,
     step: S,
     is_target: T,
-    pred: &mut [Option<usize>],
+    pred: &mut BfsTree,
     dist: &mut [W],
     heap: &mut BinaryHeap<(Reverse<W>, usize)>,
 ) -> Option<Vec<usize>>
@@ -423,7 +432,7 @@ where
 {
     while let Some((Reverse(acc), s)) = heap.pop() {
         if is_target(s, &acc) {
-            return predecessor::search_by(pred, s, |_, u| u.is_none()).map(|mut path| {
+            return pred.search_by(s, |_, u| u.is_none()).map(|mut path| {
                 path.reverse();
 
                 path
@@ -507,7 +516,7 @@ where
     D: Order + IterOutWeightedNeighbors<usize>,
 {
     let v = digraph.order();
-    let pred = &mut vec![None; v];
+    let pred = &mut BfsTree::new(v);
     let dist = &mut vec![usize::MAX; v];
     let heap = &mut BinaryHeap::from([(Reverse(0), s)]);
 
@@ -541,7 +550,7 @@ mod tests {
 
     macro_rules! test_predecessors {
         ($digraph:expr, $dist:expr, $pred:expr) => {
-            let mut pred = vec![None; $dist.len()];
+            let mut pred = BfsTree::new($dist.len());
             let mut dist = vec![usize::MAX; $dist.len()];
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
@@ -550,13 +559,13 @@ mod tests {
             predecessors(&$digraph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
 
             assert!(dist.iter().eq($dist));
-            assert!(pred.iter().eq($pred));
+            assert!(pred.into_iter().eq($pred));
         };
     }
 
     macro_rules! test_shortest_path {
         ($digraph:expr, $t:expr, $dist:expr, $pred:expr, $path:expr) => {
-            let mut pred = vec![None; $dist.len()];
+            let mut pred = BfsTree::new($dist.len());
             let mut dist = vec![usize::MAX; $dist.len()];
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
@@ -572,7 +581,7 @@ mod tests {
             );
 
             assert!(dist.iter().eq($dist));
-            assert!(pred.iter().eq($pred));
+            assert!(pred.into_iter().eq($pred));
             assert_eq!(path, $path);
         };
     }
@@ -682,7 +691,7 @@ mod tests {
 
     #[test]
     fn predecessors_trivial() {
-        test_predecessors!(Vec::<Vec<(usize, usize)>>::trivial(), &[0], &[None]);
+        test_predecessors!(Vec::<Vec<(usize, usize)>>::trivial(), &[0], [None]);
     }
 
     #[test]
@@ -690,7 +699,7 @@ mod tests {
         test_predecessors!(
             fixture::bang_jensen_94_weighted_usize(),
             &[0, 1, 1, 2, 2, 2, 3],
-            &[None, Some(0), Some(0), Some(2), Some(2), Some(2), Some(4)]
+            [None, Some(0), Some(0), Some(2), Some(2), Some(2), Some(4)]
         );
     }
 
@@ -699,7 +708,7 @@ mod tests {
         test_predecessors!(
             fixture::bang_jensen_96(),
             &[0, 5, 3, 6, 4, 7],
-            &[None, Some(2), Some(0), Some(4), Some(2), Some(3)]
+            [None, Some(2), Some(0), Some(4), Some(2), Some(3)]
         );
     }
 
@@ -708,7 +717,7 @@ mod tests {
         test_predecessors!(
             fixture::kattis_bryr_1(),
             &[0, 1, 1],
-            &[None, Some(0), Some(0)]
+            [None, Some(0), Some(0)]
         );
     }
 
@@ -717,7 +726,7 @@ mod tests {
         test_predecessors!(
             fixture::kattis_bryr_2(),
             &[0, 1, 2, 1, 2, 3],
-            &[None, Some(0), Some(3), Some(0), Some(3), Some(4)]
+            [None, Some(0), Some(3), Some(0), Some(3), Some(4)]
         );
     }
 
@@ -726,7 +735,7 @@ mod tests {
         test_predecessors!(
             fixture::kattis_bryr_3(),
             &[0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
-            &[
+            [
                 None,
                 Some(7),
                 Some(9),
@@ -746,7 +755,7 @@ mod tests {
         test_predecessors!(
             fixture::kattis_crosscountry(),
             &[0, 1, 3, 10],
-            &[None, Some(0), Some(0), Some(2)]
+            [None, Some(0), Some(0), Some(2)]
         );
     }
 
@@ -755,7 +764,7 @@ mod tests {
         test_predecessors!(
             fixture::kattis_shortestpath1(),
             &[0, 2, 4, usize::MAX],
-            &[None, Some(0), Some(1), None]
+            [None, Some(0), Some(1), None]
         );
     }
 
@@ -763,8 +772,8 @@ mod tests {
     fn single_source_predecessors_trivial() {
         assert!(
             single_source_predecessors(&Vec::<Vec<(usize, usize)>>::trivial(), 0)
-                .iter()
-                .eq(&[None])
+                .into_iter()
+                .eq([None])
         );
     }
 
@@ -772,37 +781,37 @@ mod tests {
     fn single_source_predecessors_bang_jensen_94() {
         assert!(
             single_source_predecessors(&fixture::bang_jensen_94_weighted_usize(), 0)
-                .iter()
-                .eq(&[None, Some(0), Some(0), Some(2), Some(2), Some(2), Some(4)])
+                .into_iter()
+                .eq([None, Some(0), Some(0), Some(2), Some(2), Some(2), Some(4)])
         );
     }
 
     #[test]
     fn single_source_predecessors_bang_jensen_96() {
         assert!(single_source_predecessors(&fixture::bang_jensen_96(), 0)
-            .iter()
-            .eq(&[None, Some(2), Some(0), Some(4), Some(2), Some(3)]));
+            .into_iter()
+            .eq([None, Some(2), Some(0), Some(4), Some(2), Some(3)]));
     }
 
     #[test]
     fn single_source_predecessors_kattis_bryr_1() {
         assert!(single_source_predecessors(&fixture::kattis_bryr_1(), 0)
-            .iter()
-            .eq(&[None, Some(0), Some(0)]));
+            .into_iter()
+            .eq([None, Some(0), Some(0)]));
     }
 
     #[test]
     fn single_source_predecessors_kattis_bryr_2() {
         assert!(single_source_predecessors(&fixture::kattis_bryr_2(), 0)
-            .iter()
-            .eq(&[None, Some(0), Some(3), Some(0), Some(3), Some(4)]));
+            .into_iter()
+            .eq([None, Some(0), Some(3), Some(0), Some(3), Some(4)]));
     }
 
     #[test]
     fn single_source_predecessors_kattis_bryr_3() {
         assert!(single_source_predecessors(&fixture::kattis_bryr_3(), 0)
-            .iter()
-            .eq(&[
+            .into_iter()
+            .eq([
                 None,
                 Some(7),
                 Some(9),
@@ -820,8 +829,8 @@ mod tests {
     fn single_source_predecessors_kattis_crosscountry() {
         assert!(
             single_source_predecessors(&fixture::kattis_crosscountry(), 0)
-                .iter()
-                .eq(&[None, Some(0), Some(0), Some(2)])
+                .into_iter()
+                .eq([None, Some(0), Some(0), Some(2)])
         );
     }
 
@@ -829,8 +838,8 @@ mod tests {
     fn single_source_predecessors_kattis_shortestpath1() {
         assert!(
             single_source_predecessors(&fixture::kattis_shortestpath1(), 0)
-                .iter()
-                .eq(&[None, Some(0), Some(1), None])
+                .into_iter()
+                .eq([None, Some(0), Some(1), None])
         );
     }
 
@@ -840,7 +849,7 @@ mod tests {
             Vec::<Vec<(usize, usize)>>::trivial(),
             0,
             &[0],
-            &[None],
+            [None],
             Some(vec![0])
         );
     }
@@ -851,7 +860,7 @@ mod tests {
             fixture::bang_jensen_94_weighted_usize(),
             6,
             &[0, 1, 1, 2, 2, 2, 3],
-            &[None, Some(0), Some(0), Some(2), Some(2), Some(2), Some(4)],
+            [None, Some(0), Some(0), Some(2), Some(2), Some(2), Some(4)],
             Some(vec![0, 2, 4, 6])
         );
     }
@@ -862,7 +871,7 @@ mod tests {
             fixture::bang_jensen_96(),
             5,
             &[0, 5, 3, 6, 4, 7],
-            &[None, Some(2), Some(0), Some(4), Some(2), Some(3)],
+            [None, Some(2), Some(0), Some(4), Some(2), Some(3)],
             Some(vec![0, 2, 4, 3, 5])
         );
     }
@@ -873,7 +882,7 @@ mod tests {
             fixture::kattis_bryr_1(),
             2,
             &[0, 1, 1],
-            &[None, Some(0), Some(0)],
+            [None, Some(0), Some(0)],
             Some(vec![0, 2])
         );
     }
@@ -884,7 +893,7 @@ mod tests {
             fixture::kattis_bryr_2(),
             5,
             &[0, 1, 2, 1, 2, 3],
-            &[None, Some(0), Some(3), Some(0), Some(3), Some(4)],
+            [None, Some(0), Some(3), Some(0), Some(3), Some(4)],
             Some(vec![0, 3, 4, 5])
         );
     }
@@ -895,7 +904,7 @@ mod tests {
             fixture::kattis_bryr_3(),
             9,
             &[0, 0, usize::MAX, 0, 0, 0, 1, 0, 0, 1],
-            &[
+            [
                 None,
                 Some(7),
                 None,
@@ -917,7 +926,7 @@ mod tests {
             fixture::kattis_crosscountry(),
             2,
             &[0, 1, 3, 14],
-            &[None, Some(0), Some(0), Some(0)],
+            [None, Some(0), Some(0), Some(0)],
             Some(vec![0, 2])
         );
     }
@@ -928,7 +937,7 @@ mod tests {
             fixture::kattis_shortestpath1(),
             3,
             &[0, 2, 4, usize::MAX],
-            &[None, Some(0), Some(1), None],
+            [None, Some(0), Some(1), None],
             None
         );
     }
