@@ -99,8 +99,8 @@ fn dfsa_visit<D>(
     ordering[*i] = u;
 }
 
-/// Generates the breadth-first tree and an acyclic ordering of the vertices of an
-/// unweighted digraph.
+/// Generates the breadth-first tree and an acyclic ordering of the vertices of
+/// an unweighted digraph.
 ///
 /// # Arguments
 ///
