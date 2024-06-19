@@ -1,8 +1,43 @@
 //! Breadth-first tree
 //!
-//! A breadth-first tree is obtained by running a [breadth-first search] on a
-//! digraph. The tree contains the predecessor of each vertex on the shortest
+//! A breadth-first tree contains the predecessor of each vertex on the shortest
 //! path from the source vertex.
+//!
+//! # Examples
+//!
+//! ```
+//! use {
+//!     core::cmp::Reverse,
+//!     graaf::{
+//!         algo::{
+//!             bfs::predecessors,
+//!             breadth_first_tree::BreadthFirstTree,
+//!         },
+//!         gen::EmptyConst,
+//!         op::AddArc,
+//!     },
+//!     std::collections::VecDeque,
+//! };
+//!
+//! // 0 -> {1}
+//! // 1 -> {2}
+//! // 2 -> {}
+//! // 3 -> {0}
+//!
+//! let mut digraph = <[Vec<usize>; 4]>::empty();
+//!
+//! digraph.add_arc(0, 1);
+//! digraph.add_arc(1, 2);
+//! digraph.add_arc(3, 0);
+//!
+//! let mut pred = BreadthFirstTree::new(4);
+//! let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
+//! let mut queue = VecDeque::from([(0, 0)]);
+//!
+//! predecessors(&digraph, |w| w + 1, &mut pred, &mut dist, &mut queue);
+//!
+//! assert!(pred.into_iter().eq([None, Some(0), Some(1), None]));
+//! ```
 //!
 //! [breadth-first search]: `crate::algo::bfs`
 
@@ -17,12 +52,12 @@ use std::{
 
 /// A breadth-first tree.
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
-pub struct BfTree {
+pub struct BreadthFirstTree {
     /// The predecessor of each vertex on the shortest path from the source.
     pred: Vec<Option<usize>>,
 }
 
-impl BfTree {
+impl BreadthFirstTree {
     /// Creates a breadth-first tree.
     ///
     /// # Arguments
@@ -58,9 +93,9 @@ impl BfTree {
     /// # Examples
     ///
     /// ```
-    /// use graaf::algo::bf_tree::BfTree;
+    /// use graaf::algo::breadth_first_tree::BreadthFirstTree;
     ///
-    /// let pred = BfTree::from(vec![Some(1), Some(2), Some(3), None]);
+    /// let pred = BreadthFirstTree::from(vec![Some(1), Some(2), Some(3), None]);
     ///
     /// assert!(pred.search(0, 3).into_iter().eq(Some(vec![0, 1, 2, 3])));
     /// ```
@@ -85,9 +120,9 @@ impl BfTree {
     /// # Examples
     ///
     /// ```
-    /// use graaf::algo::bf_tree::BfTree;
+    /// use graaf::algo::breadth_first_tree::BreadthFirstTree;
     ///
-    /// let pred = BfTree::from(vec![Some(1), Some(2), Some(3), None]);
+    /// let pred = BreadthFirstTree::from(vec![Some(1), Some(2), Some(3), None]);
     ///
     /// assert!(pred
     ///     .search_by(0, |&v, _| v > 1)
@@ -96,9 +131,9 @@ impl BfTree {
     /// ```
     ///
     /// ```
-    /// use graaf::algo::bf_tree::BfTree;
+    /// use graaf::algo::breadth_first_tree::BreadthFirstTree;
     ///
-    /// let pred = BfTree::from(vec![Some(1), Some(2), Some(3), None, Some(0)]);
+    /// let pred = BreadthFirstTree::from(vec![Some(1), Some(2), Some(3), None, Some(0)]);
     ///
     /// assert!(pred
     ///     .search_by(0, |_, u| u.is_none())
@@ -141,13 +176,13 @@ impl BfTree {
     }
 }
 
-impl From<Vec<Option<usize>>> for BfTree {
+impl From<Vec<Option<usize>>> for BreadthFirstTree {
     fn from(pred: Vec<Option<usize>>) -> Self {
         Self { pred }
     }
 }
 
-impl Index<usize> for BfTree {
+impl Index<usize> for BreadthFirstTree {
     type Output = Option<usize>;
 
     fn index(&self, s: usize) -> &Self::Output {
@@ -155,13 +190,13 @@ impl Index<usize> for BfTree {
     }
 }
 
-impl IndexMut<usize> for BfTree {
+impl IndexMut<usize> for BreadthFirstTree {
     fn index_mut(&mut self, s: usize) -> &mut Self::Output {
         &mut self.pred[s]
     }
 }
 
-impl IntoIterator for BfTree {
+impl IntoIterator for BreadthFirstTree {
     type IntoIter = IntoIter<Self::Item>;
     type Item = Option<usize>;
 
@@ -176,12 +211,12 @@ mod tests {
 
     #[test]
     fn search_singleton_s_ne_t() {
-        assert_eq!(BfTree::from(vec![Some(0)]).search(0, 1), None);
+        assert_eq!(BreadthFirstTree::from(vec![Some(0)]).search(0, 1), None);
     }
 
     #[test]
     fn search_singleton_s_eq_t() {
-        assert!(BfTree::from(vec![Some(0)])
+        assert!(BreadthFirstTree::from(vec![Some(0)])
             .search(0, 0)
             .unwrap()
             .into_iter()
@@ -191,7 +226,7 @@ mod tests {
     #[test]
     fn search_no_path() {
         assert_eq!(
-            BfTree::from(vec![Some(1), Some(2), None, None]).search(0, 3),
+            BreadthFirstTree::from(vec![Some(1), Some(2), None, None]).search(0, 3),
             None
         );
     }
@@ -199,32 +234,36 @@ mod tests {
     #[test]
     fn search_cycle() {
         assert_eq!(
-            BfTree::from(vec![Some(1), Some(2), Some(0), None]).search(0, 3),
+            BreadthFirstTree::from(vec![Some(1), Some(2), Some(0), None]).search(0, 3),
             None
         );
     }
 
     #[test]
     fn search_path_s_eq_t() {
-        assert!(BfTree::from(vec![Some(1), Some(2), Some(0), None])
-            .search(0, 0)
-            .unwrap()
-            .into_iter()
-            .eq([0]));
+        assert!(
+            BreadthFirstTree::from(vec![Some(1), Some(2), Some(0), None])
+                .search(0, 0)
+                .unwrap()
+                .into_iter()
+                .eq([0])
+        );
     }
 
     #[test]
     fn search_path_s_ne_t() {
-        assert!(BfTree::from(vec![Some(1), Some(2), Some(3), None])
-            .search(1, 3)
-            .unwrap()
-            .into_iter()
-            .eq([1, 2, 3]));
+        assert!(
+            BreadthFirstTree::from(vec![Some(1), Some(2), Some(3), None])
+                .search(1, 3)
+                .unwrap()
+                .into_iter()
+                .eq([1, 2, 3])
+        );
     }
 
     #[test]
     fn search_by_singleton_s_eq_t() {
-        assert!(BfTree::from(vec![Some(0)])
+        assert!(BreadthFirstTree::from(vec![Some(0)])
             .search_by(0, |&t, _| t == 0)
             .unwrap()
             .into_iter()
@@ -234,7 +273,7 @@ mod tests {
     #[test]
     fn search_by_singleton_s_ne_t() {
         assert_eq!(
-            BfTree::from(vec![Some(0)]).search_by(0, |&t, _| t == 1),
+            BreadthFirstTree::from(vec![Some(0)]).search_by(0, |&t, _| t == 1),
             None
         );
     }
@@ -242,7 +281,7 @@ mod tests {
     #[test]
     fn search_by_no_path() {
         assert_eq!(
-            BfTree::from(vec![Some(1), Some(2), None, None]).search_by(0, |&t, _| t == 3),
+            BreadthFirstTree::from(vec![Some(1), Some(2), None, None]).search_by(0, |&t, _| t == 3),
             None
         );
     }
@@ -250,32 +289,37 @@ mod tests {
     #[test]
     fn search_by_cycle() {
         assert_eq!(
-            BfTree::from(vec![Some(1), Some(2), Some(0), None]).search_by(0, |&t, _| t == 3),
+            BreadthFirstTree::from(vec![Some(1), Some(2), Some(0), None])
+                .search_by(0, |&t, _| t == 3),
             None
         );
     }
 
     #[test]
     fn search_by_path_s_eq_t() {
-        assert!(BfTree::from(vec![Some(1), Some(2), Some(0), None])
-            .search_by(0, |&t, _| t == 0)
-            .unwrap()
-            .into_iter()
-            .eq([0]));
+        assert!(
+            BreadthFirstTree::from(vec![Some(1), Some(2), Some(0), None])
+                .search_by(0, |&t, _| t == 0)
+                .unwrap()
+                .into_iter()
+                .eq([0])
+        );
     }
 
     #[test]
     fn search_by_path_s_ne_t() {
-        assert!(BfTree::from(vec![Some(1), Some(2), Some(3), None])
-            .search_by(1, |&t, _| t == 3)
-            .unwrap()
-            .into_iter()
-            .eq([1, 2, 3]));
+        assert!(
+            BreadthFirstTree::from(vec![Some(1), Some(2), Some(3), None])
+                .search_by(1, |&t, _| t == 3)
+                .unwrap()
+                .into_iter()
+                .eq([1, 2, 3])
+        );
     }
 
     #[test]
     fn index() {
-        let pred = BfTree::from(vec![Some(1), Some(2), Some(3), None]);
+        let pred = BreadthFirstTree::from(vec![Some(1), Some(2), Some(3), None]);
 
         assert_eq!(pred[0], Some(1));
         assert_eq!(pred[1], Some(2));
@@ -285,7 +329,7 @@ mod tests {
 
     #[test]
     fn index_mut() {
-        let mut pred = BfTree::from(vec![Some(1), Some(2), Some(3), None]);
+        let mut pred = BreadthFirstTree::from(vec![Some(1), Some(2), Some(3), None]);
 
         pred[0] = Some(0);
         pred[1] = None;

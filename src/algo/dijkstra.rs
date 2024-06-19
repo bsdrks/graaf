@@ -72,7 +72,7 @@
 
 use {
     crate::{
-        algo::bf_tree::BfTree,
+        algo::breadth_first_tree::BreadthFirstTree,
         op::{
             IterOutWeightedNeighbors,
             Order,
@@ -238,7 +238,7 @@ where
 ///     core::cmp::Reverse,
 ///     graaf::{
 ///         algo::{
-///             bf_tree::BfTree,
+///             breadth_first_tree::BreadthFirstTree,
 ///             dijkstra::predecessors,
 ///         },
 ///         gen::Empty,
@@ -258,7 +258,7 @@ where
 /// digraph.add_weighted_arc(1, 2, 2);
 /// digraph.add_weighted_arc(3, 0, 2);
 ///
-/// let mut pred = BfTree::new(4);
+/// let mut pred = BreadthFirstTree::new(4);
 /// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
 /// let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 ///
@@ -270,7 +270,7 @@ where
 pub fn predecessors<D, S, W>(
     digraph: &D,
     step: S,
-    pred: &mut BfTree,
+    pred: &mut BreadthFirstTree,
     dist: &mut [W],
     heap: &mut BinaryHeap<(Reverse<W>, usize)>,
 ) where
@@ -333,12 +333,12 @@ pub fn predecessors<D, S, W>(
 ///
 /// assert!(pred.into_iter().eq([None, Some(0), Some(1), None]));
 /// ```
-pub fn single_source_predecessors<D>(digraph: &D, s: usize) -> BfTree
+pub fn single_source_predecessors<D>(digraph: &D, s: usize) -> BreadthFirstTree
 where
     D: Order + IterOutWeightedNeighbors<usize>,
 {
     let v = digraph.order();
-    let mut pred = BfTree::new(v);
+    let mut pred = BreadthFirstTree::new(v);
     let mut dist = vec![usize::MAX; v];
     let mut heap = BinaryHeap::from([(Reverse(0), s)]);
 
@@ -379,7 +379,7 @@ where
 ///     core::cmp::Reverse,
 ///     graaf::{
 ///         algo::{
-///             bf_tree::BfTree,
+///             breadth_first_tree::BreadthFirstTree,
 ///             dijkstra::shortest_path,
 ///         },
 ///         gen::EmptyConst,
@@ -399,7 +399,7 @@ where
 /// digraph.add_weighted_arc(1, 2, 2);
 /// digraph.add_weighted_arc(3, 0, 2);
 ///
-/// let mut pred = BfTree::new(4);
+/// let mut pred = BreadthFirstTree::new(4);
 /// let mut dist = [usize::MAX, usize::MAX, usize::MAX, 0];
 /// let mut heap = BinaryHeap::from([(Reverse(0), 3)]);
 ///
@@ -420,7 +420,7 @@ pub fn shortest_path<D, S, T, W>(
     digraph: &D,
     step: S,
     is_target: T,
-    pred: &mut BfTree,
+    pred: &mut BreadthFirstTree,
     dist: &mut [W],
     heap: &mut BinaryHeap<(Reverse<W>, usize)>,
 ) -> Option<Vec<usize>>
@@ -516,7 +516,7 @@ where
     D: Order + IterOutWeightedNeighbors<usize>,
 {
     let v = digraph.order();
-    let pred = &mut BfTree::new(v);
+    let pred = &mut BreadthFirstTree::new(v);
     let dist = &mut vec![usize::MAX; v];
     let heap = &mut BinaryHeap::from([(Reverse(0), s)]);
 
@@ -550,7 +550,7 @@ mod tests {
 
     macro_rules! test_predecessors {
         ($digraph:expr, $dist:expr, $pred:expr) => {
-            let mut pred = BfTree::new($dist.len());
+            let mut pred = BreadthFirstTree::new($dist.len());
             let mut dist = vec![usize::MAX; $dist.len()];
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
@@ -565,7 +565,7 @@ mod tests {
 
     macro_rules! test_shortest_path {
         ($digraph:expr, $t:expr, $dist:expr, $pred:expr, $path:expr) => {
-            let mut pred = BfTree::new($dist.len());
+            let mut pred = BreadthFirstTree::new($dist.len());
             let mut dist = vec![usize::MAX; $dist.len()];
             let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 

@@ -67,7 +67,7 @@
 
 use {
     crate::{
-        algo::bf_tree::BfTree,
+        algo::breadth_first_tree::BreadthFirstTree,
         op::{
             IterOutNeighbors,
             Order,
@@ -216,8 +216,8 @@ where
 ///     core::cmp::Reverse,
 ///     graaf::{
 ///         algo::{
-///             bf_tree::BfTree,
 ///             bfs::predecessors,
+///             breadth_first_tree::BreadthFirstTree,
 ///         },
 ///         gen::EmptyConst,
 ///         op::AddArc,
@@ -236,7 +236,7 @@ where
 /// digraph.add_arc(1, 2);
 /// digraph.add_arc(3, 0);
 ///
-/// let mut pred = BfTree::new(4);
+/// let mut pred = BreadthFirstTree::new(4);
 /// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
 /// let mut queue = VecDeque::from([(0, 0)]);
 ///
@@ -248,7 +248,7 @@ where
 pub fn predecessors<D, S, W>(
     digraph: &D,
     step: S,
-    pred: &mut BfTree,
+    pred: &mut BreadthFirstTree,
     dist: &mut [W],
     queue: &mut VecDeque<(usize, W)>,
 ) where
@@ -311,12 +311,12 @@ pub fn predecessors<D, S, W>(
 ///
 /// assert!(pred.into_iter().eq([None, Some(0), Some(1), None]));
 /// ```
-pub fn single_source_predecessors<D>(digraph: &D, s: usize) -> BfTree
+pub fn single_source_predecessors<D>(digraph: &D, s: usize) -> BreadthFirstTree
 where
     D: Order + IterOutNeighbors,
 {
     let v = digraph.order();
-    let mut pred = BfTree::new(v);
+    let mut pred = BreadthFirstTree::new(v);
     let mut dist = vec![usize::MAX; v];
     let mut queue = VecDeque::from(vec![(s, 0)]);
 
@@ -357,8 +357,8 @@ where
 /// use {
 ///     graaf::{
 ///         algo::{
-///             bf_tree::BfTree,
 ///             bfs::shortest_path,
+///             breadth_first_tree::BreadthFirstTree,
 ///         },
 ///         gen::EmptyConst,
 ///         op::AddArc,
@@ -377,7 +377,7 @@ where
 /// digraph.add_arc(1, 2);
 /// digraph.add_arc(3, 0);
 ///
-/// let mut pred = BfTree::new(4);
+/// let mut pred = BreadthFirstTree::new(4);
 /// let mut dist = [usize::MAX, usize::MAX, usize::MAX, 0];
 /// let mut queue = VecDeque::from([(3, 0)]);
 ///
@@ -396,7 +396,7 @@ pub fn shortest_path<D, S, T>(
     digraph: &D,
     step: S,
     is_target: T,
-    pred: &mut BfTree,
+    pred: &mut BreadthFirstTree,
     dist: &mut [usize],
     queue: &mut VecDeque<(usize, usize)>,
 ) -> Option<Vec<usize>>
@@ -508,7 +508,7 @@ where
     D: Order + IterOutNeighbors,
 {
     let v = digraph.order();
-    let mut pred = BfTree::new(v);
+    let mut pred = BreadthFirstTree::new(v);
     let mut dist = vec![usize::MAX; v];
     let mut queue = VecDeque::from(vec![(s, 0)]);
 
@@ -639,7 +639,7 @@ mod tests {
     #[test]
     fn predecessors_trivial() {
         let digraph = Vec::<Vec<usize>>::trivial();
-        let mut pred = BfTree::new(1);
+        let mut pred = BreadthFirstTree::new(1);
         let mut dist = vec![0];
         let mut queue = VecDeque::new();
 
@@ -652,7 +652,7 @@ mod tests {
     #[test]
     fn predecessors_bang_jensen_94() {
         let digraph = fixture::bang_jensen_94();
-        let mut pred = BfTree::new(7);
+        let mut pred = BreadthFirstTree::new(7);
         let mut dist = [usize::MAX; 7];
         let mut queue = VecDeque::from([(0, 0)]);
 
@@ -670,7 +670,7 @@ mod tests {
     #[test]
     fn predecessors_kattis_escapewallmaria_1() {
         let digraph = fixture::kattis_escapewallmaria_1();
-        let mut pred = BfTree::new(16);
+        let mut pred = BreadthFirstTree::new(16);
         let mut dist = [usize::MAX; 16];
         let mut queue = VecDeque::from([(5, 0)]);
 
@@ -701,7 +701,7 @@ mod tests {
     #[test]
     fn predecessors_kattis_escapewallmaria_2() {
         let digraph = fixture::kattis_escapewallmaria_2();
-        let mut pred = BfTree::new(16);
+        let mut pred = BreadthFirstTree::new(16);
         let mut dist = [usize::MAX; 16];
         let mut queue = VecDeque::from([(5, 0)]);
 
@@ -728,7 +728,7 @@ mod tests {
     #[test]
     fn predecessors_kattis_escapewallmaria_3() {
         let digraph = fixture::kattis_escapewallmaria_3();
-        let mut pred = BfTree::new(16);
+        let mut pred = BreadthFirstTree::new(16);
         let mut dist = [usize::MAX; 16];
         let mut queue = VecDeque::from([(1, 0)]);
 
@@ -777,7 +777,7 @@ mod tests {
     #[test]
     fn shortest_path_trivial() {
         let digraph = Vec::<Vec<usize>>::trivial();
-        let mut pred = BfTree::new(1);
+        let mut pred = BreadthFirstTree::new(1);
         let mut dist = vec![0];
         let mut queue = VecDeque::new();
 
@@ -798,7 +798,7 @@ mod tests {
     #[test]
     fn shortest_path_bang_jensen_94() {
         let digraph = fixture::bang_jensen_94();
-        let mut pred = BfTree::new(7);
+        let mut pred = BreadthFirstTree::new(7);
         let mut dist = [usize::MAX; 7];
         let mut queue = VecDeque::from([(0, 0)]);
 
@@ -825,7 +825,7 @@ mod tests {
     fn shortest_path_kattis_escapewallmaria_1() {
         let digraph = fixture::kattis_escapewallmaria_1();
         let border = BTreeSet::from([0, 1, 2, 3, 4, 7, 8, 11, 12, 13, 14, 15]);
-        let mut pred = BfTree::new(16);
+        let mut pred = BreadthFirstTree::new(16);
         let mut dist = [usize::MAX; 16];
         let mut queue = VecDeque::from([(5, 0)]);
 
@@ -863,7 +863,7 @@ mod tests {
     fn shortest_path_kattis_escapewallmaria_2() {
         let digraph = fixture::kattis_escapewallmaria_2();
         let border = BTreeSet::from([0, 1, 2, 3, 4, 7, 8, 11, 12, 13, 14, 15]);
-        let mut pred = BfTree::new(16);
+        let mut pred = BreadthFirstTree::new(16);
         let mut dist = [usize::MAX; 16];
         let mut queue = VecDeque::from([(5, 0)]);
 
@@ -899,7 +899,7 @@ mod tests {
     fn shortest_path_kattis_escapewallmaria_3() {
         let digraph = fixture::kattis_escapewallmaria_3();
         let border = BTreeSet::from([0, 1, 2, 3, 4, 7, 8, 11, 12, 13, 14, 15]);
-        let mut pred = BfTree::new(16);
+        let mut pred = BreadthFirstTree::new(16);
         let mut dist = [usize::MAX; 16];
         let mut queue = VecDeque::from([(1, 0)]);
 

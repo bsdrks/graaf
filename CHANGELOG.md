@@ -30,31 +30,46 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.61.0] - 2024-06-19
+
+Added
+
+- Add `DistanceMatrix` data structure.
+- Implement and test `DistanceMatrix::new`.
+- Implement and test `Index<usize>` for `DistanceMatrix`.
+- Implement and test `IndexMut<usize>` for `DistanceMatrix`.
+
+Changed
+
+- Breaking: Rename `BfTree` to `BreadthFirstTree`.
+- Breaking: Rename `bf_tree` to `breadth_first_tree`.
+- Breaking: `FloydWarshall::distances` now returns a `DistanceMatrix`.
+
 ## [0.60.0] - 2024-06-19
 
 Added
 
-- Added unit test `index_mut` for `BfTree`.
-- Added unit test `index` for `BfTree`.
-- Added unit test `search_by_cycle` for `BfTree`.
-- Added unit test `search_by_no_path` for `BfTree`.
-- Added unit test `search_by_path_s_eq_t` for `BfTree`.
-- Added unit test `search_by_path_s_ne_t` for `BfTree`.
-- Added unit test `search_by_singleton_s_eq_t` for `BfTree`.
-- Added unit test `search_by_singleton_s_ne_t` for `BfTree`.
-- Added unit test `search_cycle` for `BfTree`.
-- Added unit test `search_no_path` for `BfTree`.
-- Added unit test `search_path_s_eq_t` for `BfTree`.
-- Added unit test `search_path_s_ne_t` for `BfTree`.
-- Added unit test `search_singleton_s_eq_t` for `BfTree`.
-- Added unit test `search_singleton_s_ne_t` for `BfTree`.
+- Add unit test `index_mut` for `BfTree`.
+- Add unit test `index` for `BfTree`.
+- Add unit test `search_by_cycle` for `BfTree`.
+- Add unit test `search_by_no_path` for `BfTree`.
+- Add unit test `search_by_path_s_eq_t` for `BfTree`.
+- Add unit test `search_by_path_s_ne_t` for `BfTree`.
+- Add unit test `search_by_singleton_s_eq_t` for `BfTree`.
+- Add unit test `search_by_singleton_s_ne_t` for `BfTree`.
+- Add unit test `search_cycle` for `BfTree`.
+- Add unit test `search_no_path` for `BfTree`.
+- Add unit test `search_path_s_eq_t` for `BfTree`.
+- Add unit test `search_path_s_ne_t` for `BfTree`.
+- Add unit test `search_singleton_s_eq_t` for `BfTree`.
+- Add unit test `search_singleton_s_ne_t` for `BfTree`.
 
 Changed
 
 - Breaking: Rename `BfsTree` to `BfTree`.
 - Breaking: `BfTree::new` now panics if `v` is zero.
-- Breaking: `BfTree::search_by` now returns early if `s` is a target.
-- Breaking: `BfTree::search` now returns early if `s` equals `t`.
+- Breaking: `BfTree::search_by` now immediately returns if `s` is a target.
+- Breaking: `BfTree::search` now immediately returns if `s` equals `t`.
 
 ## [0.59.0] - 2024-06-18
 
