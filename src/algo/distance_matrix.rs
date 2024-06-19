@@ -28,12 +28,24 @@
 //! digraph.add_weighted_arc(2, 3, 2);
 //! digraph.add_weighted_arc(3, 1, -1);
 //!
-//! assert!(distances(&digraph).eq(DistanceMatrix::from(vec![
-//!     vec![0, -1, -2, 0],
-//!     vec![4, 0, 2, 4],
-//!     vec![5, 1, 0, 2],
-//!     vec![3, -1, 1, 0],
-//! ])));
+//! let dist = distances(&digraph);
+//!
+//! assert_eq!(dist[0][0], 0);
+//! assert_eq!(dist[0][1], -1);
+//! assert_eq!(dist[0][2], -2);
+//! assert_eq!(dist[0][3], 0);
+//! assert_eq!(dist[1][0], 4);
+//! assert_eq!(dist[1][1], 0);
+//! assert_eq!(dist[1][2], 2);
+//! assert_eq!(dist[1][3], 4);
+//! assert_eq!(dist[2][0], 5);
+//! assert_eq!(dist[2][1], 1);
+//! assert_eq!(dist[2][2], 0);
+//! assert_eq!(dist[2][3], 2);
+//! assert_eq!(dist[3][0], 3);
+//! assert_eq!(dist[3][1], -1);
+//! assert_eq!(dist[3][2], 1);
+//! assert_eq!(dist[3][3], 0);
 //! ```
 
 use std::ops::{
