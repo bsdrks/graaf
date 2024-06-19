@@ -91,12 +91,8 @@ use crate::{
 ///     vec![4, 0, 2, 4],
 ///     vec![5, 1, 0, 2],
 ///     vec![3, -1, 1, 0],
-/// ])));
+/// ]))));
 /// ```
-///
-/// # Panics
-///
-/// Never
 ///
 /// [^1]: Robert W. Floyd. 1962. Algorithm 97: Shortest path. Commun.
 ///   ACM 5, 6 (June 1962), 345. <https://doi.org/10.1145/367766.368168>
