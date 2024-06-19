@@ -30,27 +30,22 @@
 //!
 //! let dist = distances(&digraph);
 //!
-//! assert_eq!(dist[0][0], 0);
-//! assert_eq!(dist[0][1], -1);
-//! assert_eq!(dist[0][2], -2);
-//! assert_eq!(dist[0][3], 0);
-//! assert_eq!(dist[1][0], 4);
-//! assert_eq!(dist[1][1], 0);
-//! assert_eq!(dist[1][2], 2);
-//! assert_eq!(dist[1][3], 4);
-//! assert_eq!(dist[2][0], 5);
-//! assert_eq!(dist[2][1], 1);
-//! assert_eq!(dist[2][2], 0);
-//! assert_eq!(dist[2][3], 2);
-//! assert_eq!(dist[3][0], 3);
-//! assert_eq!(dist[3][1], -1);
-//! assert_eq!(dist[3][2], 1);
-//! assert_eq!(dist[3][3], 0);
+//! assert!(dist[0].iter().eq(&[0, -1, -2, 0]));
+//! assert!(dist[1].iter().eq(&[4, 0, 2, 4]));
+//! assert!(dist[2].iter().eq(&[5, 1, 0, 2]));
+//! assert!(dist[3].iter().eq(&[3, -1, 1, 0]));
 //! ```
 
-use std::ops::{
-    Index,
-    IndexMut,
+use std::{
+    cmp::Ordering::{
+        Equal,
+        Greater,
+        Less,
+    },
+    ops::{
+        Index,
+        IndexMut,
+    },
 };
 
 /// A distance matrix.
@@ -82,10 +77,10 @@ impl<W> DistanceMatrix<W> {
     /// let dist = DistanceMatrix::new(4, 0);
     ///
     /// assert_eq!(dist.max, 0);
-    /// assert_eq!(dist[0], vec![0, 0, 0, 0]);
-    /// assert_eq!(dist[1], vec![0, 0, 0, 0]);
-    /// assert_eq!(dist[2], vec![0, 0, 0, 0]);
-    /// assert_eq!(dist[3], vec![0, 0, 0, 0]);
+    /// assert_eq!(dist[0], vec![0; 4]);
+    /// assert_eq!(dist[1], vec![0; 4]);
+    /// assert_eq!(dist[2], vec![0; 4]);
+    /// assert_eq!(dist[3], vec![0; 4]);
     /// ```
     pub fn new(v: usize, max: W) -> Self
     where
@@ -95,6 +90,86 @@ impl<W> DistanceMatrix<W> {
             dist: vec![vec![max; v]; v],
             max,
         }
+    }
+
+    /// Finds the center of a distance matrix.
+    ///
+    /// # Returns
+    ///
+    /// The vertices with the smallest eccentricity.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use graaf::{
+    ///     algo::{
+    ///         distance_matrix::DistanceMatrix,
+    ///         floyd_warshall::distances,
+    ///     },
+    ///     gen::Empty,
+    ///     op::AddWeightedArc,
+    /// };
+    ///
+    /// // 0 -> {2}
+    /// // 1 -> {3}
+    /// // 2 -> {0, 3, 4}
+    /// // 3 -> {1, 2, 5}
+    /// // 4 -> {2, 5, 6}
+    /// // 5 -> {3, 4, 7}
+    /// // 6 -> {5, 8}
+    /// // 7 -> {5}
+    /// // 8 -> {6}
+    ///
+    /// let mut digraph = Vec::<Vec<(usize, isize)>>::empty(9);
+    ///
+    /// digraph.add_weighted_arc(0, 2, 1);
+    /// digraph.add_weighted_arc(1, 3, 1);
+    /// digraph.add_weighted_arc(2, 0, 1);
+    /// digraph.add_weighted_arc(2, 3, 1);
+    /// digraph.add_weighted_arc(2, 4, 1);
+    /// digraph.add_weighted_arc(3, 1, 1);
+    /// digraph.add_weighted_arc(3, 2, 1);
+    /// digraph.add_weighted_arc(3, 5, 1);
+    /// digraph.add_weighted_arc(4, 2, 1);
+    /// digraph.add_weighted_arc(4, 5, 1);
+    /// digraph.add_weighted_arc(4, 6, 1);
+    /// digraph.add_weighted_arc(5, 3, 1);
+    /// digraph.add_weighted_arc(5, 4, 1);
+    /// digraph.add_weighted_arc(5, 7, 1);
+    /// digraph.add_weighted_arc(6, 5, 1);
+    /// digraph.add_weighted_arc(6, 8, 1);
+    /// digraph.add_weighted_arc(7, 5, 1);
+    /// digraph.add_weighted_arc(8, 6, 1);
+    ///
+    /// let dist = distances(&digraph);
+    ///
+    /// assert!(dist.center().iter().eq(&[2, 4, 5]));
+    /// ```
+    pub fn center(&self) -> Vec<usize>
+    where
+        W: Copy + Ord,
+    {
+        let mut center = Vec::new();
+        let mut ecc_min = self.max;
+
+        for (i, row) in self.dist.iter().enumerate() {
+            if let Some(&ecc_next) = row.iter().max() {
+                match ecc_next.cmp(&ecc_min) {
+                    Less => {
+                        ecc_min = ecc_next;
+
+                        center.clear();
+                        center.push(i);
+                    }
+                    Equal => {
+                        center.push(i);
+                    }
+                    Greater => {}
+                }
+            }
+        }
+
+        center
     }
 }
 
@@ -118,9 +193,9 @@ mod tests {
 
     #[test]
     fn test_new() {
-        let dist = DistanceMatrix::new(4, 0);
+        let dist = DistanceMatrix::new(4, isize::MAX);
 
-        assert_eq!(dist.max, 0);
+        assert_eq!(dist.max, isize::MAX);
         assert!(dist[0].iter().eq(&[0; 4]));
         assert!(dist[1].iter().eq(&[0; 4]));
         assert!(dist[2].iter().eq(&[0; 4]));
@@ -129,7 +204,7 @@ mod tests {
 
     #[test]
     fn test_index() {
-        let dist = DistanceMatrix::new(4, 0);
+        let dist = DistanceMatrix::new(4, isize::MAX);
 
         assert_eq!(dist[0][0], 0);
         assert_eq!(dist[0][1], 0);
@@ -151,7 +226,7 @@ mod tests {
 
     #[test]
     fn test_index_mut() {
-        let mut dist = DistanceMatrix::new(4, 0);
+        let mut dist = DistanceMatrix::new(4, isize::MAX);
 
         dist[0][0] = 1;
         dist[0][1] = 2;

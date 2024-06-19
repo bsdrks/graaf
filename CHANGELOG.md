@@ -30,6 +30,12 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.61.1] - 2024-06-19
+
+Added
+
+- Add `DistanceMatrix::center`.
+
 ## [0.61.0] - 2024-06-19
 
 Added
