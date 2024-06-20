@@ -1,5 +1,7 @@
 *.profraw
+.DS_Store
 .vscode
 /target
 Cargo.lock
 coverage
+priv

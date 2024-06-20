@@ -30,6 +30,21 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.62.0] - 2024-06-20
+
+Added
+
+- Add and test `DistanceMatrix::eccentricities`.
+- Add unit test `center` for `DistanceMatrix`.
+- Base `DistanceMatrix::center` on `DistanceMatrix::eccentricities`.
+
+Changed
+
+- Breaking: `DistanceMatrix::new` now panics if `v` is zero.
+- Rename `distance_matrix::tests::test_index_mut` to `distance_matrix::tests::index_mut`.
+- Rename `distance_matrix::tests::test_index` to `distance_matrix::tests::index`.
+- Rename `distance_matrix::tests::test_new` to `distance_matrix::tests::new`.
+
 ## [0.61.2] - 2024-06-20
 
 Fixed

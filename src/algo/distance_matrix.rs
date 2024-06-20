@@ -69,6 +69,10 @@ impl<W> DistanceMatrix<W> {
     ///
     /// Returns a new distance matrix.
     ///
+    /// # Panics
+    ///
+    /// Panics if `v` is zero.
+    ///
     /// # Examples
     ///
     /// ```
@@ -86,6 +90,8 @@ impl<W> DistanceMatrix<W> {
     where
         W: Copy,
     {
+        assert!(v > 0, "a distance matrix must have at least one vertex");
+
         Self {
             dist: vec![vec![max; v]; v],
             max,
@@ -149,27 +155,90 @@ impl<W> DistanceMatrix<W> {
     where
         W: Copy + Ord,
     {
+        let ecc = self.eccentricities();
         let mut center = Vec::new();
-        let mut ecc_min = self.max;
+        let mut min = self.max;
 
-        for (i, row) in self.dist.iter().enumerate() {
-            if let Some(&ecc_next) = row.iter().max() {
-                match ecc_next.cmp(&ecc_min) {
-                    Less => {
-                        ecc_min = ecc_next;
-
-                        center.clear();
-                        center.push(i);
-                    }
-                    Equal => {
-                        center.push(i);
-                    }
-                    Greater => {}
+        for (i, &e) in ecc.iter().enumerate() {
+            match e.cmp(&min) {
+                Less => {
+                    center.clear();
+                    center.push(i);
+                    min = e;
                 }
+                Equal => center.push(i),
+                Greater => (),
             }
         }
 
         center
+    }
+
+    /// Returns the eccentricities of the vertices.
+    ///
+    /// # Returns
+    ///
+    /// Returns the eccentricities of the vertices.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use graaf::{
+    ///     algo::{
+    ///         distance_matrix::DistanceMatrix,
+    ///         floyd_warshall::distances,
+    ///     },
+    ///     gen::Empty,
+    ///     op::AddWeightedArc,
+    /// };
+    ///
+    /// // 0 -> {2}
+    /// // 1 -> {3}
+    /// // 2 -> {0, 3, 4}
+    /// // 3 -> {1, 2, 5}
+    /// // 4 -> {2, 5, 6}
+    /// // 5 -> {3, 4, 7}
+    /// // 6 -> {5, 8}
+    /// // 7 -> {5}
+    /// // 8 -> {6}
+    ///
+    /// let mut digraph = Vec::<Vec<(usize, isize)>>::empty(9);
+    ///
+    /// digraph.add_weighted_arc(0, 2, 1);
+    /// digraph.add_weighted_arc(1, 3, 1);
+    /// digraph.add_weighted_arc(2, 0, 1);
+    /// digraph.add_weighted_arc(2, 3, 1);
+    /// digraph.add_weighted_arc(2, 4, 1);
+    /// digraph.add_weighted_arc(3, 1, 1);
+    /// digraph.add_weighted_arc(3, 2, 1);
+    /// digraph.add_weighted_arc(3, 5, 1);
+    /// digraph.add_weighted_arc(4, 2, 1);
+    /// digraph.add_weighted_arc(4, 5, 1);
+    /// digraph.add_weighted_arc(4, 6, 1);
+    /// digraph.add_weighted_arc(5, 3, 1);
+    /// digraph.add_weighted_arc(5, 4, 1);
+    /// digraph.add_weighted_arc(5, 7, 1);
+    /// digraph.add_weighted_arc(6, 5, 1);
+    /// digraph.add_weighted_arc(6, 8, 1);
+    /// digraph.add_weighted_arc(7, 5, 1);
+    /// digraph.add_weighted_arc(8, 6, 1);
+    ///
+    /// let dist = distances(&digraph);
+    ///
+    /// assert!(dist
+    ///     .eccentricities()
+    ///     .iter()
+    ///     .eq(&[4, 5, 3, 4, 3, 3, 4, 4, 5]));
+    /// ```
+    pub fn eccentricities(&self) -> Vec<W>
+    where
+        W: Copy + Ord,
+    {
+        self.dist
+            .iter()
+            .map(|row| row.iter().reduce(|acc, x| acc.max(x)).unwrap_or(&self.max))
+            .copied()
+            .collect()
     }
 }
 
@@ -192,7 +261,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_new() {
+    fn new() {
         let dist = DistanceMatrix::new(4, isize::MAX);
 
         assert_eq!(dist.max, isize::MAX);
@@ -203,7 +272,7 @@ mod tests {
     }
 
     #[test]
-    fn test_index() {
+    fn index() {
         let dist = DistanceMatrix::new(4, isize::MAX);
 
         assert_eq!(dist[0][0], isize::MAX);
@@ -225,7 +294,7 @@ mod tests {
     }
 
     #[test]
-    fn test_index_mut() {
+    fn index_mut() {
         let mut dist = DistanceMatrix::new(4, isize::MAX);
 
         dist[0][0] = 1;
@@ -249,5 +318,96 @@ mod tests {
         assert!(dist[1].iter().eq(&[5, 6, 7, 8]));
         assert!(dist[2].iter().eq(&[9, 10, 11, 12]));
         assert!(dist[3].iter().eq(&[13, 14, 15, 16]));
+    }
+
+    #[test]
+    fn center() {
+        use crate::{
+            algo::floyd_warshall::distances,
+            gen::Empty,
+            op::AddWeightedArc,
+        };
+
+        // 0 -> {2}
+        // 1 -> {3}
+        // 2 -> {0, 3, 4}
+        // 3 -> {1, 2, 5}
+        // 4 -> {2, 5, 6}
+        // 5 -> {3, 4, 7}
+        // 6 -> {5, 8}
+        // 7 -> {5}
+        // 8 -> {6}
+
+        let mut digraph = Vec::<Vec<(usize, isize)>>::empty(9);
+
+        digraph.add_weighted_arc(0, 2, 1);
+        digraph.add_weighted_arc(1, 3, 1);
+        digraph.add_weighted_arc(2, 0, 1);
+        digraph.add_weighted_arc(2, 3, 1);
+        digraph.add_weighted_arc(2, 4, 1);
+        digraph.add_weighted_arc(3, 1, 1);
+        digraph.add_weighted_arc(3, 2, 1);
+        digraph.add_weighted_arc(3, 5, 1);
+        digraph.add_weighted_arc(4, 2, 1);
+        digraph.add_weighted_arc(4, 5, 1);
+        digraph.add_weighted_arc(4, 6, 1);
+        digraph.add_weighted_arc(5, 3, 1);
+        digraph.add_weighted_arc(5, 4, 1);
+        digraph.add_weighted_arc(5, 7, 1);
+        digraph.add_weighted_arc(6, 5, 1);
+        digraph.add_weighted_arc(6, 8, 1);
+        digraph.add_weighted_arc(7, 5, 1);
+        digraph.add_weighted_arc(8, 6, 1);
+
+        let dist = distances(&digraph);
+
+        assert!(dist.center().iter().eq(&[2, 4, 5]));
+    }
+
+    #[test]
+    fn eccentricities() {
+        use crate::{
+            algo::floyd_warshall::distances,
+            gen::Empty,
+            op::AddWeightedArc,
+        };
+
+        // 0 -> {2}
+        // 1 -> {3}
+        // 2 -> {0, 3, 4}
+        // 3 -> {1, 2, 5}
+        // 4 -> {2, 5, 6}
+        // 5 -> {3, 4, 7}
+        // 6 -> {5, 8}
+        // 7 -> {5}
+        // 8 -> {6}
+
+        let mut digraph = Vec::<Vec<(usize, isize)>>::empty(9);
+
+        digraph.add_weighted_arc(0, 2, 1);
+        digraph.add_weighted_arc(1, 3, 1);
+        digraph.add_weighted_arc(2, 0, 1);
+        digraph.add_weighted_arc(2, 3, 1);
+        digraph.add_weighted_arc(2, 4, 1);
+        digraph.add_weighted_arc(3, 1, 1);
+        digraph.add_weighted_arc(3, 2, 1);
+        digraph.add_weighted_arc(3, 5, 1);
+        digraph.add_weighted_arc(4, 2, 1);
+        digraph.add_weighted_arc(4, 5, 1);
+        digraph.add_weighted_arc(4, 6, 1);
+        digraph.add_weighted_arc(5, 3, 1);
+        digraph.add_weighted_arc(5, 4, 1);
+        digraph.add_weighted_arc(5, 7, 1);
+        digraph.add_weighted_arc(6, 5, 1);
+        digraph.add_weighted_arc(6, 8, 1);
+        digraph.add_weighted_arc(7, 5, 1);
+        digraph.add_weighted_arc(8, 6, 1);
+
+        let dist = distances(&digraph);
+
+        assert!(dist
+            .eccentricities()
+            .iter()
+            .eq(&[4, 5, 3, 4, 3, 3, 4, 4, 5]));
     }
 }
