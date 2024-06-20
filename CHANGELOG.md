@@ -30,6 +30,13 @@
 - Release via GitHub Actions.
 - Speed up GHA workflow.
 
+## [0.61.2] - 2024-06-20
+
+Fixed
+
+- Fix `distance_matrix::tests::test_new`.
+- Fix `distance_matrix::tests::test_index`.
+
 ## [0.61.1] - 2024-06-19
 
 Added

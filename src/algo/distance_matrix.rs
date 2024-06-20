@@ -67,7 +67,7 @@ impl<W> DistanceMatrix<W> {
     ///
     /// # Returns
     ///
-    /// A distance matrix.
+    /// Returns a new distance matrix.
     ///
     /// # Examples
     ///
@@ -96,7 +96,7 @@ impl<W> DistanceMatrix<W> {
     ///
     /// # Returns
     ///
-    /// The vertices with the smallest eccentricity.
+    /// Returns the vertices with the smallest eccentricity.
     ///
     /// # Examples
     ///
@@ -196,32 +196,32 @@ mod tests {
         let dist = DistanceMatrix::new(4, isize::MAX);
 
         assert_eq!(dist.max, isize::MAX);
-        assert!(dist[0].iter().eq(&[0; 4]));
-        assert!(dist[1].iter().eq(&[0; 4]));
-        assert!(dist[2].iter().eq(&[0; 4]));
-        assert!(dist[3].iter().eq(&[0; 4]));
+        assert!(dist[0].iter().eq(&[isize::MAX; 4]));
+        assert!(dist[1].iter().eq(&[isize::MAX; 4]));
+        assert!(dist[2].iter().eq(&[isize::MAX; 4]));
+        assert!(dist[3].iter().eq(&[isize::MAX; 4]));
     }
 
     #[test]
     fn test_index() {
         let dist = DistanceMatrix::new(4, isize::MAX);
 
-        assert_eq!(dist[0][0], 0);
-        assert_eq!(dist[0][1], 0);
-        assert_eq!(dist[0][2], 0);
-        assert_eq!(dist[0][3], 0);
-        assert_eq!(dist[1][0], 0);
-        assert_eq!(dist[1][1], 0);
-        assert_eq!(dist[1][2], 0);
-        assert_eq!(dist[1][3], 0);
-        assert_eq!(dist[2][0], 0);
-        assert_eq!(dist[2][1], 0);
-        assert_eq!(dist[2][2], 0);
-        assert_eq!(dist[2][3], 0);
-        assert_eq!(dist[3][0], 0);
-        assert_eq!(dist[3][1], 0);
-        assert_eq!(dist[3][2], 0);
-        assert_eq!(dist[3][3], 0);
+        assert_eq!(dist[0][0], isize::MAX);
+        assert_eq!(dist[0][1], isize::MAX);
+        assert_eq!(dist[0][2], isize::MAX);
+        assert_eq!(dist[0][3], isize::MAX);
+        assert_eq!(dist[1][0], isize::MAX);
+        assert_eq!(dist[1][1], isize::MAX);
+        assert_eq!(dist[1][2], isize::MAX);
+        assert_eq!(dist[1][3], isize::MAX);
+        assert_eq!(dist[2][0], isize::MAX);
+        assert_eq!(dist[2][1], isize::MAX);
+        assert_eq!(dist[2][2], isize::MAX);
+        assert_eq!(dist[2][3], isize::MAX);
+        assert_eq!(dist[3][0], isize::MAX);
+        assert_eq!(dist[3][1], isize::MAX);
+        assert_eq!(dist[3][2], isize::MAX);
+        assert_eq!(dist[3][3], isize::MAX);
     }
 
     #[test]
