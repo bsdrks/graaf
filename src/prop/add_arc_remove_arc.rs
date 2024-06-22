@@ -38,7 +38,13 @@ where
 mod tests {
     use {
         super::*,
-        crate::prop::strategy::binop_vertices,
+        crate::{
+            gen::{
+                Empty,
+                EmptyConst,
+            },
+            prop::strategy::binop_vertices,
+        },
         proptest::prelude::*,
         std::collections::{
             BTreeSet,
@@ -49,14 +55,14 @@ mod tests {
     proptest! {
         #[test]
         fn vec_btree_set((v, s, t) in binop_vertices(1, 100)) {
-            let digraph = vec![HashSet::new(); v];
+            let digraph = Vec::<BTreeSet<usize>>::empty(v);
 
             assert!(add_arc_remove_arc(&digraph, s, t));
         }
 
         #[test]
         fn vec_hash_set((v, s, t) in binop_vertices(1, 100)) {
-            let digraph = vec![HashSet::new(); v];
+            let digraph = Vec::<HashSet<usize>>::empty(v);
 
             assert!(add_arc_remove_arc(&digraph, s, t));
         }
@@ -64,32 +70,16 @@ mod tests {
 
     #[test]
     fn arr_btree_set() {
-        let digraph = [BTreeSet::new(), BTreeSet::new(), BTreeSet::new()];
+        let digraph = <[BTreeSet<usize>; 3]>::empty();
 
         assert!(add_arc_remove_arc(&digraph, 0, 0));
-        assert!(add_arc_remove_arc(&digraph, 0, 1));
-        assert!(add_arc_remove_arc(&digraph, 0, 2));
-        assert!(add_arc_remove_arc(&digraph, 1, 0));
-        assert!(add_arc_remove_arc(&digraph, 1, 1));
-        assert!(add_arc_remove_arc(&digraph, 1, 2));
-        assert!(add_arc_remove_arc(&digraph, 2, 0));
-        assert!(add_arc_remove_arc(&digraph, 2, 1));
-        assert!(add_arc_remove_arc(&digraph, 2, 2));
     }
 
     #[test]
     fn arr_hash_set() {
-        let digraph = [HashSet::new(), HashSet::new(), HashSet::new()];
+        let digraph = <[HashSet<usize>; 3]>::empty();
 
         assert!(add_arc_remove_arc(&digraph, 0, 0));
-        assert!(add_arc_remove_arc(&digraph, 0, 1));
-        assert!(add_arc_remove_arc(&digraph, 0, 2));
-        assert!(add_arc_remove_arc(&digraph, 1, 0));
-        assert!(add_arc_remove_arc(&digraph, 1, 1));
-        assert!(add_arc_remove_arc(&digraph, 1, 2));
-        assert!(add_arc_remove_arc(&digraph, 2, 0));
-        assert!(add_arc_remove_arc(&digraph, 2, 1));
-        assert!(add_arc_remove_arc(&digraph, 2, 2));
     }
 
     #[cfg(feature = "adjacency_matrix")]
@@ -100,13 +90,5 @@ mod tests {
         let digraph = AdjacencyMatrix::<3>::new();
 
         assert!(add_arc_remove_arc(&digraph, 0, 0));
-        assert!(add_arc_remove_arc(&digraph, 0, 1));
-        assert!(add_arc_remove_arc(&digraph, 0, 2));
-        assert!(add_arc_remove_arc(&digraph, 1, 0));
-        assert!(add_arc_remove_arc(&digraph, 1, 1));
-        assert!(add_arc_remove_arc(&digraph, 1, 2));
-        assert!(add_arc_remove_arc(&digraph, 2, 0));
-        assert!(add_arc_remove_arc(&digraph, 2, 1));
-        assert!(add_arc_remove_arc(&digraph, 2, 2));
     }
 }

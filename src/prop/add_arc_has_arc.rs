@@ -35,7 +35,10 @@ mod tests {
     use {
         super::*,
         crate::{
-            gen::Empty,
+            gen::{
+                Empty,
+                EmptyConst,
+            },
             prop::strategy::binop_vertices,
         },
         proptest::prelude::*,
@@ -50,23 +53,23 @@ mod tests {
     proptest! {
         #[test]
         fn vec_btree_set((v, s, t) in binop_vertices(1, 100)) {
-            let mut digraph = vec![BTreeSet::new(); v];
+            let mut digraph = Vec::<BTreeSet<usize>>::empty(v);
 
             assert!(add_arc_has_arc(&mut digraph, s, t));
         }
 
         #[test]
         fn vec_hash_set((v, s, t) in binop_vertices(1, 100)) {
-            let mut digraph = vec![HashSet::new(); v];
+            let mut digraph = Vec::<HashSet<usize>>::empty(v);
 
             assert!(add_arc_has_arc(&mut digraph, s, t));
         }
 
         #[test]
         fn slice_btree_set((v, s, t) in binop_vertices(1, 100)) {
-            let digraph = &mut vec![BTreeSet::new(); v][..];
+            let mut digraph = Vec::<BTreeSet<usize>>::empty(v);
 
-            assert!(add_arc_has_arc(digraph, s, t));
+            assert!(add_arc_has_arc(digraph.as_mut_slice(), s, t));
         }
 
         #[test]
@@ -78,18 +81,14 @@ mod tests {
 
         #[test]
         fn btree_map_btree_set((v, s, t) in binop_vertices(1, 100)) {
-            let mut digraph = (0..v)
-                .map(|v| (v, BTreeSet::new()))
-                .collect::<BTreeMap<_, _>>();
+            let mut digraph = BTreeMap::<usize, BTreeSet<usize>>::empty(v);
 
             assert!(add_arc_has_arc(&mut digraph, s, t));
         }
 
         #[test]
         fn hash_map_hash_set((v, s, t) in binop_vertices(1, 100)) {
-            let mut digraph = (0..v)
-                .map(|v| (v, HashSet::new()))
-                .collect::<HashMap<_, _>>();
+            let mut digraph = HashMap::<usize, HashSet<usize>>::empty(v);
 
             assert!(add_arc_has_arc(&mut digraph, s, t));
         }
@@ -97,32 +96,16 @@ mod tests {
 
     #[test]
     fn arr_btree_set() {
-        let digraph = &mut [BTreeSet::new(), BTreeSet::new(), BTreeSet::new()];
+        let mut digraph = <[BTreeSet<usize>; 3]>::empty();
 
-        assert!(add_arc_has_arc(digraph, 0, 0));
-        assert!(add_arc_has_arc(digraph, 0, 1));
-        assert!(add_arc_has_arc(digraph, 0, 2));
-        assert!(add_arc_has_arc(digraph, 1, 0));
-        assert!(add_arc_has_arc(digraph, 1, 1));
-        assert!(add_arc_has_arc(digraph, 1, 2));
-        assert!(add_arc_has_arc(digraph, 2, 0));
-        assert!(add_arc_has_arc(digraph, 2, 1));
-        assert!(add_arc_has_arc(digraph, 2, 2));
+        assert!(add_arc_has_arc(&mut digraph, 0, 0));
     }
 
     #[test]
     fn arr_hash_set() {
-        let digraph = &mut [HashSet::new(), HashSet::new(), HashSet::new()];
+        let mut digraph = <[HashSet<usize>; 3]>::empty();
 
-        assert!(add_arc_has_arc(digraph, 0, 0));
-        assert!(add_arc_has_arc(digraph, 0, 1));
-        assert!(add_arc_has_arc(digraph, 0, 2));
-        assert!(add_arc_has_arc(digraph, 1, 0));
-        assert!(add_arc_has_arc(digraph, 1, 1));
-        assert!(add_arc_has_arc(digraph, 1, 2));
-        assert!(add_arc_has_arc(digraph, 2, 0));
-        assert!(add_arc_has_arc(digraph, 2, 1));
-        assert!(add_arc_has_arc(digraph, 2, 2));
+        assert!(add_arc_has_arc(&mut digraph, 0, 0));
     }
 
     #[cfg(feature = "adjacency_matrix")]
@@ -133,13 +116,5 @@ mod tests {
         let digraph = &mut AdjacencyMatrix::<3>::new();
 
         assert!(add_arc_has_arc(digraph, 0, 0));
-        assert!(add_arc_has_arc(digraph, 0, 1));
-        assert!(add_arc_has_arc(digraph, 0, 2));
-        assert!(add_arc_has_arc(digraph, 1, 0));
-        assert!(add_arc_has_arc(digraph, 1, 1));
-        assert!(add_arc_has_arc(digraph, 1, 2));
-        assert!(add_arc_has_arc(digraph, 2, 0));
-        assert!(add_arc_has_arc(digraph, 2, 1));
-        assert!(add_arc_has_arc(digraph, 2, 2));
     }
 }

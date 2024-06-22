@@ -2,33 +2,15 @@
 
 ## Provisional roadmap
 
-- Add A*.
-- Add Boruvka.
-- Add Dinic.
-- Add Edmonds-Karp.
-- Add Ford-Fulkerson.
-- Add Held-Karp.
-- Add Kosaraju.
-- Add Kruksal.
-- Add Prim.
-- Add Tarjan.
-- Add the `Difference` trait.
-- Add the `Intersection` trait.
-- Add the `IsBipartite` trait.
-- Add the `IsInTree` trait.
-- Add the `IsIsomorphic` trait.
-- Add the `IsOutTree` trait.
-- Add the `JoinVertices` trait.
-- Add the `RemoveVertex` trait.
-- Add the `RemoveWeightedArc` trait.
-- Add the `Union` trait.
 - Benchmark against popular graph libraries in other languages.
-- Benchmark traits for `AdjacencyMatrix` against adjacency lists.
-- Describe `IsSuperdigraph` without mentioning `IsSubdigraph`, except in passing.
+- Benchmark trait implementations.
 - Implement `IterOutNeighborsMut` for additional types.
-- Mention the `size` benchmark in `op::size` documentation.
-- Release via GitHub Actions.
-- Speed up GHA workflow.
+
+## [0.62.1] - 2024-06-22
+
+Changed
+
+- Clean up `prop` modules.
 
 ## [0.62.0] - 2024-06-20
 

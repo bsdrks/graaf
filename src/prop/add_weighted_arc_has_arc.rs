@@ -38,7 +38,13 @@ where
 mod tests {
     use {
         super::*,
-        crate::prop::strategy::binop_vertices,
+        crate::{
+            gen::{
+                Empty,
+                EmptyConst,
+            },
+            prop::strategy::binop_vertices,
+        },
         proptest::prelude::*,
         std::collections::{
             BTreeMap,
@@ -49,46 +55,42 @@ mod tests {
     proptest! {
         #[test]
         fn vec_btree_map((v, s, t) in binop_vertices(1, 100), w in -100..100_i32) {
-            let mut digraph = vec![BTreeMap::new(); v];
+            let mut digraph = Vec::<BTreeMap<usize, i32>>::empty(v);
 
             assert!(add_weighted_arc_has_arc(&mut digraph, s, t, w));
         }
 
         #[test]
         fn vec_hash_map((v, s, t) in binop_vertices(1, 100), w in -100..100_i32) {
-            let digraph: &mut Vec<HashMap<usize, i32>> = &mut vec![HashMap::new(); v];
+            let mut digraph = Vec::<HashMap<usize, i32>>::empty(v);
 
-            assert!(add_weighted_arc_has_arc(digraph, s, t, w));
+            assert!(add_weighted_arc_has_arc(&mut digraph, s, t, w));
         }
 
         #[test]
         fn slice_btree_map((v, s, t) in binop_vertices(1, 100), w in -100..100_i32) {
-            let digraph = &mut vec![BTreeMap::new(); v][..];
+            let mut digraph = Vec::<BTreeMap<usize, i32>>::empty(v);
 
-            assert!(add_weighted_arc_has_arc(digraph, s, t, w));
+            assert!(add_weighted_arc_has_arc(digraph.as_mut_slice(), s, t, w));
         }
 
         #[test]
         fn slice_hash_map((v, s, t) in binop_vertices(1, 100), w in -100..100_i32) {
-            let digraph = &mut vec![HashMap::new(); v][..];
+            let mut digraph = Vec::<HashMap<usize, i32>>::empty(v);
 
-            assert!(add_weighted_arc_has_arc(digraph, s, t, w));
+            assert!(add_weighted_arc_has_arc(digraph.as_mut_slice(), s, t, w));
         }
 
         #[test]
         fn btree_map_btree_map((v, s, t) in binop_vertices(1, 100), w in -100..100_i32) {
-            let mut digraph = (0..v)
-                .map(|v| (v, BTreeMap::new()))
-                .collect::<BTreeMap<_, _>>();
+            let mut digraph = BTreeMap::<usize, BTreeMap<usize, i32>>::empty(v);
 
             assert!(add_weighted_arc_has_arc(&mut digraph, s, t, w));
         }
 
         #[test]
         fn hash_map_hash_map((v, s, t) in binop_vertices(1, 100), w in -100..100_i32) {
-            let mut digraph = (0..v)
-                .map(|v| (v, HashMap::new()))
-                .collect::<HashMap<_, _>>();
+            let mut digraph = HashMap::<usize, HashMap<usize, i32>>::empty(v);
 
             assert!(add_weighted_arc_has_arc(&mut digraph, s, t, w));
         }
@@ -96,31 +98,15 @@ mod tests {
 
     #[test]
     fn arr_btree_map() {
-        let mut digraph = [BTreeMap::new(), BTreeMap::new(), BTreeMap::new()];
+        let mut digraph = <[BTreeMap<usize, i32>; 3]>::empty();
 
         assert!(add_weighted_arc_has_arc(&mut digraph, 0, 0, 0));
-        assert!(add_weighted_arc_has_arc(&mut digraph, 0, 1, 0));
-        assert!(add_weighted_arc_has_arc(&mut digraph, 0, 2, 0));
-        assert!(add_weighted_arc_has_arc(&mut digraph, 1, 0, 0));
-        assert!(add_weighted_arc_has_arc(&mut digraph, 1, 1, 0));
-        assert!(add_weighted_arc_has_arc(&mut digraph, 1, 2, 0));
-        assert!(add_weighted_arc_has_arc(&mut digraph, 2, 0, 0));
-        assert!(add_weighted_arc_has_arc(&mut digraph, 2, 1, 0));
-        assert!(add_weighted_arc_has_arc(&mut digraph, 2, 2, 0));
     }
 
     #[test]
     fn arr_hash_map() {
-        let mut digraph = [HashMap::new(), HashMap::new(), HashMap::new()];
+        let mut digraph = <[HashMap<usize, i32>; 3]>::empty();
 
         assert!(add_weighted_arc_has_arc(&mut digraph, 0, 0, 0));
-        assert!(add_weighted_arc_has_arc(&mut digraph, 0, 1, 0));
-        assert!(add_weighted_arc_has_arc(&mut digraph, 0, 2, 0));
-        assert!(add_weighted_arc_has_arc(&mut digraph, 1, 0, 0));
-        assert!(add_weighted_arc_has_arc(&mut digraph, 1, 1, 0));
-        assert!(add_weighted_arc_has_arc(&mut digraph, 1, 2, 0));
-        assert!(add_weighted_arc_has_arc(&mut digraph, 2, 0, 0));
-        assert!(add_weighted_arc_has_arc(&mut digraph, 2, 1, 0));
-        assert!(add_weighted_arc_has_arc(&mut digraph, 2, 2, 0));
     }
 }

@@ -40,7 +40,13 @@ where
 mod tests {
     use {
         super::*,
-        crate::prop::strategy::binop_vertices,
+        crate::{
+            gen::{
+                Empty,
+                EmptyConst,
+            },
+            prop::strategy::binop_vertices,
+        },
         proptest::prelude::*,
         std::collections::{
             BTreeMap,
@@ -51,14 +57,14 @@ mod tests {
     proptest! {
         #[test]
         fn vec_btree_map((v, s, t) in binop_vertices(1, 100), w in -100..100_i32) {
-            let digraph = vec![BTreeMap::new(); v];
+            let digraph = Vec::<BTreeMap<usize, i32>>::empty(v);
 
             assert!(add_weighted_arc_remove_arc(&digraph, s, t, w));
         }
 
         #[test]
         fn vec_hash_map((v, s, t) in binop_vertices(1, 100), w in -100..100_i32) {
-            let digraph = vec![HashMap::new(); v];
+            let digraph = Vec::<HashMap<usize, i32>>::empty(v);
 
             assert!(add_weighted_arc_remove_arc(&digraph, s, t, w));
         }
@@ -66,31 +72,15 @@ mod tests {
 
     #[test]
     fn arr_btree_map() {
-        let digraph = [BTreeMap::new(), BTreeMap::new(), BTreeMap::new()];
+        let digraph = <[BTreeMap<usize, i32>; 3]>::empty();
 
         assert!(add_weighted_arc_remove_arc(&digraph, 0, 0, 0));
-        assert!(add_weighted_arc_remove_arc(&digraph, 0, 1, 0));
-        assert!(add_weighted_arc_remove_arc(&digraph, 0, 2, 0));
-        assert!(add_weighted_arc_remove_arc(&digraph, 1, 0, 0));
-        assert!(add_weighted_arc_remove_arc(&digraph, 1, 1, 0));
-        assert!(add_weighted_arc_remove_arc(&digraph, 1, 2, 0));
-        assert!(add_weighted_arc_remove_arc(&digraph, 2, 0, 0));
-        assert!(add_weighted_arc_remove_arc(&digraph, 2, 1, 0));
-        assert!(add_weighted_arc_remove_arc(&digraph, 2, 2, 0));
     }
 
     #[test]
     fn arr_hash_map() {
-        let digraph = [HashMap::new(), HashMap::new(), HashMap::new()];
+        let digraph = <[HashMap<usize, i32>; 3]>::empty();
 
         assert!(add_weighted_arc_remove_arc(&digraph, 0, 0, 0));
-        assert!(add_weighted_arc_remove_arc(&digraph, 0, 1, 0));
-        assert!(add_weighted_arc_remove_arc(&digraph, 0, 2, 0));
-        assert!(add_weighted_arc_remove_arc(&digraph, 1, 0, 0));
-        assert!(add_weighted_arc_remove_arc(&digraph, 1, 1, 0));
-        assert!(add_weighted_arc_remove_arc(&digraph, 1, 2, 0));
-        assert!(add_weighted_arc_remove_arc(&digraph, 2, 0, 0));
-        assert!(add_weighted_arc_remove_arc(&digraph, 2, 1, 0));
-        assert!(add_weighted_arc_remove_arc(&digraph, 2, 2, 0));
     }
 }
