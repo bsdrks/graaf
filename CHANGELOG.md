@@ -6,6 +6,12 @@
 - Benchmark trait implementations.
 - Implement `IterOutNeighborsMut` for additional types.
 
+## [0.62.2] - 2024-06-23
+
+Added
+
+- Add documentation alias `jordan_center` for `DistanceMatrix::center`.
+
 ## [0.62.1] - 2024-06-22
 
 Changed

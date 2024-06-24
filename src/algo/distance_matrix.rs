@@ -65,10 +65,6 @@ impl<W> DistanceMatrix<W> {
     /// * `v`: The number of vertices.
     /// * `max`: The maximum distance between two vertices.
     ///
-    /// # Returns
-    ///
-    /// Returns a new distance matrix.
-    ///
     /// # Panics
     ///
     /// Panics if `v` is zero.
@@ -99,6 +95,9 @@ impl<W> DistanceMatrix<W> {
     }
 
     /// Finds the center of a distance matrix.
+    ///
+    /// The center of a digraph is the set of vertices with the smallest
+    /// eccentricity. The center is also known as the Jordan center.
     ///
     /// # Returns
     ///
@@ -151,6 +150,7 @@ impl<W> DistanceMatrix<W> {
     ///
     /// assert!(dist.center().iter().eq(&[2, 4, 5]));
     /// ```
+    #[doc(alias = "jordan_center")]
     pub fn center(&self) -> Vec<usize>
     where
         W: Copy + Ord,
@@ -174,11 +174,72 @@ impl<W> DistanceMatrix<W> {
         center
     }
 
+    /// Returns the diameter of the digraph.
+    ///
+    /// The diameter of a digraph is the maximum eccentricity of any vertex.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use graaf::{
+    ///     algo::{
+    ///         distance_matrix::DistanceMatrix,
+    ///         floyd_warshall::distances,
+    ///     },
+    ///     gen::Empty,
+    ///     op::AddWeightedArc,
+    /// };
+    ///
+    /// // 0 -> {2}
+    /// // 1 -> {3}
+    /// // 2 -> {0, 3, 4}
+    /// // 3 -> {1, 2, 5}
+    /// // 4 -> {2, 5, 6}
+    /// // 5 -> {3, 4, 7}
+    /// // 6 -> {5, 8}
+    /// // 7 -> {5}
+    /// // 8 -> {6}
+    ///
+    /// let mut digraph = Vec::<Vec<(usize, isize)>>::empty(9);
+    ///
+    /// digraph.add_weighted_arc(0, 2, 1);
+    /// digraph.add_weighted_arc(1, 3, 1);
+    /// digraph.add_weighted_arc(2, 0, 1);
+    /// digraph.add_weighted_arc(2, 3, 1);
+    /// digraph.add_weighted_arc(2, 4, 1);
+    /// digraph.add_weighted_arc(3, 1, 1);
+    /// digraph.add_weighted_arc(3, 2, 1);
+    /// digraph.add_weighted_arc(3, 5, 1);
+    /// digraph.add_weighted_arc(4, 2, 1);
+    /// digraph.add_weighted_arc(4, 5, 1);
+    /// digraph.add_weighted_arc(4, 6, 1);
+    /// digraph.add_weighted_arc(5, 3, 1);
+    /// digraph.add_weighted_arc(5, 4, 1);
+    /// digraph.add_weighted_arc(5, 7, 1);
+    /// digraph.add_weighted_arc(6, 5, 1);
+    /// digraph.add_weighted_arc(6, 8, 1);
+    /// digraph.add_weighted_arc(7, 5, 1);
+    /// digraph.add_weighted_arc(8, 6, 1);
+    ///
+    /// let dist = distances(&digraph);
+    ///
+    /// assert_eq!(dist.diameter(), 5);
+    /// ```
+    pub fn diameter(&self) -> W
+    where
+        W: Copy + Ord,
+    {
+        self.eccentricities()
+            .iter()
+            .copied()
+            .max()
+            .unwrap_or(self.max)
+    }
+
     /// Returns the eccentricities of the vertices.
     ///
-    /// # Returns
-    ///
-    /// Returns the eccentricities of the vertices.
+    /// The eccentricity of a vertex is the maximum distance to any other
+    /// vertex.
     ///
     /// # Examples
     ///
