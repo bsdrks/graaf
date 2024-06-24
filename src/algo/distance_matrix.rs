@@ -426,6 +426,50 @@ mod tests {
     }
 
     #[test]
+    fn diameter() {
+        use crate::{
+            algo::floyd_warshall::distances,
+            gen::Empty,
+            op::AddWeightedArc,
+        };
+
+        // 0 -> {2}
+        // 1 -> {3}
+        // 2 -> {0, 3, 4}
+        // 3 -> {1, 2, 5}
+        // 4 -> {2, 5, 6}
+        // 5 -> {3, 4, 7}
+        // 6 -> {5, 8}
+        // 7 -> {5}
+        // 8 -> {6}
+
+        let mut digraph = Vec::<Vec<(usize, isize)>>::empty(9);
+
+        digraph.add_weighted_arc(0, 2, 1);
+        digraph.add_weighted_arc(1, 3, 1);
+        digraph.add_weighted_arc(2, 0, 1);
+        digraph.add_weighted_arc(2, 3, 1);
+        digraph.add_weighted_arc(2, 4, 1);
+        digraph.add_weighted_arc(3, 1, 1);
+        digraph.add_weighted_arc(3, 2, 1);
+        digraph.add_weighted_arc(3, 5, 1);
+        digraph.add_weighted_arc(4, 2, 1);
+        digraph.add_weighted_arc(4, 5, 1);
+        digraph.add_weighted_arc(4, 6, 1);
+        digraph.add_weighted_arc(5, 3, 1);
+        digraph.add_weighted_arc(5, 4, 1);
+        digraph.add_weighted_arc(5, 7, 1);
+        digraph.add_weighted_arc(6, 5, 1);
+        digraph.add_weighted_arc(6, 8, 1);
+        digraph.add_weighted_arc(7, 5, 1);
+        digraph.add_weighted_arc(8, 6, 1);
+
+        let dist = distances(&digraph);
+
+        assert_eq!(dist.diameter(), 5);
+    }
+
+    #[test]
     fn eccentricities() {
         use crate::{
             algo::floyd_warshall::distances,

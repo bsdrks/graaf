@@ -11,6 +11,7 @@
 Added
 
 - Add documentation alias `jordan_center` for `DistanceMatrix::center`.
+- Add `DistanceMatrix::diameter`.
 
 ## [0.62.1] - 2024-06-22
 
