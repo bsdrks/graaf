@@ -384,6 +384,7 @@ macro_rules! kattis_shortestpath1 {
     };
 }
 
+#[allow(unused_imports)]
 pub(crate) use {
     bang_jensen_34,
     bang_jensen_94,
