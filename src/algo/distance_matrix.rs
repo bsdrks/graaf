@@ -6,34 +6,23 @@
 //! # Examples
 //!
 //! ```
-//! use graaf::{
-//!     algo::{
-//!         distance_matrix::DistanceMatrix,
-//!         floyd_warshall::distances,
-//!     },
-//!     gen::Empty,
-//!     op::AddWeightedArc,
+//! use graaf::algo::{
+//!     distance_matrix::DistanceMatrix,
+//!     fixture::kattis_crosscountry_isize,
+//!     floyd_warshall::distances,
 //! };
 //!
-//! // 0 -> {2 (-2)}
-//! // 1 -> {0 (4), 2 (3)}
-//! // 2 -> {3 (2)}
-//! // 3 -> {1 (-1)}
+//! // 0 -> {1 (1), 2 (3), 3 (14)}
+//! // 1 -> {0 (2), 2 (4), 3 (22)}
+//! // 2 -> {0 (3), 1 (10), 3 (7)}
+//! // 3 -> {0 (13), 1 (8), 2 (2)}
 //!
-//! let mut digraph = Vec::<Vec<(usize, isize)>>::empty(4);
+//! let dist = distances(&kattis_crosscountry_isize());
 //!
-//! digraph.add_weighted_arc(0, 2, -2);
-//! digraph.add_weighted_arc(1, 0, 4);
-//! digraph.add_weighted_arc(1, 2, 3);
-//! digraph.add_weighted_arc(2, 3, 2);
-//! digraph.add_weighted_arc(3, 1, -1);
-//!
-//! let dist = distances(&digraph);
-//!
-//! assert!(dist[0].iter().eq(&[0, -1, -2, 0]));
-//! assert!(dist[1].iter().eq(&[4, 0, 2, 4]));
-//! assert!(dist[2].iter().eq(&[5, 1, 0, 2]));
-//! assert!(dist[3].iter().eq(&[3, -1, 1, 0]));
+//! assert!(dist[0].iter().eq(&[0, 1, 3, 10]));
+//! assert!(dist[1].iter().eq(&[2, 0, 4, 11]));
+//! assert!(dist[2].iter().eq(&[3, 4, 0, 7]));
+//! assert!(dist[3].iter().eq(&[5, 6, 2, 0]));
 //! ```
 
 use std::{
@@ -106,49 +95,20 @@ impl<W> DistanceMatrix<W> {
     /// # Examples
     ///
     /// ```
-    /// use graaf::{
-    ///     algo::{
-    ///         distance_matrix::DistanceMatrix,
-    ///         floyd_warshall::distances,
-    ///     },
-    ///     gen::Empty,
-    ///     op::AddWeightedArc,
+    /// use graaf::algo::{
+    ///     distance_matrix::DistanceMatrix,
+    ///     fixture::kattis_crosscountry_isize,
+    ///     floyd_warshall::distances,
     /// };
     ///
-    /// // 0 -> {2}
-    /// // 1 -> {3}
-    /// // 2 -> {0, 3, 4}
-    /// // 3 -> {1, 2, 5}
-    /// // 4 -> {2, 5, 6}
-    /// // 5 -> {3, 4, 7}
-    /// // 6 -> {5, 8}
-    /// // 7 -> {5}
-    /// // 8 -> {6}
+    /// // 0 -> {1 (1), 2 (3), 3 (14)}
+    /// // 1 -> {0 (2), 2 (4), 3 (22)}
+    /// // 2 -> {0 (3), 1 (10), 3 (7)}
+    /// // 3 -> {0 (13), 1 (8), 2 (2)}
     ///
-    /// let mut digraph = Vec::<Vec<(usize, isize)>>::empty(9);
+    /// let dist = distances(&kattis_crosscountry_isize());
     ///
-    /// digraph.add_weighted_arc(0, 2, 1);
-    /// digraph.add_weighted_arc(1, 3, 1);
-    /// digraph.add_weighted_arc(2, 0, 1);
-    /// digraph.add_weighted_arc(2, 3, 1);
-    /// digraph.add_weighted_arc(2, 4, 1);
-    /// digraph.add_weighted_arc(3, 1, 1);
-    /// digraph.add_weighted_arc(3, 2, 1);
-    /// digraph.add_weighted_arc(3, 5, 1);
-    /// digraph.add_weighted_arc(4, 2, 1);
-    /// digraph.add_weighted_arc(4, 5, 1);
-    /// digraph.add_weighted_arc(4, 6, 1);
-    /// digraph.add_weighted_arc(5, 3, 1);
-    /// digraph.add_weighted_arc(5, 4, 1);
-    /// digraph.add_weighted_arc(5, 7, 1);
-    /// digraph.add_weighted_arc(6, 5, 1);
-    /// digraph.add_weighted_arc(6, 8, 1);
-    /// digraph.add_weighted_arc(7, 5, 1);
-    /// digraph.add_weighted_arc(8, 6, 1);
-    ///
-    /// let dist = distances(&digraph);
-    ///
-    /// assert!(dist.center().iter().eq(&[2, 4, 5]));
+    /// assert!(dist.center().iter().eq(&[3]));
     /// ```
     #[doc(alias = "jordan_center")]
     pub fn center(&self) -> Vec<usize>
@@ -181,49 +141,20 @@ impl<W> DistanceMatrix<W> {
     /// # Examples
     ///
     /// ```
-    /// use graaf::{
-    ///     algo::{
-    ///         distance_matrix::DistanceMatrix,
-    ///         floyd_warshall::distances,
-    ///     },
-    ///     gen::Empty,
-    ///     op::AddWeightedArc,
+    /// use graaf::algo::{
+    ///     distance_matrix::DistanceMatrix,
+    ///     fixture::kattis_crosscountry_isize,
+    ///     floyd_warshall::distances,
     /// };
     ///
-    /// // 0 -> {2}
-    /// // 1 -> {3}
-    /// // 2 -> {0, 3, 4}
-    /// // 3 -> {1, 2, 5}
-    /// // 4 -> {2, 5, 6}
-    /// // 5 -> {3, 4, 7}
-    /// // 6 -> {5, 8}
-    /// // 7 -> {5}
-    /// // 8 -> {6}
+    /// // 0 -> {1 (1), 2 (3), 3 (14)}
+    /// // 1 -> {0 (2), 2 (4), 3 (22)}
+    /// // 2 -> {0 (3), 1 (10), 3 (7)}
+    /// // 3 -> {0 (13), 1 (8), 2 (2)}
     ///
-    /// let mut digraph = Vec::<Vec<(usize, isize)>>::empty(9);
+    /// let dist = distances(&kattis_crosscountry_isize());
     ///
-    /// digraph.add_weighted_arc(0, 2, 1);
-    /// digraph.add_weighted_arc(1, 3, 1);
-    /// digraph.add_weighted_arc(2, 0, 1);
-    /// digraph.add_weighted_arc(2, 3, 1);
-    /// digraph.add_weighted_arc(2, 4, 1);
-    /// digraph.add_weighted_arc(3, 1, 1);
-    /// digraph.add_weighted_arc(3, 2, 1);
-    /// digraph.add_weighted_arc(3, 5, 1);
-    /// digraph.add_weighted_arc(4, 2, 1);
-    /// digraph.add_weighted_arc(4, 5, 1);
-    /// digraph.add_weighted_arc(4, 6, 1);
-    /// digraph.add_weighted_arc(5, 3, 1);
-    /// digraph.add_weighted_arc(5, 4, 1);
-    /// digraph.add_weighted_arc(5, 7, 1);
-    /// digraph.add_weighted_arc(6, 5, 1);
-    /// digraph.add_weighted_arc(6, 8, 1);
-    /// digraph.add_weighted_arc(7, 5, 1);
-    /// digraph.add_weighted_arc(8, 6, 1);
-    ///
-    /// let dist = distances(&digraph);
-    ///
-    /// assert_eq!(dist.diameter(), 5);
+    /// assert_eq!(dist.diameter(), 11);
     /// ```
     pub fn diameter(&self) -> W
     where
@@ -244,52 +175,20 @@ impl<W> DistanceMatrix<W> {
     /// # Examples
     ///
     /// ```
-    /// use graaf::{
-    ///     algo::{
-    ///         distance_matrix::DistanceMatrix,
-    ///         floyd_warshall::distances,
-    ///     },
-    ///     gen::Empty,
-    ///     op::AddWeightedArc,
+    /// use graaf::algo::{
+    ///     distance_matrix::DistanceMatrix,
+    ///     fixture::kattis_crosscountry_isize,
+    ///     floyd_warshall::distances,
     /// };
     ///
-    /// // 0 -> {2}
-    /// // 1 -> {3}
-    /// // 2 -> {0, 3, 4}
-    /// // 3 -> {1, 2, 5}
-    /// // 4 -> {2, 5, 6}
-    /// // 5 -> {3, 4, 7}
-    /// // 6 -> {5, 8}
-    /// // 7 -> {5}
-    /// // 8 -> {6}
+    /// // 0 -> {1 (1), 2 (3), 3 (14)}
+    /// // 1 -> {0 (2), 2 (4), 3 (22)}
+    /// // 2 -> {0 (3), 1 (10), 3 (7)}
+    /// // 3 -> {0 (13), 1 (8), 2 (2)}
     ///
-    /// let mut digraph = Vec::<Vec<(usize, isize)>>::empty(9);
+    /// let dist = distances(&kattis_crosscountry_isize());
     ///
-    /// digraph.add_weighted_arc(0, 2, 1);
-    /// digraph.add_weighted_arc(1, 3, 1);
-    /// digraph.add_weighted_arc(2, 0, 1);
-    /// digraph.add_weighted_arc(2, 3, 1);
-    /// digraph.add_weighted_arc(2, 4, 1);
-    /// digraph.add_weighted_arc(3, 1, 1);
-    /// digraph.add_weighted_arc(3, 2, 1);
-    /// digraph.add_weighted_arc(3, 5, 1);
-    /// digraph.add_weighted_arc(4, 2, 1);
-    /// digraph.add_weighted_arc(4, 5, 1);
-    /// digraph.add_weighted_arc(4, 6, 1);
-    /// digraph.add_weighted_arc(5, 3, 1);
-    /// digraph.add_weighted_arc(5, 4, 1);
-    /// digraph.add_weighted_arc(5, 7, 1);
-    /// digraph.add_weighted_arc(6, 5, 1);
-    /// digraph.add_weighted_arc(6, 8, 1);
-    /// digraph.add_weighted_arc(7, 5, 1);
-    /// digraph.add_weighted_arc(8, 6, 1);
-    ///
-    /// let dist = distances(&digraph);
-    ///
-    /// assert!(dist
-    ///     .eccentricities()
-    ///     .iter()
-    ///     .eq(&[4, 5, 3, 4, 3, 3, 4, 4, 5]));
+    /// assert!(dist.eccentricities().iter().eq(&[10, 11, 7, 6]));
     /// ```
     pub fn eccentricities(&self) -> Vec<W>
     where
@@ -319,7 +218,18 @@ impl<W> IndexMut<usize> for DistanceMatrix<W> {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use {
+        super::*,
+        crate::algo::{
+            fixture::{
+                kattis_bryr_1_isize,
+                kattis_bryr_2_isize,
+                kattis_bryr_3_isize,
+                kattis_crosscountry_isize,
+            },
+            floyd_warshall::distances,
+        },
+    };
 
     #[test]
     fn new() {
@@ -382,137 +292,89 @@ mod tests {
     }
 
     #[test]
-    fn center() {
-        use crate::{
-            algo::floyd_warshall::distances,
-            gen::Empty,
-            op::AddWeightedArc,
-        };
+    fn center_kattis_bryr_1() {
+        let dist = distances(&kattis_bryr_1_isize());
 
-        // 0 -> {2}
-        // 1 -> {3}
-        // 2 -> {0, 3, 4}
-        // 3 -> {1, 2, 5}
-        // 4 -> {2, 5, 6}
-        // 5 -> {3, 4, 7}
-        // 6 -> {5, 8}
-        // 7 -> {5}
-        // 8 -> {6}
-
-        let mut digraph = Vec::<Vec<(usize, isize)>>::empty(9);
-
-        digraph.add_weighted_arc(0, 2, 1);
-        digraph.add_weighted_arc(1, 3, 1);
-        digraph.add_weighted_arc(2, 0, 1);
-        digraph.add_weighted_arc(2, 3, 1);
-        digraph.add_weighted_arc(2, 4, 1);
-        digraph.add_weighted_arc(3, 1, 1);
-        digraph.add_weighted_arc(3, 2, 1);
-        digraph.add_weighted_arc(3, 5, 1);
-        digraph.add_weighted_arc(4, 2, 1);
-        digraph.add_weighted_arc(4, 5, 1);
-        digraph.add_weighted_arc(4, 6, 1);
-        digraph.add_weighted_arc(5, 3, 1);
-        digraph.add_weighted_arc(5, 4, 1);
-        digraph.add_weighted_arc(5, 7, 1);
-        digraph.add_weighted_arc(6, 5, 1);
-        digraph.add_weighted_arc(6, 8, 1);
-        digraph.add_weighted_arc(7, 5, 1);
-        digraph.add_weighted_arc(8, 6, 1);
-
-        let dist = distances(&digraph);
-
-        assert!(dist.center().iter().eq(&[2, 4, 5]));
+        assert!(dist.center().iter().eq(&[0, 1, 2]));
     }
 
     #[test]
-    fn diameter() {
-        use crate::{
-            algo::floyd_warshall::distances,
-            gen::Empty,
-            op::AddWeightedArc,
-        };
+    fn center_kattis_bryr_2() {
+        let dist = distances(&kattis_bryr_2_isize());
 
-        // 0 -> {2}
-        // 1 -> {3}
-        // 2 -> {0, 3, 4}
-        // 3 -> {1, 2, 5}
-        // 4 -> {2, 5, 6}
-        // 5 -> {3, 4, 7}
-        // 6 -> {5, 8}
-        // 7 -> {5}
-        // 8 -> {6}
-
-        let mut digraph = Vec::<Vec<(usize, isize)>>::empty(9);
-
-        digraph.add_weighted_arc(0, 2, 1);
-        digraph.add_weighted_arc(1, 3, 1);
-        digraph.add_weighted_arc(2, 0, 1);
-        digraph.add_weighted_arc(2, 3, 1);
-        digraph.add_weighted_arc(2, 4, 1);
-        digraph.add_weighted_arc(3, 1, 1);
-        digraph.add_weighted_arc(3, 2, 1);
-        digraph.add_weighted_arc(3, 5, 1);
-        digraph.add_weighted_arc(4, 2, 1);
-        digraph.add_weighted_arc(4, 5, 1);
-        digraph.add_weighted_arc(4, 6, 1);
-        digraph.add_weighted_arc(5, 3, 1);
-        digraph.add_weighted_arc(5, 4, 1);
-        digraph.add_weighted_arc(5, 7, 1);
-        digraph.add_weighted_arc(6, 5, 1);
-        digraph.add_weighted_arc(6, 8, 1);
-        digraph.add_weighted_arc(7, 5, 1);
-        digraph.add_weighted_arc(8, 6, 1);
-
-        let dist = distances(&digraph);
-
-        assert_eq!(dist.diameter(), 5);
+        assert!(dist.center().iter().eq(&[3]));
     }
 
     #[test]
-    fn eccentricities() {
-        use crate::{
-            algo::floyd_warshall::distances,
-            gen::Empty,
-            op::AddWeightedArc,
-        };
+    fn center_kattis_bryr_3() {
+        let dist = distances(&kattis_bryr_3_isize());
 
-        // 0 -> {2}
-        // 1 -> {3}
-        // 2 -> {0, 3, 4}
-        // 3 -> {1, 2, 5}
-        // 4 -> {2, 5, 6}
-        // 5 -> {3, 4, 7}
-        // 6 -> {5, 8}
-        // 7 -> {5}
-        // 8 -> {6}
+        assert!(dist.center().iter().eq(&[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
+    }
 
-        let mut digraph = Vec::<Vec<(usize, isize)>>::empty(9);
+    #[test]
+    fn center_kattis_crosscountry() {
+        let dist = distances(&kattis_crosscountry_isize());
 
-        digraph.add_weighted_arc(0, 2, 1);
-        digraph.add_weighted_arc(1, 3, 1);
-        digraph.add_weighted_arc(2, 0, 1);
-        digraph.add_weighted_arc(2, 3, 1);
-        digraph.add_weighted_arc(2, 4, 1);
-        digraph.add_weighted_arc(3, 1, 1);
-        digraph.add_weighted_arc(3, 2, 1);
-        digraph.add_weighted_arc(3, 5, 1);
-        digraph.add_weighted_arc(4, 2, 1);
-        digraph.add_weighted_arc(4, 5, 1);
-        digraph.add_weighted_arc(4, 6, 1);
-        digraph.add_weighted_arc(5, 3, 1);
-        digraph.add_weighted_arc(5, 4, 1);
-        digraph.add_weighted_arc(5, 7, 1);
-        digraph.add_weighted_arc(6, 5, 1);
-        digraph.add_weighted_arc(6, 8, 1);
-        digraph.add_weighted_arc(7, 5, 1);
-        digraph.add_weighted_arc(8, 6, 1);
+        assert!(dist.center().iter().eq(&[3]));
+    }
 
-        let dist = distances(&digraph);
+    #[test]
+    fn diameter_kattis_bryr_1() {
+        let dist = distances(&kattis_bryr_1_isize());
+
+        assert_eq!(dist.diameter(), 1);
+    }
+
+    #[test]
+    fn diameter_kattis_bryr_2() {
+        let dist = distances(&kattis_bryr_2_isize());
+
+        assert_eq!(dist.diameter(), 4);
+    }
+
+    #[test]
+    fn diameter_kattis_bryr_3() {
+        let dist = distances(&kattis_bryr_3_isize());
+
+        assert_eq!(dist.diameter(), 1);
+    }
+
+    #[test]
+    fn diameter_kattis_crosscountry() {
+        let dist = distances(&kattis_crosscountry_isize());
+
+        assert_eq!(dist.diameter(), 11);
+    }
+
+    #[test]
+    fn eccentricities_kattis_bryr_1() {
+        let dist = distances(&kattis_bryr_1_isize());
+
+        assert!(dist.eccentricities().iter().eq(&[1, 1, 1]));
+    }
+
+    #[test]
+    fn eccentricities_kattis_bryr_2() {
+        let dist = distances(&kattis_bryr_2_isize());
+
+        assert!(dist.eccentricities().iter().eq(&[3, 4, 3, 2, 3, 4]));
+    }
+
+    #[test]
+    fn eccentricities_kattis_bryr_3() {
+        let dist = distances(&kattis_bryr_3_isize());
 
         assert!(dist
             .eccentricities()
             .iter()
-            .eq(&[4, 5, 3, 4, 3, 3, 4, 4, 5]));
+            .eq(&[1, 1, 1, 1, 1, 1, 1, 1, 1, 1]));
+    }
+
+    #[test]
+    fn eccentricities_kattis_crosscountry() {
+        let dist = distances(&kattis_crosscountry_isize());
+
+        assert!(dist.eccentricities().iter().eq(&[10, 11, 7, 6]));
     }
 }

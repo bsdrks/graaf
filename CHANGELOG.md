@@ -6,6 +6,12 @@
 - Benchmark trait implementations.
 - Implement `IterOutNeighborsMut` for additional types.
 
+## [0.62.3] - 2024-06-25
+
+Changed
+
+- Test `DistanceMatrix` with existing fixtures.
+
 ## [0.62.2] - 2024-06-23
 
 Added

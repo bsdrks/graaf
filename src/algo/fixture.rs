@@ -129,14 +129,14 @@ pub fn bang_jensen_94_weighted_isize() -> Vec<BTreeMap<usize, isize>> {
 /// 5 -> {3 (2)}
 /// ```
 #[must_use]
-pub fn bang_jensen_96() -> Vec<Vec<(usize, usize)>> {
+pub fn bang_jensen_96() -> Vec<BTreeMap<usize, usize>> {
     vec![
-        vec![(1, 9), (2, 3)],
-        vec![(2, 6), (3, 2)],
-        vec![(1, 2), (4, 1)],
-        vec![(5, 1)],
-        vec![(2, 2), (3, 2), (5, 7)],
-        vec![(3, 2)],
+        BTreeMap::from([(1, 9), (2, 3)]),
+        BTreeMap::from([(2, 6), (3, 2)]),
+        BTreeMap::from([(1, 2), (4, 1)]),
+        BTreeMap::from([(5, 1)]),
+        BTreeMap::from([(2, 2), (3, 2), (5, 7)]),
+        BTreeMap::from([(3, 2)]),
     ]
 }
 
@@ -153,14 +153,14 @@ pub fn bang_jensen_96() -> Vec<Vec<(usize, usize)>> {
 /// 5 -> {3 (2)}
 /// ```
 #[must_use]
-pub fn bang_jensen_96_isize() -> Vec<Vec<(usize, isize)>> {
+pub fn bang_jensen_96_isize() -> Vec<BTreeMap<usize, isize>> {
     vec![
-        vec![(1, 9), (2, 3)],
-        vec![(2, 6), (3, 2)],
-        vec![(1, 2), (4, 1)],
-        vec![(5, 1)],
-        vec![(2, 2), (3, 2), (5, 7)],
-        vec![(3, 2)],
+        BTreeMap::from([(1, 9), (2, 3)]),
+        BTreeMap::from([(2, 6), (3, 2)]),
+        BTreeMap::from([(1, 2), (4, 1)]),
+        BTreeMap::from([(5, 1)]),
+        BTreeMap::from([(2, 2), (3, 2), (5, 7)]),
+        BTreeMap::from([(3, 2)]),
     ]
 }
 
@@ -177,14 +177,14 @@ pub fn bang_jensen_96_isize() -> Vec<Vec<(usize, isize)>> {
 /// 5 -> {3 (5), 4 (-3)}
 /// ```
 #[must_use]
-pub fn bang_jensen_99() -> Vec<Vec<(usize, isize)>> {
+pub fn bang_jensen_99() -> Vec<BTreeMap<usize, isize>> {
     vec![
-        vec![(1, 8), (2, 4)],
-        vec![(2, -5)],
-        vec![(3, -2), (4, 4)],
-        vec![(5, -2)],
-        vec![(3, 10), (5, 9)],
-        vec![(3, 5), (4, -3)],
+        BTreeMap::from([(1, 8), (2, 4)]),
+        BTreeMap::from([(2, -5)]),
+        BTreeMap::from([(3, -2), (4, 4)]),
+        BTreeMap::from([(5, -2)]),
+        BTreeMap::from([(3, 10), (5, 9)]),
+        BTreeMap::from([(3, 5), (4, -3)]),
     ]
 }
 
@@ -431,12 +431,12 @@ pub fn kattis_crosscountry() -> Vec<Vec<(usize, usize)>> {
 /// 3 -> {0 (13), 1 (8), 2 (2)}
 /// ```
 #[must_use]
-pub fn kattis_crosscountry_isize() -> Vec<Vec<(usize, isize)>> {
+pub fn kattis_crosscountry_isize() -> Vec<BTreeMap<usize, isize>> {
     vec![
-        vec![(1, 1), (2, 3), (3, 14)],
-        vec![(0, 2), (2, 4), (3, 22)],
-        vec![(0, 3), (1, 10), (3, 7)],
-        vec![(0, 13), (1, 8), (2, 2)],
+        BTreeMap::from([(1, 1), (2, 3), (3, 14)]),
+        BTreeMap::from([(0, 2), (2, 4), (3, 22)]),
+        BTreeMap::from([(0, 3), (1, 10), (3, 7)]),
+        BTreeMap::from([(0, 13), (1, 8), (2, 2)]),
     ]
 }
 
