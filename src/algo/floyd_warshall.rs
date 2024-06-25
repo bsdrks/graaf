@@ -210,7 +210,7 @@ mod tests {
 
     #[test]
     fn bang_jensen_94() {
-        let dist = distances(&fixture::bang_jensen_94_weighted_isize());
+        let dist = distances(&fixture::bang_jensen_94_weighted!());
 
         assert_eq!(dist[0][0], 0);
         assert_eq!(dist[0][1], 1);
@@ -223,7 +223,7 @@ mod tests {
 
     #[test]
     fn bang_jensen_96() {
-        let dist = distances(&fixture::bang_jensen_96_isize());
+        let dist = distances(&fixture::bang_jensen_96!());
 
         assert_eq!(dist[0][0], 0);
         assert_eq!(dist[0][1], 5);
@@ -235,7 +235,7 @@ mod tests {
 
     #[test]
     fn bang_jensen_99() {
-        let dist = distances(&fixture::bang_jensen_99());
+        let dist = distances(&fixture::bang_jensen_99!());
 
         assert_eq!(dist[0][0], 0);
         assert_eq!(dist[0][1], 8);
@@ -247,7 +247,7 @@ mod tests {
 
     #[test]
     fn kattis_bryr_1() {
-        let dist = distances(&fixture::kattis_bryr_1_isize());
+        let dist = distances(&fixture::kattis_bryr_1!());
 
         assert_eq!(dist[0][0], 0);
         assert_eq!(dist[0][1], 1);
@@ -256,7 +256,7 @@ mod tests {
 
     #[test]
     fn kattis_bryr_2() {
-        let dist = distances(&fixture::kattis_bryr_2_isize());
+        let dist = distances(&fixture::kattis_bryr_2!());
 
         assert_eq!(dist[0][0], 0);
         assert_eq!(dist[0][1], 1);
@@ -268,7 +268,7 @@ mod tests {
 
     #[test]
     fn kattis_bryr_3() {
-        let dist = distances(&fixture::kattis_bryr_3_isize());
+        let dist = distances(&fixture::kattis_bryr_3!());
 
         assert_eq!(dist[0][0], 0);
         assert_eq!(dist[0][1], 0);
@@ -284,7 +284,7 @@ mod tests {
 
     #[test]
     fn kattis_crosscountry() {
-        let dist = distances(&fixture::kattis_crosscountry_isize());
+        let dist = distances(&fixture::kattis_crosscountry!());
 
         assert_eq!(dist[0][0], 0);
         assert_eq!(dist[0][1], 1);
@@ -294,7 +294,7 @@ mod tests {
 
     #[test]
     fn kattis_shortestpath1() {
-        let dist = distances(&fixture::kattis_shortestpath1_isize());
+        let dist = distances(&fixture::kattis_shortestpath1!());
 
         assert_eq!(dist[0][0], 0);
         assert_eq!(dist[0][1], 2);

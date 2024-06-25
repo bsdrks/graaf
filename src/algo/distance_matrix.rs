@@ -6,10 +6,12 @@
 //! # Examples
 //!
 //! ```
-//! use graaf::algo::{
-//!     distance_matrix::DistanceMatrix,
-//!     fixture::kattis_crosscountry_isize,
-//!     floyd_warshall::distances,
+//! use {
+//!     graaf::algo::{
+//!         distance_matrix::DistanceMatrix,
+//!         floyd_warshall::distances,
+//!     },
+//!     std::collections::BTreeMap,
 //! };
 //!
 //! // 0 -> {1 (1), 2 (3), 3 (14)}
@@ -17,7 +19,14 @@
 //! // 2 -> {0 (3), 1 (10), 3 (7)}
 //! // 3 -> {0 (13), 1 (8), 2 (2)}
 //!
-//! let dist = distances(&kattis_crosscountry_isize());
+//! let digraph = vec![
+//!     BTreeMap::from([(1, 1), (2, 3), (3, 14)]),
+//!     BTreeMap::from([(0, 2), (2, 4), (3, 22)]),
+//!     BTreeMap::from([(0, 3), (1, 10), (3, 7)]),
+//!     BTreeMap::from([(0, 13), (1, 8), (2, 2)]),
+//! ];
+//!
+//! let dist = distances(&digraph);
 //!
 //! assert!(dist[0].iter().eq(&[0, 1, 3, 10]));
 //! assert!(dist[1].iter().eq(&[2, 0, 4, 11]));
@@ -95,10 +104,12 @@ impl<W> DistanceMatrix<W> {
     /// # Examples
     ///
     /// ```
-    /// use graaf::algo::{
-    ///     distance_matrix::DistanceMatrix,
-    ///     fixture::kattis_crosscountry_isize,
-    ///     floyd_warshall::distances,
+    /// use {
+    ///     graaf::algo::{
+    ///         distance_matrix::DistanceMatrix,
+    ///         floyd_warshall::distances,
+    ///     },
+    ///     std::collections::BTreeMap,
     /// };
     ///
     /// // 0 -> {1 (1), 2 (3), 3 (14)}
@@ -106,7 +117,14 @@ impl<W> DistanceMatrix<W> {
     /// // 2 -> {0 (3), 1 (10), 3 (7)}
     /// // 3 -> {0 (13), 1 (8), 2 (2)}
     ///
-    /// let dist = distances(&kattis_crosscountry_isize());
+    /// let digraph = vec![
+    ///     BTreeMap::from([(1, 1), (2, 3), (3, 14)]),
+    ///     BTreeMap::from([(0, 2), (2, 4), (3, 22)]),
+    ///     BTreeMap::from([(0, 3), (1, 10), (3, 7)]),
+    ///     BTreeMap::from([(0, 13), (1, 8), (2, 2)]),
+    /// ];
+    ///
+    /// let dist = distances(&digraph);
     ///
     /// assert!(dist.center().iter().eq(&[3]));
     /// ```
@@ -141,10 +159,12 @@ impl<W> DistanceMatrix<W> {
     /// # Examples
     ///
     /// ```
-    /// use graaf::algo::{
-    ///     distance_matrix::DistanceMatrix,
-    ///     fixture::kattis_crosscountry_isize,
-    ///     floyd_warshall::distances,
+    /// use {
+    ///     graaf::algo::{
+    ///         distance_matrix::DistanceMatrix,
+    ///         floyd_warshall::distances,
+    ///     },
+    ///     std::collections::BTreeMap,
     /// };
     ///
     /// // 0 -> {1 (1), 2 (3), 3 (14)}
@@ -152,7 +172,14 @@ impl<W> DistanceMatrix<W> {
     /// // 2 -> {0 (3), 1 (10), 3 (7)}
     /// // 3 -> {0 (13), 1 (8), 2 (2)}
     ///
-    /// let dist = distances(&kattis_crosscountry_isize());
+    /// let digraph = vec![
+    ///     BTreeMap::from([(1, 1), (2, 3), (3, 14)]),
+    ///     BTreeMap::from([(0, 2), (2, 4), (3, 22)]),
+    ///     BTreeMap::from([(0, 3), (1, 10), (3, 7)]),
+    ///     BTreeMap::from([(0, 13), (1, 8), (2, 2)]),
+    /// ];
+    ///
+    /// let dist = distances(&digraph);
     ///
     /// assert_eq!(dist.diameter(), 11);
     /// ```
@@ -175,10 +202,12 @@ impl<W> DistanceMatrix<W> {
     /// # Examples
     ///
     /// ```
-    /// use graaf::algo::{
-    ///     distance_matrix::DistanceMatrix,
-    ///     fixture::kattis_crosscountry_isize,
-    ///     floyd_warshall::distances,
+    /// use {
+    ///     graaf::algo::{
+    ///         distance_matrix::DistanceMatrix,
+    ///         floyd_warshall::distances,
+    ///     },
+    ///     std::collections::BTreeMap,
     /// };
     ///
     /// // 0 -> {1 (1), 2 (3), 3 (14)}
@@ -186,7 +215,14 @@ impl<W> DistanceMatrix<W> {
     /// // 2 -> {0 (3), 1 (10), 3 (7)}
     /// // 3 -> {0 (13), 1 (8), 2 (2)}
     ///
-    /// let dist = distances(&kattis_crosscountry_isize());
+    /// let digraph = vec![
+    ///     BTreeMap::from([(1, 1), (2, 3), (3, 14)]),
+    ///     BTreeMap::from([(0, 2), (2, 4), (3, 22)]),
+    ///     BTreeMap::from([(0, 3), (1, 10), (3, 7)]),
+    ///     BTreeMap::from([(0, 13), (1, 8), (2, 2)]),
+    /// ];
+    ///
+    /// let dist = distances(&digraph);
     ///
     /// assert!(dist.eccentricities().iter().eq(&[10, 11, 7, 6]));
     /// ```
@@ -222,10 +258,10 @@ mod tests {
         super::*,
         crate::algo::{
             fixture::{
-                kattis_bryr_1_isize,
-                kattis_bryr_2_isize,
-                kattis_bryr_3_isize,
-                kattis_crosscountry_isize,
+                kattis_bryr_1,
+                kattis_bryr_2,
+                kattis_bryr_3,
+                kattis_crosscountry,
             },
             floyd_warshall::distances,
         },
@@ -293,77 +329,77 @@ mod tests {
 
     #[test]
     fn center_kattis_bryr_1() {
-        let dist = distances(&kattis_bryr_1_isize());
+        let dist = distances(&kattis_bryr_1!());
 
         assert!(dist.center().iter().eq(&[0, 1, 2]));
     }
 
     #[test]
     fn center_kattis_bryr_2() {
-        let dist = distances(&kattis_bryr_2_isize());
+        let dist = distances(&kattis_bryr_2!());
 
         assert!(dist.center().iter().eq(&[3]));
     }
 
     #[test]
     fn center_kattis_bryr_3() {
-        let dist = distances(&kattis_bryr_3_isize());
+        let dist = distances(&kattis_bryr_3!());
 
         assert!(dist.center().iter().eq(&[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
     }
 
     #[test]
     fn center_kattis_crosscountry() {
-        let dist = distances(&kattis_crosscountry_isize());
+        let dist = distances(&kattis_crosscountry!());
 
         assert!(dist.center().iter().eq(&[3]));
     }
 
     #[test]
     fn diameter_kattis_bryr_1() {
-        let dist = distances(&kattis_bryr_1_isize());
+        let dist = distances(&kattis_bryr_1!());
 
         assert_eq!(dist.diameter(), 1);
     }
 
     #[test]
     fn diameter_kattis_bryr_2() {
-        let dist = distances(&kattis_bryr_2_isize());
+        let dist = distances(&kattis_bryr_2!());
 
         assert_eq!(dist.diameter(), 4);
     }
 
     #[test]
     fn diameter_kattis_bryr_3() {
-        let dist = distances(&kattis_bryr_3_isize());
+        let dist = distances(&kattis_bryr_3!());
 
         assert_eq!(dist.diameter(), 1);
     }
 
     #[test]
     fn diameter_kattis_crosscountry() {
-        let dist = distances(&kattis_crosscountry_isize());
+        let dist = distances(&kattis_crosscountry!());
 
         assert_eq!(dist.diameter(), 11);
     }
 
     #[test]
     fn eccentricities_kattis_bryr_1() {
-        let dist = distances(&kattis_bryr_1_isize());
+        let dist = distances(&kattis_bryr_1!());
 
         assert!(dist.eccentricities().iter().eq(&[1, 1, 1]));
     }
 
     #[test]
     fn eccentricities_kattis_bryr_2() {
-        let dist = distances(&kattis_bryr_2_isize());
+        let dist = distances(&kattis_bryr_2!());
 
         assert!(dist.eccentricities().iter().eq(&[3, 4, 3, 2, 3, 4]));
     }
 
     #[test]
     fn eccentricities_kattis_bryr_3() {
-        let dist = distances(&kattis_bryr_3_isize());
+        let dist = distances(&kattis_bryr_3!());
 
         assert!(dist
             .eccentricities()
@@ -373,7 +409,7 @@ mod tests {
 
     #[test]
     fn eccentricities_kattis_crosscountry() {
-        let dist = distances(&kattis_crosscountry_isize());
+        let dist = distances(&kattis_crosscountry!());
 
         assert!(dist.eccentricities().iter().eq(&[10, 11, 7, 6]));
     }

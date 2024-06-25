@@ -16,10 +16,8 @@ mod bang_jensen_94 {
 
     #[divan::bench]
     fn bellman_ford_moore() {
-        let _ = bellman_ford_moore::single_source_distances(
-            &fixture::bang_jensen_94_weighted_isize(),
-            0,
-        );
+        let _ =
+            bellman_ford_moore::single_source_distances(&fixture::bang_jensen_94_weighted!(), 0);
     }
 
     #[divan::bench]
@@ -37,8 +35,7 @@ mod bang_jensen_94 {
 
     #[divan::bench]
     fn floyd_warshall() {
-        let _ =
-            graaf::algo::floyd_warshall::distances(&fixture::bang_jensen_94_weighted_isize())[0];
+        let _ = graaf::algo::floyd_warshall::distances(&fixture::bang_jensen_94_weighted!())[0];
     }
 }
 
@@ -48,7 +45,7 @@ mod bang_jensen_96 {
 
     #[divan::bench]
     fn bellman_ford_moore() {
-        let _ = bellman_ford_moore::single_source_distances(&fixture::bang_jensen_96_isize(), 0);
+        let _ = bellman_ford_moore::single_source_distances(&fixture::bang_jensen_96!(), 0);
     }
 
     #[divan::bench]
@@ -58,7 +55,7 @@ mod bang_jensen_96 {
 
     #[divan::bench]
     fn floyd_warshall() {
-        let _ = graaf::algo::floyd_warshall::distances(&fixture::bang_jensen_96_isize())[0];
+        let _ = graaf::algo::floyd_warshall::distances(&fixture::bang_jensen_96!())[0];
     }
 }
 
@@ -83,7 +80,7 @@ mod kattis_bryr_1 {
 
     #[divan::bench]
     fn bellman_ford_moore() {
-        let _ = bellman_ford_moore::single_source_distances(&fixture::kattis_bryr_1_isize(), 0);
+        let _ = bellman_ford_moore::single_source_distances(&fixture::kattis_bryr_1!(), 0);
     }
 
     #[divan::bench]
@@ -93,7 +90,7 @@ mod kattis_bryr_1 {
 
     #[divan::bench]
     fn floyd_warshall() {
-        let _ = graaf::algo::floyd_warshall::distances(&fixture::kattis_bryr_1_isize())[0];
+        let _ = graaf::algo::floyd_warshall::distances(&fixture::kattis_bryr_1!())[0];
     }
 }
 
@@ -103,7 +100,7 @@ mod kattis_bryr_2 {
 
     #[divan::bench]
     fn bellman_ford_moore() {
-        let _ = bellman_ford_moore::single_source_distances(&fixture::kattis_bryr_2_isize(), 0);
+        let _ = bellman_ford_moore::single_source_distances(&fixture::kattis_bryr_2!(), 0);
     }
 
     #[divan::bench]
@@ -113,7 +110,7 @@ mod kattis_bryr_2 {
 
     #[divan::bench]
     fn floyd_warshall() {
-        let _ = graaf::algo::floyd_warshall::distances(&fixture::kattis_bryr_2_isize())[0];
+        let _ = graaf::algo::floyd_warshall::distances(&fixture::kattis_bryr_2!())[0];
     }
 }
 
@@ -123,7 +120,7 @@ mod kattis_bryr_3 {
 
     #[divan::bench]
     fn bellman_ford_moore() {
-        let _ = bellman_ford_moore::single_source_distances(&fixture::kattis_bryr_3_isize(), 0);
+        let _ = bellman_ford_moore::single_source_distances(&fixture::kattis_bryr_3!(), 0);
     }
 
     #[divan::bench]
@@ -133,7 +130,7 @@ mod kattis_bryr_3 {
 
     #[divan::bench]
     fn floyd_warshall() {
-        let _ = graaf::algo::floyd_warshall::distances(&fixture::kattis_bryr_3_isize())[0];
+        let _ = graaf::algo::floyd_warshall::distances(&fixture::kattis_bryr_3!())[0];
     }
 }
 
@@ -143,8 +140,7 @@ mod kattis_crosscountry {
 
     #[divan::bench]
     fn bellman_ford_moore() {
-        let _ =
-            bellman_ford_moore::single_source_distances(&fixture::kattis_crosscountry_isize(), 0);
+        let _ = bellman_ford_moore::single_source_distances(&fixture::kattis_crosscountry!(), 0);
     }
 
     #[divan::bench]
@@ -154,7 +150,7 @@ mod kattis_crosscountry {
 
     #[divan::bench]
     fn floyd_warshall() {
-        let _ = graaf::algo::floyd_warshall::distances(&fixture::kattis_crosscountry_isize())[0];
+        let _ = graaf::algo::floyd_warshall::distances(&fixture::kattis_crosscountry!())[0];
     }
 }
 
@@ -164,8 +160,7 @@ mod kattis_shortestpath1 {
 
     #[divan::bench]
     fn bellman_ford_moore() {
-        let _ =
-            bellman_ford_moore::single_source_distances(&fixture::kattis_shortestpath1_isize(), 0);
+        let _ = bellman_ford_moore::single_source_distances(&fixture::kattis_shortestpath1!(), 0);
     }
 
     #[divan::bench]
@@ -175,7 +170,7 @@ mod kattis_shortestpath1 {
 
     #[divan::bench]
     fn floyd_warshall() {
-        let _ = graaf::algo::floyd_warshall::distances(&fixture::kattis_shortestpath1_isize())[0];
+        let _ = graaf::algo::floyd_warshall::distances(&fixture::kattis_shortestpath1!())[0];
     }
 }
 

@@ -6,6 +6,12 @@
 - Benchmark trait implementations.
 - Implement `IterOutNeighborsMut` for additional types.
 
+## [0.63.0] - 2024-06-25
+
+Changed
+
+- Breaking: Fixtures are now `cfg(test)`.
+
 ## [0.62.3] - 2024-06-25
 
 Changed

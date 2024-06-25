@@ -265,15 +265,12 @@ where
 mod tests {
     use {
         super::*,
-        crate::{
-            algo::fixture,
-            op::Order,
-        },
+        crate::algo::fixture,
     };
 
     #[test]
     fn dfsa_bang_jensen_34() {
-        let digraph = fixture::bang_jensen_34();
+        let digraph = fixture::bang_jensen_34!();
         let v = digraph.order();
         let mut ordering = vec![0; v];
         let mut t_visit = vec![0; v];
@@ -286,7 +283,7 @@ mod tests {
 
     #[test]
     fn dfsa_kattis_builddeps() {
-        let digraph = fixture::kattis_builddeps();
+        let digraph = fixture::kattis_builddeps!();
         let v = digraph.order();
         let mut ordering = vec![0; v];
         let mut t_visit = vec![0; v];
@@ -309,7 +306,7 @@ mod tests {
 
     #[test]
     fn dfsa_predecessors_bang_jensen_34() {
-        let digraph = fixture::bang_jensen_34();
+        let digraph = fixture::bang_jensen_34!();
         let v = digraph.order();
         let mut ordering = vec![0; v];
         let mut pred = vec![None; v];
@@ -333,7 +330,7 @@ mod tests {
 
     #[test]
     fn dfsa_predecessors_kattis_builddeps() {
-        let digraph = fixture::kattis_builddeps();
+        let digraph = fixture::kattis_builddeps!();
         let v = digraph.order();
         let mut ordering = vec![0; v];
         let mut pred = vec![None; v];
@@ -367,14 +364,14 @@ mod tests {
 
     #[test]
     fn acyclic_ordering_bang_jensen_34() {
-        assert!(acyclic_ordering(&fixture::bang_jensen_34())
+        assert!(acyclic_ordering(&fixture::bang_jensen_34!())
             .iter()
             .eq(&[2, 5, 3, 1, 0, 4]));
     }
 
     #[test]
     fn acycling_ordering_kattis_builddeps() {
-        let ordering = acyclic_ordering(&fixture::kattis_builddeps());
+        let ordering = acyclic_ordering(&fixture::kattis_builddeps!());
 
         let dependencies = ordering
             .into_iter()
