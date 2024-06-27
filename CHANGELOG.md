@@ -6,6 +6,12 @@
 - Benchmark trait implementations.
 - Implement `IterOutNeighborsMut` for additional types.
 
+## [0.63.1] - 2024-06-27
+
+Added
+
+- Add and test `DistanceMatrix::is_connected`.
+
 ## [0.63.0] - 2024-06-25
 
 Changed

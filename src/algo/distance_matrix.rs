@@ -236,6 +236,50 @@ impl<W> DistanceMatrix<W> {
             .copied()
             .collect()
     }
+
+    /// Returns whether the distance matrix is connected.
+    ///
+    /// A distance matrix is connected if the eccentricity of every vertex is
+    /// finite.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use {
+    ///     graaf::algo::{
+    ///         distance_matrix::DistanceMatrix,
+    ///         floyd_warshall::distances,
+    ///     },
+    ///     std::collections::BTreeMap,
+    /// };
+    ///
+    /// // 0 -> {1 (1), 2 (1)}
+    /// // 1 -> {0 (1), 2 (1)}
+    /// // 2 -> {0 (1), 1 (1)}
+    /// // 3 -> {}
+    ///
+    /// let mut digraph = vec![
+    ///     BTreeMap::from([(1, 1), (2, 1)]),
+    ///     BTreeMap::from([(0, 1), (2, 1)]),
+    ///     BTreeMap::from([(0, 1), (1, 1)]),
+    /// ];
+    ///
+    /// let dist = distances(&digraph);
+    ///
+    /// assert!(dist.is_connected());
+    ///
+    /// digraph.push(BTreeMap::new());
+    ///
+    /// let dist = distances(&digraph);
+    ///
+    /// assert!(!dist.is_connected());
+    /// ```
+    pub fn is_connected(&self) -> bool
+    where
+        W: Copy + Ord,
+    {
+        self.eccentricities().iter().all(|&e| e != self.max)
+    }
 }
 
 impl<W> Index<usize> for DistanceMatrix<W> {
@@ -265,6 +309,7 @@ mod tests {
             },
             floyd_warshall::distances,
         },
+        std::collections::BTreeMap,
     };
 
     #[test]
@@ -276,6 +321,12 @@ mod tests {
         assert!(dist[1].iter().eq(&[isize::MAX; 4]));
         assert!(dist[2].iter().eq(&[isize::MAX; 4]));
         assert!(dist[3].iter().eq(&[isize::MAX; 4]));
+    }
+
+    #[test]
+    #[should_panic(expected = "a distance matrix must have at least one vertex")]
+    fn new_zero() {
+        let _ = DistanceMatrix::new(0, isize::MAX);
     }
 
     #[test]
@@ -412,5 +463,61 @@ mod tests {
         let dist = distances(&kattis_crosscountry!());
 
         assert!(dist.eccentricities().iter().eq(&[10, 11, 7, 6]));
+    }
+
+    #[test]
+    fn is_connected_kattis_bryr_1() {
+        let mut digraph = kattis_bryr_1!();
+        let dist = distances(&digraph);
+
+        assert!(dist.is_connected());
+
+        digraph.push(BTreeMap::new());
+
+        let dist = distances(&digraph);
+
+        assert!(!dist.is_connected());
+    }
+
+    #[test]
+    fn is_connected_kattis_bryr_2() {
+        let mut digraph = kattis_bryr_2!();
+        let dist = distances(&digraph);
+
+        assert!(dist.is_connected());
+
+        digraph.push(BTreeMap::new());
+
+        let dist = distances(&digraph);
+
+        assert!(!dist.is_connected());
+    }
+
+    #[test]
+    fn is_connected_kattis_bryr_3() {
+        let mut digraph = kattis_bryr_3!();
+        let dist = distances(&digraph);
+
+        assert!(dist.is_connected());
+
+        digraph.push(BTreeMap::new());
+
+        let dist = distances(&digraph);
+
+        assert!(!dist.is_connected());
+    }
+
+    #[test]
+    fn is_connected_kattis_crosscountry() {
+        let mut digraph = kattis_crosscountry!();
+        let dist = distances(&digraph);
+
+        assert!(dist.is_connected());
+
+        digraph.push(BTreeMap::new());
+
+        let dist = distances(&digraph);
+
+        assert!(!dist.is_connected());
     }
 }
