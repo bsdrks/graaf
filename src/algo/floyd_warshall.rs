@@ -9,12 +9,13 @@
 //!
 //! ```
 //! use graaf::{
+//!     adjacency_list_weighted::Digraph,
 //!     algo::{
 //!         distance_matrix::DistanceMatrix,
 //!         floyd_warshall::distances,
 //!     },
 //!     gen::Empty,
-//!     op::AddWeightedArc,
+//!     op::AddArcWeighted,
 //! };
 //!
 //! // 0 -> {2 (-2)}
@@ -22,13 +23,13 @@
 //! // 2 -> {3 (2)}
 //! // 3 -> {1 (-1)}
 //!
-//! let mut digraph = Vec::<Vec<(usize, isize)>>::empty(4);
+//! let mut digraph = Digraph::<isize>::empty(4);
 //!
-//! digraph.add_weighted_arc(0, 2, -2);
-//! digraph.add_weighted_arc(1, 0, 4);
-//! digraph.add_weighted_arc(1, 2, 3);
-//! digraph.add_weighted_arc(2, 3, 2);
-//! digraph.add_weighted_arc(3, 1, -1);
+//! digraph.add_arc_weighted(0, 2, -2);
+//! digraph.add_arc_weighted(1, 0, 4);
+//! digraph.add_arc_weighted(1, 2, 3);
+//! digraph.add_arc_weighted(2, 3, 2);
+//! digraph.add_arc_weighted(3, 1, -1);
 //!
 //! let dist = distances(&digraph);
 //!
@@ -56,9 +57,9 @@
 use crate::{
     algo::distance_matrix::DistanceMatrix,
     op::{
-        IterVertices,
-        IterWeightedArcs,
+        ArcsWeighted,
         Order,
+        Vertices,
     },
 };
 
@@ -77,12 +78,13 @@ use crate::{
 ///
 /// ```
 /// use graaf::{
+///     adjacency_list_weighted::Digraph,
 ///     algo::{
 ///         distance_matrix::DistanceMatrix,
 ///         floyd_warshall::distances,
 ///     },
 ///     gen::Empty,
-///     op::AddWeightedArc,
+///     op::AddArcWeighted,
 /// };
 ///
 /// // 0 -> {2 (-2)}
@@ -90,13 +92,13 @@ use crate::{
 /// // 2 -> {3 (2)}
 /// // 3 -> {1 (-1)}
 ///
-/// let mut digraph = Vec::<Vec<(usize, isize)>>::empty(4);
+/// let mut digraph = Digraph::<isize>::empty(4);
 ///
-/// digraph.add_weighted_arc(0, 2, -2);
-/// digraph.add_weighted_arc(1, 0, 4);
-/// digraph.add_weighted_arc(1, 2, 3);
-/// digraph.add_weighted_arc(2, 3, 2);
-/// digraph.add_weighted_arc(3, 1, -1);
+/// digraph.add_arc_weighted(0, 2, -2);
+/// digraph.add_arc_weighted(1, 0, 4);
+/// digraph.add_arc_weighted(1, 2, 3);
+/// digraph.add_arc_weighted(2, 3, 2);
+/// digraph.add_arc_weighted(3, 1, -1);
 ///
 /// let dist = distances(&digraph);
 ///
@@ -123,12 +125,12 @@ use crate::{
 #[doc(alias = "apsp")]
 pub fn distances<D>(digraph: &D) -> DistanceMatrix<isize>
 where
-    D: IterVertices + IterWeightedArcs<isize> + Order,
+    D: Vertices + ArcsWeighted<isize> + Order,
 {
     let v = digraph.order();
     let mut dist = DistanceMatrix::<isize>::new(v, isize::MAX);
 
-    for (s, t, w) in digraph.iter_weighted_arcs() {
+    for (s, t, w) in digraph.arcs_weighted() {
         dist[s][t] = *w;
     }
 
@@ -136,15 +138,15 @@ where
         dist[i][i] = 0;
     }
 
-    for i in digraph.iter_vertices() {
-        for j in digraph.iter_vertices() {
+    for i in digraph.vertices() {
+        for j in digraph.vertices() {
             let a = dist[j][i];
 
             if a == isize::MAX {
                 continue;
             }
 
-            for k in digraph.iter_vertices() {
+            for k in digraph.vertices() {
                 let b = dist[i][k];
 
                 if b == isize::MAX {
@@ -166,20 +168,25 @@ where
 #[cfg(test)]
 mod tests {
     use crate::{
-        algo::fixture,
+        adjacency_list_weighted::{
+            fixture,
+            Digraph,
+        },
         gen::Empty,
+        op::AddArcWeighted,
     };
 
     use super::*;
 
     #[test]
     fn doctest() {
-        let digraph = vec![
-            vec![(2, -2)],
-            vec![(0, 4), (2, 3)],
-            vec![(3, 2)],
-            vec![(1, -1)],
-        ];
+        let mut digraph = Digraph::empty(4);
+
+        digraph.add_arc_weighted(0, 2, -2);
+        digraph.add_arc_weighted(1, 0, 4);
+        digraph.add_arc_weighted(1, 2, 3);
+        digraph.add_arc_weighted(2, 3, 2);
+        digraph.add_arc_weighted(3, 1, -1);
 
         let dist = distances(&digraph);
 
@@ -203,13 +210,13 @@ mod tests {
 
     #[test]
     fn trivial() {
-        let dist = distances(&Vec::<Vec<(usize, isize)>>::trivial());
+        let dist = distances(&Digraph::<isize>::trivial());
 
         assert_eq!(dist[0][0], 0);
     }
 
     #[test]
-    fn bang_jensen_94() {
+    fn bang_jensen_94_weighted() {
         let dist = distances(&fixture::bang_jensen_94_weighted!());
 
         assert_eq!(dist[0][0], 0);

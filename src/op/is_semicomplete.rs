@@ -6,23 +6,21 @@
 //! # Examples
 //!
 //! ```
-//! use {
-//!     graaf::{
-//!         gen::{
-//!             Complete,
-//!             Cycle,
-//!             Empty,
-//!             RandomTournament,
-//!         },
-//!         op::IsSemicomplete,
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     gen::{
+//!         Complete,
+//!         Cycle,
+//!         Empty,
+//!         RandomTournament,
 //!     },
-//!     std::collections::BTreeSet,
+//!     op::IsSemicomplete,
 //! };
 //!
-//! assert!(!Vec::<BTreeSet<usize>>::empty(3).is_semicomplete());
-//! assert!(Vec::<BTreeSet<usize>>::complete(3).is_semicomplete());
-//! assert!(Vec::<BTreeSet<usize>>::cycle(3).is_semicomplete());
-//! assert!(Vec::<BTreeSet<usize>>::random_tournament(3).is_semicomplete());
+//! assert!(!Digraph::empty(3).is_semicomplete());
+//! assert!(Digraph::complete(3).is_semicomplete());
+//! assert!(Digraph::cycle(3).is_semicomplete());
+//! assert!(Digraph::random_tournament(3).is_semicomplete());
 //! ```
 
 use crate::op::{
@@ -35,7 +33,8 @@ use crate::op::{
 /// # How can I implement `IsSemicomplete`?
 ///
 /// Provide an implementation of `is_semicomplete` that returns `true` if there
-/// is an arc between every pair `s`, `t` of distinct vertices.
+/// is an arc between every pair `s`, `t` of distinct vertices OR implement
+/// `HasArc` and `Order`.
 ///
 /// ```
 /// use {
@@ -44,7 +43,6 @@ use crate::op::{
 ///             Complete,
 ///             Cycle,
 ///             Empty,
-///             RandomTournament,
 ///         },
 ///         op::{
 ///             HasArc,
@@ -59,39 +57,38 @@ use crate::op::{
 ///     pub arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl IsSemicomplete for Digraph {
-///     fn is_semicomplete(&self) -> bool {
-///         let v = self.arcs.order();
+/// impl HasArc for Digraph {
+///     fn has_arc(&self, s: usize, t: usize) -> bool {
+///         self.arcs[s].contains(&t)
+///     }
+/// }
 ///
-///         for s in 0..v {
-///             for t in (s + 1)..v {
-///                 if !(self.arcs.has_arc(s, t) || self.arcs.has_arc(t, s)) {
-///                     return false;
-///                 }
-///             }
-///         }
-///
-///         true
+/// impl Order for Digraph {
+///     fn order(&self) -> usize {
+///         self.arcs.len()
 ///     }
 /// }
 ///
 /// assert!(Digraph {
-///     arcs: Vec::<BTreeSet<usize>>::complete(3)
+///     arcs: vec![
+///         BTreeSet::from([1, 2]),
+///         BTreeSet::from([0, 2]),
+///         BTreeSet::from([0, 1]),
+///     ]
 /// }
 /// .is_semicomplete());
 ///
 /// assert!(Digraph {
-///     arcs: Vec::<BTreeSet<usize>>::cycle(3)
+///     arcs: vec![
+///         BTreeSet::from([1, 2]),
+///         BTreeSet::from([0, 2]),
+///         BTreeSet::from([0]),
+///     ]
 /// }
 /// .is_semicomplete());
 ///
 /// assert!(!Digraph {
-///     arcs: Vec::<BTreeSet<usize>>::empty(3)
-/// }
-/// .is_semicomplete());
-///
-/// assert!(Digraph {
-///     arcs: Vec::<BTreeSet<usize>>::random_tournament(3)
+///     arcs: vec![BTreeSet::new(); 3]
 /// }
 /// .is_semicomplete());
 /// ```
@@ -99,23 +96,21 @@ use crate::op::{
 /// # Examples
 ///
 /// ```
-/// use {
-///     graaf::{
-///         gen::{
-///             Complete,
-///             Cycle,
-///             Empty,
-///             RandomTournament,
-///         },
-///         op::IsSemicomplete,
+/// use graaf::{
+///     adjacency_list::Digraph,
+///     gen::{
+///         Complete,
+///         Cycle,
+///         Empty,
+///         RandomTournament,
 ///     },
-///     std::collections::BTreeSet,
+///     op::IsSemicomplete,
 /// };
 ///
-/// assert!(!Vec::<BTreeSet<usize>>::empty(3).is_semicomplete());
-/// assert!(Vec::<BTreeSet<usize>>::complete(3).is_semicomplete());
-/// assert!(Vec::<BTreeSet<usize>>::cycle(3).is_semicomplete());
-/// assert!(Vec::<BTreeSet<usize>>::random_tournament(3).is_semicomplete());
+/// assert!(!Digraph::empty(3).is_semicomplete());
+/// assert!(Digraph::complete(3).is_semicomplete());
+/// assert!(Digraph::cycle(3).is_semicomplete());
+/// assert!(Digraph::random_tournament(3).is_semicomplete());
 /// ```
 pub trait IsSemicomplete {
     /// Determines whether the digraph is semicomplete.
@@ -124,7 +119,7 @@ pub trait IsSemicomplete {
 
 impl<D> IsSemicomplete for D
 where
-    D: HasArc + Order + ?Sized,
+    D: HasArc + Order,
 {
     fn is_semicomplete(&self) -> bool {
         let v = self.order();
@@ -138,107 +133,5 @@ where
         }
 
         true
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use {
-        super::*,
-        crate::gen::{
-            Complete,
-            CompleteConst,
-            Cycle,
-            CycleConst,
-            Empty,
-            EmptyConst,
-            RandomTournament,
-            RandomTournamentConst,
-        },
-        std::collections::{
-            BTreeSet,
-            HashSet,
-        },
-    };
-
-    #[test]
-    fn vec_btree_set_complete() {
-        assert!(Vec::<BTreeSet<usize>>::complete(3).is_semicomplete());
-    }
-
-    #[test]
-    fn vec_hash_set_complete() {
-        assert!(Vec::<HashSet<usize>>::complete(3).is_semicomplete());
-    }
-
-    #[test]
-    fn arr_btree_set_complete() {
-        assert!(<[BTreeSet<usize>; 3]>::complete().is_semicomplete());
-    }
-
-    #[test]
-    fn arr_hash_set_complete() {
-        assert!(<[HashSet<usize>; 3]>::complete().is_semicomplete());
-    }
-
-    #[test]
-    fn vec_btree_set_cycle() {
-        assert!(Vec::<BTreeSet<usize>>::cycle(3).is_semicomplete());
-    }
-
-    #[test]
-    fn vec_hash_set_cycle() {
-        assert!(Vec::<HashSet<usize>>::cycle(3).is_semicomplete());
-    }
-
-    #[test]
-    fn arr_btree_set_cycle() {
-        assert!(<[BTreeSet<usize>; 3]>::cycle().is_semicomplete());
-    }
-
-    #[test]
-    fn arr_hash_set_cycle() {
-        assert!(<[HashSet<usize>; 3]>::cycle().is_semicomplete());
-    }
-
-    #[test]
-    fn vec_btree_set_empty() {
-        assert!(!Vec::<BTreeSet<usize>>::empty(3).is_semicomplete());
-    }
-
-    #[test]
-    fn vec_hash_set_empty() {
-        assert!(!Vec::<HashSet<usize>>::empty(3).is_semicomplete());
-    }
-
-    #[test]
-    fn arr_btree_set_empty() {
-        assert!(!<[BTreeSet<usize>; 3]>::empty().is_semicomplete());
-    }
-
-    #[test]
-    fn arr_hash_set_empty() {
-        assert!(!<[HashSet<usize>; 3]>::empty().is_semicomplete());
-    }
-
-    #[test]
-    fn vec_btree_set_random_tournament() {
-        println!("{:?}", Vec::<BTreeSet<usize>>::random_tournament(3));
-        assert!(Vec::<BTreeSet<usize>>::random_tournament(3).is_semicomplete());
-    }
-
-    #[test]
-    fn vec_hash_set_random_tournament() {
-        assert!(Vec::<HashSet<usize>>::random_tournament(3).is_semicomplete());
-    }
-
-    #[test]
-    fn arr_btree_set_random_tournament() {
-        assert!(<[BTreeSet<usize>; 3]>::random_tournament().is_semicomplete());
-    }
-
-    #[test]
-    fn arr_hash_set_random_tournament() {
-        assert!(<[HashSet<usize>; 3]>::random_tournament().is_semicomplete());
     }
 }

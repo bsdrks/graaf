@@ -1,13 +1,13 @@
 //! Depth-first search
 //!
-//! Depth-first search is a graph traversal algorithm that explores a digraph
+//! Depth-first search is a digraph traversal algorithm that explores a digraph
 //! by following a path as far as possible before backtracking.
 //!
 //! The time complexity is *O*(*v* + *a*).
 
 use crate::op::{
-    IterOutNeighbors,
     Order,
+    OutNeighbors,
 };
 
 /// Generates an acyclic ordering of the vertices of an unweighted digraph.
@@ -22,13 +22,11 @@ use crate::op::{
 /// # Examples
 ///
 /// ```
-/// use {
-///     graaf::{
-///         algo::dfs::dfsa,
-///         gen::Empty,
-///         op::AddArc,
-///     },
-///     std::collections::BTreeSet,
+/// use graaf::{
+///     adjacency_list::Digraph,
+///     algo::dfs::dfsa,
+///     gen::Empty,
+///     op::AddArc,
 /// };
 ///
 /// const V: usize = 6;
@@ -40,7 +38,7 @@ use crate::op::{
 /// // 4 -> {}
 /// // 5 -> {4}
 ///
-/// let mut digraph = Vec::<BTreeSet<usize>>::empty(V);
+/// let mut digraph = Digraph::empty(V);
 ///
 /// digraph.add_arc(0, 4);
 /// digraph.add_arc(1, 0);
@@ -59,7 +57,7 @@ use crate::op::{
 /// ```
 pub fn dfsa<D>(digraph: &D, ordering: &mut [usize], t_visit: &mut [usize], t_expl: &mut [usize])
 where
-    D: IterOutNeighbors + Order,
+    D: OutNeighbors + Order,
 {
     let v = digraph.order();
     let mut t = 0;
@@ -82,12 +80,12 @@ fn dfsa_visit<D>(
     i: &mut usize,
     t: &mut usize,
 ) where
-    D: IterOutNeighbors,
+    D: OutNeighbors,
 {
     *t += 1;
     t_visit[u] = *t;
 
-    for v in digraph.iter_out_neighbors(u) {
+    for v in digraph.out_neighbors(u) {
         if t_visit[v] == 0 {
             dfsa_visit(digraph, v, ordering, t_visit, t_expl, i, t);
         }
@@ -113,13 +111,11 @@ fn dfsa_visit<D>(
 /// # Examples
 ///
 /// ```
-/// use {
-///     graaf::{
-///         algo::dfs::dfsa_predecessors,
-///         gen::Empty,
-///         op::AddArc,
-///     },
-///     std::collections::BTreeSet,
+/// use graaf::{
+///     adjacency_list::Digraph,
+///     algo::dfs::dfsa_predecessors,
+///     gen::Empty,
+///     op::AddArc,
 /// };
 ///
 /// const V: usize = 6;
@@ -131,7 +127,7 @@ fn dfsa_visit<D>(
 /// // 4 -> {}
 /// // 5 -> {4}
 ///
-/// let mut digraph = Vec::<BTreeSet<usize>>::empty(V);
+/// let mut digraph = Digraph::empty(V);
 ///
 /// digraph.add_arc(0, 4);
 /// digraph.add_arc(1, 0);
@@ -162,7 +158,7 @@ pub fn dfsa_predecessors<D>(
     t_visit: &mut [usize],
     t_expl: &mut [usize],
 ) where
-    D: IterOutNeighbors + Order,
+    D: OutNeighbors + Order,
 {
     let v = digraph.order();
     let mut t = 0;
@@ -186,12 +182,12 @@ fn dfsa_predecessors_visit<D>(
     i: &mut usize,
     t: &mut usize,
 ) where
-    D: IterOutNeighbors,
+    D: OutNeighbors,
 {
     *t += 1;
     t_visit[u] = *t;
 
-    for v in digraph.iter_out_neighbors(u) {
+    for v in digraph.out_neighbors(u) {
         if t_visit[v] == 0 {
             pred[v] = Some(u);
 
@@ -218,13 +214,11 @@ fn dfsa_predecessors_visit<D>(
 /// # Examples
 ///
 /// ```
-/// use {
-///     graaf::{
-///         algo::dfs::acyclic_ordering,
-///         gen::Empty,
-///         op::AddArc,
-///     },
-///     std::collections::BTreeSet,
+/// use graaf::{
+///     adjacency_list::Digraph,
+///     algo::dfs::acyclic_ordering,
+///     gen::Empty,
+///     op::AddArc,
 /// };
 ///
 /// const V: usize = 6;
@@ -236,7 +230,7 @@ fn dfsa_predecessors_visit<D>(
 /// // 4 -> {}
 /// // 5 -> {4}
 ///
-/// let mut digraph = Vec::<BTreeSet<usize>>::empty(V);
+/// let mut digraph = Digraph::empty(V);
 ///
 /// digraph.add_arc(0, 4);
 /// digraph.add_arc(1, 0);
@@ -249,7 +243,7 @@ fn dfsa_predecessors_visit<D>(
 /// ```
 pub fn acyclic_ordering<D>(digraph: &D) -> Vec<usize>
 where
-    D: IterOutNeighbors + Order,
+    D: OutNeighbors + Order,
 {
     let v = digraph.order();
     let mut ordering = vec![0; v];
@@ -265,7 +259,7 @@ where
 mod tests {
     use {
         super::*,
-        crate::algo::fixture,
+        crate::adjacency_list::fixture,
     };
 
     #[test]

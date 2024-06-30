@@ -1,88 +1,6 @@
 //! # Graaf
 //!
-//! Build and query digraphs.
-//!
-//! ## Examples
-//!
-//! ```rust
-//! use {
-//!     graaf::{
-//!         algo::bfs::single_pair_shortest_path as spsp,
-//!         gen::*,
-//!         op::*,
-//!         repr::*,
-//!     },
-//!     std::collections::BTreeSet,
-//! };
-//!
-//! // 0 -> {1, 2}
-//! // 1 -> {}
-//! // 2 -> {}
-//!
-//! let mut digraph = <[BTreeSet<usize>; 3]>::empty();
-//!
-//! digraph.add_arc(0, 1);
-//! digraph.add_arc(0, 2);
-//!
-//! assert_eq!(digraph.degree(0), 2);
-//! assert_eq!(digraph.degree(1), 1);
-//! assert_eq!(digraph.degree(2), 1);
-//!
-//! // 0 -> {1}
-//! // 1 -> {0}
-//! // 2 -> {1}
-//! // 3 -> {0, 2}
-//!
-//! let digraph = [Vec::new(), vec![0], vec![1], vec![0, 2]];
-//!
-//! assert_eq!(spsp(&digraph, 3, 0), Some(vec![3, 0]));
-//! assert_eq!(spsp(&digraph, 3, 1), Some(vec![3, 2, 1]));
-//!
-//! // 0 -> {}
-//! // 1 -> {}
-//! // 2 -> {}
-//!
-//! assert!(Vec::<Vec<usize>>::empty(3)
-//!     .iter()
-//!     .eq(&[Vec::new(), Vec::new(), Vec::new()]));
-//!
-//! // 0 -> {1}
-//! // 1 -> {2}
-//! // 2 -> {0}
-//!
-//! assert!(Vec::<Vec<usize>>::cycle(3)
-//!     .iter()
-//!     .eq(&[vec![1], vec![2], vec![0]]));
-//!
-//! // 0 -> {1, 2}
-//! // 1 -> {0, 2}
-//! // 2 -> {0, 1}
-//!
-//! assert!(<[Vec::<usize>; 3]>::complete()
-//!     .iter()
-//!     .eq(&[vec![1, 2], vec![0, 2], vec![0, 1]]));
-//!
-//! let tournament = Vec::<BTreeSet<usize>>::random_tournament(4);
-//!
-//! assert_eq!(tournament.size(), 6);
-//! assert_eq!(tournament.order(), 4);
-//!
-//! for s in tournament.iter_vertices() {
-//!     assert_eq!(tournament.degree(s), 3);
-//!     assert!((0..3).contains(&tournament.outdegree(s)));
-//!     assert!((0..3).contains(&tournament.indegree(s)));
-//! }
-//!
-//! // 0 -> {1}
-//! // 1 -> {1}
-//!
-//! let mut digraph = AdjacencyMatrix::<3>::new();
-//!
-//! digraph.add_arc(0, 1);
-//! digraph.add_arc(1, 1);
-//!
-//! assert!(!digraph.is_simple());
-//! ```
+//! Work with directed graphs.
 
 // Clippy lint groups
 #![deny(clippy::all, clippy::cargo, clippy::pedantic, clippy::nursery)]
@@ -118,11 +36,10 @@
 )]
 // Rustdoc lints
 #![deny(rustdoc::all)]
-#![cfg_attr(feature = "adjacency_matrix", allow(incomplete_features))]
-#![cfg_attr(feature = "adjacency_matrix", feature(generic_const_exprs))]
 
+pub mod adjacency_list;
+pub mod adjacency_list_weighted;
+pub mod adjacency_matrix;
 pub mod algo;
 pub mod gen;
 pub mod op;
-pub mod prop;
-pub mod repr;

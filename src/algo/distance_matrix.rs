@@ -6,12 +6,17 @@
 //! # Examples
 //!
 //! ```
-//! use {
-//!     graaf::algo::{
+//! use graaf::{
+//!     adjacency_list_weighted::Digraph,
+//!     algo::{
 //!         distance_matrix::DistanceMatrix,
 //!         floyd_warshall::distances,
 //!     },
-//!     std::collections::BTreeMap,
+//!     gen::Empty,
+//!     op::{
+//!         AddArcWeighted,
+//!         Arcs,
+//!     },
 //! };
 //!
 //! // 0 -> {1 (1), 2 (3), 3 (14)}
@@ -19,12 +24,20 @@
 //! // 2 -> {0 (3), 1 (10), 3 (7)}
 //! // 3 -> {0 (13), 1 (8), 2 (2)}
 //!
-//! let digraph = vec![
-//!     BTreeMap::from([(1, 1), (2, 3), (3, 14)]),
-//!     BTreeMap::from([(0, 2), (2, 4), (3, 22)]),
-//!     BTreeMap::from([(0, 3), (1, 10), (3, 7)]),
-//!     BTreeMap::from([(0, 13), (1, 8), (2, 2)]),
-//! ];
+//! let mut digraph = Digraph::<isize>::empty(4);
+//!
+//! digraph.add_arc_weighted(0, 1, 1);
+//! digraph.add_arc_weighted(0, 2, 3);
+//! digraph.add_arc_weighted(0, 3, 14);
+//! digraph.add_arc_weighted(1, 0, 2);
+//! digraph.add_arc_weighted(1, 2, 4);
+//! digraph.add_arc_weighted(1, 3, 22);
+//! digraph.add_arc_weighted(2, 0, 3);
+//! digraph.add_arc_weighted(2, 1, 10);
+//! digraph.add_arc_weighted(2, 3, 7);
+//! digraph.add_arc_weighted(3, 0, 13);
+//! digraph.add_arc_weighted(3, 1, 8);
+//! digraph.add_arc_weighted(3, 2, 2);
 //!
 //! let dist = distances(&digraph);
 //!
@@ -104,12 +117,14 @@ impl<W> DistanceMatrix<W> {
     /// # Examples
     ///
     /// ```
-    /// use {
-    ///     graaf::algo::{
+    /// use graaf::{
+    ///     adjacency_list_weighted::Digraph,
+    ///     algo::{
     ///         distance_matrix::DistanceMatrix,
     ///         floyd_warshall::distances,
     ///     },
-    ///     std::collections::BTreeMap,
+    ///     gen::Empty,
+    ///     op::AddArcWeighted,
     /// };
     ///
     /// // 0 -> {1 (1), 2 (3), 3 (14)}
@@ -117,12 +132,20 @@ impl<W> DistanceMatrix<W> {
     /// // 2 -> {0 (3), 1 (10), 3 (7)}
     /// // 3 -> {0 (13), 1 (8), 2 (2)}
     ///
-    /// let digraph = vec![
-    ///     BTreeMap::from([(1, 1), (2, 3), (3, 14)]),
-    ///     BTreeMap::from([(0, 2), (2, 4), (3, 22)]),
-    ///     BTreeMap::from([(0, 3), (1, 10), (3, 7)]),
-    ///     BTreeMap::from([(0, 13), (1, 8), (2, 2)]),
-    /// ];
+    /// let mut digraph = Digraph::<isize>::empty(4);
+    ///
+    /// digraph.add_arc_weighted(0, 1, 1);
+    /// digraph.add_arc_weighted(0, 2, 3);
+    /// digraph.add_arc_weighted(0, 3, 14);
+    /// digraph.add_arc_weighted(1, 0, 2);
+    /// digraph.add_arc_weighted(1, 2, 4);
+    /// digraph.add_arc_weighted(1, 3, 22);
+    /// digraph.add_arc_weighted(2, 0, 3);
+    /// digraph.add_arc_weighted(2, 1, 10);
+    /// digraph.add_arc_weighted(2, 3, 7);
+    /// digraph.add_arc_weighted(3, 0, 13);
+    /// digraph.add_arc_weighted(3, 1, 8);
+    /// digraph.add_arc_weighted(3, 2, 2);
     ///
     /// let dist = distances(&digraph);
     ///
@@ -159,12 +182,14 @@ impl<W> DistanceMatrix<W> {
     /// # Examples
     ///
     /// ```
-    /// use {
-    ///     graaf::algo::{
+    /// use graaf::{
+    ///     adjacency_list_weighted::Digraph,
+    ///     algo::{
     ///         distance_matrix::DistanceMatrix,
     ///         floyd_warshall::distances,
     ///     },
-    ///     std::collections::BTreeMap,
+    ///     gen::Empty,
+    ///     op::AddArcWeighted,
     /// };
     ///
     /// // 0 -> {1 (1), 2 (3), 3 (14)}
@@ -172,12 +197,20 @@ impl<W> DistanceMatrix<W> {
     /// // 2 -> {0 (3), 1 (10), 3 (7)}
     /// // 3 -> {0 (13), 1 (8), 2 (2)}
     ///
-    /// let digraph = vec![
-    ///     BTreeMap::from([(1, 1), (2, 3), (3, 14)]),
-    ///     BTreeMap::from([(0, 2), (2, 4), (3, 22)]),
-    ///     BTreeMap::from([(0, 3), (1, 10), (3, 7)]),
-    ///     BTreeMap::from([(0, 13), (1, 8), (2, 2)]),
-    /// ];
+    /// let mut digraph = Digraph::<isize>::empty(4);
+    ///
+    /// digraph.add_arc_weighted(0, 1, 1);
+    /// digraph.add_arc_weighted(0, 2, 3);
+    /// digraph.add_arc_weighted(0, 3, 14);
+    /// digraph.add_arc_weighted(1, 0, 2);
+    /// digraph.add_arc_weighted(1, 2, 4);
+    /// digraph.add_arc_weighted(1, 3, 22);
+    /// digraph.add_arc_weighted(2, 0, 3);
+    /// digraph.add_arc_weighted(2, 1, 10);
+    /// digraph.add_arc_weighted(2, 3, 7);
+    /// digraph.add_arc_weighted(3, 0, 13);
+    /// digraph.add_arc_weighted(3, 1, 8);
+    /// digraph.add_arc_weighted(3, 2, 2);
     ///
     /// let dist = distances(&digraph);
     ///
@@ -202,12 +235,14 @@ impl<W> DistanceMatrix<W> {
     /// # Examples
     ///
     /// ```
-    /// use {
-    ///     graaf::algo::{
+    /// use graaf::{
+    ///     adjacency_list_weighted::Digraph,
+    ///     algo::{
     ///         distance_matrix::DistanceMatrix,
     ///         floyd_warshall::distances,
     ///     },
-    ///     std::collections::BTreeMap,
+    ///     gen::Empty,
+    ///     op::AddArcWeighted,
     /// };
     ///
     /// // 0 -> {1 (1), 2 (3), 3 (14)}
@@ -215,12 +250,20 @@ impl<W> DistanceMatrix<W> {
     /// // 2 -> {0 (3), 1 (10), 3 (7)}
     /// // 3 -> {0 (13), 1 (8), 2 (2)}
     ///
-    /// let digraph = vec![
-    ///     BTreeMap::from([(1, 1), (2, 3), (3, 14)]),
-    ///     BTreeMap::from([(0, 2), (2, 4), (3, 22)]),
-    ///     BTreeMap::from([(0, 3), (1, 10), (3, 7)]),
-    ///     BTreeMap::from([(0, 13), (1, 8), (2, 2)]),
-    /// ];
+    /// let mut digraph = Digraph::<isize>::empty(4);
+    ///
+    /// digraph.add_arc_weighted(0, 1, 1);
+    /// digraph.add_arc_weighted(0, 2, 3);
+    /// digraph.add_arc_weighted(0, 3, 14);
+    /// digraph.add_arc_weighted(1, 0, 2);
+    /// digraph.add_arc_weighted(1, 2, 4);
+    /// digraph.add_arc_weighted(1, 3, 22);
+    /// digraph.add_arc_weighted(2, 0, 3);
+    /// digraph.add_arc_weighted(2, 1, 10);
+    /// digraph.add_arc_weighted(2, 3, 7);
+    /// digraph.add_arc_weighted(3, 0, 13);
+    /// digraph.add_arc_weighted(3, 1, 8);
+    /// digraph.add_arc_weighted(3, 2, 2);
     ///
     /// let dist = distances(&digraph);
     ///
@@ -245,30 +288,46 @@ impl<W> DistanceMatrix<W> {
     /// # Examples
     ///
     /// ```
-    /// use {
-    ///     graaf::algo::{
+    /// use graaf::{
+    ///     adjacency_list_weighted::Digraph,
+    ///     algo::{
     ///         distance_matrix::DistanceMatrix,
     ///         floyd_warshall::distances,
     ///     },
-    ///     std::collections::BTreeMap,
+    ///     gen::Empty,
+    ///     op::AddArcWeighted,
     /// };
+    ///
+    /// // 0 -> {1 (1), 2 (1)}
+    /// // 1 -> {0 (1), 2 (1)}
+    /// // 2 -> {0 (1), 1 (1)}
+    ///
+    /// let mut digraph = Digraph::<isize>::empty(3);
+    ///
+    /// digraph.add_arc_weighted(0, 1, 1);
+    /// digraph.add_arc_weighted(0, 2, 1);
+    /// digraph.add_arc_weighted(1, 0, 1);
+    /// digraph.add_arc_weighted(1, 2, 1);
+    /// digraph.add_arc_weighted(2, 0, 1);
+    /// digraph.add_arc_weighted(2, 1, 1);
+    ///
+    /// let dist = distances(&digraph);
+    ///
+    /// assert!(dist.is_connected());
     ///
     /// // 0 -> {1 (1), 2 (1)}
     /// // 1 -> {0 (1), 2 (1)}
     /// // 2 -> {0 (1), 1 (1)}
     /// // 3 -> {}
     ///
-    /// let mut digraph = vec![
-    ///     BTreeMap::from([(1, 1), (2, 1)]),
-    ///     BTreeMap::from([(0, 1), (2, 1)]),
-    ///     BTreeMap::from([(0, 1), (1, 1)]),
-    /// ];
+    /// let mut digraph = Digraph::<isize>::empty(4);
     ///
-    /// let dist = distances(&digraph);
-    ///
-    /// assert!(dist.is_connected());
-    ///
-    /// digraph.push(BTreeMap::new());
+    /// digraph.add_arc_weighted(0, 1, 1);
+    /// digraph.add_arc_weighted(0, 2, 1);
+    /// digraph.add_arc_weighted(1, 0, 1);
+    /// digraph.add_arc_weighted(1, 2, 1);
+    /// digraph.add_arc_weighted(2, 0, 1);
+    /// digraph.add_arc_weighted(2, 1, 1);
     ///
     /// let dist = distances(&digraph);
     ///
@@ -300,16 +359,15 @@ impl<W> IndexMut<usize> for DistanceMatrix<W> {
 mod tests {
     use {
         super::*,
-        crate::algo::{
-            fixture::{
+        crate::{
+            adjacency_list_weighted::fixture::{
                 kattis_bryr_1,
                 kattis_bryr_2,
                 kattis_bryr_3,
                 kattis_crosscountry,
             },
-            floyd_warshall::distances,
+            algo::floyd_warshall::distances,
         },
-        std::collections::BTreeMap,
     };
 
     #[test]
@@ -467,57 +525,33 @@ mod tests {
 
     #[test]
     fn is_connected_kattis_bryr_1() {
-        let mut digraph = kattis_bryr_1!();
+        let digraph = kattis_bryr_1!();
         let dist = distances(&digraph);
 
         assert!(dist.is_connected());
-
-        digraph.push(BTreeMap::new());
-
-        let dist = distances(&digraph);
-
-        assert!(!dist.is_connected());
     }
 
     #[test]
     fn is_connected_kattis_bryr_2() {
-        let mut digraph = kattis_bryr_2!();
+        let digraph = kattis_bryr_2!();
         let dist = distances(&digraph);
 
         assert!(dist.is_connected());
-
-        digraph.push(BTreeMap::new());
-
-        let dist = distances(&digraph);
-
-        assert!(!dist.is_connected());
     }
 
     #[test]
     fn is_connected_kattis_bryr_3() {
-        let mut digraph = kattis_bryr_3!();
+        let digraph = kattis_bryr_3!();
         let dist = distances(&digraph);
 
         assert!(dist.is_connected());
-
-        digraph.push(BTreeMap::new());
-
-        let dist = distances(&digraph);
-
-        assert!(!dist.is_connected());
     }
 
     #[test]
     fn is_connected_kattis_crosscountry() {
-        let mut digraph = kattis_crosscountry!();
+        let digraph = kattis_crosscountry!();
         let dist = distances(&digraph);
 
         assert!(dist.is_connected());
-
-        digraph.push(BTreeMap::new());
-
-        let dist = distances(&digraph);
-
-        assert!(!dist.is_connected());
     }
 }

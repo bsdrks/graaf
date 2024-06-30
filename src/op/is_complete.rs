@@ -6,23 +6,21 @@
 //! # Examples
 //!
 //! ```
-//! use {
-//!     graaf::{
-//!         gen::{
-//!             Complete,
-//!             Cycle,
-//!             Empty,
-//!             RandomTournament,
-//!         },
-//!         op::IsComplete,
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     gen::{
+//!         Complete,
+//!         Cycle,
+//!         Empty,
+//!         RandomTournament,
 //!     },
-//!     std::collections::BTreeSet,
+//!     op::IsComplete,
 //! };
 //!
-//! assert!(Vec::<BTreeSet<usize>>::complete(3).is_complete());
-//! assert!(!Vec::<BTreeSet<usize>>::cycle(3).is_complete());
-//! assert!(!Vec::<BTreeSet<usize>>::empty(3).is_complete());
-//! assert!(!Vec::<BTreeSet<usize>>::random_tournament(3).is_complete());
+//! assert!(Digraph::complete(3).is_complete());
+//! assert!(!Digraph::cycle(3).is_complete());
+//! assert!(!Digraph::empty(3).is_complete());
+//! assert!(!Digraph::random_tournament(3).is_complete());
 //! ```
 
 use crate::op::{
@@ -36,7 +34,7 @@ use crate::op::{
 ///
 /// Provide an implementation of `is_complete` that returns `true` if, for every
 /// pair `s`, `t` of distinct vertices, there is an arc from `s` to `t` and an
-/// arc from `t` to `s`.
+/// arc from `t` to `s` OR implement `HasEdge` and `Order`.
 ///
 /// ```
 /// use {
@@ -48,7 +46,7 @@ use crate::op::{
 ///             RandomTournament,
 ///         },
 ///         op::{
-///             HasEdge,
+///             HasArc,
 ///             IsComplete,
 ///             Order,
 ///         },
@@ -60,39 +58,38 @@ use crate::op::{
 ///     pub arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl IsComplete for Digraph {
-///     fn is_complete(&self) -> bool {
-///         let v = self.arcs.order();
+/// impl HasArc for Digraph {
+///     fn has_arc(&self, s: usize, t: usize) -> bool {
+///         self.arcs.get(s).map_or(false, |set| set.contains(&t))
+///     }
+/// }
 ///
-///         for s in 0..v {
-///             for t in (s + 1)..v {
-///                 if !self.arcs.has_edge(s, t) {
-///                     return false;
-///                 }
-///             }
-///         }
-///
-///         true
+/// impl Order for Digraph {
+///     fn order(&self) -> usize {
+///         self.arcs.len()
 ///     }
 /// }
 ///
 /// assert!(Digraph {
-///     arcs: Vec::<BTreeSet<usize>>::complete(3)
+///     arcs: vec![
+///         BTreeSet::from([1, 2]),
+///         BTreeSet::from([0, 2]),
+///         BTreeSet::from([0, 1])
+///     ]
 /// }
 /// .is_complete());
 ///
 /// assert!(!Digraph {
-///     arcs: Vec::<BTreeSet<usize>>::cycle(3)
+///     arcs: vec![
+///         BTreeSet::from([1]),
+///         BTreeSet::from([2]),
+///         BTreeSet::from([0])
+///     ]
 /// }
 /// .is_complete());
 ///
 /// assert!(!Digraph {
-///     arcs: Vec::<BTreeSet<usize>>::empty(3)
-/// }
-/// .is_complete());
-///
-/// assert!(!Digraph {
-///     arcs: Vec::<BTreeSet<usize>>::random_tournament(3)
+///     arcs: vec![BTreeSet::new(); 3]
 /// }
 /// .is_complete());
 /// ```
@@ -103,7 +100,7 @@ pub trait IsComplete {
 
 impl<D> IsComplete for D
 where
-    D: HasEdge + Order + ?Sized,
+    D: HasEdge + Order,
 {
     fn is_complete(&self) -> bool {
         let v = self.order();
@@ -117,84 +114,5 @@ where
         }
 
         true
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use {
-        super::*,
-        crate::gen::{
-            Complete,
-            CompleteConst,
-            Cycle,
-            CycleConst,
-            Empty,
-            EmptyConst,
-            RandomTournament,
-            RandomTournamentConst,
-        },
-        std::collections::{
-            BTreeSet,
-            HashSet,
-        },
-    };
-
-    macro_rules! test_const {
-        ($ty:ty) => {
-            assert!(<[$ty; 1]>::empty().is_complete());
-            assert!(<[$ty; 1]>::cycle().is_complete());
-            assert!(<[$ty; 2]>::cycle().is_complete());
-            assert!(<[$ty; 2]>::complete().is_complete());
-            assert!(<[$ty; 3]>::complete().is_complete());
-            assert!(<[$ty; 4]>::complete().is_complete());
-
-            assert!(!<[$ty; 2]>::empty().is_complete());
-            assert!(!<[$ty; 3]>::empty().is_complete());
-            assert!(!<[$ty; 3]>::cycle().is_complete());
-            assert!(!<[$ty; 4]>::cycle().is_complete());
-            assert!(!<[$ty; 2]>::random_tournament().is_complete());
-            assert!(!<[$ty; 3]>::random_tournament().is_complete());
-            assert!(!<[$ty; 4]>::random_tournament().is_complete());
-        };
-    }
-
-    macro_rules! test_dynamic {
-        ($ty:ty) => {
-            assert!(<$ty>::empty(1).is_complete());
-            assert!(<$ty>::cycle(1).is_complete());
-            assert!(<$ty>::cycle(2).is_complete());
-            assert!(<$ty>::complete(2).is_complete());
-            assert!(<$ty>::complete(3).is_complete());
-            assert!(<$ty>::complete(4).is_complete());
-
-            assert!(!<$ty>::empty(2).is_complete());
-            assert!(!<$ty>::empty(3).is_complete());
-            assert!(!<$ty>::cycle(3).is_complete());
-            assert!(!<$ty>::cycle(4).is_complete());
-            assert!(!<$ty>::random_tournament(2).is_complete());
-            assert!(!<$ty>::random_tournament(3).is_complete());
-            assert!(!<$ty>::random_tournament(4).is_complete());
-        };
-    }
-
-    #[test]
-    fn vec_btree_set() {
-        test_dynamic!(Vec::<BTreeSet<usize>>);
-    }
-
-    #[test]
-    fn vec_hash_set() {
-        test_dynamic!(Vec::<HashSet<usize>>);
-    }
-
-    #[test]
-    fn arr_btree_set() {
-        test_const!(BTreeSet<usize>);
-    }
-
-    #[test]
-    fn arr_hash_set() {
-        test_const!(HashSet<usize>);
     }
 }

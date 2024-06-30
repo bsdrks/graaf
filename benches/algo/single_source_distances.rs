@@ -174,15 +174,15 @@ mod random_tournament {
     use {
         divan::Bencher,
         graaf::{
+            adjacency_list,
             algo::bfs,
             gen::RandomTournament,
         },
-        std::collections::BTreeSet,
     };
 
     #[divan::bench]
     fn bfs(bencher: Bencher<'_, '_>) {
-        let digraph = Vec::<BTreeSet<usize>>::random_tournament(100);
+        let digraph = adjacency_list::Digraph::random_tournament(100);
 
         bencher.bench_local(|| {
             let _ = bfs::single_source_distances(&digraph, 0);

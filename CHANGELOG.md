@@ -4,7 +4,19 @@
 
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
-- Implement `IterOutNeighborsMut` for additional types.
+- Tidy up the `adjacency_matrix` tests.
+- User guide.
+
+## [0.64.0] - 2024-06-30
+
+This update is big. Users will find that I changed the entire API except for traits and algorithms. Analyzing the digraph `op` and `gen` implementations for the standard library collections, I settled on two main digraph representations:
+
+- `adjacency_list`
+- `adjacency_list_weighted`
+
+These representations offer a good balance between performance and ergonomics. All applicable traits are implemented and tested for these representations. The `adjacency_matrix` representation is still available for dense unweighted digraphs, but blocks are now stored in a `Vec` instead of an array.
+
+The next minor release will add a user guide to the documentation.
 
 ## [0.63.1] - 2024-06-27
 
@@ -252,7 +264,7 @@ Added
 - Add unit test `vec_hash_set` for `IterInNeighbors`.
 - Add unit test `vec_tuple` for `IterInNeighbors`.
 - Add unit test `vec_vec` for `IterInNeighbors`.
-- Implement `IterInNeighbors` for `IterArcs + ?Sized`.
+- Implement `IterInNeighbors` for `IterArcs`.
 - Implement and test `EmptyConst` for `BTreeSet<(usize, usize)>`.
 - Implement and test `EmptyConst` for `BTreeSet<(usize, usize, W)>`.
 - Implement and test `EmptyConst` for `HashSet<(usize, usize)>`.

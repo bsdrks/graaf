@@ -9,11 +9,12 @@
 //! use {
 //!     core::cmp::Reverse,
 //!     graaf::{
+//!         adjacency_list::Digraph,
 //!         algo::{
 //!             bfs::predecessors,
 //!             breadth_first_tree::BreadthFirstTree,
 //!         },
-//!         gen::EmptyConst,
+//!         gen::Empty,
 //!         op::AddArc,
 //!     },
 //!     std::collections::VecDeque,
@@ -24,7 +25,7 @@
 //! // 2 -> {}
 //! // 3 -> {0}
 //!
-//! let mut digraph = <[Vec<usize>; 4]>::empty();
+//! let mut digraph = Digraph::empty(4);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(1, 2);

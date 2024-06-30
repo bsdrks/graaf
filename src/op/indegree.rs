@@ -6,27 +6,25 @@
 //! # Examples
 //!
 //! ```
-//! use {
-//!     graaf::op::Indegree,
-//!     std::collections::HashSet,
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     gen::Empty,
+//!     op::{
+//!         AddArc,
+//!         Indegree,
+//!     },
 //! };
 //!
-//! let digraph = vec![HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
+//! let mut digraph = Digraph::empty(3);
+//!
+//! digraph.add_arc(0, 1);
+//! digraph.add_arc(0, 2);
+//! digraph.add_arc(1, 2);
 //!
 //! assert_eq!(digraph.indegree(0), 0);
 //! assert_eq!(digraph.indegree(1), 1);
 //! assert_eq!(digraph.indegree(2), 2);
 //! ```
-
-use {
-    core::hash::BuildHasher,
-    std::collections::{
-        BTreeMap,
-        BTreeSet,
-        HashMap,
-        HashSet,
-    },
-};
 
 /// Get the indegree of a vertex.
 ///
@@ -38,11 +36,11 @@ use {
 /// ```
 /// use {
 ///     graaf::op::Indegree,
-///     std::collections::HashSet,
+///     std::collections::BTreeSet,
 /// };
 ///
 /// struct Digraph {
-///     arcs: Vec<HashSet<usize>>,
+///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
 /// impl Indegree for Digraph {
@@ -50,17 +48,33 @@ use {
 ///         self.arcs.iter().filter(|set| set.contains(&t)).count()
 ///     }
 /// }
+///
+/// let digraph = Digraph {
+///     arcs: vec![BTreeSet::from([1, 2]), BTreeSet::from([2]), BTreeSet::new()],
+/// };
+///
+/// assert_eq!(digraph.indegree(0), 0);
+/// assert_eq!(digraph.indegree(1), 1);
+/// assert_eq!(digraph.indegree(2), 2);
 /// ```
 ///
 /// # Examples
 ///
 /// ```
-/// use {
-///     graaf::op::Indegree,
-///     std::collections::HashSet,
+/// use graaf::{
+///     adjacency_list::Digraph,
+///     gen::Empty,
+///     op::{
+///         AddArc,
+///         Indegree,
+///     },
 /// };
 ///
-/// let digraph = vec![HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
+/// let mut digraph = Digraph::empty(3);
+///
+/// digraph.add_arc(0, 1);
+/// digraph.add_arc(0, 2);
+/// digraph.add_arc(1, 2);
 ///
 /// assert_eq!(digraph.indegree(0), 0);
 /// assert_eq!(digraph.indegree(1), 1);
@@ -85,12 +99,20 @@ pub trait Indegree {
     /// # Examples
     ///
     /// ```
-    /// use {
-    ///     graaf::op::Indegree,
-    ///     std::collections::HashSet,
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     gen::Empty,
+    ///     op::{
+    ///         AddArc,
+    ///         Indegree,
+    ///     },
     /// };
     ///
-    /// let digraph = vec![HashSet::from([1, 2]), HashSet::from([2]), HashSet::new()];
+    /// let mut digraph = Digraph::empty(3);
+    ///
+    /// digraph.add_arc(0, 1);
+    /// digraph.add_arc(0, 2);
+    /// digraph.add_arc(1, 2);
     ///
     /// assert!(digraph.is_source(0));
     /// assert!(!digraph.is_source(1));
@@ -98,435 +120,5 @@ pub trait Indegree {
     /// ```
     fn is_source(&self, t: usize) -> bool {
         self.indegree(t) == 0
-    }
-}
-
-macro_rules! impl_iter_contains {
-    () => {
-        fn indegree(&self, t: usize) -> usize {
-            self.iter().filter(|set| set.contains(&t)).count()
-        }
-    };
-}
-
-macro_rules! impl_values_contains {
-    () => {
-        fn indegree(&self, t: usize) -> usize {
-            self.values().filter(|set| set.contains(&t)).count()
-        }
-    };
-}
-
-macro_rules! impl_iter_contains_key {
-    () => {
-        fn indegree(&self, t: usize) -> usize {
-            self.iter().filter(|map| map.contains_key(&t)).count()
-        }
-    };
-}
-
-macro_rules! impl_values_contains_key {
-    () => {
-        fn indegree(&self, t: usize) -> usize {
-            self.values().filter(|map| map.contains_key(&t)).count()
-        }
-    };
-}
-
-impl Indegree for Vec<BTreeSet<usize>> {
-    impl_iter_contains!();
-}
-
-impl<H> Indegree for Vec<HashSet<usize, H>>
-where
-    H: BuildHasher,
-{
-    impl_iter_contains!();
-}
-
-impl Indegree for [BTreeSet<usize>] {
-    impl_iter_contains!();
-}
-
-impl<H> Indegree for [HashSet<usize, H>]
-where
-    H: BuildHasher,
-{
-    impl_iter_contains!();
-}
-
-impl<const V: usize> Indegree for [BTreeSet<usize>; V] {
-    impl_iter_contains!();
-}
-
-impl<const V: usize, H> Indegree for [HashSet<usize, H>; V]
-where
-    H: BuildHasher,
-{
-    impl_iter_contains!();
-}
-
-impl Indegree for BTreeMap<usize, BTreeSet<usize>> {
-    impl_values_contains!();
-}
-
-impl<H> Indegree for HashMap<usize, HashSet<usize, H>, H>
-where
-    H: BuildHasher,
-{
-    impl_values_contains!();
-}
-
-impl<W> Indegree for Vec<BTreeMap<usize, W>> {
-    impl_iter_contains_key!();
-}
-
-impl<W, H> Indegree for Vec<HashMap<usize, W, H>>
-where
-    H: BuildHasher,
-{
-    impl_iter_contains_key!();
-}
-
-impl<W> Indegree for [BTreeMap<usize, W>] {
-    impl_iter_contains_key!();
-}
-
-impl<W, H> Indegree for [HashMap<usize, W, H>]
-where
-    H: BuildHasher,
-{
-    impl_iter_contains_key!();
-}
-
-impl<const V: usize, W> Indegree for [BTreeMap<usize, W>; V] {
-    impl_iter_contains_key!();
-}
-
-impl<const V: usize, W, H> Indegree for [HashMap<usize, W, H>; V]
-where
-    H: BuildHasher,
-{
-    impl_iter_contains_key!();
-}
-
-impl<W> Indegree for BTreeMap<usize, BTreeMap<usize, W>> {
-    impl_values_contains_key!();
-}
-
-impl<W, H> Indegree for HashMap<usize, HashMap<usize, W, H>, H>
-where
-    H: BuildHasher,
-{
-    impl_values_contains_key!();
-}
-
-#[cfg(test)]
-mod tests {
-    use {
-        super::*,
-        crate::{
-            gen::{
-                Empty,
-                EmptyConst,
-            },
-            op::{
-                AddArc,
-                AddWeightedArc,
-            },
-        },
-    };
-
-    macro_rules! test_indegree {
-        ($digraph:expr) => {
-            assert_eq!($digraph.indegree(0), 0);
-            assert_eq!($digraph.indegree(1), 1);
-            assert_eq!($digraph.indegree(2), 2);
-        };
-    }
-
-    macro_rules! test_indegree_unweighted {
-        ($digraph:expr) => {
-            $digraph.add_arc(0, 1);
-            $digraph.add_arc(0, 2);
-            $digraph.add_arc(1, 2);
-
-            test_indegree!($digraph);
-        };
-    }
-
-    macro_rules! test_indegree_weighted {
-        ($digraph:expr) => {
-            $digraph.add_weighted_arc(0, 1, 1);
-            $digraph.add_weighted_arc(0, 2, 2);
-            $digraph.add_weighted_arc(1, 2, 3);
-
-            test_indegree!($digraph);
-        };
-    }
-
-    macro_rules! test_is_source {
-        ($digraph:expr) => {
-            assert!($digraph.is_source(0));
-            assert!(!$digraph.is_source(1));
-            assert!($digraph.is_source(2));
-            assert!(!$digraph.is_source(3));
-        };
-    }
-
-    macro_rules! setup_unweighted {
-        ($digraph:expr) => {
-            $digraph.add_arc(0, 1);
-            $digraph.add_arc(0, 3);
-            $digraph.add_arc(2, 1);
-        };
-    }
-
-    macro_rules! setup_weighted {
-        ($digraph:expr) => {
-            $digraph.add_weighted_arc(0, 1, 1);
-            $digraph.add_weighted_arc(0, 3, 2);
-            $digraph.add_weighted_arc(2, 1, 4);
-        };
-    }
-
-    #[test]
-    fn vec_btree_set() {
-        let digraph = &mut <Vec<BTreeSet<usize>>>::empty(3);
-
-        test_indegree_unweighted!(digraph);
-    }
-
-    #[test]
-    fn vec_hash_set() {
-        let digraph = &mut <Vec<HashSet<usize>>>::empty(3);
-
-        test_indegree_unweighted!(digraph);
-    }
-
-    #[test]
-    fn slice_btree_set() {
-        let digraph: &mut [BTreeSet<usize>] = &mut Vec::<BTreeSet<usize>>::empty(3);
-
-        test_indegree_unweighted!(digraph);
-    }
-
-    #[test]
-    fn slice_hash_set() {
-        let digraph: &mut [HashSet<usize>] = &mut Vec::<HashSet<usize>>::empty(3);
-
-        test_indegree_unweighted!(digraph);
-    }
-
-    #[test]
-    fn arr_btree_set() {
-        let digraph = &mut <[BTreeSet<usize>; 3]>::empty();
-
-        test_indegree_unweighted!(digraph);
-    }
-
-    #[test]
-    fn arr_hash_set() {
-        let digraph = &mut <[HashSet<usize>; 3]>::empty();
-
-        test_indegree_unweighted!(digraph);
-    }
-
-    #[test]
-    fn vec_btree_map() {
-        let digraph = &mut <Vec<BTreeMap<usize, usize>>>::empty(3);
-
-        test_indegree_weighted!(digraph);
-    }
-
-    #[test]
-    fn vec_hash_map() {
-        let digraph = &mut <Vec<HashMap<usize, usize>>>::empty(3);
-
-        test_indegree_weighted!(digraph);
-    }
-
-    #[test]
-    fn slice_btree_map() {
-        let digraph: &mut [BTreeMap<usize, usize>] = &mut Vec::<BTreeMap<usize, usize>>::empty(3);
-
-        test_indegree_weighted!(digraph);
-    }
-
-    #[test]
-    fn slice_hash_map() {
-        let digraph: &mut [HashMap<usize, usize>] = &mut Vec::<HashMap<usize, usize>>::empty(3);
-
-        test_indegree_weighted!(digraph);
-    }
-
-    #[test]
-    fn arr_btree_map() {
-        let digraph = &mut <[BTreeMap<usize, usize>; 3]>::empty();
-
-        test_indegree_weighted!(digraph);
-    }
-
-    #[test]
-    fn arr_hash_map() {
-        let digraph = &mut <[HashMap<usize, usize>; 3]>::empty();
-
-        test_indegree_weighted!(digraph);
-    }
-
-    #[test]
-    fn btree_map_btree_set() {
-        let digraph = &mut BTreeMap::<usize, BTreeSet<usize>>::empty(3);
-
-        test_indegree_unweighted!(digraph);
-    }
-
-    #[test]
-    fn btree_map_btree_map() {
-        let digraph = &mut BTreeMap::<usize, BTreeMap<usize, usize>>::empty(3);
-
-        test_indegree_weighted!(digraph);
-    }
-
-    #[test]
-    fn hash_map_hash_set() {
-        let digraph = &mut HashMap::<usize, HashSet<usize>>::empty(3);
-
-        test_indegree_unweighted!(digraph);
-    }
-
-    #[test]
-    fn hash_map_hash_map() {
-        let digraph = &mut HashMap::<usize, HashMap<usize, usize>>::empty(3);
-
-        test_indegree_weighted!(digraph);
-    }
-
-    #[test]
-    fn is_source_vec_btree_set() {
-        let digraph = &mut <Vec<BTreeSet<usize>>>::empty(3);
-
-        setup_unweighted!(digraph);
-        test_is_source!(digraph);
-    }
-
-    #[test]
-    fn is_source_vec_hash_set() {
-        let digraph = &mut <Vec<HashSet<usize>>>::empty(3);
-
-        setup_unweighted!(digraph);
-        test_is_source!(digraph);
-    }
-
-    #[test]
-    fn is_source_slice_btree_set() {
-        let digraph: &mut [BTreeSet<usize>] = &mut Vec::<BTreeSet<usize>>::empty(3);
-
-        setup_unweighted!(digraph);
-        test_is_source!(digraph);
-    }
-
-    #[test]
-    fn is_source_slice_hash_set() {
-        let digraph: &mut [HashSet<usize>] = &mut Vec::<HashSet<usize>>::empty(3);
-
-        setup_unweighted!(digraph);
-        test_is_source!(digraph);
-    }
-
-    #[test]
-    fn is_source_arr_btree_set() {
-        let digraph = &mut <[BTreeSet<usize>; 3]>::empty();
-
-        setup_unweighted!(digraph);
-        test_is_source!(digraph);
-    }
-
-    #[test]
-    fn is_source_arr_hash_set() {
-        let digraph = &mut <[HashSet<usize>; 3]>::empty();
-
-        setup_unweighted!(digraph);
-        test_is_source!(digraph);
-    }
-
-    #[test]
-    fn is_source_vec_btree_map() {
-        let digraph = &mut <Vec<BTreeMap<usize, usize>>>::empty(3);
-
-        setup_weighted!(digraph);
-        test_is_source!(digraph);
-    }
-
-    #[test]
-    fn is_source_vec_hash_map() {
-        let digraph = &mut <Vec<HashMap<usize, usize>>>::empty(3);
-
-        setup_weighted!(digraph);
-        test_is_source!(digraph);
-    }
-
-    #[test]
-    fn is_source_slice_btree_map() {
-        let digraph: &mut [BTreeMap<usize, usize>] = &mut Vec::<BTreeMap<usize, usize>>::empty(3);
-
-        setup_weighted!(digraph);
-        test_is_source!(digraph);
-    }
-
-    #[test]
-    fn is_source_slice_hash_map() {
-        let digraph: &mut [HashMap<usize, usize>] = &mut Vec::<HashMap<usize, usize>>::empty(3);
-
-        setup_weighted!(digraph);
-        test_is_source!(digraph);
-    }
-
-    #[test]
-    fn is_source_arr_btree_map() {
-        let digraph = &mut <[BTreeMap<usize, usize>; 3]>::empty();
-
-        setup_weighted!(digraph);
-        test_is_source!(digraph);
-    }
-
-    #[test]
-    fn is_source_arr_hash_map() {
-        let digraph = &mut <[HashMap<usize, usize>; 3]>::empty();
-
-        setup_weighted!(digraph);
-        test_is_source!(digraph);
-    }
-
-    #[test]
-    fn is_source_btree_map_btree_set() {
-        let digraph = &mut BTreeMap::<usize, BTreeSet<usize>>::empty(3);
-
-        setup_unweighted!(digraph);
-        test_is_source!(digraph);
-    }
-
-    #[test]
-    fn is_source_btree_map_btree_map() {
-        let digraph = &mut BTreeMap::<usize, BTreeMap<usize, usize>>::empty(3);
-
-        setup_weighted!(digraph);
-        test_is_source!(digraph);
-    }
-
-    #[test]
-    fn is_source_hash_map_hash_set() {
-        let digraph = &mut HashMap::<usize, HashSet<usize>>::empty(3);
-
-        setup_unweighted!(digraph);
-        test_is_source!(digraph);
-    }
-
-    #[test]
-    fn is_source_hash_map_hash_map() {
-        let digraph = &mut HashMap::<usize, HashMap<usize, usize>>::empty(3);
-
-        setup_weighted!(digraph);
-        test_is_source!(digraph);
     }
 }

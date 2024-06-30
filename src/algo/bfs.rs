@@ -1,6 +1,6 @@
 //! Breadth-first search
 //!
-//! Breadth-first search is a graph traversal algorithm that visits
+//! Breadth-first search is a digraph traversal algorithm that visits
 //! vertices of an unweighted digraph in order of their distance from the source
 //! vertex. Use [`dijkstra`] for weighted digraphs.
 //!
@@ -19,11 +19,12 @@
 //!
 //! ```
 //! use graaf::{
+//!     adjacency_list::Digraph,
 //!     algo::bfs::{
 //!         single_source_distances,
 //!         single_source_predecessors,
 //!     },
-//!     gen::EmptyConst,
+//!     gen::Empty,
 //!     op::AddArc,
 //! };
 //!
@@ -32,7 +33,7 @@
 //! // 2 -> {}
 //! // 3 -> {0}
 //!
-//! let mut digraph = <[Vec<usize>; 4]>::empty();
+//! let mut digraph = Digraph::empty(4);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(1, 2);
@@ -69,8 +70,8 @@ use {
     crate::{
         algo::breadth_first_tree::BreadthFirstTree,
         op::{
-            IterOutNeighbors,
             Order,
+            OutNeighbors,
         },
     },
     std::collections::VecDeque,
@@ -96,6 +97,7 @@ use {
 /// ```
 /// use {
 ///     graaf::{
+///         adjacency_list::Digraph,
 ///         algo::bfs::distances,
 ///         gen::Empty,
 ///         op::AddArc,
@@ -108,7 +110,7 @@ use {
 /// // 2 -> {}
 /// // 3 -> {0}
 ///
-/// let mut digraph = Vec::<Vec<usize>>::empty(4);
+/// let mut digraph = Digraph::empty(4);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(1, 2);
@@ -123,14 +125,14 @@ use {
 /// ```
 pub fn distances<D, S, W>(digraph: &D, step: S, dist: &mut [W], queue: &mut VecDeque<(usize, W)>)
 where
-    D: IterOutNeighbors,
+    D: OutNeighbors,
     S: Fn(W) -> W,
     W: Copy + Ord,
 {
     while let Some((s, w)) = queue.pop_front() {
         let w = step(w);
 
-        for t in digraph.iter_out_neighbors(s) {
+        for t in digraph.out_neighbors(s) {
             if w >= dist[t] {
                 continue;
             }
@@ -160,8 +162,9 @@ where
 ///
 /// ```
 /// use graaf::{
+///     adjacency_list::Digraph,
 ///     algo::bfs::single_source_distances,
-///     gen::EmptyConst,
+///     gen::Empty,
 ///     op::AddArc,
 /// };
 ///
@@ -170,7 +173,7 @@ where
 /// // 2 -> {}
 /// // 3 -> {0}
 ///
-/// let mut digraph = <[Vec<usize>; 4]>::empty();
+/// let mut digraph = Digraph::empty(4);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(1, 2);
@@ -180,7 +183,7 @@ where
 /// ```
 pub fn single_source_distances<D>(digraph: &D, s: usize) -> Vec<usize>
 where
-    D: Order + IterOutNeighbors,
+    D: Order + OutNeighbors,
 {
     let mut dist = vec![usize::MAX; digraph.order()];
     let mut queue = VecDeque::from(vec![(s, 0)]);
@@ -215,11 +218,12 @@ where
 /// use {
 ///     core::cmp::Reverse,
 ///     graaf::{
+///         adjacency_list::Digraph,
 ///         algo::{
 ///             bfs::predecessors,
 ///             breadth_first_tree::BreadthFirstTree,
 ///         },
-///         gen::EmptyConst,
+///         gen::Empty,
 ///         op::AddArc,
 ///     },
 ///     std::collections::VecDeque,
@@ -230,7 +234,7 @@ where
 /// // 2 -> {}
 /// // 3 -> {0}
 ///
-/// let mut digraph = <[Vec<usize>; 4]>::empty();
+/// let mut digraph = Digraph::empty(4);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(1, 2);
@@ -252,14 +256,14 @@ pub fn predecessors<D, S, W>(
     dist: &mut [W],
     queue: &mut VecDeque<(usize, W)>,
 ) where
-    D: IterOutNeighbors,
+    D: OutNeighbors,
     S: Fn(W) -> W,
     W: Copy + Ord,
 {
     while let Some((s, w)) = queue.pop_front() {
         let w = step(w);
 
-        for t in digraph.iter_out_neighbors(s) {
+        for t in digraph.out_neighbors(s) {
             if w >= dist[t] {
                 continue;
             }
@@ -291,8 +295,9 @@ pub fn predecessors<D, S, W>(
 ///
 /// ```
 /// use graaf::{
+///     adjacency_list::Digraph,
 ///     algo::bfs::single_source_predecessors,
-///     gen::EmptyConst,
+///     gen::Empty,
 ///     op::AddArc,
 /// };
 ///
@@ -301,7 +306,7 @@ pub fn predecessors<D, S, W>(
 /// // 2 -> {}
 /// // 3 -> {0}
 ///
-/// let mut digraph = <[Vec<usize>; 4]>::empty();
+/// let mut digraph = Digraph::empty(4);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(1, 2);
@@ -313,7 +318,7 @@ pub fn predecessors<D, S, W>(
 /// ```
 pub fn single_source_predecessors<D>(digraph: &D, s: usize) -> BreadthFirstTree
 where
-    D: Order + IterOutNeighbors,
+    D: Order + OutNeighbors,
 {
     let v = digraph.order();
     let mut pred = BreadthFirstTree::new(v);
@@ -356,11 +361,12 @@ where
 /// ```
 /// use {
 ///     graaf::{
+///         adjacency_list::Digraph,
 ///         algo::{
 ///             bfs::shortest_path,
 ///             breadth_first_tree::BreadthFirstTree,
 ///         },
-///         gen::EmptyConst,
+///         gen::Empty,
 ///         op::AddArc,
 ///     },
 ///     std::collections::VecDeque,
@@ -371,7 +377,7 @@ where
 /// // 2 -> {}
 /// // 3 -> {0}
 ///
-/// let mut digraph = <[Vec<usize>; 4]>::empty();
+/// let mut digraph = Digraph::empty(4);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(1, 2);
@@ -401,7 +407,7 @@ pub fn shortest_path<D, S, T>(
     queue: &mut VecDeque<(usize, usize)>,
 ) -> Option<Vec<usize>>
 where
-    D: IterOutNeighbors,
+    D: OutNeighbors,
     S: Fn(usize) -> usize,
     T: Fn(usize) -> bool,
 {
@@ -416,7 +422,7 @@ where
 
         let w = step(w);
 
-        for t in digraph.iter_out_neighbors(s) {
+        for t in digraph.out_neighbors(s) {
             if w >= dist[t] {
                 continue;
             }
@@ -465,8 +471,9 @@ where
 ///
 /// ```
 /// use graaf::{
+///     adjacency_list::Digraph,
 ///     algo::bfs::single_pair_shortest_path as spsp,
-///     gen::EmptyConst,
+///     gen::Empty,
 ///     op::AddArc,
 /// };
 ///
@@ -475,7 +482,7 @@ where
 /// // 2 -> {}
 /// // 3 -> {0}
 ///
-/// let mut digraph = <[Vec<usize>; 4]>::empty();
+/// let mut digraph = Digraph::empty(4);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(1, 2);
@@ -490,7 +497,7 @@ where
 /// // 2 -> {1}
 /// // 3 -> {0, 2}
 ///
-/// let mut digraph = <[Vec<usize>; 4]>::empty();
+/// let mut digraph = Digraph::empty(4);
 ///
 /// digraph.add_arc(1, 0);
 /// digraph.add_arc(2, 1);
@@ -505,7 +512,7 @@ where
 #[doc(alias = "spsp")]
 pub fn single_pair_shortest_path<D>(digraph: &D, s: usize, t: usize) -> Option<Vec<usize>>
 where
-    D: Order + IterOutNeighbors,
+    D: Order + OutNeighbors,
 {
     let v = digraph.order();
     let mut pred = BreadthFirstTree::new(v);
@@ -526,18 +533,22 @@ where
 
 #[cfg(test)]
 mod tests {
-    use std::collections::BTreeSet;
-
-    use crate::{
-        algo::fixture,
-        gen::Empty,
+    use {
+        crate::{
+            adjacency_list::{
+                fixture,
+                Digraph,
+            },
+            gen::Empty,
+        },
+        std::collections::BTreeSet,
     };
 
     use super::*;
 
     #[test]
     fn distances_trivial() {
-        let digraph = Vec::<Vec<usize>>::trivial();
+        let digraph = Digraph::trivial();
         let mut dist = vec![0];
         let mut queue = VecDeque::new();
 
@@ -624,7 +635,7 @@ mod tests {
 
     #[test]
     fn single_source_distances_trivial() {
-        assert!(single_source_distances(&Vec::<Vec<usize>>::trivial(), 0)
+        assert!(single_source_distances(&Digraph::trivial(), 0)
             .iter()
             .eq(&[0]));
     }
@@ -638,7 +649,7 @@ mod tests {
 
     #[test]
     fn predecessors_trivial() {
-        let digraph = Vec::<Vec<usize>>::trivial();
+        let digraph = Digraph::trivial();
         let mut pred = BreadthFirstTree::new(1);
         let mut dist = vec![0];
         let mut queue = VecDeque::new();
@@ -762,7 +773,7 @@ mod tests {
 
     #[test]
     fn single_source_predecessors_trivial() {
-        assert!(single_source_predecessors(&Vec::<Vec<usize>>::trivial(), 0)
+        assert!(single_source_predecessors(&Digraph::trivial(), 0)
             .into_iter()
             .eq([None]));
     }
@@ -776,7 +787,7 @@ mod tests {
 
     #[test]
     fn shortest_path_trivial() {
-        let digraph = Vec::<Vec<usize>>::trivial();
+        let digraph = Digraph::trivial();
         let mut pred = BreadthFirstTree::new(1);
         let mut dist = vec![0];
         let mut queue = VecDeque::new();
@@ -927,7 +938,7 @@ mod tests {
     #[test]
     fn single_pair_shortest_path_trivial() {
         assert_eq!(
-            single_pair_shortest_path(&Vec::<Vec<usize>>::trivial(), 0, 0),
+            single_pair_shortest_path(&Digraph::trivial(), 0, 0),
             Some(vec![0])
         );
     }

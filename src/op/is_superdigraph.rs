@@ -8,35 +8,41 @@
 //! # Examples
 //!
 //! ```
-//! use {
-//!     graaf::{
-//!         gen::{
-//!             Cycle,
-//!             Empty,
-//!         },
-//!         op::IsSuperdigraph,
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     gen::{
+//!         Cycle,
+//!         Empty,
 //!     },
-//!     std::collections::BTreeSet,
+//!     op::{
+//!         AddArc,
+//!         IsSuperdigraph,
+//!     },
 //! };
 //!
-//! let h = vec![BTreeSet::from([1]), BTreeSet::new()];
-//! let d = Vec::<BTreeSet<usize>>::cycle(3);
+//! let mut h = Digraph::empty(3);
+//!
+//! h.add_arc(0, 1);
+//!
+//! let d = Digraph::cycle(3);
 //!
 //! assert!(d.is_superdigraph(&h));
+//!
+//! h.add_arc(0, 2);
+//!
+//! assert!(!d.is_superdigraph(&h));
 //! ```
 //!
 //! Every digraph is a superdigraph of itself.
 //!
 //! ```
-//! use {
-//!     graaf::{
-//!         gen::RandomTournament,
-//!         op::IsSuperdigraph,
-//!     },
-//!     std::collections::BTreeSet,
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     gen::RandomTournament,
+//!     op::IsSuperdigraph,
 //! };
 //!
-//! let tournament = Vec::<BTreeSet<usize>>::random_tournament(4);
+//! let tournament = Digraph::random_tournament(4);
 //!
 //! assert!(tournament.is_superdigraph(&tournament));
 //! ```
@@ -52,16 +58,19 @@ use crate::op::IsSubdigraph;
 ///
 /// # How can I implement `IsSuperdigraph`?
 ///
-/// Provide an implementation of `is_superdigraph` that returns `true` if the
-/// digraph is a superdigraph of the digraph `d` and `false` otherwise.
+/// Provide an implementation of `is_subdigraph` that returns `true` if the
+/// digraph is a superdigraph of the digraph `d` and `false` otherwise OR
+/// implement `IsSubdigraph`.
 ///
 /// ```
 /// use {
 ///     graaf::{
 ///         gen::Cycle,
 ///         op::{
-///             IsSubdigraph,
+///             HasArc,
 ///             IsSuperdigraph,
+///             Arcs,
+///             Vertices,
 ///         },
 ///     },
 ///     std::collections::BTreeSet,
@@ -71,55 +80,84 @@ use crate::op::IsSubdigraph;
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl IsSuperdigraph for Digraph {
-///     fn is_superdigraph(&self, d: &Self) -> bool {
-///         d.arcs.is_subdigraph(&self.arcs)
+/// impl HasArc for Digraph {
+///     fn has_arc(&self, u: usize, v: usize) -> bool {
+///         self.arcs[u].contains(&v)
 ///     }
 /// }
 ///
-/// let h = Digraph {
-///     arcs: vec![BTreeSet::from([1]), BTreeSet::new()],
+/// impl Arcs for Digraph {
+///     fn arcs(&self) -> impl Iterator<Item = (usize, usize)> {
+///         self.arcs
+///             .iter()
+///             .enumerate()
+///             .flat_map(|(u, vs)| vs.iter().map(move |v| (u, *v)))
+///     }
+/// }
+///
+/// impl Vertices for Digraph {
+///     fn vertices(&self) -> impl Iterator<Item = usize> {
+///         (0..self.arcs.len())
+///     }
+/// }
+///
+/// let mut h = Digraph {
+///     arcs: vec![BTreeSet::from([1]), BTreeSet::new(), BTreeSet::new()],
 /// };
 ///
 /// let d = Digraph {
-///     arcs: Vec::<BTreeSet<usize>>::cycle(3),
+///     arcs: vec![
+///         BTreeSet::from([1]),
+///         BTreeSet::from([2]),
+///         BTreeSet::from([0]),
+///     ],
 /// };
 ///
 /// assert!(d.is_superdigraph(&h));
+///
+/// h.arcs[0].insert(2);
+///
+/// assert!(!d.is_superdigraph(&h));
 /// ```
 ///
 /// # Examples
 ///
 /// ```
-/// use {
-///     graaf::{
-///         gen::{
-///             Cycle,
-///             Empty,
-///         },
-///         op::IsSuperdigraph,
+/// use graaf::{
+///     adjacency_list::Digraph,
+///     gen::{
+///         Cycle,
+///         Empty,
 ///     },
-///     std::collections::BTreeSet,
+///     op::{
+///         AddArc,
+///         IsSuperdigraph,
+///     },
 /// };
 ///
-/// let h = vec![BTreeSet::from([1]), BTreeSet::new()];
-/// let d = Vec::<BTreeSet<usize>>::cycle(3);
+/// let mut h = Digraph::empty(2);
+///
+/// h.add_arc(0, 1);
+///
+/// let d = Digraph::cycle(3);
 ///
 /// assert!(d.is_superdigraph(&h));
+///
+/// h.add_arc(0, 2);
+///
+/// assert!(!d.is_superdigraph(&h));
 /// ```
 ///
 /// Every digraph is a superdigraph of itself.
 ///
 /// ```
-/// use {
-///     graaf::{
-///         gen::RandomTournament,
-///         op::IsSuperdigraph,
-///     },
-///     std::collections::BTreeSet,
+/// use graaf::{
+///     adjacency_list::Digraph,
+///     gen::RandomTournament,
+///     op::IsSuperdigraph,
 /// };
 ///
-/// let tournament = Vec::<BTreeSet<usize>>::random_tournament(4);
+/// let tournament = Digraph::random_tournament(4);
 ///
 /// assert!(tournament.is_superdigraph(&tournament));
 /// ```
@@ -130,100 +168,9 @@ pub trait IsSuperdigraph {
 
 impl<T> IsSuperdigraph for T
 where
-    T: IsSubdigraph + ?Sized,
+    T: IsSubdigraph,
 {
     fn is_superdigraph(&self, d: &Self) -> bool {
         d.is_subdigraph(self)
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use {
-        super::*,
-        crate::gen::{
-            RandomTournament,
-            RandomTournamentConst,
-        },
-        proptest::proptest,
-        std::collections::{
-            BTreeMap,
-            BTreeSet,
-            HashMap,
-            HashSet,
-        },
-    };
-
-    fn is_superdigraph_self<T>(digraph: &T)
-    where
-        T: IsSuperdigraph,
-    {
-        assert!(digraph.is_superdigraph(digraph));
-    }
-
-    proptest! {
-        #[test]
-        fn random_tournament_vec_btree_set(v in 1..100_usize) {
-            let tournament = Vec::<BTreeSet<usize>>::random_tournament(v);
-
-            assert!(tournament.is_superdigraph(&tournament));
-        }
-
-        #[test]
-        fn random_tournament_vec_hash_set(v in 1..100_usize) {
-            let tournament = Vec::<HashSet<usize>>::random_tournament(v);
-
-            assert!(tournament.is_superdigraph(&tournament));
-        }
-
-        #[test]
-        fn random_tournament_slice_btree_set(v in 1..100_usize) {
-            let tournament = Vec::<BTreeSet<usize>>::random_tournament(v);
-
-            assert!(tournament.as_slice().is_superdigraph(tournament.as_slice()));
-        }
-
-        #[test]
-        fn random_tournament_slice_hash_set(v in 1..100_usize) {
-            let tournament = Vec::<HashSet<usize>>::random_tournament(v);
-
-            assert!(tournament.as_slice().is_superdigraph(tournament.as_slice()));
-        }
-
-        #[test]
-        fn random_tournament_btree_map_btree_set(v in 1..100_usize) {
-            let tournament = BTreeMap::<usize, BTreeSet<usize>>::random_tournament(v);
-
-            assert!(tournament.is_superdigraph(&tournament));
-        }
-
-        #[test]
-        fn random_tournament_hash_map_hash_set(v in 1..100_usize) {
-            let tournament = HashMap::<usize, HashSet<usize>>::random_tournament(v);
-
-            assert!(tournament.is_superdigraph(&tournament));
-        }
-    }
-
-    #[test]
-    fn random_tournament_arr_btree_set() {
-        is_superdigraph_self(&<[BTreeSet<usize>; 1]>::random_tournament());
-        is_superdigraph_self(&<[BTreeSet<usize>; 2]>::random_tournament());
-        is_superdigraph_self(&<[BTreeSet<usize>; 3]>::random_tournament());
-        is_superdigraph_self(&<[BTreeSet<usize>; 4]>::random_tournament());
-        is_superdigraph_self(&<[BTreeSet<usize>; 5]>::random_tournament());
-        is_superdigraph_self(&<[BTreeSet<usize>; 6]>::random_tournament());
-        is_superdigraph_self(&<[BTreeSet<usize>; 7]>::random_tournament());
-    }
-
-    #[test]
-    fn random_tournament_arr_hash_set() {
-        is_superdigraph_self(&<[HashSet<usize>; 1]>::random_tournament());
-        is_superdigraph_self(&<[HashSet<usize>; 2]>::random_tournament());
-        is_superdigraph_self(&<[HashSet<usize>; 3]>::random_tournament());
-        is_superdigraph_self(&<[HashSet<usize>; 4]>::random_tournament());
-        is_superdigraph_self(&<[HashSet<usize>; 5]>::random_tournament());
-        is_superdigraph_self(&<[HashSet<usize>; 6]>::random_tournament());
-        is_superdigraph_self(&<[HashSet<usize>; 7]>::random_tournament());
     }
 }

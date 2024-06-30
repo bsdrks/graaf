@@ -5,62 +5,76 @@
 //! # Examples
 //!
 //! ```
-//! use graaf::gen::Cycle;
-//!
-//! assert_eq!(
-//!     Vec::<Vec<usize>>::cycle(4),
-//!     vec![vec![1], vec![2], vec![3], vec![0]]
-//! );
-//! ```
-//!
-//! ```
-//! use {
-//!     graaf::gen::CompleteConst,
-//!     std::collections::BTreeSet,
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     gen::Cycle,
+//!     op::Arcs,
 //! };
 //!
-//! assert_eq!(
-//!     <[BTreeSet::<usize>; 4]>::complete(),
-//!     [
-//!         BTreeSet::from([1, 2, 3]),
-//!         BTreeSet::from([0, 2, 3]),
-//!         BTreeSet::from([0, 1, 3]),
-//!         BTreeSet::from([0, 1, 2]),
-//!     ]
-//! );
+//! assert!(Digraph::cycle(4)
+//!     .arcs()
+//!     .eq([(0, 1), (1, 2), (2, 3), (3, 0)]));
 //! ```
 //!
 //! ```
-//! use {
-//!     graaf::gen::Empty,
-//!     std::collections::BTreeSet,
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     gen::Complete,
+//!     op::Arcs,
 //! };
 //!
-//! assert_eq!(Vec::<BTreeSet<usize>>::empty(3), vec![BTreeSet::new(); 3]);
+//! assert!(Digraph::complete(4).arcs().eq([
+//!     (0, 1),
+//!     (0, 2),
+//!     (0, 3),
+//!     (1, 0),
+//!     (1, 2),
+//!     (1, 3),
+//!     (2, 0),
+//!     (2, 1),
+//!     (2, 3),
+//!     (3, 0),
+//!     (3, 1),
+//!     (3, 2),
+//! ]));
 //! ```
 //!
 //! ```
-//! use {
-//!     graaf::{
-//!         gen::RandomTournament,
-//!         op::{
-//!             Degree,
-//!             Indegree,
-//!             IterVertices,
-//!             Order,
-//!             Outdegree,
-//!             Size,
-//!         },
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     gen::Empty,
+//!     op::{
+//!         Arcs,
+//!         Order,
 //!     },
-//!     std::collections::BTreeSet,
 //! };
 //!
-//! let tournament = Vec::<BTreeSet<usize>>::random_tournament(4);
+//! let digraph = Digraph::empty(4);
+//!
+//! assert!(digraph.arcs().eq([]));
+//! assert_eq!(digraph.order(), 4);
+//! ```
+//!
+//! ```
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     gen::RandomTournament,
+//!     op::{
+//!         Degree,
+//!         Indegree,
+//!         Order,
+//!         Outdegree,
+//!         Size,
+//!         Vertices,
+//!     },
+//! };
+//!
+//! let tournament = Digraph::random_tournament(4);
 //!
 //! assert_eq!(tournament.size(), 6);
 //! assert_eq!(tournament.order(), 4);
 //!
-//! for s in tournament.iter_vertices() {
+//! for s in tournament.vertices() {
 //!     assert_eq!(tournament.degree(s), 3);
 //!     assert!((0..3).contains(&tournament.outdegree(s)));
 //!     assert!((0..3).contains(&tournament.indegree(s)));
@@ -68,22 +82,14 @@
 //! ```
 
 pub mod complete;
-pub mod complete_const;
 pub mod cycle;
-pub mod cycle_const;
 pub mod empty;
-pub mod empty_const;
 pub mod prng;
 pub mod random_tournament;
-pub mod random_tournament_const;
 
 pub use {
     complete::Complete,
-    complete_const::CompleteConst,
     cycle::Cycle,
-    cycle_const::CycleConst,
     empty::Empty,
-    empty_const::EmptyConst,
     random_tournament::RandomTournament,
-    random_tournament_const::RandomTournamentConst,
 };

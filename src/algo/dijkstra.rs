@@ -14,12 +14,13 @@
 //!
 //! ```
 //! use graaf::{
+//!     adjacency_list_weighted::Digraph,
 //!     algo::dijkstra::{
 //!         single_source_distances,
 //!         single_source_predecessors,
 //!     },
 //!     gen::Empty,
-//!     op::AddWeightedArc,
+//!     op::AddArcWeighted,
 //! };
 //!
 //! // 0 -> {1 (2)}
@@ -27,11 +28,11 @@
 //! // 2 -> {}
 //! // 3 -> {0 (2)}
 //!
-//! let mut digraph = Vec::<Vec<(usize, usize)>>::empty(4);
+//! let mut digraph = Digraph::<usize>::empty(4);
 //!
-//! digraph.add_weighted_arc(0, 1, 2);
-//! digraph.add_weighted_arc(1, 2, 2);
-//! digraph.add_weighted_arc(3, 0, 2);
+//! digraph.add_arc_weighted(0, 1, 2);
+//! digraph.add_arc_weighted(1, 2, 2);
+//! digraph.add_arc_weighted(3, 0, 2);
 //!
 //! let dist = single_source_distances(&digraph, 0);
 //! let pred = single_source_predecessors(&digraph, 0);
@@ -74,8 +75,8 @@ use {
     crate::{
         algo::breadth_first_tree::BreadthFirstTree,
         op::{
-            IterOutWeightedNeighbors,
             Order,
+            OutNeighborsWeighted,
         },
     },
     core::cmp::Reverse,
@@ -108,9 +109,10 @@ use {
 /// use {
 ///     core::cmp::Reverse,
 ///     graaf::{
+///         adjacency_list_weighted::Digraph,
 ///         algo::dijkstra::distances,
 ///         gen::Empty,
-///         op::AddWeightedArc,
+///         op::AddArcWeighted,
 ///     },
 ///     std::collections::BinaryHeap,
 /// };
@@ -120,11 +122,11 @@ use {
 /// // 2 -> {}
 /// // 3 -> {0 (2)}
 ///
-/// let mut digraph = Vec::<Vec<(usize, usize)>>::empty(4);
+/// let mut digraph = Digraph::<usize>::empty(4);
 ///
-/// digraph.add_weighted_arc(0, 1, 2);
-/// digraph.add_weighted_arc(1, 2, 2);
-/// digraph.add_weighted_arc(3, 0, 2);
+/// digraph.add_arc_weighted(0, 1, 2);
+/// digraph.add_arc_weighted(1, 2, 2);
+/// digraph.add_arc_weighted(3, 0, 2);
 ///
 /// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
 /// let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
@@ -143,12 +145,12 @@ pub fn distances<D, S, W>(
     dist: &mut [W],
     heap: &mut BinaryHeap<(Reverse<W>, usize)>,
 ) where
-    D: Order + IterOutWeightedNeighbors<W>,
+    D: Order + OutNeighborsWeighted<W>,
     S: Fn(W, &W) -> W,
     W: Copy + Ord,
 {
     while let Some((Reverse(acc), s)) = heap.pop() {
-        for (t, w) in digraph.iter_out_weighted_neighbors(s) {
+        for (t, w) in digraph.out_neighbors_weighted(s) {
             let w = step(acc, w);
 
             if w >= dist[t] {
@@ -181,9 +183,10 @@ pub fn distances<D, S, W>(
 ///
 /// ```
 /// use graaf::{
+///     adjacency_list_weighted::Digraph,
 ///     algo::dijkstra::single_source_distances,
 ///     gen::Empty,
-///     op::AddWeightedArc,
+///     op::AddArcWeighted,
 /// };
 ///
 /// // 0 -> {1 (2)}
@@ -191,17 +194,17 @@ pub fn distances<D, S, W>(
 /// // 2 -> {}
 /// // 3 -> {0 (2)}
 ///
-/// let mut digraph = Vec::<Vec<(usize, usize)>>::empty(4);
+/// let mut digraph = Digraph::<usize>::empty(4);
 ///
-/// digraph.add_weighted_arc(0, 1, 2);
-/// digraph.add_weighted_arc(1, 2, 2);
-/// digraph.add_weighted_arc(3, 0, 2);
+/// digraph.add_arc_weighted(0, 1, 2);
+/// digraph.add_arc_weighted(1, 2, 2);
+/// digraph.add_arc_weighted(3, 0, 2);
 ///
 /// assert_eq!(single_source_distances(&digraph, 0), [0, 2, 4, usize::MAX]);
 /// ```
 pub fn single_source_distances<D>(digraph: &D, s: usize) -> Vec<usize>
 where
-    D: Order + IterOutWeightedNeighbors<usize>,
+    D: Order + OutNeighborsWeighted<usize>,
 {
     let mut dist = vec![usize::MAX; digraph.order()];
     let mut heap = BinaryHeap::from([(Reverse(0), s)]);
@@ -237,12 +240,13 @@ where
 /// use {
 ///     core::cmp::Reverse,
 ///     graaf::{
+///         adjacency_list_weighted::Digraph,
 ///         algo::{
 ///             breadth_first_tree::BreadthFirstTree,
 ///             dijkstra::predecessors,
 ///         },
 ///         gen::Empty,
-///         op::AddWeightedArc,
+///         op::AddArcWeighted,
 ///     },
 ///     std::collections::BinaryHeap,
 /// };
@@ -252,11 +256,11 @@ where
 /// // 2 -> {}
 /// // 3 -> {0 (2)}
 ///
-/// let mut digraph = Vec::<Vec<(usize, usize)>>::empty(4);
+/// let mut digraph = Digraph::<usize>::empty(4);
 ///
-/// digraph.add_weighted_arc(0, 1, 2);
-/// digraph.add_weighted_arc(1, 2, 2);
-/// digraph.add_weighted_arc(3, 0, 2);
+/// digraph.add_arc_weighted(0, 1, 2);
+/// digraph.add_arc_weighted(1, 2, 2);
+/// digraph.add_arc_weighted(3, 0, 2);
 ///
 /// let mut pred = BreadthFirstTree::new(4);
 /// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
@@ -274,12 +278,12 @@ pub fn predecessors<D, S, W>(
     dist: &mut [W],
     heap: &mut BinaryHeap<(Reverse<W>, usize)>,
 ) where
-    D: Order + IterOutWeightedNeighbors<W>,
+    D: Order + OutNeighborsWeighted<W>,
     S: Fn(W, &W) -> W,
     W: Copy + Ord,
 {
     while let Some((Reverse(acc), s)) = heap.pop() {
-        for (t, w) in digraph.iter_out_weighted_neighbors(s) {
+        for (t, w) in digraph.out_neighbors_weighted(s) {
             let w = step(acc, w);
 
             if w >= dist[t] {
@@ -313,9 +317,10 @@ pub fn predecessors<D, S, W>(
 ///
 /// ```
 /// use graaf::{
+///     adjacency_list_weighted::Digraph,
 ///     algo::dijkstra::single_source_predecessors,
 ///     gen::Empty,
-///     op::AddWeightedArc,
+///     op::AddArcWeighted,
 /// };
 ///
 /// // 0 -> {1 (2)}
@@ -323,11 +328,11 @@ pub fn predecessors<D, S, W>(
 /// // 2 -> {}
 /// // 3 -> {0 (2)}
 ///
-/// let mut digraph = Vec::<Vec<(usize, usize)>>::empty(4);
+/// let mut digraph = Digraph::<usize>::empty(4);
 ///
-/// digraph.add_weighted_arc(0, 1, 2);
-/// digraph.add_weighted_arc(1, 2, 2);
-/// digraph.add_weighted_arc(3, 0, 2);
+/// digraph.add_arc_weighted(0, 1, 2);
+/// digraph.add_arc_weighted(1, 2, 2);
+/// digraph.add_arc_weighted(3, 0, 2);
 ///
 /// let pred = single_source_predecessors(&digraph, 0);
 ///
@@ -335,7 +340,7 @@ pub fn predecessors<D, S, W>(
 /// ```
 pub fn single_source_predecessors<D>(digraph: &D, s: usize) -> BreadthFirstTree
 where
-    D: Order + IterOutWeightedNeighbors<usize>,
+    D: Order + OutNeighborsWeighted<usize>,
 {
     let v = digraph.order();
     let mut pred = BreadthFirstTree::new(v);
@@ -378,12 +383,13 @@ where
 /// use {
 ///     core::cmp::Reverse,
 ///     graaf::{
+///         adjacency_list_weighted::Digraph,
 ///         algo::{
 ///             breadth_first_tree::BreadthFirstTree,
 ///             dijkstra::shortest_path,
 ///         },
-///         gen::EmptyConst,
-///         op::AddWeightedArc,
+///         gen::Empty,
+///         op::AddArcWeighted,
 ///     },
 ///     std::collections::BinaryHeap,
 /// };
@@ -393,11 +399,11 @@ where
 /// // 2 -> {}
 /// // 3 -> {0 (2)}
 ///
-/// let mut digraph = <[Vec<(usize, usize)>; 4]>::empty();
+/// let mut digraph = Digraph::<usize>::empty(4);
 ///
-/// digraph.add_weighted_arc(0, 1, 2);
-/// digraph.add_weighted_arc(1, 2, 2);
-/// digraph.add_weighted_arc(3, 0, 2);
+/// digraph.add_arc_weighted(0, 1, 2);
+/// digraph.add_arc_weighted(1, 2, 2);
+/// digraph.add_arc_weighted(3, 0, 2);
 ///
 /// let mut pred = BreadthFirstTree::new(4);
 /// let mut dist = [usize::MAX, usize::MAX, usize::MAX, 0];
@@ -425,7 +431,7 @@ pub fn shortest_path<D, S, T, W>(
     heap: &mut BinaryHeap<(Reverse<W>, usize)>,
 ) -> Option<Vec<usize>>
 where
-    D: Order + IterOutWeightedNeighbors<W>,
+    D: Order + OutNeighborsWeighted<W>,
     S: Fn(W, &W) -> W,
     T: Fn(usize, &W) -> bool,
     W: Copy + Ord,
@@ -439,7 +445,7 @@ where
             });
         }
 
-        for (t, w) in digraph.iter_out_weighted_neighbors(s) {
+        for (t, w) in digraph.out_neighbors_weighted(s) {
             let w = step(acc, w);
 
             if w >= dist[t] {
@@ -480,9 +486,10 @@ where
 ///
 /// ```
 /// use graaf::{
+///     adjacency_list_weighted::Digraph,
 ///     algo::dijkstra::single_pair_shortest_path as spsp,
-///     gen::EmptyConst,
-///     op::AddWeightedArc,
+///     gen::Empty,
+///     op::AddArcWeighted,
 /// };
 ///
 /// // 0 -> {1 (2)}
@@ -490,11 +497,11 @@ where
 /// // 2 -> {}
 /// // 3 -> {0 (2)}
 ///
-/// let mut digraph = <[Vec<(usize, usize)>; 4]>::empty();
+/// let mut digraph = Digraph::<usize>::empty(4);
 ///
-/// digraph.add_weighted_arc(0, 1, 2);
-/// digraph.add_weighted_arc(1, 2, 2);
-/// digraph.add_weighted_arc(3, 0, 2);
+/// digraph.add_arc_weighted(0, 1, 2);
+/// digraph.add_arc_weighted(1, 2, 2);
+/// digraph.add_arc_weighted(3, 0, 2);
 ///
 /// let path = spsp(&digraph, 3, 2);
 ///
@@ -505,7 +512,13 @@ where
 /// // 2 -> {1 (1)}
 /// // 3 -> {0 (4), 2 (1)}
 ///
-/// let digraph = [Vec::new(), vec![(0, 1)], vec![(1, 1)], vec![(0, 4), (2, 1)]];
+/// let mut digraph = Digraph::<usize>::empty(4);
+///
+/// digraph.add_arc_weighted(1, 0, 1);
+/// digraph.add_arc_weighted(2, 1, 1);
+/// digraph.add_arc_weighted(3, 0, 4);
+/// digraph.add_arc_weighted(3, 2, 1);
+///
 /// let path = spsp(&digraph, 3, 0);
 ///
 /// assert_eq!(path, Some(vec![3, 2, 1, 0]));
@@ -513,7 +526,7 @@ where
 #[doc(alias = "spsp")]
 pub fn single_pair_shortest_path<D>(digraph: &D, s: usize, t: usize) -> Option<Vec<usize>>
 where
-    D: Order + IterOutWeightedNeighbors<usize>,
+    D: Order + OutNeighborsWeighted<usize>,
 {
     let v = digraph.order();
     let pred = &mut BreadthFirstTree::new(v);
@@ -530,7 +543,10 @@ mod tests {
     use {
         super::*,
         crate::{
-            algo::fixture,
+            adjacency_list_weighted::{
+                fixture,
+                Digraph,
+            },
             gen::Empty,
         },
     };
@@ -588,11 +604,11 @@ mod tests {
 
     #[test]
     fn distances_trivial() {
-        test_distances!(Vec::<Vec<(usize, usize)>>::trivial(), &[0]);
+        test_distances!(Digraph::trivial(), &[0]);
     }
 
     #[test]
-    fn distances_bang_jensen_94() {
+    fn distances_bang_jensen_94_weighted() {
         test_distances!(fixture::bang_jensen_94_weighted!(), &[0, 1, 1, 2, 2, 2, 3]);
     }
 
@@ -628,15 +644,13 @@ mod tests {
 
     #[test]
     fn single_source_distances_trivial() {
-        assert!(
-            single_source_distances(&Vec::<Vec<(usize, usize)>>::trivial(), 0)
-                .iter()
-                .eq(&[0])
-        );
+        assert!(single_source_distances(&Digraph::trivial(), 0)
+            .iter()
+            .eq(&[0]));
     }
 
     #[test]
-    fn single_source_distances_bang_jensen_94() {
+    fn single_source_distances_bang_jensen_94_weighted() {
         assert!(
             single_source_distances(&fixture::bang_jensen_94_weighted!(), 0)
                 .iter()
@@ -690,11 +704,11 @@ mod tests {
 
     #[test]
     fn predecessors_trivial() {
-        test_predecessors!(Vec::<Vec<(usize, usize)>>::trivial(), &[0], [None]);
+        test_predecessors!(Digraph::trivial(), &[0], [None]);
     }
 
     #[test]
-    fn predecessors_bang_jensen_94() {
+    fn predecessors_bang_jensen_94_weighted() {
         test_predecessors!(
             fixture::bang_jensen_94_weighted!(),
             &[0, 1, 1, 2, 2, 2, 3],
@@ -769,15 +783,13 @@ mod tests {
 
     #[test]
     fn single_source_predecessors_trivial() {
-        assert!(
-            single_source_predecessors(&Vec::<Vec<(usize, usize)>>::trivial(), 0)
-                .into_iter()
-                .eq([None])
-        );
+        assert!(single_source_predecessors(&Digraph::trivial(), 0)
+            .into_iter()
+            .eq([None]));
     }
 
     #[test]
-    fn single_source_predecessors_bang_jensen_94() {
+    fn single_source_predecessors_bang_jensen_94_weighted() {
         assert!(
             single_source_predecessors(&fixture::bang_jensen_94_weighted!(), 0)
                 .into_iter()
@@ -844,17 +856,11 @@ mod tests {
 
     #[test]
     fn shortest_path_trivial() {
-        test_shortest_path!(
-            Vec::<Vec<(usize, usize)>>::trivial(),
-            0,
-            &[0],
-            [None],
-            Some(vec![0])
-        );
+        test_shortest_path!(Digraph::trivial(), 0, &[0], [None], Some(vec![0]));
     }
 
     #[test]
-    fn shortest_path_bang_jensen_94() {
+    fn shortest_path_bang_jensen_94_weighted() {
         test_shortest_path!(
             fixture::bang_jensen_94_weighted!(),
             6,
@@ -943,16 +949,14 @@ mod tests {
 
     #[test]
     fn single_pair_shortest_path_trivial() {
-        assert!(
-            single_pair_shortest_path(&Vec::<Vec<(usize, usize)>>::trivial(), 0, 0)
-                .unwrap()
-                .iter()
-                .eq(&[0])
-        );
+        assert!(single_pair_shortest_path(&Digraph::trivial(), 0, 0)
+            .unwrap()
+            .iter()
+            .eq(&[0]));
     }
 
     #[test]
-    fn single_pair_shortest_path_bang_jensen_94() {
+    fn single_pair_shortest_path_bang_jensen_94_weighted() {
         assert!(
             single_pair_shortest_path(&fixture::bang_jensen_94_weighted!(), 0, 6)
                 .unwrap()

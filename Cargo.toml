@@ -22,20 +22,6 @@ proptest = "1.4.0"
 [profile.test.package.proptest]
 opt-level = 3
 
-[features]
-default = ["adjacency_matrix"]
-adjacency_matrix = []
-
-[[bench]]
-name = "add_arc"
-path = "benches/op/add_arc.rs"
-harness = false
-
-[[bench]]
-name = "size"
-path = "benches/op/size.rs"
-harness = false
-
 [[bench]]
 name = "single_source_distances"
 path = "benches/algo/single_source_distances.rs"

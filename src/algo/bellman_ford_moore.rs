@@ -9,9 +9,10 @@
 //!
 //! ```
 //! use graaf::{
+//!     adjacency_list_weighted::Digraph,
 //!     algo::bellman_ford_moore::single_source_distances,
 //!     gen::Empty,
-//!     op::AddWeightedArc,
+//!     op::AddArcWeighted,
 //! };
 //!
 //! // 0 -> {1 (8), 2 (4)}
@@ -21,18 +22,18 @@
 //! // 4 -> {3 (10), 5 (9)}
 //! // 5 -> {3 (5), 4 (-3)}
 //!
-//! let mut digraph = Vec::<Vec<(usize, isize)>>::empty(6);
+//! let mut digraph = Digraph::<isize>::empty(6);
 //!
-//! digraph.add_weighted_arc(0, 1, 8);
-//! digraph.add_weighted_arc(0, 2, 4);
-//! digraph.add_weighted_arc(1, 2, -5);
-//! digraph.add_weighted_arc(2, 3, -2);
-//! digraph.add_weighted_arc(2, 4, 4);
-//! digraph.add_weighted_arc(3, 5, -2);
-//! digraph.add_weighted_arc(4, 3, 10);
-//! digraph.add_weighted_arc(4, 5, 9);
-//! digraph.add_weighted_arc(5, 3, 5);
-//! digraph.add_weighted_arc(5, 4, -3);
+//! digraph.add_arc_weighted(0, 1, 8);
+//! digraph.add_arc_weighted(0, 2, 4);
+//! digraph.add_arc_weighted(1, 2, -5);
+//! digraph.add_arc_weighted(2, 3, -2);
+//! digraph.add_arc_weighted(2, 4, 4);
+//! digraph.add_arc_weighted(3, 5, -2);
+//! digraph.add_arc_weighted(4, 3, 10);
+//! digraph.add_arc_weighted(4, 5, 9);
+//! digraph.add_arc_weighted(5, 3, 5);
+//! digraph.add_arc_weighted(5, 4, -3);
 //!
 //! assert!(single_source_distances(&digraph, 0)
 //!     .unwrap()
@@ -42,17 +43,17 @@
 //! // 1 -> {2 (-1)}
 //! // 2 -> {0 (-1)}
 //!
-//! let mut digraph = Vec::<Vec<(usize, isize)>>::empty(3);
+//! let mut digraph = Digraph::empty(3);
 //!
-//! digraph.add_weighted_arc(0, 1, -2);
-//! digraph.add_weighted_arc(1, 2, -1);
-//! digraph.add_weighted_arc(2, 0, -1);
+//! digraph.add_arc_weighted(0, 1, -2);
+//! digraph.add_arc_weighted(1, 2, -1);
+//! digraph.add_arc_weighted(2, 0, -1);
 //!
 //! assert_eq!(single_source_distances(&digraph, 0), None);
 //! ```
 
 use crate::op::{
-    IterWeightedArcs,
+    ArcsWeighted,
     Order,
 };
 
@@ -73,9 +74,10 @@ use crate::op::{
 ///
 /// ```
 /// use graaf::{
+///     adjacency_list_weighted::Digraph,
 ///     algo::bellman_ford_moore::single_source_distances,
 ///     gen::Empty,
-///     op::AddWeightedArc,
+///     op::AddArcWeighted,
 /// };
 ///
 /// // 0 -> {1 (8), 2 (4)}
@@ -85,18 +87,18 @@ use crate::op::{
 /// // 4 -> {3 (10), 5 (9)}
 /// // 5 -> {3 (5), 4 (-3)}
 ///
-/// let mut digraph = Vec::<Vec<(usize, isize)>>::empty(6);
+/// let mut digraph = Digraph::<isize>::empty(6);
 ///
-/// digraph.add_weighted_arc(0, 1, 8);
-/// digraph.add_weighted_arc(0, 2, 4);
-/// digraph.add_weighted_arc(1, 2, -5);
-/// digraph.add_weighted_arc(2, 3, -2);
-/// digraph.add_weighted_arc(2, 4, 4);
-/// digraph.add_weighted_arc(3, 5, -2);
-/// digraph.add_weighted_arc(4, 3, 10);
-/// digraph.add_weighted_arc(4, 5, 9);
-/// digraph.add_weighted_arc(5, 3, 5);
-/// digraph.add_weighted_arc(5, 4, -3);
+/// digraph.add_arc_weighted(0, 1, 8);
+/// digraph.add_arc_weighted(0, 2, 4);
+/// digraph.add_arc_weighted(1, 2, -5);
+/// digraph.add_arc_weighted(2, 3, -2);
+/// digraph.add_arc_weighted(2, 4, 4);
+/// digraph.add_arc_weighted(3, 5, -2);
+/// digraph.add_arc_weighted(4, 3, 10);
+/// digraph.add_arc_weighted(4, 5, 9);
+/// digraph.add_arc_weighted(5, 3, 5);
+/// digraph.add_arc_weighted(5, 4, -3);
 ///
 /// assert!(single_source_distances(&digraph, 0)
 ///     .unwrap()
@@ -106,17 +108,17 @@ use crate::op::{
 /// // 1 -> {2 (-1)}
 /// // 2 -> {0 (-1)}
 ///
-/// let mut digraph = Vec::<Vec<(usize, isize)>>::empty(3);
+/// let mut digraph = Digraph::<isize>::empty(3);
 ///
-/// digraph.add_weighted_arc(0, 1, -2);
-/// digraph.add_weighted_arc(1, 2, -1);
-/// digraph.add_weighted_arc(2, 0, -1);
+/// digraph.add_arc_weighted(0, 1, -2);
+/// digraph.add_arc_weighted(1, 2, -1);
+/// digraph.add_arc_weighted(2, 0, -1);
 ///
 /// assert_eq!(single_source_distances(&digraph, 0), None);
 /// ```
 pub fn single_source_distances<D>(digraph: &D, s: usize) -> Option<Vec<isize>>
 where
-    D: IterWeightedArcs<isize> + Order,
+    D: ArcsWeighted<isize> + Order,
 {
     let v = digraph.order();
     let mut dist = vec![isize::MAX; v];
@@ -124,12 +126,12 @@ where
     dist[s] = 0;
 
     for _ in 1..v {
-        for (s, t, w) in digraph.iter_weighted_arcs() {
+        for (s, t, w) in digraph.arcs_weighted() {
             dist[t] = dist[t].min(dist[s].saturating_add(*w));
         }
     }
 
-    for (s, t, w) in digraph.iter_weighted_arcs() {
+    for (s, t, w) in digraph.arcs_weighted() {
         if dist[t] > dist[s].saturating_add(*w) {
             return None;
         }
@@ -143,23 +145,25 @@ mod tests {
     use {
         super::*,
         crate::{
-            algo::fixture,
+            adjacency_list_weighted::{
+                fixture,
+                Digraph,
+            },
             gen::Empty,
+            op::AddArcWeighted,
         },
     };
 
     #[test]
     fn trivial() {
-        assert!(
-            single_source_distances(&Vec::<Vec<(usize, isize)>>::trivial(), 0)
-                .unwrap()
-                .iter()
-                .eq(&[0])
-        );
+        assert!(single_source_distances(&Digraph::<isize>::trivial(), 0)
+            .unwrap()
+            .iter()
+            .eq(&[0]));
     }
 
     #[test]
-    fn bang_jensen_94() {
+    fn bang_jensen_94_weighted() {
         assert!(
             single_source_distances(&fixture::bang_jensen_94_weighted!(), 0)
                 .unwrap()
@@ -220,7 +224,11 @@ mod tests {
 
     #[test]
     fn test_negative_cycle() {
-        let digraph = vec![vec![(1, -2)], vec![(2, -1)], vec![(0, -1)]];
+        let mut digraph = Digraph::<isize>::empty(3);
+
+        digraph.add_arc_weighted(0, 1, -2);
+        digraph.add_arc_weighted(1, 2, -1);
+        digraph.add_arc_weighted(2, 0, -1);
 
         assert_eq!(single_source_distances(&digraph, 0), None);
     }

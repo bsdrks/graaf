@@ -5,26 +5,36 @@
 //! # Examples
 //!
 //! ```
-//! use {
-//!     graaf::op::HasEdge,
-//!     std::collections::HashSet,
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     gen::{
+//!         Cycle,
+//!         Empty,
+//!     },
+//!     op::{
+//!         AddArc,
+//!         HasEdge,
+//!     },
 //! };
 //!
-//! let digraph = vec![HashSet::from([1]), HashSet::from([0])];
+//! let digraph = Digraph::cycle(2);
 //!
 //! assert!(digraph.has_edge(0, 1));
 //! assert!(digraph.has_edge(1, 0));
 //!
-//! let digraph = vec![HashSet::from([1]), HashSet::new()];
+//! let mut digraph = Digraph::empty(2);
+//!
+//! digraph.add_arc(0, 1);
 //!
 //! assert!(!digraph.has_edge(0, 1));
 //! assert!(!digraph.has_edge(1, 0));
 //!
-//! let digraph = vec![
-//!     HashSet::from([1, 2]),
-//!     HashSet::from([2]),
-//!     HashSet::from([0]),
-//! ];
+//! let mut digraph = Digraph::empty(3);
+//!
+//! digraph.add_arc(0, 1);
+//! digraph.add_arc(0, 2);
+//! digraph.add_arc(1, 2);
+//! digraph.add_arc(2, 0);
 //!
 //! assert!(!digraph.has_edge(0, 1));
 //! assert!(digraph.has_edge(0, 2));
@@ -43,11 +53,15 @@ use super::HasArc;
 /// # How can I implement `HasEdge`?
 ///
 /// Provide an implementation of `has_edge` that returns `true` if the
-/// digraph has an arc between `s` and `t` and `false` otherwise.
+/// digraph has an arc between `s` and `t` and `false` otherwise OR implement
+/// `HasArc`.
 ///
 /// ```
 /// use {
-///     graaf::op::HasEdge,
+///     graaf::op::{
+///         HasArc,
+///         HasEdge,
+///     },
 ///     std::collections::BTreeSet,
 /// };
 ///
@@ -55,9 +69,9 @@ use super::HasArc;
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl HasEdge for Digraph {
-///     fn has_edge(&self, s: usize, t: usize) -> bool {
-///         self.arcs[s].contains(&t) && self.arcs[t].contains(&s)
+/// impl HasArc for Digraph {
+///     fn has_arc(&self, s: usize, t: usize) -> bool {
+///         self.arcs.get(s).map_or(false, |set| set.contains(&t))
 ///     }
 /// }
 ///
@@ -72,26 +86,36 @@ use super::HasArc;
 /// # Examples
 ///
 /// ```
-/// use {
-///     graaf::op::HasEdge,
-///     std::collections::HashSet,
+/// use graaf::{
+///     adjacency_list::Digraph,
+///     gen::{
+///         Cycle,
+///         Empty,
+///     },
+///     op::{
+///         AddArc,
+///         HasEdge,
+///     },
 /// };
 ///
-/// let digraph = vec![HashSet::from([1]), HashSet::from([0])];
+/// let digraph = Digraph::cycle(2);
 ///
 /// assert!(digraph.has_edge(0, 1));
 /// assert!(digraph.has_edge(1, 0));
 ///
-/// let digraph = vec![HashSet::from([1]), HashSet::new()];
+/// let mut digraph = Digraph::empty(2);
+///
+/// digraph.add_arc(0, 1);
 ///
 /// assert!(!digraph.has_edge(0, 1));
 /// assert!(!digraph.has_edge(1, 0));
 ///
-/// let digraph = vec![
-///     HashSet::from([1, 2]),
-///     HashSet::from([2]),
-///     HashSet::from([0]),
-/// ];
+/// let mut digraph = Digraph::empty(3);
+///
+/// digraph.add_arc(0, 1);
+/// digraph.add_arc(0, 2);
+/// digraph.add_arc(1, 2);
+/// digraph.add_arc(2, 0);
 ///
 /// assert!(!digraph.has_edge(0, 1));
 /// assert!(digraph.has_edge(0, 2));
@@ -112,201 +136,5 @@ where
 {
     fn has_edge(&self, s: usize, t: usize) -> bool {
         self.has_arc(s, t) && self.has_arc(t, s)
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use {
-        super::*,
-        crate::{
-            gen::{
-                Empty,
-                EmptyConst,
-            },
-            op::{
-                AddArc,
-                AddWeightedArc,
-            },
-        },
-        std::collections::{
-            BTreeMap,
-            BTreeSet,
-            HashMap,
-            HashSet,
-        },
-    };
-
-    macro_rules! setup_unweighted {
-        ($digraph:expr) => {
-            $digraph.add_arc(0, 1);
-            $digraph.add_arc(0, 2);
-            $digraph.add_arc(1, 2);
-            $digraph.add_arc(2, 0);
-        };
-    }
-
-    macro_rules! setup_weighted {
-        ($digraph:expr) => {
-            $digraph.add_weighted_arc(0, 1, 2);
-            $digraph.add_weighted_arc(0, 2, 3);
-            $digraph.add_weighted_arc(1, 2, 4);
-            $digraph.add_weighted_arc(2, 0, 7);
-        };
-    }
-
-    macro_rules! test_has_edge {
-        ($digraph:expr) => {
-            assert!(!$digraph.has_edge(0, 1));
-            assert!($digraph.has_edge(0, 2));
-            assert!(!$digraph.has_edge(1, 0));
-            assert!(!$digraph.has_edge(1, 2));
-            assert!($digraph.has_edge(2, 0));
-            assert!(!$digraph.has_edge(2, 1));
-        };
-    }
-
-    #[test]
-    fn vec_btree_set() {
-        let mut digraph = Vec::<BTreeSet<usize>>::empty(3);
-
-        setup_unweighted!(digraph);
-        test_has_edge!(digraph);
-    }
-
-    #[test]
-    fn vec_hash_set() {
-        let mut digraph = Vec::<HashSet<usize>>::empty(3);
-
-        setup_unweighted!(digraph);
-        test_has_edge!(digraph);
-    }
-
-    #[test]
-    fn slice_btree_set() {
-        let mut digraph = Vec::<BTreeSet<usize>>::empty(3);
-
-        setup_unweighted!(digraph);
-        test_has_edge!(digraph.as_slice());
-    }
-
-    #[test]
-    fn slice_hash_set() {
-        let mut digraph = Vec::<HashSet<usize>>::empty(3);
-
-        setup_unweighted!(digraph);
-        test_has_edge!(digraph.as_slice());
-    }
-
-    #[test]
-    fn arr_btree_set() {
-        let mut digraph = <[BTreeSet<usize>; 3]>::empty();
-
-        setup_unweighted!(digraph);
-        test_has_edge!(digraph);
-    }
-
-    #[test]
-    fn arr_hash_set() {
-        let mut digraph = <[HashSet<usize>; 3]>::empty();
-
-        setup_unweighted!(digraph);
-        test_has_edge!(digraph);
-    }
-
-    #[test]
-    fn vec_btree_map() {
-        let mut digraph = Vec::<BTreeMap<usize, usize>>::empty(3);
-
-        setup_weighted!(digraph);
-        test_has_edge!(digraph);
-    }
-
-    #[test]
-    fn vec_hash_map() {
-        let mut digraph = Vec::<HashMap<usize, usize>>::empty(3);
-
-        setup_weighted!(digraph);
-        test_has_edge!(digraph);
-    }
-
-    #[test]
-    fn slice_btree_map() {
-        let mut digraph = Vec::<BTreeMap<usize, usize>>::empty(3);
-
-        setup_weighted!(digraph);
-        test_has_edge!(digraph.as_slice());
-    }
-
-    #[test]
-    fn slice_hash_map() {
-        let mut digraph = Vec::<HashMap<usize, usize>>::empty(3);
-
-        setup_weighted!(digraph);
-        test_has_edge!(digraph.as_slice());
-    }
-
-    #[test]
-    fn arr_btree_map() {
-        let mut digraph = <[BTreeMap<usize, usize>; 3]>::empty();
-
-        setup_weighted!(digraph);
-        test_has_edge!(digraph);
-    }
-
-    #[test]
-    fn arr_hash_map() {
-        let mut digraph = <[HashMap<usize, usize>; 3]>::empty();
-
-        setup_weighted!(digraph);
-        test_has_edge!(digraph);
-    }
-
-    #[test]
-    fn btree_map_btree_set() {
-        let mut digraph = BTreeMap::<usize, BTreeSet<usize>>::empty(3);
-
-        setup_unweighted!(digraph);
-        test_has_edge!(digraph);
-    }
-
-    #[test]
-    fn hash_map_hash_set() {
-        let mut digraph = HashMap::<usize, HashSet<usize>>::empty(3);
-
-        setup_unweighted!(digraph);
-        test_has_edge!(digraph);
-    }
-
-    #[test]
-    fn btree_map_btree_map() {
-        let mut digraph = BTreeMap::<usize, BTreeMap<usize, usize>>::empty(3);
-
-        setup_weighted!(digraph);
-        test_has_edge!(digraph);
-    }
-
-    #[test]
-    fn hash_map_hash_map() {
-        let mut digraph = HashMap::<usize, HashMap<usize, usize>>::empty(3);
-
-        setup_weighted!(digraph);
-        test_has_edge!(digraph);
-    }
-
-    #[test]
-    fn btree_set_tuple() {
-        let mut digraph = BTreeSet::<(usize, usize)>::empty();
-
-        setup_unweighted!(digraph);
-        test_has_edge!(digraph);
-    }
-
-    #[test]
-    fn hash_set_tuple() {
-        let mut digraph = HashSet::<(usize, usize)>::empty();
-
-        setup_unweighted!(digraph);
-        test_has_edge!(digraph);
     }
 }

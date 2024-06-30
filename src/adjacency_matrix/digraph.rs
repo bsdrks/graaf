@@ -4,106 +4,39 @@
 //! row `s` and column `t` indicates an arc from vertex `s` to vertex `t`. The
 //! matrix is stored as a bit array, and is suited for dense digraphs with a
 //! small number of vertices.
-//!
-//! # Examples
-//!
-//! ```
-//! use graaf::{
-//!     op::{
-//!         AddArc,
-//!         IsSimple,
-//!     },
-//!     repr::AdjacencyMatrix,
-//! };
-//!
-//! let mut digraph = AdjacencyMatrix::<3>::new();
-//!
-//! digraph.add_arc(0, 1);
-//!
-//! assert!(digraph.is_simple());
-//!
-//! digraph.add_arc(1, 1);
-//!
-//! assert!(!digraph.is_simple());
-//! ```
 
 use crate::{
-    gen::{
-        CycleConst,
-        EmptyConst,
-    },
+    gen::Empty,
     op::{
         AddArc,
         ArcWeight,
+        Arcs,
         HasArc,
         Indegree,
         IsSimple,
-        IterArcs,
-        IterOutNeighbors,
-        IterVertices,
         Order,
+        OutNeighbors,
         Outdegree,
         RemoveArc,
         Size,
+        Vertices,
     },
 };
 
-macro_rules! blocks {
-    ($v:expr) => {
-        ($v * $v + 63) / 64
-    };
-}
-
 /// An adjacency matrix representation of an unweighted digraph
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
-pub struct AdjacencyMatrix<const V: usize>
-where
-    [(); blocks!(V)]:,
-{
-    blocks: [usize; blocks!(V)],
+pub struct Digraph {
+    blocks: Vec<usize>,
+    order: usize,
 }
 
-impl<const V: usize> AdjacencyMatrix<V>
-where
-    [(); blocks!(V)]:,
-{
-    /// Creates a new adjacency matrix.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use graaf::{
-    ///     op::{
-    ///         Order,
-    ///         Size,
-    ///     },
-    ///     repr::AdjacencyMatrix,
-    /// };
-    ///
-    /// let digraph = AdjacencyMatrix::<3>::new();
-    ///
-    /// assert_eq!(digraph.size(), 0);
-    /// assert_eq!(digraph.order(), 3);
-    /// ```
-    ///
-    /// # Panics
-    ///
-    /// Panics if `V` is zero.
-    #[must_use]
-    pub const fn new() -> Self {
-        assert!(V > 0, "a graph must have at least one vertex");
-
-        Self {
-            blocks: [0; blocks!(V)],
-        }
-    }
-
+impl Digraph {
     const fn mask(i: usize) -> usize {
         1 << (i & 63)
     }
 
-    const fn index(s: usize, t: usize) -> usize {
-        s * V + t
+    const fn index(&self, s: usize, t: usize) -> usize {
+        s * self.order + t
     }
 
     /// Toggles the arc from the source vertex to the target vertex.
@@ -121,11 +54,12 @@ where
     ///
     /// ```
     /// use graaf::{
+    ///     adjacency_matrix::Digraph,
+    ///     gen::Empty,
     ///     op::HasArc,
-    ///     repr::AdjacencyMatrix,
     /// };
     ///
-    /// let mut digraph = AdjacencyMatrix::<3>::new();
+    /// let mut digraph = Digraph::empty(3);
     ///
     /// assert!(!digraph.has_arc(0, 1));
     ///
@@ -134,190 +68,139 @@ where
     /// assert!(digraph.has_arc(0, 1));
     /// ```
     pub fn toggle(&mut self, s: usize, t: usize) {
-        assert!(s < V, "s is not in the graph");
-        assert!(t < V, "t is not in the graph");
+        let v = self.order;
 
-        let i = Self::index(s, t);
+        assert!(s < v, "s is not in the digraph");
+        assert!(t < v, "t is not in the digraph");
+
+        let i = self.index(s, t);
 
         self.blocks[i >> 6] ^= Self::mask(i);
     }
 }
 
-impl<const V: usize> Default for AdjacencyMatrix<V>
-where
-    [(); blocks!(V)]:,
-{
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<const V: usize> AddArc for AdjacencyMatrix<V>
-where
-    [(); blocks!(V)]:,
-{
+impl AddArc for Digraph {
     /// # Panics
     ///
     /// Panics if `s` or `t` is not in the digraph.
     fn add_arc(&mut self, s: usize, t: usize) {
-        assert!(s < V, "s is not in the graph");
-        assert!(t < V, "t is not in the graph");
+        let v = self.order;
 
-        let i = Self::index(s, t);
+        assert!(s < v, "s is not in the digraph");
+        assert!(t < v, "t is not in the digraph");
+
+        let i = self.index(s, t);
 
         self.blocks[i >> 6] |= Self::mask(i);
     }
 }
 
-impl<const V: usize> ArcWeight<usize> for AdjacencyMatrix<V>
-where
-    [(); blocks!(V)]:,
-{
+impl ArcWeight<usize> for Digraph {
     fn arc_weight(&self, s: usize, t: usize) -> Option<&usize> {
         self.has_arc(s, t).then_some(&1)
     }
 }
 
-impl<const V: usize> CycleConst for AdjacencyMatrix<V>
-where
-    [(); blocks!(V)]:,
-{
-    fn cycle() -> Self {
-        let mut digraph = Self::empty();
-
-        for i in 0..V - 1 {
-            digraph.add_arc(i, i + 1);
-        }
-
-        digraph.add_arc(V - 1, 0);
-
-        digraph
-    }
-}
-
-impl<const V: usize> EmptyConst for AdjacencyMatrix<V>
-where
-    [(); blocks!(V)]:,
-{
+impl Empty for Digraph {
     /// # Panics
     ///
     /// Panics if `V` is zero.
-    fn empty() -> Self {
-        assert!(V > 0, "a graph must have at least one vertex");
+    fn empty(v: usize) -> Self {
+        assert!(v > 0, "a digraph must have at least one vertex");
 
-        Self::new()
+        let n = (v * v + 63) / 64;
+
+        Self {
+            blocks: vec![0; n],
+            order: v,
+        }
     }
 }
 
-impl<const V: usize> HasArc for AdjacencyMatrix<V>
-where
-    [(); blocks!(V)]:,
-{
+impl HasArc for Digraph {
     fn has_arc(&self, s: usize, t: usize) -> bool {
-        if s >= V || t >= V {
+        if s >= self.order || t >= self.order {
             return false;
         }
 
-        let i = Self::index(s, t);
+        let i = self.index(s, t);
 
         self.blocks[i >> 6] & Self::mask(i) != 0
     }
 }
 
-impl<const V: usize> Indegree for AdjacencyMatrix<V>
-where
-    [(); blocks!(V)]:,
-{
+impl Indegree for Digraph {
     /// # Panics
     ///
     /// Panics if `t >= V`.
     fn indegree(&self, t: usize) -> usize {
-        assert!(t < V, "t is not in the graph");
+        assert!(t < self.order, "t is not in the digraph");
 
-        self.iter_vertices().filter(|&s| self.has_arc(s, t)).count()
+        self.vertices().filter(|&s| self.has_arc(s, t)).count()
     }
 }
 
-impl<const V: usize> IsSimple for AdjacencyMatrix<V>
-where
-    [(); blocks!(V)]:,
-{
+impl IsSimple for Digraph {
     fn is_simple(&self) -> bool {
-        self.iter_vertices().all(|s| !self.has_arc(s, s))
+        self.vertices().all(|s| !self.has_arc(s, s))
     }
 }
 
-impl<const V: usize> IterArcs for AdjacencyMatrix<V>
-where
-    [(); blocks!(V)]:,
-{
-    fn iter_arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.iter_vertices().flat_map(move |s| {
-            self.iter_vertices()
+impl Arcs for Digraph {
+    fn arcs(&self) -> impl Iterator<Item = (usize, usize)> {
+        self.vertices().flat_map(move |s| {
+            self.vertices()
                 .filter_map(move |t| self.has_arc(s, t).then_some((s, t)))
         })
     }
 }
 
-impl<const V: usize> IterOutNeighbors for AdjacencyMatrix<V>
-where
-    [(); blocks!(V)]:,
-{
+impl OutNeighbors for Digraph {
     /// # Panics
     ///
     /// Panics if `s >= V`.
-    fn iter_out_neighbors(&self, s: usize) -> impl Iterator<Item = usize> {
-        assert!(s < V, "s is not in the graph");
+    fn out_neighbors(&self, s: usize) -> impl Iterator<Item = usize> {
+        assert!(s < self.order, "s is not in the digraph");
 
-        self.iter_vertices().filter(move |&t| self.has_arc(s, t))
+        self.vertices().filter(move |&t| self.has_arc(s, t))
     }
 }
 
-impl<const V: usize> IterVertices for AdjacencyMatrix<V>
-where
-    [(); blocks!(V)]:,
-{
-    fn iter_vertices(&self) -> impl Iterator<Item = usize> {
-        0..V
+impl Vertices for Digraph {
+    fn vertices(&self) -> impl Iterator<Item = usize> {
+        0..self.order
     }
 }
 
-impl<const V: usize> Order for AdjacencyMatrix<V>
-where
-    [(); blocks!(V)]:,
-{
+impl Order for Digraph {
     fn order(&self) -> usize {
-        V
+        self.order
     }
 }
 
-impl<const V: usize> Outdegree for AdjacencyMatrix<V>
-where
-    [(); blocks!(V)]:,
-{
+impl Outdegree for Digraph {
     /// # Panics
     ///
     /// Panics if `s >= V`.
     fn outdegree(&self, s: usize) -> usize {
-        assert!(s < V, "s is not in the graph");
+        assert!(s < self.order, "s is not in the digraph");
 
-        self.iter_vertices().filter(|&t| self.has_arc(s, t)).count()
+        self.vertices().filter(|&t| self.has_arc(s, t)).count()
     }
 }
 
-impl<const V: usize> RemoveArc for AdjacencyMatrix<V>
-where
-    [(); blocks!(V)]:,
-{
+impl RemoveArc for Digraph {
     /// # Panics
     ///
     /// Panics if `s >= V` or `t >= V`.
     fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        assert!(s < V, "s is not in the graph");
-        assert!(t < V, "t is not in the graph");
+        let v = self.order;
+
+        assert!(s < v, "s is not in the digraph");
+        assert!(t < v, "t is not in the digraph");
 
         let has_arc = self.has_arc(s, t);
-        let i = Self::index(s, t);
+        let i = self.index(s, t);
 
         self.blocks[i >> 6] &= !Self::mask(i);
 
@@ -325,10 +208,7 @@ where
     }
 }
 
-impl<const V: usize> Size for AdjacencyMatrix<V>
-where
-    [(); blocks!(V)]:,
-{
+impl Size for Digraph {
     /// # Panics
     ///
     /// Panics when the number of arcs is greater than `usize::MAX`.
@@ -345,7 +225,7 @@ mod tests {
     use {
         super::*,
         crate::{
-            gen::CycleConst,
+            gen::Cycle,
             op::{
                 HasEdge,
                 IsBalanced,
@@ -356,21 +236,8 @@ mod tests {
     };
 
     #[test]
-    fn new() {
-        let digraph = AdjacencyMatrix::<3>::new();
-
-        assert_eq!(digraph.blocks, [0]);
-    }
-
-    #[test]
-    #[should_panic(expected = "a graph must have at least one vertex")]
-    const fn new_panic() {
-        let _ = AdjacencyMatrix::<0>::new();
-    }
-
-    #[test]
     fn toggle() {
-        let mut digraph = AdjacencyMatrix::<3>::new();
+        let mut digraph = Digraph::empty(3);
 
         digraph.toggle(0, 1);
         digraph.toggle(0, 2);
@@ -379,31 +246,24 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "s is not in the graph")]
+    #[should_panic(expected = "s is not in the digraph")]
     fn toggle_panic_s_gte_v() {
-        let mut digraph = AdjacencyMatrix::<3>::new();
+        let mut digraph = Digraph::empty(3);
 
         digraph.toggle(3, 0);
     }
 
     #[test]
-    #[should_panic(expected = "t is not in the graph")]
+    #[should_panic(expected = "t is not in the digraph")]
     fn toggle_panic_t_gte_v() {
-        let mut digraph = AdjacencyMatrix::<3>::new();
+        let mut digraph = Digraph::empty(3);
 
         digraph.toggle(0, 3);
     }
 
     #[test]
-    fn default() {
-        let digraph = AdjacencyMatrix::<1>::default();
-
-        assert_eq!(digraph.blocks, [0]);
-    }
-
-    #[test]
     fn add_arc() {
-        let mut digraph = AdjacencyMatrix::<3>::new();
+        let mut digraph = Digraph::empty(3);
 
         digraph.add_arc(0, 1);
         digraph.add_arc(0, 2);
@@ -412,24 +272,24 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "s is not in the graph")]
+    #[should_panic(expected = "s is not in the digraph")]
     fn add_arc_panic_s_gte_v() {
-        let mut digraph = AdjacencyMatrix::<3>::new();
+        let mut digraph = Digraph::empty(3);
 
         digraph.add_arc(3, 0);
     }
 
     #[test]
-    #[should_panic(expected = "t is not in the graph")]
+    #[should_panic(expected = "t is not in the digraph")]
     fn add_arc_panic_t_gte_v() {
-        let mut digraph = AdjacencyMatrix::<3>::new();
+        let mut digraph = Digraph::empty(3);
 
         digraph.add_arc(0, 3);
     }
 
     #[test]
     fn arc_weight() {
-        let digraph = AdjacencyMatrix::<3>::cycle();
+        let digraph = Digraph::cycle(3);
 
         assert_eq!(digraph.arc_weight(0, 0), None);
         assert_eq!(digraph.arc_weight(0, 1), Some(&1));
@@ -447,33 +307,27 @@ mod tests {
 
     #[test]
     fn cycle() {
-        assert!(AdjacencyMatrix::<1>::cycle().iter_arcs().eq([(0, 0)]));
-
-        assert!(AdjacencyMatrix::<2>::cycle()
-            .iter_arcs()
-            .eq([(0, 1), (1, 0)]));
-
-        assert!(AdjacencyMatrix::<3>::cycle()
-            .iter_arcs()
-            .eq([(0, 1), (1, 2), (2, 0)]));
+        assert!(Digraph::cycle(1).arcs().eq([(0, 0)]));
+        assert!(Digraph::cycle(2).arcs().eq([(0, 1), (1, 0)]));
+        assert!(Digraph::cycle(3).arcs().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]
     fn empty() {
-        assert_eq!(AdjacencyMatrix::<1>::empty().blocks, [0]);
-        assert_eq!(AdjacencyMatrix::<2>::empty().blocks, [0]);
-        assert_eq!(AdjacencyMatrix::<3>::empty().blocks, [0]);
+        assert_eq!(Digraph::empty(1).blocks, [0]);
+        assert_eq!(Digraph::empty(2).blocks, [0]);
+        assert_eq!(Digraph::empty(3).blocks, [0]);
     }
 
     #[test]
-    #[should_panic(expected = "a graph must have at least one vertex")]
+    #[should_panic(expected = "a digraph must have at least one vertex")]
     fn empty_panic() {
-        let _ = AdjacencyMatrix::<0>::empty();
+        let _ = Digraph::empty(0);
     }
 
     #[test]
     fn has_arc() {
-        let mut digraph = AdjacencyMatrix::<3>::new();
+        let mut digraph = Digraph::empty(3);
 
         assert!(!digraph.has_arc(0, 1));
         assert!(!digraph.has_arc(0, 2));
@@ -500,7 +354,7 @@ mod tests {
 
     #[test]
     fn has_edge() {
-        let mut digraph = AdjacencyMatrix::<3>::new();
+        let mut digraph = Digraph::empty(3);
 
         assert!(!digraph.has_edge(0, 1));
         assert!(!digraph.has_edge(0, 2));
@@ -528,7 +382,7 @@ mod tests {
 
     #[test]
     fn indegree() {
-        let mut digraph = AdjacencyMatrix::<3>::new();
+        let mut digraph = Digraph::empty(3);
 
         assert_eq!(digraph.indegree(0), 0);
         assert_eq!(digraph.indegree(1), 0);
@@ -543,15 +397,15 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "t is not in the graph")]
+    #[should_panic(expected = "t is not in the digraph")]
     fn indegree_panic_t_gte_v() {
-        let digraph = AdjacencyMatrix::<3>::new();
+        let digraph = Digraph::empty(3);
         let _ = digraph.indegree(3);
     }
 
     #[test]
     fn is_balanced() {
-        let mut digraph = AdjacencyMatrix::<3>::new();
+        let mut digraph = Digraph::empty(3);
 
         assert!(digraph.is_balanced());
 
@@ -582,7 +436,7 @@ mod tests {
 
     #[test]
     fn is_isolated() {
-        let mut digraph = AdjacencyMatrix::<4>::new();
+        let mut digraph = Digraph::empty(4);
 
         digraph.add_arc(0, 1);
         digraph.add_arc(0, 2);
@@ -596,7 +450,7 @@ mod tests {
 
     #[test]
     fn is_simple() {
-        let mut digraph = AdjacencyMatrix::<3>::new();
+        let mut digraph = Digraph::empty(3);
 
         digraph.add_arc(0, 1);
         digraph.add_arc(0, 2);
@@ -607,7 +461,7 @@ mod tests {
 
     #[test]
     fn is_simple_self_loop() {
-        let mut digraph = AdjacencyMatrix::<3>::new();
+        let mut digraph = Digraph::empty(3);
 
         digraph.add_arc(0, 0);
 
@@ -616,20 +470,20 @@ mod tests {
 
     #[test]
     fn is_symmetric_simple() {
-        let mut digraph = AdjacencyMatrix::<2>::new();
+        let mut digraph = Digraph::empty(2);
 
         digraph.add_arc(0, 1);
         digraph.add_arc(1, 0);
 
         assert!(digraph.is_symmetric());
 
-        let mut digraph = AdjacencyMatrix::<2>::new();
+        let mut digraph = Digraph::empty(2);
 
         digraph.add_arc(0, 1);
 
         assert!(!digraph.is_symmetric());
 
-        let mut digraph = AdjacencyMatrix::<3>::new();
+        let mut digraph = Digraph::empty(3);
 
         digraph.add_arc(0, 1);
         digraph.add_arc(0, 2);
@@ -640,46 +494,46 @@ mod tests {
     }
 
     #[test]
-    fn iter_arcs() {
-        let mut digraph = AdjacencyMatrix::<3>::new();
+    fn arcs() {
+        let mut digraph = Digraph::empty(3);
 
         digraph.add_arc(0, 1);
         digraph.add_arc(1, 2);
         digraph.add_arc(2, 0);
 
-        assert!(digraph.iter_arcs().eq([(0, 1), (1, 2), (2, 0)]));
+        assert!(digraph.arcs().eq([(0, 1), (1, 2), (2, 0)]));
     }
 
     #[test]
-    fn iter_out_neighbors() {
-        let mut digraph = AdjacencyMatrix::<3>::new();
+    fn out_neighbors() {
+        let mut digraph = Digraph::empty(3);
 
         digraph.add_arc(0, 1);
         digraph.add_arc(0, 2);
         digraph.add_arc(2, 1);
 
-        assert!(digraph.iter_out_neighbors(0).eq([1, 2]));
-        assert!(digraph.iter_out_neighbors(1).eq([]));
-        assert!(digraph.iter_out_neighbors(2).eq([1]));
+        assert!(digraph.out_neighbors(0).eq([1, 2]));
+        assert!(digraph.out_neighbors(1).eq([]));
+        assert!(digraph.out_neighbors(2).eq([1]));
     }
 
     #[test]
-    #[should_panic(expected = "s is not in the graph")]
-    fn iter_out_neighbors_panic_s_gte_v() {
-        let digraph = AdjacencyMatrix::<3>::new();
-        let _ = digraph.iter_out_neighbors(3);
+    #[should_panic(expected = "s is not in the digraph")]
+    fn out_neighbors_panic_s_gte_v() {
+        let digraph = Digraph::empty(3);
+        let _ = digraph.out_neighbors(3);
     }
 
     #[test]
-    fn iter_vertices() {
-        let digraph = AdjacencyMatrix::<3>::new();
+    fn vertices() {
+        let digraph = Digraph::empty(3);
 
-        assert!(digraph.iter_vertices().eq([0, 1, 2]));
+        assert!(digraph.vertices().eq([0, 1, 2]));
     }
 
     #[test]
     fn outdegree() {
-        let mut digraph = AdjacencyMatrix::<3>::new();
+        let mut digraph = Digraph::empty(3);
 
         assert_eq!(digraph.outdegree(0), 0);
         assert_eq!(digraph.outdegree(1), 0);
@@ -695,15 +549,15 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "s is not in the graph")]
+    #[should_panic(expected = "s is not in the digraph")]
     fn outdegree_panic_s_gte_v() {
-        let digraph = AdjacencyMatrix::<3>::new();
+        let digraph = Digraph::empty(3);
         let _ = digraph.outdegree(3);
     }
 
     #[test]
     fn remove_arc() {
-        let mut digraph = AdjacencyMatrix::<3>::new();
+        let mut digraph = Digraph::empty(3);
 
         digraph.add_arc(0, 1);
         digraph.add_arc(0, 2);
@@ -733,42 +587,42 @@ mod tests {
 
     #[test]
     fn order() {
-        let digraph = AdjacencyMatrix::<3>::new();
-
-        assert_eq!(digraph.order(), 3);
-
-        let digraph = AdjacencyMatrix::<1>::new();
+        let digraph = Digraph::empty(1);
 
         assert_eq!(digraph.order(), 1);
 
-        let digraph = AdjacencyMatrix::<512>::new();
+        let digraph = Digraph::empty(3);
+
+        assert_eq!(digraph.order(), 3);
+
+        let digraph = Digraph::empty(512);
 
         assert_eq!(digraph.order(), 512);
     }
 
     #[test]
-    #[should_panic(expected = "s is not in the graph")]
+    #[should_panic(expected = "s is not in the digraph")]
     fn remove_arc_panic_s_gte_v() {
-        let mut digraph = AdjacencyMatrix::<3>::new();
+        let mut digraph = Digraph::empty(3);
 
         let _ = digraph.remove_arc(3, 0);
     }
 
     #[test]
-    #[should_panic(expected = "t is not in the graph")]
+    #[should_panic(expected = "t is not in the digraph")]
     fn remove_arc_panic_t_gte_v() {
-        let mut digraph = AdjacencyMatrix::<3>::new();
+        let mut digraph = Digraph::empty(3);
 
         let _ = digraph.remove_arc(0, 3);
     }
 
     #[test]
     fn size() {
-        let digraph = AdjacencyMatrix::<3>::new();
+        let digraph = Digraph::empty(3);
 
         assert_eq!(digraph.size(), 0);
 
-        let mut digraph = AdjacencyMatrix::<3>::new();
+        let mut digraph = Digraph::empty(3);
 
         digraph.add_arc(0, 1);
 
