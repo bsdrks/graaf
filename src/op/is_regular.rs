@@ -26,8 +26,8 @@
 
 use crate::op::{
     Indegree,
-    Vertices,
     Outdegree,
+    Vertices,
 };
 
 /// Determine whether a digraph is regular.
@@ -43,8 +43,8 @@ use crate::op::{
 ///     graaf::op::{
 ///         Indegree,
 ///         IsRegular,
-///         Vertices,
 ///         Outdegree,
+///         Vertices,
 ///     },
 ///     std::collections::BTreeSet,
 /// };

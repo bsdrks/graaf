@@ -10,8 +10,8 @@
 //!     gen::Cycle,
 //!     op::{
 //!         AddArc,
-//!         Converse,
 //!         Arcs,
+//!         Converse,
 //!     },
 //! };
 //!

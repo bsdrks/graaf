@@ -67,9 +67,9 @@ use crate::op::IsSubdigraph;
 ///     graaf::{
 ///         gen::Cycle,
 ///         op::{
+///             Arcs,
 ///             HasArc,
 ///             IsSuperdigraph,
-///             Arcs,
 ///             Vertices,
 ///         },
 ///     },

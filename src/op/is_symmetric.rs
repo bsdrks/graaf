@@ -38,8 +38,8 @@
 //! ```
 
 use super::{
-    HasArc,
     Arcs,
+    HasArc,
 };
 
 /// Determine whether a digraph is symmetric.
@@ -52,9 +52,9 @@ use super::{
 /// ```
 /// use {
 ///     graaf::op::{
+///         Arcs,
 ///         HasArc,
 ///         IsSymmetric,
-///         Arcs,
 ///     },
 ///     std::collections::BTreeSet,
 /// };

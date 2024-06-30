@@ -139,9 +139,9 @@ use {
 /// ```
 /// use {
 ///     graaf::op::{
+///         Arcs,
 ///         HasArc,
 ///         IsSubdigraph,
-///         Arcs,
 ///         Vertices,
 ///     },
 ///     std::collections::BTreeSet,

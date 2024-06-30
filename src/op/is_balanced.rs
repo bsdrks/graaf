@@ -34,8 +34,8 @@
 
 use super::{
     Indegree,
-    Vertices,
     Outdegree,
+    Vertices,
 };
 
 /// Determine whether a digraph is balanced.
@@ -51,8 +51,8 @@ use super::{
 ///     graaf::op::{
 ///         Indegree,
 ///         IsBalanced,
-///         Vertices,
 ///         Outdegree,
+///         Vertices,
 ///     },
 ///     std::collections::BTreeSet,
 /// };
