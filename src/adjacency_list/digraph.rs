@@ -37,6 +37,7 @@ use {
             IsSimple,
             Order,
             OutNeighbors,
+            OutNeighborsWeighted,
             Outdegree,
             RemoveArc,
             Size,
@@ -134,6 +135,12 @@ impl IsSimple for Digraph {
     }
 }
 
+impl Order for Digraph {
+    fn order(&self) -> usize {
+        self.arcs.len()
+    }
+}
+
 impl OutNeighbors for Digraph {
     /// # Panics
     ///
@@ -142,10 +149,15 @@ impl OutNeighbors for Digraph {
         self.arcs[s].iter().copied()
     }
 }
-
-impl Order for Digraph {
-    fn order(&self) -> usize {
-        self.arcs.len()
+impl OutNeighborsWeighted<usize> for Digraph {
+    /// # Panics
+    ///
+    /// Panics if `s` is out of bounds.
+    fn out_neighbors_weighted<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a usize)>
+    where
+        usize: 'a,
+    {
+        self.out_neighbors(s).map(move |t| (t, &1))
     }
 }
 
@@ -188,6 +200,7 @@ mod tests {
                 RandomTournament,
             },
             op::{
+                Converse,
                 Degree,
                 HasEdge,
                 InNeighbors,

@@ -125,7 +125,7 @@ use crate::{
 #[doc(alias = "apsp")]
 pub fn distances<D>(digraph: &D) -> DistanceMatrix<isize>
 where
-    D: Vertices + ArcsWeighted<isize> + Order,
+    D: ArcsWeighted<isize> + Order + Vertices,
 {
     let v = digraph.order();
     let mut dist = DistanceMatrix::<isize>::new(v, isize::MAX);

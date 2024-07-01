@@ -193,7 +193,7 @@ pub trait IsSubdigraph {
 
 impl<T> IsSubdigraph for T
 where
-    T: HasArc + Arcs + Vertices,
+    T: Arcs + HasArc + Vertices,
 {
     fn is_subdigraph(&self, d: &Self) -> bool {
         let hv = self.vertices().collect::<BTreeSet<_>>();

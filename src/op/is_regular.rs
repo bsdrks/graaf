@@ -98,7 +98,7 @@ pub trait IsRegular {
 
 impl<T> IsRegular for T
 where
-    T: Indegree + Vertices + Outdegree,
+    T: Indegree + Outdegree + Vertices,
 {
     /// # Panics
     ///

@@ -121,7 +121,7 @@ pub trait IsSymmetric {
 
 impl<T> IsSymmetric for T
 where
-    T: HasArc + Arcs,
+    T: Arcs + HasArc,
 {
     fn is_symmetric(&self) -> bool {
         self.arcs().all(|(s, t)| self.has_arc(t, s))

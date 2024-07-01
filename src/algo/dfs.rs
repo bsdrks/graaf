@@ -158,7 +158,7 @@ pub fn dfsa_predecessors<D>(
     t_visit: &mut [usize],
     t_expl: &mut [usize],
 ) where
-    D: OutNeighbors + Order,
+    D: Order + OutNeighbors,
 {
     let v = digraph.order();
     let mut t = 0;
@@ -243,7 +243,7 @@ fn dfsa_predecessors_visit<D>(
 /// ```
 pub fn acyclic_ordering<D>(digraph: &D) -> Vec<usize>
 where
-    D: OutNeighbors + Order,
+    D: Order + OutNeighbors,
 {
     let v = digraph.order();
     let mut ordering = vec![0; v];

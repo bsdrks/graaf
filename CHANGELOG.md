@@ -7,6 +7,24 @@
 - Tidy up the `adjacency_matrix` tests.
 - User guide.
 
+## [0.64.1] - 2024-07-01
+
+Added
+
+- Add project overview to `lib.rs`.
+- Implement `ArcsWeighted` for `adjacency_matrix::Digraph`.
+- Implement `Converse` for `adjacency_matrix::Digraph`.
+- Implement `OutNeighborsWeighted` for `adjacency_list::Digraph`.
+- Implement `OutNeighborsWeighted` for `adjacency_matrix::Digraph`.
+
+Changed
+
+- Order trait bounds alphabetically.
+
+Removed
+
+- Remove documentation references to deprecated benchmarks.
+
 ## [0.64.0] - 2024-06-30
 
 This update is big. Users will find that I changed the entire API except for traits and algorithms. Analyzing the digraph `op` and `gen` implementations for the standard library collections, I settled on two main digraph representations:

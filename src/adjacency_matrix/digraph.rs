@@ -11,11 +11,14 @@ use crate::{
         AddArc,
         ArcWeight,
         Arcs,
+        ArcsWeighted,
+        Converse,
         HasArc,
         Indegree,
         IsSimple,
         Order,
         OutNeighbors,
+        OutNeighborsWeighted,
         Outdegree,
         RemoveArc,
         Size,
@@ -101,6 +104,28 @@ impl ArcWeight<usize> for Digraph {
     }
 }
 
+impl ArcsWeighted<usize> for Digraph {
+    fn arcs_weighted<'a>(&'a self) -> impl Iterator<Item = (usize, usize, &'a usize)>
+    where
+        usize: 'a,
+    {
+        self.arcs().map(|(s, t)| (s, t, &1))
+    }
+}
+
+impl Converse for Digraph {
+    fn converse(&self) -> Self {
+        let v = self.order();
+        let mut converse = Self::empty(v);
+
+        for (s, t) in self.arcs() {
+            converse.add_arc(t, s);
+        }
+
+        converse
+    }
+}
+
 impl Empty for Digraph {
     /// # Panics
     ///
@@ -155,6 +180,12 @@ impl Arcs for Digraph {
     }
 }
 
+impl Order for Digraph {
+    fn order(&self) -> usize {
+        self.order
+    }
+}
+
 impl OutNeighbors for Digraph {
     /// # Panics
     ///
@@ -166,15 +197,15 @@ impl OutNeighbors for Digraph {
     }
 }
 
-impl Vertices for Digraph {
-    fn vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.order
-    }
-}
-
-impl Order for Digraph {
-    fn order(&self) -> usize {
-        self.order
+impl OutNeighborsWeighted<usize> for Digraph {
+    /// # Panics
+    ///
+    /// Panics if `s` is out of bounds.
+    fn out_neighbors_weighted<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a usize)>
+    where
+        usize: 'a,
+    {
+        self.out_neighbors(s).map(move |t| (t, &1))
     }
 }
 
@@ -217,6 +248,12 @@ impl Size for Digraph {
             .iter()
             .map(|&block| block.count_ones() as usize)
             .sum()
+    }
+}
+
+impl Vertices for Digraph {
+    fn vertices(&self) -> impl Iterator<Item = usize> {
+        0..self.order
     }
 }
 

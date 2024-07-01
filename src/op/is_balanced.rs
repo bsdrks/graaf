@@ -133,7 +133,7 @@ pub trait IsBalanced {
 
 impl<T> IsBalanced for T
 where
-    T: Indegree + Vertices + Outdegree,
+    T: Indegree + Outdegree + Vertices,
 {
     fn is_balanced(&self) -> bool {
         self.vertices()

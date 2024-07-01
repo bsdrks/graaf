@@ -20,14 +20,6 @@
 //!
 //! assert!(digraph.arcs().eq([(0, 1), (0, 2), (2, 0)]));
 //! ```
-//!
-//! # Benchmarks
-//!
-//! To run the benchmarks for this operation, use:
-//!
-//! ```sh
-//! cargo bench --bench add_arc
-//! ```
 
 /// Add an arc to an unweighted digraph.
 ///

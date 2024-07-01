@@ -27,14 +27,6 @@
 //!
 //! assert_eq!(digraph.size(), 10);
 //! ```
-//!
-//! # Benchmarks
-//!
-//! To run the benchmarks for this operation, use:
-//!
-//! ```sh
-//! cargo bench --bench size
-//! ```
 
 /// Count the arcs in a digraph.
 ///
