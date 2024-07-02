@@ -22,9 +22,9 @@
 //!
 //! Graaf provides three representations of directed graphs.
 //!
-//! - The [Adjacency List] is for unweighted and sparse digraphs.
-//! - The [Adjacency Matrix] is for unweighted and dense digraphs.
-//! - The [Weighted Adjacency List] is for weighted and sparse digraphs.
+//! - The [Adjacency List] is for unweighted sparse digraphs.
+//! - The [Adjacency Matrix] is for unweighted dense digraphs.
+//! - The [Weighted Adjacency List] is for weighted sparse digraphs.
 //!
 //! These types eagerly implement [digraph operations](#operations) and
 //! [digraph algorithms](#algorithms).
@@ -157,10 +157,10 @@
 //! ## Bellman-Ford-Moore
 //!
 //! [`bellman_ford_moore`](algo::bellman_ford_moore) finds the shortest paths
-//! from one source vertex in a weighted digraph with negative weights.
+//! in a weighted digraph with negative weights.
 //!
 //! - [`single_source_distances`](algo::bellman_ford_moore::single_source_distances)
-//!   finds the shortest distances from a source vertex to all other vertices.
+//!   finds the shortest distances from one source vertex to all other vertices.
 //!
 //! ## Breadth-first search (BFS)
 //!
@@ -235,13 +235,13 @@
 //!
 //! ## Breadth-first tree
 //!
-//! A [`BreadthFirstTree`](algo::breadth_first_tree::BreadthFirstTree) contains
-//! the predecessors of the vertices in a breadth-first search.
+//! A [`BreadthFirstTree`](algo::breadth_first_tree::BreadthFirstTree) is
+//! the result of a breadth-first search.
 //!
-//! - [`search`](algo::breadth_first_tree::BreadthFirstTree::search) returns the
+//! - [`search`](algo::breadth_first_tree::BreadthFirstTree::search) finds the
 //!   path to a target vertex.
-//! - [`search_by`](algo::breadth_first_tree::BreadthFirstTree::search_by)
-//!   returns the path to a vertex that satisfies a predicate.
+//! - [`search_by`](algo::breadth_first_tree::BreadthFirstTree::search_by) finds
+//!   the path to a vertex that satisfies a predicate.
 //!
 //! These functions produce a
 //! [`BreadthFirstTree`](algo::breadth_first_tree::BreadthFirstTree).
