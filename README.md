@@ -31,7 +31,7 @@ These types eagerly implement [digraph operations](#operations) and
 
 ## Creating Digraphs
 
-Graaf provides four digraph generators.
+The [`gen`] module provides four digraph generators.
 
 - [`Complete`] generates a digraph with all possible arcs,
   excluding self-loops.
@@ -273,11 +273,14 @@ shortest distances between all pairs of vertices in a digraph.
 
 [Adjacency List]: https://docs.rs/graaf/latest/graaf/adjacency_list/digraph/struct.Digraph.html
 [Adjacency Matrix]: https://docs.rs/graaf/latest/graaf/adjacency_matrix/digraph/struct.Digraph.html
+[Weighted Adjacency List]: https://docs.rs/graaf/latest/graaf/adjacency_list_weighted/digraph/struct.Digraph.html
 [`Complete`]: https://docs.rs/graaf/latest/graaf/gen/complete/trait.Complete.html
 [`Cycle`]: https://docs.rs/graaf/latest/graaf/gen/cycle/trait.Cycle.html
 [`Empty`]: https://docs.rs/graaf/latest/graaf/gen/empty/trait.Empty.html
 [`RandomTournament`]: https://docs.rs/graaf/latest/graaf/gen/random_tournament/trait.RandomTournament.html
-[Weighted Adjacency List]: https://docs.rs/graaf/latest/graaf/adjacency_list_weighted/digraph/struct.Digraph.html
+[`algo`]: https://docs.rs/graaf/latest/graaf/algo/index.html
+[`gen`]: https://docs.rs/graaf/latest/graaf/gen/index.html
+[`op`]: https://docs.rs/graaf/latest/graaf/op/index.html
 
 ## Project goals
 
