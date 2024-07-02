@@ -164,113 +164,113 @@ The [`algo`] module provides digraph algorithms.
 
 ### Bellman-Ford-Moore
 
-[`bellman_ford_moore`](algo::bellman_ford_moore) finds the shortest paths
-from one source vertex in a weighted digraph with negative weights.
+[`bellman_ford_moore`] finds the shortest paths from one source vertex in a
+weighted digraph with negative weights.
 
-- [`single_source_distances`](algo::bellman_ford_moore::single_source_distances)
+- [`single_source_distances`](https://docs.rs/graaf/latest/graaf/algo/bellman_ford_moore/fn.single_source_distances.html)
   finds the shortest distances from a source vertex to all other vertices.
 
 ### Breadth-First Search (BFS)
 
-[`bfs`](algo::bfs) explores the vertices of an unweighted digraph in order
-of their distance from a source.
+[`bfs`] explores the vertices of an unweighted digraph in order of their
+distance from a source.
 
-These functions start from one or more source vertices and allow a custom
-step function, target predicate, distance array, breadth-first tree, and
-queue value, where applicable.
+These functions start from one or more source vertices and allow a custom step
+function, target predicate, distance array, breadth-first tree, and queue value,
+where applicable.
 
-- [`distances`](algo::bfs::distances) finds the shortest distances to all
-  other vertices.
-- [`predecessors`](algo::bfs::predecessors) finds the predecessors of the
-  vertices on the shortest paths.
-- [`shortest_path`](algo::bfs::shortest_path) finds the shortest path to a
-  target vertex.
-
-These algorithms start from one source vertex.
-
-- [`single_source_distances`](algo::bfs::single_source_distances) finds the
-  distances to all other vertices.
-- [`single_source_predecessors`](algo::bfs::single_source_predecessors)
+- [`distances`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.distances.html)
+  finds the shortest distances to all other vertices.
+- [`predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.predecessors.html)
   finds the predecessors of the vertices on the shortest paths.
-- [`single_pair_shortest_path`](algo::bfs::single_pair_shortest_path) finds
-  the shortest path between two vertices.
+- [`shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.shortest_path.html)
+  finds the shortest path to a target vertex.
+
+These functions start from one source vertex.
+
+- [`single_source_distances`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.single_source_distances.html)
+  finds the distances to all other vertices.
+- [`single_source_predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.single_source_predecessors.html)
+  finds the predecessors of the vertices on the shortest paths.
+- [`single_pair_shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.single_pair_shortest_path.html)
+  finds the shortest path between two vertices.
 
 ### Depth-First Search (DFS)
 
-[`dfs`](algo::dfs) explores the vertices of an unweighted digraph in order
-of their depth from a source.
+[`dfs`] explores the vertices of an unweighted digraph in order of their depth
+from a source.
 
-- [`dfsa`](algo::dfs::dfsa) traverses the digraph, collecting an acyclic
-  ordering and the times of each vertex's first and last visit.
-- [`dfsa_predecessors`](algo::dfs::dfsa_predecessors) collects an acyclic
-  ordering, the predecessors, and the times of each vertex's first and last
-  visit.
-- [`acyclic_ordering`](algo::dfs::acyclic_ordering) generates an acyclic
-  ordering of the vertices.
+- [`dfsa`](https://docs.rs/graaf/latest/graaf/algo/dfs/fn.dfsa.html) traverses
+  the digraph, collecting an acyclic ordering and the times of each vertex's
+  first and last visit.
+- [`dfsa_predecessors`](https://docs.rs/graaf/latest/graaf/algo/dfs/fn.dfsa_predecessors.html)
+  collects an acyclic ordering, the predecessors, and the times of each vertex's
+  first and last visit.
+- [`acyclic_ordering`](https://docs.rs/graaf/latest/graaf/algo/dfs/fn.acyclic_ordering.html)
+  generates an acyclic ordering of the vertices.
 
 ### Dijkstra's Algorithm
 
-[`dijkstra`](algo::dijkstra) finds the shortest paths from one or more
-source vertices in a weighted digraph.
+[`dijkstra`] finds the shortest paths from one or more source vertices in a
+weighted digraph.
 
-These functions start from one or more source vertices and allow a custom
-step function, target predicate, distance array, and heap value, where
-applicable.
+These functions start from one or more source vertices and allow a custom step
+function, target predicate, distance array, and heap value, where applicable.
 
-- [`distances`](algo::dijkstra::distances) finds the shortest distances to
+- [`distances`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.distances.html) finds the shortest distances to
   all other vertices.
-- [`predecessors`](algo::dijkstra::predecessors) finds the predecessors of
+- [`predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.predecessors.html) finds the predecessors of
   the vertices on the shortest paths.
-- [`shortest_path`](algo::dijkstra::shortest_path) finds the shortest path
+- [`shortest_path`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.shortest_path.html) finds the shortest path
   to a target vertex.
 
-These algorithms start from one source vertex.
+These functions start from one source vertex.
 
-- [`single_source_distances`](algo::dijkstra::single_source_distances) finds
+- [`single_source_distances`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.single_source_distances.html) finds
   the shortest distances to all other vertices.
-- [`single_source_predecessors`](algo::dijkstra::single_source_predecessors)
+- [`single_source_predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.single_source_predecessors.html)
   finds the predecessors of the vertices on the shortest paths.
-- [`single_pair_shortest_path`](algo::dijkstra::single_pair_shortest_path)
+- [`single_pair_shortest_path`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.single_pair_shortest_path.html)
   finds the shortest path between two vertices.
 
 ### Floyd-Warshall
 
-[`floyd_warshall`](algo::floyd_warshall) algorithm finds the shortest paths
-between all pairs of vertices in a weighted digraph.
+[`floyd_warshall`] finds the shortest paths between all pairs of vertices in a
+weighted digraph.
 
-- [`distances`](algo::floyd_warshall::distances) finds the shortest
-  distances between all pairs of vertices.
+- [`distances`](https://docs.rs/graaf/latest/graaf/algo/floyd_warshall/fn.distances.html)
+  finds the shortest distances between all pairs of vertices.
 
 ### Breadth-First Tree
 
-A [`BreadthFirstTree`](algo::breadth_first_tree::BreadthFirstTree) tree
+A [`BreadthFirstTree`](https://docs.rs/graaf/latest/graaf/algo/breadth_first_tree/struct.BreadthFirstTree.html)
 contains the predecessors of the vertices in a breadth-first search.
 
-- [`search`](algo::breadth_first_tree::BreadthFirstTree::search) returns the
-  path to a target vertex.
-- [`search_by`](algo::breadth_first_tree::BreadthFirstTree::search_by)
+- [`search`](https://docs.rs/graaf/latest/graaf/algo/breadth_first_tree/struct.BreadthFirstTree.html#method.search)
+  returns the path to a target vertex.
+- [`search_by`](https://docs.rs/graaf/latest/graaf/algo/breadth_first_tree/struct.BreadthFirstTree.html#method.search_by)
   returns the path to a vertex that satisfies a predicate.
 
 These functions produce a
-[`BreadthFirstTree`](algo::breadth_first_tree::BreadthFirstTree).
+[`BreadthFirstTree`](https://docs.rs/graaf/latest/graaf/algo/breadth_first_tree/struct.BreadthFirstTree.html).
 
-- [`bfs::single_source_predecessors`](algo::bfs::single_source_predecessors)
-- [`bfs::predecessors`](algo::bfs::predecessors)
-- [`dijkstra::single_source_predecessors`](algo::dijkstra::single_source_predecessors)
-- [`dijkstra::predecessors`](algo::dijkstra::predecessors)
+- [`bfs::single_source_predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.single_source_predecessors.html)
+- [`bfs::predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.predecessors.html)
+- [`dijkstra::single_source_predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.single_source_predecessors.html)
+- [`dijkstra::predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.predecessors.html)
 
 ### Distance Matrix
 
 A [`DistanceMatrix`](algo::distance_matrix::DistanceMatrix) contains the
 shortest distances between all pairs of vertices in a digraph.
 
-- [`center`](algo::distance_matrix::DistanceMatrix::center) finds the center
-  of the digraph.
-- [`diameter`](algo::distance_matrix::DistanceMatrix::diameter) finds the
-  diameter of the digraph.
-- [`eccentricities`](algo::distance_matrix::DistanceMatrix::eccentricities)
+- [`center`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.center)
+  finds the center of the digraph.
+- [`diameter`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.diameter)
+  finds the diameter of the digraph.
+- [`eccentricities`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.eccentricities)
   returns the eccentricities of the vertices.
-- [`is_connected`](algo::distance_matrix::DistanceMatrix::is_connected)
+- [`is_connected`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.is_connected)
   checks if the digraph is connected.
 
 [Adjacency List]: https://docs.rs/graaf/latest/graaf/adjacency_list/digraph/struct.Digraph.html

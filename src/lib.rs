@@ -178,7 +178,7 @@
 //! - [`shortest_path`](algo::bfs::shortest_path) finds the shortest path to a
 //!   target vertex.
 //!
-//! These algorithms start from one source vertex.
+//! These functions start from one source vertex.
 //!
 //! - [`single_source_distances`](algo::bfs::single_source_distances) finds the
 //!   distances to all other vertices.
@@ -216,7 +216,7 @@
 //! - [`shortest_path`](algo::dijkstra::shortest_path) finds the shortest path
 //!   to a target vertex.
 //!
-//! These algorithms start from one source vertex.
+//! These functions start from one source vertex.
 //!
 //! - [`single_source_distances`](algo::dijkstra::single_source_distances) finds
 //!   the shortest distances to all other vertices.
@@ -235,8 +235,8 @@
 //!
 //! ## Breadth-first tree
 //!
-//! A [`BreadthFirstTree`](algo::breadth_first_tree::BreadthFirstTree) tree
-//! contains the predecessors of the vertices in a breadth-first search.
+//! A [`BreadthFirstTree`](algo::breadth_first_tree::BreadthFirstTree) contains
+//! the predecessors of the vertices in a breadth-first search.
 //!
 //! - [`search`](algo::breadth_first_tree::BreadthFirstTree::search) returns the
 //!   path to a target vertex.
