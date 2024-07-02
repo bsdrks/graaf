@@ -7,6 +7,12 @@
 - Tidy up the `adjacency_matrix` tests.
 - User guide.
 
+## [0.64.2] - 2024-07-02
+
+Added
+
+- Add project overview to README.
+
 ## [0.64.1] - 2024-07-01
 
 Added
