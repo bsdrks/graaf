@@ -52,7 +52,7 @@
 /// impl Empty for Digraph {
 ///     /// # Panics
 ///     ///
-///     /// Panics if `v` is 0.
+///     /// Panics if `v` is zero.
 ///     fn empty(v: usize) -> Self {
 ///         assert!(v > 0, "a digraph must have at least one vertex");
 ///

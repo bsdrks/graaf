@@ -98,7 +98,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `v` is 0.
+    /// Panics if `v` is zero.
     fn complete(v: usize) -> Self {
         let mut digraph = D::empty(v);
 

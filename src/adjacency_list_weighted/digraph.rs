@@ -211,14 +211,14 @@ mod tests {
         super::*,
         crate::{
             adjacency_list_weighted::fixture::{
-                bang_jensen_94_weighted,
-                bang_jensen_96,
+                bang_jensen_94_weighted_usize,
+                bang_jensen_96_usize,
                 bang_jensen_99,
-                kattis_bryr_1,
-                kattis_bryr_2,
-                kattis_bryr_3,
-                kattis_crosscountry,
-                kattis_shortestpath1,
+                kattis_bryr_1_usize,
+                kattis_bryr_2_usize,
+                kattis_bryr_3_usize,
+                kattis_crosscountry_usize,
+                kattis_shortestpath1_usize,
             },
             op::{
                 Degree,
@@ -460,7 +460,7 @@ mod tests {
 
     #[test]
     fn arcs_bang_jensen_94_weighted() {
-        assert!(bang_jensen_94_weighted!().arcs().eq([
+        assert!(bang_jensen_94_weighted_usize().arcs().eq([
             (0, 1),
             (0, 2),
             (1, 3),
@@ -475,7 +475,7 @@ mod tests {
 
     #[test]
     fn arcs_bang_jensen_96() {
-        assert!(bang_jensen_96!().arcs().eq([
+        assert!(bang_jensen_96_usize().arcs().eq([
             (0, 1),
             (0, 2),
             (1, 2),
@@ -492,7 +492,7 @@ mod tests {
 
     #[test]
     fn arcs_bang_jensen_99() {
-        assert!(bang_jensen_99!().arcs().eq([
+        assert!(bang_jensen_99().arcs().eq([
             (0, 1),
             (0, 2),
             (1, 2),
@@ -508,14 +508,14 @@ mod tests {
 
     #[test]
     fn arcs_kattis_bryr_1() {
-        assert!(kattis_bryr_1!()
+        assert!(kattis_bryr_1_usize()
             .arcs()
             .eq([(0, 1), (0, 2), (1, 0), (1, 2), (2, 0), (2, 1)]));
     }
 
     #[test]
     fn arcs_kattis_bryr_2() {
-        assert!(kattis_bryr_2!().arcs().eq([
+        assert!(kattis_bryr_2_usize().arcs().eq([
             (0, 1),
             (0, 3),
             (1, 0),
@@ -533,7 +533,7 @@ mod tests {
 
     #[test]
     fn arcs_kattis_bryr_3() {
-        assert!(kattis_bryr_3!().arcs().eq([
+        assert!(kattis_bryr_3_usize().arcs().eq([
             (0, 3),
             (1, 7),
             (1, 9),
@@ -564,7 +564,7 @@ mod tests {
 
     #[test]
     fn arcs_kattis_crosscountry() {
-        assert!(kattis_crosscountry!().arcs().eq([
+        assert!(kattis_crosscountry_usize().arcs().eq([
             (0, 1),
             (0, 2),
             (0, 3),
@@ -582,12 +582,14 @@ mod tests {
 
     #[test]
     fn arcs_kattis_shortestpath1() {
-        assert!(kattis_shortestpath1!().arcs().eq([(0, 1), (1, 2), (3, 0)]));
+        assert!(kattis_shortestpath1_usize()
+            .arcs()
+            .eq([(0, 1), (1, 2), (3, 0)]));
     }
 
     #[test]
     fn arcs_weighted_bang_jensen_94_weighted() {
-        assert!(bang_jensen_94_weighted!().arcs_weighted().eq([
+        assert!(bang_jensen_94_weighted_usize().arcs_weighted().eq([
             (0, 1, &1),
             (0, 2, &1),
             (1, 3, &1),
@@ -602,7 +604,7 @@ mod tests {
 
     #[test]
     fn arcs_weighted_bang_jensen_96() {
-        assert!(bang_jensen_96!().arcs_weighted().eq([
+        assert!(bang_jensen_96_usize().arcs_weighted().eq([
             (0, 1, &9),
             (0, 2, &3),
             (1, 2, &6),
@@ -619,7 +621,7 @@ mod tests {
 
     #[test]
     fn arcs_weighted_bang_jensen_99() {
-        assert!(bang_jensen_99!().arcs_weighted().eq([
+        assert!(bang_jensen_99().arcs_weighted().eq([
             (0, 1, &8),
             (0, 2, &4),
             (1, 2, &-5),
@@ -635,7 +637,7 @@ mod tests {
 
     #[test]
     fn arcs_weighted_kattis_bryr_1() {
-        assert!(kattis_bryr_1!().arcs_weighted().eq([
+        assert!(kattis_bryr_1_usize().arcs_weighted().eq([
             (0, 1, &1),
             (0, 2, &1),
             (1, 0, &1),
@@ -647,7 +649,7 @@ mod tests {
 
     #[test]
     fn arcs_weighted_kattis_bryr_2() {
-        assert!(kattis_bryr_2!().arcs_weighted().eq([
+        assert!(kattis_bryr_2_usize().arcs_weighted().eq([
             (0, 1, &1),
             (0, 3, &1),
             (1, 0, &1),
@@ -665,7 +667,7 @@ mod tests {
 
     #[test]
     fn arcs_weighted_kattis_bryr_3() {
-        assert!(kattis_bryr_3!().arcs_weighted().eq([
+        assert!(kattis_bryr_3_usize().arcs_weighted().eq([
             (0, 3, &0),
             (1, 7, &0),
             (1, 9, &1),
@@ -696,7 +698,7 @@ mod tests {
 
     #[test]
     fn arcs_weighted_kattis_crosscountry() {
-        assert!(kattis_crosscountry!().arcs_weighted().eq([
+        assert!(kattis_crosscountry_usize().arcs_weighted().eq([
             (0, 1, &1),
             (0, 2, &3),
             (0, 3, &14),
@@ -714,29 +716,34 @@ mod tests {
 
     #[test]
     fn arcs_weighted_kattis_shortestpath1() {
-        assert!(kattis_shortestpath1!()
-            .arcs_weighted()
-            .eq([(0, 1, &2), (1, 2, &2), (3, 0, &2)]));
-    }
-
-    #[test]
-    fn converse_bang_jensen_94_weighted() {
-        assert!(bang_jensen_94_weighted!().converse().arcs_weighted().eq([
-            (1, 0, &1),
-            (1, 2, &1),
-            (2, 0, &1),
-            (3, 1, &1),
-            (3, 2, &1),
-            (4, 2, &1),
-            (5, 2, &1),
-            (5, 3, &1),
-            (6, 4, &1)
+        assert!(kattis_shortestpath1_usize().arcs_weighted().eq([
+            (0, 1, &2),
+            (1, 2, &2),
+            (3, 0, &2)
         ]));
     }
 
     #[test]
+    fn converse_bang_jensen_94_weighted() {
+        assert!(bang_jensen_94_weighted_usize()
+            .converse()
+            .arcs_weighted()
+            .eq([
+                (1, 0, &1),
+                (1, 2, &1),
+                (2, 0, &1),
+                (3, 1, &1),
+                (3, 2, &1),
+                (4, 2, &1),
+                (5, 2, &1),
+                (5, 3, &1),
+                (6, 4, &1)
+            ]));
+    }
+
+    #[test]
     fn converse_bang_jensen_96() {
-        assert!(bang_jensen_96!().converse().arcs_weighted().eq([
+        assert!(bang_jensen_96_usize().converse().arcs_weighted().eq([
             (1, 0, &9),
             (1, 2, &2),
             (2, 0, &3),
@@ -753,7 +760,7 @@ mod tests {
 
     #[test]
     fn converse_bang_jensen_99() {
-        assert!(bang_jensen_99!().converse().arcs_weighted().eq([
+        assert!(bang_jensen_99().converse().arcs_weighted().eq([
             (1, 0, &8),
             (2, 0, &4),
             (2, 1, &-5),
@@ -769,7 +776,7 @@ mod tests {
 
     #[test]
     fn converse_kattis_bryr_1() {
-        assert!(kattis_bryr_1!().converse().arcs_weighted().eq([
+        assert!(kattis_bryr_1_usize().converse().arcs_weighted().eq([
             (0, 1, &1),
             (0, 2, &1),
             (1, 0, &1),
@@ -781,7 +788,7 @@ mod tests {
 
     #[test]
     fn converse_kattis_bryr_2() {
-        assert!(kattis_bryr_2!().converse().arcs_weighted().eq([
+        assert!(kattis_bryr_2_usize().converse().arcs_weighted().eq([
             (0, 1, &1),
             (0, 3, &1),
             (1, 0, &1),
@@ -799,7 +806,7 @@ mod tests {
 
     #[test]
     fn converse_kattis_bryr_3() {
-        assert!(kattis_bryr_3!().converse().arcs_weighted().eq([
+        assert!(kattis_bryr_3_usize().converse().arcs_weighted().eq([
             (0, 3, &0),
             (1, 7, &0),
             (1, 9, &1),
@@ -830,7 +837,7 @@ mod tests {
 
     #[test]
     fn converse_kattis_crosscountry() {
-        assert!(kattis_crosscountry!().converse().arcs_weighted().eq([
+        assert!(kattis_crosscountry_usize().converse().arcs_weighted().eq([
             (0, 1, &2),
             (0, 2, &3),
             (0, 3, &13),
@@ -848,7 +855,7 @@ mod tests {
 
     #[test]
     fn converse_kattis_shortestpath1() {
-        assert!(kattis_shortestpath1!().converse().arcs_weighted().eq([
+        assert!(kattis_shortestpath1_usize().converse().arcs_weighted().eq([
             (0, 3, &2),
             (1, 0, &2),
             (2, 1, &2)
@@ -857,7 +864,7 @@ mod tests {
 
     #[test]
     fn degree_bang_jensen_94_weighted() {
-        let digraph = bang_jensen_94_weighted!();
+        let digraph = bang_jensen_94_weighted_usize();
 
         assert!(digraph.degree(0) == 2);
         assert!(digraph.degree(1) == 3);
@@ -870,7 +877,7 @@ mod tests {
 
     #[test]
     fn degree_bang_jensen_96() {
-        let digraph = bang_jensen_96!();
+        let digraph = bang_jensen_96_usize();
 
         assert!(digraph.degree(0) == 2);
         assert!(digraph.degree(1) == 4);
@@ -882,7 +889,7 @@ mod tests {
 
     #[test]
     fn degree_bang_jensen_99() {
-        let digraph = bang_jensen_99!();
+        let digraph = bang_jensen_99();
 
         assert!(digraph.degree(0) == 2);
         assert!(digraph.degree(1) == 2);
@@ -894,7 +901,7 @@ mod tests {
 
     #[test]
     fn degree_kattis_bryr_1() {
-        let digraph = kattis_bryr_1!();
+        let digraph = kattis_bryr_1_usize();
 
         assert!(digraph.degree(0) == 4);
         assert!(digraph.degree(1) == 4);
@@ -903,7 +910,7 @@ mod tests {
 
     #[test]
     fn degree_kattis_bryr_2() {
-        let digraph = kattis_bryr_2!();
+        let digraph = kattis_bryr_2_usize();
 
         assert!(digraph.degree(0) == 4);
         assert!(digraph.degree(1) == 4);
@@ -915,7 +922,7 @@ mod tests {
 
     #[test]
     fn degree_kattis_bryr_3() {
-        let digraph = kattis_bryr_3!();
+        let digraph = kattis_bryr_3_usize();
 
         assert!(digraph.degree(0) == 2);
         assert!(digraph.degree(1) == 4);
@@ -931,7 +938,7 @@ mod tests {
 
     #[test]
     fn degree_kattis_crosscountry() {
-        let digraph = kattis_crosscountry!();
+        let digraph = kattis_crosscountry_usize();
 
         assert!(digraph.degree(0) == 6);
         assert!(digraph.degree(1) == 6);
@@ -941,7 +948,7 @@ mod tests {
 
     #[test]
     fn degree_kattis_shortestpath1() {
-        let digraph = kattis_shortestpath1!();
+        let digraph = kattis_shortestpath1_usize();
 
         assert!(digraph.degree(0) == 2);
         assert!(digraph.degree(1) == 2);
@@ -961,7 +968,7 @@ mod tests {
 
     #[test]
     fn in_neighbors_bang_jensen_94_weighted() {
-        let digraph = bang_jensen_94_weighted!();
+        let digraph = bang_jensen_94_weighted_usize();
 
         assert!(digraph.in_neighbors(0).eq([]));
         assert!(digraph.in_neighbors(1).eq([0, 2]));
@@ -974,7 +981,7 @@ mod tests {
 
     #[test]
     fn in_neighbors_bang_jensen_96() {
-        let digraph = bang_jensen_96!();
+        let digraph = bang_jensen_96_usize();
 
         assert!(digraph.in_neighbors(0).eq([]));
         assert!(digraph.in_neighbors(1).eq([0, 2]));
@@ -986,7 +993,7 @@ mod tests {
 
     #[test]
     fn in_neighbors_bang_jensen_99() {
-        let digraph = bang_jensen_99!();
+        let digraph = bang_jensen_99();
 
         assert!(digraph.in_neighbors(0).eq([]));
         assert!(digraph.in_neighbors(1).eq([0]));
@@ -998,7 +1005,7 @@ mod tests {
 
     #[test]
     fn in_neighbors_kattis_bryr_1() {
-        let digraph = kattis_bryr_1!();
+        let digraph = kattis_bryr_1_usize();
 
         assert!(digraph.in_neighbors(0).eq([1, 2]));
         assert!(digraph.in_neighbors(1).eq([0, 2]));
@@ -1007,7 +1014,7 @@ mod tests {
 
     #[test]
     fn in_neighbors_kattis_bryr_2() {
-        let digraph = kattis_bryr_2!();
+        let digraph = kattis_bryr_2_usize();
 
         assert!(digraph.in_neighbors(0).eq([1, 3]));
         assert!(digraph.in_neighbors(1).eq([0, 2]));
@@ -1019,7 +1026,7 @@ mod tests {
 
     #[test]
     fn in_neighbors_kattis_bryr_3() {
-        let digraph = kattis_bryr_3!();
+        let digraph = kattis_bryr_3_usize();
 
         assert!(digraph.in_neighbors(0).eq([3]));
         assert!(digraph.in_neighbors(1).eq([7, 9]));
@@ -1035,7 +1042,7 @@ mod tests {
 
     #[test]
     fn in_neighbors_kattis_crosscountry() {
-        let digraph = kattis_crosscountry!();
+        let digraph = kattis_crosscountry_usize();
 
         assert!(digraph.in_neighbors(0).eq([1, 2, 3]));
         assert!(digraph.in_neighbors(1).eq([0, 2, 3]));
@@ -1045,7 +1052,7 @@ mod tests {
 
     #[test]
     fn in_neighbors_kattis_shortestpath1() {
-        let digraph = kattis_shortestpath1!();
+        let digraph = kattis_shortestpath1_usize();
 
         assert!(digraph.in_neighbors(0).eq([3]));
         assert!(digraph.in_neighbors(1).eq([0]));
@@ -1055,7 +1062,7 @@ mod tests {
 
     #[test]
     fn indegree_bang_jensen_94_weighted() {
-        let digraph = bang_jensen_94_weighted!();
+        let digraph = bang_jensen_94_weighted_usize();
 
         assert!(digraph.indegree(0) == 0);
         assert!(digraph.indegree(1) == 2);
@@ -1068,7 +1075,7 @@ mod tests {
 
     #[test]
     fn indegree_bang_jensen_96() {
-        let digraph = bang_jensen_96!();
+        let digraph = bang_jensen_96_usize();
 
         assert!(digraph.indegree(0) == 0);
         assert!(digraph.indegree(1) == 2);
@@ -1080,7 +1087,7 @@ mod tests {
 
     #[test]
     fn indegree_bang_jensen_99() {
-        let digraph = bang_jensen_99!();
+        let digraph = bang_jensen_99();
 
         assert!(digraph.indegree(0) == 0);
         assert!(digraph.indegree(1) == 1);
@@ -1092,7 +1099,7 @@ mod tests {
 
     #[test]
     fn indegree_kattis_bryr_1() {
-        let digraph = kattis_bryr_1!();
+        let digraph = kattis_bryr_1_usize();
 
         assert!(digraph.indegree(0) == 2);
         assert!(digraph.indegree(1) == 2);
@@ -1101,7 +1108,7 @@ mod tests {
 
     #[test]
     fn indegree_kattis_bryr_2() {
-        let digraph = kattis_bryr_2!();
+        let digraph = kattis_bryr_2_usize();
 
         assert!(digraph.indegree(0) == 2);
         assert!(digraph.indegree(1) == 2);
@@ -1113,7 +1120,7 @@ mod tests {
 
     #[test]
     fn indegree_kattis_bryr_3() {
-        let digraph = kattis_bryr_3!();
+        let digraph = kattis_bryr_3_usize();
 
         assert!(digraph.indegree(0) == 1);
         assert!(digraph.indegree(1) == 2);
@@ -1129,7 +1136,7 @@ mod tests {
 
     #[test]
     fn indegree_kattis_crosscountry() {
-        let digraph = kattis_crosscountry!();
+        let digraph = kattis_crosscountry_usize();
 
         assert!(digraph.indegree(0) == 3);
         assert!(digraph.indegree(1) == 3);
@@ -1139,7 +1146,7 @@ mod tests {
 
     #[test]
     fn indegree_kattis_shortestpath1() {
-        let digraph = kattis_shortestpath1!();
+        let digraph = kattis_shortestpath1_usize();
 
         assert!(digraph.indegree(0) == 1);
         assert!(digraph.indegree(1) == 1);
@@ -1149,87 +1156,87 @@ mod tests {
 
     #[test]
     fn is_balanced_bang_jensen_94_weighted() {
-        assert!(!bang_jensen_94_weighted!().is_balanced());
+        assert!(!bang_jensen_94_weighted_usize().is_balanced());
     }
 
     #[test]
     fn is_balanced_bang_jensen_96() {
-        assert!(!bang_jensen_96!().is_balanced());
+        assert!(!bang_jensen_96_usize().is_balanced());
     }
 
     #[test]
     fn is_balanced_bang_jensen_99() {
-        assert!(!bang_jensen_99!().is_balanced());
+        assert!(!bang_jensen_99().is_balanced());
     }
 
     #[test]
     fn is_balanced_kattis_bryr_1() {
-        assert!(kattis_bryr_1!().is_balanced());
+        assert!(kattis_bryr_1_usize().is_balanced());
     }
 
     #[test]
     fn is_balanced_kattis_bryr_2() {
-        assert!(kattis_bryr_2!().is_balanced());
+        assert!(kattis_bryr_2_usize().is_balanced());
     }
 
     #[test]
     fn is_balanced_kattis_bryr_3() {
-        assert!(!kattis_bryr_3!().is_balanced());
+        assert!(!kattis_bryr_3_usize().is_balanced());
     }
 
     #[test]
     fn is_balanced_kattis_crosscountry() {
-        assert!(kattis_crosscountry!().is_balanced());
+        assert!(kattis_crosscountry_usize().is_balanced());
     }
 
     #[test]
     fn is_balanced_kattis_shortestpath1() {
-        assert!(!kattis_shortestpath1!().is_balanced());
+        assert!(!kattis_shortestpath1_usize().is_balanced());
     }
 
     #[test]
     fn is_complete_bang_jensen_94_weighted() {
-        assert!(!bang_jensen_94_weighted!().is_complete());
+        assert!(!bang_jensen_94_weighted_usize().is_complete());
     }
 
     #[test]
     fn is_complete_bang_jensen_96() {
-        assert!(!bang_jensen_96!().is_complete());
+        assert!(!bang_jensen_96_usize().is_complete());
     }
 
     #[test]
     fn is_complete_bang_jensen_99() {
-        assert!(!bang_jensen_99!().is_complete());
+        assert!(!bang_jensen_99().is_complete());
     }
 
     #[test]
     fn is_complete_kattis_bryr_1() {
-        assert!(kattis_bryr_1!().is_complete());
+        assert!(kattis_bryr_1_usize().is_complete());
     }
 
     #[test]
     fn is_complete_kattis_bryr_2() {
-        assert!(!kattis_bryr_2!().is_complete());
+        assert!(!kattis_bryr_2_usize().is_complete());
     }
 
     #[test]
     fn is_complete_kattis_bryr_3() {
-        assert!(!kattis_bryr_3!().is_complete());
+        assert!(!kattis_bryr_3_usize().is_complete());
     }
 
     #[test]
     fn is_complete_kattis_crosscountry() {
-        assert!(kattis_crosscountry!().is_complete());
+        assert!(kattis_crosscountry_usize().is_complete());
     }
 
     #[test]
     fn is_complete_kattis_shortestpath1() {
-        assert!(!kattis_shortestpath1!().is_complete());
+        assert!(!kattis_shortestpath1_usize().is_complete());
     }
 
     #[test]
     fn is_isolated_bang_jensen_94_weighted() {
-        let digraph = bang_jensen_94_weighted!();
+        let digraph = bang_jensen_94_weighted_usize();
 
         assert!(!digraph.is_isolated(0));
         assert!(!digraph.is_isolated(1));
@@ -1242,7 +1249,7 @@ mod tests {
 
     #[test]
     fn is_isolated_bang_jensen_96() {
-        let digraph = bang_jensen_96!();
+        let digraph = bang_jensen_96_usize();
 
         assert!(!digraph.is_isolated(0));
         assert!(!digraph.is_isolated(1));
@@ -1254,7 +1261,7 @@ mod tests {
 
     #[test]
     fn is_isolated_bang_jensen_99() {
-        let digraph = bang_jensen_99!();
+        let digraph = bang_jensen_99();
 
         assert!(!digraph.is_isolated(0));
         assert!(!digraph.is_isolated(1));
@@ -1266,7 +1273,7 @@ mod tests {
 
     #[test]
     fn is_isolated_kattis_bryr_1() {
-        let digraph = kattis_bryr_1!();
+        let digraph = kattis_bryr_1_usize();
 
         assert!(!digraph.is_isolated(0));
         assert!(!digraph.is_isolated(1));
@@ -1275,7 +1282,7 @@ mod tests {
 
     #[test]
     fn is_isolated_kattis_bryr_2() {
-        let digraph = kattis_bryr_2!();
+        let digraph = kattis_bryr_2_usize();
 
         assert!(!digraph.is_isolated(0));
         assert!(!digraph.is_isolated(1));
@@ -1287,7 +1294,7 @@ mod tests {
 
     #[test]
     fn is_isolated_kattis_bryr_3() {
-        let digraph = kattis_bryr_3!();
+        let digraph = kattis_bryr_3_usize();
 
         assert!(!digraph.is_isolated(0));
         assert!(!digraph.is_isolated(1));
@@ -1303,7 +1310,7 @@ mod tests {
 
     #[test]
     fn is_isolated_kattis_crosscountry() {
-        let digraph = kattis_crosscountry!();
+        let digraph = kattis_crosscountry_usize();
 
         assert!(!digraph.is_isolated(0));
         assert!(!digraph.is_isolated(1));
@@ -1313,7 +1320,7 @@ mod tests {
 
     #[test]
     fn is_isolated_kattis_shortestpath1() {
-        let digraph = kattis_shortestpath1!();
+        let digraph = kattis_shortestpath1_usize();
 
         assert!(!digraph.is_isolated(0));
         assert!(!digraph.is_isolated(1));
@@ -1323,47 +1330,47 @@ mod tests {
 
     #[test]
     fn is_oriented_bang_jensen_94_weighted() {
-        assert!(bang_jensen_94_weighted!().is_oriented());
+        assert!(bang_jensen_94_weighted_usize().is_oriented());
     }
 
     #[test]
     fn is_oriented_bang_jensen_96() {
-        assert!(!bang_jensen_96!().is_oriented());
+        assert!(!bang_jensen_96_usize().is_oriented());
     }
 
     #[test]
     fn is_oriented_bang_jensen_99() {
-        assert!(!bang_jensen_99!().is_oriented());
+        assert!(!bang_jensen_99().is_oriented());
     }
 
     #[test]
     fn is_oriented_kattis_bryr_1() {
-        assert!(!kattis_bryr_1!().is_oriented());
+        assert!(!kattis_bryr_1_usize().is_oriented());
     }
 
     #[test]
     fn is_oriented_kattis_bryr_2() {
-        assert!(!kattis_bryr_2!().is_oriented());
+        assert!(!kattis_bryr_2_usize().is_oriented());
     }
 
     #[test]
     fn is_oriented_kattis_bryr_3() {
-        assert!(!kattis_bryr_3!().is_oriented());
+        assert!(!kattis_bryr_3_usize().is_oriented());
     }
 
     #[test]
     fn is_oriented_kattis_crosscountry() {
-        assert!(!kattis_crosscountry!().is_oriented());
+        assert!(!kattis_crosscountry_usize().is_oriented());
     }
 
     #[test]
     fn is_oriented_kattis_shortestpath1() {
-        assert!(kattis_shortestpath1!().is_oriented());
+        assert!(kattis_shortestpath1_usize().is_oriented());
     }
 
     #[test]
     fn is_pendant_bang_jensen_94_weighted() {
-        let digraph = bang_jensen_94_weighted!();
+        let digraph = bang_jensen_94_weighted_usize();
 
         assert!(!digraph.is_pendant(0));
         assert!(!digraph.is_pendant(1));
@@ -1376,7 +1383,7 @@ mod tests {
 
     #[test]
     fn is_pendant_bang_jensen_96() {
-        let digraph = bang_jensen_96!();
+        let digraph = bang_jensen_96_usize();
 
         assert!(!digraph.is_pendant(0));
         assert!(!digraph.is_pendant(1));
@@ -1388,7 +1395,7 @@ mod tests {
 
     #[test]
     fn is_pendant_bang_jensen_99() {
-        let digraph = bang_jensen_99!();
+        let digraph = bang_jensen_99();
 
         assert!(!digraph.is_pendant(0));
         assert!(!digraph.is_pendant(1));
@@ -1400,7 +1407,7 @@ mod tests {
 
     #[test]
     fn is_pendant_kattis_bryr_1() {
-        let digraph = kattis_bryr_1!();
+        let digraph = kattis_bryr_1_usize();
 
         assert!(!digraph.is_pendant(0));
         assert!(!digraph.is_pendant(1));
@@ -1409,7 +1416,7 @@ mod tests {
 
     #[test]
     fn is_pendant_kattis_bryr_2() {
-        let digraph = kattis_bryr_2!();
+        let digraph = kattis_bryr_2_usize();
 
         assert!(!digraph.is_pendant(0));
         assert!(!digraph.is_pendant(1));
@@ -1421,7 +1428,7 @@ mod tests {
 
     #[test]
     fn is_pendant_kattis_bryr_3() {
-        let digraph = kattis_bryr_3!();
+        let digraph = kattis_bryr_3_usize();
 
         assert!(!digraph.is_pendant(0));
         assert!(!digraph.is_pendant(1));
@@ -1437,7 +1444,7 @@ mod tests {
 
     #[test]
     fn is_pendant_kattis_crosscountry() {
-        let digraph = kattis_crosscountry!();
+        let digraph = kattis_crosscountry_usize();
 
         assert!(!digraph.is_pendant(0));
         assert!(!digraph.is_pendant(1));
@@ -1447,7 +1454,7 @@ mod tests {
 
     #[test]
     fn is_pendant_kattis_shortestpath1() {
-        let digraph = kattis_shortestpath1!();
+        let digraph = kattis_shortestpath1_usize();
 
         assert!(!digraph.is_pendant(0));
         assert!(!digraph.is_pendant(1));
@@ -1457,207 +1464,207 @@ mod tests {
 
     #[test]
     fn is_regular_bang_jensen_94_weighted() {
-        assert!(!bang_jensen_94_weighted!().is_regular());
+        assert!(!bang_jensen_94_weighted_usize().is_regular());
     }
 
     #[test]
     fn is_regular_bang_jensen_96() {
-        assert!(!bang_jensen_96!().is_regular());
+        assert!(!bang_jensen_96_usize().is_regular());
     }
 
     #[test]
     fn is_regular_bang_jensen_99() {
-        assert!(!bang_jensen_99!().is_regular());
+        assert!(!bang_jensen_99().is_regular());
     }
 
     #[test]
     fn is_regular_kattis_bryr_1() {
-        assert!(kattis_bryr_1!().is_regular());
+        assert!(kattis_bryr_1_usize().is_regular());
     }
 
     #[test]
     fn is_regular_kattis_bryr_2() {
-        assert!(!kattis_bryr_2!().is_regular());
+        assert!(!kattis_bryr_2_usize().is_regular());
     }
 
     #[test]
     fn is_regular_kattis_bryr_3() {
-        assert!(!kattis_bryr_3!().is_regular());
+        assert!(!kattis_bryr_3_usize().is_regular());
     }
 
     #[test]
     fn is_regular_kattis_crosscountry() {
-        assert!(kattis_crosscountry!().is_regular());
+        assert!(kattis_crosscountry_usize().is_regular());
     }
 
     #[test]
     fn is_regular_kattis_shortestpath1() {
-        assert!(!kattis_shortestpath1!().is_regular());
+        assert!(!kattis_shortestpath1_usize().is_regular());
     }
 
     #[test]
     fn is_semicomplete_bang_jensen_94_weighted() {
-        assert!(!bang_jensen_94_weighted!().is_semicomplete());
+        assert!(!bang_jensen_94_weighted_usize().is_semicomplete());
     }
 
     #[test]
     fn is_semicomplete_bang_jensen_96() {
-        assert!(!bang_jensen_96!().is_semicomplete());
+        assert!(!bang_jensen_96_usize().is_semicomplete());
     }
 
     #[test]
     fn is_semicomplete_bang_jensen_99() {
-        assert!(!bang_jensen_99!().is_semicomplete());
+        assert!(!bang_jensen_99().is_semicomplete());
     }
 
     #[test]
     fn is_semicomplete_kattis_bryr_1() {
-        assert!(kattis_bryr_1!().is_semicomplete());
+        assert!(kattis_bryr_1_usize().is_semicomplete());
     }
 
     #[test]
     fn is_semicomplete_kattis_bryr_2() {
-        assert!(!kattis_bryr_2!().is_semicomplete());
+        assert!(!kattis_bryr_2_usize().is_semicomplete());
     }
 
     #[test]
     fn is_semicomplete_kattis_bryr_3() {
-        assert!(!kattis_bryr_3!().is_semicomplete());
+        assert!(!kattis_bryr_3_usize().is_semicomplete());
     }
 
     #[test]
     fn is_semicomplete_kattis_crosscountry() {
-        assert!(kattis_crosscountry!().is_semicomplete());
+        assert!(kattis_crosscountry_usize().is_semicomplete());
     }
 
     #[test]
     fn is_semicomplete_kattis_shortestpath1() {
-        assert!(!kattis_shortestpath1!().is_semicomplete());
+        assert!(!kattis_shortestpath1_usize().is_semicomplete());
     }
 
     #[test]
     fn is_simple_bang_jensen_94_weighted() {
-        assert!(bang_jensen_94_weighted!().is_simple());
+        assert!(bang_jensen_94_weighted_usize().is_simple());
     }
 
     #[test]
     fn is_simple_bang_jensen_96() {
-        assert!(bang_jensen_96!().is_simple());
+        assert!(bang_jensen_96_usize().is_simple());
     }
 
     #[test]
     fn is_simple_bang_jensen_99() {
-        assert!(bang_jensen_99!().is_simple());
+        assert!(bang_jensen_99().is_simple());
     }
 
     #[test]
     fn is_simple_kattis_bryr_1() {
-        assert!(kattis_bryr_1!().is_simple());
+        assert!(kattis_bryr_1_usize().is_simple());
     }
 
     #[test]
     fn is_simple_kattis_bryr_2() {
-        assert!(kattis_bryr_2!().is_simple());
+        assert!(kattis_bryr_2_usize().is_simple());
     }
 
     #[test]
     fn is_simple_kattis_bryr_3() {
-        assert!(kattis_bryr_3!().is_simple());
+        assert!(kattis_bryr_3_usize().is_simple());
     }
 
     #[test]
     fn is_simple_kattis_crosscountry() {
-        assert!(kattis_crosscountry!().is_simple());
+        assert!(kattis_crosscountry_usize().is_simple());
     }
 
     #[test]
     fn is_simple_kattis_shortestpath1() {
-        assert!(kattis_shortestpath1!().is_simple());
+        assert!(kattis_shortestpath1_usize().is_simple());
     }
 
     #[test]
     fn is_symmetric_bang_jensen_94_weighted() {
-        assert!(!bang_jensen_94_weighted!().is_symmetric());
+        assert!(!bang_jensen_94_weighted_usize().is_symmetric());
     }
 
     #[test]
     fn is_symmetric_bang_jensen_96() {
-        assert!(!bang_jensen_96!().is_symmetric());
+        assert!(!bang_jensen_96_usize().is_symmetric());
     }
 
     #[test]
     fn is_symmetric_bang_jensen_99() {
-        assert!(!bang_jensen_99!().is_symmetric());
+        assert!(!bang_jensen_99().is_symmetric());
     }
 
     #[test]
     fn is_symmetric_kattis_bryr_1() {
-        assert!(kattis_bryr_1!().is_symmetric());
+        assert!(kattis_bryr_1_usize().is_symmetric());
     }
 
     #[test]
     fn is_symmetric_kattis_bryr_2() {
-        assert!(kattis_bryr_2!().is_symmetric());
+        assert!(kattis_bryr_2_usize().is_symmetric());
     }
 
     #[test]
     fn is_symmetric_kattis_bryr_3() {
-        assert!(!kattis_bryr_3!().is_symmetric());
+        assert!(!kattis_bryr_3_usize().is_symmetric());
     }
 
     #[test]
     fn is_symmetric_kattis_crosscountry() {
-        assert!(kattis_crosscountry!().is_symmetric());
+        assert!(kattis_crosscountry_usize().is_symmetric());
     }
 
     #[test]
     fn is_symmetric_kattis_shortestpath1() {
-        assert!(!kattis_shortestpath1!().is_symmetric());
+        assert!(!kattis_shortestpath1_usize().is_symmetric());
     }
 
     #[test]
     fn order_bang_jensen_94_weighted() {
-        assert!(bang_jensen_94_weighted!().order() == 7);
+        assert!(bang_jensen_94_weighted_usize().order() == 7);
     }
 
     #[test]
     fn order_bang_jensen_96() {
-        assert!(bang_jensen_96!().order() == 6);
+        assert!(bang_jensen_96_usize().order() == 6);
     }
 
     #[test]
     fn order_bang_jensen_99() {
-        assert!(bang_jensen_99!().order() == 6);
+        assert!(bang_jensen_99().order() == 6);
     }
 
     #[test]
     fn order_kattis_bryr_1() {
-        assert!(kattis_bryr_1!().order() == 3);
+        assert!(kattis_bryr_1_usize().order() == 3);
     }
 
     #[test]
     fn order_kattis_bryr_2() {
-        assert!(kattis_bryr_2!().order() == 6);
+        assert!(kattis_bryr_2_usize().order() == 6);
     }
 
     #[test]
     fn order_kattis_bryr_3() {
-        assert!(kattis_bryr_3!().order() == 10);
+        assert!(kattis_bryr_3_usize().order() == 10);
     }
 
     #[test]
     fn order_kattis_crosscountry() {
-        assert!(kattis_crosscountry!().order() == 4);
+        assert!(kattis_crosscountry_usize().order() == 4);
     }
 
     #[test]
     fn order_kattis_shortestpath1() {
-        assert!(kattis_shortestpath1!().order() == 4);
+        assert!(kattis_shortestpath1_usize().order() == 4);
     }
 
     #[test]
     fn out_neighbors_bang_jensen_94_weighted() {
-        let digraph = bang_jensen_94_weighted!();
+        let digraph = bang_jensen_94_weighted_usize();
 
         assert!(digraph.out_neighbors(0).eq([1, 2]));
         assert!(digraph.out_neighbors(1).eq([3]));
@@ -1670,7 +1677,7 @@ mod tests {
 
     #[test]
     fn out_neighbors_bang_jensen_96() {
-        let digraph = bang_jensen_96!();
+        let digraph = bang_jensen_96_usize();
 
         assert!(digraph.out_neighbors(0).eq([1, 2]));
         assert!(digraph.out_neighbors(1).eq([2, 3]));
@@ -1682,7 +1689,7 @@ mod tests {
 
     #[test]
     fn outdegree_bang_jensen_94_weighted() {
-        let digraph = bang_jensen_94_weighted!();
+        let digraph = bang_jensen_94_weighted_usize();
 
         assert!(digraph.outdegree(0) == 2);
         assert!(digraph.outdegree(1) == 1);
@@ -1695,7 +1702,7 @@ mod tests {
 
     #[test]
     fn outdegree_bang_jensen_96() {
-        let digraph = bang_jensen_96!();
+        let digraph = bang_jensen_96_usize();
 
         assert!(digraph.outdegree(0) == 2);
         assert!(digraph.outdegree(1) == 2);
@@ -1707,7 +1714,7 @@ mod tests {
 
     #[test]
     fn outdegree_bang_jensen_99() {
-        let digraph = bang_jensen_99!();
+        let digraph = bang_jensen_99();
 
         assert!(digraph.outdegree(0) == 2);
         assert!(digraph.outdegree(1) == 1);
@@ -1719,7 +1726,7 @@ mod tests {
 
     #[test]
     fn outdegree_kattis_bryr_1() {
-        let digraph = kattis_bryr_1!();
+        let digraph = kattis_bryr_1_usize();
 
         assert!(digraph.outdegree(0) == 2);
         assert!(digraph.outdegree(1) == 2);
@@ -1728,7 +1735,7 @@ mod tests {
 
     #[test]
     fn outdegree_kattis_bryr_2() {
-        let digraph = kattis_bryr_2!();
+        let digraph = kattis_bryr_2_usize();
 
         assert!(digraph.outdegree(0) == 2);
         assert!(digraph.outdegree(1) == 2);
@@ -1740,7 +1747,7 @@ mod tests {
 
     #[test]
     fn outdegree_kattis_bryr_3() {
-        let digraph = kattis_bryr_3!();
+        let digraph = kattis_bryr_3_usize();
 
         assert!(digraph.outdegree(0) == 1);
         assert!(digraph.outdegree(1) == 2);
@@ -1756,7 +1763,7 @@ mod tests {
 
     #[test]
     fn outdegree_kattis_crosscountry() {
-        let digraph = kattis_crosscountry!();
+        let digraph = kattis_crosscountry_usize();
 
         assert!(digraph.outdegree(0) == 3);
         assert!(digraph.outdegree(1) == 3);
@@ -1766,7 +1773,7 @@ mod tests {
 
     #[test]
     fn outdegree_kattis_shortestpath1() {
-        let digraph = kattis_shortestpath1!();
+        let digraph = kattis_shortestpath1_usize();
 
         assert!(digraph.outdegree(0) == 1);
         assert!(digraph.outdegree(1) == 1);
@@ -1776,7 +1783,7 @@ mod tests {
 
     #[test]
     fn remove_arc_bang_jensen_94_weighted() {
-        let mut digraph = bang_jensen_94_weighted!();
+        let mut digraph = bang_jensen_94_weighted_usize();
 
         assert!(digraph.remove_arc(0, 1));
         assert!(digraph.remove_arc(0, 2));
@@ -1803,7 +1810,7 @@ mod tests {
 
     #[test]
     fn remove_arc_bang_jensen_96() {
-        let mut digraph = bang_jensen_96!();
+        let mut digraph = bang_jensen_96_usize();
 
         assert!(digraph.remove_arc(0, 1));
         assert!(digraph.remove_arc(0, 2));
@@ -1834,7 +1841,7 @@ mod tests {
 
     #[test]
     fn remove_arc_bang_jensen_99() {
-        let mut digraph = bang_jensen_99!();
+        let mut digraph = bang_jensen_99();
 
         assert!(digraph.remove_arc(0, 1));
         assert!(digraph.remove_arc(0, 2));
@@ -1863,7 +1870,7 @@ mod tests {
 
     #[test]
     fn remove_arc_kattis_bryr_1() {
-        let mut digraph = kattis_bryr_1!();
+        let mut digraph = kattis_bryr_1_usize();
 
         assert!(digraph.remove_arc(0, 1));
         assert!(digraph.remove_arc(0, 2));
@@ -1885,7 +1892,7 @@ mod tests {
     #[test]
     #[allow(clippy::cognitive_complexity)]
     fn remove_arc_kattis_bryr_2() {
-        let mut digraph = kattis_bryr_2!();
+        let mut digraph = kattis_bryr_2_usize();
 
         assert!(digraph.remove_arc(0, 1));
         assert!(digraph.remove_arc(0, 3));
@@ -1919,7 +1926,7 @@ mod tests {
     #[test]
     #[allow(clippy::cognitive_complexity)]
     fn remove_arc_kattis_bryr_3() {
-        let mut digraph = kattis_bryr_3!();
+        let mut digraph = kattis_bryr_3_usize();
 
         assert!(digraph.remove_arc(0, 3));
         assert!(digraph.remove_arc(1, 7));
@@ -1979,7 +1986,7 @@ mod tests {
     #[test]
     #[allow(clippy::cognitive_complexity)]
     fn remove_arc_kattis_crosscountry() {
-        let mut digraph = kattis_crosscountry!();
+        let mut digraph = kattis_crosscountry_usize();
 
         assert!(digraph.remove_arc(0, 1));
         assert!(digraph.remove_arc(0, 2));
@@ -2012,7 +2019,7 @@ mod tests {
 
     #[test]
     fn remove_arc_kattis_shortestpath1() {
-        let mut digraph = kattis_shortestpath1!();
+        let mut digraph = kattis_shortestpath1_usize();
 
         assert!(digraph.remove_arc(0, 1));
         assert!(digraph.remove_arc(1, 2));
@@ -2027,41 +2034,41 @@ mod tests {
 
     #[test]
     fn size_bang_jensen_94_weighted() {
-        assert_eq!(bang_jensen_94_weighted!().size(), 9);
+        assert_eq!(bang_jensen_94_weighted_usize().size(), 9);
     }
 
     #[test]
     fn size_bang_jensen_96() {
-        assert_eq!(bang_jensen_96!().size(), 11);
+        assert_eq!(bang_jensen_96_usize().size(), 11);
     }
 
     #[test]
     fn size_bang_jensen_99() {
-        assert_eq!(bang_jensen_99!().size(), 10);
+        assert_eq!(bang_jensen_99().size(), 10);
     }
 
     #[test]
     fn size_kattis_bryr_1() {
-        assert_eq!(kattis_bryr_1!().size(), 6);
+        assert_eq!(kattis_bryr_1_usize().size(), 6);
     }
 
     #[test]
     fn size_kattis_bryr_2() {
-        assert_eq!(kattis_bryr_2!().size(), 12);
+        assert_eq!(kattis_bryr_2_usize().size(), 12);
     }
 
     #[test]
     fn size_kattis_bryr_3() {
-        assert_eq!(kattis_bryr_3!().size(), 25);
+        assert_eq!(kattis_bryr_3_usize().size(), 25);
     }
 
     #[test]
     fn size_kattis_crosscountry() {
-        assert_eq!(kattis_crosscountry!().size(), 12);
+        assert_eq!(kattis_crosscountry_usize().size(), 12);
     }
 
     #[test]
     fn size_kattis_shortestpath1() {
-        assert_eq!(kattis_shortestpath1!().size(), 3);
+        assert_eq!(kattis_shortestpath1_usize().size(), 3);
     }
 }

@@ -169,7 +169,16 @@ where
 mod tests {
     use crate::{
         adjacency_list_weighted::{
-            fixture,
+            fixture::{
+                bang_jensen_94_weighted_isize,
+                bang_jensen_96_isize,
+                bang_jensen_99,
+                kattis_bryr_1_isize,
+                kattis_bryr_2_isize,
+                kattis_bryr_3_isize,
+                kattis_crosscountry_isize,
+                kattis_shortestpath1_isize,
+            },
             Digraph,
         },
         gen::Empty,
@@ -179,7 +188,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn doctest() {
+    fn distances_doctest() {
         let mut digraph = Digraph::empty(4);
 
         digraph.add_arc_weighted(0, 2, -2);
@@ -209,15 +218,15 @@ mod tests {
     }
 
     #[test]
-    fn trivial() {
+    fn distances_trivial() {
         let dist = distances(&Digraph::<isize>::trivial());
 
         assert_eq!(dist[0][0], 0);
     }
 
     #[test]
-    fn bang_jensen_94_weighted() {
-        let dist = distances(&fixture::bang_jensen_94_weighted!());
+    fn distances_bang_jensen_94_weighted() {
+        let dist = distances(&bang_jensen_94_weighted_isize());
 
         assert_eq!(dist[0][0], 0);
         assert_eq!(dist[0][1], 1);
@@ -229,8 +238,8 @@ mod tests {
     }
 
     #[test]
-    fn bang_jensen_96() {
-        let dist = distances(&fixture::bang_jensen_96!());
+    fn distances_bang_jensen_96() {
+        let dist = distances(&bang_jensen_96_isize());
 
         assert_eq!(dist[0][0], 0);
         assert_eq!(dist[0][1], 5);
@@ -241,8 +250,8 @@ mod tests {
     }
 
     #[test]
-    fn bang_jensen_99() {
-        let dist = distances(&fixture::bang_jensen_99!());
+    fn distances_bang_jensen_99() {
+        let dist = distances(&bang_jensen_99());
 
         assert_eq!(dist[0][0], 0);
         assert_eq!(dist[0][1], 8);
@@ -253,8 +262,8 @@ mod tests {
     }
 
     #[test]
-    fn kattis_bryr_1() {
-        let dist = distances(&fixture::kattis_bryr_1!());
+    fn distances_kattis_bryr_1() {
+        let dist = distances(&kattis_bryr_1_isize());
 
         assert_eq!(dist[0][0], 0);
         assert_eq!(dist[0][1], 1);
@@ -262,8 +271,8 @@ mod tests {
     }
 
     #[test]
-    fn kattis_bryr_2() {
-        let dist = distances(&fixture::kattis_bryr_2!());
+    fn distances_kattis_bryr_2() {
+        let dist = distances(&kattis_bryr_2_isize());
 
         assert_eq!(dist[0][0], 0);
         assert_eq!(dist[0][1], 1);
@@ -274,8 +283,8 @@ mod tests {
     }
 
     #[test]
-    fn kattis_bryr_3() {
-        let dist = distances(&fixture::kattis_bryr_3!());
+    fn distances_kattis_bryr_3() {
+        let dist = distances(&kattis_bryr_3_isize());
 
         assert_eq!(dist[0][0], 0);
         assert_eq!(dist[0][1], 0);
@@ -290,8 +299,8 @@ mod tests {
     }
 
     #[test]
-    fn kattis_crosscountry() {
-        let dist = distances(&fixture::kattis_crosscountry!());
+    fn distances_kattis_crosscountry() {
+        let dist = distances(&kattis_crosscountry_isize());
 
         assert_eq!(dist[0][0], 0);
         assert_eq!(dist[0][1], 1);
@@ -300,8 +309,8 @@ mod tests {
     }
 
     #[test]
-    fn kattis_shortestpath1() {
-        let dist = distances(&fixture::kattis_shortestpath1!());
+    fn distances_kattis_shortestpath1() {
+        let dist = distances(&kattis_shortestpath1_isize());
 
         assert_eq!(dist[0][0], 0);
         assert_eq!(dist[0][1], 2);

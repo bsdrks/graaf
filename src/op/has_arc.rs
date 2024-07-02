@@ -104,6 +104,6 @@ pub trait HasArc {
     ///
     /// # Panics
     ///
-    /// Implementations may not panic if `s` or `t` are not in the digraph.
+    /// Panics if `s` or `t` are out of bounds.
     fn has_arc(&self, s: usize, t: usize) -> bool;
 }

@@ -361,10 +361,10 @@ mod tests {
         super::*,
         crate::{
             adjacency_list_weighted::fixture::{
-                kattis_bryr_1,
-                kattis_bryr_2,
-                kattis_bryr_3,
-                kattis_crosscountry,
+                kattis_bryr_1_isize,
+                kattis_bryr_2_isize,
+                kattis_bryr_3_isize,
+                kattis_crosscountry_isize,
             },
             algo::floyd_warshall::distances,
         },
@@ -438,77 +438,77 @@ mod tests {
 
     #[test]
     fn center_kattis_bryr_1() {
-        let dist = distances(&kattis_bryr_1!());
+        let dist = distances(&kattis_bryr_1_isize());
 
         assert!(dist.center().iter().eq(&[0, 1, 2]));
     }
 
     #[test]
     fn center_kattis_bryr_2() {
-        let dist = distances(&kattis_bryr_2!());
+        let dist = distances(&kattis_bryr_2_isize());
 
         assert!(dist.center().iter().eq(&[3]));
     }
 
     #[test]
     fn center_kattis_bryr_3() {
-        let dist = distances(&kattis_bryr_3!());
+        let dist = distances(&kattis_bryr_3_isize());
 
         assert!(dist.center().iter().eq(&[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
     }
 
     #[test]
     fn center_kattis_crosscountry() {
-        let dist = distances(&kattis_crosscountry!());
+        let dist = distances(&kattis_crosscountry_isize());
 
         assert!(dist.center().iter().eq(&[3]));
     }
 
     #[test]
     fn diameter_kattis_bryr_1() {
-        let dist = distances(&kattis_bryr_1!());
+        let dist = distances(&kattis_bryr_1_isize());
 
         assert_eq!(dist.diameter(), 1);
     }
 
     #[test]
     fn diameter_kattis_bryr_2() {
-        let dist = distances(&kattis_bryr_2!());
+        let dist = distances(&kattis_bryr_2_isize());
 
         assert_eq!(dist.diameter(), 4);
     }
 
     #[test]
     fn diameter_kattis_bryr_3() {
-        let dist = distances(&kattis_bryr_3!());
+        let dist = distances(&kattis_bryr_3_isize());
 
         assert_eq!(dist.diameter(), 1);
     }
 
     #[test]
     fn diameter_kattis_crosscountry() {
-        let dist = distances(&kattis_crosscountry!());
+        let dist = distances(&kattis_crosscountry_isize());
 
         assert_eq!(dist.diameter(), 11);
     }
 
     #[test]
     fn eccentricities_kattis_bryr_1() {
-        let dist = distances(&kattis_bryr_1!());
+        let dist = distances(&kattis_bryr_1_isize());
 
         assert!(dist.eccentricities().iter().eq(&[1, 1, 1]));
     }
 
     #[test]
     fn eccentricities_kattis_bryr_2() {
-        let dist = distances(&kattis_bryr_2!());
+        let dist = distances(&kattis_bryr_2_isize());
 
         assert!(dist.eccentricities().iter().eq(&[3, 4, 3, 2, 3, 4]));
     }
 
     #[test]
     fn eccentricities_kattis_bryr_3() {
-        let dist = distances(&kattis_bryr_3!());
+        let dist = distances(&kattis_bryr_3_isize());
 
         assert!(dist
             .eccentricities()
@@ -518,14 +518,14 @@ mod tests {
 
     #[test]
     fn eccentricities_kattis_crosscountry() {
-        let dist = distances(&kattis_crosscountry!());
+        let dist = distances(&kattis_crosscountry_isize());
 
         assert!(dist.eccentricities().iter().eq(&[10, 11, 7, 6]));
     }
 
     #[test]
     fn is_connected_kattis_bryr_1() {
-        let digraph = kattis_bryr_1!();
+        let digraph = kattis_bryr_1_isize();
         let dist = distances(&digraph);
 
         assert!(dist.is_connected());
@@ -533,7 +533,7 @@ mod tests {
 
     #[test]
     fn is_connected_kattis_bryr_2() {
-        let digraph = kattis_bryr_2!();
+        let digraph = kattis_bryr_2_isize();
         let dist = distances(&digraph);
 
         assert!(dist.is_connected());
@@ -541,7 +541,7 @@ mod tests {
 
     #[test]
     fn is_connected_kattis_bryr_3() {
-        let digraph = kattis_bryr_3!();
+        let digraph = kattis_bryr_3_isize();
         let dist = distances(&digraph);
 
         assert!(dist.is_connected());
@@ -549,7 +549,7 @@ mod tests {
 
     #[test]
     fn is_connected_kattis_crosscountry() {
-        let digraph = kattis_crosscountry!();
+        let digraph = kattis_crosscountry_isize();
         let dist = distances(&digraph);
 
         assert!(dist.is_connected());
