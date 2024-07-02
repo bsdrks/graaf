@@ -243,8 +243,8 @@ weighted digraph.
 
 ### Breadth-First Tree
 
-A [`BreadthFirstTree`](https://docs.rs/graaf/latest/graaf/algo/breadth_first_tree/struct.BreadthFirstTree.html)
-contains the predecessors of the vertices in a breadth-first search.
+A [`BreadthFirstTree`] contains the predecessors of the vertices in a
+breadth-first search.
 
 - [`search`](https://docs.rs/graaf/latest/graaf/algo/breadth_first_tree/struct.BreadthFirstTree.html#method.search)
   returns the path to a target vertex.
@@ -261,8 +261,8 @@ These functions produce a
 
 ### Distance Matrix
 
-A [`DistanceMatrix`](algo::distance_matrix::DistanceMatrix) contains the
-shortest distances between all pairs of vertices in a digraph.
+A [`DistanceMatrix`] contains the shortest distances between all pairs of
+vertices in a digraph.
 
 - [`center`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.center)
   finds the center of the digraph.
@@ -273,6 +273,8 @@ shortest distances between all pairs of vertices in a digraph.
 - [`is_connected`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.is_connected)
   checks if the digraph is connected.
 
+[`DistanceMatrix`]: https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html
+[`BreadthFirstTree`]: https://docs.rs/graaf/latest/graaf/algo/breadth_first_tree/struct.BreadthFirstTree.html
 [Adjacency List]: https://docs.rs/graaf/latest/graaf/adjacency_list/digraph/struct.Digraph.html
 [Adjacency Matrix]: https://docs.rs/graaf/latest/graaf/adjacency_matrix/digraph/struct.Digraph.html
 [Weighted Adjacency List]: https://docs.rs/graaf/latest/graaf/adjacency_list_weighted/digraph/struct.Digraph.html
