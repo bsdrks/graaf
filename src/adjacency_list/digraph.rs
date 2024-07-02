@@ -149,6 +149,7 @@ impl OutNeighbors for Digraph {
         self.arcs[s].iter().copied()
     }
 }
+
 impl OutNeighborsWeighted<usize> for Digraph {
     /// # Panics
     ///

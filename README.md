@@ -33,7 +33,7 @@ These types eagerly implement [digraph operations](#operations) and
 
 Graaf provides four digraph generators.
 
-- [`Complete`](gen::Complete) generates a digraph with all possible arcs,
+- [Complete] generates a digraph with all possible arcs,
   excluding self-loops.
 - [`Cycle`](gen::Cycle) generates a digraph with a cycle of a given length.
 - [`Empty`](gen::Empty) generates a digraph with no arcs.
@@ -43,7 +43,7 @@ Graaf provides four digraph generators.
 
 | Generator                                   | [Adjacency List] | [Adjacency Matrix] | [Weighted Adjacency List] |
 | :------------------------------------------ | :--------------- | :------------------ | :----------------------- |
-| [`Complete`](gen::Complete)                 | Yes              | Yes                 | No                       |
+| [Complete]                 | Yes              | Yes                 | No                       |
 | [`Cycle`](gen::Cycle)                       | Yes              | Yes                 | No                       |
 | [`Empty`](gen::Empty)                       | Yes              | Yes                 | Yes                      |
 | [`RandomTournament`](gen::RandomTournament) | Yes              | Yes                 | No                       |
@@ -271,9 +271,10 @@ shortest distances between all pairs of vertices in a digraph.
 - [`is_connected`](algo::distance_matrix::DistanceMatrix::is_connected)
   checks if the digraph is connected.
 
-[Adjacency List]: `adjacency_list::Digraph`
-[Adjacency Matrix]: `adjacency_matrix::Digraph`
-[Weighted Adjacency List]: `adjacency_list_weighted::Digraph`
+[Adjacency List]: https://docs.rs/graaf/latest/graaf/adjacency_list/digraph/struct.Digraph.html
+[Adjacency Matrix]: https://docs.rs/graaf/latest/graaf/adjacency_matrix/digraph/struct.Digraph.html
+[Complete]: https://docs.rs/graaf/latest/graaf/gen/complete/trait.Complete.html
+[Weighted Adjacency List]: https://docs.rs/graaf/latest/graaf/adjacency_list_weighted/digraph/struct.Digraph.html
 
 ## Project goals
 
