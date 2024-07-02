@@ -161,14 +161,12 @@ impl From<Vec<BTreeSet<usize>>> for Digraph {
 }
 
 impl HasArc for Digraph {
-    /// # Panics
-    ///
-    /// Panics if `s` or `t` is out of bounds.
     fn has_arc(&self, s: usize, t: usize) -> bool {
         let v = self.order;
 
-        assert!(s < v, "s = {s} is out of bounds.");
-        assert!(t < v, "t = {t} is out of bounds.");
+        if s >= v || t >= v {
+            return false;
+        }
 
         let i = self.index(s, t);
 
@@ -767,6 +765,16 @@ mod tests {
 
             for s in digraph.vertices() {
                 assert_eq!(digraph.outdegree(s), 0);
+            }
+        }
+
+        #[test]
+        fn has_arc_out_of_bounds(v in 1..100_usize) {
+            let digraph = Digraph::empty(v);
+
+            for s in 0..v {
+                assert!(!digraph.has_arc(s, v));
+                assert!(!digraph.has_arc(v, s));
             }
         }
 

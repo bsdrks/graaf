@@ -127,7 +127,7 @@ impl<W> From<Vec<BTreeMap<usize, W>>> for Digraph<W> {
 
 impl<W> HasArc for Digraph<W> {
     fn has_arc(&self, s: usize, t: usize) -> bool {
-        self.arcs[s].contains_key(&t)
+        self.arcs.get(s).map_or(false, |set| set.contains_key(&t))
     }
 }
 
@@ -454,6 +454,16 @@ mod tests {
 
             for u in digraph.vertices() {
                 assert_eq!(digraph.outdegree(u), 0);
+            }
+        }
+
+        #[test]
+        fn has_arc_out_of_bounds(v in 1..100_usize) {
+            let digraph = Digraph::<isize>::empty(v);
+
+            for s in 0..v {
+                assert!(!digraph.has_arc(s, v));
+                assert!(!digraph.has_arc(v, s));
             }
         }
     }
