@@ -39,8 +39,6 @@ The [`gen`] module provides four digraph generators.
 - [`Empty`] generates a digraph with no arcs.
 - [`RandomTournament`] generates a random tournament.
 
-### Implementations
-
 | Generator            | [Adjacency List] | [Adjacency Matrix] | [Weighted Adjacency List] |
 | :------------------- | :--------------- | :------------------ | :----------------------- |
 | [`Complete`]         | Yes              | Yes                 | No                       |
@@ -59,85 +57,78 @@ custom digraph types. Operations form the foundation for
 
 [Individual digraph types](#digraph-types) implement the basic operations.
 
-- [`AddArcWeighted`](op::AddArcWeighted) adds an arc to a weighted digraph.
-- [`AddArc`](op::AddArc) adds an arc to an unweighted digraph.
-- [`ArcWeight`](op::ArcWeight) gets the weight of an arc.
-- [`ArcsWeighted`](op::ArcsWeighted) gets the arcs and their weights in a
-  digraph.
-- [`Arcs`](op::Arcs) gets the arcs in a digraph.
-- [`Converse`](op::Converse) gets the converse of a digraph.
-- [`HasArc`](op::HasArc) checks if an arc exists in a digraph.
-- [`Indegree`](op::Indegree) gets the indegree of a vertex.
-- [`IsSimple`](op::IsSimple) checks if a digraph contains no loops or
-  parallel arcs.
-- [`Order`](op::Order) gets the number of vertices.
-- [`OutNeighborsWeighted`](op::OutNeighborsWeighted) gets the weighted
-  out-neighbors of a vertex.
-- [`OutNeighbors`](op::OutNeighbors) gets the out-neighbors of a vertex.
-- [`Outdegree`](op::Outdegree) gets the outdegree of a vertex.
-- [`RemoveArc`](op::RemoveArc) removes an arc from a digraph.
-- [`Size`](op::Size) gets the number of arcs in a digraph.
-- [`Vertices`](op::Vertices) gets the vertices in a digraph.
+- [`AddArcWeighted`] adds an arc to a weighted digraph.
+- [`AddArc`] adds an arc to an unweighted digraph.
+- [`ArcWeight`] gets the weight of an arc.
+- [`ArcsWeighted`] gets the arcs and their weights in a digraph.
+- [`Arcs`] gets the arcs in a digraph.
+- [`Converse`] gets the converse of a digraph.
+- [`HasArc`] checks if an arc exists in a digraph.
+- [`Indegree`] gets the indegree of a vertex.
+- [`IsSimple`] checks if a digraph contains no loops or parallel arcs.
+- [`Order`] gets the number of vertices.
+- [`OutNeighborsWeighted`] gets the weighted out-neighbors of a vertex.
+- [`OutNeighbors`] gets the out-neighbors of a vertex.
+- [`Outdegree`] gets the outdegree of a vertex.
+- [`RemoveArc`] removes an arc from a digraph.
+- [`Size`] gets the number of arcs in a digraph.
+- [`Vertices`] gets the vertices in a digraph.
 
-Implementations
-
-| Operation                                          | [Adjacency List] | [Adjacency Matrix] | [Weighted Adjacency List] |
-| :------------------------------------------------- | :--------------- | :----------------- | :------------------------ |
-| [`AddArcWeighted`](op::AddArcWeighted)             | No               | No                 | Yes                       |
-| [`AddArc`](op::AddArc)                             | Yes              | Yes                | No                        |
-| [`ArcWeight`](op::ArcWeight)                       | Yes              | Yes                | Yes                       |
-| [`ArcsWeighted`](op::ArcsWeighted)                 | Yes              | Yes                | Yes                       |
-| [`Arcs`](op::Arcs)                                 | Yes              | Yes                | Yes                       |
-| [`Converse`](op::Converse)                         | Yes              | Yes                | Yes                       |
-| [`HasArc`](op::HasArc)                             | Yes              | Yes                | Yes                       |
-| [`Indegree`](op::Indegree)                         | Yes              | Yes                | Yes                       |
-| [`IsSimple`](op::IsSimple)                         | Yes              | Yes                | Yes                       |
-| [`Order`](op::Order)                               | Yes              | Yes                | Yes                       |
-| [`OutNeighborsWeighted`](op::OutNeighborsWeighted) | Yes              | Yes                | Yes                       |
-| [`OutNeighbors`](op::OutNeighbors)                 | Yes              | Yes                | Yes                       |
-| [`Outdegree`](op::Outdegree)                       | Yes              | Yes                | Yes                       |
-| [`RemoveArc`](op::RemoveArc)                       | Yes              | Yes                | Yes                       |
-| [`Size`](op::Size)                                 | Yes              | Yes                | Yes                       |
-| [`Vertices`](op::Vertices)                         | Yes              | Yes                | Yes                       |
+| Operation                | [Adjacency List] | [Adjacency Matrix] | [Weighted Adjacency List] |
+| :----------------------- | :--------------- | :----------------- | :------------------------ |
+| [`AddArcWeighted`]       | No               | No                 | Yes                       |
+| [`AddArc`]               | Yes              | Yes                | No                        |
+| [`ArcWeight`]            | Yes              | Yes                | Yes                       |
+| [`ArcsWeighted`]         | Yes              | Yes                | Yes                       |
+| [`Arcs`]                 | Yes              | Yes                | Yes                       |
+| [`Converse`]             | Yes              | Yes                | Yes                       |
+| [`HasArc`]               | Yes              | Yes                | Yes                       |
+| [`Indegree`]             | Yes              | Yes                | Yes                       |
+| [`IsSimple`]             | Yes              | Yes                | Yes                       |
+| [`Order`]                | Yes              | Yes                | Yes                       |
+| [`OutNeighborsWeighted`] | Yes              | Yes                | Yes                       |
+| [`OutNeighbors`]         | Yes              | Yes                | Yes                       |
+| [`Outdegree`]            | Yes              | Yes                | Yes                       |
+| [`RemoveArc`]            | Yes              | Yes                | Yes                       |
+| [`Size`]                 | Yes              | Yes                | Yes                       |
+| [`Vertices`]             | Yes              | Yes                | Yes                       |
 
 ### Extended operations
 
 The extended traits derive their implementation from the basic
 operations.
 
-- [`Degree`](op::Degree) gets the degree of a vertex. Requires
+- [`Degree`](op::Degree) gets the degree of a vertex; requires
   [`Indegree`](op::Indegree) `+` [`Outdegree`](op::Outdegree).
-- [`HasEdge`](op::HasEdge) checks if an edge exists in a digraph. Requires
+- [`HasEdge`](op::HasEdge) checks if an edge exists in a digraph; requires
   [`HasArc`](op::HasArc).
-- [`InNeighbors`](op::InNeighbors) gets the in-neighbors of a vertex.
-  Requires [`Arcs`](op::Arcs).
-- [`IsBalanced`](op::IsBalanced) checks if a digraph is balanced. Requires
+- [`InNeighbors`](op::InNeighbors) gets the in-neighbors of a vertex; requires
+  [`Arcs`](op::Arcs).
+- [`IsBalanced`](op::IsBalanced) checks if a digraph is balanced; requires
   [`Indegree`](op::Indegree) `+` [`Outdegree`](op::Outdegree).
-- [`IsComplete`](op::IsComplete) checks if a digraph is complete. Requires
+- [`IsComplete`](op::IsComplete) checks if a digraph is complete; requires
   [`HasEdge`](op::HasEdge) `+` [`Order`](op::Order).
-- [`IsIsolated`](op::IsIsolated) checks if a vertex is isolated. Requires
+- [`IsIsolated`](op::IsIsolated) checks if a vertex is isolated; requires
   [`Indegree`](op::Indegree) `+` [`Outdegree`](op::Outdegree).
-- [`IsOriented`](op::IsOriented) checks if a digraph is oriented. Requires
+- [`IsOriented`](op::IsOriented) checks if a digraph is oriented; requires
   [`Arcs`](op::Arcs) `+` [`HasArc`](op::HasArc).
-- [`IsPendant`](op::IsPendant) checks if a vertex is a pendant. Requires
+- [`IsPendant`](op::IsPendant) checks if a vertex is a pendant; requires
   [`Degree`](op::Degree).
-- [`IsRegular`](op::IsRegular) checks if a digraph is regular. Requires
+- [`IsRegular`](op::IsRegular) checks if a digraph is regular; requires
   [`Indegree`](op::Indegree) `+` [`Outdegree`](op::Outdegree) `+`
   [`Vertices`](op::Vertices).
 - [`IsSemicomplete`](op::IsSemicomplete) checks if a digraph is
-  semicomplete. Requires [`HasArc`](op::HasArc) `+` [`Order`](op::Order).
+  semicomplete; requires [`HasArc`](op::HasArc) `+` [`Order`](op::Order).
 - [`IsSubdigraph`](op::IsSubdigraph) checks if a digraph is a subdigraph of
-  another digraph. Requires [`Arcs`](op::Arcs) `+` [`HasArc`](op::HasArc)
+  another digraph; requires [`Arcs`](op::Arcs) `+` [`HasArc`](op::HasArc)
   `+` [`Vertices`](op::Vertices).
 - [`IsSuperdigraph`](op::IsSuperdigraph) checks if a digraph is a
-  superdigraph of another digraph. Requires
+  superdigraph of another digraph; requires
   [`Subdigraph`](op::IsSubdigraph).
-- [`IsSymmetric`](op::IsSymmetric) checks if a digraph is symmetric.
-  Requires [`Arcs`](op::Arcs) `+` [`HasArc`](op::HasArc).
+- [`IsSymmetric`](op::IsSymmetric) checks if a digraph is symmetric; requires
+  [`Arcs`](op::Arcs) `+` [`HasArc`](op::HasArc).
 - [`IsWalk`](op::IsWalk) checks if a sequence of vertices is a walk in a
-  digraph. Requires [`Arcs`](op::Arcs).
-
-Implementations
+  digraph; requires [`Arcs`](op::Arcs).
 
 | Operation                              | [Adjacency List] | [Adjacency Matrix] | [Weighted Adjacency List] |
 | :------------------------------------- | :--------------- | :----------------- | :------------------------ |
@@ -274,10 +265,26 @@ shortest distances between all pairs of vertices in a digraph.
 [Adjacency List]: https://docs.rs/graaf/latest/graaf/adjacency_list/digraph/struct.Digraph.html
 [Adjacency Matrix]: https://docs.rs/graaf/latest/graaf/adjacency_matrix/digraph/struct.Digraph.html
 [Weighted Adjacency List]: https://docs.rs/graaf/latest/graaf/adjacency_list_weighted/digraph/struct.Digraph.html
+[`AddArcWeighted`]: https://docs.rs/graaf/latest/graaf/op/add_arc_weighted/trait.AddArcWeighted.html
+[`AddArc`]: https://docs.rs/graaf/latest/graaf/op/add_arc/trait.AddArc.html
+[`ArcWeight`]: https://docs.rs/graaf/latest/graaf/op/arc_weight/trait.ArcWeight.html
+[`ArcsWeighted`]: https://docs.rs/graaf/latest/graaf/op/arcs_weighted/trait.ArcsWeighted.html
+[`Arcs`]: https://docs.rs/graaf/latest/graaf/op/arcs/trait.Arcs.html
 [`Complete`]: https://docs.rs/graaf/latest/graaf/gen/complete/trait.Complete.html
+[`Converse`]: https://docs.rs/graaf/latest/graaf/op/converse/trait.Converse.html
 [`Cycle`]: https://docs.rs/graaf/latest/graaf/gen/cycle/trait.Cycle.html
 [`Empty`]: https://docs.rs/graaf/latest/graaf/gen/empty/trait.Empty.html
+[`HasArc`]: https://docs.rs/graaf/latest/graaf/op/has_arc/trait.HasArc.html
+[`Indegree`]: https://docs.rs/graaf/latest/graaf/op/indegree/trait.Indegree.html
+[`IsSimple`]: https://docs.rs/graaf/latest/graaf/op/is_simple/trait.IsSimple.html
+[`Order`]: https://docs.rs/graaf/latest/graaf/op/order/trait.Order.html
+[`OutNeighborsWeighted`]: https://docs.rs/graaf/latest/graaf/op/out_neighbors_weighted/trait.OutNeighborsWeighted.html
+[`OutNeighbors`]: https://docs.rs/graaf/latest/graaf/op/out_neighbors/trait.OutNeighbors.html
+[`Outdegree`]: https://docs.rs/graaf/latest/graaf/op/outdegree/trait.Outdegree.html
 [`RandomTournament`]: https://docs.rs/graaf/latest/graaf/gen/random_tournament/trait.RandomTournament.html
+[`RemoveArc`]: https://docs.rs/graaf/latest/graaf/op/remove_arc/trait.RemoveArc.html
+[`Size`]: https://docs.rs/graaf/latest/graaf/op/size/trait.Size.html
+[`Vertices`]: https://docs.rs/graaf/latest/graaf/op/vertices/trait.Vertices.html
 [`algo`]: https://docs.rs/graaf/latest/graaf/algo/index.html
 [`gen`]: https://docs.rs/graaf/latest/graaf/gen/index.html
 [`op`]: https://docs.rs/graaf/latest/graaf/op/index.html

@@ -39,8 +39,6 @@
 //! - [`Empty`](gen::Empty) generates a digraph with no arcs.
 //! - [`RandomTournament`](gen::RandomTournament) generates a random tournament.
 //!
-//! Implementations
-//!
 //! | Generator                                   | [Adjacency List] | [Adjacency Matrix] | [Weighted Adjacency List] |
 //! | :------------------------------------------ | :--------------- | :------------------ | :----------------------- |
 //! | [`Complete`](gen::Complete)                 | Yes              | Yes                 | No                       |
@@ -78,8 +76,6 @@
 //! - [`RemoveArc`](op::RemoveArc) removes an arc from a digraph.
 //! - [`Size`](op::Size) gets the number of arcs in a digraph.
 //! - [`Vertices`](op::Vertices) gets the vertices in a digraph.
-//!
-//! Implementations
 //!
 //! | Operation                                          | [Adjacency List] | [Adjacency Matrix] | [Weighted Adjacency List] |
 //! | :------------------------------------------------- | :--------------- | :----------------- | :------------------------ |
@@ -136,8 +132,6 @@
 //!   Requires [`Arcs`](op::Arcs) `+` [`HasArc`](op::HasArc).
 //! - [`IsWalk`](op::IsWalk) checks if a sequence of vertices is a walk in a
 //!   digraph. Requires [`Arcs`](op::Arcs).
-//!
-//! Implementations
 //!
 //! | Operation                              | [Adjacency List] | [Adjacency Matrix] | [Weighted Adjacency List] |
 //! | :------------------------------------- | :--------------- | :----------------- | :------------------------ |
