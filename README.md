@@ -4,6 +4,7 @@ Work with directed graphs in Rust.
 
 ## Table of Contents
 
+- [Installation](#installation)
 - [Digraph Types](#digraph-types)
 - [Creating Digraphs](#creating-digraphs)
 - [Operations](#operations)
@@ -17,6 +18,15 @@ Work with directed graphs in Rust.
   - [Floyd-Warshall algorithm](#floyd-warshall)
   - [Breath-first tree](#breadth-first-tree)
   - [Distance matrix](#distance-matrix)
+
+## Installation
+
+Add the following to your `Cargo.toml`:
+
+```toml
+[dependencies]
+graaf = "0.64.1"
+```
 
 ## Digraph Types
 
@@ -317,15 +327,6 @@ shortest distances between all pairs of vertices in a digraph.
 - Full documentation
 - Extensive property tests
 - Complete unit test and benchmark coverage
-
-## Installation
-
-Add the following to your `Cargo.toml`:
-
-```toml
-[dependencies]
-graaf = "0.64.1"
-```
 
 ## Changelog
 
