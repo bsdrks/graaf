@@ -8,17 +8,17 @@ Work with directed graphs in Rust.
 - [Digraph Types](#digraph-types)
 - [Creating Digraphs](#creating-digraphs)
 - [Operations](#operations)
-  - [Basic operations](#basic-operations)
-  - [Extended operations](#extended-operations)
+  - [Basic Operations](#basic-operations)
+  - [Extended Operations](#extended-operations)
 - [Algorithms](#algorithms)
   - [Bellman-Ford-Moore](#bellman-ford-moore)
-  - [Breadth-first search (BFS)](#breadth-first-search-bfs)
-  - [Depth-first search (DFS)](#depth-first-search-dfs)
-  - [Dijkstra's algorithm](#dijkstras-algorithm)
-  - [Floyd-Warshall algorithm](#floyd-warshall)
-  - [Breath-first tree](#breadth-first-tree)
-  - [Distance matrix](#distance-matrix)
-- [Project goals](#project-goals)
+  - [Breadth-First Search (BFS)](#breadth-first-search-bfs)
+  - [Depth-First Search (DFS)](#depth-first-search-dfs)
+  - [Dijkstra's Algorithm](#dijkstras-algorithm)
+  - [Floyd-Warshall Algorithm](#floyd-warshall)
+  - [Breath-First Tree](#breadth-first-tree)
+  - [Distance Matrix](#distance-matrix)
+- [Project Goals](#project-goals)
 - [Changelog](#changelog)
 - [License](#license)
 
@@ -68,7 +68,7 @@ types](#digraph-types) implement these traits. One can implement these traits fo
 custom digraph types. Operations form the foundation for
 [algorithms](#algorithms).
 
-### Basic operations
+### Basic Operations
 
 [Individual digraph types](#digraph-types) implement the basic operations.
 
@@ -110,7 +110,7 @@ custom digraph types. Operations form the foundation for
 | [`Size`]                 | Yes              | Yes                | Yes                       |
 | [`Vertices`]             | Yes              | Yes                | Yes                       |
 
-### Extended operations
+### Extended Operations
 
 The extended traits derive their implementation from the basic
 operations.
@@ -172,7 +172,7 @@ from one source vertex in a weighted digraph with negative weights.
 - [`single_source_distances`](algo::bellman_ford_moore::single_source_distances)
   finds the shortest distances from a source vertex to all other vertices.
 
-### Breadth-first search (BFS)
+### Breadth-First Search (BFS)
 
 [`bfs`](algo::bfs) explores the vertices of an unweighted digraph in order
 of their distance from a source.
@@ -197,7 +197,7 @@ These algorithms start from one source vertex.
 - [`single_pair_shortest_path`](algo::bfs::single_pair_shortest_path) finds
   the shortest path between two vertices.
 
-### Depth-first search (DFS)
+### Depth-First Search (DFS)
 
 [`dfs`](algo::dfs) explores the vertices of an unweighted digraph in order
 of their depth from a source.
@@ -210,7 +210,7 @@ of their depth from a source.
 - [`acyclic_ordering`](algo::dfs::acyclic_ordering) generates an acyclic
   ordering of the vertices.
 
-### Dijkstra's algorithm
+### Dijkstra's Algorithm
 
 [`dijkstra`](algo::dijkstra) finds the shortest paths from one or more
 source vertices in a weighted digraph.
@@ -243,7 +243,7 @@ between all pairs of vertices in a weighted digraph.
 - [`distances`](algo::floyd_warshall::distances) finds the shortest
   distances between all pairs of vertices.
 
-### Breadth-first tree
+### Breadth-First Tree
 
 A [`BreadthFirstTree`](algo::breadth_first_tree::BreadthFirstTree) tree
 contains the predecessors of the vertices in a breadth-first search.
@@ -261,7 +261,7 @@ These functions produce a
 - [`dijkstra::single_source_predecessors`](algo::dijkstra::single_source_predecessors)
 - [`dijkstra::predecessors`](algo::dijkstra::predecessors)
 
-### Distance matrix
+### Distance Matrix
 
 A [`DistanceMatrix`](algo::distance_matrix::DistanceMatrix) contains the
 shortest distances between all pairs of vertices in a digraph.
