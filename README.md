@@ -18,6 +18,9 @@ Work with directed graphs in Rust.
   - [Floyd-Warshall algorithm](#floyd-warshall)
   - [Breath-first tree](#breadth-first-tree)
   - [Distance matrix](#distance-matrix)
+- [Project goals](#project-goals)
+- [Changelog](#changelog)
+- [License](#license)
 
 ## Installation
 
