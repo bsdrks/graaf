@@ -39,6 +39,8 @@ The [`gen`] module provides four digraph generators.
 - [`Empty`] generates a digraph with no arcs.
 - [`RandomTournament`] generates a random tournament.
 
+---
+
 | Generator            | [Adjacency List] | [Adjacency Matrix] | [Weighted Adjacency List] |
 | :------------------- | :--------------- | :------------------ | :----------------------- |
 | [`Complete`]         | Yes              | Yes                 | No                       |
@@ -74,6 +76,8 @@ custom digraph types. Operations form the foundation for
 - [`Size`] gets the number of arcs in a digraph.
 - [`Vertices`] gets the vertices in a digraph.
 
+---
+
 | Operation                | [Adjacency List] | [Adjacency Matrix] | [Weighted Adjacency List] |
 | :----------------------- | :--------------- | :----------------- | :------------------------ |
 | [`AddArcWeighted`]       | No               | No                 | Yes                       |
@@ -98,54 +102,50 @@ custom digraph types. Operations form the foundation for
 The extended traits derive their implementation from the basic
 operations.
 
-- [`Degree`](op::Degree) gets the degree of a vertex; requires
-  [`Indegree`](op::Indegree) `+` [`Outdegree`](op::Outdegree).
-- [`HasEdge`](op::HasEdge) checks if an edge exists in a digraph; requires
-  [`HasArc`](op::HasArc).
-- [`InNeighbors`](op::InNeighbors) gets the in-neighbors of a vertex; requires
-  [`Arcs`](op::Arcs).
-- [`IsBalanced`](op::IsBalanced) checks if a digraph is balanced; requires
-  [`Indegree`](op::Indegree) `+` [`Outdegree`](op::Outdegree).
-- [`IsComplete`](op::IsComplete) checks if a digraph is complete; requires
-  [`HasEdge`](op::HasEdge) `+` [`Order`](op::Order).
-- [`IsIsolated`](op::IsIsolated) checks if a vertex is isolated; requires
-  [`Indegree`](op::Indegree) `+` [`Outdegree`](op::Outdegree).
-- [`IsOriented`](op::IsOriented) checks if a digraph is oriented; requires
-  [`Arcs`](op::Arcs) `+` [`HasArc`](op::HasArc).
-- [`IsPendant`](op::IsPendant) checks if a vertex is a pendant; requires
-  [`Degree`](op::Degree).
-- [`IsRegular`](op::IsRegular) checks if a digraph is regular; requires
-  [`Indegree`](op::Indegree) `+` [`Outdegree`](op::Outdegree) `+`
-  [`Vertices`](op::Vertices).
-- [`IsSemicomplete`](op::IsSemicomplete) checks if a digraph is
-  semicomplete; requires [`HasArc`](op::HasArc) `+` [`Order`](op::Order).
-- [`IsSubdigraph`](op::IsSubdigraph) checks if a digraph is a subdigraph of
-  another digraph; requires [`Arcs`](op::Arcs) `+` [`HasArc`](op::HasArc)
-  `+` [`Vertices`](op::Vertices).
-- [`IsSuperdigraph`](op::IsSuperdigraph) checks if a digraph is a
-  superdigraph of another digraph; requires
-  [`Subdigraph`](op::IsSubdigraph).
-- [`IsSymmetric`](op::IsSymmetric) checks if a digraph is symmetric; requires
-  [`Arcs`](op::Arcs) `+` [`HasArc`](op::HasArc).
-- [`IsWalk`](op::IsWalk) checks if a sequence of vertices is a walk in a
-  digraph; requires [`Arcs`](op::Arcs).
+- [`Degree`] gets the degree of a vertex; requires [`Indegree`] `+`
+  [`Outdegree`].
+- [`HasEdge`] checks if an edge exists in a digraph; requires [`HasArc`].
+- [`InNeighbors`] gets the in-neighbors of a vertex; requires [`Arcs`].
+- [`IsBalanced`] checks if a digraph is balanced; requires [`Indegree`] `+`
+  [`Outdegree`].
+- [`IsComplete`] checks if a digraph is complete; requires [`HasEdge`] `+`
+  [`Order`].
+- [`IsIsolated`] checks if a vertex is isolated; requires [`Indegree`] `+`
+  [`Outdegree`].
+- [`IsOriented`] checks if a digraph is oriented; requires [`Arcs`] `+`
+  [`HasArc`].
+- [`IsPendant`] checks if a vertex is a pendant; requires [`Degree`].
+- [`IsRegular`] checks if a digraph is regular; requires [`Indegree`] `+`
+  [`Outdegree`] `+` [`Vertices`].
+- [`IsSemicomplete`] checks if a digraph is semicomplete; requires [`HasArc`]
+  `+` [`Order`].
+- [`IsSubdigraph`] checks if a digraph is a subdigraph of another digraph;
+  requires [`Arcs`] `+` [`HasArc`] `+` [`Vertices`]
+- [`IsSuperdigraph`] checks if a digraph is a superdigraph of another digraph;
+  requires [`Subdigraph`]
+- [`IsSymmetric`] checks if a digraph is symmetric; requires [`Arcs`] `+`
+  [`HasArc`].
+- [`IsWalk`] checks if a sequence of vertices is a walk in a digraph; requires
+  [`Arcs`].
 
-| Operation                              | [Adjacency List] | [Adjacency Matrix] | [Weighted Adjacency List] |
-| :------------------------------------- | :--------------- | :----------------- | :------------------------ |
-| [`Degree`](op::Degree)                 | Yes              | Yes                | Yes                       |
-| [`HasEdge`](op::HasEdge)               | Yes              | Yes                | Yes                       |
-| [`InNeighbors`](op::InNeighbors)       | Yes              | Yes                | Yes                       |
-| [`IsBalanced`](op::IsBalanced)         | Yes              | Yes                | Yes                       |
-| [`IsComplete`](op::IsComplete)         | Yes              | Yes                | Yes                       |
-| [`IsIsolated`](op::IsIsolated)         | Yes              | Yes                | Yes                       |
-| [`IsOriented`](op::IsOriented)         | Yes              | Yes                | Yes                       |
-| [`IsPendant`](op::IsPendant)           | Yes              | Yes                | Yes                       |
-| [`IsRegular`](op::IsRegular)           | Yes              | Yes                | Yes                       |
-| [`IsSemicomplete`](op::IsSemicomplete) | Yes              | Yes                | Yes                       |
-| [`IsSubdigraph`](op::IsSubdigraph)     | Yes              | Yes                | Yes                       |
-| [`IsSuperdigraph`](op::IsSuperdigraph) | Yes              | Yes                | Yes                       |
-| [`IsSymmetric`](op::IsSymmetric)       | Yes              | Yes                | Yes                       |
-| [`IsWalk`](op::IsWalk)                 | Yes              | Yes                | Yes                       |
+---
+
+| Operation          | [Adjacency List] | [Adjacency Matrix] | [Weighted Adjacency List] |
+| :----------------- | :--------------- | :----------------- | :------------------------ |
+| [`Degree`]         | Yes              | Yes                | Yes                       |
+| [`HasEdge`]        | Yes              | Yes                | Yes                       |
+| [`InNeighbors`]    | Yes              | Yes                | Yes                       |
+| [`IsBalanced`]     | Yes              | Yes                | Yes                       |
+| [`IsComplete`]     | Yes              | Yes                | Yes                       |
+| [`IsIsolated`]     | Yes              | Yes                | Yes                       |
+| [`IsOriented`]     | Yes              | Yes                | Yes                       |
+| [`IsPendant`]      | Yes              | Yes                | Yes                       |
+| [`IsRegular`]      | Yes              | Yes                | Yes                       |
+| [`IsSemicomplete`] | Yes              | Yes                | Yes                       |
+| [`IsSubdigraph`]   | Yes              | Yes                | Yes                       |
+| [`IsSuperdigraph`] | Yes              | Yes                | Yes                       |
+| [`IsSymmetric`]    | Yes              | Yes                | Yes                       |
+| [`IsWalk`]         | Yes              | Yes                | Yes                       |
 
 ## Algorithms
 
@@ -273,10 +273,24 @@ shortest distances between all pairs of vertices in a digraph.
 [`Complete`]: https://docs.rs/graaf/latest/graaf/gen/complete/trait.Complete.html
 [`Converse`]: https://docs.rs/graaf/latest/graaf/op/converse/trait.Converse.html
 [`Cycle`]: https://docs.rs/graaf/latest/graaf/gen/cycle/trait.Cycle.html
+[`Degree`]: https://docs.rs/graaf/latest/graaf/op/degree/trait.Degree.html
 [`Empty`]: https://docs.rs/graaf/latest/graaf/gen/empty/trait.Empty.html
 [`HasArc`]: https://docs.rs/graaf/latest/graaf/op/has_arc/trait.HasArc.html
+[`HasEdge`]: https://docs.rs/graaf/latest/graaf/op/has_edge/trait.HasEdge.html
+[`InNeighbors`]: https://docs.rs/graaf/latest/graaf/op/in_neighbors/trait.InNeighbors.html
 [`Indegree`]: https://docs.rs/graaf/latest/graaf/op/indegree/trait.Indegree.html
+[`IsBalanced`]: https://docs.rs/graaf/latest/graaf/op/is_balanced/trait.IsBalanced.html
+[`IsComplete`]: https://docs.rs/graaf/latest/graaf/op/is_complete/trait.IsComplete.html
+[`IsIsolated`]: https://docs.rs/graaf/latest/graaf/op/is_isolated/trait.IsIsolated.html
+[`IsOriented`]: https://docs.rs/graaf/latest/graaf/op/is_oriented/trait.IsOriented.html
+[`IsPendant`]: https://docs.rs/graaf/latest/graaf/op/is_pendant/trait.IsPendant.html
+[`IsRegular`]: https://docs.rs/graaf/latest/graaf/op/is_regular/trait.IsRegular.html
+[`IsSemicomplete`]: https://docs.rs/graaf/latest/graaf/op/is_semicomplete/trait.IsSemicomplete.html
 [`IsSimple`]: https://docs.rs/graaf/latest/graaf/op/is_simple/trait.IsSimple.html
+[`IsSubdigraph`]: https://docs.rs/graaf/latest/graaf/op/is_subdigraph/trait.IsSubdigraph.html
+[`IsSuperdigraph`]: https://docs.rs/graaf/latest/graaf/op/is_superdigraph/trait.IsSuperdigraph.html
+[`IsSymmetric`]: https://docs.rs/graaf/latest/graaf/op/is_symmetric/trait.IsSymmetric.html
+[`IsWalk`]: https://docs.rs/graaf/latest/graaf/op/is_walk/trait.IsWalk.html
 [`Order`]: https://docs.rs/graaf/latest/graaf/op/order/trait.Order.html
 [`OutNeighborsWeighted`]: https://docs.rs/graaf/latest/graaf/op/out_neighbors_weighted/trait.OutNeighborsWeighted.html
 [`OutNeighbors`]: https://docs.rs/graaf/latest/graaf/op/out_neighbors/trait.OutNeighbors.html
@@ -286,6 +300,11 @@ shortest distances between all pairs of vertices in a digraph.
 [`Size`]: https://docs.rs/graaf/latest/graaf/op/size/trait.Size.html
 [`Vertices`]: https://docs.rs/graaf/latest/graaf/op/vertices/trait.Vertices.html
 [`algo`]: https://docs.rs/graaf/latest/graaf/algo/index.html
+[`bellman_ford_moore`]: https://docs.rs/graaf/latest/graaf/algo/bellman_ford_moore/index.html
+[`bfs`]: https://docs.rs/graaf/latest/graaf/algo/bfs/index.html
+[`dfs`]: https://docs.rs/graaf/latest/graaf/algo/dfs/index.html
+[`dijkstra`]: https://docs.rs/graaf/latest/graaf/algo/dijkstra/index.html
+[`floyd_warshall`]: https://docs.rs/gra
 [`gen`]: https://docs.rs/graaf/latest/graaf/gen/index.html
 [`op`]: https://docs.rs/graaf/latest/graaf/op/index.html
 
