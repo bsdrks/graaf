@@ -4,7 +4,13 @@
 
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
-- Expand user guide.
+- Expand the user guide.
+
+## [0.64.3] - 2024-07-02
+
+Changed
+
+- Improve the `README` project overview.
 
 ## [0.64.2] - 2024-07-02
 
