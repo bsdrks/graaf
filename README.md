@@ -115,28 +115,26 @@ custom digraph types. Operations form the foundation for
 The extended traits derive their implementation from the basic
 operations.
 
-- [`Degree`] gets the degree of a vertex; requires [`Indegree`] `+`
-  [`Outdegree`].
+- [`Degree`] gets the degree of a vertex; requires [`Indegree`], [`Outdegree`].
 - [`HasEdge`] checks if an edge exists in a digraph; requires [`HasArc`].
 - [`InNeighbors`] gets the in-neighbors of a vertex; requires [`Arcs`].
-- [`IsBalanced`] checks if a digraph is balanced; requires [`Indegree`] `+`
+- [`IsBalanced`] checks if a digraph is balanced; requires [`Indegree`],
   [`Outdegree`].
-- [`IsComplete`] checks if a digraph is complete; requires [`HasEdge`] `+`
+- [`IsComplete`] checks if a digraph is complete; requires [`HasEdge`],
   [`Order`].
-- [`IsIsolated`] checks if a vertex is isolated; requires [`Indegree`] `+`
+- [`IsIsolated`] checks if a vertex is isolated; requires [`Indegree`],
   [`Outdegree`].
-- [`IsOriented`] checks if a digraph is oriented; requires [`Arcs`] `+`
-  [`HasArc`].
+- [`IsOriented`] checks if a digraph is oriented; requires [`Arcs`], [`HasArc`].
 - [`IsPendant`] checks if a vertex is a pendant; requires [`Degree`].
-- [`IsRegular`] checks if a digraph is regular; requires [`Indegree`] `+`
-  [`Outdegree`] `+` [`Vertices`].
-- [`IsSemicomplete`] checks if a digraph is semicomplete; requires [`HasArc`]
-  `+` [`Order`].
+- [`IsRegular`] checks if a digraph is regular; requires [`Indegree`],
+  [`Outdegree`], [`Vertices`].
+- [`IsSemicomplete`] checks if a digraph is semicomplete; requires [`HasArc`],
+  [`Order`].
 - [`IsSubdigraph`] checks if a digraph is a subdigraph of another digraph;
-  requires [`Arcs`] `+` [`HasArc`] `+` [`Vertices`]
+  requires [`Arcs`], [`HasArc`], [`Vertices`]
 - [`IsSuperdigraph`] checks if a digraph is a superdigraph of another digraph;
   requires [`Subdigraph`]
-- [`IsSymmetric`] checks if a digraph is symmetric; requires [`Arcs`] `+`
+- [`IsSymmetric`] checks if a digraph is symmetric; requires [`Arcs`],
   [`HasArc`].
 - [`IsWalk`] checks if a sequence of vertices is a walk in a digraph; requires
   [`Arcs`].
