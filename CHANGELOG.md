@@ -8,7 +8,13 @@
 - Improve documentation for the `Cycle` trait.
 - Improve documentation for the `Empty` trait.
 
-## [0.64.6] - 2024-07-02
+## [0.64.7] - 2024-07-03
+
+Changed
+
+- Improve the readability of the project overview.
+
+## [0.64.6] - 2024-07-03
 
 Fixed
 
@@ -19,7 +25,7 @@ Removed
 - Remove implementation tables in `README`.
 - Remove implementation tables in `lib.rs`.
 
-## [0.64.5] - 2024-07-02
+## [0.64.5] - 2024-07-03
 
 Changed
 
