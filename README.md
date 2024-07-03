@@ -108,7 +108,7 @@ The Bellman-Ford-Moore algorithm finds the shortest paths in a weighted digraph 
 
 A breadth-first search explores the vertices of an unweighted digraph in order of their distance from a source.
 
-These functions start from one or more source vertices and allow a custom step function, target predicate, distance array, breadth-first tree, and queue value, where applicable.
+These functions start from one or more source vertices and allow a custom step function, target predicate, distance array, breadth-first tree, and queue, where applicable.
 
 - The [`distances`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.distances.html) function finds the shortest distances.
 - The [`predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.predecessors.html) function finds the predecessors.
@@ -132,7 +132,7 @@ A depth-first search explores the vertices of an unweighted digraph in order of 
 
 Dijkstra's algorithm finds the shortest paths in a weighted digraph.
 
-These functions start from one or more source vertices and allow a custom step function, target predicate, distance array, and heap value, where applicable.
+These functions start from one or more source vertices and allow a custom step function, target predicate, distance array, and heap, where applicable.
 
 - The [`distances`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.distances.html) function finds the shortest distances.
 - The [`predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.predecessors.html) function finds the predecessors.
