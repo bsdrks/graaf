@@ -79,14 +79,14 @@
 //! operations.
 //!
 //! - [`Degree`](op::Degree) gets the degree of a vertex.
-//! - [`HasEdge`](op::HasEdge) checks if an edge exists in a digraph. Requires
+//! - [`HasEdge`](op::HasEdge) checks if an edge exists in a digraph.
 //! - [`InNeighbors`](op::InNeighbors) gets the in-neighbors of a vertex.
-//! - [`IsBalanced`](op::IsBalanced) checks if a digraph is balanced. Requires
-//! - [`IsComplete`](op::IsComplete) checks if a digraph is complete. Requires
-//! - [`IsIsolated`](op::IsIsolated) checks if a vertex is isolated. Requires
-//! - [`IsOriented`](op::IsOriented) checks if a digraph is oriented. Requires
-//! - [`IsPendant`](op::IsPendant) checks if a vertex is a pendant. Requires
-//! - [`IsRegular`](op::IsRegular) checks if a digraph is regular. Requires
+//! - [`IsBalanced`](op::IsBalanced) checks if a digraph is balanced.
+//! - [`IsComplete`](op::IsComplete) checks if a digraph is complete.
+//! - [`IsIsolated`](op::IsIsolated) checks if a vertex is isolated.
+//! - [`IsOriented`](op::IsOriented) checks if a digraph is oriented.
+//! - [`IsPendant`](op::IsPendant) checks if a vertex is a pendant.
+//! - [`IsRegular`](op::IsRegular) checks if a digraph is regular.
 //! - [`IsSemicomplete`](op::IsSemicomplete) checks if a digraph is
 //!   semicomplete.
 //! - [`IsSubdigraph`](op::IsSubdigraph) checks if a digraph is a subdigraph of
