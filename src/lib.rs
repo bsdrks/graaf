@@ -78,37 +78,24 @@
 //! The extended traits derive their implementation from the basic
 //! operations.
 //!
-//! - [`Degree`](op::Degree) gets the degree of a vertex. Requires
-//!   [`Indegree`](op::Indegree) `+` [`Outdegree`](op::Outdegree).
+//! - [`Degree`](op::Degree) gets the degree of a vertex.
 //! - [`HasEdge`](op::HasEdge) checks if an edge exists in a digraph. Requires
-//!   [`HasArc`](op::HasArc).
 //! - [`InNeighbors`](op::InNeighbors) gets the in-neighbors of a vertex.
-//!   Requires [`Arcs`](op::Arcs).
 //! - [`IsBalanced`](op::IsBalanced) checks if a digraph is balanced. Requires
-//!   [`Indegree`](op::Indegree) `+` [`Outdegree`](op::Outdegree).
 //! - [`IsComplete`](op::IsComplete) checks if a digraph is complete. Requires
-//!   [`HasEdge`](op::HasEdge) `+` [`Order`](op::Order).
 //! - [`IsIsolated`](op::IsIsolated) checks if a vertex is isolated. Requires
-//!   [`Indegree`](op::Indegree) `+` [`Outdegree`](op::Outdegree).
 //! - [`IsOriented`](op::IsOriented) checks if a digraph is oriented. Requires
-//!   [`Arcs`](op::Arcs) `+` [`HasArc`](op::HasArc).
 //! - [`IsPendant`](op::IsPendant) checks if a vertex is a pendant. Requires
-//!   [`Degree`](op::Degree).
 //! - [`IsRegular`](op::IsRegular) checks if a digraph is regular. Requires
-//!   [`Indegree`](op::Indegree) `+` [`Outdegree`](op::Outdegree) `+`
-//!   [`Vertices`](op::Vertices).
 //! - [`IsSemicomplete`](op::IsSemicomplete) checks if a digraph is
-//!   semicomplete. Requires [`HasArc`](op::HasArc) `+` [`Order`](op::Order).
+//!   semicomplete.
 //! - [`IsSubdigraph`](op::IsSubdigraph) checks if a digraph is a subdigraph of
-//!   another digraph. Requires [`Arcs`](op::Arcs) `+` [`HasArc`](op::HasArc)
-//!   `+` [`Vertices`](op::Vertices).
+//!   another digraph.
 //! - [`IsSuperdigraph`](op::IsSuperdigraph) checks if a digraph is a
-//!   superdigraph of another digraph. Requires
-//!   [`Subdigraph`](op::IsSubdigraph).
+//!   superdigraph of another digraph.
 //! - [`IsSymmetric`](op::IsSymmetric) checks if a digraph is symmetric.
-//!   Requires [`Arcs`](op::Arcs) `+` [`HasArc`](op::HasArc).
 //! - [`IsWalk`](op::IsWalk) checks if a sequence of vertices is a walk in a
-//!   digraph. Requires [`Arcs`](op::Arcs).
+//!   digraph.
 //!
 //! # Algorithms
 //!
