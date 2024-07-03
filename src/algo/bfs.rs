@@ -1,8 +1,7 @@
 //! Breadth-first search
 //!
-//! Breadth-first search is a digraph traversal algorithm that visits
-//! vertices of an unweighted digraph in order of their distance from the source
-//! vertex. Use [`dijkstra`] for weighted digraphs.
+//! Breadth-first search explores the vertices of an unweighted digraph in order
+//! of their distance from a source. For weighted digraphs, use [`dijkstra`].
 //!
 //! The implementations use distances instead of a set or boolean array to check
 //! if it has already visited a vertex because it already calculates these
@@ -77,12 +76,13 @@ use {
     std::collections::VecDeque,
 };
 
-/// Calculates all distances from the source vertices.
+/// Finds the shortest distances from one or more source vertices to all other
+/// vertices.
 ///
 /// # Arguments
 ///
 /// * `digraph`: The digraph.
-/// * `step`: The function to calculate the new weight.
+/// * `step`: The function that calculates the accumulated distance.
 /// * `dist`: The distances from the source vertices.
 /// * `queue`: The source vertices.
 ///
@@ -143,7 +143,7 @@ where
     }
 }
 
-/// Calculates all distances from a single source vertex.
+/// Finds the shortest distances from the source vertex to all other vertices.
 ///
 /// # Arguments
 ///
@@ -152,7 +152,7 @@ where
 ///
 /// # Returns
 ///
-/// Returns the BFS tree.
+/// Returns the distances from the source vertex to all other vertices.
 ///
 /// # Panics
 ///
@@ -195,13 +195,13 @@ where
     dist
 }
 
-/// Calculates the breadth-first tree and distances from the source vertices.
+/// Finds the breadth-first tree and distances from the source vertices.
 ///
 /// # Arguments
 ///
 /// * `digraph`: The digraph.
-/// * `step`: The function that calculates the accumulated weight.
-/// * `pred`: The predecessors on the shortest paths from the source vertices.
+/// * `step`: The function that calculates the accumulated distance.
+/// * `pred`: The predecessors of the vertices.
 /// * `dist`: The distances from the source vertices.
 /// * `queue`: The source vertices.
 ///
@@ -275,7 +275,7 @@ pub fn predecessors<D, S, W>(
     }
 }
 
-/// Calculates the breadth-first tree for the shortest paths from a single
+/// Finds the breadth-first tree for the shortest paths from a single
 /// source vertex.
 ///
 /// # Arguments
@@ -335,7 +335,7 @@ where
     pred
 }
 
-/// Calculates the shortest path from the source vertex to a target vertex.
+/// Finds the shortest path from the source vertex to a target vertex.
 ///
 /// # Arguments
 ///
@@ -448,7 +448,7 @@ where
     None
 }
 
-/// Calculates the shortest path from a single source vertex to a single target
+/// Finds the shortest path from a single source vertex to a single target
 /// vertex.
 ///
 /// In an unweighted digraph, the shortest path is the path with the fewest

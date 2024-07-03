@@ -28,7 +28,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.64.7"
+graaf = "0.64.8"
 ```
 
 ## Digraph Types
@@ -89,8 +89,8 @@ The extended traits derive their implementation from the basic operations.
 - The [`IsPendant`] trait checks if a vertex is a pendant.
 - The [`IsRegular`] trait checks if a digraph is regular.
 - The [`IsSemicomplete`] trait checks if a digraph is semicomplete.
-- The [`IsSubdigraph`] trait checks if a digraph is a subdigraph of another digraph.
-- The [`IsSuperdigraph`] trait checks if a digraph is a superdigraph of another digraph.
+- The [`IsSubdigraph`] trait checks if a digraph is a subdigraph.
+- The [`IsSuperdigraph`] trait checks if a digraph is a superdigraph.
 - The [`IsSymmetric`] trait checks if a digraph is symmetric.
 - The [`IsWalk`] trait checks if a sequence of vertices is a walk in a digraph.
 
@@ -102,7 +102,7 @@ The [`algo`] module provides digraph algorithms.
 
 The Bellman-Ford-Moore algorithm finds the shortest paths in a weighted digraph with negative weights.
 
-- The [`single_source_distances`](https://docs.rs/graaf/latest/graaf/algo/bellman_ford_moore/fn.single_source_distances.html) function finds the shortest distances from one source vertex to all other vertices.
+- The [`single_source_distances`](https://docs.rs/graaf/latest/graaf/algo/bellman_ford_moore/fn.single_source_distances.html) function finds the shortest distances.
 
 ### Breadth-First Search (BFS)
 
@@ -110,52 +110,52 @@ A breadth-first search explores the vertices of an unweighted digraph in order o
 
 These functions start from one or more source vertices and allow a custom step function, target predicate, distance array, breadth-first tree, and queue value, where applicable.
 
-- The [`distances`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.distances.html) function finds the shortest distances to all other vertices.
-- The [`predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.predecessors.html) function finds the predecessors of the vertices on the shortest paths.
-- The [`shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.shortest_path.html) function finds the shortest path to a target vertex.
+- The [`distances`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.distances.html) function finds the shortest distances.
+- The [`predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.predecessors.html) function finds the predecessors.
+- The [`shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.shortest_path.html) function finds the shortest path.
 
 These functions start from one source vertex.
 
-- The [`single_source_distances`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.single_source_distances.html) function finds the distances to all other vertices.
-- The [`single_source_predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.single_source_predecessors.html) function finds the predecessors on the shortest paths.
-- The [`single_pair_shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.single_pair_shortest_path.html) function finds the shortest path between two vertices.
+- The [`single_source_distances`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.single_source_distances.html) function finds the shortest distances.
+- The [`single_source_predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.single_source_predecessors.html) function finds the predecessors.
+- The [`single_pair_shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.single_pair_shortest_path.html) function finds the shortest path.
 
 ### Depth-First Search (DFS)
 
 A depth-first search explores the vertices of an unweighted digraph in order of their depth from a source.
 
-- The [`dfsa`](https://docs.rs/graaf/latest/graaf/algo/dfs/fn.dfsa.html) function traverses the digraph, collecting an acyclic ordering and the times of each vertex's first and last visit.
-- The [`dfsa_predecessors`](https://docs.rs/graaf/latest/graaf/algo/dfs/fn.dfsa_predecessors.html) function collects an acyclic ordering, the predecessors, and the times of each vertex's first and last visit.
-- The [`acyclic_ordering`](https://docs.rs/graaf/latest/graaf/algo/dfs/fn.acyclic_ordering.html) function generates an acyclic ordering of the vertices.
+- The [`dfsa`](https://docs.rs/graaf/latest/graaf/algo/dfs/fn.dfsa.html) function traverses the digraph.
+- The [`dfsa_predecessors`](https://docs.rs/graaf/latest/graaf/algo/dfs/fn.dfsa_predecessors.html) function finds the predecessors.
+- The [`acyclic_ordering`](https://docs.rs/graaf/latest/graaf/algo/dfs/fn.acyclic_ordering.html) function generates an acyclic ordering.
 
 ### Dijkstra's Algorithm
 
-Dijkstra's algorithm finds the shortest paths from one or more source vertices in a weighted digraph.
+Dijkstra's algorithm finds the shortest paths in a weighted digraph.
 
 These functions start from one or more source vertices and allow a custom step function, target predicate, distance array, and heap value, where applicable.
 
-- The [`distances`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.distances.html) function finds the shortest distances to all other vertices.
-- The [`predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.predecessors.html) function finds the predecessors of the vertices on the shortest paths.
-- The [`shortest_path`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.shortest_path.html) function finds the shortest path to a target vertex.
+- The [`distances`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.distances.html) function finds the shortest distances.
+- The [`predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.predecessors.html) function finds the predecessors.
+- The [`shortest_path`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.shortest_path.html) function finds the shortest path.
 
 These functions start from one source vertex.
 
-- The [`single_source_distances`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.single_source_distances.html) function finds the shortest distances to all other vertices.
-- The [`single_source_predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.single_source_predecessors.html) function finds the predecessors of the vertices on the shortest paths.
-- The [`single_pair_shortest_path`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.single_pair_shortest_path.html) function finds the shortest path between two vertices.
+- The [`single_source_distances`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.single_source_distances.html) function finds the shortest distances.
+- The [`single_source_predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.single_source_predecessors.html) function finds the predecessors.
+- The [`single_pair_shortest_path`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.single_pair_shortest_path.html) function finds the shortest path.
 
 ### Floyd-Warshall
 
 The Floyd-Warshall algorithm finds the shortest paths between all pairs of vertices in a weighted digraph.
 
-- The [`distances`](https://docs.rs/graaf/latest/graaf/algo/floyd_warshall/fn.distances.html) function finds the shortest distances between all pairs of vertices.
+- The [`distances`](https://docs.rs/graaf/latest/graaf/algo/floyd_warshall/fn.distances.html) function finds the shortest distances.
 
 ### Breadth-First Tree
 
 A breadth-first-tree is the result of a breadth-first search.
 
-- The [`search`](https://docs.rs/graaf/latest/graaf/algo/breadth_first_tree/struct.BreadthFirstTree.html#method.search) method finds the path to a target vertex.
-- The [`search_by`](https://docs.rs/graaf/latest/graaf/algo/breadth_first_tree/struct.BreadthFirstTree.html#method.search_by) method finds the path to a vertex that satisfies a predicate.
+- The [`search`](https://docs.rs/graaf/latest/graaf/algo/breadth_first_tree/struct.BreadthFirstTree.html#method.search) method finds a vertex by value.
+- The [`search_by`](https://docs.rs/graaf/latest/graaf/algo/breadth_first_tree/struct.BreadthFirstTree.html#method.search_by) method finds a vertex by predicate.
 
 These functions produce a [`BreadthFirstTree`](https://docs.rs/graaf/latest/graaf/algo/breadth_first_tree/struct.BreadthFirstTree.html).
 

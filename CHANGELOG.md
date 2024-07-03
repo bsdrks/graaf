@@ -8,6 +8,12 @@
 - Improve documentation for the `Cycle` trait.
 - Improve documentation for the `Empty` trait.
 
+## [0.64.8] - 2024-07-03
+
+Changed
+
+- Improve the length of the project overview descriptions.
+
 ## [0.64.7] - 2024-07-03
 
 Changed

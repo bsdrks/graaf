@@ -92,9 +92,9 @@
 //! - The [`IsSemicomplete`](op::IsSemicomplete) trait checks if a digraph is
 //!   semicomplete.
 //! - The [`IsSubdigraph`](op::IsSubdigraph) trait checks if a digraph is a
-//!   subdigraph of another digraph.
+//!   subdigraph.
 //! - The [`IsSuperdigraph`](op::IsSuperdigraph) trait checks if a digraph is a
-//!   superdigraph of another digraph.
+//!   superdigraph.
 //! - The [`IsSymmetric`](op::IsSymmetric) trait checks if a digraph is
 //!   symmetric.
 //! - The [`IsWalk`](op::IsWalk) trait checks if a sequence of vertices is a
@@ -110,7 +110,7 @@
 //! digraph with negative weights.
 //!
 //! - The [`single_source_distances`](algo::bellman_ford_moore::single_source_distances)
-//!   function finds the shortest distances from one source vertex to all other vertices.
+//!   function finds the shortest distances.
 //!
 //! ## Breadth-first search (BFS)
 //!
@@ -122,33 +122,31 @@
 //! queue value, where applicable.
 //!
 //! - The [`distances`](algo::bfs::distances) function finds the shortest
-//!   distances to all other vertices.
+//!   distances.
 //! - The [`predecessors`](algo::bfs::predecessors) function finds the
-//!   predecessors of the vertices on the shortest paths.
+//!   predecessors.
 //! - The [`shortest_path`](algo::bfs::shortest_path) function finds the
-//!   shortest path to a target vertex.
+//!   shortest path.
 //!
 //! These functions start from one source vertex.
 //!
 //! - The [`single_source_distances`](algo::bfs::single_source_distances)
-//!   function finds the distances to all other vertices.
+//!   function finds the shortest distances.
 //! - The [`single_source_predecessors`](algo::bfs::single_source_predecessors)
-//!   function finds the predecessors of the vertices on the shortest paths.
+//!   function finds the predecessors.
 //! - The [`single_pair_shortest_path`](algo::bfs::single_pair_shortest_path)
-//!   function finds the shortest path between two vertices.
+//!   function finds the shortest path.
 //!
 //! ## Depth-first search (DFS)
 //!
 //! A depth-first search explores the vertices of an unweighted digraph in order
 //! of their depth from a source.
 //!
-//! - The [`dfsa`](algo::dfs::dfsa) function traverses the digraph, collecting
-//!   an acyclic ordering and the times of each vertex's first and last visit.
-//! - The [`dfsa_predecessors`](algo::dfs::dfsa_predecessors) function collects
-//!   an acyclic ordering, the predecessors, and the times of each vertex's
-//!   first and last visit.
+//! - The [`dfsa`](algo::dfs::dfsa) function traverses the digraph.
+//! - The [`dfsa_predecessors`](algo::dfs::dfsa_predecessors) function finds the
+//!   predecessors.
 //! - The [`acyclic_ordering`](algo::dfs::acyclic_ordering) function generates
-//!   an acyclic ordering of the vertices.
+//!   an acyclic ordering.
 //!
 //! ## Dijkstra's algorithm
 //!
@@ -160,20 +158,20 @@
 //! applicable.
 //!
 //! - The [`distances`](algo::dijkstra::distances) function finds the shortest
-//!   distances to all other vertices.
+//!   distances.
 //! - The [`predecessors`](algo::dijkstra::predecessors) function finds the
-//!   predecessors of the vertices on the shortest paths.
+//!   predecessors.
 //! - The [`shortest_path`](algo::dijkstra::shortest_path) function finds the
-//!   shortest path to a target vertex.
+//!   shortest path.
 //!
 //! These functions start from one source vertex.
 //!
 //! - The [`single_source_distances`](algo::dijkstra::single_source_distances)
-//!   function finds the shortest distances to all other vertices.
+//!   function finds the shortest distances.
 //! - The [`single_source_predecessors`](algo::dijkstra::single_source_predecessors)
-//!   function finds the predecessors of the vertices on the shortest paths.
+//!   function finds the predecessors.
 //! - The [`single_pair_shortest_path`](algo::dijkstra::single_pair_shortest_path)
-//!   function finds the shortest path between two vertices.
+//!   function finds the shortest path.
 //!
 //! ## Floyd-Warshall
 //!
@@ -181,7 +179,7 @@
 //! of vertices in a weighted digraph.
 //!
 //! - The [`distances`](algo::floyd_warshall::distances) function finds the
-//!   shortest distances between all pairs of vertices.
+//!   shortest distances.
 //!
 //! ## Breadth-first tree
 //!
@@ -189,9 +187,9 @@
 //! the predecessors of the vertices on the shortest paths.
 //!
 //! - The [`search`](algo::breadth_first_tree::BreadthFirstTree::search) method
-//!   finds the path to a target vertex.
+//!   finds a vertex by value.
 //! - The [`search_by`](algo::breadth_first_tree::BreadthFirstTree::search_by)
-//!   method finds the path to a vertex that satisfies a predicate.
+//!   method finds a vertex by predicate.
 //!
 //! These functions produce a
 //! [`BreadthFirstTree`](algo::breadth_first_tree::BreadthFirstTree).

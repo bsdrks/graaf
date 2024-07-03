@@ -83,7 +83,7 @@ use {
     std::collections::BinaryHeap,
 };
 
-/// Calculates the distances from the source vertices to all vertices in a
+/// Finds the distances from the source vertices to all vertices in a
 /// weighted digraph.[^1]
 ///
 /// # Arguments
@@ -163,7 +163,7 @@ pub fn distances<D, S, W>(
     }
 }
 
-/// Calculates all distances from a single source vertex in a weighted directed
+/// Finds all distances from a single source vertex in a weighted directed
 /// digraph.
 ///
 /// # Arguments
@@ -220,14 +220,14 @@ where
     dist
 }
 
-/// Calculates the breadth-first tree and distances of the shortest paths from
+/// Finds the breadth-first tree and distances of the shortest paths from
 /// the source vertices to all vertices in a weighted digraph.
 ///
 /// # Arguments
 ///
 /// * `digraph`: The digraph.
 /// * `step`: The function that calculates the accumulated weight.
-/// * `pred`: The predecessors on the shortest paths from the source vertices.
+/// * `pred`: The predecessors of the vertices.
 /// * `dist`: The distances from the source vertices.
 /// * `heap`: The source vertices.
 ///
@@ -301,7 +301,7 @@ pub fn predecessors<D, S, W>(
     }
 }
 
-/// Calculates the breadth-first tree for the shortest paths from a single
+/// Finds the breadth-first tree for the shortest paths from a single
 /// source vertex in a weighted digraph.
 ///
 /// # Arguments
@@ -361,7 +361,7 @@ where
     pred
 }
 
-/// Calculates the shortest path from the source vertex to a target vertex.
+/// Finds the shortest path from the source vertex to a target vertex.
 ///
 /// In a weighted digraph, the shortest path is the path with the
 /// smallest sum of weights. There can be multiple shortest paths in a digraph,
@@ -372,7 +372,7 @@ where
 /// * `digraph`: The digraph.
 /// * `step`: The function that calculates the accumulated weight.
 /// * `is_target`: The function determining whether the vertex is a target.
-/// * `pred`: The predecessors on the shortest paths from the source vertices.
+/// * `pred`: The predecessors of the vertices.
 /// * `dist`: The distances from the source vertices.
 /// * `heap`: The source vertices and their initial distances.
 ///
@@ -468,7 +468,7 @@ where
     None
 }
 
-/// Calculates the shortest path from a single source vertex to a single target
+/// Finds the shortest path from a single source vertex to a single target
 /// vertex.
 ///
 /// In a weighted digraph, the shortest path is the path with the

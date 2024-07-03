@@ -57,7 +57,7 @@ use crate::op::{
     Order,
 };
 
-/// Computes the distances from one source vertex to all other vertices in a
+/// Computes the distances from the source vertex to all other vertices in a
 /// weighted digraph.
 ///
 /// # Arguments
@@ -67,7 +67,7 @@ use crate::op::{
 ///
 /// # Returns
 ///
-/// Returns the distances from the source vertex to all other vertices. Returns
+/// Returns the distances one the source vertex to all other vertices. Returns
 /// `None` if the digraph contains a negative cycle.
 ///
 /// # Examples
