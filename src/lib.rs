@@ -53,49 +53,52 @@
 //!
 //! [Individual digraph types](#digraph-types) implement the basic operations.
 //!
-//! - [`AddArcWeighted`](op::AddArcWeighted) adds an arc to a weighted digraph.
-//! - [`AddArc`](op::AddArc) adds an arc to an unweighted digraph.
-//! - [`ArcWeight`](op::ArcWeight) gets the weight of an arc.
-//! - [`ArcsWeighted`](op::ArcsWeighted) gets the arcs and their weights in a
+//! - The [`AddArcWeighted`](op::AddArcWeighted) adds an arc to a weighted
 //!   digraph.
-//! - [`Arcs`](op::Arcs) gets the arcs in a digraph.
-//! - [`Converse`](op::Converse) gets the converse of a digraph.
-//! - [`HasArc`](op::HasArc) checks if an arc exists in a digraph.
-//! - [`Indegree`](op::Indegree) gets the indegree of a vertex.
-//! - [`IsSimple`](op::IsSimple) checks if a digraph contains no loops or
-//!   parallel arcs.
-//! - [`Order`](op::Order) gets the number of vertices.
-//! - [`OutNeighborsWeighted`](op::OutNeighborsWeighted) gets the weighted
-//!   out-neighbors of a vertex.
-//! - [`OutNeighbors`](op::OutNeighbors) gets the out-neighbors of a vertex.
-//! - [`Outdegree`](op::Outdegree) gets the outdegree of a vertex.
-//! - [`RemoveArc`](op::RemoveArc) removes an arc from a digraph.
-//! - [`Size`](op::Size) gets the number of arcs in a digraph.
-//! - [`Vertices`](op::Vertices) gets the vertices in a digraph.
+//! - The [`AddArc`](op::AddArc) adds an arc to an unweighted digraph.
+//! - The [`ArcWeight`](op::ArcWeight) returns the weight of an arc.
+//! - The [`ArcsWeighted`](op::ArcsWeighted) returns the arcs and their weights
+//!   in a digraph.
+//! - The [`Arcs`](op::Arcs) returns the arcs in a digraph.
+//! - The [`Converse`](op::Converse) returns the converse of a digraph.
+//! - The [`HasArc`](op::HasArc) trait checks if an arc exists in a digraph.
+//! - The [`Indegree`](op::Indegree) returns the indegree of a vertex.
+//! - The [`IsSimple`](op::IsSimple) trait checks if a digraph contains no loops
+//!   or parallel arcs.
+//! - The [`Order`](op::Order) returns the number of vertices.
+//! - The [`OutNeighborsWeighted`](op::OutNeighborsWeighted) returns the
+//!   weighted out-neighbors of a vertex.
+//! - The [`OutNeighbors`](op::OutNeighbors) returns the out-neighbors of a
+//!   vertex.
+//! - The [`Outdegree`](op::Outdegree) returns the outdegree of a vertex.
+//! - The [`RemoveArc`](op::RemoveArc) removes an arc from a digraph.
+//! - The [`Size`](op::Size) returns the number of arcs in a digraph.
+//! - The [`Vertices`](op::Vertices) returns the vertices in a digraph.
 //!
 //! ## Extended operations
 //!
 //! The extended traits derive their implementation from the basic
 //! operations.
 //!
-//! - [`Degree`](op::Degree) gets the degree of a vertex.
-//! - [`HasEdge`](op::HasEdge) checks if an edge exists in a digraph.
-//! - [`InNeighbors`](op::InNeighbors) gets the in-neighbors of a vertex.
-//! - [`IsBalanced`](op::IsBalanced) checks if a digraph is balanced.
-//! - [`IsComplete`](op::IsComplete) checks if a digraph is complete.
-//! - [`IsIsolated`](op::IsIsolated) checks if a vertex is isolated.
-//! - [`IsOriented`](op::IsOriented) checks if a digraph is oriented.
-//! - [`IsPendant`](op::IsPendant) checks if a vertex is a pendant.
-//! - [`IsRegular`](op::IsRegular) checks if a digraph is regular.
-//! - [`IsSemicomplete`](op::IsSemicomplete) checks if a digraph is
+//! - The [`Degree`](op::Degree) returns the degree of a vertex.
+//! - The [`HasEdge`](op::HasEdge) trait checks if an edge exists in a digraph.
+//! - The [`InNeighbors`](op::InNeighbors) gets the in-neighbors of a vertex.
+//! - The [`IsBalanced`](op::IsBalanced) trait checks if a digraph is balanced.
+//! - The [`IsComplete`](op::IsComplete) trait checks if a digraph is complete.
+//! - The [`IsIsolated`](op::IsIsolated) trait checks if a vertex is isolated.
+//! - The [`IsOriented`](op::IsOriented) trait checks if a digraph is oriented.
+//! - The [`IsPendant`](op::IsPendant) trait checks if a vertex is a pendant.
+//! - The [`IsRegular`](op::IsRegular) trait checks if a digraph is regular.
+//! - The [`IsSemicomplete`](op::IsSemicomplete) trait checks if a digraph is
 //!   semicomplete.
-//! - [`IsSubdigraph`](op::IsSubdigraph) checks if a digraph is a subdigraph of
-//!   another digraph.
-//! - [`IsSuperdigraph`](op::IsSuperdigraph) checks if a digraph is a
+//! - The [`IsSubdigraph`](op::IsSubdigraph) trait checks if a digraph is a
+//!   subdigraph of another digraph.
+//! - The [`IsSuperdigraph`](op::IsSuperdigraph) trait checks if a digraph is a
 //!   superdigraph of another digraph.
-//! - [`IsSymmetric`](op::IsSymmetric) checks if a digraph is symmetric.
-//! - [`IsWalk`](op::IsWalk) checks if a sequence of vertices is a walk in a
-//!   digraph.
+//! - The [`IsSymmetric`](op::IsSymmetric) trait checks if a digraph is
+//!   symmetric.
+//! - The [`IsWalk`](op::IsWalk) trait checks if a sequence of vertices is a
+//!   walk in a digraph.
 //!
 //! # Algorithms
 //!
@@ -103,92 +106,92 @@
 //!
 //! ## Bellman-Ford-Moore
 //!
-//! [`bellman_ford_moore`](algo::bellman_ford_moore) finds the shortest paths
-//! in a weighted digraph with negative weights.
+//! The Bellman-Ford-Moore algorithm finds the shortest paths in a weighted
+//! digraph with negative weights.
 //!
-//! - [`single_source_distances`](algo::bellman_ford_moore::single_source_distances)
-//!   finds the shortest distances from one source vertex to all other vertices.
+//! - The [`single_source_distances`](algo::bellman_ford_moore::single_source_distances)
+//!   function finds the shortest distances from one source vertex to all other vertices.
 //!
 //! ## Breadth-first search (BFS)
 //!
-//! [`bfs`](algo::bfs) explores the vertices of an unweighted digraph in order
-//! of their distance from a source.
+//! A breadth-first search explores the vertices of an unweighted digraph in
+//! order of their distance from a source.
 //!
 //! These functions start from one or more source vertices and allow a custom
 //! step function, target predicate, distance array, breadth-first tree, and
 //! queue value, where applicable.
 //!
-//! - [`distances`](algo::bfs::distances) finds the shortest distances to all
-//!   other vertices.
-//! - [`predecessors`](algo::bfs::predecessors) finds the predecessors of the
-//!   vertices on the shortest paths.
-//! - [`shortest_path`](algo::bfs::shortest_path) finds the shortest path to a
-//!   target vertex.
+//! - The [`distances`](algo::bfs::distances) function finds the shortest
+//!   distances to all other vertices.
+//! - The [`predecessors`](algo::bfs::predecessors) function finds the
+//!   predecessors of the vertices on the shortest paths.
+//! - The [`shortest_path`](algo::bfs::shortest_path) function finds the
+//!   shortest path to a target vertex.
 //!
 //! These functions start from one source vertex.
 //!
-//! - [`single_source_distances`](algo::bfs::single_source_distances) finds the
-//!   distances to all other vertices.
-//! - [`single_source_predecessors`](algo::bfs::single_source_predecessors)
-//!   finds the predecessors of the vertices on the shortest paths.
-//! - [`single_pair_shortest_path`](algo::bfs::single_pair_shortest_path) finds
-//!   the shortest path between two vertices.
+//! - The [`single_source_distances`](algo::bfs::single_source_distances)
+//!   function finds the distances to all other vertices.
+//! - The [`single_source_predecessors`](algo::bfs::single_source_predecessors)
+//!   function finds the predecessors of the vertices on the shortest paths.
+//! - The [`single_pair_shortest_path`](algo::bfs::single_pair_shortest_path)
+//!   function finds the shortest path between two vertices.
 //!
 //! ## Depth-first search (DFS)
 //!
-//! [`dfs`](algo::dfs) explores the vertices of an unweighted digraph in order
+//! A depth-first search explores the vertices of an unweighted digraph in order
 //! of their depth from a source.
 //!
-//! - [`dfsa`](algo::dfs::dfsa) traverses the digraph, collecting an acyclic
-//!   ordering and the times of each vertex's first and last visit.
-//! - [`dfsa_predecessors`](algo::dfs::dfsa_predecessors) collects an acyclic
-//!   ordering, the predecessors, and the times of each vertex's first and last
-//!   visit.
-//! - [`acyclic_ordering`](algo::dfs::acyclic_ordering) generates an acyclic
-//!   ordering of the vertices.
+//! - The [`dfsa`](algo::dfs::dfsa) function traverses the digraph, collecting
+//!   an acyclic ordering and the times of each vertex's first and last visit.
+//! - The [`dfsa_predecessors`](algo::dfs::dfsa_predecessors) function collects
+//!   an acyclic ordering, the predecessors, and the times of each vertex's
+//!   first and last visit.
+//! - The [`acyclic_ordering`](algo::dfs::acyclic_ordering) function generates
+//!   an acyclic ordering of the vertices.
 //!
 //! ## Dijkstra's algorithm
 //!
-//! [`dijkstra`](algo::dijkstra) finds the shortest paths from one or more
-//! source vertices in a weighted digraph.
+//! Dijkstra's algorithm finds the shortest paths from one or more source
+//! vertices in a weighted digraph.
 //!
 //! These functions start from one or more source vertices and allow a custom
 //! step function, target predicate, distance array, and heap value, where
 //! applicable.
 //!
-//! - [`distances`](algo::dijkstra::distances) finds the shortest distances to
-//!   all other vertices.
-//! - [`predecessors`](algo::dijkstra::predecessors) finds the predecessors of
-//!   the vertices on the shortest paths.
-//! - [`shortest_path`](algo::dijkstra::shortest_path) finds the shortest path
-//!   to a target vertex.
+//! - The [`distances`](algo::dijkstra::distances) function finds the shortest
+//!   distances to all other vertices.
+//! - The [`predecessors`](algo::dijkstra::predecessors) function finds the
+//!   predecessors of the vertices on the shortest paths.
+//! - The [`shortest_path`](algo::dijkstra::shortest_path) function finds the
+//!   shortest path to a target vertex.
 //!
 //! These functions start from one source vertex.
 //!
-//! - [`single_source_distances`](algo::dijkstra::single_source_distances) finds
-//!   the shortest distances to all other vertices.
-//! - [`single_source_predecessors`](algo::dijkstra::single_source_predecessors)
-//!   finds the predecessors of the vertices on the shortest paths.
-//! - [`single_pair_shortest_path`](algo::dijkstra::single_pair_shortest_path)
-//!   finds the shortest path between two vertices.
+//! - The [`single_source_distances`](algo::dijkstra::single_source_distances)
+//!   function finds the shortest distances to all other vertices.
+//! - The [`single_source_predecessors`](algo::dijkstra::single_source_predecessors)
+//!   function finds the predecessors of the vertices on the shortest paths.
+//! - The [`single_pair_shortest_path`](algo::dijkstra::single_pair_shortest_path)
+//!   function finds the shortest path between two vertices.
 //!
 //! ## Floyd-Warshall
 //!
-//! [`floyd_warshall`](algo::floyd_warshall) algorithm finds the shortest paths
-//! between all pairs of vertices in a weighted digraph.
+//! The Floyd-Warshall algorithm finds the shortest paths between all pairs
+//! of vertices in a weighted digraph.
 //!
-//! - [`distances`](algo::floyd_warshall::distances) finds the shortest
-//!   distances between all pairs of vertices.
+//! - The [`distances`](algo::floyd_warshall::distances) function finds the
+//!   shortest distances between all pairs of vertices.
 //!
 //! ## Breadth-first tree
 //!
-//! A [`BreadthFirstTree`](algo::breadth_first_tree::BreadthFirstTree) is
-//! the result of a breadth-first search.
+//! A breadth-first-tree is the result of a breadth-first search and contains
+//! the predecessors of the vertices on the shortest paths.
 //!
-//! - [`search`](algo::breadth_first_tree::BreadthFirstTree::search) finds the
-//!   path to a target vertex.
-//! - [`search_by`](algo::breadth_first_tree::BreadthFirstTree::search_by) finds
-//!   the path to a vertex that satisfies a predicate.
+//! - The [`search`](algo::breadth_first_tree::BreadthFirstTree::search) method
+//!   finds the path to a target vertex.
+//! - The [`search_by`](algo::breadth_first_tree::BreadthFirstTree::search_by)
+//!   method finds the path to a vertex that satisfies a predicate.
 //!
 //! These functions produce a
 //! [`BreadthFirstTree`](algo::breadth_first_tree::BreadthFirstTree).
@@ -200,17 +203,17 @@
 //!
 //! ## Distance matrix
 //!
-//! A [`DistanceMatrix`](algo::distance_matrix::DistanceMatrix) contains the
-//! shortest distances between all pairs of vertices in a digraph.
+//! A distance matrix contains the shortest distances between all pairs of
+//! vertices in a digraph.
 //!
-//! - [`center`](algo::distance_matrix::DistanceMatrix::center) finds the center
-//!   of the digraph.
-//! - [`diameter`](algo::distance_matrix::DistanceMatrix::diameter) finds the
-//!   diameter of the digraph.
-//! - [`eccentricities`](algo::distance_matrix::DistanceMatrix::eccentricities)
-//!   returns the eccentricities of the vertices.
-//! - [`is_connected`](algo::distance_matrix::DistanceMatrix::is_connected)
-//!   checks if the digraph is connected.
+//! - The [`center`](algo::distance_matrix::DistanceMatrix::center) method finds
+//!   the center of the digraph.
+//! - The [`diameter`](algo::distance_matrix::DistanceMatrix::diameter) method
+//!   finds the diameter of the digraph.
+//! - The [`eccentricities`](algo::distance_matrix::DistanceMatrix::eccentricities)
+//!   method returns the eccentricities of the vertices.
+//! - The [`is_connected`](algo::distance_matrix::DistanceMatrix::is_connected)
+//!   method checks if the digraph is connected.
 //!
 //! [Adjacency List]: `adjacency_list::Digraph`
 //! [Adjacency Matrix]: `adjacency_matrix::Digraph`
