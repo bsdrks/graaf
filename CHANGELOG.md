@@ -10,6 +10,10 @@
 
 ## [0.64.6] - 2024-07-02
 
+Fixed
+
+- Remove extraneous words from the documentation.
+
 Removed
 
 - Remove implementation tables in `README`.
