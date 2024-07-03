@@ -50,13 +50,6 @@ The [`gen`] module provides four digraph generators.
 - The [`Empty`] trait generates a digraph with no arcs.
 - The [`RandomTournament`] trait generates a random digraph in which an arc connects every unordered pair of distinct vertices.
 
-| Generator            | [Adj. List] | [Adj. Matrix] | [Weighted Adj. List] |
-| :------------------- | :---------- | :------------- | :------------------ |
-| [`Complete`]         | Yes         | Yes            | No                  |
-| [`Cycle`]            | Yes         | Yes            | No                  |
-| [`Empty`]            | Yes         | Yes            | Yes                 |
-| [`RandomTournament`] | Yes         | Yes            | No                  |
-
 ## Operations
 
 The [`op`] module provides digraph operation traits. The [digraph types](#digraph-types) implement these traits. One can implement these traits for custom digraph types. Operations form the foundation for [algorithms](#algorithms).
@@ -82,25 +75,6 @@ The [`op`] module provides digraph operation traits. The [digraph types](#digrap
 - The [`Size`] trait returns the number of arcs in a digraph.
 - The [`Vertices`] trait returns the vertices in a digraph.
 
-| Operation                | [Adj. List] | [Adj. Matrix] | [Weighted Adj. List] |
-| :----------------------- | :---------- | :------------ | :------------------- |
-| [`AddArcWeighted`]       | No          | No            | Yes                  |
-| [`AddArc`]               | Yes         | Yes           | No                   |
-| [`ArcWeight`]            | Yes         | Yes           | Yes                  |
-| [`ArcsWeighted`]         | Yes         | Yes           | Yes                  |
-| [`Arcs`]                 | Yes         | Yes           | Yes                  |
-| [`Converse`]             | Yes         | Yes           | Yes                  |
-| [`HasArc`]               | Yes         | Yes           | Yes                  |
-| [`Indegree`]             | Yes         | Yes           | Yes                  |
-| [`IsSimple`]             | Yes         | Yes           | Yes                  |
-| [`Order`]                | Yes         | Yes           | Yes                  |
-| [`OutNeighborsWeighted`] | Yes         | Yes           | Yes                  |
-| [`OutNeighbors`]         | Yes         | Yes           | Yes                  |
-| [`Outdegree`]            | Yes         | Yes           | Yes                  |
-| [`RemoveArc`]            | Yes         | Yes           | Yes                  |
-| [`Size`]                 | Yes         | Yes           | Yes                  |
-| [`Vertices`]             | Yes         | Yes           | Yes                  |
-
 ### Extended Operations
 
 The extended traits derive their implementation from the basic operations.
@@ -119,23 +93,6 @@ The extended traits derive their implementation from the basic operations.
 - [`IsSuperdigraph`] checks if a digraph is a superdigraph of another digraph.
 - [`IsSymmetric`] checks if a digraph is symmetric.
 - [`IsWalk`] checks if a sequence of vertices is a walk in a digraph.
-
-| Operation          | [Adj. List] | [Adj. Matrix] | [Weighted Adj. List] |
-| :----------------- | :---------- | :------------ | :------------------- |
-| [`Degree`]         | Yes         | Yes           | Yes                  |
-| [`HasEdge`]        | Yes         | Yes           | Yes                  |
-| [`InNeighbors`]    | Yes         | Yes           | Yes                  |
-| [`IsBalanced`]     | Yes         | Yes           | Yes                  |
-| [`IsComplete`]     | Yes         | Yes           | Yes                  |
-| [`IsIsolated`]     | Yes         | Yes           | Yes                  |
-| [`IsOriented`]     | Yes         | Yes           | Yes                  |
-| [`IsPendant`]      | Yes         | Yes           | Yes                  |
-| [`IsRegular`]      | Yes         | Yes           | Yes                  |
-| [`IsSemicomplete`] | Yes         | Yes           | Yes                  |
-| [`IsSubdigraph`]   | Yes         | Yes           | Yes                  |
-| [`IsSuperdigraph`] | Yes         | Yes           | Yes                  |
-| [`IsSymmetric`]    | Yes         | Yes           | Yes                  |
-| [`IsWalk`]         | Yes         | Yes           | Yes                  |
 
 ## Algorithms
 

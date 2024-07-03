@@ -42,13 +42,6 @@
 //!   digraph in which an arc connects every unordered pair of distinct
 //!   vertices.
 //!
-//! | Generator                                   | [Adjacency List] | [Adjacency Matrix] | [Weighted Adjacency List] |
-//! | :------------------------------------------ | :--------------- | :------------------ | :----------------------- |
-//! | [`Complete`](gen::Complete)                 | Yes              | Yes                 | No                       |
-//! | [`Cycle`](gen::Cycle)                       | Yes              | Yes                 | No                       |
-//! | [`Empty`](gen::Empty)                       | Yes              | Yes                 | Yes                      |
-//! | [`RandomTournament`](gen::RandomTournament) | Yes              | Yes                 | No                       |
-//!
 //! # Operations
 //!
 //! The [`op`] module provides digraph operation traits. The [digraph
@@ -79,25 +72,6 @@
 //! - [`RemoveArc`](op::RemoveArc) removes an arc from a digraph.
 //! - [`Size`](op::Size) gets the number of arcs in a digraph.
 //! - [`Vertices`](op::Vertices) gets the vertices in a digraph.
-//!
-//! | Operation                                          | [Adjacency List] | [Adjacency Matrix] | [Weighted Adjacency List] |
-//! | :------------------------------------------------- | :--------------- | :----------------- | :------------------------ |
-//! | [`AddArcWeighted`](op::AddArcWeighted)             | No               | No                 | Yes                       |
-//! | [`AddArc`](op::AddArc)                             | Yes              | Yes                | No                        |
-//! | [`ArcWeight`](op::ArcWeight)                       | Yes              | Yes                | Yes                       |
-//! | [`ArcsWeighted`](op::ArcsWeighted)                 | Yes              | Yes                | Yes                       |
-//! | [`Arcs`](op::Arcs)                                 | Yes              | Yes                | Yes                       |
-//! | [`Converse`](op::Converse)                         | Yes              | Yes                | Yes                       |
-//! | [`HasArc`](op::HasArc)                             | Yes              | Yes                | Yes                       |
-//! | [`Indegree`](op::Indegree)                         | Yes              | Yes                | Yes                       |
-//! | [`IsSimple`](op::IsSimple)                         | Yes              | Yes                | Yes                       |
-//! | [`Order`](op::Order)                               | Yes              | Yes                | Yes                       |
-//! | [`OutNeighborsWeighted`](op::OutNeighborsWeighted) | Yes              | Yes                | Yes                       |
-//! | [`OutNeighbors`](op::OutNeighbors)                 | Yes              | Yes                | Yes                       |
-//! | [`Outdegree`](op::Outdegree)                       | Yes              | Yes                | Yes                       |
-//! | [`RemoveArc`](op::RemoveArc)                       | Yes              | Yes                | Yes                       |
-//! | [`Size`](op::Size)                                 | Yes              | Yes                | Yes                       |
-//! | [`Vertices`](op::Vertices)                         | Yes              | Yes                | Yes                       |
 //!
 //! ## Extended operations
 //!
@@ -135,23 +109,6 @@
 //!   Requires [`Arcs`](op::Arcs) `+` [`HasArc`](op::HasArc).
 //! - [`IsWalk`](op::IsWalk) checks if a sequence of vertices is a walk in a
 //!   digraph. Requires [`Arcs`](op::Arcs).
-//!
-//! | Operation                              | [Adjacency List] | [Adjacency Matrix] | [Weighted Adjacency List] |
-//! | :------------------------------------- | :--------------- | :----------------- | :------------------------ |
-//! | [`Degree`](op::Degree)                 | Yes              | Yes                | Yes                       |
-//! | [`HasEdge`](op::HasEdge)               | Yes              | Yes                | Yes                       |
-//! | [`InNeighbors`](op::InNeighbors)       | Yes              | Yes                | Yes                       |
-//! | [`IsBalanced`](op::IsBalanced)         | Yes              | Yes                | Yes                       |
-//! | [`IsComplete`](op::IsComplete)         | Yes              | Yes                | Yes                       |
-//! | [`IsIsolated`](op::IsIsolated)         | Yes              | Yes                | Yes                       |
-//! | [`IsOriented`](op::IsOriented)         | Yes              | Yes                | Yes                       |
-//! | [`IsPendant`](op::IsPendant)           | Yes              | Yes                | Yes                       |
-//! | [`IsRegular`](op::IsRegular)           | Yes              | Yes                | Yes                       |
-//! | [`IsSemicomplete`](op::IsSemicomplete) | Yes              | Yes                | Yes                       |
-//! | [`IsSubdigraph`](op::IsSubdigraph)     | Yes              | Yes                | Yes                       |
-//! | [`IsSuperdigraph`](op::IsSuperdigraph) | Yes              | Yes                | Yes                       |
-//! | [`IsSymmetric`](op::IsSymmetric)       | Yes              | Yes                | Yes                       |
-//! | [`IsWalk`](op::IsWalk)                 | Yes              | Yes                | Yes                       |
 //!
 //! # Algorithms
 //!
