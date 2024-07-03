@@ -1,5 +1,5 @@
 #![doc(alias = "circular")]
-//! Generate directed cycle digraphs.
+//! Generate cycle digraphs.
 //!
 //! Cycle graphs are also known as circular graphs.
 //!
@@ -33,7 +33,7 @@ use crate::{
     op::AddArc,
 };
 
-/// Generate directed cycle digraphs.
+/// Generate cycle digraphs.
 ///
 /// # How can I implement `Cycle`?
 ///

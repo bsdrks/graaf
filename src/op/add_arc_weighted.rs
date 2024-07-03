@@ -1,4 +1,4 @@
-//! Add an arc to a directed weighted digraph.
+//! Add an arc to a weighted digraph.
 //!
 //! # Examples
 //!
