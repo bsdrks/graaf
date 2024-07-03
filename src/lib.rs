@@ -22,9 +22,9 @@
 //!
 //! Graaf provides three representations of directed graphs.
 //!
-//! - The [Adjacency List] is for unweighted sparse digraphs.
-//! - The [Adjacency Matrix] is for unweighted dense digraphs.
-//! - The [Weighted Adjacency List] is for weighted sparse digraphs.
+//! - The [Adjacency List] type represents unweighted sparse digraphs.
+//! - The [Adjacency Matrix] type represents unweighted dense digraphs.
+//! - The [Weighted Adjacency List] type represents weighted sparse digraphs.
 //!
 //! These types eagerly implement [digraph operations](#operations) and
 //! [digraph algorithms](#algorithms).
@@ -34,7 +34,7 @@
 //! Graaf provides four digraph generators.
 //!
 //! - The [`Complete`](gen::Complete) trait generates a digraph in which an arc
-//!   connects every ordered pair of vertices.
+//!   connects every ordered pair of distinct vertices.
 //! - The [`Cycle`](gen::Cycle) trait generates a digraph with a cycle of a
 //!   given length.
 //! - The [`Empty`](gen::Empty) trait generates a digraph with no arcs.
