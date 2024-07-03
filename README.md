@@ -28,16 +28,16 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.64.4"
+graaf = "0.64.5"
 ```
 
 ## Digraph Types
 
 Graaf provides three representations of directed graphs.
 
-- The [Adjacency List] is for unweighted sparse digraphs.
-- The [Adjacency Matrix] is for unweighted dense digraphs.
-- The [Weighted Adjacency List] is for weighted sparse digraphs.
+- The [Adjacency List] type represents unweighted sparse digraphs.
+- The [Adjacency Matrix] type represents unweighted dense digraphs.
+- The [Weighted Adjacency List] type represents weighted sparse digraphs.
 
 These types eagerly implement [digraph operations](#operations) and [digraph algorithms](#algorithms).
 
@@ -45,12 +45,12 @@ These types eagerly implement [digraph operations](#operations) and [digraph alg
 
 The [`gen`] module provides four digraph generators.
 
-- [`Complete`] generates a digraph with all possible arcs, excluding self-loops.
-- [`Cycle`] generates a digraph with a cycle of a given length.
-- [`Empty`] generates a digraph with no arcs.
-- [`RandomTournament`] generates a random tournament.
+- The [`Complete`] trait generates a digraph in which an arc connects every ordered pair of distinct vertices.
+- The [`Cycle`] trait generates a digraph with a cycle of a given length.
+- The [`Empty`] trait generates a digraph with no arcs.
+- The [`RandomTournament`] trait generates a random digraph in which an arc connects every unordered pair of distinct vertices.
 
-| Generator            | [AL]        | [AM]           | [WAL]               |
+| Generator            | [Adj. List] | [Adj. Matrix] | [Weighted Adj. List] |
 | :------------------- | :---------- | :------------- | :------------------ |
 | [`Complete`]         | Yes         | Yes            | No                  |
 | [`Cycle`]            | Yes         | Yes            | No                  |
@@ -65,24 +65,24 @@ The [`op`] module provides digraph operation traits. The [digraph types](#digrap
 
 [Individual digraph types](#digraph-types) implement the basic operations.
 
-- [`AddArcWeighted`] adds an arc to a weighted digraph.
-- [`AddArc`] adds an arc to an unweighted digraph.
-- [`ArcWeight`] returns the weight of an arc.
-- [`ArcsWeighted`] returns the arcs and their weights in a digraph.
-- [`Arcs`] returns the arcs in a digraph.
-- [`Converse`] returns the converse of a digraph.
-- [`HasArc`] checks if an arc exists in a digraph.
-- [`Indegree`] returns the indegree of a vertex.
-- [`IsSimple`] checks if a digraph contains no loops or parallel arcs.
-- [`Order`] returns the number of vertices.
-- [`OutNeighborsWeighted`] returns the weighted out-neighbors of a vertex.
-- [`OutNeighbors`] returns the out-neighbors of a vertex.
-- [`Outdegree`] returns the outdegree of a vertex.
-- [`RemoveArc`] removes an arc from a digraph.
-- [`Size`] returns the number of arcs in a digraph.
-- [`Vertices`] returns the vertices in a digraph.
+- The [`AddArcWeighted`] trait adds an arc to a weighted digraph.
+- The [`AddArc`] trait adds an arc to an unweighted digraph.
+- The [`ArcWeight`] trait returns the weight of an arc.
+- The [`ArcsWeighted`] trait returns the arcs and their weights in a digraph.
+- The [`Arcs`] trait returns the arcs in a digraph.
+- The [`Converse`] trait returns the converse of a digraph.
+- The [`HasArc`] trait checks if an arc exists in a digraph.
+- The [`Indegree`] trait returns the indegree of a vertex.
+- The [`IsSimple`] trait checks if a digraph contains no loops or parallel arcs.
+- The [`Order`] trait returns the number of vertices.
+- The [`OutNeighborsWeighted`] trait returns the weighted out-neighbors of a vertex.
+- The [`OutNeighbors`] trait returns the out-neighbors of a vertex.
+- The [`Outdegree`] trait returns the outdegree of a vertex.
+- The [`RemoveArc`] trait removes an arc from a digraph.
+- The [`Size`] trait returns the number of arcs in a digraph.
+- The [`Vertices`] trait returns the vertices in a digraph.
 
-| Operation                | [AL]        | [AM]          | [WAL]                |
+| Operation                | [Adj. List] | [Adj. Matrix] | [Weighted Adj. List] |
 | :----------------------- | :---------- | :------------ | :------------------- |
 | [`AddArcWeighted`]       | No          | No            | Yes                  |
 | [`AddArc`]               | Yes         | Yes           | No                   |
@@ -120,7 +120,7 @@ The extended traits derive their implementation from the basic operations.
 - [`IsSymmetric`] checks if a digraph is symmetric.
 - [`IsWalk`] checks if a sequence of vertices is a walk in a digraph.
 
-| Operation          | [AL]        | [AM]          | [WAL]                |
+| Operation          | [Adj. List] | [Adj. Matrix] | [Weighted Adj. List] |
 | :----------------- | :---------- | :------------ | :------------------- |
 | [`Degree`]         | Yes         | Yes           | Yes                  |
 | [`HasEdge`]        | Yes         | Yes           | Yes                  |
@@ -219,9 +219,9 @@ vertices in a digraph.
 
 [`DistanceMatrix`]: https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html
 [`BreadthFirstTree`]: https://docs.rs/graaf/latest/graaf/algo/breadth_first_tree/struct.BreadthFirstTree.html
-[AL]: https://docs.rs/graaf/latest/graaf/adjacency_list/digraph/struct.Digraph.html
-[AM]: https://docs.rs/graaf/latest/graaf/adjacency_matrix/digraph/struct.Digraph.html
-[WAL]: https://docs.rs/graaf/latest/graaf/adjacency_list_weighted/digraph/struct.Digraph.html
+[Adj. List]: https://docs.rs/graaf/latest/graaf/adjacency_list/digraph/struct.Digraph.html
+[Adj. Matrix]: https://docs.rs/graaf/latest/graaf/adjacency_matrix/digraph/struct.Digraph.html
+[Weighted Adj. List]: https://docs.rs/graaf/latest/graaf/adjacency_list_weighted/digraph/struct.Digraph.html
 [Adjacency List]: https://docs.rs/graaf/latest/graaf/adjacency_list/digraph/struct.Digraph.html
 [Adjacency Matrix]: https://docs.rs/graaf/latest/graaf/adjacency_matrix/digraph/struct.Digraph.html
 [Weighted Adjacency List]: https://docs.rs/graaf/latest/graaf/adjacency_list_weighted/digraph/struct.Digraph.html

@@ -1,8 +1,7 @@
 //! Generate random tournaments.
 //!
-//! A tournament is a digraph in which, for every pair of distinct
-//! vertices `s` and `t`, exactly one of the arcs `(s, t)` and `(t, s)` is
-//! present.
+//! A tournament is a digraph in which an arc connects every unordered pair of
+//! distinct vertices.
 //!
 //! # Examples
 //!
@@ -44,8 +43,8 @@ use {
 ///
 /// # How can I implement `RandomTournament`?
 ///
-/// Provide an implementation of `random_tournament` that returns a random
-/// tournament.
+/// Provide an implementation of `random_tournament` that generates a random
+/// tournament with `v` vertices OR implement `AddArc` and `Empty`.
 ///
 /// ```
 /// use {
@@ -136,7 +135,7 @@ use {
 /// }
 /// ```
 pub trait RandomTournament {
-    /// Returns a random tournament.
+    /// Generates a random tournament.
     #[must_use]
     fn random_tournament(v: usize) -> Self;
 }

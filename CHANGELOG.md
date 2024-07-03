@@ -5,6 +5,15 @@
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
 - Expand the user guide.
+- Improve documentation for the `Cycle` trait.
+- Improve documentation for the `Empty` trait.
+
+## [0.64.5] - 2024-07-02
+
+Changed
+
+- Improve documentation for the `Complete` trait.
+- Improve documentation for the `RandomTournament` trait.
 
 ## [0.64.4] - 2024-07-02
 

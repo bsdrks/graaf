@@ -33,11 +33,14 @@
 //!
 //! Graaf provides four digraph generators.
 //!
-//! - [`Complete`](gen::Complete) generates a digraph with all possible arcs,
-//!   excluding self-loops.
-//! - [`Cycle`](gen::Cycle) generates a digraph with a cycle of a given length.
-//! - [`Empty`](gen::Empty) generates a digraph with no arcs.
-//! - [`RandomTournament`](gen::RandomTournament) generates a random tournament.
+//! - The [`Complete`](gen::Complete) trait generates a digraph in which an arc
+//!   connects every ordered pair of vertices.
+//! - The [`Cycle`](gen::Cycle) trait generates a digraph with a cycle of a
+//!   given length.
+//! - The [`Empty`](gen::Empty) trait generates a digraph with no arcs.
+//! - The [`RandomTournament`](gen::RandomTournament) trait generates a random
+//!   digraph in which an arc connects every unordered pair of distinct
+//!   vertices.
 //!
 //! | Generator                                   | [Adjacency List] | [Adjacency Matrix] | [Weighted Adjacency List] |
 //! | :------------------------------------------ | :--------------- | :------------------ | :----------------------- |

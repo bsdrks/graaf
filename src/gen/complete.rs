@@ -1,6 +1,6 @@
-//! Generate complete symmetric digraphs.
+//! Generate complete digraphs.
 //!
-//! The generated digraphs are simple; they contain no self-loops.
+//! In a complete digraph, an arc connects every ordered pair of vertices.
 //!
 //! # Examples
 //!
@@ -34,12 +34,12 @@ use crate::{
     op::AddArc,
 };
 
-/// Generate symmetric complete digraphs.
+/// Generate complete digraphs.
 ///
 /// # How can I implement `Complete`?
 ///
-/// Provide an implementation of `complete` that generates a symmetric complete
-/// digraph with `v` vertices OR implement `AddArc` and `Empty`.
+/// Provide an implementation of `complete` that generates a complete digraph
+/// with `v` vertices OR implement `AddArc` and `Empty`.
 ///
 /// ```
 /// use {
