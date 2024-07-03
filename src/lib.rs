@@ -119,7 +119,7 @@
 //!
 //! These functions start from one or more source vertices and allow a custom
 //! step function, target predicate, distance array, breadth-first tree, and
-//! queue value, where applicable.
+//! queue, where applicable.
 //!
 //! - The [`distances`](algo::bfs::distances) function finds the shortest
 //!   distances.
@@ -154,7 +154,7 @@
 //! vertices in a weighted digraph.
 //!
 //! These functions start from one or more source vertices and allow a custom
-//! step function, target predicate, distance array, and heap value, where
+//! step function, target predicate, distance array, and heap, where
 //! applicable.
 //!
 //! - The [`distances`](algo::dijkstra::distances) function finds the shortest
