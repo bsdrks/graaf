@@ -6,6 +6,16 @@
 - Benchmark trait implementations.
 - Expand the user guide.
 
+## [0.64.4] - 2024-07-02
+
+Added
+
+- Add unit test `bellman_ford_moore::single_source_distances_kattis_shortestpath3`.
+
+Changed
+
+- Misc. improvements to the `README`.
+
 ## [0.64.3] - 2024-07-02
 
 Changed

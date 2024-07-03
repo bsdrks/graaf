@@ -28,7 +28,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.64.3"
+graaf = "0.64.4"
 ```
 
 ## Digraph Types
@@ -50,7 +50,7 @@ The [`gen`] module provides four digraph generators.
 - [`Empty`] generates a digraph with no arcs.
 - [`RandomTournament`] generates a random tournament.
 
-| Generator            | [Adj. List] | [Adj. Matrix] | [Weighted Adj. List] |
+| Generator            | [AL]        | [AM]           | [WAL]               |
 | :------------------- | :---------- | :------------- | :------------------ |
 | [`Complete`]         | Yes         | Yes            | No                  |
 | [`Cycle`]            | Yes         | Yes            | No                  |
@@ -82,7 +82,7 @@ The [`op`] module provides digraph operation traits. The [digraph types](#digrap
 - [`Size`] returns the number of arcs in a digraph.
 - [`Vertices`] returns the vertices in a digraph.
 
-| Operation                | [Adj. List] | [Adj. Matrix] | [Weighted Adj. List] |
+| Operation                | [AL]        | [AM]          | [WAL]                |
 | :----------------------- | :---------- | :------------ | :------------------- |
 | [`AddArcWeighted`]       | No          | No            | Yes                  |
 | [`AddArc`]               | Yes         | Yes           | No                   |
@@ -120,7 +120,7 @@ The extended traits derive their implementation from the basic operations.
 - [`IsSymmetric`] checks if a digraph is symmetric.
 - [`IsWalk`] checks if a sequence of vertices is a walk in a digraph.
 
-| Operation          | [Adj. List] | [Adj. Matrix] | [Weighted Adj. List] |
+| Operation          | [AL]        | [AM]          | [WAL]                |
 | :----------------- | :---------- | :------------ | :------------------- |
 | [`Degree`]         | Yes         | Yes           | Yes                  |
 | [`HasEdge`]        | Yes         | Yes           | Yes                  |
@@ -219,9 +219,9 @@ vertices in a digraph.
 
 [`DistanceMatrix`]: https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html
 [`BreadthFirstTree`]: https://docs.rs/graaf/latest/graaf/algo/breadth_first_tree/struct.BreadthFirstTree.html
-[Adj. List]: https://docs.rs/graaf/latest/graaf/adjacency_list/digraph/struct.Digraph.html
-[Adj. Matrix]: https://docs.rs/graaf/latest/graaf/adjacency_matrix/digraph/struct.Digraph.html
-[Weighted Adj. List]: https://docs.rs/graaf/latest/graaf/adjacency_list_weighted/digraph/struct.Digraph.html
+[AL]: https://docs.rs/graaf/latest/graaf/adjacency_list/digraph/struct.Digraph.html
+[AM]: https://docs.rs/graaf/latest/graaf/adjacency_matrix/digraph/struct.Digraph.html
+[WAL]: https://docs.rs/graaf/latest/graaf/adjacency_list_weighted/digraph/struct.Digraph.html
 [Adjacency List]: https://docs.rs/graaf/latest/graaf/adjacency_list/digraph/struct.Digraph.html
 [Adjacency Matrix]: https://docs.rs/graaf/latest/graaf/adjacency_matrix/digraph/struct.Digraph.html
 [Weighted Adjacency List]: https://docs.rs/graaf/latest/graaf/adjacency_list_weighted/digraph/struct.Digraph.html

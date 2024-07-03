@@ -155,6 +155,7 @@ mod tests {
                     kattis_bryr_3_isize,
                     kattis_crosscountry_isize,
                     kattis_shortestpath1_isize,
+                    kattis_shortestpath3,
                 },
                 Digraph,
             },
@@ -225,6 +226,11 @@ mod tests {
         assert!(single_source_distances(&kattis_shortestpath1_isize(), 0)
             .unwrap()
             .eq(&[0, 2, 4, isize::MAX]));
+    }
+
+    #[test]
+    fn single_source_distances_kattis_shortestpath3() {
+        assert_eq!(single_source_distances(&kattis_shortestpath3(), 0), None);
     }
 
     #[test]

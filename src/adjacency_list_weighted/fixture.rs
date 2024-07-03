@@ -346,3 +346,22 @@ pub fn kattis_shortestpath1_isize() -> Digraph<isize> {
         BTreeMap::from([(0, 2)]),
     ])
 }
+
+/// Per Austrin. 2005. Single source shortest path, negative weights.
+/// Kattis. <https://open.kattis.com/problems/shortestpath3>
+///
+/// ```text
+/// 0 -> {1 (999), 3 (2)}
+/// 1 -> {2 (-2)}
+/// 2 -> {1 (1)}
+/// ```
+#[must_use]
+pub fn kattis_shortestpath3() -> Digraph<isize> {
+    Digraph::from(vec![
+        BTreeMap::from([(1, 999), (3, 2)]),
+        BTreeMap::from([(2, -2)]),
+        BTreeMap::from([(1, 1)]),
+        BTreeMap::new(),
+        BTreeMap::new(),
+    ])
+}
