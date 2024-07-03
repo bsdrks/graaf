@@ -183,7 +183,7 @@
 //!
 //! ## Breadth-first tree
 //!
-//! A breadth-first-tree is the result of a breadth-first search and contains
+//! A breadth-first tree is the result of a breadth-first search and contains
 //! the predecessors of the vertices on the shortest paths.
 //!
 //! - The [`search`](algo::breadth_first_tree::BreadthFirstTree::search) method
@@ -191,8 +191,7 @@
 //! - The [`search_by`](algo::breadth_first_tree::BreadthFirstTree::search_by)
 //!   method finds a vertex by predicate.
 //!
-//! These functions produce a
-//! [`BreadthFirstTree`](algo::breadth_first_tree::BreadthFirstTree).
+//! These functions produce a breadth-first tree.
 //!
 //! - [`bfs::single_source_predecessors`](algo::bfs::single_source_predecessors)
 //! - [`bfs::predecessors`](algo::bfs::predecessors)

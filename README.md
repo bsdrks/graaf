@@ -152,12 +152,12 @@ The Floyd-Warshall algorithm finds the shortest paths between all pairs of verti
 
 ### Breadth-First Tree
 
-A breadth-first-tree is the result of a breadth-first search.
+A breadth-first tree is the result of a breadth-first search.
 
 - The [`search`](https://docs.rs/graaf/latest/graaf/algo/breadth_first_tree/struct.BreadthFirstTree.html#method.search) method finds a vertex by value.
 - The [`search_by`](https://docs.rs/graaf/latest/graaf/algo/breadth_first_tree/struct.BreadthFirstTree.html#method.search_by) method finds a vertex by predicate.
 
-These functions produce a [`BreadthFirstTree`](https://docs.rs/graaf/latest/graaf/algo/breadth_first_tree/struct.BreadthFirstTree.html).
+These functions produce a breadth-first tree.
 
 - [`bfs::single_source_predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.single_source_predecessors.html)
 - [`bfs::predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.predecessors.html)
