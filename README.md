@@ -29,7 +29,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.64.11"
+graaf = "0.64.12"
 ```
 
 ## Digraph Types
@@ -187,7 +187,7 @@ A distance matrix contains the shortest distances between all pairs of vertices 
 [`Converse`]: https://docs.rs/graaf/latest/graaf/op/converse/trait.Converse.html
 [`Cycle`]: https://docs.rs/graaf/latest/graaf/gen/cycle/trait.Cycle.html
 [`Degree`]: https://docs.rs/graaf/latest/graaf/op/degree/trait.Degree.html
-[`DegreeSequence`]: https://docs.rs/graaf/latest/graaf/op/degree/trait.DegreeSequence.html
+[`DegreeSequence`]: https://docs.rs/graaf/latest/graaf/op/degree_sequence/trait.DegreeSequence.html
 [`Empty`]: https://docs.rs/graaf/latest/graaf/gen/empty/trait.Empty.html
 [`HasArc`]: https://docs.rs/graaf/latest/graaf/op/has_arc/trait.HasArc.html
 [`HasEdge`]: https://docs.rs/graaf/latest/graaf/op/has_edge/trait.HasEdge.html

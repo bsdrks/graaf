@@ -9,6 +9,12 @@
 - Improve documentation for the `Cycle` trait.
 - Improve documentation for the `Empty` trait.
 
+## [0.64.12] - 2024-07-04
+
+Fixed
+
+- Fix the `DegreeSequence` link in the `README`.
+
 ## [0.64.11] - 2024-07-04
 
 Fixed
