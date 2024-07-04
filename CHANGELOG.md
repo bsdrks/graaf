@@ -8,6 +8,13 @@
 - Improve documentation for the `Cycle` trait.
 - Improve documentation for the `Empty` trait.
 
+## [0.64.9] - 2024-07-04
+
+Added
+
+- Add documentation alias `centre` for `DistanceMatrix::center`.
+- Add documentation alias `jordan_centre` for `DistanceMatrix::center`.
+
 ## [0.64.8] - 2024-07-03
 
 Changed

@@ -50,7 +50,7 @@ use {
 /// An adjacency list representation of an unweighted digraph
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct Digraph {
-    /// The edges of the digraph
+    /// The arcs of the digraph
     arcs: Vec<BTreeSet<usize>>,
 }
 

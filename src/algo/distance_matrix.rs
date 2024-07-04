@@ -151,7 +151,9 @@ impl<W> DistanceMatrix<W> {
     ///
     /// assert!(dist.center().iter().eq(&[3]));
     /// ```
+    #[doc(alias = "centre")]
     #[doc(alias = "jordan_center")]
+    #[doc(alias = "jordan_centre")]
     pub fn center(&self) -> Vec<usize>
     where
         W: Copy + Ord,
