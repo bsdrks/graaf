@@ -47,7 +47,7 @@
 //! assert!(tournament.is_superdigraph(&tournament));
 //! ```
 
-use crate::op::IsSubdigraph;
+use super::IsSubdigraph;
 
 /// Determine whether a digraph is a superdigraph of another digraph.
 ///

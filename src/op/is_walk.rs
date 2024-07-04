@@ -25,7 +25,7 @@
 //! assert!(!digraph.is_walk(&[0, 2]));
 //! ```
 
-use crate::op::HasArc;
+use super::HasArc;
 
 /// Check whether a sequence of vertices is a walk in a digraph.
 ///

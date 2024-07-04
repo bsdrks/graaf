@@ -23,7 +23,7 @@
 //! assert!(Digraph::random_tournament(3).is_semicomplete());
 //! ```
 
-use crate::op::{
+use super::{
     HasArc,
     Order,
 };

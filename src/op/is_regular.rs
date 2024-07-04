@@ -24,7 +24,7 @@
 //! assert!(!digraph.is_regular());
 //! ```
 
-use crate::op::{
+use super::{
     Indegree,
     Outdegree,
     Vertices,

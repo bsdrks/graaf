@@ -2,6 +2,7 @@
 
 ## Provisional roadmap
 
+- Apply internal naming conventions.
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
 - Expand the user guide.
@@ -14,6 +15,16 @@ Added
 
 - Add documentation alias `centre` for `DistanceMatrix::center`.
 - Add documentation alias `jordan_centre` for `DistanceMatrix::center`.
+- Add naming conventions to the `README`. 
+- Add the `DegreeSequence` trait.
+- Implement and test `DegreeSequence` for `adjacency_list::Digraph`.
+- Implement and test `DegreeSequence` for `adjacency_list_weighted::Digraph`.
+- Implement and test `DegreeSequence` for `adjacency_matrix::Digraph`.
+
+Changed
+
+- Apply internal naming conventions in `adjacency_list`.
+- Use `super` in `op` imports.
 
 ## [0.64.8] - 2024-07-03
 

@@ -1,7 +1,7 @@
-#![doc(alias = "valency")]
-//! Get the degree of a vertex.
+//! Get the degree sequence of a digraph.
 //!
-//! For digraphs, the degree is the sum of the indegree and outdegree.
+//! For digraphs, the degree sequence is the list of its indegree and outdegree
+//! pairs.
 //!
 //! # Examples
 //!
@@ -11,7 +11,7 @@
 //!     gen::Empty,
 //!     op::{
 //!         AddArc,
-//!         Degree,
+//!         DegreeSequence,
 //!     },
 //! };
 //!
@@ -22,29 +22,32 @@
 //! digraph.add_arc(1, 2);
 //! digraph.add_arc(2, 0);
 //!
-//! assert_eq!(digraph.degree(0), 3);
-//! assert_eq!(digraph.degree(1), 2);
-//! assert_eq!(digraph.degree(2), 3);
+//! assert!(digraph
+//!     .degree_sequence()
+//!     .iter()
+//!     .eq(&[(1, 2), (1, 1), (2, 1)]));
 //! ```
 
 use super::{
     Indegree,
     Outdegree,
+    Vertices,
 };
 
-/// Get the degree of a vertex.
+/// Get the outdegree sequence of a digraph.
 ///
-/// # How can I implement `Degree`?
+/// # How can I implement `DegreeSequence`?
 ///
-/// Provide an implementation of `Degree` that returns the degree of the vertex
-/// OR implement `Indegree` and `Outdegree`.
+/// Provide an implementation of `DegreeSequence` that returns the degree
+/// sequence of the digraph OR implement `Indegree` and `Outdegree`.
 ///
 /// ```
 /// use {
 ///     graaf::op::{
-///         Degree,
+///         DegreeSequence,
 ///         Indegree,
 ///         Outdegree,
+///         Vertices,
 ///     },
 ///     std::collections::BTreeSet,
 /// };
@@ -65,6 +68,12 @@ use super::{
 ///     }
 /// }
 ///
+/// impl Vertices for Digraph {
+///     fn vertices(&self) -> impl Iterator<Item = usize> {
+///         0..self.arcs.len()
+///     }
+/// }
+///
 /// let digraph = Digraph {
 ///     arcs: vec![
 ///         BTreeSet::from([1, 2]),
@@ -74,10 +83,10 @@ use super::{
 ///     ],
 /// };
 ///
-/// assert_eq!(digraph.degree(0), 3);
-/// assert_eq!(digraph.degree(1), 2);
-/// assert_eq!(digraph.degree(2), 3);
-/// assert_eq!(digraph.degree(3), 0);
+/// assert!(digraph
+///     .degree_sequence()
+///     .iter()
+///     .eq(&[(1, 2), (1, 1), (2, 1), (0, 0)]));
 /// ```
 ///
 /// # Examples
@@ -88,7 +97,7 @@ use super::{
 ///     gen::Empty,
 ///     op::{
 ///         AddArc,
-///         Degree,
+///         DegreeSequence,
 ///     },
 /// };
 ///
@@ -99,24 +108,23 @@ use super::{
 /// digraph.add_arc(1, 2);
 /// digraph.add_arc(2, 0);
 ///
-/// assert_eq!(digraph.degree(0), 3);
-/// assert_eq!(digraph.degree(1), 2);
-/// assert_eq!(digraph.degree(2), 3);
+/// assert!(digraph
+///     .degree_sequence()
+///     .iter()
+///     .eq(&[(1, 2), (1, 1), (2, 1)]));
 /// ```
-pub trait Degree {
-    /// Returns the degree of a vertex in the digraph.
-    ///
-    /// # Arguments
-    ///
-    /// * `s`: The vertex.
-    fn degree(&self, s: usize) -> usize;
+pub trait DegreeSequence {
+    /// Returns the degree sequence of a digraph.
+    fn degree_sequence(&self) -> Vec<(usize, usize)>;
 }
 
-impl<T> Degree for T
+impl<T> DegreeSequence for T
 where
-    T: Indegree + Outdegree,
+    T: Indegree + Outdegree + Vertices,
 {
-    fn degree(&self, s: usize) -> usize {
-        self.indegree(s) + self.outdegree(s)
+    fn degree_sequence(&self) -> Vec<(usize, usize)> {
+        self.vertices()
+            .map(|u| (self.indegree(u), self.outdegree(u)))
+            .collect()
     }
 }

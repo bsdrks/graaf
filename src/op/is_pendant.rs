@@ -28,7 +28,7 @@
 //! assert!(digraph.is_pendant(3));
 //! ```
 
-use crate::op::Degree;
+use super::Degree;
 
 /// Determine whether a vertex is a pendant vertex.
 ///

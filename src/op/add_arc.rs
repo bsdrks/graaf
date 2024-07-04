@@ -26,7 +26,7 @@
 /// # How can I implement `AddArc`?
 ///
 /// Provide an implementation of `add_arc` that adds an unweighted arc from
-/// `s` to `t` to the digraph.
+/// `u` to `v` to the digraph.
 ///
 /// ```
 /// use graaf::op::AddArc;
@@ -36,8 +36,8 @@
 /// }
 ///
 /// impl AddArc for Digraph {
-///     fn add_arc(&mut self, s: usize, t: usize) {
-///         self.arcs[s].push(t);
+///     fn add_arc(&mut self, u: usize, v: usize) {
+///         self.arcs[u].push(v);
 ///     }
 /// }
 ///
@@ -76,11 +76,11 @@
 /// [`HasArc`]: crate::op::HasArc
 /// [`RemoveArc`]: crate::op::RemoveArc
 pub trait AddArc {
-    /// Adds an arc from `s` to `t` to the digraph.
+    /// Adds an arc from `u` to `v` to the digraph.
     ///
     /// # Arguments
     ///
-    /// * `s`: The head vertex.
-    /// * `t`: The tail vertex.
-    fn add_arc(&mut self, s: usize, t: usize);
+    /// * `u`: The head vertex.
+    /// * `v`: The tail vertex.
+    fn add_arc(&mut self, u: usize, v: usize);
 }

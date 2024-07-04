@@ -298,6 +298,7 @@ mod tests {
             },
             op::{
                 Degree,
+                DegreeSequence,
                 HasEdge,
                 InNeighbors,
                 IsBalanced,
@@ -1342,6 +1343,91 @@ mod tests {
         assert!(digraph.degree(11) == 0);
         assert!(digraph.degree(12) == 2);
         assert!(digraph.degree(13) == 4);
+    }
+
+    #[test]
+    fn degree_sequence_bang_jensen_94() {
+        assert!(bang_jensen_94().degree_sequence().iter().eq(&[
+            (0, 2),
+            (2, 1),
+            (1, 4),
+            (2, 1),
+            (1, 1),
+            (2, 0),
+            (1, 0)
+        ]));
+    }
+
+    #[test]
+    fn degree_sequence_kattis_builddeps() {
+        assert!(kattis_builddeps().degree_sequence().iter().eq(&[
+            (0, 2),
+            (3, 0),
+            (0, 3),
+            (2, 1),
+            (2, 1),
+            (1, 1)
+        ]));
+    }
+
+    #[test]
+    fn degree_sequence_kattis_escapewallmaria_1() {
+        assert!(kattis_escapewallmaria_1().degree_sequence().iter().eq(&[
+            (0, 0),
+            (0, 0),
+            (0, 0),
+            (0, 0),
+            (0, 0),
+            (2, 2),
+            (1, 1),
+            (0, 0),
+            (0, 0),
+            (2, 2),
+            (0, 0),
+            (0, 0),
+            (1, 0),
+            (1, 2)
+        ]));
+    }
+
+    #[test]
+    fn degree_sequence_kattis_escapewallmaria_2() {
+        assert!(kattis_escapewallmaria_2().degree_sequence().iter().eq(&[
+            (0, 0),
+            (0, 0),
+            (0, 0),
+            (0, 0),
+            (0, 0),
+            (2, 2),
+            (1, 1),
+            (0, 0),
+            (0, 0),
+            (2, 1),
+            (0, 0),
+            (0, 0),
+            (1, 1),
+            (1, 2)
+        ]));
+    }
+
+    #[test]
+    fn degree_sequence_kattis_escapewallmaria_3() {
+        assert!(kattis_escapewallmaria_3().degree_sequence().iter().eq(&[
+            (0, 0),
+            (2, 2),
+            (2, 2),
+            (0, 0),
+            (0, 0),
+            (3, 3),
+            (2, 2),
+            (0, 0),
+            (0, 0),
+            (2, 2),
+            (0, 0),
+            (0, 0),
+            (1, 1),
+            (2, 2)
+        ]));
     }
 
     #[test]

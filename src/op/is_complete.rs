@@ -23,7 +23,7 @@
 //! assert!(!Digraph::random_tournament(3).is_complete());
 //! ```
 
-use crate::op::{
+use super::{
     HasEdge,
     Order,
 };

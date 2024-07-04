@@ -219,9 +219,11 @@ mod tests {
                 kattis_bryr_3_usize,
                 kattis_crosscountry_usize,
                 kattis_shortestpath1_usize,
+                kattis_shortestpath3,
             },
             op::{
                 Degree,
+                DegreeSequence,
                 HasEdge,
                 InNeighbors,
                 IsBalanced,
@@ -964,6 +966,105 @@ mod tests {
         assert!(digraph.degree(1) == 2);
         assert!(digraph.degree(2) == 1);
         assert!(digraph.degree(3) == 1);
+    }
+
+    #[test]
+    fn degree_sequence_bang_jensen_94_weighted() {
+        assert!(bang_jensen_94_weighted_usize()
+            .degree_sequence()
+            .iter()
+            .eq(&[(0, 2), (2, 1), (1, 4), (2, 1), (1, 1), (2, 0), (1, 0)]));
+    }
+
+    #[test]
+    fn degree_sequence_bang_jensen_96() {
+        assert!(bang_jensen_96_usize().degree_sequence().iter().eq(&[
+            (0, 2),
+            (2, 2),
+            (3, 2),
+            (3, 1),
+            (1, 3),
+            (2, 1)
+        ]));
+    }
+
+    #[test]
+    fn degree_sequence_bang_jensen_99() {
+        assert!(bang_jensen_99().degree_sequence().iter().eq(&[
+            (0, 2),
+            (1, 1),
+            (2, 2),
+            (3, 1),
+            (2, 2),
+            (2, 2)
+        ]));
+    }
+
+    #[test]
+    fn degree_sequence_kattis_bryr_1() {
+        assert!(kattis_bryr_1_usize()
+            .degree_sequence()
+            .iter()
+            .eq(&[(2, 2), (2, 2), (2, 2)]));
+    }
+
+    #[test]
+    fn degree_sequence_kattis_bryr_2() {
+        assert!(kattis_bryr_2_usize().degree_sequence().iter().eq(&[
+            (2, 2),
+            (2, 2),
+            (2, 2),
+            (3, 3),
+            (2, 2),
+            (1, 1)
+        ]));
+    }
+
+    #[test]
+    fn degree_sequence_kattis_bryr_3() {
+        assert!(kattis_bryr_3_usize().degree_sequence().iter().eq(&[
+            (1, 1),
+            (2, 2),
+            (2, 1),
+            (4, 4),
+            (3, 3),
+            (3, 3),
+            (4, 4),
+            (2, 2),
+            (2, 2),
+            (2, 3)
+        ]));
+    }
+
+    #[test]
+    fn degree_sequence_kattis_crosscountry() {
+        assert!(kattis_crosscountry_usize().degree_sequence().iter().eq(&[
+            (3, 3),
+            (3, 3),
+            (3, 3),
+            (3, 3)
+        ]));
+    }
+
+    #[test]
+    fn degree_sequence_kattis_shortestpath1() {
+        assert!(kattis_shortestpath1_usize().degree_sequence().iter().eq(&[
+            (1, 1),
+            (1, 1),
+            (1, 0),
+            (0, 1)
+        ]));
+    }
+
+    #[test]
+    fn degree_sequence_kattis_shortestpath3() {
+        assert!(kattis_shortestpath3().degree_sequence().iter().eq(&[
+            (0, 2),
+            (2, 1),
+            (1, 1),
+            (1, 0),
+            (0, 0)
+        ]));
     }
 
     #[test]

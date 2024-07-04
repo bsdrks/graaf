@@ -18,6 +18,7 @@ Work with directed graphs in Rust.
   - [Floyd-Warshall Algorithm](#floyd-warshall)
   - [Breath-First Tree](#breadth-first-tree)
   - [Distance Matrix](#distance-matrix)
+- [Naming Conventions](#naming-conventions)
 - [Project Goals](#project-goals)
 - [Changelog](#changelog)
 - [License](#license)
@@ -28,7 +29,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.64.8"
+graaf = "0.64.9"
 ```
 
 ## Digraph Types
@@ -214,7 +215,17 @@ A distance matrix contains the shortest distances between all pairs of vertices 
 [`gen`]: https://docs.rs/graaf/latest/graaf/gen/index.html
 [`op`]: https://docs.rs/graaf/latest/graaf/op/index.html
 
-## Project goals
+## Naming Conventions
+
+- `s` denotes a source vertex.
+- `t` denotes a target vertex.
+- `u` denotes a head vertex or the first vertex in scope.
+- `v` denotes a tail vertex or the second vertex in scope.
+- `w` denotes a weight.
+- `x` denotes a head vertex or the third vertex in scope.
+- `y` denotes a tail vertex or the fourth vertex in scope.
+
+## Project Goals
 
 - A flexible API for digraph operations
 - A comprehensive set of algorithms
