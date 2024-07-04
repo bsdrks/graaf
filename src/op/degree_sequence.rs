@@ -39,7 +39,8 @@ use super::{
 /// # How can I implement `DegreeSequence`?
 ///
 /// Provide an implementation of `DegreeSequence` that returns the degree
-/// sequence of the digraph OR implement `Indegree` and `Outdegree`.
+/// sequence of the digraph OR implement `Indegree`, `Outdegree`, and
+/// `Vertices`.
 ///
 /// ```
 /// use {
