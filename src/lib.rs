@@ -81,7 +81,8 @@
 //! operations.
 //!
 //! - The [`Degree`](op::Degree) returns the degree of a vertex.
-//! - The [`DegreeSequence`](op::DegreeSequence) returns the degree of a vertex.
+//! - The [`DegreeSequence`](op::DegreeSequence) returns the degree sequence of
+//!   a digraph.
 //! - The [`HasEdge`](op::HasEdge) trait checks if an edge exists in a digraph.
 //! - The [`InNeighbors`](op::InNeighbors) gets the in-neighbors of a vertex.
 //! - The [`IsBalanced`](op::IsBalanced) trait checks if a digraph is balanced.
