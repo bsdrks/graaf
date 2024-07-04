@@ -9,6 +9,12 @@
 - Improve documentation for the `Cycle` trait.
 - Improve documentation for the `Empty` trait.
 
+## [0.64.10] - 2024-07-04
+
+Added
+
+- Add `DegreeSequence` to the `README` and the `lib.rs` documentation.
+
 ## [0.64.9] - 2024-07-04
 
 Added
