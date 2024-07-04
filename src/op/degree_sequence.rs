@@ -34,7 +34,7 @@ use super::{
     Vertices,
 };
 
-/// Get the outdegree sequence of a digraph.
+/// Get the degree sequence of a digraph.
 ///
 /// # How can I implement `DegreeSequence`?
 ///
