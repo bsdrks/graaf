@@ -58,15 +58,15 @@ use crate::{
 /// }
 ///
 /// impl AddArc for Digraph {
-///     fn add_arc(&mut self, s: usize, t: usize) {
-///         self.arcs[s].insert(t);
+///     fn add_arc(&mut self, u: usize, v: usize) {
+///         self.arcs[u].insert(v);
 ///     }
 /// }
 ///
 /// impl Empty for Digraph {
-///     fn empty(v: usize) -> Self {
+///     fn empty(order: usize) -> Self {
 ///         Digraph {
-///             arcs: vec![BTreeSet::new(); v],
+///             arcs: vec![BTreeSet::new(); order],
 ///         }
 ///     }
 /// }
@@ -88,8 +88,8 @@ pub trait Complete {
     ///
     /// # Arguments
     ///
-    /// * `v` - The number of vertices in the digraph
-    fn complete(v: usize) -> Self;
+    /// * `order` - The number of vertices in the digraph
+    fn complete(order: usize) -> Self;
 }
 
 impl<D> Complete for D
@@ -98,14 +98,14 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `v` is zero.
-    fn complete(v: usize) -> Self {
-        let mut digraph = D::empty(v);
+    /// Panics if `order` is zero.
+    fn complete(order: usize) -> Self {
+        let mut digraph = D::empty(order);
 
-        for s in 0..v {
-            for t in (s + 1)..v {
-                digraph.add_arc(s, t);
-                digraph.add_arc(t, s);
+        for u in 0..order {
+            for v in (u + 1)..order {
+                digraph.add_arc(u, v);
+                digraph.add_arc(v, u);
             }
         }
 

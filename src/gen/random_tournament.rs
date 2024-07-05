@@ -72,19 +72,19 @@ use {
 /// }
 ///
 /// impl RandomTournament for Tournament {
-///     fn random_tournament(v: usize) -> Self {
-///         let mut rng = Xoshiro256StarStar::new(v as u64);
+///     fn random_tournament(order: usize) -> Self {
+///         let mut rng = Xoshiro256StarStar::new(order as u64);
 ///
 ///         let mut tournament = Self {
-///             arcs: vec![BTreeSet::new(); v],
+///             arcs: vec![BTreeSet::new(); order],
 ///         };
 ///
-///         for s in 0..v {
-///             for t in (s + 1)..v {
+///         for u in 0..order {
+///             for v in (s + 1)..order {
 ///                 if rng.next_bool() {
-///                     tournament.arcs[s].insert(t);
+///                     tournament.arcs[u].insert(v);
 ///                 } else {
-///                     tournament.arcs[t].insert(s);
+///                     tournament.arcs[v].insert(u);
 ///                 }
 ///             }
 ///         }
@@ -102,8 +102,8 @@ use {
 ///     6
 /// );
 ///
-/// for s in 0..tournament.arcs.len() {
-///     assert!((0..3).contains(&tournament.arcs[s].len()));
+/// for u in 0..tournament.arcs.len() {
+///     assert!((0..3).contains(&tournament.arcs[u].len()));
 /// }
 /// ```
 ///
@@ -137,23 +137,23 @@ use {
 pub trait RandomTournament {
     /// Generates a random tournament.
     #[must_use]
-    fn random_tournament(v: usize) -> Self;
+    fn random_tournament(order: usize) -> Self;
 }
 
 impl<D> RandomTournament for D
 where
     D: AddArc + Empty,
 {
-    fn random_tournament(v: usize) -> Self {
-        let mut digraph = Self::empty(v);
-        let mut rng = Xoshiro256StarStar::new(v as u64);
+    fn random_tournament(order: usize) -> Self {
+        let mut digraph = Self::empty(order);
+        let mut rng = Xoshiro256StarStar::new(order as u64);
 
-        for s in 0..v {
-            for t in (s + 1)..v {
+        for u in 0..order {
+            for v in (u + 1)..order {
                 if rng.next_bool() {
-                    digraph.add_arc(s, t);
+                    digraph.add_arc(u, v);
                 } else {
-                    digraph.add_arc(t, s);
+                    digraph.add_arc(v, u);
                 }
             }
         }

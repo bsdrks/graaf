@@ -37,8 +37,8 @@ use crate::{
 ///
 /// # How can I implement `Cycle`?
 ///
-/// Provide an implementation of `cycle` that generates a cycle digraph with `v`
-/// vertices OR implement `AddArc` and `Empty`.
+/// Provide an implementation of `cycle` that generates a cycle digraph with
+/// `order` vertices OR implement `AddArc` and `Empty`.
 ///
 /// ```
 /// use {
@@ -112,9 +112,9 @@ pub trait Cycle {
     ///
     /// # Arguments
     ///
-    /// * `v` - The number of vertices in the digraph
+    /// * `order` - The number of vertices in the digraph
     #[must_use]
-    fn cycle(v: usize) -> Self;
+    fn cycle(order: usize) -> Self;
 }
 
 impl<D> Cycle for D
@@ -123,15 +123,15 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `V` is zero.
-    fn cycle(v: usize) -> Self {
-        let mut digraph = D::empty(v);
+    /// Panics if `order` is zero.
+    fn cycle(order: usize) -> Self {
+        let mut digraph = D::empty(order);
 
-        for i in 0..v - 1 {
-            digraph.add_arc(i, i + 1);
+        for u in 0..order - 1 {
+            digraph.add_arc(u, u + 1);
         }
 
-        digraph.add_arc(v - 1, 0);
+        digraph.add_arc(order - 1, 0);
 
         digraph
     }

@@ -52,12 +52,12 @@
 /// impl Empty for Digraph {
 ///     /// # Panics
 ///     ///
-///     /// Panics if `v` is zero.
-///     fn empty(v: usize) -> Self {
-///         assert!(v > 0, "a digraph must have at least one vertex");
+///     /// Panics if `order` is zero.
+///     fn empty(order: usize) -> Self {
+///         assert!(order > 0, "a digraph must have at least one vertex");
 ///
 ///         Digraph {
-///             arcs: vec![BTreeSet::new(); v],
+///             arcs: vec![BTreeSet::new(); order],
 ///         }
 ///     }
 /// }
@@ -110,9 +110,9 @@ pub trait Empty {
     ///
     /// # Arguments
     ///
-    /// * `v` - The number of vertices in the digraph
+    /// * `order` - The number of vertices in the digraph
     #[must_use]
-    fn empty(v: usize) -> Self;
+    fn empty(order: usize) -> Self;
 
     /// Generates a trivial digraph.
     ///
