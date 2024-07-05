@@ -40,12 +40,12 @@
 ///
 /// impl Converse for Digraph {
 ///     fn converse(&self) -> Self {
-///         let v = self.arcs.len();
-///         let mut arcs = vec![BTreeSet::<usize>::new(); v];
+///         let order = self.arcs.len();
+///         let mut arcs = vec![BTreeSet::<usize>::new(); order];
 ///
-///         for (s, set) in self.arcs.iter().enumerate() {
-///             for &t in set {
-///                 arcs[t].insert(s);
+///         for (u, set) in self.arcs.iter().enumerate() {
+///             for &v in set {
+///                 arcs[v].insert(u);
 ///             }
 ///         }
 ///

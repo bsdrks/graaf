@@ -35,7 +35,7 @@ use super::Degree;
 /// # How can I implement `IsPendant`?
 ///
 /// Provide an implementation of `is_pendant` that returns `true` if the vertex
-/// is a pendant vertex and `false` otherwise.
+/// is a pendant vertex and `false` otherwise OR implement `Degree`.
 ///
 /// ```
 /// use {
@@ -52,14 +52,14 @@ use super::Degree;
 /// }
 ///
 /// impl Indegree for Digraph {
-///     fn indegree(&self, s: usize) -> usize {
-///         self.arcs.iter().filter(|set| set.contains(&s)).count()
+///     fn indegree(&self, u: usize) -> usize {
+///         self.arcs.iter().filter(|set| set.contains(&u)).count()
 ///     }
 /// }
 ///
 /// impl Outdegree for Digraph {
-///     fn outdegree(&self, s: usize) -> usize {
-///         self.arcs[s].len()
+///     fn outdegree(&self, u: usize) -> usize {
+///         self.arcs[u].len()
 ///     }
 /// }
 ///
@@ -80,14 +80,14 @@ use super::Degree;
 pub trait IsPendant {
     /// Returns `true` if the vertex is a pendant vertex in the digraph and
     /// `false` otherwise
-    fn is_pendant(&self, s: usize) -> bool;
+    fn is_pendant(&self, u: usize) -> bool;
 }
 
 impl<T> IsPendant for T
 where
     T: Degree,
 {
-    fn is_pendant(&self, s: usize) -> bool {
-        self.degree(s) == 1
+    fn is_pendant(&self, u: usize) -> bool {
+        self.degree(u) == 1
     }
 }

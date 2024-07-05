@@ -56,7 +56,7 @@
 ///         self.arcs
 ///             .iter()
 ///             .enumerate()
-///             .all(|(s, set)| !set.contains(&s))
+///             .all(|(u, set)| !set.contains(&u))
 ///     }
 /// }
 /// ```

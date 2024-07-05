@@ -42,8 +42,8 @@
 /// }
 ///
 /// impl Outdegree for Digraph {
-///     fn outdegree(&self, s: usize) -> usize {
-///         self.arcs.get(s).map_or(0, Vec::len)
+///     fn outdegree(&self, u: usize) -> usize {
+///         self.arcs.get(u).map_or(0, Vec::len)
 ///     }
 /// }
 /// ```

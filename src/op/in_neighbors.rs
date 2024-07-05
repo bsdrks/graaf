@@ -46,11 +46,11 @@ use super::Arcs;
 /// }
 ///
 /// impl InNeighbors for Digraph {
-///     fn in_neighbors(&self, t: usize) -> impl Iterator<Item = usize> {
+///     fn in_neighbors(&self, v: usize) -> impl Iterator<Item = usize> {
 ///         self.arcs
 ///             .iter()
 ///             .enumerate()
-///             .filter_map(move |(s, ts)| ts.iter().find(|&t_| *t_ == t).map(move |_| s))
+///             .filter_map(move |(u, set)| set.iter().find(|&v_| *v_ == v).map(move |_| u))
 ///     }
 /// }
 ///

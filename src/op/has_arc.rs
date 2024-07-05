@@ -1,6 +1,6 @@
 //! Check if an arc exists from one vertex to another.
 //!
-//! To check if an arc exists from `s` to `t` and from `t` to `s`, see
+//! To check if an arc exists from `u` to `v` and from `v` to `u`, see
 //! [`HasEdge`].
 //!
 //! # Examples
@@ -36,7 +36,7 @@
 /// # How can I implement `HasArc`?
 ///
 /// Provide an implementation of `has_arc` that returns `true` if there is an
-/// arc from `s` to `t`.
+/// arc from `u` to `v`.
 ///
 /// ```
 /// use {
@@ -49,8 +49,8 @@
 /// }
 ///
 /// impl HasArc for Digraph {
-///     fn has_arc(&self, s: usize, t: usize) -> bool {
-///         self.arcs.get(s).map_or(false, |set| set.contains(&t))
+///     fn has_arc(&self, u: usize, v: usize) -> bool {
+///         self.arcs.get(u).map_or(false, |set| set.contains(&v))
 ///     }
 /// }
 ///

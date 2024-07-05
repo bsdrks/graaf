@@ -152,8 +152,8 @@ use {
 /// }
 ///
 /// impl HasArc for Digraph {
-///     fn has_arc(&self, s: usize, t: usize) -> bool {
-///         self.arcs[s].contains(&t)
+///     fn has_arc(&self, u: usize, v: usize) -> bool {
+///         self.arcs[u].contains(&v)
 ///     }
 /// }
 ///
@@ -162,13 +162,13 @@ use {
 ///         self.arcs
 ///             .iter()
 ///             .enumerate()
-///             .flat_map(|(s, set)| set.iter().map(move |t| (s, *t)))
+///             .flat_map(|(u, set)| set.iter().map(move |v| (u, *v)))
 ///     }
 /// }
 ///
 /// impl Vertices for Digraph {
 ///     fn vertices(&self) -> impl Iterator<Item = usize> {
-///         (0..self.arcs.len())
+///         0..self.arcs.len()
 ///     }
 /// }
 ///
@@ -200,7 +200,7 @@ where
         let dv = d.vertices().collect::<BTreeSet<_>>();
 
         self.arcs()
-            .all(|(s, t)| d.has_arc(s, t) && hv.contains(&s) && hv.contains(&t))
-            && hv.iter().all(|s| dv.contains(s))
+            .all(|(u, v)| d.has_arc(u, v) && hv.contains(&u) && hv.contains(&v))
+            && hv.iter().all(|u| dv.contains(u))
     }
 }

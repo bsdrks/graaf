@@ -29,8 +29,6 @@ use crate::op::{
 ///     op::AddArc,
 /// };
 ///
-/// let order = 6;
-///
 /// // 0 -> {4}
 /// // 1 -> {0}
 /// // 2 -> {1, 3, 5}
@@ -38,7 +36,7 @@ use crate::op::{
 /// // 4 -> {}
 /// // 5 -> {4}
 ///
-/// let mut digraph = Digraph::empty(order);
+/// let mut digraph = Digraph::empty(6);
 ///
 /// digraph.add_arc(0, 4);
 /// digraph.add_arc(1, 0);
@@ -47,9 +45,9 @@ use crate::op::{
 /// digraph.add_arc(2, 5);
 /// digraph.add_arc(5, 4);
 ///
-/// let mut ordering = [0; order];
-/// let mut t_visit = [0; order];
-/// let mut t_expl = [0; order];
+/// let mut ordering = [0; 6];
+/// let mut t_visit = [0; 6];
+/// let mut t_expl = [0; 6];
 ///
 /// dfsa(&digraph, &mut ordering, &mut t_visit, &mut t_expl);
 ///
@@ -118,8 +116,6 @@ fn dfsa_visit<D>(
 ///     op::AddArc,
 /// };
 ///
-/// let order = 6;
-///
 /// // 0 -> {4}
 /// // 1 -> {0}
 /// // 2 -> {1, 3, 5}
@@ -127,7 +123,7 @@ fn dfsa_visit<D>(
 /// // 4 -> {}
 /// // 5 -> {4}
 ///
-/// let mut digraph = Digraph::empty(order);
+/// let mut digraph = Digraph::empty(6);
 ///
 /// digraph.add_arc(0, 4);
 /// digraph.add_arc(1, 0);
@@ -136,10 +132,10 @@ fn dfsa_visit<D>(
 /// digraph.add_arc(2, 5);
 /// digraph.add_arc(5, 4);
 ///
-/// let mut ordering = [0; order];
-/// let mut pred = [None; order];
-/// let mut t_visit = [0; order];
-/// let mut t_expl = [0; order];
+/// let mut ordering = [0; 6];
+/// let mut pred = [None; 6];
+/// let mut t_visit = [0; 6];
+/// let mut t_expl = [0; 6];
 ///
 /// dfsa_predecessors(
 ///     &digraph,

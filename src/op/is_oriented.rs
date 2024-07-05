@@ -25,8 +25,7 @@ use super::{
 /// # How can I implement `IsOriented`?
 ///
 /// Provide an implementation of `is_oriented` that returns `true` if the
-/// digraph is oriented and `false` otherwise OR implement `HasArc` and
-/// `Arcs`.
+/// digraph is oriented and `false` otherwise OR implement `Arcs` and `HasArc`.
 ///
 /// ```
 /// use {
@@ -47,13 +46,13 @@ use super::{
 ///
 /// impl Arcs for Digraph {
 ///     fn arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-///         (0..self.arcs.len()).flat_map(move |s| self.arcs[s].iter().map(move |&t| (s, t)))
+///         (0..self.arcs.len()).flat_map(move |u| self.arcs[u].iter().map(move |&v| (u, v)))
 ///     }
 /// }
 ///
 /// impl HasArc for Digraph {
-///     fn has_arc(&self, s: usize, t: usize) -> bool {
-///         self.arcs[s].contains(&t)
+///     fn has_arc(&self, u: usize, v: usize) -> bool {
+///         self.arcs[u].contains(&v)
 ///     }
 /// }
 ///
@@ -96,6 +95,6 @@ where
     T: Arcs + HasArc,
 {
     fn is_oriented(&self) -> bool {
-        self.arcs().all(|(s, t)| !self.has_arc(t, s))
+        self.arcs().all(|(u, v)| !self.has_arc(v, u))
     }
 }

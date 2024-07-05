@@ -6,18 +6,24 @@
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
 - Expand the user guide.
-- Improve documentation for `adjacency_list::Digraph`.
-- Improve documentation for `adjacency_list_weighted::Digraph`.
-- Improve documentation for `adjacency_matrix::Digraph`.
 - Improve documentation for the `Cycle` trait.
 - Improve documentation for the `Empty` trait.
 - Test out-of-bounds panics.
 
 ## [0.64.13] - 2024-07-05
 
+Added
+
+- Add unit test `new` for `breadth_first_tree::BreadthFirstTree`.
+- Add unit test `new_zero` for `breadth_first_tree::BreadthFirstTree`.
+
 Changed
 
 - Apply internal naming conventions in `adjacency_list_weighted`.
+- Apply internal naming conventions in `adjacency_matrix`.
+- Apply internal naming conventions in `gen`.
+- Apply internal naming conventions in `op`.
+- Misc. improvements to the API documentation.
 
 ## [0.64.12] - 2024-07-04
 
@@ -43,7 +49,7 @@ Added
 
 - Add documentation alias `centre` for `DistanceMatrix::center`.
 - Add documentation alias `jordan_centre` for `DistanceMatrix::center`.
-- Add naming conventions to the `README`. 
+- Add naming conventions to the `README`.
 - Add the `DegreeSequence` trait.
 - Implement and test `DegreeSequence` for `adjacency_list::Digraph`.
 - Implement and test `DegreeSequence` for `adjacency_list_weighted::Digraph`.

@@ -1,6 +1,6 @@
 //! Check if an edge exists between two vertices.
 //!
-//! To check if an arc exists from `s` to `t`, see [`HasArc`].
+//! To check if an arc exists from `u` to `v`, see [`HasArc`].
 //!
 //! # Examples
 //!
@@ -53,7 +53,7 @@ use super::HasArc;
 /// # How can I implement `HasEdge`?
 ///
 /// Provide an implementation of `has_edge` that returns `true` if the
-/// digraph has an arc between `s` and `t` and `false` otherwise OR implement
+/// digraph has an arc between `u` and `v` and `false` otherwise OR implement
 /// `HasArc`.
 ///
 /// ```
@@ -70,8 +70,8 @@ use super::HasArc;
 /// }
 ///
 /// impl HasArc for Digraph {
-///     fn has_arc(&self, s: usize, t: usize) -> bool {
-///         self.arcs.get(s).map_or(false, |set| set.contains(&t))
+///     fn has_arc(&self, u: usize, v: usize) -> bool {
+///         self.arcs.get(u).map_or(false, |set| set.contains(&v))
 ///     }
 /// }
 ///
@@ -125,16 +125,16 @@ use super::HasArc;
 /// assert!(!digraph.has_edge(2, 1));
 /// ```
 pub trait HasEdge {
-    /// Returns whether the digraph has an arc from `s` to `t` and from `t` to
-    /// `s`
-    fn has_edge(&self, s: usize, t: usize) -> bool;
+    /// Returns whether the digraph has an arc from `u` to `v` and from `v` to
+    /// `u`
+    fn has_edge(&self, u: usize, v: usize) -> bool;
 }
 
 impl<T> HasEdge for T
 where
     T: HasArc,
 {
-    fn has_edge(&self, s: usize, t: usize) -> bool {
-        self.has_arc(s, t) && self.has_arc(t, s)
+    fn has_edge(&self, u: usize, v: usize) -> bool {
+        self.has_arc(u, v) && self.has_arc(v, u)
     }
 }

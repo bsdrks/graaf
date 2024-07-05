@@ -53,14 +53,14 @@ use super::{
 /// }
 ///
 /// impl Indegree for Digraph {
-///     fn indegree(&self, s: usize) -> usize {
-///         self.arcs.iter().filter(|set| set.contains(&s)).count()
+///     fn indegree(&self, u: usize) -> usize {
+///         self.arcs.iter().filter(|set| set.contains(&u)).count()
 ///     }
 /// }
 ///
 /// impl Outdegree for Digraph {
-///     fn outdegree(&self, s: usize) -> usize {
-///         self.arcs[s].len()
+///     fn outdegree(&self, u: usize) -> usize {
+///         self.arcs[u].len()
 ///     }
 /// }
 ///
@@ -102,14 +102,14 @@ use super::{
 /// ```
 pub trait IsIsolated {
     /// Returns whether the vertex is isolated in the digraph.
-    fn is_isolated(&self, s: usize) -> bool;
+    fn is_isolated(&self, u: usize) -> bool;
 }
 
 impl<T> IsIsolated for T
 where
     T: Indegree + Outdegree,
 {
-    fn is_isolated(&self, s: usize) -> bool {
-        self.indegree(s) == 0 && self.outdegree(s) == 0
+    fn is_isolated(&self, u: usize) -> bool {
+        self.indegree(u) == 0 && self.outdegree(u) == 0
     }
 }

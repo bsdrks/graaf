@@ -54,14 +54,14 @@ use super::{
 /// }
 ///
 /// impl Indegree for Digraph {
-///     fn indegree(&self, s: usize) -> usize {
-///         self.arcs.iter().filter(|set| set.contains(&s)).count()
+///     fn indegree(&self, v: usize) -> usize {
+///         self.arcs.iter().filter(|set| set.contains(&v)).count()
 ///     }
 /// }
 ///
 /// impl Outdegree for Digraph {
-///     fn outdegree(&self, s: usize) -> usize {
-///         self.arcs[s].len()
+///     fn outdegree(&self, u: usize) -> usize {
+///         self.arcs[u].len()
 ///     }
 /// }
 ///
@@ -108,15 +108,15 @@ pub trait Degree {
     ///
     /// # Arguments
     ///
-    /// * `s`: The vertex.
-    fn degree(&self, s: usize) -> usize;
+    /// * `u`: The vertex.
+    fn degree(&self, u: usize) -> usize;
 }
 
 impl<T> Degree for T
 where
     T: Indegree + Outdegree,
 {
-    fn degree(&self, s: usize) -> usize {
-        self.indegree(s) + self.outdegree(s)
+    fn degree(&self, u: usize) -> usize {
+        self.indegree(u) + self.outdegree(u)
     }
 }

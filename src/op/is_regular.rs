@@ -61,13 +61,13 @@ use super::{
 ///
 /// impl Vertices for Digraph {
 ///     fn vertices(&self) -> impl Iterator<Item = usize> {
-///         Box::new((0..self.arcs.len()).map(|v| v))
+///         0..self.arcs.len()
 ///     }
 /// }
 ///
 /// impl Outdegree for Digraph {
-///     fn outdegree(&self, s: usize) -> usize {
-///         self.arcs[s].len()
+///     fn outdegree(&self, u: usize) -> usize {
+///         self.arcs[u].len()
 ///     }
 /// }
 ///
@@ -106,13 +106,13 @@ where
     fn is_regular(&self) -> bool {
         let mut vertices = self.vertices();
 
-        let v = vertices
+        let order = vertices
             .next()
             .expect("a digraph must have at least one vertex");
 
-        let indegree = self.indegree(v);
-        let outdegree = self.outdegree(v);
+        let indegree = self.indegree(order);
+        let outdegree = self.outdegree(order);
 
-        vertices.all(|v| self.indegree(v) == indegree && self.outdegree(v) == outdegree)
+        vertices.all(|u| self.indegree(u) == indegree && self.outdegree(u) == outdegree)
     }
 }

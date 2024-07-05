@@ -335,7 +335,7 @@ mod tests {
 
             for x in digraph.vertices() {
                 assert_eq!(
-                    digraph.degree(u),
+                    digraph.degree(x),
                     usize::from(x == u) + usize::from(x == v)
                 );
             }

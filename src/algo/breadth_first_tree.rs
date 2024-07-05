@@ -121,6 +121,10 @@ impl BreadthFirstTree {
     /// If it finds a target, it returns the path from the source to the target.
     /// Otherwise, it returns `None`.
     ///
+    /// # Panics
+    ///
+    /// Panics if `s` is not in the path.
+    ///
     /// # Examples
     ///
     /// ```
@@ -212,6 +216,44 @@ impl IntoIterator for BreadthFirstTree {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn index() {
+        let pred = BreadthFirstTree::from(vec![Some(1), Some(2), Some(3), None]);
+
+        assert_eq!(pred[0], Some(1));
+        assert_eq!(pred[1], Some(2));
+        assert_eq!(pred[2], Some(3));
+        assert_eq!(pred[3], None);
+    }
+
+    #[test]
+    fn index_mut() {
+        let mut pred = BreadthFirstTree::from(vec![Some(1), Some(2), Some(3), None]);
+
+        pred[0] = Some(0);
+        pred[1] = None;
+        pred[2] = None;
+        pred[3] = Some(2);
+
+        assert_eq!(pred[0], Some(0));
+        assert_eq!(pred[1], None);
+        assert_eq!(pred[2], None);
+        assert_eq!(pred[3], Some(2));
+    }
+
+    #[test]
+    fn new() {
+        let pred = BreadthFirstTree::new(1);
+
+        assert_eq!(pred.search(0, 0), Some(vec![0]));
+    }
+
+    #[test]
+    #[should_panic(expected = "a breadth-first tree must have at least one vertex")]
+    fn new_zero() {
+        let _ = BreadthFirstTree::new(0);
+    }
 
     #[test]
     fn search_singleton_s_ne_t() {
@@ -319,30 +361,5 @@ mod tests {
                 .into_iter()
                 .eq([1, 2, 3])
         );
-    }
-
-    #[test]
-    fn index() {
-        let pred = BreadthFirstTree::from(vec![Some(1), Some(2), Some(3), None]);
-
-        assert_eq!(pred[0], Some(1));
-        assert_eq!(pred[1], Some(2));
-        assert_eq!(pred[2], Some(3));
-        assert_eq!(pred[3], None);
-    }
-
-    #[test]
-    fn index_mut() {
-        let mut pred = BreadthFirstTree::from(vec![Some(1), Some(2), Some(3), None]);
-
-        pred[0] = Some(0);
-        pred[1] = None;
-        pred[2] = None;
-        pred[3] = Some(2);
-
-        assert_eq!(pred[0], Some(0));
-        assert_eq!(pred[1], None);
-        assert_eq!(pred[2], None);
-        assert_eq!(pred[3], Some(2));
     }
 }

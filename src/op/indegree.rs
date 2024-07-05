@@ -44,8 +44,8 @@
 /// }
 ///
 /// impl Indegree for Digraph {
-///     fn indegree(&self, t: usize) -> usize {
-///         self.arcs.iter().filter(|set| set.contains(&t)).count()
+///     fn indegree(&self, v: usize) -> usize {
+///         self.arcs.iter().filter(|set| set.contains(&v)).count()
 ///     }
 /// }
 ///
@@ -85,8 +85,8 @@ pub trait Indegree {
     ///
     /// # Arguments
     ///
-    /// * `u`: The vertex.
-    fn indegree(&self, u: usize) -> usize;
+    /// * `v`: The vertex.
+    fn indegree(&self, v: usize) -> usize;
 
     /// Returns whether a vertex is a source of the digraph.
     ///
@@ -94,7 +94,7 @@ pub trait Indegree {
     ///
     /// # Arguments
     ///
-    /// * `t`: The vertex.
+    /// * `v`: The vertex.
     ///
     /// # Examples
     ///
@@ -118,7 +118,7 @@ pub trait Indegree {
     /// assert!(!digraph.is_source(1));
     /// assert!(!digraph.is_source(2));
     /// ```
-    fn is_source(&self, u: usize) -> bool {
-        self.indegree(u) == 0
+    fn is_source(&self, v: usize) -> bool {
+        self.indegree(v) == 0
     }
 }

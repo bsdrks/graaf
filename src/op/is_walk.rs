@@ -33,7 +33,7 @@ use super::HasArc;
 ///
 /// Provide an implementation of `is_walk` that returns `true` if each pair of
 /// consecutive vertices in the sequence is an arc in the digraph and `false`
-/// otherwise.
+/// otherwise OR implement `HasArc`.
 ///
 /// ```
 /// use {
@@ -52,7 +52,7 @@ use super::HasArc;
 ///     fn is_walk(&self, walk: &[usize]) -> bool {
 ///         let mut arcs = walk.iter().zip(walk.iter().skip(1));
 ///
-///         arcs.clone().count() > 0 && arcs.all(|(s, t)| self.arcs.contains(&(*s, *t)))
+///         arcs.clone().count() > 0 && arcs.all(|(u, v)| self.arcs.contains(&(*u, *v)))
 ///     }
 /// }
 ///
@@ -97,6 +97,6 @@ where
     fn is_walk(&self, walk: &[usize]) -> bool {
         let mut arcs = walk.iter().zip(walk.iter().skip(1));
 
-        arcs.clone().count() > 0 && arcs.all(|(s, t)| self.has_arc(*s, *t))
+        arcs.clone().count() > 0 && arcs.all(|(u, v)| self.has_arc(*u, *v))
     }
 }

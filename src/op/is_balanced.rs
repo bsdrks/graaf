@@ -44,7 +44,7 @@ use super::{
 ///
 /// Provide an implementation of `is_balanced` that returns `true` if the
 /// digraph is balanced and `false` otherwise OR implement `Indegree`,
-/// `Vertices`, and `Outdegree`.
+/// `Outdegree`, and `Vertices`.
 ///
 /// ```
 /// use {
@@ -62,8 +62,8 @@ use super::{
 /// }
 ///
 /// impl Indegree for Digraph {
-///     fn indegree(&self, s: usize) -> usize {
-///         self.arcs.iter().filter(|set| set.contains(&s)).count()
+///     fn indegree(&self, v: usize) -> usize {
+///         self.arcs.iter().filter(|set| set.contains(&v)).count()
 ///     }
 /// }
 ///
@@ -74,8 +74,8 @@ use super::{
 /// }
 ///
 /// impl Outdegree for Digraph {
-///     fn outdegree(&self, s: usize) -> usize {
-///         self.arcs[s].len()
+///     fn outdegree(&self, u: usize) -> usize {
+///         self.arcs[u].len()
 ///     }
 /// }
 ///
@@ -137,6 +137,6 @@ where
 {
     fn is_balanced(&self) -> bool {
         self.vertices()
-            .all(|s| self.indegree(s) == self.outdegree(s))
+            .all(|u| self.indegree(u) == self.outdegree(u))
     }
 }

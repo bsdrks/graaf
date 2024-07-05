@@ -1,7 +1,7 @@
 //! Determine whether a digraph is semicomplete.
 //!
-//! A digraph is semicomplete if, for every pair `s`, `t` of distinct vertices,
-//! there is an arc between `s` and `t`.
+//! A digraph is semicomplete if, for every unordered pair `u`, `v` of distinct
+//! vertices, there is an arc between `u` and `v`.
 //!
 //! # Examples
 //!
@@ -33,7 +33,7 @@ use super::{
 /// # How can I implement `IsSemicomplete`?
 ///
 /// Provide an implementation of `is_semicomplete` that returns `true` if there
-/// is an arc between every pair `s`, `t` of distinct vertices OR implement
+/// is an arc between every pair `u`, `v` of distinct vertices OR implement
 /// `HasArc` and `Order`.
 ///
 /// ```
@@ -58,8 +58,8 @@ use super::{
 /// }
 ///
 /// impl HasArc for Digraph {
-///     fn has_arc(&self, s: usize, t: usize) -> bool {
-///         self.arcs[s].contains(&t)
+///     fn has_arc(&self, u: usize, v: usize) -> bool {
+///         self.arcs[u].contains(&v)
 ///     }
 /// }
 ///
@@ -122,11 +122,11 @@ where
     D: HasArc + Order,
 {
     fn is_semicomplete(&self) -> bool {
-        let v = self.order();
+        let order = self.order();
 
-        for s in 0..v {
-            for t in (s + 1)..v {
-                if !(self.has_arc(s, t) || self.has_arc(t, s)) {
+        for u in 0..order {
+            for v in (u + 1)..order {
+                if !(self.has_arc(u, v) || self.has_arc(v, u)) {
                     return false;
                 }
             }

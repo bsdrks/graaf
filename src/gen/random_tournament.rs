@@ -80,7 +80,7 @@ use {
 ///         };
 ///
 ///         for u in 0..order {
-///             for v in (s + 1)..order {
+///             for v in (u + 1)..order {
 ///                 if rng.next_bool() {
 ///                     tournament.arcs[u].insert(v);
 ///                 } else {

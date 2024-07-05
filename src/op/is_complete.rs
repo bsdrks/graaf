@@ -1,7 +1,7 @@
 //! Determine whether a digraph is complete.
 //!
-//! A digraph is complete if, for every pair `s`, `t` of distinct vertices,
-//! there is an arc from `s` to `t` and an arc from `t` to `s`.
+//! A digraph is complete if, for every pair `u`, `v` of distinct vertices,
+//! there is an arc from `u` to `v` and an arc from `v` to `u`.
 //!
 //! # Examples
 //!
@@ -33,8 +33,8 @@ use super::{
 /// # How can I implement `IsComplete`?
 ///
 /// Provide an implementation of `is_complete` that returns `true` if, for every
-/// pair `s`, `t` of distinct vertices, there is an arc from `s` to `t` and an
-/// arc from `t` to `s` OR implement `HasEdge` and `Order`.
+/// pair `u`, `v` of distinct vertices, there is an arc from `v` to `u` and an
+/// arc from `v` to `u` OR implement `HasEdge` and `Order`.
 ///
 /// ```
 /// use {
@@ -59,8 +59,8 @@ use super::{
 /// }
 ///
 /// impl HasArc for Digraph {
-///     fn has_arc(&self, s: usize, t: usize) -> bool {
-///         self.arcs.get(s).map_or(false, |set| set.contains(&t))
+///     fn has_arc(&self, u: usize, v: usize) -> bool {
+///         self.arcs.get(u).map_or(false, |set| set.contains(&v))
 ///     }
 /// }
 ///
@@ -103,11 +103,11 @@ where
     D: HasEdge + Order,
 {
     fn is_complete(&self) -> bool {
-        let v = self.order();
+        let order = self.order();
 
-        for s in 0..v {
-            for t in (s + 1)..v {
-                if !self.has_edge(s, t) {
+        for u in 0..order {
+            for v in (u + 1)..order {
+                if !self.has_edge(u, v) {
                     return false;
                 }
             }

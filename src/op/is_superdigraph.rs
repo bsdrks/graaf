@@ -91,13 +91,13 @@ use super::IsSubdigraph;
 ///         self.arcs
 ///             .iter()
 ///             .enumerate()
-///             .flat_map(|(u, vs)| vs.iter().map(move |v| (u, *v)))
+///             .flat_map(|(u, set)| set.iter().map(move |v| (u, *v)))
 ///     }
 /// }
 ///
 /// impl Vertices for Digraph {
 ///     fn vertices(&self) -> impl Iterator<Item = usize> {
-///         (0..self.arcs.len())
+///         0..self.arcs.len()
 ///     }
 /// }
 ///

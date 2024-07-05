@@ -35,8 +35,8 @@
 ///
 /// # How can I implement `RemoveArc`?
 ///
-/// Provide an implementation of `remove_arc` that removes the arc from `s` to
-/// `t` from a digraph. Return whether the arc was removed.
+/// Provide an implementation of `remove_arc` that removes the arc from `u` to
+/// `v` from a digraph. Return whether the arc was removed.
 ///
 /// ```
 /// use {
@@ -49,8 +49,8 @@
 /// }
 ///
 /// impl RemoveArc for Digraph {
-///     fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-///         self.arcs[s].remove(&t)
+///     fn remove_arc(&mut self, u: usize, v: usize) -> bool {
+///         self.arcs[u].remove(&v)
 ///     }
 /// }
 /// ```

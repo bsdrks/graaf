@@ -47,8 +47,8 @@
 /// }
 ///
 /// impl OutNeighbors for Digraph {
-///     fn out_neighbors(&self, s: usize) -> impl Iterator<Item = usize> {
-///         self.arcs[s].iter().copied()
+///     fn out_neighbors(&self, u: usize) -> impl Iterator<Item = usize> {
+///         self.arcs[u].iter().copied()
 ///     }
 /// }
 ///

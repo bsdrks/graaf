@@ -43,7 +43,7 @@
 /// # How can I implement `OutNeighborsWeighted`?
 ///
 /// Provide an implementation of `out_neighbors_weighted` that returns an
-/// iterator over all weighted arcs with the source vertex `s`.
+/// iterator over all weighted arcs with tail vertex `u`.
 ///
 /// ```
 /// use graaf::op::OutNeighborsWeighted;
@@ -55,12 +55,12 @@
 /// impl OutNeighborsWeighted<usize> for Digraph {
 ///     fn out_neighbors_weighted<'a>(
 ///         &'a self,
-///         s: usize,
+///         u: usize,
 ///     ) -> impl Iterator<Item = (usize, &'a usize)>
 ///     where
 ///         usize: 'a,
 ///     {
-///         self.arcs[s].iter().map(|(t, w)| (*t, w))
+///         self.arcs[u].iter().map(|(v, w)| (*v, w))
 ///     }
 /// }
 /// ```

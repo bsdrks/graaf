@@ -1,7 +1,7 @@
 //! Determine whether a digraph is symmetric.
 //!
-//! A digraph is symmetric if for every arc `(s, t)` there is an arc
-//! `(t, s)`.
+//! A digraph is symmetric if for every arc `(u, v)` there is an arc
+//! `(v, u)`.
 //!
 //! # Examples
 //!
@@ -47,7 +47,7 @@ use super::{
 /// # How can I implement `IsSymmetric`?
 ///
 /// Provide an implementation of `is_symmetric` that returns `true` if the
-/// digraph is symmetric and `false` otherwise.
+/// digraph is symmetric and `false` otherwise OR implement `Arcs` and `HasArc`.
 ///
 /// ```
 /// use {
@@ -64,8 +64,8 @@ use super::{
 /// }
 ///
 /// impl HasArc for Digraph {
-///     fn has_arc(&self, s: usize, t: usize) -> bool {
-///         self.arcs[s].contains(&t)
+///     fn has_arc(&self, u: usize, v: usize) -> bool {
+///         self.arcs[u].contains(&v)
 ///     }
 /// }
 ///
@@ -74,7 +74,7 @@ use super::{
 ///         self.arcs
 ///             .iter()
 ///             .enumerate()
-///             .flat_map(|(s, set)| set.iter().map(move |&t| (s, t)))
+///             .flat_map(|(u, set)| set.iter().map(move |&v| (u, v)))
 ///     }
 /// }
 ///
@@ -124,6 +124,6 @@ where
     T: Arcs + HasArc,
 {
     fn is_symmetric(&self) -> bool {
-        self.arcs().all(|(s, t)| self.has_arc(t, s))
+        self.arcs().all(|(u, v)| self.has_arc(v, u))
     }
 }
