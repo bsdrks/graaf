@@ -103,13 +103,13 @@
 /// ```
 #[doc(alias = "OutNeighboursWeighted")]
 pub trait OutNeighborsWeighted<W> {
-    /// Returns an iterator over the out-neighbors of the head vertex and their
+    /// Returns an iterator over the out-neighbors of the vertex and their
     /// weights.
     ///
     /// # Arguments
     ///
-    /// * `s`: The head vertex.
-    fn out_neighbors_weighted<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a W)>
+    /// * `u`: The vertex.
+    fn out_neighbors_weighted<'a>(&'a self, u: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a;
 }

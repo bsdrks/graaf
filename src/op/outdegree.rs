@@ -77,8 +77,8 @@ pub trait Outdegree {
     ///
     /// # Arguments
     ///
-    /// * `s`: The head vertex.
-    fn outdegree(&self, s: usize) -> usize;
+    /// * `u`: The vertex.
+    fn outdegree(&self, u: usize) -> usize;
 
     /// Returns whether a vertex is a sink of the digraph.
     ///
@@ -86,7 +86,7 @@ pub trait Outdegree {
     ///
     /// # Arguments
     ///
-    /// * `s`: The vertex.
+    /// * `u`: The vertex.
     ///
     /// # Examples
     ///
@@ -110,7 +110,7 @@ pub trait Outdegree {
     /// assert!(!digraph.is_sink(1));
     /// assert!(digraph.is_sink(2));
     /// ```
-    fn is_sink(&self, s: usize) -> bool {
-        self.outdegree(s) == 0
+    fn is_sink(&self, u: usize) -> bool {
+        self.outdegree(u) == 0
     }
 }

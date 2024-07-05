@@ -120,19 +120,19 @@ pub fn single_source_distances<D>(digraph: &D, s: usize) -> Option<Vec<isize>>
 where
     D: ArcsWeighted<isize> + Order,
 {
-    let v = digraph.order();
-    let mut dist = vec![isize::MAX; v];
+    let order = digraph.order();
+    let mut dist = vec![isize::MAX; order];
 
     dist[s] = 0;
 
-    for _ in 1..v {
-        for (s, t, w) in digraph.arcs_weighted() {
-            dist[t] = dist[t].min(dist[s].saturating_add(*w));
+    for _ in 1..order {
+        for (u, v, w) in digraph.arcs_weighted() {
+            dist[v] = dist[v].min(dist[u].saturating_add(*w));
         }
     }
 
-    for (s, t, w) in digraph.arcs_weighted() {
-        if dist[t] > dist[s].saturating_add(*w) {
+    for (u, v, w) in digraph.arcs_weighted() {
+        if dist[v] > dist[u].saturating_add(*w) {
             return None;
         }
     }

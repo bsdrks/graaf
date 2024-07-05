@@ -95,6 +95,6 @@ pub trait OutNeighbors {
     ///
     /// # Arguments
     ///
-    /// * `s`: The tail vertex.
-    fn out_neighbors(&self, s: usize) -> impl Iterator<Item = usize>;
+    /// * `u`: The vertex.
+    fn out_neighbors(&self, u: usize) -> impl Iterator<Item = usize>;
 }

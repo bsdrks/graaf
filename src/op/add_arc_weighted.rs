@@ -87,12 +87,12 @@
 /// [`HasArc`]: crate::op::HasArc
 /// [`RemoveArc`]: crate::op::RemoveArc
 pub trait AddArcWeighted<W> {
-    /// Adds an arc from `s` to `t` with weight `w` to the digraph.
+    /// Adds an arc from `u` to `v` with weight `w` to the digraph.
     ///
     /// # Arguments
     ///
-    /// * `s`: The head vertex.
-    /// * `t`: The tail vertex.
+    /// * `u`: The tail vertex.
+    /// * `v`: The head vertex.
     /// * `w`: The weight of the arc.
-    fn add_arc_weighted(&mut self, s: usize, t: usize, w: W);
+    fn add_arc_weighted(&mut self, u: usize, v: usize, w: W);
 }

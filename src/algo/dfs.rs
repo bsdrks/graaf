@@ -29,7 +29,7 @@ use crate::op::{
 ///     op::AddArc,
 /// };
 ///
-/// const V: usize = 6;
+/// let order = 6;
 ///
 /// // 0 -> {4}
 /// // 1 -> {0}
@@ -38,7 +38,7 @@ use crate::op::{
 /// // 4 -> {}
 /// // 5 -> {4}
 ///
-/// let mut digraph = Digraph::empty(V);
+/// let mut digraph = Digraph::empty(order);
 ///
 /// digraph.add_arc(0, 4);
 /// digraph.add_arc(1, 0);
@@ -47,9 +47,9 @@ use crate::op::{
 /// digraph.add_arc(2, 5);
 /// digraph.add_arc(5, 4);
 ///
-/// let mut ordering = [0; V];
-/// let mut t_visit = [0; V];
-/// let mut t_expl = [0; V];
+/// let mut ordering = [0; order];
+/// let mut t_visit = [0; order];
+/// let mut t_expl = [0; order];
 ///
 /// dfsa(&digraph, &mut ordering, &mut t_visit, &mut t_expl);
 ///
@@ -59,11 +59,11 @@ pub fn dfsa<D>(digraph: &D, ordering: &mut [usize], t_visit: &mut [usize], t_exp
 where
     D: OutNeighbors + Order,
 {
-    let v = digraph.order();
+    let order = digraph.order();
     let mut t = 0;
-    let mut i = v;
+    let mut i = order;
 
-    for u in 0..v {
+    for u in 0..order {
         if t_visit[u] == 0 {
             dfsa_visit(digraph, u, ordering, t_visit, t_expl, &mut i, &mut t);
         }
@@ -118,7 +118,7 @@ fn dfsa_visit<D>(
 ///     op::AddArc,
 /// };
 ///
-/// const V: usize = 6;
+/// let order = 6;
 ///
 /// // 0 -> {4}
 /// // 1 -> {0}
@@ -127,7 +127,7 @@ fn dfsa_visit<D>(
 /// // 4 -> {}
 /// // 5 -> {4}
 ///
-/// let mut digraph = Digraph::empty(V);
+/// let mut digraph = Digraph::empty(order);
 ///
 /// digraph.add_arc(0, 4);
 /// digraph.add_arc(1, 0);
@@ -136,10 +136,10 @@ fn dfsa_visit<D>(
 /// digraph.add_arc(2, 5);
 /// digraph.add_arc(5, 4);
 ///
-/// let mut ordering = [0; V];
-/// let mut pred = [None; V];
-/// let mut t_visit = [0; V];
-/// let mut t_expl = [0; V];
+/// let mut ordering = [0; order];
+/// let mut pred = [None; order];
+/// let mut t_visit = [0; order];
+/// let mut t_expl = [0; order];
 ///
 /// dfsa_predecessors(
 ///     &digraph,
@@ -160,11 +160,11 @@ pub fn dfsa_predecessors<D>(
 ) where
     D: Order + OutNeighbors,
 {
-    let v = digraph.order();
+    let order = digraph.order();
     let mut t = 0;
-    let mut i = v;
+    let mut i = order;
 
-    for u in 0..v {
+    for u in 0..order {
         if t_visit[u] == 0 {
             dfsa_predecessors_visit(digraph, u, ordering, pred, t_visit, t_expl, &mut i, &mut t);
         }
@@ -221,8 +221,6 @@ fn dfsa_predecessors_visit<D>(
 ///     op::AddArc,
 /// };
 ///
-/// const V: usize = 6;
-///
 /// // 0 -> {4}
 /// // 1 -> {0}
 /// // 2 -> {1, 3, 5}
@@ -230,7 +228,7 @@ fn dfsa_predecessors_visit<D>(
 /// // 4 -> {}
 /// // 5 -> {4}
 ///
-/// let mut digraph = Digraph::empty(V);
+/// let mut digraph = Digraph::empty(6);
 ///
 /// digraph.add_arc(0, 4);
 /// digraph.add_arc(1, 0);
@@ -245,10 +243,10 @@ pub fn acyclic_ordering<D>(digraph: &D) -> Vec<usize>
 where
     D: Order + OutNeighbors,
 {
-    let v = digraph.order();
-    let mut ordering = vec![0; v];
-    let mut t_visit = vec![0; v];
-    let mut t_expl = vec![0; v];
+    let order = digraph.order();
+    let mut ordering = vec![0; order];
+    let mut t_visit = vec![0; order];
+    let mut t_expl = vec![0; order];
 
     dfsa(digraph, &mut ordering, &mut t_visit, &mut t_expl);
 
@@ -265,10 +263,10 @@ mod tests {
     #[test]
     fn dfsa_bang_jensen_34() {
         let digraph = fixture::bang_jensen_34();
-        let v = digraph.order();
-        let mut ordering = vec![0; v];
-        let mut t_visit = vec![0; v];
-        let mut t_expl = vec![0; v];
+        let order = digraph.order();
+        let mut ordering = vec![0; order];
+        let mut t_visit = vec![0; order];
+        let mut t_expl = vec![0; order];
 
         dfsa(&digraph, &mut ordering, &mut t_visit, &mut t_expl);
 
@@ -278,10 +276,10 @@ mod tests {
     #[test]
     fn dfsa_kattis_builddeps() {
         let digraph = fixture::kattis_builddeps();
-        let v = digraph.order();
-        let mut ordering = vec![0; v];
-        let mut t_visit = vec![0; v];
-        let mut t_expl = vec![0; v];
+        let order = digraph.order();
+        let mut ordering = vec![0; order];
+        let mut t_visit = vec![0; order];
+        let mut t_expl = vec![0; order];
 
         dfsa(&digraph, &mut ordering, &mut t_visit, &mut t_expl);
 
@@ -301,11 +299,11 @@ mod tests {
     #[test]
     fn dfsa_predecessors_bang_jensen_34() {
         let digraph = fixture::bang_jensen_34();
-        let v = digraph.order();
-        let mut ordering = vec![0; v];
-        let mut pred = vec![None; v];
-        let mut t_visit = vec![0; v];
-        let mut t_expl = vec![0; v];
+        let order = digraph.order();
+        let mut ordering = vec![0; order];
+        let mut pred = vec![None; order];
+        let mut t_visit = vec![0; order];
+        let mut t_expl = vec![0; order];
 
         dfsa_predecessors(
             &digraph,
@@ -325,11 +323,11 @@ mod tests {
     #[test]
     fn dfsa_predecessors_kattis_builddeps() {
         let digraph = fixture::kattis_builddeps();
-        let v = digraph.order();
-        let mut ordering = vec![0; v];
-        let mut pred = vec![None; v];
-        let mut t_visit = vec![0; v];
-        let mut t_expl = vec![0; v];
+        let order = digraph.order();
+        let mut ordering = vec![0; order];
+        let mut pred = vec![None; order];
+        let mut t_visit = vec![0; order];
+        let mut t_expl = vec![0; order];
 
         dfsa_predecessors(
             &digraph,

@@ -89,12 +89,12 @@
 /// [`AddArc`]: crate::op::AddArc
 /// [`AddArcWeighted`]: crate::op::AddArcWeighted
 pub trait RemoveArc {
-    /// Removes the arc from `s` to `t` from the digraph. Returns whether the
+    /// Removes the arc from `u` to `v` from the digraph. Returns whether the
     /// arc was removed.
     ///
     /// # Arguments
     ///
-    /// * `s`: The head vertex.
-    /// * `t`: The tail vertex.
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool;
+    /// * `u`: The tail vertex.
+    /// * `v`: The head vertex.
+    fn remove_arc(&mut self, u: usize, v: usize) -> bool;
 }

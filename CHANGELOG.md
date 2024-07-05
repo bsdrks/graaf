@@ -6,8 +6,18 @@
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
 - Expand the user guide.
+- Improve documentation for `adjacency_list::Digraph`.
+- Improve documentation for `adjacency_list_weighted::Digraph`.
+- Improve documentation for `adjacency_matrix::Digraph`.
 - Improve documentation for the `Cycle` trait.
 - Improve documentation for the `Empty` trait.
+- Test out-of-bounds panics.
+
+## [0.64.13] - 2024-07-05
+
+Changed
+
+- Apply internal naming conventions in `adjacency_list_weighted`.
 
 ## [0.64.12] - 2024-07-04
 

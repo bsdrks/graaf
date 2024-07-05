@@ -37,24 +37,24 @@ pub struct Digraph {
 }
 
 impl Digraph {
-    const fn mask(i: usize) -> usize {
-        1 << (i & 63)
+    const fn mask(u: usize) -> usize {
+        1 << (u & 63)
     }
 
-    const fn index(&self, s: usize, t: usize) -> usize {
-        s * self.order + t
+    const fn index(&self, u: usize, v: usize) -> usize {
+        u * self.order + v
     }
 
-    /// Toggles the arc from the source vertex to the target vertex.
+    /// Toggles the arc from the tail vertex to the head vertex.
     ///
     /// # Arguments
     ///
-    /// * `s`: The source vertex.
-    /// * `t`: The target vertex.
+    /// * `u`: The tail vertex.
+    /// * `v`: The head vertex.
     ///
     /// # Panics
     ///
-    /// Panics if `s` or `t` is out of bounds.
+    /// Panics if `u` or `v` is out of bounds.
     ///
     /// # Examples
     ///
@@ -73,13 +73,11 @@ impl Digraph {
     ///
     /// assert!(digraph.has_arc(0, 1));
     /// ```
-    pub fn toggle(&mut self, s: usize, t: usize) {
-        let v = self.order;
+    pub fn toggle(&mut self, u: usize, v: usize) {
+        assert!(u < self.order, "u = {u} is out of bounds.");
+        assert!(v < self.order, "v = {v} is out of bounds.");
 
-        assert!(s < v, "s = {s} is out of bounds.");
-        assert!(t < v, "t = {t} is out of bounds.");
-
-        let i = self.index(s, t);
+        let i = self.index(u, v);
 
         self.blocks[i >> 6] ^= Self::mask(i);
     }
@@ -88,22 +86,20 @@ impl Digraph {
 impl AddArc for Digraph {
     /// # Panics
     ///
-    /// Panics if `s` or `t` is out of bounds.
-    fn add_arc(&mut self, s: usize, t: usize) {
-        let v = self.order;
+    /// Panics if `u` or `v` is out of bounds.
+    fn add_arc(&mut self, u: usize, v: usize) {
+        assert!(u < self.order, "u = {u} is out of bounds.");
+        assert!(v < self.order, "v = {v} is out of bounds.");
 
-        assert!(s < v, "s = {s} is out of bounds.");
-        assert!(t < v, "t = {t} is out of bounds.");
-
-        let i = self.index(s, t);
+        let i = self.index(u, v);
 
         self.blocks[i >> 6] |= Self::mask(i);
     }
 }
 
 impl ArcWeight<usize> for Digraph {
-    fn arc_weight(&self, s: usize, t: usize) -> Option<&usize> {
-        self.has_arc(s, t).then_some(&1)
+    fn arc_weight(&self, u: usize, v: usize) -> Option<&usize> {
+        self.has_arc(u, v).then_some(&1)
     }
 }
 
@@ -112,17 +108,16 @@ impl ArcsWeighted<usize> for Digraph {
     where
         usize: 'a,
     {
-        self.arcs().map(|(s, t)| (s, t, &1))
+        self.arcs().map(|(u, v)| (u, v, &1))
     }
 }
 
 impl Converse for Digraph {
     fn converse(&self) -> Self {
-        let v = self.order;
-        let mut converse = Self::empty(v);
+        let mut converse = Self::empty(self.order);
 
-        for (s, t) in self.arcs() {
-            converse.add_arc(t, s);
+        for (u, v) in self.arcs() {
+            converse.add_arc(v, u);
         }
 
         converse
@@ -132,27 +127,27 @@ impl Converse for Digraph {
 impl Empty for Digraph {
     /// # Panics
     ///
-    /// Panics if `V` is zero.
-    fn empty(v: usize) -> Self {
-        assert!(v > 0, "a digraph must have at least one vertex");
+    /// Panics if `order` is zero.
+    fn empty(order: usize) -> Self {
+        assert!(order > 0, "a digraph must have at least one vertex");
 
-        let n = (v * v + 63) / 64;
+        let n = (order * order + 63) / 64;
 
         Self {
             blocks: vec![0; n],
-            order: v,
+            order,
         }
     }
 }
 
 impl From<Vec<BTreeSet<usize>>> for Digraph {
     fn from(adjacency: Vec<BTreeSet<usize>>) -> Self {
-        let v = adjacency.len();
-        let mut digraph = Self::empty(v);
+        let order = adjacency.len();
+        let mut digraph = Self::empty(order);
 
-        for (s, neighbors) in adjacency.into_iter().enumerate() {
-            for t in neighbors {
-                digraph.add_arc(s, t);
+        for (u, set) in adjacency.into_iter().enumerate() {
+            for v in set {
+                digraph.add_arc(u, v);
             }
         }
 
@@ -161,14 +156,12 @@ impl From<Vec<BTreeSet<usize>>> for Digraph {
 }
 
 impl HasArc for Digraph {
-    fn has_arc(&self, s: usize, t: usize) -> bool {
-        let v = self.order;
-
-        if s >= v || t >= v {
+    fn has_arc(&self, u: usize, v: usize) -> bool {
+        if u >= self.order || v >= self.order {
             return false;
         }
 
-        let i = self.index(s, t);
+        let i = self.index(u, v);
 
         self.blocks[i >> 6] & Self::mask(i) != 0
     }
@@ -177,25 +170,25 @@ impl HasArc for Digraph {
 impl Indegree for Digraph {
     /// # Panics
     ///
-    /// Panics if `t >= V`.
-    fn indegree(&self, t: usize) -> usize {
-        assert!(t < self.order, "t = {t} is out of bounds.");
+    /// Panics if `v >= self.order`.
+    fn indegree(&self, v: usize) -> usize {
+        assert!(v < self.order, "v = {v} is out of bounds.");
 
-        self.vertices().filter(|&s| self.has_arc(s, t)).count()
+        self.vertices().filter(|&u| self.has_arc(u, v)).count()
     }
 }
 
 impl IsSimple for Digraph {
     fn is_simple(&self) -> bool {
-        self.vertices().all(|s| !self.has_arc(s, s))
+        self.vertices().all(|u| !self.has_arc(u, u))
     }
 }
 
 impl Arcs for Digraph {
     fn arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.vertices().flat_map(move |s| {
+        self.vertices().flat_map(move |u| {
             self.vertices()
-                .filter_map(move |t| self.has_arc(s, t).then_some((s, t)))
+                .filter_map(move |v| self.has_arc(u, v).then_some((u, v)))
         })
     }
 }
@@ -209,11 +202,11 @@ impl Order for Digraph {
 impl OutNeighbors for Digraph {
     /// # Panics
     ///
-    /// Panics if `s` is out of bounds.
-    fn out_neighbors(&self, s: usize) -> impl Iterator<Item = usize> {
-        assert!(s < self.order, "s = {s} is out of bounds.");
+    /// Panics if `u` is out of bounds.
+    fn out_neighbors(&self, u: usize) -> impl Iterator<Item = usize> {
+        assert!(u < self.order, "u = {u} is out of bounds.");
 
-        self.vertices().filter(move |&t| self.has_arc(s, t))
+        self.vertices().filter(move |&v| self.has_arc(u, v))
     }
 }
 
@@ -225,18 +218,18 @@ impl OutNeighborsWeighted<usize> for Digraph {
     where
         usize: 'a,
     {
-        self.out_neighbors(s).map(move |t| (t, &1))
+        self.out_neighbors(s).map(move |u| (u, &1))
     }
 }
 
 impl Outdegree for Digraph {
     /// # Panics
     ///
-    /// Panics if `s >= V`.
-    fn outdegree(&self, s: usize) -> usize {
-        assert!(s < self.order, "s = {s} is out of bounds.");
+    /// Panics if `u >= self.order`.
+    fn outdegree(&self, u: usize) -> usize {
+        assert!(u < self.order, "u = {u} is out of bounds.");
 
-        self.vertices().filter(|&t| self.has_arc(s, t)).count()
+        self.vertices().filter(|&v| self.has_arc(u, v)).count()
     }
 }
 
@@ -244,14 +237,12 @@ impl RemoveArc for Digraph {
     /// # Panics
     ///
     /// Panics if `s >= V` or `t >= V`.
-    fn remove_arc(&mut self, s: usize, t: usize) -> bool {
-        let v = self.order;
+    fn remove_arc(&mut self, u: usize, v: usize) -> bool {
+        assert!(u < self.order, "u = {u} is out of bounds.");
+        assert!(v < self.order, "v = {v} is out of bounds.");
 
-        assert!(s < v, "s = {s} is out of bounds.");
-        assert!(t < v, "t = {t} is out of bounds.");
-
-        let has_arc = self.has_arc(s, t);
-        let i = self.index(s, t);
+        let has_arc = self.has_arc(u, v);
+        let i = self.index(u, v);
 
         self.blocks[i >> 6] &= !Self::mask(i);
 
@@ -321,79 +312,79 @@ mod tests {
 
     proptest! {
         #[test]
-        fn add_arc_arc_weight(s in 1..100_usize, t in 1..100_usize) {
+        fn add_arc_arc_weight(u in 1..100_usize, v in 1..100_usize) {
             let mut digraph = Digraph::empty(100);
 
-            digraph.add_arc(s, t);
+            digraph.add_arc(u, v);
 
-            for u in digraph.vertices() {
-                for v in digraph.vertices() {
+            for x in digraph.vertices() {
+                for y in digraph.vertices() {
                     assert_eq!(
-                        digraph.arc_weight(u, v),
-                        (u == s && v == t).then_some(&1)
+                        digraph.arc_weight(x, y),
+                        (x == u && y == v).then_some(&1)
                     );
                 }
             }
         }
 
         #[test]
-        fn add_arc_degree(s in 1..100_usize, t in 1..100_usize) {
+        fn add_arc_degree(u in 1..100_usize, v in 1..100_usize) {
             let mut digraph = Digraph::empty(100);
 
-            digraph.add_arc(s, t);
+            digraph.add_arc(u, v);
 
-            for u in digraph.vertices() {
+            for x in digraph.vertices() {
                 assert_eq!(
                     digraph.degree(u),
-                    usize::from(u == s) + usize::from(u == t)
+                    usize::from(x == u) + usize::from(x == v)
                 );
             }
         }
 
         #[test]
-        fn add_arc_has_arc(s in 1..100_usize, t in 1..100_usize) {
+        fn add_arc_has_arc(u in 1..100_usize, v in 1..100_usize) {
             let mut digraph = Digraph::empty(100);
 
-            digraph.add_arc(s, t);
+            digraph.add_arc(u, v);
 
-            assert!(digraph.has_arc(s, t));
+            assert!(digraph.has_arc(u, v));
         }
 
         #[test]
-        fn add_arc_indegree(s in 1..100_usize, t in 1..100_usize) {
+        fn add_arc_indegree(u in 1..100_usize, v in 1..100_usize) {
             let mut digraph = Digraph::empty(100);
 
-            digraph.add_arc(s, t);
+            digraph.add_arc(u, v);
 
-            for u in digraph.vertices() {
-                assert_eq!(digraph.indegree(u), usize::from(u == t));
+            for x in digraph.vertices() {
+                assert_eq!(digraph.indegree(x), usize::from(x == v));
             }
         }
 
         #[test]
-        fn add_arc_outdegree(s in 1..100_usize, t in 1..100_usize) {
+        fn add_arc_outdegree(u in 1..100_usize, v in 1..100_usize) {
             let mut digraph = Digraph::empty(100);
 
-            digraph.add_arc(s, t);
+            digraph.add_arc(u, v);
 
-            for u in digraph.vertices() {
-                assert_eq!(digraph.outdegree(u), usize::from(u == s));
+            for x in digraph.vertices() {
+                assert_eq!(digraph.outdegree(x), usize::from(x == u));
             }
         }
 
         #[test]
-        fn add_arc_remove_arc(s in 1..100_usize, t in 1..100_usize) {
+        fn add_arc_remove_arc(u in 1..100_usize, v in 1..100_usize) {
             let d = Digraph::empty(100);
             let mut h = d.clone();
 
-            h.add_arc(s, t);
+            h.add_arc(u, v);
 
-            for u in d.vertices() {
-                for v in d.vertices() {
-                    if u == s && v == t {
-                        assert!(h.remove_arc(u, v));
+            for x in d.vertices() {
+                for y in d.vertices() {
+                    if x == u && y == v {
+                        assert!(h.remove_arc(x, y));
                     } else {
-                        assert!(!h.remove_arc(u, v));
+                        assert!(!h.remove_arc(x, y));
                     }
                 }
             }
@@ -402,488 +393,488 @@ mod tests {
         }
 
         #[test]
-        fn complete_degree(v in 1..100_usize) {
-            let digraph = Digraph::complete(v);
+        fn complete_degree(order in 1..100_usize) {
+            let digraph = Digraph::complete(order);
 
-            for s in digraph.vertices() {
-                assert_eq!(digraph.degree(s), v * 2 - 2);
+            for u in digraph.vertices() {
+                assert_eq!(digraph.degree(u), order * 2 - 2);
             }
         }
 
         #[test]
-        fn complete_has_edge(v in 2..100_usize) {
-            let digraph = Digraph::complete(v);
+        fn complete_has_edge(order in 2..100_usize) {
+            let digraph = Digraph::complete(order);
 
-            for s in 0..v {
-                for t in s + 1..v {
-                    assert!(digraph.has_edge(s, t));
+            for u in 0..order {
+                for v in u + 1..order {
+                    assert!(digraph.has_edge(u, v));
                 }
             }
         }
 
         #[test]
-        fn complete_indegree(v in 1..100_usize) {
-            let digraph = Digraph::complete(v);
+        fn complete_indegree(order in 1..100_usize) {
+            let digraph = Digraph::complete(order);
 
-            for s in digraph.vertices() {
-                assert_eq!(digraph.indegree(s), v - 1);
+            for u in digraph.vertices() {
+                assert_eq!(digraph.indegree(u), order - 1);
             }
         }
 
         #[test]
-        fn complete_is_balanced(v in 1..100_usize) {
-            assert!(Digraph::complete(v).is_balanced());
+        fn complete_is_balanced(order in 1..100_usize) {
+            assert!(Digraph::complete(order).is_balanced());
         }
 
         #[test]
-        fn complete_is_complete(v in 1..100_usize) {
-            assert!(Digraph::complete(v).is_complete());
+        fn complete_is_complete(order in 1..100_usize) {
+            assert!(Digraph::complete(order).is_complete());
         }
 
         #[test]
-        fn complete_is_isolated(v in 2..100_usize) {
-            let digraph = Digraph::complete(v);
+        fn complete_is_isolated(order in 2..100_usize) {
+            let digraph = Digraph::complete(order);
 
-            for s in digraph.vertices() {
-                assert!(!digraph.is_isolated(s));
+            for u in digraph.vertices() {
+                assert!(!digraph.is_isolated(u));
             }
         }
 
         #[test]
-        fn complete_is_oriented(v in 2..100_usize) {
-            assert!(!Digraph::complete(v).is_oriented());
+        fn complete_is_oriented(order in 2..100_usize) {
+            assert!(!Digraph::complete(order).is_oriented());
         }
 
         #[test]
-        fn complete_is_pendant(v in 1..100_usize) {
-            let digraph = Digraph::complete(v);
+        fn complete_is_pendant(order in 1..100_usize) {
+            let digraph = Digraph::complete(order);
 
-            for s in digraph.vertices() {
-                assert!(!digraph.is_pendant(s));
+            for u in digraph.vertices() {
+                assert!(!digraph.is_pendant(u));
             }
         }
 
         #[test]
-        fn complete_is_regular(v in 1..100_usize) {
-            assert!(Digraph::complete(v).is_regular());
+        fn complete_is_regular(order in 1..100_usize) {
+            assert!(Digraph::complete(order).is_regular());
         }
 
         #[test]
-        fn complete_is_semicomplete(v in 1..100_usize) {
-            assert!(Digraph::complete(v).is_semicomplete());
+        fn complete_is_semicomplete(order in 1..100_usize) {
+            assert!(Digraph::complete(order).is_semicomplete());
         }
 
         #[test]
-        fn complete_is_simple(v in 2..100_usize) {
-            assert!(Digraph::complete(v).is_simple());
+        fn complete_is_simple(order in 2..100_usize) {
+            assert!(Digraph::complete(order).is_simple());
         }
 
         #[test]
-        fn complete_is_subdigraph(v in 1..100_usize) {
-            let digraph = Digraph::complete(v);
+        fn complete_is_subdigraph(order in 1..100_usize) {
+            let digraph = Digraph::complete(order);
 
             assert!(digraph.is_subdigraph(&digraph));
         }
 
         #[test]
-        fn complete_is_superdigraph(v in 1..100_usize) {
-            let digraph = Digraph::complete(v);
+        fn complete_is_superdigraph(order in 1..100_usize) {
+            let digraph = Digraph::complete(order);
 
             assert!(digraph.is_superdigraph(&digraph));
         }
 
         #[test]
-        fn complete_is_symmetric(v in 1..100_usize) {
-            assert!(Digraph::complete(v).is_symmetric());
+        fn complete_is_symmetric(order in 1..100_usize) {
+            assert!(Digraph::complete(order).is_symmetric());
         }
 
         #[test]
-        fn complete_order(v in 1..100_usize) {
-            assert_eq!(Digraph::complete(v).order(), v);
+        fn complete_order(order in 1..100_usize) {
+            assert_eq!(Digraph::complete(order).order(), order);
         }
 
         #[test]
-        fn complete_outdegree(v in 1..100_usize) {
-            let digraph = Digraph::complete(v);
+        fn complete_outdegree(order in 1..100_usize) {
+            let digraph = Digraph::complete(order);
 
-            for s in digraph.vertices() {
-                assert_eq!(digraph.outdegree(s), v - 1);
+            for u in digraph.vertices() {
+                assert_eq!(digraph.outdegree(u), order - 1);
             }
         }
 
         #[test]
-        fn complete_size(v in 1..100_usize) {
-            assert_eq!(Digraph::complete(v).size(), v * (v - 1));
+        fn complete_size(order in 1..100_usize) {
+            assert_eq!(Digraph::complete(order).size(), order * (order - 1));
         }
 
         #[test]
-        fn cycle_degree(v in 1..100_usize) {
-            let digraph = Digraph::cycle(v);
+        fn cycle_degree(order in 1..100_usize) {
+            let digraph = Digraph::cycle(order);
 
-            for s in digraph.vertices() {
-                assert_eq!(digraph.degree(s), 2);
+            for u in digraph.vertices() {
+                assert_eq!(digraph.degree(u), 2);
             }
         }
 
         #[test]
-        fn cycle_has_edge(v in 3..100_usize) {
-            let digraph = Digraph::cycle(v);
+        fn cycle_has_edge(order in 3..100_usize) {
+            let digraph = Digraph::cycle(order);
 
-            for s in 0..v {
-                for t in s + 1..v {
-                    assert!(!digraph.has_edge(s, t));
+            for u in 0..order {
+                for v in u + 1..order {
+                    assert!(!digraph.has_edge(u, v));
                 }
             }
         }
 
         #[test]
-        fn cycle_indegree(v in 1..100_usize) {
-            let digraph = Digraph::cycle(v);
+        fn cycle_indegree(order in 1..100_usize) {
+            let digraph = Digraph::cycle(order);
 
-            for s in digraph.vertices() {
-                assert_eq!(digraph.indegree(s), 1);
+            for u in digraph.vertices() {
+                assert_eq!(digraph.indegree(u), 1);
             }
         }
 
         #[test]
-        fn cycle_is_balanced(v in 1..100_usize) {
-            assert!(Digraph::cycle(v).is_balanced());
+        fn cycle_is_balanced(order in 1..100_usize) {
+            assert!(Digraph::cycle(order).is_balanced());
         }
 
         #[test]
-        fn cycle_is_complete(v in 3..100_usize) {
-            assert!(!Digraph::cycle(v).is_complete());
+        fn cycle_is_complete(order in 3..100_usize) {
+            assert!(!Digraph::cycle(order).is_complete());
         }
 
         #[test]
-        fn cycle_is_isolated(v in 1..100_usize) {
-            let digraph = Digraph::cycle(v);
+        fn cycle_is_isolated(order in 1..100_usize) {
+            let digraph = Digraph::cycle(order);
 
-            for s in digraph.vertices() {
-                assert!(!digraph.is_isolated(s));
+            for u in digraph.vertices() {
+                assert!(!digraph.is_isolated(u));
             }
         }
 
         #[test]
-        fn cycle_is_oriented(v in 3..100_usize) {
-            assert!(Digraph::cycle(v).is_oriented());
+        fn cycle_is_oriented(order in 3..100_usize) {
+            assert!(Digraph::cycle(order).is_oriented());
         }
 
         #[test]
-        fn cycle_is_pendant(v in 1..100_usize) {
-            let digraph = Digraph::cycle(v);
+        fn cycle_is_pendant(order in 1..100_usize) {
+            let digraph = Digraph::cycle(order);
 
-            for s in digraph.vertices() {
-                assert!(!digraph.is_pendant(s));
+            for u in digraph.vertices() {
+                assert!(!digraph.is_pendant(u));
             }
         }
 
         #[test]
-        fn cycle_is_regular(v in 1..100_usize) {
-            assert!(Digraph::cycle(v).is_regular());
+        fn cycle_is_regular(order in 1..100_usize) {
+            assert!(Digraph::cycle(order).is_regular());
         }
 
         #[test]
-        fn cycle_is_semicomplete(v in 4..100_usize) {
-            assert!(!Digraph::cycle(v).is_semicomplete());
+        fn cycle_is_semicomplete(order in 4..100_usize) {
+            assert!(!Digraph::cycle(order).is_semicomplete());
         }
 
         #[test]
-        fn cycle_is_simple(v in 2..100_usize) {
-            assert!(Digraph::cycle(v).is_simple());
+        fn cycle_is_simple(order in 2..100_usize) {
+            assert!(Digraph::cycle(order).is_simple());
         }
 
         #[test]
-        fn cycle_is_sink(v in 1..100_usize) {
-            let digraph = Digraph::cycle(v);
+        fn cycle_is_sink(order in 1..100_usize) {
+            let digraph = Digraph::cycle(order);
 
-            for s in digraph.vertices() {
-                assert!(!digraph.is_sink(s));
+            for u in digraph.vertices() {
+                assert!(!digraph.is_sink(u));
             }
         }
 
         #[test]
-        fn cycle_is_source(v in 1..100_usize) {
-            let digraph = Digraph::cycle(v);
+        fn cycle_is_source(order in 1..100_usize) {
+            let digraph = Digraph::cycle(order);
 
-            for s in digraph.vertices() {
-                assert!(!digraph.is_source(s));
+            for u in digraph.vertices() {
+                assert!(!digraph.is_source(u));
             }
         }
 
         #[test]
-        fn cycle_is_subdigraph(v in 1..100_usize) {
-            let digraph = Digraph::cycle(v);
+        fn cycle_is_subdigraph(order in 1..100_usize) {
+            let digraph = Digraph::cycle(order);
 
             assert!(digraph.is_subdigraph(&digraph));
         }
 
         #[test]
-        fn cycle_is_superdigraph(v in 1..100_usize) {
-            let digraph = Digraph::cycle(v);
+        fn cycle_is_superdigraph(order in 1..100_usize) {
+            let digraph = Digraph::cycle(order);
 
             assert!(digraph.is_superdigraph(&digraph));
         }
 
         #[test]
-        fn cycle_is_symmetric(v in 3..100_usize) {
-            assert!(!Digraph::cycle(v).is_symmetric());
+        fn cycle_is_symmetric(order in 3..100_usize) {
+            assert!(!Digraph::cycle(order).is_symmetric());
         }
 
         #[test]
-        fn empty_arcs(v in 1..100_usize) {
-            assert!(Digraph::empty(v).arcs().eq([]));
+        fn empty_arcs(order in 1..100_usize) {
+            assert!(Digraph::empty(order).arcs().eq([]));
         }
 
         #[test]
-        fn empty_degree(v in 1..100_usize) {
-            let digraph = Digraph::empty(v);
+        fn empty_degree(order in 1..100_usize) {
+            let digraph = Digraph::empty(order);
 
-            for s in digraph.vertices() {
-                assert_eq!(digraph.degree(s), 0);
+            for u in digraph.vertices() {
+                assert_eq!(digraph.degree(u), 0);
             }
         }
 
         #[test]
-        fn empty_has_arc(v in 1..100_usize) {
-            let digraph = Digraph::empty(v);
+        fn empty_has_arc(order in 1..100_usize) {
+            let digraph = Digraph::empty(order);
 
-            for s in digraph.vertices() {
-                for t in digraph.vertices() {
-                    assert!(!digraph.has_arc(s, t));
+            for u in digraph.vertices() {
+                for v in digraph.vertices() {
+                    assert!(!digraph.has_arc(u, v));
                 }
             }
         }
 
         #[test]
-        fn empty_has_edge(v in 1..100_usize) {
-            let digraph = Digraph::empty(v);
+        fn empty_has_edge(order in 1..100_usize) {
+            let digraph = Digraph::empty(order);
 
-            for s in digraph.vertices() {
-                for t in digraph.vertices() {
-                    assert!(!digraph.has_edge(s, t));
+            for u in digraph.vertices() {
+                for v in digraph.vertices() {
+                    assert!(!digraph.has_edge(u, v));
                 }
             }
         }
 
         #[test]
-        fn empty_indegree(v in 1..100_usize) {
-            let digraph = Digraph::empty(v);
+        fn empty_indegree(order in 1..100_usize) {
+            let digraph = Digraph::empty(order);
 
-            for s in digraph.vertices() {
-                assert_eq!(digraph.indegree(s), 0);
+            for u in digraph.vertices() {
+                assert_eq!(digraph.indegree(u), 0);
             }
         }
 
         #[test]
-        fn empty_is_balanced(v in 1..100_usize) {
-            assert!(Digraph::empty(v).is_balanced());
+        fn empty_is_balanced(order in 1..100_usize) {
+            assert!(Digraph::empty(order).is_balanced());
         }
 
         #[test]
-        fn empty_is_complete(v in 2..100_usize) {
-            assert!(!Digraph::empty(v).is_complete());
+        fn empty_is_complete(order in 2..100_usize) {
+            assert!(!Digraph::empty(order).is_complete());
         }
 
         #[test]
-        fn empty_is_isolated(v in 1..100_usize) {
-            let digraph = Digraph::empty(v);
+        fn empty_is_isolated(order in 1..100_usize) {
+            let digraph = Digraph::empty(order);
 
-            for s in digraph.vertices() {
-                assert!(digraph.is_isolated(s));
+            for u in digraph.vertices() {
+                assert!(digraph.is_isolated(u));
             }
         }
 
         #[test]
-        fn empty_is_oriented(v in 1..100_usize) {
-            assert!(Digraph::empty(v).is_oriented());
+        fn empty_is_oriented(order in 1..100_usize) {
+            assert!(Digraph::empty(order).is_oriented());
         }
 
         #[test]
-        fn empty_is_pendant(v in 1..100_usize) {
-            let digraph = Digraph::empty(v);
+        fn empty_is_pendant(order in 1..100_usize) {
+            let digraph = Digraph::empty(order);
 
-            for s in digraph.vertices() {
-                assert!(!digraph.is_pendant(s));
+            for u in digraph.vertices() {
+                assert!(!digraph.is_pendant(u));
             }
         }
 
         #[test]
-        fn empty_is_regular(v in 1..100_usize) {
-            assert!(Digraph::empty(v).is_regular());
+        fn empty_is_regular(order in 1..100_usize) {
+            assert!(Digraph::empty(order).is_regular());
         }
 
         #[test]
-        fn empty_is_semicomplete(v in 2..100_usize) {
-            assert!(!Digraph::empty(v).is_semicomplete());
+        fn empty_is_semicomplete(order in 2..100_usize) {
+            assert!(!Digraph::empty(order).is_semicomplete());
         }
 
         #[test]
-        fn empty_is_simple(v in 1..100_usize) {
-            assert!(Digraph::empty(v).is_simple());
+        fn empty_is_simple(order in 1..100_usize) {
+            assert!(Digraph::empty(order).is_simple());
         }
 
         #[test]
-        fn empty_is_sink(v in 1..100_usize) {
-            let digraph = Digraph::empty(v);
+        fn empty_is_sink(order in 1..100_usize) {
+            let digraph = Digraph::empty(order);
 
-            for s in digraph.vertices() {
-                assert!(digraph.is_sink(s));
+            for u in digraph.vertices() {
+                assert!(digraph.is_sink(u));
             }
         }
 
         #[test]
-        fn empty_is_source(v in 1..100_usize) {
-            let digraph = Digraph::empty(v);
+        fn empty_is_source(order in 1..100_usize) {
+            let digraph = Digraph::empty(order);
 
-            for s in digraph.vertices() {
-                assert!(digraph.is_source(s));
+            for u in digraph.vertices() {
+                assert!(digraph.is_source(u));
             }
         }
 
         #[test]
-        fn empty_is_subdigraph(v in 1..100_usize) {
-            let digraph = Digraph::empty(v);
+        fn empty_is_subdigraph(order in 1..100_usize) {
+            let digraph = Digraph::empty(order);
 
             assert!(digraph.is_subdigraph(&digraph));
         }
 
         #[test]
-        fn empty_is_superdigraph(v in 1..100_usize) {
-            let digraph = Digraph::empty(v);
+        fn empty_is_superdigraph(order in 1..100_usize) {
+            let digraph = Digraph::empty(order);
 
             assert!(digraph.is_superdigraph(&digraph));
         }
 
         #[test]
-        fn empty_is_symmetric(v in 1..100_usize) {
-            assert!(Digraph::empty(v).is_symmetric());
+        fn empty_is_symmetric(order in 1..100_usize) {
+            assert!(Digraph::empty(order).is_symmetric());
         }
 
         #[test]
-        fn empty_outdegree(v in 1..100_usize) {
-            let digraph = Digraph::empty(v);
+        fn empty_outdegree(order in 1..100_usize) {
+            let digraph = Digraph::empty(order);
 
-            for s in digraph.vertices() {
-                assert_eq!(digraph.outdegree(s), 0);
+            for u in digraph.vertices() {
+                assert_eq!(digraph.outdegree(u), 0);
             }
         }
 
         #[test]
-        fn has_arc_out_of_bounds(v in 1..100_usize) {
-            let digraph = Digraph::empty(v);
+        fn has_arc_out_of_bounds(order in 1..100_usize) {
+            let digraph = Digraph::empty(order);
 
-            for s in 0..v {
-                assert!(!digraph.has_arc(s, v));
-                assert!(!digraph.has_arc(v, s));
+            for u in 0..order {
+                assert!(!digraph.has_arc(u, order));
+                assert!(!digraph.has_arc(order, u));
             }
         }
 
         #[test]
-        fn random_tournament_degree(v in 1..100_usize) {
-            let digraph = Digraph::random_tournament(v);
+        fn random_tournament_degree(order in 1..100_usize) {
+            let digraph = Digraph::random_tournament(order);
 
-            for s in digraph.vertices() {
-                assert_eq!(digraph.degree(s), v - 1);
+            for u in digraph.vertices() {
+                assert_eq!(digraph.degree(u), order - 1);
             }
         }
 
         #[test]
-        fn random_tournament_has_edge(v in 1..100_usize) {
-            let digraph = Digraph::random_tournament(v);
+        fn random_tournament_has_edge(order in 1..100_usize) {
+            let digraph = Digraph::random_tournament(order);
 
-            for s in digraph.vertices() {
-                for t in digraph.vertices() {
-                    assert!(!digraph.has_edge(s, t));
+            for u in digraph.vertices() {
+                for v in digraph.vertices() {
+                    assert!(!digraph.has_edge(u, v));
                 }
             }
         }
 
         #[test]
-        fn random_tournament_indegree(v in 1..100_usize) {
-            let digraph = Digraph::random_tournament(v);
+        fn random_tournament_indegree(order in 1..100_usize) {
+            let digraph = Digraph::random_tournament(order);
 
-            for s in digraph.vertices() {
-                assert!((0..v).contains(&digraph.indegree(s)));
+            for u in digraph.vertices() {
+                assert!((0..order).contains(&digraph.indegree(u)));
             }
         }
 
         #[test]
-        fn random_tournament_is_complete(v in 2..100_usize) {
-            assert!(!Digraph::random_tournament(v).is_complete());
+        fn random_tournament_is_complete(order in 2..100_usize) {
+            assert!(!Digraph::random_tournament(order).is_complete());
         }
 
         #[test]
-        fn random_tournament_is_isolated(v in 2..100_usize) {
-            let digraph = Digraph::random_tournament(v);
+        fn random_tournament_is_isolated(order in 2..100_usize) {
+            let digraph = Digraph::random_tournament(order);
 
-            for s in digraph.vertices() {
-                assert!(!digraph.is_isolated(s));
+            for u in digraph.vertices() {
+                assert!(!digraph.is_isolated(u));
             }
         }
 
         #[test]
-        fn random_tournament_is_oriented(v in 1..100_usize) {
-            assert!(Digraph::random_tournament(v).is_oriented());
+        fn random_tournament_is_oriented(order in 1..100_usize) {
+            assert!(Digraph::random_tournament(order).is_oriented());
         }
 
         #[test]
-        fn random_tournament_is_pendant(v in 3..100_usize) {
-            let digraph = Digraph::random_tournament(v);
+        fn random_tournament_is_pendant(order in 3..100_usize) {
+            let digraph = Digraph::random_tournament(order);
 
-            for s in digraph.vertices() {
-                assert!(!digraph.is_pendant(s));
+            for u in digraph.vertices() {
+                assert!(!digraph.is_pendant(u));
             }
         }
 
         #[test]
-        fn random_tournament_is_semicomplete(v in 1..100_usize) {
-            assert!(Digraph::random_tournament(v).is_semicomplete());
+        fn random_tournament_is_semicomplete(order in 1..100_usize) {
+            assert!(Digraph::random_tournament(order).is_semicomplete());
         }
 
         #[test]
-        fn random_tournament_is_simple(v in 1..100_usize) {
-            assert!(Digraph::random_tournament(v).is_simple());
+        fn random_tournament_is_simple(order in 1..100_usize) {
+            assert!(Digraph::random_tournament(order).is_simple());
         }
 
         #[test]
-        fn random_tournament_is_subdigraph(v in 1..100_usize) {
-            let digraph = Digraph::random_tournament(v);
+        fn random_tournament_is_subdigraph(order in 1..100_usize) {
+            let digraph = Digraph::random_tournament(order);
 
             assert!(digraph.is_subdigraph(&digraph));
         }
 
         #[test]
-        fn random_tournament_is_superdigraph(v in 1..100_usize) {
-            let digraph = Digraph::random_tournament(v);
+        fn random_tournament_is_superdigraph(order in 1..100_usize) {
+            let digraph = Digraph::random_tournament(order);
 
             assert!(digraph.is_superdigraph(&digraph));
         }
 
         #[test]
-        fn random_tournament_is_symmetric(v in 2..100_usize) {
-            assert!(!Digraph::random_tournament(v).is_symmetric());
+        fn random_tournament_is_symmetric(order in 2..100_usize) {
+            assert!(!Digraph::random_tournament(order).is_symmetric());
         }
 
         #[test]
-        fn random_tournament_order(v in 1..100_usize) {
-            assert_eq!(Digraph::random_tournament(v).order(), v);
+        fn random_tournament_order(order in 1..100_usize) {
+            assert_eq!(Digraph::random_tournament(order).order(), order);
         }
 
         #[test]
-        fn random_tournament_outdegree(v in 1..100_usize) {
-            let digraph = Digraph::random_tournament(v);
+        fn random_tournament_outdegree(order in 1..100_usize) {
+            let digraph = Digraph::random_tournament(order);
 
             for s in digraph.vertices() {
-                assert!((0..v).contains(&digraph.outdegree(s)));
+                assert!((0..order).contains(&digraph.outdegree(s)));
             }
         }
 
         #[test]
-        fn random_tournament_size(v in 1..100_usize) {
-            let digraph = Digraph::random_tournament(v);
+        fn random_tournament_size(order in 1..100_usize) {
+            let digraph = Digraph::random_tournament(order);
 
-            assert_eq!(digraph.size(), v * (v - 1) / 2);
+            assert_eq!(digraph.size(), order * (order - 1) / 2);
         }
     }
 
@@ -2905,7 +2896,7 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "s = 3 is out of bounds.")]
+    #[should_panic(expected = "u = 3 is out of bounds.")]
     fn toggle_panic_s_gte_v() {
         let mut digraph = Digraph::empty(3);
 
@@ -2913,7 +2904,7 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "t = 3 is out of bounds.")]
+    #[should_panic(expected = "v = 3 is out of bounds.")]
     fn toggle_panic_t_gte_v() {
         let mut digraph = Digraph::empty(3);
 

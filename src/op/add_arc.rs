@@ -80,7 +80,7 @@ pub trait AddArc {
     ///
     /// # Arguments
     ///
-    /// * `u`: The head vertex.
-    /// * `v`: The tail vertex.
+    /// * `u`: The tail vertex.
+    /// * `v`: The head vertex.
     fn add_arc(&mut self, u: usize, v: usize);
 }

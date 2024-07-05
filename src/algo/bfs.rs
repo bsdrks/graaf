@@ -129,16 +129,16 @@ where
     S: Fn(W) -> W,
     W: Copy + Ord,
 {
-    while let Some((s, w)) = queue.pop_front() {
+    while let Some((u, w)) = queue.pop_front() {
         let w = step(w);
 
-        for t in digraph.out_neighbors(s) {
-            if w >= dist[t] {
+        for v in digraph.out_neighbors(u) {
+            if w >= dist[v] {
                 continue;
             }
 
-            dist[t] = w;
-            queue.push_back((t, w));
+            dist[v] = w;
+            queue.push_back((v, w));
         }
     }
 }
@@ -260,17 +260,17 @@ pub fn predecessors<D, S, W>(
     S: Fn(W) -> W,
     W: Copy + Ord,
 {
-    while let Some((s, w)) = queue.pop_front() {
+    while let Some((u, w)) = queue.pop_front() {
         let w = step(w);
 
-        for t in digraph.out_neighbors(s) {
-            if w >= dist[t] {
+        for v in digraph.out_neighbors(u) {
+            if w >= dist[v] {
                 continue;
             }
 
-            dist[t] = w;
-            pred[t] = Some(s);
-            queue.push_back((t, w));
+            dist[v] = w;
+            pred[v] = Some(u);
+            queue.push_back((v, w));
         }
     }
 }
@@ -414,9 +414,9 @@ where
     S: Fn(usize) -> usize,
     T: Fn(usize) -> bool,
 {
-    while let Some((s, w)) = queue.pop_front() {
-        if is_target(s) {
-            return pred.search_by(s, |_, b| b.is_none()).map(|mut path| {
+    while let Some((u, w)) = queue.pop_front() {
+        if is_target(u) {
+            return pred.search_by(u, |_, b| b.is_none()).map(|mut path| {
                 path.reverse();
 
                 path
@@ -425,23 +425,23 @@ where
 
         let w = step(w);
 
-        for t in digraph.out_neighbors(s) {
-            if w >= dist[t] {
+        for v in digraph.out_neighbors(u) {
+            if w >= dist[v] {
                 continue;
             }
 
-            dist[t] = w;
-            pred[t] = Some(s);
+            dist[v] = w;
+            pred[v] = Some(u);
 
-            if is_target(t) {
-                return pred.search_by(t, |_, b| b.is_none()).map(|mut path| {
+            if is_target(v) {
+                return pred.search_by(v, |_, b| b.is_none()).map(|mut path| {
                     path.reverse();
 
                     path
                 });
             }
 
-            queue.push_back((t, w));
+            queue.push_back((v, w));
         }
     }
 

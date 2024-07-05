@@ -127,14 +127,14 @@ pub fn distances<D>(digraph: &D) -> DistanceMatrix<isize>
 where
     D: ArcsWeighted<isize> + Order + Vertices,
 {
-    let v = digraph.order();
-    let mut dist = DistanceMatrix::<isize>::new(v, isize::MAX);
+    let order = digraph.order();
+    let mut dist = DistanceMatrix::<isize>::new(order, isize::MAX);
 
-    for (s, t, w) in digraph.arcs_weighted() {
-        dist[s][t] = *w;
+    for (u, v, w) in digraph.arcs_weighted() {
+        dist[u][v] = *w;
     }
 
-    for i in 0..v {
+    for i in 0..order {
         dist[i][i] = 0;
     }
 

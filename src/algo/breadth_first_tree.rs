@@ -68,13 +68,16 @@ impl BreadthFirstTree {
     ///
     /// # Panics
     ///
-    /// Panics if `v` is zero.
+    /// Panics if `order` is zero.
     #[must_use]
-    pub fn new(v: usize) -> Self {
-        assert!(v > 0, "a breadth-first tree must have at least one vertex");
+    pub fn new(order: usize) -> Self {
+        assert!(
+            order > 0,
+            "a breadth-first tree must have at least one vertex"
+        );
 
         Self {
-            pred: vec![None; v],
+            pred: vec![None; order],
         }
     }
 
@@ -137,7 +140,7 @@ impl BreadthFirstTree {
     /// let pred = BreadthFirstTree::from(vec![Some(1), Some(2), Some(3), None, Some(0)]);
     ///
     /// assert!(pred
-    ///     .search_by(0, |_, u| u.is_none())
+    ///     .search_by(0, |_, v| v.is_none())
     ///     .into_iter()
     ///     .eq(Some(vec![0, 1, 2, 3])));
     /// ```
@@ -153,12 +156,12 @@ impl BreadthFirstTree {
         let mut visited = HashSet::new();
         let mut path = vec![s];
 
-        while let Some(&u) = self.pred.get(s) {
-            if is_target(&s, &u) {
+        while let Some(&v) = self.pred.get(s) {
+            if is_target(&s, &v) {
                 return Some(path);
             }
 
-            if let Some(v) = u {
+            if let Some(v) = v {
                 if !visited.insert(v) {
                     break;
                 }

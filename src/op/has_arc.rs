@@ -95,15 +95,15 @@
 /// [`AddArc`]: crate::op::AddArc
 /// [`AddArcWeighted`]: crate::op::AddArcWeighted
 pub trait HasArc {
-    /// Returns whether an arc exists from `s` to `t` in the digraph.
+    /// Returns whether an arc exists from `u` to `v` in the digraph.
     ///
     /// # Arguments
     ///
-    /// * `s`: The head vertex.
-    /// * `t`: The tail vertex.
+    /// * `u`: The tail vertex.
+    /// * `v`: The head vertex.
     ///
     /// # Panics
     ///
-    /// `has_arc` may not panic if `s` and `t` are out of bounds.
-    fn has_arc(&self, s: usize, t: usize) -> bool;
+    /// `has_arc` may not panic if `u` and `v` are out of bounds.
+    fn has_arc(&self, u: usize, v: usize) -> bool;
 }

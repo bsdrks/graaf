@@ -73,12 +73,12 @@ impl<W> DistanceMatrix<W> {
     ///
     /// # Arguments
     ///
-    /// * `v`: The number of vertices.
+    /// * `order`: The number of vertices.
     /// * `max`: The maximum distance between two vertices.
     ///
     /// # Panics
     ///
-    /// Panics if `v` is zero.
+    /// Panics if `order` is zero.
     ///
     /// # Examples
     ///
@@ -93,14 +93,14 @@ impl<W> DistanceMatrix<W> {
     /// assert_eq!(dist[2], vec![0; 4]);
     /// assert_eq!(dist[3], vec![0; 4]);
     /// ```
-    pub fn new(v: usize, max: W) -> Self
+    pub fn new(order: usize, max: W) -> Self
     where
         W: Copy,
     {
-        assert!(v > 0, "a distance matrix must have at least one vertex");
+        assert!(order > 0, "a distance matrix must have at least one vertex");
 
         Self {
-            dist: vec![vec![max; v]; v],
+            dist: vec![vec![max; order]; order],
             max,
         }
     }
@@ -346,14 +346,14 @@ impl<W> DistanceMatrix<W> {
 impl<W> Index<usize> for DistanceMatrix<W> {
     type Output = Vec<W>;
 
-    fn index(&self, s: usize) -> &Self::Output {
-        &self.dist[s]
+    fn index(&self, u: usize) -> &Self::Output {
+        &self.dist[u]
     }
 }
 
 impl<W> IndexMut<usize> for DistanceMatrix<W> {
-    fn index_mut(&mut self, s: usize) -> &mut Self::Output {
-        &mut self.dist[s]
+    fn index_mut(&mut self, u: usize) -> &mut Self::Output {
+        &mut self.dist[u]
     }
 }
 

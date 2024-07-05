@@ -97,16 +97,16 @@ pub trait InNeighbors {
     ///
     /// # Arguments
     ///
-    /// * `t`: The head vertex.
-    fn in_neighbors(&self, t: usize) -> impl Iterator<Item = usize>;
+    /// * `v`: The vertex.
+    fn in_neighbors(&self, v: usize) -> impl Iterator<Item = usize>;
 }
 
 impl<D> InNeighbors for D
 where
     D: Arcs,
 {
-    fn in_neighbors(&self, t: usize) -> impl Iterator<Item = usize> {
+    fn in_neighbors(&self, v: usize) -> impl Iterator<Item = usize> {
         self.arcs()
-            .filter_map(move |(s, t_)| (t == t_).then_some(s))
+            .filter_map(move |(u, v_)| (v == v_).then_some(u))
     }
 }

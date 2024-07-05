@@ -221,9 +221,9 @@ A distance matrix contains the shortest distances between all pairs of vertices 
 
 - `s` denotes a source vertex.
 - `t` denotes a target vertex.
-- `u` denotes a head vertex or the first vertex in scope.
-- `v` denotes a tail vertex or the second vertex in scope.
-- `w` denotes a weight.
+- `u` denotes a tail vertex or the first vertex in scope.
+- `v` denotes a head vertex or the second vertex in scope.
+- `w` denotes the weight of an arc.
 - `x` denotes a head vertex or the third vertex in scope.
 - `y` denotes a tail vertex or the fourth vertex in scope.
 

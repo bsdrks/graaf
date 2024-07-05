@@ -84,12 +84,12 @@
 /// assert_eq!(digraph.arc_weight(2, 2), None);
 /// ```
 pub trait ArcWeight<W> {
-    /// Returns the weight of the arc from `s` to `t` if it exists in the
+    /// Returns the weight of the arc from `u` to `v` if it exists in the
     /// digraph.
     ///
     /// # Arguments
     ///
-    /// * `s`: The head vertex.
-    /// * `t`: The tail vertex.
-    fn arc_weight(&self, s: usize, t: usize) -> Option<&W>;
+    /// * `u`: The tail vertex.
+    /// * `v`: The head vertex.
+    fn arc_weight(&self, u: usize, v: usize) -> Option<&W>;
 }

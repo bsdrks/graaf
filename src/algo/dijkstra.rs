@@ -443,25 +443,25 @@ where
     T: Fn(usize, &W) -> bool,
     W: Copy + Ord,
 {
-    while let Some((Reverse(acc), s)) = heap.pop() {
-        if is_target(s, &acc) {
-            return pred.search_by(s, |_, u| u.is_none()).map(|mut path| {
+    while let Some((Reverse(acc), u)) = heap.pop() {
+        if is_target(u, &acc) {
+            return pred.search_by(u, |_, u| u.is_none()).map(|mut path| {
                 path.reverse();
 
                 path
             });
         }
 
-        for (t, w) in digraph.out_neighbors_weighted(s) {
+        for (v, w) in digraph.out_neighbors_weighted(u) {
             let w = step(acc, w);
 
-            if w >= dist[t] {
+            if w >= dist[v] {
                 continue;
             }
 
-            dist[t] = w;
-            pred[t] = Some(s);
-            heap.push((Reverse(w), t));
+            dist[v] = w;
+            pred[v] = Some(u);
+            heap.push((Reverse(w), v));
         }
     }
 

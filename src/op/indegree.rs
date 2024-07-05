@@ -85,8 +85,8 @@ pub trait Indegree {
     ///
     /// # Arguments
     ///
-    /// * `t`: The tail vertex.
-    fn indegree(&self, t: usize) -> usize;
+    /// * `u`: The vertex.
+    fn indegree(&self, u: usize) -> usize;
 
     /// Returns whether a vertex is a source of the digraph.
     ///
@@ -118,7 +118,7 @@ pub trait Indegree {
     /// assert!(!digraph.is_source(1));
     /// assert!(!digraph.is_source(2));
     /// ```
-    fn is_source(&self, t: usize) -> bool {
-        self.indegree(t) == 0
+    fn is_source(&self, u: usize) -> bool {
+        self.indegree(u) == 0
     }
 }
