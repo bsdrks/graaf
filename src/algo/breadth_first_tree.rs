@@ -193,8 +193,8 @@ impl From<Vec<Option<usize>>> for BreadthFirstTree {
 impl Index<usize> for BreadthFirstTree {
     type Output = Option<usize>;
 
-    fn index(&self, s: usize) -> &Self::Output {
-        &self.pred[s]
+    fn index(&self, u: usize) -> &Self::Output {
+        &self.pred[u]
     }
 }
 

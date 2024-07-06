@@ -27,8 +27,8 @@
 ///
 /// # How can I implement `AddArcWeighted`?
 ///
-/// Provide an implementation of `add_arc_weighted` that adds an arc from `s`
-/// to `t` to the digraph with weight `w`.
+/// Provide an implementation of `add_arc_weighted` that adds an arc from `u`
+/// to `v` to the digraph with weight `w`.
 ///
 /// ```
 /// use {
@@ -41,8 +41,8 @@
 /// }
 ///
 /// impl AddArcWeighted<isize> for Digraph {
-///     fn add_arc_weighted(&mut self, s: usize, t: usize, w: isize) {
-///         self.arcs[s].insert(t, w);
+///     fn add_arc_weighted(&mut self, u: usize, v: usize, w: isize) {
+///         self.arcs[u].insert(v, w);
 ///     }
 /// }
 ///

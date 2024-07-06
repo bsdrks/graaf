@@ -57,15 +57,15 @@ use crate::{
 /// }
 ///
 /// impl AddArc for Digraph {
-///     fn add_arc(&mut self, s: usize, t: usize) {
-///         self.arcs[s].insert(t);
+///     fn add_arc(&mut self, u: usize, v: usize) {
+///         self.arcs[u].insert(v);
 ///     }
 /// }
 ///
 /// impl Empty for Digraph {
-///     fn empty(v: usize) -> Self {
+///     fn empty(order: usize) -> Self {
 ///         Self {
-///             arcs: vec![BTreeSet::new(); v],
+///             arcs: vec![BTreeSet::new(); order],
 ///         }
 ///     }
 /// }

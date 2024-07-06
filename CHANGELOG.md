@@ -10,6 +10,12 @@
 - Improve documentation for the `Empty` trait.
 - Test out-of-bounds panics.
 
+## [0.64.14] - 2024-07-06
+
+Fixed
+
+- Apply internal naming conventions.
+
 ## [0.64.13] - 2024-07-05
 
 Added

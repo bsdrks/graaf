@@ -35,7 +35,7 @@
 /// # How can I implement `ArcWeight`?
 ///
 /// Provide an implementation of `arc_weight` that returns the weight of the
-/// arc from `s` to `t`.
+/// arc from `u` to `v`.
 ///
 /// ```
 /// use {
@@ -48,8 +48,8 @@
 /// }
 ///
 /// impl ArcWeight<usize> for Digraph {
-///     fn arc_weight(&self, s: usize, t: usize) -> Option<&usize> {
-///         self.arcs.get(s).and_then(|m| m.get(&t))
+///     fn arc_weight(&self, u: usize, v: usize) -> Option<&usize> {
+///         self.arcs.get(u).and_then(|m| m.get(&v))
 ///     }
 /// }
 /// ```

@@ -1,7 +1,7 @@
 //! An adjacency matrix representation for unweighted digraphs
 //!
 //! An adjacency matrix is a symmetric binary matrix where a value of `1` at
-//! row `s` and column `t` indicates an arc from vertex `s` to vertex `t`. The
+//! row `u` and column `v` indicates an arc from vertex `u` to vertex `v`. The
 //! matrix is stored as a bit array, and is suited for dense digraphs with a
 //! small number of vertices.
 
@@ -213,12 +213,12 @@ impl OutNeighbors for Digraph {
 impl OutNeighborsWeighted<usize> for Digraph {
     /// # Panics
     ///
-    /// Panics if `s` is out of bounds.
-    fn out_neighbors_weighted<'a>(&'a self, s: usize) -> impl Iterator<Item = (usize, &'a usize)>
+    /// Panics if `u` is out of bounds.
+    fn out_neighbors_weighted<'a>(&'a self, u: usize) -> impl Iterator<Item = (usize, &'a usize)>
     where
         usize: 'a,
     {
-        self.out_neighbors(s).map(move |u| (u, &1))
+        self.out_neighbors(u).map(move |v| (v, &1))
     }
 }
 

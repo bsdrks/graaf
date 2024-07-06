@@ -152,7 +152,7 @@ impl<W> IsSimple for Digraph<W> {
 impl<W> OutNeighbors for Digraph<W> {
     /// # Panics
     ///
-    /// Panics if `s` is out of bounds.
+    /// Panics if `u` is out of bounds.
     fn out_neighbors(&self, u: usize) -> impl Iterator<Item = usize> {
         self.arcs[u].keys().copied()
     }
@@ -161,7 +161,7 @@ impl<W> OutNeighbors for Digraph<W> {
 impl<W> OutNeighborsWeighted<W> for Digraph<W> {
     /// # Panics
     ///
-    /// Panics if `s` is out of bounds.
+    /// Panics if `u` is out of bounds.
     fn out_neighbors_weighted<'a>(&'a self, u: usize) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
@@ -179,7 +179,7 @@ impl<W> Order for Digraph<W> {
 impl<W> Outdegree for Digraph<W> {
     /// # Panics
     ///
-    /// Panics if `s` is out of bounds.
+    /// Panics if `u` is out of bounds.
     fn outdegree(&self, u: usize) -> usize {
         self.arcs[u].len()
     }
