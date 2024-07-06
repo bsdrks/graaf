@@ -80,10 +80,7 @@ impl ArcsWeighted<usize> for Digraph {
     where
         usize: 'a,
     {
-        self.arcs
-            .iter()
-            .enumerate()
-            .flat_map(|(u, set)| set.iter().map(move |&v| (u, v, &1)))
+        self.arcs().map(move |(u, v)| (u, v, &1))
     }
 }
 

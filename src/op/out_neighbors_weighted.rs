@@ -46,10 +46,13 @@
 /// iterator over all weighted arcs with tail vertex `u`.
 ///
 /// ```
-/// use graaf::op::OutNeighborsWeighted;
+/// use {
+///     graaf::op::OutNeighborsWeighted,
+///     std::collections::BTreeMap,
+/// };
 ///
 /// struct Digraph {
-///     arcs: Vec<Vec<(usize, usize)>>,
+///     arcs: Vec<BTreeMap<usize, usize>>,
 /// }
 ///
 /// impl OutNeighborsWeighted<usize> for Digraph {
@@ -60,7 +63,7 @@
 ///     where
 ///         usize: 'a,
 ///     {
-///         self.arcs[u].iter().map(|(&v, w)| (v, w))
+///         self.arcs[u].iter().map(|(v, w)| (*v, w))
 ///     }
 /// }
 /// ```
