@@ -126,13 +126,13 @@ where
     dist[s] = 0;
 
     for _ in 1..order {
-        for (u, v, w) in digraph.arcs_weighted() {
-            dist[v] = dist[v].min(dist[u].saturating_add(*w));
+        for (u, v, &w) in digraph.arcs_weighted() {
+            dist[v] = dist[v].min(dist[u].saturating_add(w));
         }
     }
 
-    for (u, v, w) in digraph.arcs_weighted() {
-        if dist[v] > dist[u].saturating_add(*w) {
+    for (u, v, &w) in digraph.arcs_weighted() {
+        if dist[v] > dist[u].saturating_add(w) {
             return None;
         }
     }

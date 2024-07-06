@@ -130,8 +130,8 @@ where
     let order = digraph.order();
     let mut dist = DistanceMatrix::<isize>::new(order, isize::MAX);
 
-    for (u, v, w) in digraph.arcs_weighted() {
-        dist[u][v] = *w;
+    for (u, v, &w) in digraph.arcs_weighted() {
+        dist[u][v] = w;
     }
 
     for i in 0..order {

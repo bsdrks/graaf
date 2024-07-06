@@ -71,7 +71,7 @@ impl Arcs for Digraph {
         self.arcs
             .iter()
             .enumerate()
-            .flat_map(|(u, set)| set.iter().map(move |v| (u, *v)))
+            .flat_map(|(u, set)| set.iter().map(move |&v| (u, v)))
     }
 }
 
@@ -83,7 +83,7 @@ impl ArcsWeighted<usize> for Digraph {
         self.arcs
             .iter()
             .enumerate()
-            .flat_map(|(u, set)| set.iter().map(move |v| (u, *v, &1)))
+            .flat_map(|(u, set)| set.iter().map(move |&v| (u, v, &1)))
     }
 }
 
@@ -322,6 +322,14 @@ mod tests {
         }
 
         #[test]
+        fn complete_degree_sequence(order in 1..100_usize) {
+            let degree = order - 1;
+            let degree_pair = (degree, degree);
+
+            assert!(Digraph::complete(order).degree_sequence().iter().all(|&d| d == degree_pair));
+        }
+
+        #[test]
         fn complete_has_edge(order in 2..100_usize) {
             let digraph = Digraph::complete(order);
 
@@ -434,6 +442,11 @@ mod tests {
             for u in digraph.vertices() {
                 assert_eq!(digraph.degree(u), 2);
             }
+        }
+
+        #[test]
+        fn cycle_degree_sequence(order in 1..100_usize) {
+            assert!(Digraph::cycle(order).degree_sequence().iter().all(|d| *d == (1, 1)));
         }
 
         #[test]
@@ -553,6 +566,11 @@ mod tests {
             for u in digraph.vertices() {
                 assert_eq!(digraph.degree(u), 0);
             }
+        }
+
+        #[test]
+        fn empty_degree_sequence(order in 1..100_usize) {
+            assert!(Digraph::empty(order).degree_sequence().iter().all(|d| *d == (0, 0)));
         }
 
         #[test]

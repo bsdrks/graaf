@@ -50,7 +50,7 @@ use super::Arcs;
 ///         self.arcs
 ///             .iter()
 ///             .enumerate()
-///             .filter_map(move |(u, set)| set.iter().find(|&v_| *v_ == v).map(move |_| u))
+///             .filter_map(move |(u, set)| set.iter().find(|v_| v_ == v).map(move |_| u))
 ///     }
 /// }
 ///

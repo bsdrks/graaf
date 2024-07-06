@@ -71,7 +71,7 @@ impl<W> Arcs for Digraph<W> {
         self.arcs
             .iter()
             .enumerate()
-            .flat_map(|(u, set)| set.iter().map(move |(v, _)| (u, *v)))
+            .flat_map(|(u, set)| set.iter().map(move |(&v, _)| (u, v)))
     }
 }
 
@@ -83,7 +83,7 @@ impl<W> ArcsWeighted<W> for Digraph<W> {
         self.arcs
             .iter()
             .enumerate()
-            .flat_map(|(u, map)| map.iter().map(move |(v, w)| (u, *v, w)))
+            .flat_map(|(u, map)| map.iter().map(move |(&v, w)| (u, v, w)))
     }
 }
 
@@ -95,8 +95,8 @@ where
         let order = self.order();
         let mut converse = Self::empty(order);
 
-        for (u, v, w) in self.arcs_weighted() {
-            converse.add_arc_weighted(v, u, *w);
+        for (u, v, &w) in self.arcs_weighted() {
+            converse.add_arc_weighted(v, u, w);
         }
 
         converse

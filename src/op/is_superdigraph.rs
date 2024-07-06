@@ -91,7 +91,7 @@ use super::IsSubdigraph;
 ///         self.arcs
 ///             .iter()
 ///             .enumerate()
-///             .flat_map(|(u, set)| set.iter().map(move |v| (u, *v)))
+///             .flat_map(|(u, set)| set.iter().map(move |&v| (u, v)))
 ///     }
 /// }
 ///

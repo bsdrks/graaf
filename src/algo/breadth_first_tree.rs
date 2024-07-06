@@ -199,8 +199,8 @@ impl Index<usize> for BreadthFirstTree {
 }
 
 impl IndexMut<usize> for BreadthFirstTree {
-    fn index_mut(&mut self, s: usize) -> &mut Self::Output {
-        &mut self.pred[s]
+    fn index_mut(&mut self, u: usize) -> &mut Self::Output {
+        &mut self.pred[u]
     }
 }
 

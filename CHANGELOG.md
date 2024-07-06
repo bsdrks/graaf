@@ -2,6 +2,7 @@
 
 ## Provisional roadmap
 
+- Add periphery to `DistanceMatrix`.
 - Apply internal naming conventions.
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
@@ -9,6 +10,17 @@
 - Improve documentation for the `Cycle` trait.
 - Improve documentation for the `Empty` trait.
 - Test out-of-bounds panics.
+
+## [0.64.15] - 2024-07-06
+
+Added
+
+- Add unit test `complete_degree_sequence` for `ajdacency_list::Digraph`.
+- Add unit test `complete_degree_sequence` for `ajdacency_matrix::Digraph`.
+- Add unit test `cycle_degree_sequence` for `ajdacency_list::Digraph`.
+- Add unit test `cycle_degree_sequence` for `ajdacency_matrix::Digraph`.
+- Add unit test `empty_degree_sequence` for `ajdacency_list::Digraph`.
+- Add unit test `empty_degree_sequence` for `ajdacency_matrix::Digraph`.
 
 ## [0.64.14] - 2024-07-06
 

@@ -60,7 +60,7 @@
 ///     where
 ///         usize: 'a,
 ///     {
-///         self.arcs[u].iter().map(|(v, w)| (*v, w))
+///         self.arcs[u].iter().map(|(&v, w)| (v, w))
 ///     }
 /// }
 /// ```
