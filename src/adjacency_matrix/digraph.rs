@@ -798,6 +798,17 @@ mod tests {
         }
 
         #[test]
+        fn random_tournament_degree_sequence(order in 1..100_usize) {
+            assert_eq!(
+                Digraph::random_tournament(order)
+                    .degree_sequence()
+                    .iter()
+                    .fold(0, |acc, (indegree, outdegree)| acc + indegree + outdegree),
+                order * (order - 1)
+            );
+        }
+
+        #[test]
         fn random_tournament_has_edge(order in 1..100_usize) {
             let digraph = Digraph::random_tournament(order);
 
