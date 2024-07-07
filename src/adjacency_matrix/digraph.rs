@@ -2112,6 +2112,36 @@ mod tests {
     }
 
     #[test]
+    fn is_tournament_bang_jensen_34() {
+        assert!(!bang_jensen_34().is_tournament());
+    }
+
+    #[test]
+    fn is_tournament_bang_jensen_94() {
+        assert!(!bang_jensen_94().is_tournament());
+    }
+
+    #[test]
+    fn is_tournament_kattis_builddeps() {
+        assert!(!kattis_builddeps().is_tournament());
+    }
+
+    #[test]
+    fn is_tournament_kattis_escapewallmaria_1() {
+        assert!(!kattis_escapewallmaria_1().is_tournament());
+    }
+
+    #[test]
+    fn is_tournament_kattis_escapewallmaria_2() {
+        assert!(!kattis_escapewallmaria_2().is_tournament());
+    }
+
+    #[test]
+    fn is_tournament_kattis_escapewallmaria_3() {
+        assert!(!kattis_escapewallmaria_3().is_tournament());
+    }
+
+    #[test]
     fn is_walk_bang_jensen_34() {
         let digraph = bang_jensen_34();
 

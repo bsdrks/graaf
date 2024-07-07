@@ -236,6 +236,7 @@ mod tests {
                 IsSubdigraph,
                 IsSuperdigraph,
                 IsSymmetric,
+                IsTournament,
             },
         },
         proptest::proptest,
@@ -448,6 +449,11 @@ mod tests {
         #[test]
         fn empty_is_symmetric(order in 1..100_usize) {
             assert!(Digraph::<usize>::empty(order).is_symmetric());
+        }
+
+        #[test]
+        fn empty_is_tournament(order in 2..100_usize) {
+            assert!(!Digraph::<usize>::empty(order).is_tournament());
         }
 
         #[test]
@@ -1075,6 +1081,11 @@ mod tests {
     #[test]
     fn empty_is_semicomplete_singleton() {
         assert!(Digraph::<usize>::trivial().is_semicomplete());
+    }
+
+    #[test]
+    fn empty_is_tournament_trivial() {
+        assert!(Digraph::<usize>::trivial().is_tournament());
     }
 
     #[test]
@@ -1731,6 +1742,46 @@ mod tests {
     #[test]
     fn is_symmetric_kattis_shortestpath1() {
         assert!(!kattis_shortestpath1_usize().is_symmetric());
+    }
+
+    #[test]
+    fn is_tournament_bang_jensen_94_weighted() {
+        assert!(!bang_jensen_94_weighted_usize().is_tournament());
+    }
+
+    #[test]
+    fn is_tournament_bang_jensen_96() {
+        assert!(!bang_jensen_96_usize().is_tournament());
+    }
+
+    #[test]
+    fn is_tournament_bang_jensen_99() {
+        assert!(!bang_jensen_99().is_tournament());
+    }
+
+    #[test]
+    fn is_tournament_kattis_bryr_1() {
+        assert!(!kattis_bryr_1_usize().is_tournament());
+    }
+
+    #[test]
+    fn is_tournament_kattis_bryr_2() {
+        assert!(!kattis_bryr_2_usize().is_tournament());
+    }
+
+    #[test]
+    fn is_tournament_kattis_bryr_3() {
+        assert!(!kattis_bryr_3_usize().is_tournament());
+    }
+
+    #[test]
+    fn is_tournament_kattis_crosscountry() {
+        assert!(!kattis_crosscountry_usize().is_tournament());
+    }
+
+    #[test]
+    fn is_tournament_kattis_shortestpath1() {
+        assert!(!kattis_shortestpath1_usize().is_tournament());
     }
 
     #[test]

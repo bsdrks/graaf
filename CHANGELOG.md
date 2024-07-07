@@ -3,6 +3,8 @@
 ## Provisional roadmap
 
 - Add periphery to `DistanceMatrix`.
+- Add the `IndegreeSequence` trait.
+- Add the `OutdegreeSequence` trait.
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
 - Expand the user guide.
@@ -10,42 +12,70 @@
 - Improve documentation for the `Empty` trait.
 - Test out-of-bounds panics.
 
-## [0.64.17] - 2024-07-06
+## [0.64.18] - 2024-07-07
 
 Added
 
-- Add property test `complete_is_tournament` for `adjacency_list::Digraph`.
-- Add property test `complete_is_tournament` for `adjacency_matrix::Digraph`.
-- Add property test `cycle_is_tournament` for `adjacency_list::Digraph`.
-- Add property test `cycle_is_tournament` for `adjacency_matrix::Digraph`.
-- Add property test `empty_is_tournament` for `adjacency_list::Digraph`.
-- Add property test `empty_is_tournament` for `adjacency_matrix::Digraph`.
-- Add property test `random_tournament_is_tournament` for `adjacency_list::Digraph`.
-- Add property test `random_tournament_is_tournament` for `adjacency_matrix::Digraph`.
-- Add unit test `complete_is_tournament_trivial` for `adjacency_list::Digraph`.
-- Add unit test `complete_is_tournament_trivial` for `adjacency_matrix::Digraph`.
-- Add unit test `cycle_is_tournament_pair` for `adjacency_list::Digraph`.
-- Add unit test `cycle_is_tournament_pair` for `adjacency_matrix::Digraph`.
-- Add unit test `cycle_is_tournament_triple` for `adjacency_list::Digraph`.
-- Add unit test `cycle_is_tournament_triple` for `adjacency_matrix::Digraph`.
-- Add unit test `cycle_is_tournament_trivial` for `adjacency_list::Digraph`.
-- Add unit test `cycle_is_tournament_trivial` for `adjacency_matrix::Digraph`.
+- Add property test `empty_is_tournament` for `adjacency_list_weighted`.
+- Add unit test `empty_is_tournament_trivial` for `adjacency_list_weighted`.
+- Add unit test `empty_is_tournament_trivial` for `adjacency_matrix_weighted`.
+- Add unit test `is_tournament_bang_jensen_34` for `adjacency_list`.
+- Add unit test `is_tournament_bang_jensen_34` for `adjacency_matrix`.
+- Add unit test `is_tournament_bang_jensen_94_weighted` for `adjacency_list_weighted`.
+- Add unit test `is_tournament_bang_jensen_94` for `adjacency_list`.
+- Add unit test `is_tournament_bang_jensen_94` for `adjacency_matrix`.
+- Add unit test `is_tournament_bang_jensen_96` for `adjacency_list_weighted`.
+- Add unit test `is_tournament_bang_jensen_99` for `adjacency_list_weighted`.
+- Add unit test `is_tournament_kattis_bryr_1` for `adjacency_list_weighted`.
+- Add unit test `is_tournament_kattis_bryr_2` for `adjacency_list_weighted`.
+- Add unit test `is_tournament_kattis_bryr_3` for `adjacency_list_weighted`.
+- Add unit test `is_tournament_kattis_builddeps` for `adjacency_list`.
+- Add unit test `is_tournament_kattis_builddeps` for `adjacency_matrix`.
+- Add unit test `is_tournament_kattis_crosscountry` for `adjacency_list_weighted`.
+- Add unit test `is_tournament_kattis_escapewallmaria_1` for `adjacency_list`.
+- Add unit test `is_tournament_kattis_escapewallmaria_1` for `adjacency_matrix`.
+- Add unit test `is_tournament_kattis_escapewallmaria_2` for `adjacency_list`.
+- Add unit test `is_tournament_kattis_escapewallmaria_2` for `adjacency_matrix`.
+- Add unit test `is_tournament_kattis_escapewallmaria_3` for `adjacency_list`.
+- Add unit test `is_tournament_kattis_escapewallmaria_3` for `adjacency_matrix`.
+- Add unit test `is_tournament_kattis_shortestpath1` for `adjacency_list_weighted`.
+
+## [0.64.17] - 2024-07-07
+
+Added
+
+- Add property test `complete_is_tournament` for `adjacency_list`.
+- Add property test `complete_is_tournament` for `adjacency_matrix`.
+- Add property test `cycle_is_tournament` for `adjacency_list`.
+- Add property test `cycle_is_tournament` for `adjacency_matrix`.
+- Add property test `empty_is_tournament` for `adjacency_list`.
+- Add property test `empty_is_tournament` for `adjacency_matrix`.
+- Add property test `random_tournament_is_tournament` for `adjacency_list`.
+- Add property test `random_tournament_is_tournament` for `adjacency_matrix`.
+- Add unit test `complete_is_tournament_trivial` for `adjacency_list`.
+- Add unit test `complete_is_tournament_trivial` for `adjacency_matrix`.
+- Add unit test `cycle_is_tournament_pair` for `adjacency_list`.
+- Add unit test `cycle_is_tournament_pair` for `adjacency_matrix`.
+- Add unit test `cycle_is_tournament_triple` for `adjacency_list`.
+- Add unit test `cycle_is_tournament_triple` for `adjacency_matrix`.
+- Add unit test `cycle_is_tournament_trivial` for `adjacency_list`.
+- Add unit test `cycle_is_tournament_trivial` for `adjacency_matrix`.
 
 ## [0.64.16] - 2024-07-06
 
-- Add property test `random_tournament_degree_sequence` for `adjacency_list::Digraph`.
-- Add property test `random_tournament_degree_sequence` for `adjacency_matrix::Digraph`.
+- Add property test `random_tournament_degree_sequence` for `adjacency_list`.
+- Add property test `random_tournament_degree_sequence` for `adjacency_matrix`.
 
 ## [0.64.15] - 2024-07-06
 
 Added
 
-- Add property test `complete_degree_sequence` for `adjacency_list::Digraph`.
-- Add property test `complete_degree_sequence` for `adjacency_matrix::Digraph`.
-- Add property test `cycle_degree_sequence` for `adjacency_list::Digraph`.
-- Add property test `cycle_degree_sequence` for `adjacency_matrix::Digraph`.
-- Add property test `empty_degree_sequence` for `adjacency_list::Digraph`.
-- Add property test `empty_degree_sequence` for `adjacency_matrix::Digraph`.
+- Add property test `complete_degree_sequence` for `adjacency_list`.
+- Add property test `complete_degree_sequence` for `adjacency_matrix`.
+- Add property test `cycle_degree_sequence` for `adjacency_list`.
+- Add property test `cycle_degree_sequence` for `adjacency_matrix`.
+- Add property test `empty_degree_sequence` for `adjacency_list`.
+- Add property test `empty_degree_sequence` for `adjacency_matrix`.
 
 ## [0.64.14] - 2024-07-06
 
@@ -94,9 +124,9 @@ Added
 - Add documentation alias `jordan_centre` for `DistanceMatrix::center`.
 - Add naming conventions to the `README`.
 - Add the `DegreeSequence` trait.
-- Implement and test `DegreeSequence` for `adjacency_list::Digraph`.
-- Implement and test `DegreeSequence` for `adjacency_list_weighted::Digraph`.
-- Implement and test `DegreeSequence` for `adjacency_matrix::Digraph`.
+- Implement and test `DegreeSequence` for `adjacency_list_weighted`.
+- Implement and test `DegreeSequence` for `adjacency_list`.
+- Implement and test `DegreeSequence` for `adjacency_matrix`.
 
 Changed
 
@@ -161,10 +191,10 @@ Added
 Added
 
 - Add project overview to `lib.rs`.
-- Implement `ArcsWeighted` for `adjacency_matrix::Digraph`.
-- Implement `Converse` for `adjacency_matrix::Digraph`.
-- Implement `OutNeighborsWeighted` for `adjacency_list::Digraph`.
-- Implement `OutNeighborsWeighted` for `adjacency_matrix::Digraph`.
+- Implement `ArcsWeighted` for `adjacency_matrix`.
+- Implement `Converse` for `adjacency_matrix`.
+- Implement `OutNeighborsWeighted` for `adjacency_list`.
+- Implement `OutNeighborsWeighted` for `adjacency_matrix`.
 
 Changed
 
