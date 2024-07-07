@@ -221,6 +221,7 @@ mod tests {
                 IsSubdigraph,
                 IsSuperdigraph,
                 IsSymmetric,
+                IsTournament,
                 IsWalk,
             },
         },
@@ -414,6 +415,11 @@ mod tests {
         }
 
         #[test]
+        fn complete_is_tournament(order in 2..100_usize) {
+            assert!(!Digraph::complete(order).is_tournament());
+        }
+
+        #[test]
         fn complete_order(order in 1..100_usize) {
             assert_eq!(Digraph::complete(order).order(), order);
         }
@@ -552,6 +558,11 @@ mod tests {
         }
 
         #[test]
+        fn cycle_is_tournament(order in 4..100_usize) {
+            assert!(!Digraph::cycle(order).is_tournament());
+        }
+
+        #[test]
         fn empty_arcs(order in 1..100_usize) {
             assert!(Digraph::empty(order).arcs().eq([]));
         }
@@ -687,6 +698,11 @@ mod tests {
         }
 
         #[test]
+        fn empty_is_tournament(order in 2..100_usize) {
+            assert!(!Digraph::empty(order).is_tournament());
+        }
+
+        #[test]
         fn empty_outdegree(order in 1..100_usize) {
             let digraph = Digraph::empty(order);
 
@@ -800,6 +816,11 @@ mod tests {
         #[test]
         fn random_tournament_is_symmetric(order in 2..100_usize) {
             assert!(!Digraph::random_tournament(order).is_symmetric());
+        }
+
+        #[test]
+        fn random_tournament_is_tournament(order in 1..100_usize) {
+            assert!(Digraph::random_tournament(order).is_tournament());
         }
 
         #[test]
@@ -1024,6 +1045,11 @@ mod tests {
     }
 
     #[test]
+    fn complete_is_tournament_trivial() {
+        assert!(Digraph::complete(1).is_tournament());
+    }
+
+    #[test]
     fn converse_bang_jensen_34() {
         assert!(bang_jensen_34().converse().arcs().eq([
             (0, 1),
@@ -1183,6 +1209,21 @@ mod tests {
     #[test]
     fn cycle_is_symmetric_pair() {
         assert!(Digraph::cycle(2).is_symmetric());
+    }
+
+    #[test]
+    fn cycle_is_tournament_trivial() {
+        assert!(Digraph::cycle(1).is_tournament());
+    }
+
+    #[test]
+    fn cycle_is_tournament_pair() {
+        assert!(!Digraph::cycle(2).is_tournament());
+    }
+
+    #[test]
+    fn cycle_is_tournament_triple() {
+        assert!(Digraph::cycle(3).is_tournament());
     }
 
     #[test]
@@ -1394,6 +1435,11 @@ mod tests {
     #[test]
     fn empty_is_semicomplete_trivial() {
         assert!(Digraph::trivial().is_semicomplete());
+    }
+
+    #[test]
+    fn empty_is_tournament_trivial() {
+        assert!(Digraph::trivial().is_tournament());
     }
 
     #[test]

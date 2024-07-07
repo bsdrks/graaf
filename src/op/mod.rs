@@ -56,6 +56,7 @@ pub mod is_simple;
 pub mod is_subdigraph;
 pub mod is_superdigraph;
 pub mod is_symmetric;
+pub mod is_tournament;
 pub mod is_walk;
 pub mod order;
 pub mod out_neighbors;
@@ -89,6 +90,7 @@ pub use {
     is_subdigraph::IsSubdigraph,
     is_superdigraph::IsSuperdigraph,
     is_symmetric::IsSymmetric,
+    is_tournament::IsTournament,
     is_walk::IsWalk,
     order::Order,
     out_neighbors::OutNeighbors,

@@ -1,7 +1,7 @@
 //! Determine whether a digraph is semicomplete.
 //!
-//! A digraph is semicomplete if, for every unordered pair `u`, `v` of distinct
-//! vertices, there is an arc between `u` and `v`.
+//! A digraph is semicomplete if there is an arc between every unordered pair
+//! `u`, `v` of distinct vertices.
 //!
 //! # Examples
 //!
