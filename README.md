@@ -94,6 +94,7 @@ The extended traits derive their implementation from the basic operations.
 - The [`IsSubdigraph`] trait checks if a digraph is a subdigraph.
 - The [`IsSuperdigraph`] trait checks if a digraph is a superdigraph.
 - The [`IsSymmetric`] trait checks if a digraph is symmetric.
+- The [`IsTournament`] trait checks if a digraph is a tournament.
 - The [`IsWalk`] trait checks if a sequence of vertices is a walk in a digraph.
 
 ## Algorithms
@@ -204,6 +205,7 @@ A distance matrix contains the shortest distances between all pairs of vertices 
 [`IsSubdigraph`]: https://docs.rs/graaf/latest/graaf/op/is_subdigraph/trait.IsSubdigraph.html
 [`IsSuperdigraph`]: https://docs.rs/graaf/latest/graaf/op/is_superdigraph/trait.IsSuperdigraph.html
 [`IsSymmetric`]: https://docs.rs/graaf/latest/graaf/op/is_symmetric/trait.IsSymmetric.html
+[`IsTournament`]: https://docs.rs/graaf/latest/graaf/op/is_tournament/trait.IsTournament.html
 [`IsWalk`]: https://docs.rs/graaf/latest/graaf/op/is_walk/trait.IsWalk.html
 [`Order`]: https://docs.rs/graaf/latest/graaf/op/order/trait.Order.html
 [`OutNeighborsWeighted`]: https://docs.rs/graaf/latest/graaf/op/out_neighbors_weighted/trait.OutNeighborsWeighted.html

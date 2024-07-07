@@ -99,6 +99,8 @@
 //!   superdigraph.
 //! - The [`IsSymmetric`](op::IsSymmetric) trait checks if a digraph is
 //!   symmetric.
+//! - The [`IsTournament`](op::IsTournament) trait checks if a digraph is a
+//!   tournament.
 //! - The [`IsWalk`](op::IsWalk) trait checks if a sequence of vertices is a
 //!   walk in a digraph.
 //!
