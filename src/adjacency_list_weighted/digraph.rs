@@ -55,6 +55,9 @@ pub struct Digraph<W> {
 }
 
 impl<W> AddArcWeighted<W> for Digraph<W> {
+    /// # Panics
+    ///
+    /// Panics if `u` is out of bounds.
     fn add_arc_weighted(&mut self, u: usize, v: usize, w: W) {
         let _ = self.arcs[u].insert(v, w);
     }
@@ -477,6 +480,12 @@ mod tests {
     }
 
     #[test]
+    #[should_panic(expected = "index out of bounds: the len is 1 but the index is 1")]
+    fn add_weighted_arc_out_of_bounds() {
+        Digraph::trivial().add_arc_weighted(1, 0, 1);
+    }
+
+    #[test]
     fn arcs_bang_jensen_94_weighted() {
         assert!(bang_jensen_94_weighted_usize().arcs().eq([
             (0, 1),
@@ -881,6 +890,13 @@ mod tests {
     }
 
     #[test]
+    #[should_panic(expected = "a digraph must have at least one vertex")]
+    fn converse_order_zero() {
+        let digraph: Digraph<usize> = Digraph { arcs: vec![] };
+        let _ = digraph.converse();
+    }
+
+    #[test]
     fn degree_bang_jensen_94_weighted() {
         let digraph = bang_jensen_94_weighted_usize();
 
@@ -1086,6 +1102,12 @@ mod tests {
     #[test]
     fn empty_is_tournament_trivial() {
         assert!(Digraph::<usize>::trivial().is_tournament());
+    }
+
+    #[test]
+    #[should_panic(expected = "a digraph must have at least one vertex")]
+    fn empty_order_zero() {
+        let _ = Digraph::<usize>::empty(0);
     }
 
     #[test]
@@ -1850,6 +1872,18 @@ mod tests {
     }
 
     #[test]
+    #[should_panic(expected = "index out of bounds: the len is 1 but the index is 1")]
+    fn out_neighbors_out_of_bounds() {
+        let _ = Digraph::<usize>::trivial().out_neighbors(1);
+    }
+
+    #[test]
+    #[should_panic(expected = "index out of bounds: the len is 1 but the index is 1")]
+    fn out_neighbors_weighted_out_of_bounds() {
+        let _ = Digraph::<usize>::trivial().out_neighbors_weighted(1);
+    }
+
+    #[test]
     fn outdegree_bang_jensen_94_weighted() {
         let digraph = bang_jensen_94_weighted_usize();
 
@@ -1941,6 +1975,12 @@ mod tests {
         assert!(digraph.outdegree(1) == 1);
         assert!(digraph.outdegree(2) == 0);
         assert!(digraph.outdegree(3) == 1);
+    }
+
+    #[test]
+    #[should_panic(expected = "index out of bounds: the len is 1 but the index is 1")]
+    fn outdegree_out_of_bounds() {
+        let _ = Digraph::<usize>::trivial().outdegree(1);
     }
 
     #[test]
@@ -2192,6 +2232,12 @@ mod tests {
         assert!(!digraph.remove_arc(0, 1));
         assert!(!digraph.remove_arc(1, 2));
         assert!(!digraph.remove_arc(3, 0));
+    }
+
+    #[test]
+    fn remove_arc_out_of_bounds() {
+        assert!(!Digraph::<usize>::trivial().remove_arc(0, 1));
+        assert!(!Digraph::<usize>::trivial().remove_arc(1, 0));
     }
 
     #[test]

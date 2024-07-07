@@ -12,6 +12,39 @@
 - Improve documentation for the `Empty` trait.
 - Test out-of-bounds panics.
 
+## [0.65.0] - 2024-07-07
+
+Added
+
+- Add unit test `add_arc_out_of_bounds_u` for `adjacency_matrix`.
+- Add unit test `add_arc_out_of_bounds_v` for `adjacency_matrix`.
+- Add unit test `add_arc_out_of_bounds` for `adjacency_list_weighted`.
+- Add unit test `add_arc_out_of_bounds` for `adjacency_list`.
+- Add unit test `converse_order_zero` for `adjacency_list_weighted`.
+- Add unit test `converse_order_zero` for `adjacency_list`.
+- Add unit test `converse_order_zero` for `adjacency_matrix`.
+- Add unit test `empty_order_zero` for `adjacency_list_matrix`.
+- Add unit test `empty_order_zero` for `adjacency_list_weighted`.
+- Add unit test `empty_order_zero` for `adjacency_list`.
+- Add unit test `indegree_out_of_bounds` for `adjacency_matrix`.
+- Add unit test `out_neighbors_out_of_bounds` for `adjacency_list_weighted`.
+- Add unit test `out_neighbors_out_of_bounds` for `adjacency_list`.
+- Add unit test `out_neighbors_out_of_bounds` for `adjacency_matrix`.
+- Add unit test `out_neighbors_weighted_out_of_bounds` for `adjacency_list_weighted`.
+- Add unit test `out_neighbors_weighted_out_of_bounds` for `adjacency_list`.
+- Add unit test `out_neighbors_weighted_out_of_bounds` for `adjacency_matrix`.
+- Add unit test `outdegree_out_of_bounds` for `adjacency_list_weighted`.
+- Add unit test `outdegree_out_of_bounds` for `adjacency_list`.
+- Add unit test `outdegree_out_of_bounds` for `adjacency_matrix`.
+- Add unit test `remove_arc_out_of_bounds` for `adjacency_list_weighted`.
+- Add unit test `remove_arc_out_of_bounds` for `adjacency_list`.
+- Add unit test `remove_arc_out_of_bounds` for `adjacency_matrix`.
+
+Changed
+
+- Breaking: `Complete::complete` is now `#[must_use]`.
+- Breaking: `remove_arc` no longer panics for `adjacency_matrix` if `u` or `v` is out of bounds.
+
 ## [0.64.18] - 2024-07-07
 
 Added

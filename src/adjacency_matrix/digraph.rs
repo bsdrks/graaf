@@ -103,6 +103,15 @@ impl ArcWeight<usize> for Digraph {
     }
 }
 
+impl Arcs for Digraph {
+    fn arcs(&self) -> impl Iterator<Item = (usize, usize)> {
+        self.vertices().flat_map(move |u| {
+            self.vertices()
+                .filter_map(move |v| self.has_arc(u, v).then_some((u, v)))
+        })
+    }
+}
+
 impl ArcsWeighted<usize> for Digraph {
     fn arcs_weighted<'a>(&'a self) -> impl Iterator<Item = (usize, usize, &'a usize)>
     where
@@ -170,7 +179,7 @@ impl HasArc for Digraph {
 impl Indegree for Digraph {
     /// # Panics
     ///
-    /// Panics if `v >= self.order`.
+    /// Panics if `v` is out of bounds.
     fn indegree(&self, v: usize) -> usize {
         assert!(v < self.order, "v = {v} is out of bounds.");
 
@@ -181,15 +190,6 @@ impl Indegree for Digraph {
 impl IsSimple for Digraph {
     fn is_simple(&self) -> bool {
         self.vertices().all(|u| !self.has_arc(u, u))
-    }
-}
-
-impl Arcs for Digraph {
-    fn arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.vertices().flat_map(move |u| {
-            self.vertices()
-                .filter_map(move |v| self.has_arc(u, v).then_some((u, v)))
-        })
     }
 }
 
@@ -225,7 +225,7 @@ impl OutNeighborsWeighted<usize> for Digraph {
 impl Outdegree for Digraph {
     /// # Panics
     ///
-    /// Panics if `u >= self.order`.
+    /// Panics if `u` is out of bounds.
     fn outdegree(&self, u: usize) -> usize {
         assert!(u < self.order, "u = {u} is out of bounds.");
 
@@ -234,12 +234,10 @@ impl Outdegree for Digraph {
 }
 
 impl RemoveArc for Digraph {
-    /// # Panics
-    ///
-    /// Panics if `s >= V` or `t >= V`.
     fn remove_arc(&mut self, u: usize, v: usize) -> bool {
-        assert!(u < self.order, "u = {u} is out of bounds.");
-        assert!(v < self.order, "v = {v} is out of bounds.");
+        if u >= self.order || v >= self.order {
+            return false;
+        }
 
         let has_arc = self.has_arc(u, v);
         let i = self.index(u, v);
@@ -253,7 +251,7 @@ impl RemoveArc for Digraph {
 impl Size for Digraph {
     /// # Panics
     ///
-    /// Panics when the number of arcs is greater than `usize::MAX`.
+    /// Panics if the number of arcs is greater than `usize::MAX`.
     fn size(&self) -> usize {
         self.blocks
             .iter()
@@ -929,6 +927,18 @@ mod tests {
     }
 
     #[test]
+    #[should_panic(expected = "u = 1 is out of bounds.")]
+    fn add_arc_out_of_bounds_u() {
+        Digraph::empty(1).add_arc(1, 0);
+    }
+
+    #[test]
+    #[should_panic(expected = "v = 1 is out of bounds.")]
+    fn add_arc_out_of_bounds_v() {
+        Digraph::empty(1).add_arc(0, 1);
+    }
+
+    #[test]
     fn arcs_bang_jensen_34() {
         assert!(bang_jensen_34()
             .arcs()
@@ -1217,6 +1227,16 @@ mod tests {
             (13, 9),
             (13, 12)
         ]));
+    }
+
+    #[test]
+    #[should_panic(expected = "a digraph must have at least one vertex")]
+    fn converse_order_zero() {
+        let _ = Digraph {
+            order: 0,
+            blocks: vec![],
+        }
+        .converse();
     }
 
     #[test]
@@ -1514,6 +1534,12 @@ mod tests {
     }
 
     #[test]
+    #[should_panic(expected = "a digraph must have at least one vertex")]
+    fn empty_order_zero() {
+        let _ = Digraph::empty(0);
+    }
+
+    #[test]
     fn in_neighbors_bang_jensen_34() {
         let digraph = bang_jensen_34();
 
@@ -1705,6 +1731,12 @@ mod tests {
         assert!(digraph.indegree(11) == 0);
         assert!(digraph.indegree(12) == 1);
         assert!(digraph.indegree(13) == 2);
+    }
+
+    #[test]
+    #[should_panic(expected = "v = 1 is out of bounds")]
+    fn indegree_out_of_bounds() {
+        let _ = Digraph::trivial().indegree(1);
     }
 
     #[test]
@@ -2500,6 +2532,12 @@ mod tests {
     }
 
     #[test]
+    #[should_panic(expected = "u = 1 is out of bounds")]
+    fn out_neighbors_out_of_bounds() {
+        let _ = Digraph::trivial().out_neighbors(1);
+    }
+
+    #[test]
     fn out_neighbors_weighted_bang_jensen_34() {
         let digraph = bang_jensen_34();
 
@@ -2614,6 +2652,12 @@ mod tests {
     }
 
     #[test]
+    #[should_panic(expected = "u = 1 is out of bounds")]
+    fn out_neighbors_weighted_out_of_bounds() {
+        let _ = Digraph::trivial().out_neighbors_weighted(1);
+    }
+
+    #[test]
     fn outdegree_bang_jensen_34() {
         let digraph = bang_jensen_34();
 
@@ -2708,6 +2752,12 @@ mod tests {
         assert_eq!(digraph.outdegree(11), 0);
         assert_eq!(digraph.outdegree(12), 1);
         assert_eq!(digraph.outdegree(13), 2);
+    }
+
+    #[test]
+    #[should_panic(expected = "u = 1 is out of bounds")]
+    fn outdegree_out_of_bounds() {
+        let _ = Digraph::trivial().outdegree(1);
     }
 
     #[test]
@@ -2961,6 +3011,12 @@ mod tests {
     }
 
     #[test]
+    fn remove_arc_out_of_bounds() {
+        assert!(!Digraph::trivial().remove_arc(0, 1));
+        assert!(!Digraph::trivial().remove_arc(1, 0));
+    }
+
+    #[test]
     fn size_bang_jensen_34() {
         assert_eq!(bang_jensen_34().size(), 6);
     }
@@ -3001,18 +3057,18 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "u = 3 is out of bounds.")]
-    fn toggle_s_gte_v() {
-        let mut digraph = Digraph::empty(3);
+    #[should_panic(expected = "u = 1 is out of bounds.")]
+    fn toggle_out_of_bounds_u() {
+        let mut digraph = Digraph::trivial();
 
-        digraph.toggle(3, 0);
+        digraph.toggle(1, 0);
     }
 
     #[test]
-    #[should_panic(expected = "v = 3 is out of bounds.")]
-    fn toggle_t_gte_v() {
-        let mut digraph = Digraph::empty(3);
+    #[should_panic(expected = "v = 1 is out of bounds.")]
+    fn toggle_out_of_bounds_v() {
+        let mut digraph = Digraph::trivial();
 
-        digraph.toggle(0, 3);
+        digraph.toggle(0, 1);
     }
 }

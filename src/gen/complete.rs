@@ -89,6 +89,7 @@ pub trait Complete {
     /// # Arguments
     ///
     /// * `order` - The number of vertices in the digraph
+    #[must_use]
     fn complete(order: usize) -> Self;
 }
 
