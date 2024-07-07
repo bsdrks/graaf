@@ -19,7 +19,7 @@
 //!
 //! assert!(!Digraph::empty(3).is_tournament());
 //! assert!(!Digraph::complete(3).is_tournament());
-//! assert!(!Digraph::cycle(3).is_tournament());
+//! assert!(Digraph::cycle(3).is_tournament());
 //! assert!(Digraph::random_tournament(3).is_tournament());
 //! ```
 
@@ -105,7 +105,7 @@ use super::{
 ///
 /// assert!(!Digraph::empty(3).is_tournament());
 /// assert!(!Digraph::complete(3).is_tournament());
-/// assert!(!Digraph::cycle(3).is_tournament());
+/// assert!(Digraph::cycle(3).is_tournament());
 /// assert!(Digraph::random_tournament(3).is_tournament());
 /// ```
 pub trait IsTournament {
