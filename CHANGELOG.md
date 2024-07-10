@@ -2,6 +2,7 @@
 
 ## Provisional roadmap
 
+- Can there be a cycle digraph of order 1?
 - Add periphery to `DistanceMatrix`.
 - Add the `IndegreeSequence` trait.
 - Add the `OutdegreeSequence` trait.
@@ -10,7 +11,76 @@
 - Expand the user guide.
 - Improve documentation for the `Cycle` trait.
 - Improve documentation for the `Empty` trait.
-- Test out-of-bounds panics.
+
+## [0.65.1] - 2024-07-10
+
+Added
+
+- Add `star_degree_sequence` unit test for `adjacency_list`.
+- Add `star_degree_sequence` unit test for `adjacency_matrix`.
+- Add `star_degree` unit test for `adjacency_list`.
+- Add `star_degree` unit test for `adjacency_matrix`.
+- Add `star_has_edge` unit test for `adjacency_list`.
+- Add `star_has_edge` unit test for `adjacency_matrix`.
+- Add `star_indegree` unit test for `adjacency_list`.
+- Add `star_indegree` unit test for `adjacency_matrix`.
+- Add `star_is_balanced_pair` unit test for `adjacency_list`.
+- Add `star_is_balanced_pair` unit test for `adjacency_matrix`.
+- Add `star_is_balanced_trivial` unit test for `adjacency_list`.
+- Add `star_is_balanced_trivial` unit test for `adjacency_matrix`.
+- Add `star_is_balanced` prop test for `adjacency_list`.
+- Add `star_is_balanced` prop test for `adjacency_matrix`.
+- Add `star_is_complete_pair` unit test for `adjacency_list`.
+- Add `star_is_complete_pair` unit test for `adjacency_matrix`.
+- Add `star_is_complete_trivial` unit test for `adjacency_list`.
+- Add `star_is_complete_trivial` unit test for `adjacency_matrix`.
+- Add `star_is_complete` prop test for `adjacency_list`.
+- Add `star_is_complete` prop test for `adjacency_matrix`.
+- Add `star_is_isolated_trivial` unit test for `adjacency_list`.
+- Add `star_is_isolated_trivial` unit test for `adjacency_matrix`.
+- Add `star_is_isolated` prop test for `adjacency_list`.
+- Add `star_is_isolated` prop test for `adjacency_matrix`.
+- Add `star_is_oriented_trivial` unit test for `adjacency_list`.
+- Add `star_is_oriented_trivial` unit test for `adjacency_matrix`.
+- Add `star_is_oriented` prop test for `adjacency_list`.
+- Add `star_is_oriented` prop test for `adjacency_matrix`.
+- Add `star_is_pendant` prop test for `adjacency_list`.
+- Add `star_is_pendant` prop test for `adjacency_matrix`.
+- Add `star_is_regular_pair` unit test for `adjacency_list`.
+- Add `star_is_regular_pair` unit test for `adjacency_matrix`.
+- Add `star_is_regular_trivial` unit test for `adjacency_list`.
+- Add `star_is_regular_trivial` unit test for `adjacency_matrix`.
+- Add `star_is_regular` prop test for `adjacency_list`.
+- Add `star_is_regular` prop test for `adjacency_matrix`.
+- Add `star_is_semicomplete_pair` unit test for `adjacency_list`.
+- Add `star_is_semicomplete_pair` unit test for `adjacency_matrix`.
+- Add `star_is_semicomplete_trivial` unit test for `adjacency_list`.
+- Add `star_is_semicomplete_trivial` unit test for `adjacency_matrix`.
+- Add `star_is_semicomplete` prop test for `adjacency_list`.
+- Add `star_is_semicomplete` prop test for `adjacency_matrix`.
+- Add `star_is_simple` prop test for `adjacency_list`.
+- Add `star_is_simple` prop test for `adjacency_matrix`.
+- Add `star_is_sink_trivial` unit test for `adjacency_list`.
+- Add `star_is_sink_trivial` unit test for `adjacency_matrix`.
+- Add `star_is_sink` prop test for `adjacency_list`.
+- Add `star_is_sink` prop test for `adjacency_matrix`.
+- Add `star_is_source_trivial` unit test for `adjacency_list`.
+- Add `star_is_source_trivial` unit test for `adjacency_matrix`.
+- Add `star_is_source` prop test for `adjacency_list`.
+- Add `star_is_source` prop test for `adjacency_matrix`.
+- Add `star_is_subdigraph` prop test for `adjacency_list`.
+- Add `star_is_subdigraph` prop test for `adjacency_matrix`.
+- Add `star_is_superdigraph` prop test for `adjacency_list`.
+- Add `star_is_superdigraph` prop test for `adjacency_matrix`.
+- Add `star_is_symmetric` prop test for `adjacency_list`.
+- Add `star_is_symmetric` prop test for `adjacency_matrix`.
+- Add `star_is_tournament_trivial` unit test for `adjacency_list`.
+- Add `star_is_tournament_trivial` unit test for `adjacency_matrix`.
+- Add `star_is_tournament` prop test for `adjacency_list`.
+- Add `star_is_tournament` prop test for `adjacency_matrix`.
+- Add naming conventions to `lib.rs`.
+- Add project goals to `lib.rs`.
+- Add the `gen::Star` trait.
 
 ## [0.65.0] - 2024-07-07
 

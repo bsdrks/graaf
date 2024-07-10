@@ -17,6 +17,8 @@
 //!    - [Floyd-Warshall algorithm](#floyd-warshall)
 //!    - [Breath-first tree](#breadth-first-tree)
 //!    - [Distance matrix](#distance-matrix)
+//! - [Naming Conventions](#naming-conventions)
+//! - [Project Goals](#project-goals)
 //!
 //! # Digraph Types
 //!
@@ -215,6 +217,26 @@
 //!   method returns the eccentricities of the vertices.
 //! - The [`is_connected`](algo::distance_matrix::DistanceMatrix::is_connected)
 //!   method checks if the digraph is connected.
+//!
+//! ## Naming Conventions
+//!
+//! - `s` denotes a source vertex.
+//! - `t` denotes a target vertex.
+//! - `u` denotes a tail vertex or the first vertex in scope.
+//! - `v` denotes a head vertex or the second vertex in scope.
+//! - `w` denotes the weight of an arc.
+//! - `x` denotes a head vertex or the third vertex in scope.
+//! - `y` denotes a tail vertex or the fourth vertex in scope.
+//!
+//! ## Project Goals
+//!
+//! - A flexible API for digraph operations
+//! - A comprehensive set of algorithms
+//! - Generators for common digraphs
+//! - Competitive performance
+//! - Full documentation
+//! - Extensive property tests
+//! - Complete unit test and benchmark coverage
 //!
 //! [Adjacency List]: `adjacency_list::Digraph`
 //! [Adjacency Matrix]: `adjacency_matrix::Digraph`

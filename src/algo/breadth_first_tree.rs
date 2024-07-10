@@ -251,7 +251,7 @@ mod tests {
 
     #[test]
     #[should_panic(expected = "a breadth-first tree must have at least one vertex")]
-    fn new_zero() {
+    fn new_order_zero() {
         let _ = BreadthFirstTree::new(0);
     }
 

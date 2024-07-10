@@ -86,10 +86,12 @@ pub mod cycle;
 pub mod empty;
 pub mod prng;
 pub mod random_tournament;
+pub mod star;
 
 pub use {
     complete::Complete,
     cycle::Cycle,
     empty::Empty,
     random_tournament::RandomTournament,
+    star::Star,
 };

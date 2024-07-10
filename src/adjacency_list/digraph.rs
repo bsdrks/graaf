@@ -212,6 +212,7 @@ mod tests {
                 Complete,
                 Cycle,
                 RandomTournament,
+                Star,
             },
             op::{
                 Converse,
@@ -851,6 +852,135 @@ mod tests {
             let digraph = Digraph::random_tournament(order);
 
             assert_eq!(digraph.size(), order * (order - 1) / 2);
+        }
+
+        #[test]
+        fn star_degree(order in 1..100_usize) {
+            let digraph = Digraph::star(order);
+
+            assert_eq!(digraph.degree(0), (order - 1) * 2);
+
+            for u in 1..order {
+                assert_eq!(digraph.degree(u), 2);
+            }
+        }
+
+        #[test]
+        fn star_degree_sequence(order in 1..100_usize) {
+            let degree_sequence = Digraph::star(order).degree_sequence();
+
+            assert_eq!(degree_sequence[0], (order - 1, order - 1));
+            assert!(degree_sequence[1..].iter().all(|d| *d == (1, 1)));
+        }
+
+        #[test]
+        fn star_has_edge(order in 1..100_usize) {
+            let digraph = Digraph::star(order);
+
+            for u in 1..order {
+                assert!(digraph.has_edge(0, u));
+            }
+        }
+
+        #[test]
+        fn star_indegree(order in 1..100_usize) {
+            let digraph = Digraph::star(order);
+
+            assert_eq!(digraph.indegree(0), order - 1);
+
+            for u in 1..order {
+                assert_eq!(digraph.indegree(u), 1);
+            }
+        }
+
+        #[test]
+        fn star_is_balanced(order in 3..100_usize) {
+            assert!(Digraph::star(order).is_balanced());
+        }
+
+        #[test]
+        fn star_is_complete(order in 3..100_usize) {
+            assert!(!Digraph::star(order).is_complete());
+        }
+
+        #[test]
+        fn star_is_isolated(order in 2..100_usize) {
+            let digraph = Digraph::star(order);
+
+            for u in digraph.vertices() {
+                assert!(!digraph.is_isolated(u));
+            }
+        }
+
+        #[test]
+        fn star_is_oriented(order in 2..100_usize) {
+            assert!(!Digraph::star(order).is_oriented());
+        }
+
+        #[test]
+        fn star_is_pendant(order in 1..100_usize) {
+            let digraph = Digraph::star(order);
+
+            for u in digraph.vertices() {
+                assert!(!digraph.is_pendant(u));
+            }
+        }
+
+        #[test]
+        fn star_is_regular(order in 3..100_usize) {
+            assert!(!Digraph::star(order).is_regular());
+        }
+
+        #[test]
+        fn star_is_semicomplete(order in 3..100_usize) {
+            assert!(!Digraph::star(order).is_semicomplete());
+        }
+
+        #[test]
+        fn star_is_simple(order in 1..100_usize) {
+            assert!(Digraph::star(order).is_simple());
+        }
+
+        #[test]
+        fn star_is_sink(order in 2..100_usize) {
+            let digraph = Digraph::star(order);
+
+            for u in digraph.vertices() {
+                assert!(!digraph.is_sink(u));
+            }
+        }
+
+        #[test]
+        fn star_is_source(order in 2..100_usize) {
+            let digraph = Digraph::star(order);
+
+            for u in digraph.vertices() {
+                assert!(!digraph.is_source(u));
+            }
+        }
+
+        #[test]
+        fn star_is_subdigraph(order in 1..100_usize) {
+            let digraph = Digraph::star(order);
+
+            assert!(digraph.is_subdigraph(&digraph));
+        }
+
+        #[test]
+        fn star_is_superdigraph(order in 1..100_usize) {
+            let digraph = Digraph::star(order);
+
+            assert!(digraph.is_superdigraph(&digraph));
+        }
+
+        #[test]
+        fn star_is_symmetric(order in 1..100_usize) {
+            assert!(Digraph::star(order).is_symmetric());
+        }
+
+        #[test]
+        fn star_is_tournament(order in 2..100_usize) {
+            assert!(!Digraph::star(order).is_tournament());
         }
     }
 
@@ -2968,5 +3098,70 @@ mod tests {
     #[test]
     fn size_kattis_escapewallmaria_3() {
         assert_eq!(kattis_escapewallmaria_3().size(), 14);
+    }
+
+    #[test]
+    fn star_is_balanced_trivial() {
+        assert!(Digraph::star(1).is_balanced());
+    }
+
+    #[test]
+    fn star_is_balanced_pair() {
+        assert!(Digraph::star(2).is_complete());
+    }
+
+    #[test]
+    fn star_is_complete_trivial() {
+        assert!(Digraph::star(1).is_complete());
+    }
+
+    #[test]
+    fn star_is_complete_pair() {
+        assert!(Digraph::star(2).is_complete());
+    }
+
+    #[test]
+    fn star_is_isolated_trivial() {
+        assert!(Digraph::star(1).is_isolated(0));
+    }
+
+    #[test]
+    fn star_is_oriented_trivial() {
+        assert!(Digraph::star(1).is_oriented());
+    }
+
+    #[test]
+    fn star_is_regular_trivial() {
+        assert!(Digraph::star(1).is_regular());
+    }
+
+    #[test]
+    fn star_is_regular_pair() {
+        assert!(Digraph::star(2).is_regular());
+    }
+
+    #[test]
+    fn star_is_semicomplete_trivial() {
+        assert!(Digraph::star(1).is_semicomplete());
+    }
+
+    #[test]
+    fn star_is_semicomplete_pair() {
+        assert!(Digraph::star(2).is_semicomplete());
+    }
+
+    #[test]
+    fn star_is_sink_trivial() {
+        assert!(Digraph::star(1).is_sink(0));
+    }
+
+    #[test]
+    fn star_is_source_trivial() {
+        assert!(Digraph::star(1).is_source(0));
+    }
+
+    #[test]
+    fn star_is_tournament_trivial() {
+        assert!(Digraph::star(1).is_tournament());
     }
 }
