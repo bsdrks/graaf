@@ -87,6 +87,11 @@ use super::HasArc;
 /// ```
 pub trait IsWalk {
     /// Returns whether the sequence of vertices is a walk in the digraph.
+    ///
+    /// # Arguments
+    ///
+    /// * `walk`: A sequence of vertices.
+    #[must_use]
     fn is_walk(&self, walk: &[usize]) -> bool;
 }
 

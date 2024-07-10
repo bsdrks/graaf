@@ -95,6 +95,7 @@ use super::{
 /// ```
 pub trait IsComplete {
     /// Determines whether the digraph is complete.
+    #[must_use]
     fn is_complete(&self) -> bool;
 }
 

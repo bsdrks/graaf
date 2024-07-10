@@ -116,6 +116,7 @@ use super::{
 /// ```
 pub trait IsSymmetric {
     /// Returns whether the digraph is symmetric.
+    #[must_use]
     fn is_symmetric(&self) -> bool;
 }
 

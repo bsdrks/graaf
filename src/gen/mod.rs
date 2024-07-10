@@ -81,6 +81,7 @@
 //! }
 //! ```
 
+pub mod biclique;
 pub mod complete;
 pub mod cycle;
 pub mod empty;
@@ -89,6 +90,7 @@ pub mod random_tournament;
 pub mod star;
 
 pub use {
+    biclique::Biclique,
     complete::Complete,
     cycle::Cycle,
     empty::Empty,

@@ -94,5 +94,6 @@
 /// ```
 pub trait IsSimple {
     /// Returns whether the digraph is simple.
+    #[must_use]
     fn is_simple(&self) -> bool;
 }

@@ -1,4 +1,3 @@
-#![doc(alias = "circular")]
 //! Generate cycle digraphs.
 //!
 //! Cycle graphs are also known as circular graphs.
@@ -27,6 +26,7 @@
 //!
 //! assert!(Digraph::cycle(3).arcs().eq([(0, 1), (1, 2), (2, 0)]));
 //! ```
+#![doc(alias = "circular")]
 
 use crate::{
     gen::Empty,
@@ -107,12 +107,14 @@ use crate::{
 ///
 /// assert!(Digraph::cycle(3).arcs().eq([(0, 1), (1, 2), (2, 0)]));
 /// ```
+#[doc(alias = "Circular")]
 pub trait Cycle {
     /// Generates a cycle digraph.
     ///
     /// # Arguments
     ///
     /// * `order` - The number of vertices in the digraph
+    #[doc(alias = "circular")]
     #[must_use]
     fn cycle(order: usize) -> Self;
 }

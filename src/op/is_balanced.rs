@@ -1,5 +1,3 @@
-#![doc(alias = "isograph")]
-#![doc(alias = "pseudosymmetric")]
 //! Determine whether a digraph is balanced.
 //!
 //! A digraph is balanced if the indegree of each vertex is equal to its
@@ -31,6 +29,8 @@
 //!
 //! assert!(digraph.is_balanced());
 //! ```
+#![doc(alias = "isograph")]
+#![doc(alias = "pseudosymmetric")]
 
 use super::{
     Indegree,
@@ -126,8 +126,13 @@ use super::{
 ///
 /// assert!(digraph.is_balanced());
 /// ```
+#[doc(alias = "Isograph")]
+#[doc(alias = "Pseudosymmetric")]
 pub trait IsBalanced {
     /// Returns whether the digraph is balanced.
+    #[doc(alias = "isograph")]
+    #[doc(alias = "pseudosymmetric")]
+    #[must_use]
     fn is_balanced(&self) -> bool;
 }
 

@@ -29,7 +29,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.65.1"
+graaf = "0.66.0"
 ```
 
 ## Digraph Types
@@ -44,12 +44,14 @@ These types eagerly implement [digraph operations](#operations) and [digraph alg
 
 ## Creating Digraphs
 
-The [`gen`] module provides four digraph generators.
+The [`gen`] module provides six digraph generators.
 
+- The [`Biclique`] trait generates a complete bipartite digraph.
 - The [`Complete`] trait generates a digraph in which an arc connects every ordered pair of distinct vertices.
 - The [`Cycle`] trait generates a digraph with a cycle of a given length.
 - The [`Empty`] trait generates a digraph with no arcs.
 - The [`RandomTournament`] trait generates a random digraph in which an arc connects every unordered pair of distinct vertices.
+- The [`Star`] trait generates a star digraph.
 
 ## Operations
 
@@ -184,6 +186,7 @@ A distance matrix contains the shortest distances between all pairs of vertices 
 [`ArcWeight`]: https://docs.rs/graaf/latest/graaf/op/arc_weight/trait.ArcWeight.html
 [`ArcsWeighted`]: https://docs.rs/graaf/latest/graaf/op/arcs_weighted/trait.ArcsWeighted.html
 [`Arcs`]: https://docs.rs/graaf/latest/graaf/op/arcs/trait.Arcs.html
+[`Biclique`]: https://docs.rs/graaf/latest/graaf/gen/biclique/trait.Biclique.html
 [`Complete`]: https://docs.rs/graaf/latest/graaf/gen/complete/trait.Complete.html
 [`Converse`]: https://docs.rs/graaf/latest/graaf/op/converse/trait.Converse.html
 [`Cycle`]: https://docs.rs/graaf/latest/graaf/gen/cycle/trait.Cycle.html
@@ -214,6 +217,7 @@ A distance matrix contains the shortest distances between all pairs of vertices 
 [`RandomTournament`]: https://docs.rs/graaf/latest/graaf/gen/random_tournament/trait.RandomTournament.html
 [`RemoveArc`]: https://docs.rs/graaf/latest/graaf/op/remove_arc/trait.RemoveArc.html
 [`Size`]: https://docs.rs/graaf/latest/graaf/op/size/trait.Size.html
+[`Star`]: https://docs.rs/graaf/latest/graaf/gen/star/trait.Star.html
 [`Vertices`]: https://docs.rs/graaf/latest/graaf/op/vertices/trait.Vertices.html
 [`algo`]: https://docs.rs/graaf/latest/graaf/algo/index.html
 [`gen`]: https://docs.rs/graaf/latest/graaf/gen/index.html

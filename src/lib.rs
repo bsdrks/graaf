@@ -33,8 +33,10 @@
 //!
 //! # Creating Digraphs
 //!
-//! Graaf provides four digraph generators.
+//! Graaf provides six digraph generators.
 //!
+//! - The [`Biclique`](gen::Biclique) trait generates a complete bipartite
+//!   digraph.
 //! - The [`Complete`](gen::Complete) trait generates a digraph in which an arc
 //!   connects every ordered pair of distinct vertices.
 //! - The [`Cycle`](gen::Cycle) trait generates a digraph with a cycle of a
@@ -43,6 +45,7 @@
 //! - The [`RandomTournament`](gen::RandomTournament) trait generates a random
 //!   digraph in which an arc connects every unordered pair of distinct
 //!   vertices.
+//! - The [`Star`](gen::Star) trait generates a star digraph.
 //!
 //! # Operations
 //!

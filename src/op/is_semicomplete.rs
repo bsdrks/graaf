@@ -114,6 +114,7 @@ use super::{
 /// ```
 pub trait IsSemicomplete {
     /// Determines whether the digraph is semicomplete.
+    #[must_use]
     fn is_semicomplete(&self) -> bool;
 }
 

@@ -87,6 +87,7 @@ use super::{
 /// ```
 pub trait IsOriented {
     /// Returns whether the digraph is oriented.
+    #[must_use]
     fn is_oriented(&self) -> bool;
 }
 

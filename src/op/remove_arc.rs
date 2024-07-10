@@ -96,5 +96,6 @@ pub trait RemoveArc {
     ///
     /// * `u`: The tail vertex.
     /// * `v`: The head vertex.
+    #[must_use]
     fn remove_arc(&mut self, u: usize, v: usize) -> bool;
 }

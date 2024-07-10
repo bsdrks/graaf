@@ -64,5 +64,6 @@
 /// ```
 pub trait Size {
     /// Counts the arcs in the digraph.
+    #[must_use]
     fn size(&self) -> usize;
 }

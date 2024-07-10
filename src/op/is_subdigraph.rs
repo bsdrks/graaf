@@ -188,6 +188,11 @@ use {
 /// ```
 pub trait IsSubdigraph {
     /// Determines whether the digraph is a subdigraph of another digraph.
+    ///
+    /// # Arguments
+    ///
+    /// * `d`: The digraph to compare against.
+    #[must_use]
     fn is_subdigraph(&self, d: &Self) -> bool;
 }
 

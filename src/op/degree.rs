@@ -1,4 +1,3 @@
-#![doc(alias = "valency")]
 //! Get the degree of a vertex.
 //!
 //! For digraphs, the degree is the sum of the indegree and outdegree.
@@ -26,6 +25,8 @@
 //! assert_eq!(digraph.degree(1), 2);
 //! assert_eq!(digraph.degree(2), 3);
 //! ```
+#![doc(alias = "valence")]
+#![doc(alias = "valency")]
 
 use super::{
     Indegree,
@@ -103,12 +104,17 @@ use super::{
 /// assert_eq!(digraph.degree(1), 2);
 /// assert_eq!(digraph.degree(2), 3);
 /// ```
+#[doc(alias = "Valence")]
+#[doc(alias = "Valency")]
 pub trait Degree {
     /// Returns the degree of a vertex in the digraph.
     ///
     /// # Arguments
     ///
     /// * `u`: The vertex.
+    #[doc(alias = "valence")]
+    #[doc(alias = "valency")]
+    #[must_use]
     fn degree(&self, u: usize) -> usize;
 }
 

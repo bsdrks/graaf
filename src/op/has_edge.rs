@@ -126,7 +126,13 @@ use super::HasArc;
 /// ```
 pub trait HasEdge {
     /// Returns whether the digraph has an arc from `u` to `v` and from `v` to
-    /// `u`
+    /// `u`.
+    ///
+    /// # Arguments
+    ///
+    /// * `u`: The tail vertex.
+    /// * `v`: The head vertex.
+    #[must_use]
     fn has_edge(&self, u: usize, v: usize) -> bool;
 }
 

@@ -53,5 +53,6 @@
 /// ```
 pub trait Arcs {
     /// Returns an iterator over the arcs in the digraph.
+    #[must_use]
     fn arcs(&self) -> impl Iterator<Item = (usize, usize)>;
 }

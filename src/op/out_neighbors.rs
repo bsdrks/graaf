@@ -96,5 +96,7 @@ pub trait OutNeighbors {
     /// # Arguments
     ///
     /// * `u`: The vertex.
+    #[doc(alias = "out_neighbours")]
+    #[must_use]
     fn out_neighbors(&self, u: usize) -> impl Iterator<Item = usize>;
 }

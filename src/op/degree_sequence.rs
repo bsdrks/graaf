@@ -116,6 +116,7 @@ use super::{
 /// ```
 pub trait DegreeSequence {
     /// Returns the degree sequence of a digraph.
+    #[must_use]
     fn degree_sequence(&self) -> Vec<(usize, usize)>;
 }
 

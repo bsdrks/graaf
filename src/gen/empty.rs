@@ -1,4 +1,3 @@
-#![doc(alias = "edgeless")]
 //! Generate empty digraphs.
 //!
 //! # Examples
@@ -31,6 +30,7 @@
 //! assert!(Digraph::empty(3).arcs().eq([]));
 //! assert_eq!(Digraph::empty(3).order(), 3);
 //! ```
+#![doc(alias = "edgeless")]
 
 /// Generate empty digraphs.
 ///
@@ -105,12 +105,14 @@
 /// assert!(Digraph::empty(3).arcs().eq([]));
 /// assert_eq!(Digraph::empty(3).order(), 3);
 /// ```
+#[doc(alias = "Edgeless")]
 pub trait Empty {
     /// Generates an empty digraph.
     ///
     /// # Arguments
     ///
     /// * `order` - The number of vertices in the digraph
+    #[doc(alias = "edgeless")]
     #[must_use]
     fn empty(order: usize) -> Self;
 
@@ -131,8 +133,8 @@ pub trait Empty {
     ///
     /// assert!(Digraph::trivial().arcs().eq([]));
     /// ```
-    #[doc(alias = "singleton")]
     #[must_use]
+    #[doc(alias = "singleton")]
     fn trivial() -> Self
     where
         Self: Sized,

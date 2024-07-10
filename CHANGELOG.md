@@ -3,14 +3,87 @@
 ## Provisional roadmap
 
 - Can there be a cycle digraph of order 1?
-- Add periphery to `DistanceMatrix`.
+- Add `periphery` to `DistanceMatrix`.
 - Add the `IndegreeSequence` trait.
 - Add the `OutdegreeSequence` trait.
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
 - Expand the user guide.
-- Improve documentation for the `Cycle` trait.
-- Improve documentation for the `Empty` trait.
+
+## [0.66.0] - 2024-07-10
+
+Added
+
+- Add documentation alias `Circular` for `Cycle`.
+- Add documentation alias `Edgeless` for `Empty`.
+- Add documentation alias `InDegree` for `Indegree`.
+- Add documentation alias `Isograph` for `IsBalanced`.
+- Add documentation alias `OutDegree` for `Outdegree`.
+- Add documentation alias `PseudoSymmetric` for `IsBalanced`.
+- Add documentation alias `Valence` for `Degree`.
+- Add documentation alias `Valency` for `Degree`.
+- Add documentation alias `circular` for `Cycle::cycle`.
+- Add documentation alias `edgeless` for `Empty::empty`.
+- Add documentation alias `in_degree` for `Indegree::indegree`.
+- Add documentation alias `in_neighbours` for `InNeighbors::in_neighbors`.
+- Add documentation alias `isograph` for `IsBalanced::is_balanced`.
+- Add documentation alias `out_degree` for `Outdegree::outdegree`.
+- Add documentation alias `out_neighbours_weighted` for `OutNeighborsWeighted::out_neighbors_weighted`.
+- Add documentation alias `out_neighbours` for `OutNeighbors::out_neighbors`.
+- Add documentation alias `pseudo_symmetric` for `IsBalanced::is_balanced`.
+- Add documentation alias `valence` for `Degree::degree`.
+- Add documentation alias `valence` for `degree`.
+- Add documentation alias `valency` for `Degree::degree`.
+- Add the `gen::Biclique` trait.
+- Add the `gen::Star` trait to the `README`.
+- Add the `gen::Star` trait to the `lib.rs`.
+- Document arguments for `HasEdge::has_edge`.
+- Document arguments for `IsIsolated::is_isolated`.
+- Document arguments for `IsPendant::is_pendant`.
+- Document arguments for `IsSubdigraph::is_subdigraph`.
+- Document arguments for `IsSuperdigraph::is_superdigraph`.
+- Document arguments for `IsWalk::is_walk`.
+
+Changed
+
+- Breaking: Make `ArcWeight::arc_weight` `#[must_use]`.
+- Breaking: Make `Arcs::arcs` `#[must_use]`.
+- Breaking: Make `ArcsWeighted::arcs_weighted` `#[must_use]`.
+- Breaking: Make `Degree::degree` `#[must_use]`.
+- Breaking: Make `DegreeSequence::degree_sequence` `#[must_use]`.
+- Breaking: Make `HasArc::has_arc` `#[must_use]`.
+- Breaking: Make `HasEdge::has_edge` `#[must_use]`.
+- Breaking: Make `InNeighbors::in_neighbors` `#[must_use]`.
+- Breaking: Make `Indegree::indegree` `#[must_use]`.
+- Breaking: Make `IsBalanced::is_balanced` `#[must_use]`.
+- Breaking: Make `IsComplete::is_complete` `#[must_use]`.
+- Breaking: Make `IsIsolated::is_isolated` `#[must_use]`.
+- Breaking: Make `IsOriented::is_oriented` `#[must_use]`.
+- Breaking: Make `IsPendant::is_pendant` `#[must_use]`.
+- Breaking: Make `IsRegular::is_regular` `#[must_use]`.
+- Breaking: Make `IsSemicomplete::is_semicomplete` `#[must_use]`.
+- Breaking: Make `IsSimple::is_simple` `#[must_use]`.
+- Breaking: Make `IsSink::is_sink` `#[must_use]`.
+- Breaking: Make `IsSource::is_source` `#[must_use]`.
+- Breaking: Make `IsSubdigraph::is_subdigraph` `#[must_use]`.
+- Breaking: Make `IsSuperdigraph::is_superdigraph` `#[must_use]`.
+- Breaking: Make `IsSymmetric::is_symmetric` `#[must_use]`.
+- Breaking: Make `IsTournament::is_tournament` `#[must_use]`.
+- Breaking: Make `IsWalk::is_walk` `#[must_use]`.
+- Breaking: Make `Order::order` `#[must_use]`.
+- Breaking: Make `OutNeighborsWeighted::out_neighbors_weighted` `#[must_use]`.
+- Breaking: Make `OutNeighbors::out_neighbors` `#[must_use]`.
+- Breaking: Make `Outdegree::outdegree` `#[must_use]`.
+- Breaking: Make `RemoveArc::remove_arc` `#[must_use]`.
+- Breaking: Make `Size::size` `#[must_use]`.
+- Breaking: Make `Star::star` `#[must_use]`.
+- Breaking: Make `Vertices::vertices` `#[must_use]`.
+- Move module doc aliases under the module doc.
+
+Fixed
+
+- Change documentation alias `weighted_out_neighbors` to `out_neighbors_weighted`.
+- Change documentation alias `IterOutNeighbours` to `OutNeighbours`.
 
 ## [0.65.1] - 2024-07-10
 

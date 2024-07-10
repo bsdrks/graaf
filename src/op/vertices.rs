@@ -50,5 +50,6 @@
 /// ```
 pub trait Vertices {
     /// Returns an iterator over the vertices.
+    #[must_use]
     fn vertices(&self) -> impl Iterator<Item = usize>;
 }

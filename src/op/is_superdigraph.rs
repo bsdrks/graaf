@@ -163,6 +163,11 @@ use super::IsSubdigraph;
 /// ```
 pub trait IsSuperdigraph {
     /// Determines whether the digraph is a superdigraph of another digraph.
+    ///
+    /// # Arguments
+    ///
+    /// * `d`: The digraph to compare against.
+    #[must_use]
     fn is_superdigraph(&self, d: &Self) -> bool;
 }
 

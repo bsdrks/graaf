@@ -98,6 +98,8 @@ pub trait InNeighbors {
     /// # Arguments
     ///
     /// * `v`: The vertex.
+    #[doc(alias = "in_neighbours")]
+    #[must_use]
     fn in_neighbors(&self, v: usize) -> impl Iterator<Item = usize>;
 }
 

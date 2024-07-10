@@ -91,5 +91,6 @@ pub trait ArcWeight<W> {
     ///
     /// * `u`: The tail vertex.
     /// * `v`: The head vertex.
+    #[must_use]
     fn arc_weight(&self, u: usize, v: usize) -> Option<&W>;
 }

@@ -71,6 +71,7 @@
 /// ```
 pub trait ArcsWeighted<W> {
     /// Returns an iterator over the weighted arcs in the digraph.
+    #[must_use]
     fn arcs_weighted<'a>(&'a self) -> impl Iterator<Item = (usize, usize, &'a W)>
     where
         W: 'a;

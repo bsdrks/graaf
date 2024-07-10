@@ -50,5 +50,6 @@
 /// ```
 pub trait Order {
     /// Count the vertices in the digraph.
+    #[must_use]
     fn order(&self) -> usize;
 }

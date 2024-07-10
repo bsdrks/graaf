@@ -93,6 +93,7 @@ use super::{
 /// ```
 pub trait IsRegular {
     /// Returns whether the digraph is regular.
+    #[must_use]
     fn is_regular(&self) -> bool;
 }
 

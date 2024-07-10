@@ -105,5 +105,6 @@ pub trait HasArc {
     /// # Panics
     ///
     /// `has_arc` may not panic if `u` and `v` are out of bounds.
+    #[must_use]
     fn has_arc(&self, u: usize, v: usize) -> bool;
 }

@@ -1,4 +1,3 @@
-#![doc(alias = "in_degree")]
 //! Get the indegree of a vertex.
 //!
 //! The indegree is the number of arcs incident into a vertex.
@@ -25,6 +24,7 @@
 //! assert_eq!(digraph.indegree(1), 1);
 //! assert_eq!(digraph.indegree(2), 2);
 //! ```
+#![doc(alias = "in_degree")]
 
 /// Get the indegree of a vertex.
 ///
@@ -80,12 +80,15 @@
 /// assert_eq!(digraph.indegree(1), 1);
 /// assert_eq!(digraph.indegree(2), 2);
 /// ```
+#[doc(alias = "InDegree")]
 pub trait Indegree {
     /// Returns the indegree of a vertex in the digraph.
     ///
     /// # Arguments
     ///
     /// * `v`: The vertex.
+    #[doc(alias = "in_degree")]
+    #[must_use]
     fn indegree(&self, v: usize) -> usize;
 
     /// Returns whether a vertex is a source of the digraph.
@@ -118,6 +121,7 @@ pub trait Indegree {
     /// assert!(!digraph.is_source(1));
     /// assert!(!digraph.is_source(2));
     /// ```
+    #[must_use]
     fn is_source(&self, v: usize) -> bool {
         self.indegree(v) == 0
     }

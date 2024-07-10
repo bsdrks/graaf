@@ -1,4 +1,3 @@
-#![doc(alias = "out_degree")]
 //! Get the outdegree of a vertex in a digraph.
 //!
 //! The outdegree is the number of arcs incident out of a vertex.
@@ -25,6 +24,7 @@
 //! assert_eq!(digraph.outdegree(1), 1);
 //! assert_eq!(digraph.outdegree(2), 0);
 //! ```
+#![doc(alias = "out_degree")]
 
 /// Get the outdegree of a vertex in a digraph.
 ///
@@ -71,13 +71,14 @@
 /// assert_eq!(digraph.outdegree(1), 1);
 /// assert_eq!(digraph.outdegree(2), 1);
 /// ```
-
 pub trait Outdegree {
     /// Returns the outdegree of a vertex in the digraph.
     ///
     /// # Arguments
     ///
     /// * `u`: The vertex.
+    #[doc(alias = "out_degree")]
+    #[must_use]
     fn outdegree(&self, u: usize) -> usize;
 
     /// Returns whether a vertex is a sink of the digraph.
@@ -110,6 +111,7 @@ pub trait Outdegree {
     /// assert!(!digraph.is_sink(1));
     /// assert!(digraph.is_sink(2));
     /// ```
+    #[must_use]
     fn is_sink(&self, u: usize) -> bool {
         self.outdegree(u) == 0
     }

@@ -102,6 +102,11 @@ use super::{
 /// ```
 pub trait IsIsolated {
     /// Returns whether the vertex is isolated in the digraph.
+    ///
+    /// # Arguments
+    ///
+    /// * `u`: The vertex.
+    #[must_use]
     fn is_isolated(&self, u: usize) -> bool;
 }
 

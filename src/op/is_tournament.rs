@@ -110,6 +110,7 @@ use super::{
 /// ```
 pub trait IsTournament {
     /// Determines whether the digraph is a tournament.
+    #[must_use]
     fn is_tournament(&self) -> bool;
 }
 
