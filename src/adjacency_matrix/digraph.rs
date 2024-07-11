@@ -280,6 +280,7 @@ mod tests {
                 kattis_escapewallmaria_3,
             },
             gen::{
+                Biclique,
                 Complete,
                 Cycle,
                 Empty,
@@ -1235,6 +1236,18 @@ mod tests {
             (13, 9, &1),
             (13, 12, &1)
         ]));
+    }
+
+    #[test]
+    #[should_panic(expected = "m must be greater than zero")]
+    fn biclique_m_zero() {
+        let _ = Digraph::biclique(0, 1);
+    }
+
+    #[test]
+    #[should_panic(expected = "n must be greater than zero")]
+    fn biclique_n_zero() {
+        let _ = Digraph::biclique(1, 0);
     }
 
     #[test]

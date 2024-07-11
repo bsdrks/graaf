@@ -1,6 +1,6 @@
 //! Generate biclique digraphs.
 //!
-//! Biclique graphs are also known as circular graphs.
+//! Bicliques are also known as complete bipartite digraphs.
 //!
 //! # Examples
 //!
@@ -75,8 +75,8 @@ use crate::{
 /// # How can I implement `Biclique`?
 ///
 /// Provide an implementation of `biclique` that generates a complete bipartite
-/// digraph with two sets of `a` and `b` vertices OR implement `AddArc` and
-/// `Empty`.
+/// digraph with two partitions of `m` and `n` vertices OR implement `AddArc`
+/// and `Empty`.
 ///
 /// ```
 /// use {
@@ -197,11 +197,11 @@ pub trait Biclique {
     ///
     /// # Arguments
     ///
-    /// * `a` - The number of vertices in the first set.
-    /// * `b` - The number of vertices in the second set.
+    /// * `m` - The number of vertices in the first partition.
+    /// * `n` - The number of vertices in the second partition.
     #[must_use]
     #[doc(alias = "complete_bipartite")]
-    fn biclique(a: usize, b: usize) -> Self;
+    fn biclique(m: usize, n: usize) -> Self;
 }
 
 impl<D> Biclique for D
@@ -210,13 +210,16 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `a` or `b` is zero.
-    fn biclique(a: usize, b: usize) -> Self {
-        let order = a + b;
+    /// Panics if `m` or `n` is zero.
+    fn biclique(m: usize, n: usize) -> Self {
+        assert!(m > 0, "m must be greater than zero");
+        assert!(n > 0, "n must be greater than zero");
+
+        let order = m + n;
         let mut digraph = D::empty(order);
 
-        for u in 0..a {
-            for v in a..order {
+        for u in 0..m {
+            for v in m..order {
                 digraph.add_arc(u, v);
                 digraph.add_arc(v, u);
             }

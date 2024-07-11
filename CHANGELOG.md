@@ -10,6 +10,24 @@
 - Benchmark trait implementations.
 - Expand the user guide.
 
+## [0.67.0] - 2024-07-11
+
+Added
+
+- Add unit test `biclique_m_zero` for `adjacency_list`.
+- Add unit test `biclique_m_zero` for `adjacency_matrix`.
+- Add unit test `biclique_n_zero` for `adjacency_list`.
+- Add unit test `biclique_n_zero` for `adjacency_matrix`.
+
+Changed
+
+- Breaking: `biclique` now panics if `a` or `b` is zero in the blanket implementation of `Biclique`.
+
+Fixed
+
+- Fix the description of `biclique` in the module documentation.
+- Use `m` and `n` to describe the sizes of the biclique partitions.
+
 ## [0.66.0] - 2024-07-10
 
 Added
