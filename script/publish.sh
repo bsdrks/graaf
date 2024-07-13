@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 # Check the versions.
 
 ## Check the version in `Cargo.toml`.
@@ -56,7 +58,7 @@ else
     exit 1
 fi
 
-echo "︎✓ Version in latest changelog entry: $VERSION"
+echo "✓ Version in latest changelog entry: $VERSION"
 
 # Run static analysis
 
