@@ -444,8 +444,108 @@ mod tests {
         }
 
         #[test]
+        fn biclique_has_arc(m in 1..100_usize, n in 1..100_usize) {
+            let digraph = Digraph::biclique(m, n);
+            let order = m + n;
+
+            for u in 0..m {
+                for v in 0..m {
+                    assert!(!digraph.has_arc(u, v));
+                }
+            }
+
+            for u in m..order {
+                for v in m..order {
+                    assert!(!digraph.has_arc(u, v));
+                }
+            }
+
+            for u in 0..m {
+                for v in m..order {
+                    assert!(digraph.has_arc(u, v));
+                    assert!(digraph.has_arc(v, u));
+                }
+            }
+        }
+
+        #[test]
+        fn biclique_has_edge(m in 1..100_usize, n in 1..100_usize) {
+            let digraph = Digraph::biclique(m, n);
+            let order = m + n;
+
+            for u in 0..m {
+                for v in 0..m {
+                    assert!(!digraph.has_edge(u, v));
+                }
+            }
+
+            for u in m..order {
+                for v in m..order {
+                    assert!(!digraph.has_edge(u, v));
+                }
+            }
+
+            for u in 0..m {
+                for v in m..order {
+                    assert!(digraph.has_edge(u, v));
+                }
+            }
+        }
+
+        #[test]
+        fn biclique_in_neighbors(m in 1..100_usize, n in 1..100_usize) {
+            let digraph = Digraph::biclique(m, n);
+            let order = m + n;
+
+            for u in 0..m {
+                assert!(digraph.in_neighbors(u).eq(m..order));
+            }
+
+            for u in m..order {
+                assert!(digraph.in_neighbors(u).eq(0..m));
+            }
+        }
+
+        #[test]
+        fn biclique_indegree(m in 1..100_usize, n in 1..100_usize) {
+            let digraph = Digraph::biclique(m, n);
+
+            for u in 0..m {
+                assert_eq!(digraph.indegree(u), n);
+            }
+
+            for u in m..m + n {
+                assert_eq!(digraph.indegree(u), m);
+            }
+        }
+
+        #[test]
+        fn biclique_is_balanced(m in 1..100_usize, n in 1..100_usize) {
+            assert!(Digraph::biclique(m, n).is_balanced());
+        }
+
+        #[test]
+        fn biclique_is_complete(m in 2..100_usize, n in 2..100_usize) {
+            assert!(!Digraph::biclique(m, n).is_complete());
+        }
+
+        #[test]
         fn biclique_order(m in 1..100_usize, n in 1..100_usize) {
             assert_eq!(Digraph::biclique(m, n).order(), m + n);
+        }
+
+        #[test]
+        fn biclique_out_neighbors(m in 1..100_usize, n in 1..100_usize) {
+            let digraph = Digraph::biclique(m, n);
+            let order = m + n;
+
+            for u in 0..m {
+                assert!(digraph.out_neighbors(u).eq(m..order));
+            }
+
+            for u in m..order {
+                assert!(digraph.out_neighbors(u).eq(0..m));
+            }
         }
 
         #[test]
@@ -1387,6 +1487,11 @@ mod tests {
             (13, 9, &1),
             (13, 12, &1)
         ]));
+    }
+
+    #[test]
+    fn biclique_is_complete_trivial() {
+        assert!(Digraph::biclique(1, 1).is_balanced());
     }
 
     #[test]

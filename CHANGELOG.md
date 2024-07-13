@@ -13,6 +13,34 @@
 - Can there be a star digraph of order 1?
 - Expand the user guide.
 
+## [0.68.0] - 2024-07-13
+
+Added
+
+- Add property test `biclique_has_arc` for `adjacency_list`.
+- Add property test `biclique_has_arc` for `adjacency_matrix`.
+- Add property test `biclique_has_edge` for `adjacency_list`.
+- Add property test `biclique_has_edge` for `adjacency_matrix`.
+- Add property test `biclique_in_neighbors` for `adjacency_list`.
+- Add property test `biclique_in_neighbors` for `adjacency_matrix`.
+- Add property test `biclique_indegree` for `adjacency_list`.
+- Add property test `biclique_indegree` for `adjacency_matrix`.
+- Add property test `biclique_is_balanced` for `adjacency_list`.
+- Add property test `biclique_is_balanced` for `adjacency_matrix`.
+- Add property test `biclique_is_complete` for `adjacency_list`.
+- Add property test `biclique_is_complete` for `adjacency_matrix`.
+- Add property test `biclique_out_neighbors` for `adjacency_list`.
+- Add property test `biclique_out_neighbors` for `adjacency_matrix`.
+- Add unit test `biclique_is_complete_trivial` for `adjacency_list`.
+- Add unit test `biclique_is_complete_trivial` for `adjacency_matrix`.
+- Add unit test `indegree_out_of_bounds` for `adjacency_list_weighted`.
+- Add unit test `indegree_out_of_bounds` for `adjacency_list`.
+
+Changed
+
+- Breaking: `indegree` now panics if `v` is out of bounds in `adjacency_list_weighted`.
+- Breaking: `indegree` now panics if `v` is out of bounds in `adjacency_list`.
+
 ## [0.67.2] - 2024-07-13
 
 Added

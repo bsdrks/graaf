@@ -135,7 +135,12 @@ impl<W> HasArc for Digraph<W> {
 }
 
 impl<W> Indegree for Digraph<W> {
+    /// # Panics
+    ///
+    /// Panics if `v` is out of bounds.
     fn indegree(&self, v: usize) -> usize {
+        assert!(v < self.order(), "v = {v} is out of bounds");
+
         self.arcs
             .iter()
             .filter(|arcs| arcs.contains_key(&v))
@@ -1296,6 +1301,12 @@ mod tests {
         assert!(digraph.indegree(1) == 1);
         assert!(digraph.indegree(2) == 1);
         assert!(digraph.indegree(3) == 0);
+    }
+
+    #[test]
+    #[should_panic(expected = "v = 1 is out of bounds")]
+    fn indegree_out_of_bounds() {
+        let _ = Digraph::<usize>::trivial().indegree(1);
     }
 
     #[test]

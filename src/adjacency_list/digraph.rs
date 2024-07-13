@@ -127,7 +127,12 @@ impl HasArc for Digraph {
 }
 
 impl Indegree for Digraph {
+    /// # Panics
+    ///
+    /// Panics if `v` is out of bounds.
     fn indegree(&self, v: usize) -> usize {
+        assert!(v < self.order(), "v = {v} is out of bounds");
+
         self.arcs.iter().filter(|set| set.contains(&v)).count()
     }
 }
@@ -372,8 +377,108 @@ mod tests {
         }
 
         #[test]
+        fn biclique_has_arc(m in 1..100_usize, n in 1..100_usize) {
+            let digraph = Digraph::biclique(m, n);
+            let order = m + n;
+
+            for u in 0..m {
+                for v in 0..m {
+                    assert!(!digraph.has_arc(u, v));
+                }
+            }
+
+            for u in m..order {
+                for v in m..order {
+                    assert!(!digraph.has_arc(u, v));
+                }
+            }
+
+            for u in 0..m {
+                for v in m..order {
+                    assert!(digraph.has_arc(u, v));
+                    assert!(digraph.has_arc(v, u));
+                }
+            }
+        }
+
+        #[test]
+        fn biclique_has_edge(m in 1..100_usize, n in 1..100_usize) {
+            let digraph = Digraph::biclique(m, n);
+            let order = m + n;
+
+            for u in 0..m {
+                for v in 0..m {
+                    assert!(!digraph.has_edge(u, v));
+                }
+            }
+
+            for u in m..order {
+                for v in m..order {
+                    assert!(!digraph.has_edge(u, v));
+                }
+            }
+
+            for u in 0..m {
+                for v in m..order {
+                    assert!(digraph.has_edge(u, v));
+                }
+            }
+        }
+
+        #[test]
+        fn biclique_in_neighbors(m in 1..100_usize, n in 1..100_usize) {
+            let digraph = Digraph::biclique(m, n);
+            let order = m + n;
+
+            for u in 0..m {
+                assert!(digraph.in_neighbors(u).eq(m..order));
+            }
+
+            for u in m..order {
+                assert!(digraph.in_neighbors(u).eq(0..m));
+            }
+        }
+
+        #[test]
+        fn biclique_indegree(m in 1..100_usize, n in 1..100_usize) {
+            let digraph = Digraph::biclique(m, n);
+
+            for u in 0..m {
+                assert_eq!(digraph.indegree(u), n);
+            }
+
+            for u in m..m + n {
+                assert_eq!(digraph.indegree(u), m);
+            }
+        }
+
+        #[test]
+        fn biclique_is_balanced(m in 1..100_usize, n in 1..100_usize) {
+            assert!(Digraph::biclique(m, n).is_balanced());
+        }
+
+        #[test]
+        fn biclique_is_complete(m in 2..100_usize, n in 2..100_usize) {
+            assert!(!Digraph::biclique(m, n).is_complete());
+        }
+
+        #[test]
         fn biclique_order(m in 1..100_usize, n in 1..100_usize) {
             assert_eq!(Digraph::biclique(m, n).order(), m + n);
+        }
+
+        #[test]
+        fn biclique_out_neighbors(m in 1..100_usize, n in 1..100_usize) {
+            let digraph = Digraph::biclique(m, n);
+            let order = m + n;
+
+            for u in 0..m {
+                assert!(digraph.out_neighbors(u).eq(m..order));
+            }
+
+            for u in m..order {
+                assert!(digraph.out_neighbors(u).eq(0..m));
+            }
         }
 
         #[test]
@@ -1312,6 +1417,11 @@ mod tests {
     }
 
     #[test]
+    fn biclique_is_complete_trivial() {
+        assert!(Digraph::biclique(1, 1).is_balanced());
+    }
+
+    #[test]
     #[should_panic(expected = "m must be greater than zero")]
     fn biclique_m_zero() {
         let _ = Digraph::biclique(0, 1);
@@ -1955,6 +2065,12 @@ mod tests {
         assert!(digraph.indegree(11) == 0);
         assert!(digraph.indegree(12) == 1);
         assert!(digraph.indegree(13) == 2);
+    }
+
+    #[test]
+    #[should_panic(expected = "v = 1 is out of bounds")]
+    fn indegree_out_of_bounds() {
+        let _ = Digraph::trivial().indegree(1);
     }
 
     #[test]
