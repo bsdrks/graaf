@@ -13,6 +13,31 @@
 - Can there be a star digraph of order 1?
 - Expand the user guide.
 
+## [0.67.2] - 2024-07-13
+
+Added
+
+- Add property test `biclique_degree_sum_eq_2size` for `adjacency_list`.
+- Add property test `biclique_degree_sum_eq_2size` for `adjacency_matrix`.
+- Add property test `biclique_even_number_odd_degrees` for `adjacency_list`.
+- Add property test `biclique_even_number_odd_degrees` for `adjacency_matrix`.
+- Add property test `complete_degree_sum_eq_2size` for `adjacency_list`.
+- Add property test `complete_degree_sum_eq_2size` for `adjacency_matrix`.
+- Add property test `complete_even_number_odd_degrees` for `adjacency_list`.
+- Add property test `complete_even_number_odd_degrees` for `adjacency_matrix`.
+- Add property test `cycle_degree_sum_eq_2size` for `adjacency_list`.
+- Add property test `cycle_degree_sum_eq_2size` for `adjacency_matrix`.
+- Add property test `cycle_even_number_odd_degrees` for `adjacency_list`.
+- Add property test `cycle_even_number_odd_degrees` for `adjacency_matrix`.
+- Add property test `random_tournament_degree_sum_eq_2size` for `adjacency_list`.
+- Add property test `random_tournament_degree_sum_eq_2size` for `adjacency_matrix`.
+- Add property test `random_tournament_even_number_odd_degrees` for `adjacency_list`.
+- Add property test `random_tournament_even_number_odd_degrees` for `adjacency_matrix`.
+- Add property test `star_degree_sum_eq_2size` for `adjacency_list`.
+- Add property test `star_degree_sum_eq_2size` for `adjacency_matrix`.
+- Add property test `star_even_number_odd_degrees` for `adjacency_list`.
+- Add property test `star_even_number_odd_degrees` for `adjacency_matrix`.
+
 ## [0.67.1] - 2024-07-13
 
 Added

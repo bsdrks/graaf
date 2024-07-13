@@ -348,6 +348,30 @@ mod tests {
         }
 
         #[test]
+        fn biclique_degree_sum_eq_2size(m in 1..100_usize, n in 1..100_usize) {
+            let digraph = Digraph::biclique(m, n);
+
+            assert_eq!(
+                digraph.vertices().fold(0, |acc, u| acc + digraph.degree(u)),
+                2 * digraph.size()
+            );
+        }
+
+        #[test]
+        fn biclique_even_number_odd_degrees(m in 1..100_usize, n in 1..100_usize) {
+            let digraph = Digraph::biclique(m, n);
+
+            assert_eq!(
+                digraph
+                    .vertices()
+                    .filter(|&u| digraph.degree(u) % 2 == 1)
+                    .count()
+                    % 2,
+                0
+            );
+        }
+
+        #[test]
         fn biclique_order(m in 1..100_usize, n in 1..100_usize) {
             assert_eq!(Digraph::biclique(m, n).order(), m + n);
         }
@@ -367,6 +391,30 @@ mod tests {
             let degree_pair = (degree, degree);
 
             assert!(Digraph::complete(order).degree_sequence().iter().all(|&d| d == degree_pair));
+        }
+
+        #[test]
+        fn complete_degree_sum_eq_2size(order in 1..100_usize) {
+            let digraph = Digraph::complete(order);
+
+            assert_eq!(
+                digraph.vertices().fold(0, |acc, u| acc + digraph.degree(u)),
+                2 * digraph.size()
+            );
+        }
+
+        #[test]
+        fn complete_even_number_odd_degrees(order in 1..100_usize) {
+            let digraph = Digraph::complete(order);
+
+            assert_eq!(
+                digraph
+                    .vertices()
+                    .filter(|&u| digraph.degree(u) % 2 == 1)
+                    .count()
+                    % 2,
+                0
+            );
         }
 
         #[test]
@@ -492,6 +540,30 @@ mod tests {
         #[test]
         fn cycle_degree_sequence(order in 1..100_usize) {
             assert!(Digraph::cycle(order).degree_sequence().iter().all(|d| *d == (1, 1)));
+        }
+
+        #[test]
+        fn cycle_degree_sum_eq_2size(order in 1..100_usize) {
+            let digraph = Digraph::cycle(order);
+
+            assert_eq!(
+                digraph.vertices().fold(0, |acc, u| acc + digraph.degree(u)),
+                2 * digraph.size()
+            );
+        }
+
+        #[test]
+        fn cycle_even_number_odd_degrees(order in 3..100_usize) {
+            let digraph = Digraph::cycle(order);
+
+            assert_eq!(
+                digraph
+                    .vertices()
+                    .filter(|&u| digraph.degree(u) % 2 == 1)
+                    .count()
+                    % 2,
+                0
+            );
         }
 
         #[test]
@@ -784,6 +856,30 @@ mod tests {
         }
 
         #[test]
+        fn random_tournament_degree_sum_eq_2size(order in 1..100_usize) {
+            let digraph = Digraph::random_tournament(order);
+
+            assert_eq!(
+                digraph.vertices().fold(0, |acc, u| acc + digraph.degree(u)),
+                2 * digraph.size()
+            );
+        }
+
+        #[test]
+        fn random_tournament_even_number_odd_degrees(order in 1..100_usize) {
+            let digraph = Digraph::random_tournament(order);
+
+            assert_eq!(
+                digraph
+                    .vertices()
+                    .filter(|&u| digraph.degree(u) % 2 == 1)
+                    .count()
+                    % 2,
+                0
+            );
+        }
+
+        #[test]
         fn random_tournament_has_edge(order in 1..100_usize) {
             let digraph = Digraph::random_tournament(order);
 
@@ -903,6 +999,30 @@ mod tests {
 
             assert_eq!(degree_sequence[0], (order - 1, order - 1));
             assert!(degree_sequence[1..].iter().all(|d| *d == (1, 1)));
+        }
+
+        #[test]
+        fn star_degree_sum_eq_2size(order in 1..100_usize) {
+            let digraph = Digraph::star(order);
+
+            assert_eq!(
+                digraph.vertices().fold(0, |acc, u| acc + digraph.degree(u)),
+                2 * digraph.size()
+            );
+        }
+
+        #[test]
+        fn star_even_number_odd_degrees(order in 1..100_usize) {
+            let digraph = Digraph::star(order);
+
+            assert_eq!(
+                digraph
+                    .vertices()
+                    .filter(|&u| digraph.degree(u) % 2 == 1)
+                    .count()
+                    % 2,
+                0
+            );
         }
 
         #[test]
