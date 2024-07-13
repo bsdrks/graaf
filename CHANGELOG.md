@@ -2,13 +2,29 @@
 
 ## Provisional roadmap
 
-- Can there be a cycle digraph of order 1?
 - Add `periphery` to `DistanceMatrix`.
 - Add the `IndegreeSequence` trait.
 - Add the `OutdegreeSequence` trait.
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
+- Can there be a complete digraph of order 1?
+- Can there be a cycle digraph of order 1?
+- Can there be a random tournament of order 1?
+- Can there be a star digraph of order 1?
 - Expand the user guide.
+
+## [0.67.1] - 2024-07-13
+
+Added
+
+- Add property test `biclique_1_n_eq_star_n_plus_1` for `adjacency_matrix`.
+- Add property test `biclique_degree_sequence` for `adjacency_matrix`.
+- Add property test `biclique_degree` for `adjacency_matrix`.
+- Add property test `biclique_order` for `adjacency_matrix`.
+- Add property test `biclique_1_n_eq_star_n_plus_1` for `adjacency_list`.
+- Add property test `biclique_degree_sequence` for `adjacency_list`.
+- Add property test `biclique_degree` for `adjacency_list`.
+- Add property test `biclique_order` for `adjacency_list`.
 
 ## [0.67.0] - 2024-07-11
 

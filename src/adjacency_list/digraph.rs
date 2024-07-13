@@ -322,6 +322,37 @@ mod tests {
         }
 
         #[test]
+        fn biclique_1_n_eq_star_n_plus_1(n in 1..100_usize) {
+            assert_eq!(Digraph::biclique(1, n), Digraph::star(n + 1));
+        }
+
+        #[test]
+        fn biclique_degree(m in 1..100_usize, n in 1..100_usize) {
+            let digraph = Digraph::biclique(m, n);
+
+            for u in 0..m {
+                assert_eq!(digraph.degree(u), n * 2);
+            }
+
+            for u in m..m + n {
+                assert_eq!(digraph.degree(u), m * 2);
+            }
+        }
+
+        #[test]
+        fn biclique_degree_sequence(m in 1..100_usize, n in 1..100_usize) {
+            let degree_sequence = Digraph::biclique(m, n).degree_sequence();
+
+            assert!(degree_sequence[..m].iter().all(|&d| d == (n, n)));
+            assert!(degree_sequence[m..].iter().all(|&d| d == (m, m)));
+        }
+
+        #[test]
+        fn biclique_order(m in 1..100_usize, n in 1..100_usize) {
+            assert_eq!(Digraph::biclique(m, n).order(), m + n);
+        }
+
+        #[test]
         fn complete_degree(order in 1..100_usize) {
             let digraph = Digraph::complete(order);
 
