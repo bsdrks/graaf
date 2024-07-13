@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 # Validate the arguments.
 
 VERSION_REGEX='([0-9]*\.[0-9]*\.[0-9]*)'

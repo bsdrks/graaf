@@ -1,3 +1,5 @@
+set -e
+
 rm -rf ./target/coverage
 rm -rf ./target/debug
 rm -rf ./coverage
