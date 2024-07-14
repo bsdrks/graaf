@@ -1095,6 +1095,19 @@ mod tests {
     }
 
     #[test]
+    fn empty() {
+        assert!(Digraph::<usize>::empty(1).arcs().eq([]));
+        assert!(Digraph::<usize>::empty(2).arcs().eq([]));
+        assert!(Digraph::<usize>::empty(3).arcs().eq([]));
+    }
+
+    #[test]
+    #[should_panic(expected = "a digraph must have at least one vertex")]
+    fn empty_0() {
+        let _ = Digraph::<usize>::empty(0);
+    }
+
+    #[test]
     fn empty_is_complete_singleton() {
         assert!(Digraph::<usize>::trivial().is_complete());
     }
@@ -1105,14 +1118,13 @@ mod tests {
     }
 
     #[test]
-    fn empty_trivial_is_tournament() {
-        assert!(Digraph::<usize>::trivial().is_tournament());
+    fn empty_trivial() {
+        assert!(Digraph::<usize>::trivial().arcs().eq([]));
     }
 
     #[test]
-    #[should_panic(expected = "a digraph must have at least one vertex")]
-    fn empty_0() {
-        let _ = Digraph::<usize>::empty(0);
+    fn empty_trivial_is_tournament() {
+        assert!(Digraph::<usize>::trivial().is_tournament());
     }
 
     #[test]

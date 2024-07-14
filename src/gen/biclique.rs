@@ -202,6 +202,36 @@ pub trait Biclique {
     #[doc(alias = "complete_bipartite")]
     #[must_use]
     fn biclique(m: usize, n: usize) -> Self;
+
+    /// Generates a claw digraph.
+    ///
+    /// The claw digraph is also known as K{1,3}.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     gen::Biclique,
+    ///     op::Arcs,
+    /// };
+    ///
+    /// // 0 -> {1, 2, 3}
+    /// // 1 -> {0}
+    /// // 2 -> {0}
+    /// // 3 -> {0}
+    ///
+    /// assert!(Digraph::claw()
+    ///     .arcs()
+    ///     .eq([(0, 1), (0, 2), (0, 3), (1, 0), (2, 0), (3, 0)]));
+    /// ```
+    #[must_use]
+    fn claw() -> Self
+    where
+        Self: Sized,
+    {
+        Self::biclique(1, 3)
+    }
 }
 
 impl<D> Biclique for D

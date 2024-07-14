@@ -15,6 +15,18 @@
 - Can there be a star digraph of order 1?
 - Expand the user guide.
 
+## [0.69.1] - 2024-07-14
+
+Added
+
+- Add `Biclique::claw`.
+- Add unit test `biclique_claw` for `adjacency_list`.
+- Add unit test `biclique_claw` for `adjacency_matrix`.
+- Add unit test `empty_trivial` for `adjacency_list_weighted`.
+- Add unit test `empty_trivial` for `adjacency_list`.
+- Add unit test `empty_trivial` for `adjacency_matrix`.
+- Add unit test `empty` for `adjacency_list_weighted`.
+
 ## [0.69.0] - 2024-07-14
 
 Added

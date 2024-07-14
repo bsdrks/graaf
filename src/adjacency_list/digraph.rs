@@ -1545,6 +1545,18 @@ mod tests {
     }
 
     #[test]
+    fn biclique_claw() {
+        assert!(Digraph::biclique(1, 3).arcs().eq([
+            (0, 1),
+            (0, 2),
+            (0, 3),
+            (1, 0),
+            (2, 0),
+            (3, 0)
+        ]));
+    }
+
+    #[test]
     #[should_panic(expected = "m must be greater than zero")]
     fn biclique_0_1() {
         let _ = Digraph::biclique(0, 1);
@@ -2006,6 +2018,17 @@ mod tests {
     }
 
     #[test]
+    #[should_panic(expected = "a digraph must have at least one vertex")]
+    fn empty_0() {
+        let _ = Digraph::empty(0);
+    }
+
+    #[test]
+    fn empty_trivial() {
+        assert!(Digraph::trivial().arcs().eq([]));
+    }
+
+    #[test]
     fn empty_trivial_is_complete() {
         assert!(Digraph::trivial().is_complete());
     }
@@ -2018,12 +2041,6 @@ mod tests {
     #[test]
     fn empty_trivial_is_tournament() {
         assert!(Digraph::trivial().is_tournament());
-    }
-
-    #[test]
-    #[should_panic(expected = "a digraph must have at least one vertex")]
-    fn empty_0() {
-        let _ = Digraph::empty(0);
     }
 
     #[test]
