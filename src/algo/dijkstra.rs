@@ -163,8 +163,7 @@ pub fn distances<D, S, W>(
     }
 }
 
-/// Finds all distances from a single source vertex in a weighted directed
-/// digraph.
+/// Finds all distances from a source vertex in a weighted digraph.
 ///
 /// # Arguments
 ///
@@ -302,8 +301,8 @@ pub fn predecessors<D, S, W>(
     }
 }
 
-/// Finds the breadth-first tree for the shortest paths from a single
-/// source vertex in a weighted digraph.
+/// Finds the breadth-first tree for the shortest paths from a source vertex in
+/// a weighted digraph.
 ///
 /// # Arguments
 ///
@@ -471,8 +470,7 @@ where
     None
 }
 
-/// Finds the shortest path from a single source vertex to a single target
-/// vertex.
+/// Finds the shortest path from a source vertex to a target vertex.
 ///
 /// In a weighted digraph, the shortest path is the path with the
 /// smallest sum of weights. There can be multiple shortest paths in a digraph,

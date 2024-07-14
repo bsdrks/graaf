@@ -276,8 +276,7 @@ pub fn predecessors<D, S, W>(
     }
 }
 
-/// Finds the breadth-first tree for the shortest paths from a single
-/// source vertex.
+/// Finds the breadth-first tree for the shortest paths from a source vertex.
 ///
 /// # Arguments
 ///
@@ -451,8 +450,7 @@ where
     None
 }
 
-/// Finds the shortest path from a single source vertex to a single target
-/// vertex.
+/// Finds the shortest path from a source vertex to a target vertex.
 ///
 /// In an unweighted digraph, the shortest path is the path with the fewest
 /// arcs. There can be multiple shortest paths in a digraph, but this function

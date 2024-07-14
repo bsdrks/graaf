@@ -118,7 +118,7 @@ pub trait Empty {
 
     /// Generates a trivial digraph.
     ///
-    /// A trivial digraph has a single vertex and no arcs.
+    /// A trivial digraph has one vertex and no arcs.
     ///
     /// # Examples
     ///
