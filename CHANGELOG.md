@@ -2,18 +2,37 @@
 
 ## Provisional roadmap
 
-- Add `periphery` to `DistanceMatrix`.
 - Add the `IndegreeSequence` trait.
 - Add the `OutdegreeSequence` trait.
-- Add `claw` to `Star`.
-- Add `utility` to `Star`.
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
-- Can there be a complete digraph of order 1?
-- Can there be a cycle digraph of order 1?
-- Can there be a random tournament of order 1?
-- Can there be a star digraph of order 1?
 - Expand the user guide.
+- Resolve: can there be a complete digraph of order 1?
+- Resolve: can there be a cycle digraph of order 1?
+- Resolve: can there be a random tournament of order 1?
+- Resolve: can there be a star digraph of order 1?
+
+## [0.69.2] - 2024-07-14
+
+Added
+
+- Add `Biclique::utility`.
+- Add `DistanceMatrix::periphery`.
+- Add unit test `biclique_utility` for `adjacency_list`.
+- Add unit test `biclique_utility` for `adjacency_matrix`.
+- Add unit test `center_trivial` for `DistanceMatrix`.
+- Add unit test `diameter_trivial` for `DistanceMatrix`.
+- Add unit test `eccentricities_trivial` for `DistanceMatrix`.
+- Add unit test `is_connected_trivial` for `DistanceMatrix`.
+- Add unit test `periphery_kattis_bryr_1` for `DistanceMatrix`.
+- Add unit test `periphery_kattis_bryr_2` for `DistanceMatrix`.
+- Add unit test `periphery_kattis_bryr_3` for `DistanceMatrix`.
+- Add unit test `periphery_kattis_crosscountry` for `DistanceMatrix`.
+- Add unit test `periphery_trivial` for `DistanceMatrix`.
+
+Changed
+
+- Use `claw` instead of `biclique()` in `biclique_claw` tests.
 
 ## [0.69.1] - 2024-07-14
 

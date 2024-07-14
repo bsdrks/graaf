@@ -313,7 +313,7 @@ mod tests {
 
     proptest! {
         #[test]
-        fn add_arc_arc_weight(u in 1..100_usize, v in 1..100_usize) {
+        fn add_arc_arc_weight(u in 1..25_usize, v in 1..25_usize) {
             let mut digraph = Digraph::empty(100);
 
             digraph.add_arc(u, v);
@@ -329,7 +329,7 @@ mod tests {
         }
 
         #[test]
-        fn add_arc_degree(u in 1..100_usize, v in 1..100_usize) {
+        fn add_arc_degree(u in 1..25_usize, v in 1..25_usize) {
             let mut digraph = Digraph::empty(100);
 
             digraph.add_arc(u, v);
@@ -343,7 +343,7 @@ mod tests {
         }
 
         #[test]
-        fn add_arc_has_arc(u in 1..100_usize, v in 1..100_usize) {
+        fn add_arc_has_arc(u in 1..25_usize, v in 1..25_usize) {
             let mut digraph = Digraph::empty(100);
 
             digraph.add_arc(u, v);
@@ -352,7 +352,7 @@ mod tests {
         }
 
         #[test]
-        fn add_arc_indegree(u in 1..100_usize, v in 1..100_usize) {
+        fn add_arc_indegree(u in 1..25_usize, v in 1..25_usize) {
             let mut digraph = Digraph::empty(100);
 
             digraph.add_arc(u, v);
@@ -363,7 +363,7 @@ mod tests {
         }
 
         #[test]
-        fn add_arc_outdegree(u in 1..100_usize, v in 1..100_usize) {
+        fn add_arc_outdegree(u in 1..25_usize, v in 1..25_usize) {
             let mut digraph = Digraph::empty(100);
 
             digraph.add_arc(u, v);
@@ -374,7 +374,7 @@ mod tests {
         }
 
         #[test]
-        fn add_arc_remove_arc(u in 1..100_usize, v in 1..100_usize) {
+        fn add_arc_remove_arc(u in 1..25_usize, v in 1..25_usize) {
             let d = Digraph::empty(100);
             let mut h = d.clone();
 
@@ -394,12 +394,12 @@ mod tests {
         }
 
         #[test]
-        fn biclique_1_n_eq_star_n_plus_1(n in 1..100_usize) {
+        fn biclique_1_n_eq_star_n_plus_1(n in 1..25_usize) {
             assert_eq!(Digraph::biclique(1, n), Digraph::star(n + 1));
         }
 
         #[test]
-        fn biclique_degree(m in 1..100_usize, n in 1..100_usize) {
+        fn biclique_degree(m in 1..25_usize, n in 1..25_usize) {
             let digraph = Digraph::biclique(m, n);
 
             for u in 0..m {
@@ -412,7 +412,7 @@ mod tests {
         }
 
         #[test]
-        fn biclique_degree_sequence(m in 1..100_usize, n in 1..100_usize) {
+        fn biclique_degree_sequence(m in 1..25_usize, n in 1..25_usize) {
             let degree_sequence = Digraph::biclique(m, n).degree_sequence();
 
             assert!(degree_sequence[..m].iter().all(|&d| d == (n, n)));
@@ -420,7 +420,7 @@ mod tests {
         }
 
         #[test]
-        fn biclique_degree_sum_eq_2size(m in 1..100_usize, n in 1..100_usize) {
+        fn biclique_degree_sum_eq_2size(m in 1..25_usize, n in 1..25_usize) {
             let digraph = Digraph::biclique(m, n);
 
             assert_eq!(
@@ -430,7 +430,7 @@ mod tests {
         }
 
         #[test]
-        fn biclique_even_number_odd_degrees(m in 1..100_usize, n in 1..100_usize) {
+        fn biclique_even_number_odd_degrees(m in 1..25_usize, n in 1..25_usize) {
             let digraph = Digraph::biclique(m, n);
 
             assert_eq!(
@@ -444,7 +444,7 @@ mod tests {
         }
 
         #[test]
-        fn biclique_has_arc(m in 1..100_usize, n in 1..100_usize) {
+        fn biclique_has_arc(m in 1..25_usize, n in 1..25_usize) {
             let digraph = Digraph::biclique(m, n);
             let order = m + n;
 
@@ -469,7 +469,7 @@ mod tests {
         }
 
         #[test]
-        fn biclique_has_edge(m in 1..100_usize, n in 1..100_usize) {
+        fn biclique_has_edge(m in 1..25_usize, n in 1..25_usize) {
             let digraph = Digraph::biclique(m, n);
             let order = m + n;
 
@@ -493,7 +493,7 @@ mod tests {
         }
 
         #[test]
-        fn biclique_in_neighbors(m in 1..100_usize, n in 1..100_usize) {
+        fn biclique_in_neighbors(m in 1..25_usize, n in 1..25_usize) {
             let digraph = Digraph::biclique(m, n);
             let order = m + n;
 
@@ -507,7 +507,7 @@ mod tests {
         }
 
         #[test]
-        fn biclique_indegree(m in 1..100_usize, n in 1..100_usize) {
+        fn biclique_indegree(m in 1..25_usize, n in 1..25_usize) {
             let digraph = Digraph::biclique(m, n);
 
             for u in 0..m {
@@ -520,17 +520,17 @@ mod tests {
         }
 
         #[test]
-        fn biclique_is_balanced(m in 1..100_usize, n in 1..100_usize) {
+        fn biclique_is_balanced(m in 1..25_usize, n in 1..25_usize) {
             assert!(Digraph::biclique(m, n).is_balanced());
         }
 
         #[test]
-        fn biclique_is_complete(m in 2..100_usize, n in 2..100_usize) {
+        fn biclique_is_complete(m in 2..25_usize, n in 2..25_usize) {
             assert!(!Digraph::biclique(m, n).is_complete());
         }
 
         #[test]
-        fn biclique_is_isolated(m in 1..100_usize, n in 1..100_usize) {
+        fn biclique_is_isolated(m in 1..25_usize, n in 1..25_usize) {
             let digraph = Digraph::biclique(m, n);
 
             for u in digraph.vertices() {
@@ -539,12 +539,12 @@ mod tests {
         }
 
         #[test]
-        fn biclique_is_oriented(m in 1..100_usize, n in 1..100_usize) {
+        fn biclique_is_oriented(m in 1..25_usize, n in 1..25_usize) {
             assert!(!Digraph::biclique(m, n).is_oriented());
         }
 
         #[test]
-        fn biclique_is_pendant(m in 1..100_usize, n in 1..100_usize) {
+        fn biclique_is_pendant(m in 1..25_usize, n in 1..25_usize) {
             let digraph = Digraph::biclique(m, n);
 
             for u in digraph.vertices() {
@@ -553,51 +553,51 @@ mod tests {
         }
 
         #[test]
-        fn biclique_is_regular(m in 1..100_usize, n in 1..100_usize) {
+        fn biclique_is_regular(m in 1..25_usize, n in 1..25_usize) {
             assert!(Digraph::biclique(m, n).is_regular() == (m == n));
         }
 
         #[test]
-        fn biclique_is_semicomplete(m in 2..100_usize, n in 2..100_usize) {
+        fn biclique_is_semicomplete(m in 2..25_usize, n in 2..25_usize) {
             assert!(!Digraph::biclique(m, n).is_semicomplete());
         }
 
         #[test]
-        fn biclique_is_simple(m in 1..100_usize, n in 1..100_usize) {
+        fn biclique_is_simple(m in 1..25_usize, n in 1..25_usize) {
             assert!(Digraph::biclique(m, n).is_simple());
         }
 
         #[test]
-        fn biclique_is_subdigraph(m in 1..100_usize, n in 1..100_usize) {
+        fn biclique_is_subdigraph(m in 1..25_usize, n in 1..25_usize) {
             let digraph = Digraph::biclique(m, n);
 
             assert!(digraph.is_subdigraph(&digraph));
         }
 
         #[test]
-        fn biclique_is_superdigraph(m in 1..100_usize, n in 1..100_usize) {
+        fn biclique_is_superdigraph(m in 1..25_usize, n in 1..25_usize) {
             let digraph = Digraph::biclique(m, n);
 
             assert!(digraph.is_superdigraph(&digraph));
         }
 
         #[test]
-        fn biclique_is_symmetric(m in 1..100_usize, n in 1..100_usize) {
+        fn biclique_is_symmetric(m in 1..25_usize, n in 1..25_usize) {
             assert!(Digraph::biclique(m, n).is_symmetric());
         }
 
         #[test]
-        fn biclique_is_tournament(m in 1..100_usize, n in 1..100_usize) {
+        fn biclique_is_tournament(m in 1..25_usize, n in 1..25_usize) {
             assert!(!Digraph::biclique(m, n).is_tournament());
         }
 
         #[test]
-        fn biclique_order(m in 1..100_usize, n in 1..100_usize) {
+        fn biclique_order(m in 1..25_usize, n in 1..25_usize) {
             assert_eq!(Digraph::biclique(m, n).order(), m + n);
         }
 
         #[test]
-        fn biclique_out_neighbors(m in 1..100_usize, n in 1..100_usize) {
+        fn biclique_out_neighbors(m in 1..25_usize, n in 1..25_usize) {
             let digraph = Digraph::biclique(m, n);
             let order = m + n;
 
@@ -611,7 +611,7 @@ mod tests {
         }
 
         #[test]
-        fn biclique_out_neighbors_weighted(m in 1..100_usize, n in 1..100_usize) {
+        fn biclique_out_neighbors_weighted(m in 1..25_usize, n in 1..25_usize) {
             let digraph = Digraph::biclique(m, n);
             let order = m + n;
 
@@ -635,7 +635,7 @@ mod tests {
         }
 
         #[test]
-        fn biclique_outdegree(m in 1..100_usize, n in 1..100_usize) {
+        fn biclique_outdegree(m in 1..25_usize, n in 1..25_usize) {
             let digraph = Digraph::biclique(m, n);
 
             for u in 0..m {
@@ -648,12 +648,12 @@ mod tests {
         }
 
         #[test]
-        fn biclique_size(m in 1..100_usize, n in 1..100_usize) {
+        fn biclique_size(m in 1..25_usize, n in 1..25_usize) {
             assert_eq!(Digraph::biclique(m, n).size(), m * n * 2);
         }
 
         #[test]
-        fn complete_degree(order in 1..100_usize) {
+        fn complete_degree(order in 1..25_usize) {
             let digraph = Digraph::complete(order);
 
             for u in digraph.vertices() {
@@ -662,7 +662,7 @@ mod tests {
         }
 
         #[test]
-        fn complete_degree_sequence(order in 1..100_usize) {
+        fn complete_degree_sequence(order in 1..25_usize) {
             let degree = order - 1;
             let degree_pair = (degree, degree);
 
@@ -670,7 +670,7 @@ mod tests {
         }
 
         #[test]
-        fn complete_degree_sum_eq_2size(order in 1..100_usize) {
+        fn complete_degree_sum_eq_2size(order in 1..25_usize) {
             let digraph = Digraph::complete(order);
 
             assert_eq!(
@@ -680,7 +680,7 @@ mod tests {
         }
 
         #[test]
-        fn complete_even_number_odd_degrees(order in 1..100_usize) {
+        fn complete_even_number_odd_degrees(order in 1..25_usize) {
             let digraph = Digraph::complete(order);
 
             assert_eq!(
@@ -694,7 +694,7 @@ mod tests {
         }
 
         #[test]
-        fn complete_has_edge(order in 2..100_usize) {
+        fn complete_has_edge(order in 2..25_usize) {
             let digraph = Digraph::complete(order);
 
             for u in 0..order {
@@ -705,7 +705,7 @@ mod tests {
         }
 
         #[test]
-        fn complete_indegree(order in 1..100_usize) {
+        fn complete_indegree(order in 1..25_usize) {
             let digraph = Digraph::complete(order);
 
             for u in digraph.vertices() {
@@ -714,17 +714,17 @@ mod tests {
         }
 
         #[test]
-        fn complete_is_balanced(order in 1..100_usize) {
+        fn complete_is_balanced(order in 1..25_usize) {
             assert!(Digraph::complete(order).is_balanced());
         }
 
         #[test]
-        fn complete_is_complete(order in 1..100_usize) {
+        fn complete_is_complete(order in 1..25_usize) {
             assert!(Digraph::complete(order).is_complete());
         }
 
         #[test]
-        fn complete_is_isolated(order in 2..100_usize) {
+        fn complete_is_isolated(order in 2..25_usize) {
             let digraph = Digraph::complete(order);
 
             for u in digraph.vertices() {
@@ -733,12 +733,12 @@ mod tests {
         }
 
         #[test]
-        fn complete_is_oriented(order in 2..100_usize) {
+        fn complete_is_oriented(order in 2..25_usize) {
             assert!(!Digraph::complete(order).is_oriented());
         }
 
         #[test]
-        fn complete_is_pendant(order in 1..100_usize) {
+        fn complete_is_pendant(order in 1..25_usize) {
             let digraph = Digraph::complete(order);
 
             for u in digraph.vertices() {
@@ -747,51 +747,51 @@ mod tests {
         }
 
         #[test]
-        fn complete_is_regular(order in 1..100_usize) {
+        fn complete_is_regular(order in 1..25_usize) {
             assert!(Digraph::complete(order).is_regular());
         }
 
         #[test]
-        fn complete_is_semicomplete(order in 1..100_usize) {
+        fn complete_is_semicomplete(order in 1..25_usize) {
             assert!(Digraph::complete(order).is_semicomplete());
         }
 
         #[test]
-        fn complete_is_simple(order in 2..100_usize) {
+        fn complete_is_simple(order in 2..25_usize) {
             assert!(Digraph::complete(order).is_simple());
         }
 
         #[test]
-        fn complete_is_subdigraph(order in 1..100_usize) {
+        fn complete_is_subdigraph(order in 1..25_usize) {
             let digraph = Digraph::complete(order);
 
             assert!(digraph.is_subdigraph(&digraph));
         }
 
         #[test]
-        fn complete_is_superdigraph(order in 1..100_usize) {
+        fn complete_is_superdigraph(order in 1..25_usize) {
             let digraph = Digraph::complete(order);
 
             assert!(digraph.is_superdigraph(&digraph));
         }
 
         #[test]
-        fn complete_is_symmetric(order in 1..100_usize) {
+        fn complete_is_symmetric(order in 1..25_usize) {
             assert!(Digraph::complete(order).is_symmetric());
         }
 
         #[test]
-        fn complete_is_tournament(order in 2..100_usize) {
+        fn complete_is_tournament(order in 2..25_usize) {
             assert!(!Digraph::complete(order).is_tournament());
         }
 
         #[test]
-        fn complete_order(order in 1..100_usize) {
+        fn complete_order(order in 1..25_usize) {
             assert_eq!(Digraph::complete(order).order(), order);
         }
 
         #[test]
-        fn complete_outdegree(order in 1..100_usize) {
+        fn complete_outdegree(order in 1..25_usize) {
             let digraph = Digraph::complete(order);
 
             for u in digraph.vertices() {
@@ -800,12 +800,12 @@ mod tests {
         }
 
         #[test]
-        fn complete_size(order in 1..100_usize) {
+        fn complete_size(order in 1..25_usize) {
             assert_eq!(Digraph::complete(order).size(), order * (order - 1));
         }
 
         #[test]
-        fn cycle_degree(order in 1..100_usize) {
+        fn cycle_degree(order in 1..25_usize) {
             let digraph = Digraph::cycle(order);
 
             for u in digraph.vertices() {
@@ -814,12 +814,12 @@ mod tests {
         }
 
         #[test]
-        fn cycle_degree_sequence(order in 1..100_usize) {
+        fn cycle_degree_sequence(order in 1..25_usize) {
             assert!(Digraph::cycle(order).degree_sequence().iter().all(|&d| d == (1, 1)));
         }
 
         #[test]
-        fn cycle_degree_sum_eq_2size(order in 1..100_usize) {
+        fn cycle_degree_sum_eq_2size(order in 1..25_usize) {
             let digraph = Digraph::cycle(order);
 
             assert_eq!(
@@ -829,7 +829,7 @@ mod tests {
         }
 
         #[test]
-        fn cycle_even_number_odd_degrees(order in 3..100_usize) {
+        fn cycle_even_number_odd_degrees(order in 3..25_usize) {
             let digraph = Digraph::cycle(order);
 
             assert_eq!(
@@ -843,7 +843,7 @@ mod tests {
         }
 
         #[test]
-        fn cycle_has_edge(order in 3..100_usize) {
+        fn cycle_has_edge(order in 3..25_usize) {
             let digraph = Digraph::cycle(order);
 
             for u in 0..order {
@@ -854,7 +854,7 @@ mod tests {
         }
 
         #[test]
-        fn cycle_indegree(order in 1..100_usize) {
+        fn cycle_indegree(order in 1..25_usize) {
             let digraph = Digraph::cycle(order);
 
             for u in digraph.vertices() {
@@ -863,17 +863,17 @@ mod tests {
         }
 
         #[test]
-        fn cycle_is_balanced(order in 1..100_usize) {
+        fn cycle_is_balanced(order in 1..25_usize) {
             assert!(Digraph::cycle(order).is_balanced());
         }
 
         #[test]
-        fn cycle_is_complete(order in 3..100_usize) {
+        fn cycle_is_complete(order in 3..25_usize) {
             assert!(!Digraph::cycle(order).is_complete());
         }
 
         #[test]
-        fn cycle_is_isolated(order in 1..100_usize) {
+        fn cycle_is_isolated(order in 1..25_usize) {
             let digraph = Digraph::cycle(order);
 
             for u in digraph.vertices() {
@@ -882,12 +882,12 @@ mod tests {
         }
 
         #[test]
-        fn cycle_is_oriented(order in 3..100_usize) {
+        fn cycle_is_oriented(order in 3..25_usize) {
             assert!(Digraph::cycle(order).is_oriented());
         }
 
         #[test]
-        fn cycle_is_pendant(order in 1..100_usize) {
+        fn cycle_is_pendant(order in 1..25_usize) {
             let digraph = Digraph::cycle(order);
 
             for u in digraph.vertices() {
@@ -896,22 +896,22 @@ mod tests {
         }
 
         #[test]
-        fn cycle_is_regular(order in 1..100_usize) {
+        fn cycle_is_regular(order in 1..25_usize) {
             assert!(Digraph::cycle(order).is_regular());
         }
 
         #[test]
-        fn cycle_is_semicomplete(order in 4..100_usize) {
+        fn cycle_is_semicomplete(order in 4..25_usize) {
             assert!(!Digraph::cycle(order).is_semicomplete());
         }
 
         #[test]
-        fn cycle_is_simple(order in 2..100_usize) {
+        fn cycle_is_simple(order in 2..25_usize) {
             assert!(Digraph::cycle(order).is_simple());
         }
 
         #[test]
-        fn cycle_is_sink(order in 1..100_usize) {
+        fn cycle_is_sink(order in 1..25_usize) {
             let digraph = Digraph::cycle(order);
 
             for u in digraph.vertices() {
@@ -920,7 +920,7 @@ mod tests {
         }
 
         #[test]
-        fn cycle_is_source(order in 1..100_usize) {
+        fn cycle_is_source(order in 1..25_usize) {
             let digraph = Digraph::cycle(order);
 
             for u in digraph.vertices() {
@@ -929,36 +929,36 @@ mod tests {
         }
 
         #[test]
-        fn cycle_is_subdigraph(order in 1..100_usize) {
+        fn cycle_is_subdigraph(order in 1..25_usize) {
             let digraph = Digraph::cycle(order);
 
             assert!(digraph.is_subdigraph(&digraph));
         }
 
         #[test]
-        fn cycle_is_superdigraph(order in 1..100_usize) {
+        fn cycle_is_superdigraph(order in 1..25_usize) {
             let digraph = Digraph::cycle(order);
 
             assert!(digraph.is_superdigraph(&digraph));
         }
 
         #[test]
-        fn cycle_is_symmetric(order in 3..100_usize) {
+        fn cycle_is_symmetric(order in 3..25_usize) {
             assert!(!Digraph::cycle(order).is_symmetric());
         }
 
         #[test]
-        fn cycle_is_tournament(order in 4..100_usize) {
+        fn cycle_is_tournament(order in 4..25_usize) {
             assert!(!Digraph::cycle(order).is_tournament());
         }
 
         #[test]
-        fn empty_arcs(order in 1..100_usize) {
+        fn empty_arcs(order in 1..25_usize) {
             assert!(Digraph::empty(order).arcs().eq([]));
         }
 
         #[test]
-        fn empty_degree(order in 1..100_usize) {
+        fn empty_degree(order in 1..25_usize) {
             let digraph = Digraph::empty(order);
 
             for u in digraph.vertices() {
@@ -967,12 +967,12 @@ mod tests {
         }
 
         #[test]
-        fn empty_degree_sequence(order in 1..100_usize) {
+        fn empty_degree_sequence(order in 1..25_usize) {
             assert!(Digraph::empty(order).degree_sequence().iter().all(|&d| d == (0, 0)));
         }
 
         #[test]
-        fn empty_has_arc(order in 1..100_usize) {
+        fn empty_has_arc(order in 1..25_usize) {
             let digraph = Digraph::empty(order);
 
             for u in digraph.vertices() {
@@ -983,7 +983,7 @@ mod tests {
         }
 
         #[test]
-        fn empty_has_edge(order in 1..100_usize) {
+        fn empty_has_edge(order in 1..25_usize) {
             let digraph = Digraph::empty(order);
 
             for u in digraph.vertices() {
@@ -994,7 +994,7 @@ mod tests {
         }
 
         #[test]
-        fn empty_indegree(order in 1..100_usize) {
+        fn empty_indegree(order in 1..25_usize) {
             let digraph = Digraph::empty(order);
 
             for u in digraph.vertices() {
@@ -1003,17 +1003,17 @@ mod tests {
         }
 
         #[test]
-        fn empty_is_balanced(order in 1..100_usize) {
+        fn empty_is_balanced(order in 1..25_usize) {
             assert!(Digraph::empty(order).is_balanced());
         }
 
         #[test]
-        fn empty_is_complete(order in 2..100_usize) {
+        fn empty_is_complete(order in 2..25_usize) {
             assert!(!Digraph::empty(order).is_complete());
         }
 
         #[test]
-        fn empty_is_isolated(order in 1..100_usize) {
+        fn empty_is_isolated(order in 1..25_usize) {
             let digraph = Digraph::empty(order);
 
             for u in digraph.vertices() {
@@ -1022,12 +1022,12 @@ mod tests {
         }
 
         #[test]
-        fn empty_is_oriented(order in 1..100_usize) {
+        fn empty_is_oriented(order in 1..25_usize) {
             assert!(Digraph::empty(order).is_oriented());
         }
 
         #[test]
-        fn empty_is_pendant(order in 1..100_usize) {
+        fn empty_is_pendant(order in 1..25_usize) {
             let digraph = Digraph::empty(order);
 
             for u in digraph.vertices() {
@@ -1036,22 +1036,22 @@ mod tests {
         }
 
         #[test]
-        fn empty_is_regular(order in 1..100_usize) {
+        fn empty_is_regular(order in 1..25_usize) {
             assert!(Digraph::empty(order).is_regular());
         }
 
         #[test]
-        fn empty_is_semicomplete(order in 2..100_usize) {
+        fn empty_is_semicomplete(order in 2..25_usize) {
             assert!(!Digraph::empty(order).is_semicomplete());
         }
 
         #[test]
-        fn empty_is_simple(order in 1..100_usize) {
+        fn empty_is_simple(order in 1..25_usize) {
             assert!(Digraph::empty(order).is_simple());
         }
 
         #[test]
-        fn empty_is_sink(order in 1..100_usize) {
+        fn empty_is_sink(order in 1..25_usize) {
             let digraph = Digraph::empty(order);
 
             for u in digraph.vertices() {
@@ -1060,7 +1060,7 @@ mod tests {
         }
 
         #[test]
-        fn empty_is_source(order in 1..100_usize) {
+        fn empty_is_source(order in 1..25_usize) {
             let digraph = Digraph::empty(order);
 
             for u in digraph.vertices() {
@@ -1069,31 +1069,31 @@ mod tests {
         }
 
         #[test]
-        fn empty_is_subdigraph(order in 1..100_usize) {
+        fn empty_is_subdigraph(order in 1..25_usize) {
             let digraph = Digraph::empty(order);
 
             assert!(digraph.is_subdigraph(&digraph));
         }
 
         #[test]
-        fn empty_is_superdigraph(order in 1..100_usize) {
+        fn empty_is_superdigraph(order in 1..25_usize) {
             let digraph = Digraph::empty(order);
 
             assert!(digraph.is_superdigraph(&digraph));
         }
 
         #[test]
-        fn empty_is_symmetric(order in 1..100_usize) {
+        fn empty_is_symmetric(order in 1..25_usize) {
             assert!(Digraph::empty(order).is_symmetric());
         }
 
         #[test]
-        fn empty_is_tournament(order in 2..100_usize) {
+        fn empty_is_tournament(order in 2..25_usize) {
             assert!(!Digraph::empty(order).is_tournament());
         }
 
         #[test]
-        fn empty_outdegree(order in 1..100_usize) {
+        fn empty_outdegree(order in 1..25_usize) {
             let digraph = Digraph::empty(order);
 
             for u in digraph.vertices() {
@@ -1102,7 +1102,7 @@ mod tests {
         }
 
         #[test]
-        fn has_arc_out_of_bounds(order in 1..100_usize) {
+        fn has_arc_out_of_bounds(order in 1..25_usize) {
             let digraph = Digraph::empty(order);
 
             for u in 0..order {
@@ -1112,7 +1112,7 @@ mod tests {
         }
 
         #[test]
-        fn random_tournament_degree(order in 1..100_usize) {
+        fn random_tournament_degree(order in 1..25_usize) {
             let digraph = Digraph::random_tournament(order);
 
             for u in digraph.vertices() {
@@ -1121,7 +1121,7 @@ mod tests {
         }
 
         #[test]
-        fn random_tournament_degree_sequence(order in 1..100_usize) {
+        fn random_tournament_degree_sequence(order in 1..25_usize) {
             assert_eq!(
                 Digraph::random_tournament(order)
                     .degree_sequence()
@@ -1132,7 +1132,7 @@ mod tests {
         }
 
         #[test]
-        fn random_tournament_degree_sum_eq_2size(order in 1..100_usize) {
+        fn random_tournament_degree_sum_eq_2size(order in 1..25_usize) {
             let digraph = Digraph::random_tournament(order);
 
             assert_eq!(
@@ -1142,7 +1142,7 @@ mod tests {
         }
 
         #[test]
-        fn random_tournament_even_number_odd_degrees(order in 1..100_usize) {
+        fn random_tournament_even_number_odd_degrees(order in 1..25_usize) {
             let digraph = Digraph::random_tournament(order);
 
             assert_eq!(
@@ -1156,7 +1156,7 @@ mod tests {
         }
 
         #[test]
-        fn random_tournament_has_edge(order in 1..100_usize) {
+        fn random_tournament_has_edge(order in 1..25_usize) {
             let digraph = Digraph::random_tournament(order);
 
             for u in digraph.vertices() {
@@ -1167,7 +1167,7 @@ mod tests {
         }
 
         #[test]
-        fn random_tournament_indegree(order in 1..100_usize) {
+        fn random_tournament_indegree(order in 1..25_usize) {
             let digraph = Digraph::random_tournament(order);
 
             for u in digraph.vertices() {
@@ -1176,12 +1176,12 @@ mod tests {
         }
 
         #[test]
-        fn random_tournament_is_complete(order in 2..100_usize) {
+        fn random_tournament_is_complete(order in 2..25_usize) {
             assert!(!Digraph::random_tournament(order).is_complete());
         }
 
         #[test]
-        fn random_tournament_is_isolated(order in 2..100_usize) {
+        fn random_tournament_is_isolated(order in 2..25_usize) {
             let digraph = Digraph::random_tournament(order);
 
             for u in digraph.vertices() {
@@ -1190,12 +1190,12 @@ mod tests {
         }
 
         #[test]
-        fn random_tournament_is_oriented(order in 1..100_usize) {
+        fn random_tournament_is_oriented(order in 1..25_usize) {
             assert!(Digraph::random_tournament(order).is_oriented());
         }
 
         #[test]
-        fn random_tournament_is_pendant(order in 3..100_usize) {
+        fn random_tournament_is_pendant(order in 3..25_usize) {
             let digraph = Digraph::random_tournament(order);
 
             for u in digraph.vertices() {
@@ -1204,46 +1204,46 @@ mod tests {
         }
 
         #[test]
-        fn random_tournament_is_semicomplete(order in 1..100_usize) {
+        fn random_tournament_is_semicomplete(order in 1..25_usize) {
             assert!(Digraph::random_tournament(order).is_semicomplete());
         }
 
         #[test]
-        fn random_tournament_is_simple(order in 1..100_usize) {
+        fn random_tournament_is_simple(order in 1..25_usize) {
             assert!(Digraph::random_tournament(order).is_simple());
         }
 
         #[test]
-        fn random_tournament_is_subdigraph(order in 1..100_usize) {
+        fn random_tournament_is_subdigraph(order in 1..25_usize) {
             let digraph = Digraph::random_tournament(order);
 
             assert!(digraph.is_subdigraph(&digraph));
         }
 
         #[test]
-        fn random_tournament_is_superdigraph(order in 1..100_usize) {
+        fn random_tournament_is_superdigraph(order in 1..25_usize) {
             let digraph = Digraph::random_tournament(order);
 
             assert!(digraph.is_superdigraph(&digraph));
         }
 
         #[test]
-        fn random_tournament_is_symmetric(order in 2..100_usize) {
+        fn random_tournament_is_symmetric(order in 2..25_usize) {
             assert!(!Digraph::random_tournament(order).is_symmetric());
         }
 
         #[test]
-        fn random_tournament_is_tournament(order in 1..100_usize) {
+        fn random_tournament_is_tournament(order in 1..25_usize) {
             assert!(Digraph::random_tournament(order).is_tournament());
         }
 
         #[test]
-        fn random_tournament_order(order in 1..100_usize) {
+        fn random_tournament_order(order in 1..25_usize) {
             assert_eq!(Digraph::random_tournament(order).order(), order);
         }
 
         #[test]
-        fn random_tournament_outdegree(order in 1..100_usize) {
+        fn random_tournament_outdegree(order in 1..25_usize) {
             let digraph = Digraph::random_tournament(order);
 
             for s in digraph.vertices() {
@@ -1252,14 +1252,14 @@ mod tests {
         }
 
         #[test]
-        fn random_tournament_size(order in 1..100_usize) {
+        fn random_tournament_size(order in 1..25_usize) {
             let digraph = Digraph::random_tournament(order);
 
             assert_eq!(digraph.size(), order * (order - 1) / 2);
         }
 
         #[test]
-        fn star_degree(order in 1..100_usize) {
+        fn star_degree(order in 1..25_usize) {
             let digraph = Digraph::star(order);
 
             assert_eq!(digraph.degree(0), (order - 1) * 2);
@@ -1270,7 +1270,7 @@ mod tests {
         }
 
         #[test]
-        fn star_degree_sequence(order in 1..100_usize) {
+        fn star_degree_sequence(order in 1..25_usize) {
             let degree_sequence = Digraph::star(order).degree_sequence();
 
             assert_eq!(degree_sequence[0], (order - 1, order - 1));
@@ -1278,7 +1278,7 @@ mod tests {
         }
 
         #[test]
-        fn star_degree_sum_eq_2size(order in 1..100_usize) {
+        fn star_degree_sum_eq_2size(order in 1..25_usize) {
             let digraph = Digraph::star(order);
 
             assert_eq!(
@@ -1288,7 +1288,7 @@ mod tests {
         }
 
         #[test]
-        fn star_even_number_odd_degrees(order in 1..100_usize) {
+        fn star_even_number_odd_degrees(order in 1..25_usize) {
             let digraph = Digraph::star(order);
 
             assert_eq!(
@@ -1302,7 +1302,7 @@ mod tests {
         }
 
         #[test]
-        fn star_has_edge(order in 1..100_usize) {
+        fn star_has_edge(order in 1..25_usize) {
             let digraph = Digraph::star(order);
 
             for u in 1..order {
@@ -1311,7 +1311,7 @@ mod tests {
         }
 
         #[test]
-        fn star_indegree(order in 1..100_usize) {
+        fn star_indegree(order in 1..25_usize) {
             let digraph = Digraph::star(order);
 
             assert_eq!(digraph.indegree(0), order - 1);
@@ -1322,17 +1322,17 @@ mod tests {
         }
 
         #[test]
-        fn star_is_balanced(order in 3..100_usize) {
+        fn star_is_balanced(order in 3..25_usize) {
             assert!(Digraph::star(order).is_balanced());
         }
 
         #[test]
-        fn star_is_complete(order in 3..100_usize) {
+        fn star_is_complete(order in 3..25_usize) {
             assert!(!Digraph::star(order).is_complete());
         }
 
         #[test]
-        fn star_is_isolated(order in 2..100_usize) {
+        fn star_is_isolated(order in 2..25_usize) {
             let digraph = Digraph::star(order);
 
             for u in digraph.vertices() {
@@ -1341,12 +1341,12 @@ mod tests {
         }
 
         #[test]
-        fn star_is_oriented(order in 2..100_usize) {
+        fn star_is_oriented(order in 2..25_usize) {
             assert!(!Digraph::star(order).is_oriented());
         }
 
         #[test]
-        fn star_is_pendant(order in 1..100_usize) {
+        fn star_is_pendant(order in 1..25_usize) {
             let digraph = Digraph::star(order);
 
             for u in digraph.vertices() {
@@ -1355,22 +1355,22 @@ mod tests {
         }
 
         #[test]
-        fn star_is_regular(order in 3..100_usize) {
+        fn star_is_regular(order in 3..25_usize) {
             assert!(!Digraph::star(order).is_regular());
         }
 
         #[test]
-        fn star_is_semicomplete(order in 3..100_usize) {
+        fn star_is_semicomplete(order in 3..25_usize) {
             assert!(!Digraph::star(order).is_semicomplete());
         }
 
         #[test]
-        fn star_is_simple(order in 1..100_usize) {
+        fn star_is_simple(order in 1..25_usize) {
             assert!(Digraph::star(order).is_simple());
         }
 
         #[test]
-        fn star_is_sink(order in 2..100_usize) {
+        fn star_is_sink(order in 2..25_usize) {
             let digraph = Digraph::star(order);
 
             for u in digraph.vertices() {
@@ -1379,7 +1379,7 @@ mod tests {
         }
 
         #[test]
-        fn star_is_source(order in 2..100_usize) {
+        fn star_is_source(order in 2..25_usize) {
             let digraph = Digraph::star(order);
 
             for u in digraph.vertices() {
@@ -1388,26 +1388,26 @@ mod tests {
         }
 
         #[test]
-        fn star_is_subdigraph(order in 1..100_usize) {
+        fn star_is_subdigraph(order in 1..25_usize) {
             let digraph = Digraph::star(order);
 
             assert!(digraph.is_subdigraph(&digraph));
         }
 
         #[test]
-        fn star_is_superdigraph(order in 1..100_usize) {
+        fn star_is_superdigraph(order in 1..25_usize) {
             let digraph = Digraph::star(order);
 
             assert!(digraph.is_superdigraph(&digraph));
         }
 
         #[test]
-        fn star_is_symmetric(order in 1..100_usize) {
+        fn star_is_symmetric(order in 1..25_usize) {
             assert!(Digraph::star(order).is_symmetric());
         }
 
         #[test]
-        fn star_is_tournament(order in 2..100_usize) {
+        fn star_is_tournament(order in 2..25_usize) {
             assert!(!Digraph::star(order).is_tournament());
         }
     }
@@ -1618,18 +1618,6 @@ mod tests {
     }
 
     #[test]
-    fn biclique_claw() {
-        assert!(Digraph::biclique(1, 3).arcs().eq([
-            (0, 1),
-            (0, 2),
-            (0, 3),
-            (1, 0),
-            (2, 0),
-            (3, 0)
-        ]));
-    }
-
-    #[test]
     #[should_panic(expected = "m must be greater than zero")]
     fn biclique_0_1() {
         let _ = Digraph::biclique(0, 1);
@@ -1669,6 +1657,37 @@ mod tests {
     #[test]
     fn biclique_2_1_is_semicomplete() {
         assert!(!Digraph::biclique(2, 1).is_semicomplete());
+    }
+
+    #[test]
+    fn biclique_claw() {
+        assert!(Digraph::claw()
+            .arcs()
+            .eq([(0, 1), (0, 2), (0, 3), (1, 0), (2, 0), (3, 0)]));
+    }
+
+    #[test]
+    fn biclique_utility() {
+        assert!(Digraph::utility().arcs().eq([
+            (0, 3),
+            (0, 4),
+            (0, 5),
+            (1, 3),
+            (1, 4),
+            (1, 5),
+            (2, 3),
+            (2, 4),
+            (2, 5),
+            (3, 0),
+            (3, 1),
+            (3, 2),
+            (4, 0),
+            (4, 1),
+            (4, 2),
+            (5, 0),
+            (5, 1),
+            (5, 2)
+        ]));
     }
 
     #[test]

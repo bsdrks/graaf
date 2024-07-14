@@ -346,6 +346,62 @@ impl<W> DistanceMatrix<W> {
     {
         self.eccentricities().iter().all(|&e| e != self.max)
     }
+
+    /// Returns the periphery of the digraph.
+    ///
+    /// The periphery of a digraph is the set of vertices with an eccentricity
+    /// equal to the diameter.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list_weighted::Digraph,
+    ///     algo::{
+    ///         distance_matrix::DistanceMatrix,
+    ///         floyd_warshall::distances,
+    ///     },
+    ///     gen::Empty,
+    ///     op::AddArcWeighted,
+    /// };
+    ///
+    /// // 0 -> {1 (1), 2 (3), 3 (14)}
+    /// // 1 -> {0 (2), 2 (4), 3 (22)}
+    /// // 2 -> {0 (3), 1 (10), 3 (7)}
+    /// // 3 -> {0 (13), 1 (8), 2 (2)}
+    ///
+    /// let mut digraph = Digraph::<isize>::empty(4);
+    ///
+    /// digraph.add_arc_weighted(0, 1, 1);
+    /// digraph.add_arc_weighted(0, 2, 3);
+    /// digraph.add_arc_weighted(0, 3, 14);
+    /// digraph.add_arc_weighted(1, 0, 2);
+    /// digraph.add_arc_weighted(1, 2, 4);
+    /// digraph.add_arc_weighted(1, 3, 22);
+    /// digraph.add_arc_weighted(2, 0, 3);
+    /// digraph.add_arc_weighted(2, 1, 10);
+    /// digraph.add_arc_weighted(2, 3, 7);
+    /// digraph.add_arc_weighted(3, 0, 13);
+    /// digraph.add_arc_weighted(3, 1, 8);
+    /// digraph.add_arc_weighted(3, 2, 2);
+    ///
+    /// let dist = distances(&digraph);
+    ///
+    /// assert!(dist.periphery().iter().eq(&[1]));
+    /// ```
+    #[must_use]
+    pub fn periphery(&self) -> Vec<usize>
+    where
+        W: Copy + Ord,
+    {
+        let ecc = self.eccentricities();
+        let diameter = ecc.iter().max().unwrap_or(&self.max);
+
+        ecc.iter()
+            .enumerate()
+            .filter_map(|(i, &e)| (e == *diameter).then_some(i))
+            .collect()
+    }
 }
 
 impl<W> Index<usize> for DistanceMatrix<W> {
@@ -367,31 +423,145 @@ mod tests {
     use {
         super::*,
         crate::{
-            adjacency_list_weighted::fixture::{
-                kattis_bryr_1_isize,
-                kattis_bryr_2_isize,
-                kattis_bryr_3_isize,
-                kattis_crosscountry_isize,
+            adjacency_list_weighted::{
+                fixture::{
+                    kattis_bryr_1_isize,
+                    kattis_bryr_2_isize,
+                    kattis_bryr_3_isize,
+                    kattis_crosscountry_isize,
+                },
+                Digraph,
             },
             algo::floyd_warshall::distances,
+            gen::Empty,
         },
     };
 
     #[test]
-    fn new() {
-        let dist = DistanceMatrix::new(4, isize::MAX);
-
-        assert_eq!(dist.max, isize::MAX);
-        assert!(dist[0].iter().eq(&[isize::MAX; 4]));
-        assert!(dist[1].iter().eq(&[isize::MAX; 4]));
-        assert!(dist[2].iter().eq(&[isize::MAX; 4]));
-        assert!(dist[3].iter().eq(&[isize::MAX; 4]));
+    fn center_kattis_bryr_1() {
+        assert!(distances(&kattis_bryr_1_isize())
+            .center()
+            .iter()
+            .eq(&[0, 1, 2]));
     }
 
     #[test]
-    #[should_panic(expected = "a distance matrix must have at least one vertex")]
-    fn new_0() {
-        let _ = DistanceMatrix::new(0, isize::MAX);
+    fn center_kattis_bryr_2() {
+        assert!(distances(&kattis_bryr_2_isize()).center().iter().eq(&[3]));
+    }
+
+    #[test]
+    fn center_kattis_bryr_3() {
+        assert!(distances(&kattis_bryr_3_isize())
+            .center()
+            .iter()
+            .eq(&[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
+    }
+
+    #[test]
+    fn center_kattis_crosscountry() {
+        assert!(distances(&kattis_crosscountry_isize())
+            .center()
+            .iter()
+            .eq(&[3]));
+    }
+
+    #[test]
+    fn center_trivial() {
+        assert!(distances(&Digraph::<isize>::trivial())
+            .center()
+            .iter()
+            .eq(&[0]));
+    }
+
+    #[test]
+    fn diameter_kattis_bryr_1() {
+        assert_eq!(distances(&kattis_bryr_1_isize()).diameter(), 1);
+    }
+
+    #[test]
+    fn diameter_kattis_bryr_2() {
+        assert_eq!(distances(&kattis_bryr_2_isize()).diameter(), 4);
+    }
+
+    #[test]
+    fn diameter_kattis_bryr_3() {
+        assert_eq!(distances(&kattis_bryr_3_isize()).diameter(), 1);
+    }
+
+    #[test]
+    fn diameter_kattis_crosscountry() {
+        assert_eq!(distances(&kattis_crosscountry_isize()).diameter(), 11);
+    }
+
+    #[test]
+    fn diameter_trivial() {
+        assert_eq!(distances(&Digraph::<isize>::trivial()).diameter(), 0);
+    }
+
+    #[test]
+    fn eccentricities_kattis_bryr_1() {
+        assert!(distances(&kattis_bryr_1_isize())
+            .eccentricities()
+            .iter()
+            .eq(&[1, 1, 1]));
+    }
+
+    #[test]
+    fn eccentricities_kattis_bryr_2() {
+        assert!(distances(&kattis_bryr_2_isize())
+            .eccentricities()
+            .iter()
+            .eq(&[3, 4, 3, 2, 3, 4]));
+    }
+
+    #[test]
+    fn eccentricities_kattis_bryr_3() {
+        assert!(distances(&kattis_bryr_3_isize())
+            .eccentricities()
+            .iter()
+            .eq(&[1, 1, 1, 1, 1, 1, 1, 1, 1, 1]));
+    }
+
+    #[test]
+    fn eccentricities_kattis_crosscountry() {
+        assert!(distances(&kattis_crosscountry_isize())
+            .eccentricities()
+            .iter()
+            .eq(&[10, 11, 7, 6]));
+    }
+
+    #[test]
+    fn eccentricities_trivial() {
+        assert!(distances(&Digraph::<isize>::trivial())
+            .eccentricities()
+            .iter()
+            .eq(&[0]));
+    }
+
+    #[test]
+    fn is_connected_kattis_bryr_1() {
+        assert!(distances(&kattis_bryr_1_isize()).is_connected());
+    }
+
+    #[test]
+    fn is_connected_kattis_bryr_2() {
+        assert!(distances(&kattis_bryr_2_isize()).is_connected());
+    }
+
+    #[test]
+    fn is_connected_kattis_bryr_3() {
+        assert!(distances(&kattis_bryr_3_isize()).is_connected());
+    }
+
+    #[test]
+    fn is_connected_kattis_crosscountry() {
+        assert!(distances(&kattis_crosscountry_isize()).is_connected());
+    }
+
+    #[test]
+    fn is_connected_trivial() {
+        assert!(distances(&Digraph::<isize>::trivial()).is_connected());
     }
 
     #[test]
@@ -444,121 +614,59 @@ mod tests {
     }
 
     #[test]
-    fn center_kattis_bryr_1() {
-        let dist = distances(&kattis_bryr_1_isize());
+    fn new() {
+        let dist = DistanceMatrix::new(4, isize::MAX);
 
-        assert!(dist.center().iter().eq(&[0, 1, 2]));
+        assert_eq!(dist.max, isize::MAX);
+        assert!(dist[0].iter().eq(&[isize::MAX; 4]));
+        assert!(dist[1].iter().eq(&[isize::MAX; 4]));
+        assert!(dist[2].iter().eq(&[isize::MAX; 4]));
+        assert!(dist[3].iter().eq(&[isize::MAX; 4]));
     }
 
     #[test]
-    fn center_kattis_bryr_2() {
-        let dist = distances(&kattis_bryr_2_isize());
-
-        assert!(dist.center().iter().eq(&[3]));
+    #[should_panic(expected = "a distance matrix must have at least one vertex")]
+    fn new_0() {
+        let _ = DistanceMatrix::new(0, isize::MAX);
     }
 
     #[test]
-    fn center_kattis_bryr_3() {
-        let dist = distances(&kattis_bryr_3_isize());
-
-        assert!(dist.center().iter().eq(&[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
-    }
-
-    #[test]
-    fn center_kattis_crosscountry() {
-        let dist = distances(&kattis_crosscountry_isize());
-
-        assert!(dist.center().iter().eq(&[3]));
-    }
-
-    #[test]
-    fn diameter_kattis_bryr_1() {
-        let dist = distances(&kattis_bryr_1_isize());
-
-        assert_eq!(dist.diameter(), 1);
-    }
-
-    #[test]
-    fn diameter_kattis_bryr_2() {
-        let dist = distances(&kattis_bryr_2_isize());
-
-        assert_eq!(dist.diameter(), 4);
-    }
-
-    #[test]
-    fn diameter_kattis_bryr_3() {
-        let dist = distances(&kattis_bryr_3_isize());
-
-        assert_eq!(dist.diameter(), 1);
-    }
-
-    #[test]
-    fn diameter_kattis_crosscountry() {
-        let dist = distances(&kattis_crosscountry_isize());
-
-        assert_eq!(dist.diameter(), 11);
-    }
-
-    #[test]
-    fn eccentricities_kattis_bryr_1() {
-        let dist = distances(&kattis_bryr_1_isize());
-
-        assert!(dist.eccentricities().iter().eq(&[1, 1, 1]));
-    }
-
-    #[test]
-    fn eccentricities_kattis_bryr_2() {
-        let dist = distances(&kattis_bryr_2_isize());
-
-        assert!(dist.eccentricities().iter().eq(&[3, 4, 3, 2, 3, 4]));
-    }
-
-    #[test]
-    fn eccentricities_kattis_bryr_3() {
-        let dist = distances(&kattis_bryr_3_isize());
-
-        assert!(dist
-            .eccentricities()
+    fn periphery_kattis_bryr_1() {
+        assert!(distances(&kattis_bryr_1_isize())
+            .periphery()
             .iter()
-            .eq(&[1, 1, 1, 1, 1, 1, 1, 1, 1, 1]));
+            .eq(&[0, 1, 2]));
     }
 
     #[test]
-    fn eccentricities_kattis_crosscountry() {
-        let dist = distances(&kattis_crosscountry_isize());
-
-        assert!(dist.eccentricities().iter().eq(&[10, 11, 7, 6]));
+    fn periphery_kattis_bryr_2() {
+        assert!(distances(&kattis_bryr_2_isize())
+            .periphery()
+            .iter()
+            .eq(&[1, 5]));
     }
 
     #[test]
-    fn is_connected_kattis_bryr_1() {
-        let digraph = kattis_bryr_1_isize();
-        let dist = distances(&digraph);
-
-        assert!(dist.is_connected());
+    fn periphery_kattis_bryr_3() {
+        assert!(distances(&kattis_bryr_3_isize())
+            .periphery()
+            .iter()
+            .eq(&[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
     }
 
     #[test]
-    fn is_connected_kattis_bryr_2() {
-        let digraph = kattis_bryr_2_isize();
-        let dist = distances(&digraph);
-
-        assert!(dist.is_connected());
+    fn periphery_kattis_crosscountry() {
+        assert!(distances(&kattis_crosscountry_isize())
+            .periphery()
+            .iter()
+            .eq(&[1]));
     }
 
     #[test]
-    fn is_connected_kattis_bryr_3() {
-        let digraph = kattis_bryr_3_isize();
-        let dist = distances(&digraph);
-
-        assert!(dist.is_connected());
-    }
-
-    #[test]
-    fn is_connected_kattis_crosscountry() {
-        let digraph = kattis_crosscountry_isize();
-        let dist = distances(&digraph);
-
-        assert!(dist.is_connected());
+    fn periphery_trivial() {
+        assert!(distances(&Digraph::<isize>::trivial())
+            .periphery()
+            .iter()
+            .eq(&[0]));
     }
 }

@@ -220,6 +220,8 @@
 //!   method returns the eccentricities of the vertices.
 //! - The [`is_connected`](algo::distance_matrix::DistanceMatrix::is_connected)
 //!   method checks if the digraph is connected.
+//! - The [`periphery`](algo::distance_matrix::DistanceMatrix::periphery) method
+//!   finds the periphery of the digraph.
 //!
 //! ## Naming Conventions
 //!
