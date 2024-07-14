@@ -116,6 +116,7 @@ use crate::op::{
 ///
 /// assert_eq!(single_source_distances(&digraph, 0), None);
 /// ```
+#[must_use]
 pub fn single_source_distances<D>(digraph: &D, s: usize) -> Option<Vec<isize>>
 where
     D: ArcsWeighted<isize> + Order,

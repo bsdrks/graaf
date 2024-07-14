@@ -463,6 +463,68 @@ mod tests {
         }
 
         #[test]
+        fn biclique_is_isolated(m in 1..100_usize, n in 1..100_usize) {
+            let digraph = Digraph::biclique(m, n);
+
+            for u in digraph.vertices() {
+                assert!(!digraph.is_isolated(u));
+            }
+        }
+
+        #[test]
+        fn biclique_is_oriented(m in 1..100_usize, n in 1..100_usize) {
+            assert!(!Digraph::biclique(m, n).is_oriented());
+        }
+
+        #[test]
+        fn biclique_is_pendant(m in 1..100_usize, n in 1..100_usize) {
+            let digraph = Digraph::biclique(m, n);
+
+            for u in digraph.vertices() {
+                assert!(!digraph.is_pendant(u));
+            }
+        }
+
+        #[test]
+        fn biclique_is_regular(m in 1..100_usize, n in 1..100_usize) {
+            assert!(Digraph::biclique(m, n).is_regular() == (m == n));
+        }
+
+        #[test]
+        fn biclique_is_semicomplete(m in 2..100_usize, n in 2..100_usize) {
+            assert!(!Digraph::biclique(m, n).is_semicomplete());
+        }
+
+        #[test]
+        fn biclique_is_simple(m in 1..100_usize, n in 1..100_usize) {
+            assert!(Digraph::biclique(m, n).is_simple());
+        }
+
+        #[test]
+        fn biclique_is_subdigraph(m in 1..100_usize, n in 1..100_usize) {
+            let digraph = Digraph::biclique(m, n);
+
+            assert!(digraph.is_subdigraph(&digraph));
+        }
+
+        #[test]
+        fn biclique_is_superdigraph(m in 1..100_usize, n in 1..100_usize) {
+            let digraph = Digraph::biclique(m, n);
+
+            assert!(digraph.is_superdigraph(&digraph));
+        }
+
+        #[test]
+        fn biclique_is_symmetric(m in 1..100_usize, n in 1..100_usize) {
+            assert!(Digraph::biclique(m, n).is_symmetric());
+        }
+
+        #[test]
+        fn biclique_is_tournament(m in 1..100_usize, n in 1..100_usize) {
+            assert!(!Digraph::biclique(m, n).is_tournament());
+        }
+
+        #[test]
         fn biclique_order(m in 1..100_usize, n in 1..100_usize) {
             assert_eq!(Digraph::biclique(m, n).order(), m + n);
         }
@@ -479,6 +541,48 @@ mod tests {
             for u in m..order {
                 assert!(digraph.out_neighbors(u).eq(0..m));
             }
+        }
+
+        #[test]
+        fn biclique_out_neighbors_weighted(m in 1..100_usize, n in 1..100_usize) {
+            let digraph = Digraph::biclique(m, n);
+            let order = m + n;
+
+            for u in 0..m {
+                assert!(
+                    digraph
+                        .out_neighbors_weighted(u)
+                        .eq((m..order).map(|v| (v, &1))
+                    )
+                );
+            }
+
+            for u in m..order {
+                assert!(
+                    digraph
+                        .out_neighbors_weighted(u)
+                        .eq((0..m).map(|v| (v, &1))
+                    )
+                );
+            }
+        }
+
+        #[test]
+        fn biclique_outdegree(m in 1..100_usize, n in 1..100_usize) {
+            let digraph = Digraph::biclique(m, n);
+
+            for u in 0..m {
+                assert_eq!(digraph.outdegree(u), n);
+            }
+
+            for u in m..m + n {
+                assert_eq!(digraph.outdegree(u), m);
+            }
+        }
+
+        #[test]
+        fn biclique_size(m in 1..100_usize, n in 1..100_usize) {
+            assert_eq!(Digraph::biclique(m, n).size(), m * n * 2);
         }
 
         #[test]
@@ -1417,20 +1521,69 @@ mod tests {
     }
 
     #[test]
-    fn biclique_is_complete_trivial() {
-        assert!(Digraph::biclique(1, 1).is_balanced());
+    fn biclique() {
+        assert!(Digraph::biclique(1, 1).arcs().eq([(0, 1), (1, 0)]));
+
+        assert!(Digraph::biclique(1, 2)
+            .arcs()
+            .eq([(0, 1), (0, 2), (1, 0), (2, 0)]));
+
+        assert!(Digraph::biclique(2, 1)
+            .arcs()
+            .eq([(0, 2), (1, 2), (2, 0), (2, 1)]));
+
+        assert!(Digraph::biclique(2, 2).arcs().eq([
+            (0, 2),
+            (0, 3),
+            (1, 2),
+            (1, 3),
+            (2, 0),
+            (2, 1),
+            (3, 0),
+            (3, 1)
+        ]));
     }
 
     #[test]
     #[should_panic(expected = "m must be greater than zero")]
-    fn biclique_m_zero() {
+    fn biclique_0_1() {
         let _ = Digraph::biclique(0, 1);
     }
 
     #[test]
     #[should_panic(expected = "n must be greater than zero")]
-    fn biclique_n_zero() {
+    fn biclique_1_0() {
         let _ = Digraph::biclique(1, 0);
+    }
+
+    #[test]
+    fn biclique_1_1_is_complete() {
+        assert!(Digraph::biclique(1, 1).is_balanced());
+    }
+
+    #[test]
+    fn biclique_1_1_is_semicomplete() {
+        assert!(Digraph::biclique(1, 1).is_semicomplete());
+    }
+
+    #[test]
+    fn biclique_1_2_is_complete() {
+        assert!(!Digraph::biclique(1, 2).is_complete());
+    }
+
+    #[test]
+    fn biclique_1_2_is_semicomplete() {
+        assert!(!Digraph::biclique(1, 2).is_semicomplete());
+    }
+
+    #[test]
+    fn biclique_2_1_is_complete() {
+        assert!(!Digraph::biclique(2, 1).is_complete());
+    }
+
+    #[test]
+    fn biclique_2_1_is_semicomplete() {
+        assert!(!Digraph::biclique(2, 1).is_semicomplete());
     }
 
     #[test]
@@ -1444,27 +1597,27 @@ mod tests {
     }
 
     #[test]
-    fn complete_has_edge_trivial() {
+    fn complete_1_has_edge() {
         assert!(!Digraph::complete(1).has_edge(0, 0));
     }
 
     #[test]
-    fn complete_is_isolated_trivial() {
+    fn complete_1_is_isolated() {
         assert!(Digraph::complete(1).is_isolated(0));
     }
 
     #[test]
-    fn complete_is_oriented_trivial() {
+    fn complete_1_is_oriented() {
         assert!(Digraph::complete(1).is_oriented());
     }
 
     #[test]
-    fn complete_is_simple_trivial() {
+    fn complete_1_is_simple() {
         assert!(Digraph::complete(1).is_simple());
     }
 
     #[test]
-    fn complete_is_tournament_trivial() {
+    fn complete_1_is_tournament() {
         assert!(Digraph::complete(1).is_tournament());
     }
 
@@ -1557,7 +1710,7 @@ mod tests {
 
     #[test]
     #[should_panic(expected = "a digraph must have at least one vertex")]
-    fn converse_order_zero() {
+    fn converse_0() {
         let _ = Digraph { arcs: vec![] }.converse();
     }
 
@@ -1569,14 +1722,44 @@ mod tests {
     }
 
     #[test]
-    fn cycle_has_edge_trivial() {
+    fn cycle_1_has_edge() {
         let digraph = Digraph::cycle(1);
 
         assert!(digraph.has_edge(0, 0));
     }
 
     #[test]
-    fn cycle_has_edge_pair() {
+    fn cycle_1_is_complete() {
+        assert!(Digraph::cycle(1).is_complete());
+    }
+
+    #[test]
+    fn cycle_1_is_oriented() {
+        assert!(!Digraph::cycle(1).is_oriented());
+    }
+
+    #[test]
+    fn cycle_1_is_semicomplete() {
+        assert!(Digraph::cycle(1).is_semicomplete());
+    }
+
+    #[test]
+    fn cycle_1_is_simple() {
+        assert!(!Digraph::cycle(1).is_simple());
+    }
+
+    #[test]
+    fn cycle_1_is_symmetric() {
+        assert!(Digraph::cycle(1).is_symmetric());
+    }
+
+    #[test]
+    fn cycle_1_is_tournament() {
+        assert!(Digraph::cycle(1).is_tournament());
+    }
+
+    #[test]
+    fn cycle_2_has_edge() {
         let digraph = Digraph::cycle(2);
 
         for u in 0..2 {
@@ -1587,67 +1770,37 @@ mod tests {
     }
 
     #[test]
-    fn cycle_is_complete_trivial() {
-        assert!(Digraph::cycle(1).is_complete());
-    }
-
-    #[test]
-    fn cycle_is_complete_pair() {
+    fn cycle_2_is_complete() {
         assert!(Digraph::cycle(2).is_complete());
     }
 
     #[test]
-    fn cycle_is_oriented_trivial() {
-        assert!(!Digraph::cycle(1).is_oriented());
-    }
-
-    #[test]
-    fn cycle_is_oriented_pair() {
+    fn cycle_2_is_oriented() {
         assert!(!Digraph::cycle(2).is_oriented());
     }
 
     #[test]
-    fn cycle_is_semicomplete_trivial() {
-        assert!(Digraph::cycle(1).is_semicomplete());
-    }
-
-    #[test]
-    fn cycle_is_semicomplete_pair() {
+    fn cycle_2_is_semicomplete() {
         assert!(Digraph::cycle(2).is_semicomplete());
     }
 
     #[test]
-    fn cycle_is_semicomplete_triple() {
-        assert!(Digraph::cycle(3).is_semicomplete());
-    }
-
-    #[test]
-    fn cycle_is_simple_trivial() {
-        assert!(!Digraph::cycle(1).is_simple());
-    }
-
-    #[test]
-    fn cycle_is_symmetric_trivial() {
-        assert!(Digraph::cycle(1).is_symmetric());
-    }
-
-    #[test]
-    fn cycle_is_symmetric_pair() {
+    fn cycle_2_is_symmetric() {
         assert!(Digraph::cycle(2).is_symmetric());
     }
 
     #[test]
-    fn cycle_is_tournament_trivial() {
-        assert!(Digraph::cycle(1).is_tournament());
-    }
-
-    #[test]
-    fn cycle_is_tournament_pair() {
+    fn cycle_2_is_tournament() {
         assert!(!Digraph::cycle(2).is_tournament());
     }
 
     #[test]
-    fn cycle_is_tournament_triple() {
+    fn cycle_3_is_semicomplete() {
+        assert!(Digraph::cycle(3).is_semicomplete());
+    }
+
+    #[test]
+    fn cycle_3_is_tournament() {
         assert!(Digraph::cycle(3).is_tournament());
     }
 
@@ -1853,23 +2006,23 @@ mod tests {
     }
 
     #[test]
-    fn empty_is_complete_trivial() {
+    fn empty_trivial_is_complete() {
         assert!(Digraph::trivial().is_complete());
     }
 
     #[test]
-    fn empty_is_semicomplete_trivial() {
+    fn empty_trivial_is_semicomplete() {
         assert!(Digraph::trivial().is_semicomplete());
     }
 
     #[test]
-    fn empty_is_tournament_trivial() {
+    fn empty_trivial_is_tournament() {
         assert!(Digraph::trivial().is_tournament());
     }
 
     #[test]
     #[should_panic(expected = "a digraph must have at least one vertex")]
-    fn empty_order_zero() {
+    fn empty_0() {
         let _ = Digraph::empty(0);
     }
 
@@ -3095,32 +3248,32 @@ mod tests {
     }
 
     #[test]
-    fn random_tournament_is_complete_trivial() {
+    fn random_tournament_1_is_complete() {
         assert!(Digraph::random_tournament(1).is_complete());
     }
 
     #[test]
-    fn random_tournament_is_isolated_trivial() {
+    fn random_tournament_1_is_isolated() {
         assert!(Digraph::random_tournament(1).is_isolated(0));
     }
 
     #[test]
-    fn random_tournament_is_pendant_trivial() {
+    fn random_tournament_1_is_pendant() {
         assert!(!Digraph::random_tournament(1).is_pendant(0));
     }
 
     #[test]
-    fn random_tournament_is_pendant_pair() {
+    fn random_tournament_1_is_simple() {
+        assert!(Digraph::random_tournament(1).is_simple());
+    }
+
+    #[test]
+    fn random_tournament_2_is_pendant() {
         let digraph = Digraph::random_tournament(2);
 
         for u in digraph.vertices() {
             assert!(digraph.is_pendant(u));
         }
-    }
-
-    #[test]
-    fn random_tournament_is_simple_trivial() {
-        assert!(Digraph::random_tournament(1).is_simple());
     }
 
     #[test]
@@ -3381,67 +3534,67 @@ mod tests {
     }
 
     #[test]
-    fn star_is_balanced_trivial() {
+    fn star_1_is_balanced() {
         assert!(Digraph::star(1).is_balanced());
     }
 
     #[test]
-    fn star_is_balanced_pair() {
-        assert!(Digraph::star(2).is_complete());
-    }
-
-    #[test]
-    fn star_is_complete_trivial() {
+    fn star_1_is_complete() {
         assert!(Digraph::star(1).is_complete());
     }
 
     #[test]
-    fn star_is_complete_pair() {
-        assert!(Digraph::star(2).is_complete());
-    }
-
-    #[test]
-    fn star_is_isolated_trivial() {
+    fn star_1_is_isolated() {
         assert!(Digraph::star(1).is_isolated(0));
     }
 
     #[test]
-    fn star_is_oriented_trivial() {
+    fn star_1_is_oriented() {
         assert!(Digraph::star(1).is_oriented());
     }
 
     #[test]
-    fn star_is_regular_trivial() {
+    fn star_1_is_regular() {
         assert!(Digraph::star(1).is_regular());
     }
 
     #[test]
-    fn star_is_regular_pair() {
-        assert!(Digraph::star(2).is_regular());
-    }
-
-    #[test]
-    fn star_is_semicomplete_trivial() {
+    fn star_1_is_semicomplete() {
         assert!(Digraph::star(1).is_semicomplete());
     }
 
     #[test]
-    fn star_is_semicomplete_pair() {
-        assert!(Digraph::star(2).is_semicomplete());
-    }
-
-    #[test]
-    fn star_is_sink_trivial() {
+    fn star_1_is_sink() {
         assert!(Digraph::star(1).is_sink(0));
     }
 
     #[test]
-    fn star_is_source_trivial() {
+    fn star_1_is_source() {
         assert!(Digraph::star(1).is_source(0));
     }
 
     #[test]
-    fn star_is_tournament_trivial() {
+    fn star_1_is_tournament() {
         assert!(Digraph::star(1).is_tournament());
+    }
+
+    #[test]
+    fn star_2_is_balanced() {
+        assert!(Digraph::star(2).is_complete());
+    }
+
+    #[test]
+    fn star_2_is_complete() {
+        assert!(Digraph::star(2).is_complete());
+    }
+
+    #[test]
+    fn star_2_is_regular() {
+        assert!(Digraph::star(2).is_regular());
+    }
+
+    #[test]
+    fn star_2_is_semicomplete() {
+        assert!(Digraph::star(2).is_semicomplete());
     }
 }

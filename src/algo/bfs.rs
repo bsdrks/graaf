@@ -181,6 +181,7 @@ where
 ///
 /// assert_eq!(single_source_distances(&digraph, 0), [0, 1, 2, usize::MAX]);
 /// ```
+#[must_use]
 pub fn single_source_distances<D>(digraph: &D, s: usize) -> Vec<usize>
 where
     D: Order + OutNeighbors,
@@ -316,6 +317,7 @@ pub fn predecessors<D, S, W>(
 ///
 /// assert!(pred.into_iter().eq([None, Some(0), Some(1), None]));
 /// ```
+#[must_use]
 pub fn single_source_predecessors<D>(digraph: &D, s: usize) -> BreadthFirstTree
 where
     D: Order + OutNeighbors,
@@ -401,6 +403,7 @@ where
 ///
 /// assert_eq!(path, Some(vec![3, 0, 1, 2]));
 /// ```
+#[must_use]
 pub fn shortest_path<D, S, T>(
     digraph: &D,
     step: S,
@@ -513,6 +516,7 @@ where
 /// assert_eq!(spsp(&digraph, 0, 3), None);
 /// ```
 #[doc(alias = "spsp")]
+#[must_use]
 pub fn single_pair_shortest_path<D>(digraph: &D, s: usize, t: usize) -> Option<Vec<usize>>
 where
     D: Order + OutNeighbors,

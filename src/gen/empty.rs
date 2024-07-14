@@ -133,8 +133,8 @@ pub trait Empty {
     ///
     /// assert!(Digraph::trivial().arcs().eq([]));
     /// ```
-    #[must_use]
     #[doc(alias = "singleton")]
+    #[must_use]
     fn trivial() -> Self
     where
         Self: Sized,

@@ -93,6 +93,7 @@ impl<W> DistanceMatrix<W> {
     /// assert_eq!(dist[2], vec![0; 4]);
     /// assert_eq!(dist[3], vec![0; 4]);
     /// ```
+    #[must_use]
     pub fn new(order: usize, max: W) -> Self
     where
         W: Copy,
@@ -154,6 +155,7 @@ impl<W> DistanceMatrix<W> {
     #[doc(alias = "centre")]
     #[doc(alias = "jordan_center")]
     #[doc(alias = "jordan_centre")]
+    #[must_use]
     pub fn center(&self) -> Vec<usize>
     where
         W: Copy + Ord,
@@ -218,6 +220,7 @@ impl<W> DistanceMatrix<W> {
     ///
     /// assert_eq!(dist.diameter(), 11);
     /// ```
+    #[must_use]
     pub fn diameter(&self) -> W
     where
         W: Copy + Ord,
@@ -271,6 +274,7 @@ impl<W> DistanceMatrix<W> {
     ///
     /// assert!(dist.eccentricities().iter().eq(&[10, 11, 7, 6]));
     /// ```
+    #[must_use]
     pub fn eccentricities(&self) -> Vec<W>
     where
         W: Copy + Ord,
@@ -335,6 +339,7 @@ impl<W> DistanceMatrix<W> {
     ///
     /// assert!(!dist.is_connected());
     /// ```
+    #[must_use]
     pub fn is_connected(&self) -> bool
     where
         W: Copy + Ord,
@@ -385,7 +390,7 @@ mod tests {
 
     #[test]
     #[should_panic(expected = "a distance matrix must have at least one vertex")]
-    fn new_order_zero() {
+    fn new_0() {
         let _ = DistanceMatrix::new(0, isize::MAX);
     }
 

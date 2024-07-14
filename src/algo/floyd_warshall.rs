@@ -123,6 +123,7 @@ use crate::{
 /// [^1]: Robert W. Floyd. 1962. Algorithm 97: Shortest path. Commun.
 ///   ACM 5, 6 (June 1962), 345. <https://doi.org/10.1145/367766.368168>
 #[doc(alias = "apsp")]
+#[must_use]
 pub fn distances<D>(digraph: &D) -> DistanceMatrix<isize>
 where
     D: ArcsWeighted<isize> + Order + Vertices,

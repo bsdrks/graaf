@@ -5,6 +5,8 @@
 - Add `periphery` to `DistanceMatrix`.
 - Add the `IndegreeSequence` trait.
 - Add the `OutdegreeSequence` trait.
+- Add `claw` to `Star`.
+- Add `utility` to `Star`.
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
 - Can there be a complete digraph of order 1?
@@ -12,6 +14,81 @@
 - Can there be a random tournament of order 1?
 - Can there be a star digraph of order 1?
 - Expand the user guide.
+
+## [0.69.0] - 2024-07-14
+
+Added
+
+- Add property test `biclique_is_isolated` for `adjacency_list`.
+- Add property test `biclique_is_isolated` for `adjacency_matrix`.
+- Add property test `biclique_is_order` for `adjacency_list`.
+- Add property test `biclique_is_order` for `adjacency_matrix`.
+- Add property test `biclique_is_oriented` for `adjacency_list`.
+- Add property test `biclique_is_oriented` for `adjacency_matrix`.
+- Add property test `biclique_is_out_neighbors_weighted` for `adjacency_list`.
+- Add property test `biclique_is_out_neighbors_weighted` for `adjacency_matrix`.
+- Add property test `biclique_is_out_neighbors` for `adjacency_list`.
+- Add property test `biclique_is_out_neighbors` for `adjacency_matrix`.
+- Add property test `biclique_is_outdegree` for `adjacency_list`.
+- Add property test `biclique_is_outdegree` for `adjacency_matrix`.
+- Add property test `biclique_is_pendant` for `adjacency_list`.
+- Add property test `biclique_is_pendant` for `adjacency_matrix`.
+- Add property test `biclique_is_regular` for `adjacency_list`.
+- Add property test `biclique_is_regular` for `adjacency_matrix`.
+- Add property test `biclique_is_semicomplete` for `adjacency_list`.
+- Add property test `biclique_is_semicomplete` for `adjacency_matrix`.
+- Add property test `biclique_is_simple` for `adjacency_list`.
+- Add property test `biclique_is_simple` for `adjacency_matrix`.
+- Add property test `biclique_is_size` for `adjacency_list`.
+- Add property test `biclique_is_size` for `adjacency_matrix`.
+- Add property test `biclique_is_subdigraph` for `adjacency_list`.
+- Add property test `biclique_is_subdigraph` for `adjacency_matrix`.
+- Add property test `biclique_is_superdigraph` for `adjacency_list`.
+- Add property test `biclique_is_superdigraph` for `adjacency_matrix`.
+- Add property test `biclique_is_symmetric` for `adjacency_list`.
+- Add property test `biclique_is_symmetric` for `adjacency_matrix`.
+- Add property test `biclique_is_tournament` for `adjacency_list`.
+- Add property test `biclique_is_tournament` for `adjacency_matrix`.
+- Add unit test `biclique_0_1` for `adjacency_list`.
+- Add unit test `biclique_0_1` for `adjacency_matrix`.
+- Add unit test `biclique_1_0` for `adjacency_list`.
+- Add unit test `biclique_1_0` for `adjacency_matrix`.
+- Add unit test `biclique_1_1_is_complete` for `adjacency_list`.
+- Add unit test `biclique_1_1_is_complete` for `adjacency_matrix`.
+- Add unit test `biclique_1_1_is_semicomplete` for `adjacency_list`.
+- Add unit test `biclique_1_1_is_semicomplete` for `adjacency_matrix`.
+- Add unit test `biclique_1_2_is_complete` for `adjacency_list`.
+- Add unit test `biclique_1_2_is_complete` for `adjacency_matrix`.
+- Add unit test `biclique_1_2_is_semicomplete` for `adjacency_list`.
+- Add unit test `biclique_1_2_is_semicomplete` for `adjacency_matrix`.
+- Add unit test `biclique_2_1_is_complete` for `adjacency_list`.
+- Add unit test `biclique_2_1_is_complete` for `adjacency_matrix`.
+- Add unit test `biclique_2_1_is_semicomplete` for `adjacency_list`.
+- Add unit test `biclique_2_1_is_semicomplete` for `adjacency_matrix`.
+- Add unit test `biclique` for `adjacency_list`.
+- Add unit test `biclique` for `adjacency_matrix`.
+
+Changed
+
+- Breaking: `bellman_ford_moore::single_source_distances` is now `#[must_use]`.
+- Breaking: `bfs::single_source_distances` is now `#[must_use]`.
+- Breaking: `bfs::single_source_predecessors` is now `#[must_use]`.
+- Breaking: `bfs::shortest_path` is now `#[must_use]`.
+- Breaking: `bfs::single_pair_shortest_path` is now `#[must_use]`.
+- Breaking: `dfs::acyclic_ordering` is now `#[must_use]`.
+- Breaking: `dijkstra::single_source_distances` is now `#[must_use]`.
+- Breaking: `dijkstra::single_source_predecessors` is now `#[must_use]`.
+- Breaking: `dijkstra::shortest_path` is now `#[must_use]`.
+- Breaking: `dijkstra::single_pair_shortest_path` is now `#[must_use]`.
+- Breaking: `DistanceMatrix::new` is now `#[must_use]`.
+- Breaking: `DistanceMatrix::center` is now `#[must_use]`.
+- Breaking: `DistanceMatrix::diameter` is now `#[must_use]`.
+- Breaking: `DistanceMatrix::eccentricities` is now `#[must_use]`.
+- Breaking: `DistanceMatrix::is_connected` is now `#[must_use]`.
+- Breaking: `floyd_warshall::distances` is now `#[must_use]`.
+- Rename non `Empty` `*_trivial` tests to `*_1_*`.
+- Rename non `Empty` `*_pair` tests to `*_2_*`.
+- Rename non `Empty` `*_triplet` tests to `*_3_*`.
 
 ## [0.68.0] - 2024-07-13
 

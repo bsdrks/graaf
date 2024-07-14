@@ -896,7 +896,7 @@ mod tests {
 
     #[test]
     #[should_panic(expected = "a digraph must have at least one vertex")]
-    fn converse_order_zero() {
+    fn converse_0() {
         let digraph: Digraph<usize> = Digraph { arcs: vec![] };
         let _ = digraph.converse();
     }
@@ -1105,13 +1105,13 @@ mod tests {
     }
 
     #[test]
-    fn empty_is_tournament_trivial() {
+    fn empty_trivial_is_tournament() {
         assert!(Digraph::<usize>::trivial().is_tournament());
     }
 
     #[test]
     #[should_panic(expected = "a digraph must have at least one vertex")]
-    fn empty_order_zero() {
+    fn empty_0() {
         let _ = Digraph::<usize>::empty(0);
     }
 

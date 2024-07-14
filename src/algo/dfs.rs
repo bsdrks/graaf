@@ -235,6 +235,7 @@ fn dfsa_predecessors_visit<D>(
 ///
 /// assert!(acyclic_ordering(&digraph).iter().eq(&[2, 5, 3, 1, 0, 4]));
 /// ```
+#[must_use]
 pub fn acyclic_ordering<D>(digraph: &D) -> Vec<usize>
 where
     D: Order + OutNeighbors,

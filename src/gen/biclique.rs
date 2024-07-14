@@ -199,8 +199,8 @@ pub trait Biclique {
     ///
     /// * `m` - The number of vertices in the first partition.
     /// * `n` - The number of vertices in the second partition.
-    #[must_use]
     #[doc(alias = "complete_bipartite")]
+    #[must_use]
     fn biclique(m: usize, n: usize) -> Self;
 }
 
