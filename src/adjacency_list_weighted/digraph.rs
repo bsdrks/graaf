@@ -1,4 +1,4 @@
-//! An adjacency list representation of a weighted digraph.
+//! An adjacency list representation of an arc-weighted digraph.
 //!
 //! # Examples
 //!
@@ -47,7 +47,7 @@ use {
     std::collections::BTreeMap,
 };
 
-/// An adjacency list representation of an unweighted digraph
+/// An adjacency list representation of an arc-weighted digraph
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct Digraph<W> {
     /// The arcs of the digraph

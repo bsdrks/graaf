@@ -12,6 +12,12 @@
 - Resolve: can there be a random tournament of order 1?
 - Resolve: can there be a star digraph of order 1?
 
+## [0.69.3] - 2024-07-14
+
+Changed
+
+- Misc. documentation improvements.
+
 ## [0.69.2] - 2024-07-14
 
 Added
