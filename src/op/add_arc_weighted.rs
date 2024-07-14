@@ -1,4 +1,4 @@
-//! Add an arc to a weighted digraph.
+//! Add an arc to an arc-weighted digraph.
 //!
 //! # Examples
 //!
@@ -23,7 +23,7 @@
 //!     .eq([(0, 1, &2), (0, 2, &1), (1, 2, &-3)]));
 //! ```
 
-/// Add an arc to a weighted digraph.
+/// Add an arc to an arc-weighted digraph.
 ///
 /// # How can I implement `AddArcWeighted`?
 ///

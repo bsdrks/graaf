@@ -26,7 +26,8 @@
 //!
 //! - The [Adjacency List] type represents unweighted sparse digraphs.
 //! - The [Adjacency Matrix] type represents unweighted dense digraphs.
-//! - The [Weighted Adjacency List] type represents weighted sparse digraphs.
+//! - The [Weighted Adjacency List] type represents arc-weighted sparse
+//!   digraphs.
 //!
 //! These types eagerly implement [digraph operations](#operations) and
 //! [digraph algorithms](#algorithms).
@@ -58,7 +59,7 @@
 //!
 //! [Individual digraph types](#digraph-types) implement the basic operations.
 //!
-//! - The [`AddArcWeighted`](op::AddArcWeighted) adds an arc to a weighted
+//! - The [`AddArcWeighted`](op::AddArcWeighted) adds an arc to an arc-weighted
 //!   digraph.
 //! - The [`AddArc`](op::AddArc) adds an arc to an unweighted digraph.
 //! - The [`ArcWeight`](op::ArcWeight) returns the weight of an arc.
@@ -115,7 +116,7 @@
 //!
 //! ## Bellman-Ford-Moore
 //!
-//! The Bellman-Ford-Moore algorithm finds the shortest paths in a weighted
+//! The Bellman-Ford-Moore algorithm finds the shortest paths in an arc-weighted
 //! digraph with negative weights.
 //!
 //! - The [`single_source_distances`](algo::bellman_ford_moore::single_source_distances)
@@ -160,7 +161,7 @@
 //! ## Dijkstra's algorithm
 //!
 //! Dijkstra's algorithm finds the shortest paths from one or more source
-//! vertices in a weighted digraph.
+//! vertices in an arc-weighted digraph.
 //!
 //! These functions start from one or more source vertices and allow a custom
 //! step function, target predicate, distance array, and heap, where
@@ -185,7 +186,7 @@
 //! ## Floyd-Warshall
 //!
 //! The Floyd-Warshall algorithm finds the shortest paths between all pairs
-//! of vertices in a weighted digraph.
+//! of vertices in an arc-weighted digraph.
 //!
 //! - The [`distances`](algo::floyd_warshall::distances) function finds the
 //!   shortest distances.

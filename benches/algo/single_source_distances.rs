@@ -1,6 +1,6 @@
 #![macro_use]
 //! Benchmark different algorithms and types to calculate the distance from a
-//! source vertex to all other vertices in a weighted digraph.
+//! source vertex to all other vertices in an arc-weighted digraph.
 
 use graaf::{
     adjacency_list::fixture::bang_jensen_94,

@@ -1,7 +1,7 @@
 //! Dijkstra's algorithm with binary heap
 //!
-//! Dijkstra's algorithm with binary heap finds the shortest path in a weighted
-//! digraph.[^1]
+//! Dijkstra's algorithm with binary heap finds the shortest path in an
+//! arc-weighted digraph.[^1]
 //!
 //! The time complexity is *O*(*v* log *v* + *a*).
 //!
@@ -163,7 +163,7 @@ pub fn distances<D, S, W>(
     }
 }
 
-/// Finds all distances from a source vertex in a weighted digraph.
+/// Finds all distances from a source vertex in an arc-weighted digraph.
 ///
 /// # Arguments
 ///
@@ -221,7 +221,7 @@ where
 }
 
 /// Finds the breadth-first tree and distances of the shortest paths from
-/// the source vertices to all vertices in a weighted digraph.
+/// the source vertices to all vertices in an arc-weighted digraph.
 ///
 /// # Arguments
 ///
@@ -302,7 +302,7 @@ pub fn predecessors<D, S, W>(
 }
 
 /// Finds the breadth-first tree for the shortest paths from a source vertex in
-/// a weighted digraph.
+/// an arc-weighted digraph.
 ///
 /// # Arguments
 ///
@@ -364,7 +364,7 @@ where
 
 /// Finds the shortest path from the source vertex to a target vertex.
 ///
-/// In a weighted digraph, the shortest path is the path with the
+/// In an arc-weighted digraph, the shortest path is the path with the
 /// smallest sum of weights. There can be multiple shortest paths in a digraph,
 /// but this function only returns one.
 ///
@@ -472,7 +472,7 @@ where
 
 /// Finds the shortest path from a source vertex to a target vertex.
 ///
-/// In a weighted digraph, the shortest path is the path with the
+/// In an arc-weighted digraph, the shortest path is the path with the
 /// smallest sum of weights. There can be multiple shortest paths in a digraph,
 /// but this function only returns one.
 ///

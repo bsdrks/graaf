@@ -38,7 +38,7 @@ Graaf provides three representations of directed graphs.
 
 - The [Adjacency List] type represents unweighted sparse digraphs.
 - The [Adjacency Matrix] type represents unweighted dense digraphs.
-- The [Weighted Adjacency List] type represents weighted sparse digraphs.
+- The [Weighted Adjacency List] type represents arc-weighted sparse digraphs.
 
 These types eagerly implement [digraph operations](#operations) and [digraph algorithms](#algorithms).
 
@@ -61,7 +61,7 @@ The [`op`] module provides digraph operation traits. The [digraph types](#digrap
 
 [Individual digraph types](#digraph-types) implement the basic operations.
 
-- The [`AddArcWeighted`] trait adds an arc to a weighted digraph.
+- The [`AddArcWeighted`] trait adds an arc to an arc-weighted digraph.
 - The [`AddArc`] trait adds an arc to an unweighted digraph.
 - The [`ArcWeight`] trait returns the weight of an arc.
 - The [`ArcsWeighted`] trait returns the arcs and their weights in a digraph.
@@ -105,7 +105,7 @@ The [`algo`] module provides digraph algorithms.
 
 ### Bellman-Ford-Moore
 
-The Bellman-Ford-Moore algorithm finds the shortest paths in a weighted digraph with negative weights.
+The Bellman-Ford-Moore algorithm finds the shortest paths in an arc-weighted digraph with negative weights.
 
 - The [`single_source_distances`](https://docs.rs/graaf/latest/graaf/algo/bellman_ford_moore/fn.single_source_distances.html) function finds the shortest distances.
 
@@ -135,7 +135,7 @@ A depth-first search explores the vertices of an unweighted digraph in order of 
 
 ### Dijkstra's Algorithm
 
-Dijkstra's algorithm finds the shortest paths in a weighted digraph.
+Dijkstra's algorithm finds the shortest paths in an arc-weighted digraph.
 
 These functions start from one or more source vertices and allow a custom step function, target predicate, distance array, and heap, where applicable.
 
@@ -151,7 +151,7 @@ These functions start from one source vertex.
 
 ### Floyd-Warshall
 
-The Floyd-Warshall algorithm finds the shortest paths between all pairs of vertices in a weighted digraph.
+The Floyd-Warshall algorithm finds the shortest paths between all pairs of vertices in an arc-weighted digraph.
 
 - The [`distances`](https://docs.rs/graaf/latest/graaf/algo/floyd_warshall/fn.distances.html) function finds the shortest distances.
 
