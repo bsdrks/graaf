@@ -29,7 +29,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.69.3"
+graaf = "0.70.0"
 ```
 
 ## Digraph Types

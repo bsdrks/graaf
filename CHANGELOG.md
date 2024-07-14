@@ -2,15 +2,35 @@
 
 ## Provisional roadmap
 
+- Add the `Complement` trait.
+- Add the `DeleteArc` trait.
+- Add the `DeleteVertex` trait.
 - Add the `IndegreeSequence` trait.
+- Add the `IsIsomorphic` trait.
+- Add the `MaxIndegree` trait.
+- Add the `MaxOutdegree` trait.
+- Add the `MaxSemidegree` trait.
+- Add the `MinIndegree` trait.
+- Add the `MinOutdegree` trait.
+- Add the `MinSemidegree` trait.
 - Add the `OutdegreeSequence` trait.
+- Add the `PathContraction` trait.
+- Add the `SetContraction` trait.
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
 - Expand the user guide.
+- Rename `DegreeSequence` to `SemidegreeSequence`, add new `DegreeSequence` trait.
 - Resolve: can there be a complete digraph of order 1?
 - Resolve: can there be a cycle digraph of order 1?
 - Resolve: can there be a random tournament of order 1?
 - Resolve: can there be a star digraph of order 1?
+- Subsume traits with one supertrait into the supertrait.
+
+## [0.70.0] - 2024-07-14
+
+Changed
+
+- Breaking: `is_regular` now returns false if the indegree does not equal the outdegree.
 
 ## [0.69.3] - 2024-07-14
 
