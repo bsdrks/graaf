@@ -36,9 +36,9 @@ graaf = "0.70.1"
 
 Graaf provides three representations of directed graphs.
 
-- The [Adjacency List] type represents unweighted sparse digraphs.
-- The [Adjacency Matrix] type represents unweighted dense digraphs.
-- The [Weighted Adjacency List] type represents arc-weighted sparse digraphs.
+- [`adjacency_list`](https://docs.rs/graaf/latest/graaf/adjacency_list/digraph/struct.Digraph.html) represents unweighted sparse digraphs.
+- [`adjacency_matrix`](https://docs.rs/graaf/latest/graaf/adjacency_matrix/digraph/struct.Digraph.html) represents unweighted dense digraphs.
+- [`adjacency_list_weighted`](https://docs.rs/graaf/latest/graaf/adjacency_list_weighted/digraph/struct.Digraph.html) represents arc-weighted sparse digraphs.
 
 These types eagerly implement [digraph operations](#operations) and [digraph algorithms](#algorithms).
 
@@ -46,12 +46,12 @@ These types eagerly implement [digraph operations](#operations) and [digraph alg
 
 The [`gen`] module provides six digraph generators.
 
-- The [`Biclique`] trait generates a complete bipartite digraph.
-- The [`Complete`] trait generates a complete digraph.
-- The [`Cycle`] trait generates a digraph with a cycle of a given length.
-- The [`Empty`] trait generates a digraph with no arcs.
-- The [`RandomTournament`] trait generates a random tournament.
-- The [`Star`] trait generates a star digraph.
+- [`Biclique`] generates a complete bipartite digraph.
+- [`Complete`] generates a complete digraph.
+- [`Cycle`] generates a digraph with a cycle of a given length.
+- [`Empty`] generates a digraph with no arcs.
+- [`RandomTournament`] generates a random tournament.
+- [`Star`] generates a star digraph.
 
 ## Operations
 
@@ -61,43 +61,43 @@ The [`op`] module provides digraph operation traits. The [digraph types](#digrap
 
 [Individual digraph types](#digraph-types) implement the basic operations.
 
-- The [`AddArcWeighted`] trait adds an arc to an arc-weighted digraph.
-- The [`AddArc`] trait adds an arc to an unweighted digraph.
-- The [`ArcWeight`] trait returns the weight of an arc.
-- The [`ArcsWeighted`] trait returns the arcs and their weights in a digraph.
-- The [`Arcs`] trait returns the arcs in a digraph.
-- The [`Converse`] trait returns the converse of a digraph.
-- The [`HasArc`] trait checks if an arc exists in a digraph.
-- The [`Indegree`] trait returns the indegree of a vertex.
-- The [`IsSimple`] trait checks if a digraph contains no loops or parallel arcs.
-- The [`Order`] trait returns the number of vertices.
-- The [`OutNeighborsWeighted`] trait returns the weighted out-neighbors of a vertex.
-- The [`OutNeighbors`] trait returns the out-neighbors of a vertex.
-- The [`Outdegree`] trait returns the outdegree of a vertex.
-- The [`RemoveArc`] trait removes an arc from a digraph.
-- The [`Size`] trait returns the number of arcs in a digraph.
-- The [`Vertices`] trait returns the vertices in a digraph.
+- [`AddArcWeighted`] adds an arc to an arc-weighted digraph.
+- [`AddArc`] adds an arc to an unweighted digraph.
+- [`ArcWeight`] returns the weight of an arc.
+- [`ArcsWeighted`] returns the arcs and their weights in a digraph.
+- [`Arcs`] returns the arcs in a digraph.
+- [`Converse`] returns the converse of a digraph.
+- [`HasArc`] checks if an arc exists in a digraph.
+- [`Indegree`] returns the indegree of a vertex.
+- [`IsSimple`] checks if a digraph contains no loops or parallel arcs.
+- [`Order`] returns the number of vertices.
+- [`OutNeighborsWeighted`] returns the weighted out-neighbors of a vertex.
+- [`OutNeighbors`] returns the out-neighbors of a vertex.
+- [`Outdegree`] returns the outdegree of a vertex.
+- [`RemoveArc`] removes an arc from a digraph.
+- [`Size`] returns the number of arcs in a digraph.
+- [`Vertices`] returns the vertices in a digraph.
 
 ### Extended Operations
 
 The extended traits derive their implementation from the basic operations.
 
-- The [`Degree`] trait returns the degree of a vertex.
-- The [`DegreeSequence`] trait returns the degree sequence of a digraph.
-- The [`HasEdge`] trait checks if an edge exists in a digraph.
-- The [`InNeighbors`] trait returns the in-neighbors of a vertex.
-- The [`IsBalanced`] trait checks if a digraph is balanced.
-- The [`IsComplete`] trait checks if a digraph is complete.
-- The [`IsIsolated`] trait checks if a vertex is isolated.
-- The [`IsOriented`] trait checks if a digraph is oriented.
-- The [`IsPendant`] trait checks if a vertex is a pendant.
-- The [`IsRegular`] trait checks if a digraph is regular.
-- The [`IsSemicomplete`] trait checks if a digraph is semicomplete.
-- The [`IsSubdigraph`] trait checks if a digraph is a subdigraph.
-- The [`IsSuperdigraph`] trait checks if a digraph is a superdigraph.
-- The [`IsSymmetric`] trait checks if a digraph is symmetric.
-- The [`IsTournament`] trait checks if a digraph is a tournament.
-- The [`IsWalk`] trait checks if a sequence of vertices is a walk in a digraph.
+- [`Degree`] returns the degree of a vertex.
+- [`DegreeSequence`] returns the degree sequence of a digraph.
+- [`HasEdge`] checks if an edge exists in a digraph.
+- [`InNeighbors`] returns the in-neighbors of a vertex.
+- [`IsBalanced`] checks if a digraph is balanced.
+- [`IsComplete`] checks if a digraph is complete.
+- [`IsIsolated`] checks if a vertex is isolated.
+- [`IsOriented`] checks if a digraph is oriented.
+- [`IsPendant`] checks if a vertex is a pendant.
+- [`IsRegular`] checks if a digraph is regular.
+- [`IsSemicomplete`] checks if a digraph is semicomplete.
+- [`IsSubdigraph`] checks if a digraph is a subdigraph.
+- [`IsSuperdigraph`] checks if a digraph is a superdigraph.
+- [`IsSymmetric`] checks if a digraph is symmetric.
+- [`IsTournament`] checks if a digraph is a tournament.
+- [`IsWalk`] checks if a sequence of vertices is a walk in a digraph.
 
 ## Algorithms
 
@@ -107,7 +107,7 @@ The [`algo`] module provides digraph algorithms.
 
 The Bellman-Ford-Moore algorithm finds the shortest paths in an arc-weighted digraph with negative weights.
 
-- The [`single_source_distances`](https://docs.rs/graaf/latest/graaf/algo/bellman_ford_moore/fn.single_source_distances.html) function finds the shortest distances.
+- [`single_source_distances`](https://docs.rs/graaf/latest/graaf/algo/bellman_ford_moore/fn.single_source_distances.html) finds the shortest distances.
 
 ### Breadth-First Search (BFS)
 
@@ -115,23 +115,23 @@ A breadth-first search explores the vertices of an unweighted digraph in order o
 
 These functions start from one or more source vertices and allow a custom step function, target predicate, distance array, breadth-first tree, and queue, where applicable.
 
-- The [`distances`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.distances.html) function finds the shortest distances.
-- The [`predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.predecessors.html) function finds the predecessors.
-- The [`shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.shortest_path.html) function finds the shortest path.
+- [`distances`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.distances.html) finds the shortest distances.
+- [`predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.predecessors.html) finds the predecessors.
+- [`shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.shortest_path.html) finds the shortest path.
 
 These functions start from one source vertex.
 
-- The [`single_source_distances`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.single_source_distances.html) function finds the shortest distances.
-- The [`single_source_predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.single_source_predecessors.html) function finds the predecessors.
-- The [`single_pair_shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.single_pair_shortest_path.html) function finds the shortest path.
+- [`single_source_distances`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.single_source_distances.html) finds the shortest distances.
+- [`single_source_predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.single_source_predecessors.html) finds the predecessors.
+- [`single_pair_shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.single_pair_shortest_path.html) finds the shortest path.
 
 ### Depth-First Search (DFS)
 
 A depth-first search explores the vertices of an unweighted digraph in order of their depth from a source.
 
-- The [`dfsa`](https://docs.rs/graaf/latest/graaf/algo/dfs/fn.dfsa.html) function traverses the digraph.
-- The [`dfsa_predecessors`](https://docs.rs/graaf/latest/graaf/algo/dfs/fn.dfsa_predecessors.html) function finds the predecessors.
-- The [`acyclic_ordering`](https://docs.rs/graaf/latest/graaf/algo/dfs/fn.acyclic_ordering.html) function generates an acyclic ordering.
+- [`dfsa`](https://docs.rs/graaf/latest/graaf/algo/dfs/fn.dfsa.html) traverses the digraph.
+- [`dfsa_predecessors`](https://docs.rs/graaf/latest/graaf/algo/dfs/fn.dfsa_predecessors.html) finds the predecessors.
+- [`acyclic_ordering`](https://docs.rs/graaf/latest/graaf/algo/dfs/fn.acyclic_ordering.html) generates an acyclic ordering.
 
 ### Dijkstra's Algorithm
 
@@ -139,28 +139,28 @@ Dijkstra's algorithm finds the shortest paths in an arc-weighted digraph.
 
 These functions start from one or more source vertices and allow a custom step function, target predicate, distance array, and heap, where applicable.
 
-- The [`distances`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.distances.html) function finds the shortest distances.
-- The [`predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.predecessors.html) function finds the predecessors.
-- The [`shortest_path`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.shortest_path.html) function finds the shortest path.
+- [`distances`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.distances.html) finds the shortest distances.
+- [`predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.predecessors.html) finds the predecessors.
+- [`shortest_path`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.shortest_path.html) finds the shortest path.
 
 These functions start from one source vertex.
 
-- The [`single_source_distances`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.single_source_distances.html) function finds the shortest distances.
-- The [`single_source_predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.single_source_predecessors.html) function finds the predecessors.
-- The [`single_pair_shortest_path`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.single_pair_shortest_path.html) function finds the shortest path.
+- [`single_source_distances`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.single_source_distances.html) finds the shortest distances.
+- [`single_source_predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.single_source_predecessors.html) finds the predecessors.
+- [`single_pair_shortest_path`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.single_pair_shortest_path.html) finds the shortest path.
 
 ### Floyd-Warshall
 
 The Floyd-Warshall algorithm finds the shortest paths between all pairs of vertices in an arc-weighted digraph.
 
-- The [`distances`](https://docs.rs/graaf/latest/graaf/algo/floyd_warshall/fn.distances.html) function finds the shortest distances.
+- [`distances`](https://docs.rs/graaf/latest/graaf/algo/floyd_warshall/fn.distances.html) finds the shortest distances.
 
 ### Breadth-First Tree
 
 A breadth-first tree is the result of a breadth-first search.
 
-- The [`search`](https://docs.rs/graaf/latest/graaf/algo/breadth_first_tree/struct.BreadthFirstTree.html#method.search) method finds a vertex by value.
-- The [`search_by`](https://docs.rs/graaf/latest/graaf/algo/breadth_first_tree/struct.BreadthFirstTree.html#method.search_by) method finds a vertex by predicate.
+- [`search`](https://docs.rs/graaf/latest/graaf/algo/breadth_first_tree/struct.BreadthFirstTree.html#method.search) finds a vertex by value.
+- [`search_by`](https://docs.rs/graaf/latest/graaf/algo/breadth_first_tree/struct.BreadthFirstTree.html#method.search_by) finds a vertex by predicate.
 
 These functions produce a breadth-first tree.
 
@@ -173,15 +173,12 @@ These functions produce a breadth-first tree.
 
 A distance matrix contains the shortest distances between all pairs of vertices in a digraph.
 
-- The [`center`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.center) method finds the center of the digraph.
-- The [`diameter`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.diameter) method finds the diameter of the digraph.
-- The [`eccentricities`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.eccentricities) method returns the eccentricities of the vertices.
-- The [`is_connected`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.is_connected) method checks if the digraph is connected.
-- The [`periphery`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.periphery) method finds the periphery of the digraph.
+- [`center`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.center) finds the center of the digraph.
+- [`diameter`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.diameter) finds the diameter of the digraph.
+- [`eccentricities`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.eccentricities) returns the eccentricities of the vertices.
+- [`is_connected`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.is_connected) checks if the digraph is connected.
+- [`periphery`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.periphery) finds the periphery of the digraph.
 
-[Adjacency List]: https://docs.rs/graaf/latest/graaf/adjacency_list/digraph/struct.Digraph.html
-[Adjacency Matrix]: https://docs.rs/graaf/latest/graaf/adjacency_matrix/digraph/struct.Digraph.html
-[Weighted Adjacency List]: https://docs.rs/graaf/latest/graaf/adjacency_list_weighted/digraph/struct.Digraph.html
 [`AddArcWeighted`]: https://docs.rs/graaf/latest/graaf/op/add_arc_weighted/trait.AddArcWeighted.html
 [`AddArc`]: https://docs.rs/graaf/latest/graaf/op/add_arc/trait.AddArc.html
 [`ArcWeight`]: https://docs.rs/graaf/latest/graaf/op/arc_weight/trait.ArcWeight.html
