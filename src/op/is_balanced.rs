@@ -42,9 +42,8 @@ use super::{
 ///
 /// # How can I implement `IsBalanced`?
 ///
-/// Provide an implementation of `is_balanced` that returns `true` if the
-/// digraph is balanced and `false` otherwise OR implement `Indegree`,
-/// `Outdegree`, and `Vertices`.
+/// Provide an implementation of `is_balanced` that returns whether the digraph
+/// is balanced OR implement `Indegree`, `Outdegree`, and `Vertices`.
 ///
 /// ```
 /// use {

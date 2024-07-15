@@ -18,8 +18,8 @@
 ///
 /// # How can I implement `Order`?
 ///
-/// Provides an implementation of `order` that returns the number
-/// of vertices in the digraph.
+/// Provides an implementation of `order` that returns the number of vertices in
+/// the digraph.
 ///
 /// ```
 /// use graaf::op::Order;
@@ -49,7 +49,7 @@
 /// assert_eq!(digraph.order(), 4);
 /// ```
 pub trait Order {
-    /// Count the vertices in the digraph.
+    /// Counts the vertices in the digraph.
     #[must_use]
     fn order(&self) -> usize;
 }

@@ -34,8 +34,8 @@ use super::Degree;
 ///
 /// # How can I implement `IsPendant`?
 ///
-/// Provide an implementation of `is_pendant` that returns `true` if the vertex
-/// is a pendant vertex and `false` otherwise OR implement `Degree`.
+/// Provide an implementation of `is_pendant` that returns whether the vertex is
+/// pendant OR implement `Degree`.
 ///
 /// ```
 /// use {
@@ -78,8 +78,7 @@ use super::Degree;
 /// assert!(digraph.is_pendant(3));
 /// ```
 pub trait IsPendant {
-    /// Returns `true` if the vertex is a pendant vertex in the digraph and
-    /// `false` otherwise.
+    /// Returns whether a vertex is a pendant vertex.
     ///
     /// # Arguments
     ///

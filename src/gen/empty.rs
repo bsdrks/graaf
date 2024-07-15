@@ -111,7 +111,7 @@ pub trait Empty {
     ///
     /// # Arguments
     ///
-    /// * `order` - The number of vertices in the digraph
+    /// * `order` - The number of vertices in the digraph.
     #[doc(alias = "edgeless")]
     #[must_use]
     fn empty(order: usize) -> Self;

@@ -31,7 +31,7 @@
 /// # How can I implement `Indegree`?
 ///
 /// Provide an implementation of `indegree` that returns the indegree of the
-/// target vertex.
+/// vertex.
 ///
 /// ```
 /// use {

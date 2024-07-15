@@ -1,4 +1,4 @@
-//! Iterate over the weighted arcs going out from a vertex in a digraph.
+//! Iterate over the weighted out-neighbours of a vertex in a digraph.
 //!
 //! # Examples
 //!
@@ -38,12 +38,12 @@
 //! ```
 #![doc(alias = "weighted_out_neighbours")]
 
-/// Iterate over the weighted arcs going out from a vertex in a digraph.
+/// Iterate over the weighted out-neighbours of a vertex in a digraph.
 ///
 /// # How can I implement `OutNeighborsWeighted`?
 ///
 /// Provide an implementation of `out_neighbors_weighted` that returns an
-/// iterator over all weighted arcs with tail vertex `u`.
+/// iterator over the weighted out-neighbours of a vertex in the digraph.
 ///
 /// ```
 /// use {
@@ -106,8 +106,8 @@
 /// ```
 #[doc(alias = "OutNeighboursWeighted")]
 pub trait OutNeighborsWeighted<W> {
-    /// Returns an iterator over the out-neighbors of the vertex and their
-    /// weights.
+    /// Returns an iterator over the weighted out-neighbours of a vertex in the
+    /// digraph.
     ///
     /// # Arguments
     ///

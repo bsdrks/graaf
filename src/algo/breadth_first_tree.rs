@@ -1,4 +1,4 @@
-//! Breadth-first tree
+//! Breadth-first trees.
 //!
 //! A breadth-first tree contains the predecessor of each vertex on the shortest
 //! path from the source vertex.
@@ -54,7 +54,6 @@ use std::{
 /// A breadth-first tree.
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct BreadthFirstTree {
-    /// The predecessor of each vertex on the shortest path from the source.
     pred: Vec<Option<usize>>,
 }
 
@@ -86,8 +85,8 @@ impl BreadthFirstTree {
     ///
     /// # Arguments
     ///
-    /// * `s`: The source vertex of the path.
-    /// * `t`: The target vertex of the path.
+    /// * `s`: The source vertex.
+    /// * `t`: The target vertex.
     ///
     /// # Returns
     ///
@@ -113,8 +112,8 @@ impl BreadthFirstTree {
     ///
     /// # Arguments
     ///
-    /// * `s`: The source vertex of the path.
-    /// * `is_target`: A predicate determining whether a vertex is the target.
+    /// * `s`: The source vertex.
+    /// * `is_target`: A predicate determining if a vertex is the target.
     ///
     /// # Returns
     ///

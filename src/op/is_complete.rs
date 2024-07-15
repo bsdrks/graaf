@@ -32,9 +32,8 @@ use super::{
 ///
 /// # How can I implement `IsComplete`?
 ///
-/// Provide an implementation of `is_complete` that returns `true` if, for every
-/// pair `u`, `v` of distinct vertices, there is an arc from `v` to `u` and an
-/// arc from `v` to `u` OR implement `HasEdge` and `Order`.
+/// Provide an implementation of `is_complete` that whether the digraph is
+/// complete OR implement `HasEdge` and `Order`.
 ///
 /// ```
 /// use {

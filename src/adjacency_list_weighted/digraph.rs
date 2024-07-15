@@ -47,10 +47,9 @@ use {
     std::collections::BTreeMap,
 };
 
-/// An adjacency list representation of an arc-weighted digraph
+/// An adjacency list representation of an arc-weighted digraph.
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct Digraph<W> {
-    /// The arcs of the digraph
     arcs: Vec<BTreeMap<usize, W>>,
 }
 

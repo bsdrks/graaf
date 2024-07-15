@@ -1,7 +1,7 @@
 //! Operations on digraphs
 //!
-//! These operations are modeled as traits that can be implemented by types
-//! that represent digraphs.
+//! These traits are digraph operations that can be implemented by digraph
+//! representations.
 //!
 //! # Examples
 //!

@@ -59,27 +59,27 @@
 //!
 //! [Individual digraph types](#digraph-types) implement the basic operations.
 //!
-//! - The [`AddArcWeighted`](op::AddArcWeighted) adds an arc to an arc-weighted
-//!   digraph.
-//! - The [`AddArc`](op::AddArc) adds an arc to an unweighted digraph.
-//! - The [`ArcWeight`](op::ArcWeight) returns the weight of an arc.
-//! - The [`ArcsWeighted`](op::ArcsWeighted) returns the arcs and their weights
-//!   in a digraph.
-//! - The [`Arcs`](op::Arcs) returns the arcs in a digraph.
-//! - The [`Converse`](op::Converse) returns the converse of a digraph.
+//! - The [`AddArcWeighted`](op::AddArcWeighted) trait adds an arc to an
+//!   arc-weighted digraph.
+//! - The [`AddArc`](op::AddArc) trait adds an arc to an unweighted digraph.
+//! - The [`ArcWeight`](op::ArcWeight) trait returns the weight of an arc.
+//! - The [`ArcsWeighted`](op::ArcsWeighted) trait returns the arcs and their
+//!   weights in a digraph.
+//! - The [`Arcs`](op::Arcs) trait returns the arcs in a digraph.
+//! - The [`Converse`](op::Converse) trait returns the converse of a digraph.
 //! - The [`HasArc`](op::HasArc) trait checks if an arc exists in a digraph.
-//! - The [`Indegree`](op::Indegree) returns the indegree of a vertex.
+//! - The [`Indegree`](op::Indegree) trait returns the indegree of a vertex.
 //! - The [`IsSimple`](op::IsSimple) trait checks if a digraph contains no loops
 //!   or parallel arcs.
-//! - The [`Order`](op::Order) returns the number of vertices.
-//! - The [`OutNeighborsWeighted`](op::OutNeighborsWeighted) returns the
+//! - The [`Order`](op::Order) trait returns the number of vertices.
+//! - The [`OutNeighborsWeighted`](op::OutNeighborsWeighted) trait returns the
 //!   weighted out-neighbors of a vertex.
-//! - The [`OutNeighbors`](op::OutNeighbors) returns the out-neighbors of a
-//!   vertex.
-//! - The [`Outdegree`](op::Outdegree) returns the outdegree of a vertex.
-//! - The [`RemoveArc`](op::RemoveArc) removes an arc from a digraph.
-//! - The [`Size`](op::Size) returns the number of arcs in a digraph.
-//! - The [`Vertices`](op::Vertices) returns the vertices in a digraph.
+//! - The [`OutNeighbors`](op::OutNeighbors) trait returns the out-neighbors of
+//!   a vertex.
+//! - The [`Outdegree`](op::Outdegree) trait returns the outdegree of a vertex.
+//! - The [`RemoveArc`](op::RemoveArc) trait removes an arc from a digraph.
+//! - The [`Size`](op::Size) trait returns the number of arcs in a digraph.
+//! - The [`Vertices`](op::Vertices) trait returns the vertices in a digraph.
 //!
 //! ## Extended operations
 //!

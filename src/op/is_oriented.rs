@@ -24,8 +24,8 @@ use super::{
 ///
 /// # How can I implement `IsOriented`?
 ///
-/// Provide an implementation of `is_oriented` that returns `true` if the
-/// digraph is oriented and `false` otherwise OR implement `Arcs` and `HasArc`.
+/// Provide an implementation of `is_oriented` that returns whether the digraph
+/// is oriented OR implement `Arcs` and `HasArc`.
 ///
 /// ```
 /// use {

@@ -47,10 +47,9 @@ use {
     std::collections::BTreeSet,
 };
 
-/// An adjacency list representation of an unweighted digraph
+/// An adjacency list representation of an unweighted digraph.
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct Digraph {
-    /// The arcs of the digraph
     arcs: Vec<BTreeSet<usize>>,
 }
 

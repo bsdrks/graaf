@@ -2,7 +2,7 @@
 //!
 //! An adjacency matrix is a symmetric binary matrix where a value of `1` at
 //! row `u` and column `v` indicates an arc from vertex `u` to vertex `v`. The
-//! matrix is stored as a bit array, and is suited for dense digraphs with a
+//! matrix is stored as a bit vector, and is suited for dense digraphs with a
 //! small number of vertices.
 
 use {
@@ -29,7 +29,7 @@ use {
     std::collections::BTreeSet,
 };
 
-/// An adjacency matrix representation of an unweighted digraph
+/// An adjacency matrix representation of an unweighted digraph.
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct Digraph {
     blocks: Vec<usize>,

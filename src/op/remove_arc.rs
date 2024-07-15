@@ -35,8 +35,8 @@
 ///
 /// # How can I implement `RemoveArc`?
 ///
-/// Provide an implementation of `remove_arc` that removes the arc from `u` to
-/// `v` from a digraph. Return whether the arc was removed.
+/// Provide an implementation of `remove_arc` that removes the arc from a
+/// digraph. Return whether the arc was removed.
 ///
 /// ```
 /// use {

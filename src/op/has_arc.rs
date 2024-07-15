@@ -1,6 +1,6 @@
-//! Check if an arc exists from one vertex to another.
+//! Check whether an arc exists from one vertex to another.
 //!
-//! To check if an arc exists from `u` to `v` and from `v` to `u`, see
+//! To check whether an arc exists from `u` to `v` and from `v` to `u`, see
 //! [`HasEdge`].
 //!
 //! # Examples
@@ -31,7 +31,7 @@
 //!
 //! [`HasEdge`]: crate::op::HasEdge
 
-/// Check if an arc exists from one vertex to another.
+/// Check whether an arc exists from one vertex to another.
 ///
 /// # How can I implement `HasArc`?
 ///

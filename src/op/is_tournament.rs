@@ -32,9 +32,8 @@ use super::{
 ///
 /// # How can I implement `IsTournament`?
 ///
-/// Provide an implementation of `is_tournament` that returns `true` if there
-/// is an arc between every unordered pair `u`, `v` of distinct vertices OR
-/// implement `HasArc` and `Order`.
+/// Provide an implementation of `is_tournament` that returns whether the
+/// digraph is a tournament OR implement `HasArc` and `Order`.
 ///
 /// ```
 /// use {
@@ -109,7 +108,7 @@ use super::{
 /// assert!(Digraph::random_tournament(3).is_tournament());
 /// ```
 pub trait IsTournament {
-    /// Determines whether the digraph is a tournament.
+    /// Returns whether the digraph is a tournament.
     #[must_use]
     fn is_tournament(&self) -> bool;
 }

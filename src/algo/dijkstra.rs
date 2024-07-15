@@ -1,4 +1,4 @@
-//! Dijkstra's algorithm with binary heap
+//! Dijkstra's algorithm with binary heap.
 //!
 //! Dijkstra's algorithm with binary heap finds the shortest path in an
 //! arc-weighted digraph.[^1]
@@ -63,7 +63,7 @@
 //!
 //! * Use [`bfs`] to find the shortest path in an unweighted digraph.
 //! * Use [`floyd_warshall`] to find the shortest path between all pairs of
-//!   vertices in small, dense, weighted digraphs.
+//!   vertices in small, dense, arc-weighted digraphs.
 //!
 //! [`bfs`]: crate::algo::bfs
 //! [`floyd_warshall`]: crate::algo::floyd_warshall
@@ -83,8 +83,8 @@ use {
     std::collections::BinaryHeap,
 };
 
-/// Finds the distances from the source vertices to all vertices in a
-/// weighted digraph.[^1]
+/// Finds the distances from the source vertices to all vertices in an
+/// arc-weighted digraph.[^1]
 ///
 /// # Arguments
 ///
@@ -372,7 +372,7 @@ where
 ///
 /// * `digraph`: The digraph.
 /// * `step`: The function that calculates the accumulated weight.
-/// * `is_target`: The function determining whether the vertex is a target.
+/// * `is_target`: The function determining if the vertex is a target.
 /// * `pred`: The predecessors of the vertices.
 /// * `dist`: The distances from the source vertices.
 /// * `heap`: The source vertices and their initial distances.

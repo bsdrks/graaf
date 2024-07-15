@@ -1,6 +1,6 @@
-//! Check if an edge exists between two vertices.
+//! Determine whether an edge exists between two vertices.
 //!
-//! To check if an arc exists from `u` to `v`, see [`HasArc`].
+//! To determine whether an arc exists from `u` to `v`, see [`HasArc`].
 //!
 //! # Examples
 //!
@@ -48,13 +48,12 @@
 
 use super::HasArc;
 
-/// Check if an edge exists between two vertices.
+/// Determine whether an edge exists between two vertices.
 ///
 /// # How can I implement `HasEdge`?
 ///
 /// Provide an implementation of `has_edge` that returns `true` if the
-/// digraph has an arc between `u` and `v` and `false` otherwise OR implement
-/// `HasArc`.
+/// digraph contains the arc OR implement `HasArc`.
 ///
 /// ```
 /// use {
@@ -125,8 +124,8 @@ use super::HasArc;
 /// assert!(!digraph.has_edge(2, 1));
 /// ```
 pub trait HasEdge {
-    /// Returns whether the digraph has an arc from `u` to `v` and from `v` to
-    /// `u`.
+    /// Determines whether the digraph has an arc from `u` to `v` AND from `v`
+    /// to `u`.
     ///
     /// # Arguments
     ///

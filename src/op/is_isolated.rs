@@ -35,8 +35,8 @@ use super::{
 ///
 /// # How can I implement `IsIsolated`?
 ///
-/// Provide an implementation of `is_isolated` that returns `true` if the vertex
-/// is isolated and `false` otherwise OR implement `Indegree` and `Outdegree`.
+/// Provide an implementation of `is_isolated` that returns whether the vertex
+/// is isolated OR implement `Indegree` and `Outdegree`.
 ///
 /// ```
 /// use {

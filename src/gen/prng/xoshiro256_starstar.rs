@@ -1,4 +1,4 @@
-//! A general-purpose PRNG
+//! A general-purpose PRNG.
 //!
 //! # Examples
 //!
@@ -12,7 +12,7 @@
 
 use super::SplitMix64;
 
-/// A general-purpose PRNG
+/// A general-purpose PRNG.
 ///
 /// # Examples
 ///
@@ -29,11 +29,11 @@ pub struct Xoshiro256StarStar {
 }
 
 impl Xoshiro256StarStar {
-    /// Constructs a new `Xoshiro256StarStar`
+    /// Constructs a new `Xoshiro256StarStar`.
     ///
     /// # Arguments
     ///
-    /// * `seed`: The seed value
+    /// * `seed`: The seed value.
     ///
     /// # Examples
     ///
@@ -62,7 +62,7 @@ impl Xoshiro256StarStar {
         Self { state }
     }
 
-    /// Generates a pseudo-random boolean
+    /// Generates a pseudo-random boolean.
     ///
     /// # Examples
     ///

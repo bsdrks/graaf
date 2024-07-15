@@ -27,8 +27,8 @@
 ///
 /// # How can I implement `AddArcWeighted`?
 ///
-/// Provide an implementation of `add_arc_weighted` that adds an arc from `u`
-/// to `v` to the digraph with weight `w`.
+/// Provide an implementation of `add_arc_weighted` that adds a weighted arc to
+/// the digraph.
 ///
 /// ```
 /// use {

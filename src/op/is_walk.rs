@@ -31,9 +31,8 @@ use super::HasArc;
 ///
 /// # How do I implement `IsWalk`?
 ///
-/// Provide an implementation of `is_walk` that returns `true` if each pair of
-/// consecutive vertices in the sequence is an arc in the digraph and `false`
-/// otherwise OR implement `HasArc`.
+/// Provide an implementation of `is_walk` that returns whether the sequence is
+/// a walk in the digraph OR implement `HasArc`.
 ///
 /// ```
 /// use {

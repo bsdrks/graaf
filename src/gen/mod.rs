@@ -1,4 +1,4 @@
-//! Digraph generators
+//! Digraph generators.
 //!
 //! Generate parameterized and random digraphs.
 //!

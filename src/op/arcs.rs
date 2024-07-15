@@ -17,12 +17,12 @@
 //! assert!(digraph.arcs().eq([(0, 1), (1, 2), (2, 0)]));
 //! ```
 
-/// Iterate the arcs in a digraph.
+/// Iterate over the arcs in a digraph.
 ///
 /// # How can I implement `Arcs`?
 ///
-/// Provide an implementation of `arcs` that returns an iterator over
-/// all arcs in a digraph.
+/// Provide an implementation of `arcs` that returns an iterator over the arcs
+/// in a digraph.
 ///
 /// ```
 /// use graaf::op::Arcs;

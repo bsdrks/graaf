@@ -19,18 +19,25 @@
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
 - Expand the user guide.
-- Rename `DegreeSequence` to `SemidegreeSequence`, add new `DegreeSequence` trait.
-- Resolve: can there be a complete digraph of order 1?
-- Resolve: can there be a cycle digraph of order 1?
-- Resolve: can there be a random tournament of order 1?
-- Resolve: can there be a star digraph of order 1?
-- Subsume traits with one supertrait into the supertrait.
+- Rename `DegreeSequence` to `SemidegreeSequence` and add a new `DegreeSequence` trait.
+- Resolve: Can there be a complete digraph of order 1?
+- Resolve: Can there be a cycle digraph of order 1?
+- Resolve: Can there be a random tournament of order 1?
+- Resolve: Can there be a star digraph of order 1?
+- Subsume traits with one super trait into the super trait.
+
+## [0.70.1] - 2024-07-15
+
+Changed
+
+- Improve documentation consistency.
+- Use `?` instead of `unwrap` in documentation examples.
 
 ## [0.70.0] - 2024-07-14
 
 Changed
 
-- Breaking: `is_regular` now returns false if the indegree does not equal the outdegree.
+- Breaking: `is_regular` returns false if the indegree does not equal the outdegree.
 
 ## [0.69.3] - 2024-07-14
 

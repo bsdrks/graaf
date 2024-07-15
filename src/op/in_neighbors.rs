@@ -36,7 +36,7 @@ use super::Arcs;
 /// # How can I implement `InNeighbors`?
 ///
 /// Provide an implementation of `in_neighbors` that returns an iterator
-/// over the in-neighbors of a vertex OR implement `Arcs`.
+/// over the in-neighbors of a vertex in the digraph.
 ///
 /// ```
 /// use graaf::op::InNeighbors;

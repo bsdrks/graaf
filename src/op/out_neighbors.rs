@@ -37,7 +37,7 @@
 /// # How can I implement `OutNeighbors`?
 ///
 /// Provide an implementation of `out_neighbors` that returns an iterator
-/// over the out-neighbors of a vertex.
+/// over the out-neighbors of a vertex in the digraph.
 ///
 /// ```
 /// use graaf::op::OutNeighbors;

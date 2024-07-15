@@ -34,9 +34,8 @@ use super::{
 ///
 /// # How can I implement `IsRegular`?
 ///
-/// Provide an implementation of `is_regular` that returns `true` if the digraph
-/// is regular and `false` otherwise OR implement `Indegree`, `Vertices`,
-/// and `Outdegree`.
+/// Provide an implementation of `is_regular` that returns whether the digraph
+/// is regular OR implement `Indegree`, `Vertices`, and `Outdegree`.
 ///
 /// ```
 /// use {

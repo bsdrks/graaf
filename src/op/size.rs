@@ -32,8 +32,8 @@
 ///
 /// # How can I implement `Size`?
 ///
-/// Provide an implementation of `size` that returns the number of
-/// arcs in the digraph.
+/// Provide an implementation of `size` that returns the number of arcs in the
+/// digraph.
 ///
 /// ```
 /// use graaf::op::Size;

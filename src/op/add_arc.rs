@@ -1,4 +1,4 @@
-//! Add an arc to an unweighted digraph.
+//! Add an arc to a digraph.
 //!
 //! # Examples
 //!
@@ -21,12 +21,11 @@
 //! assert!(digraph.arcs().eq([(0, 1), (0, 2), (2, 0)]));
 //! ```
 
-/// Add an arc to an unweighted digraph.
+/// Add an arc to a digraph.
 ///
 /// # How can I implement `AddArc`?
 ///
-/// Provide an implementation of `add_arc` that adds an unweighted arc from
-/// `u` to `v` to the digraph.
+/// Provide an implementation of `add_arc` that adds an arc to the digraph.
 ///
 /// ```
 /// use graaf::op::AddArc;

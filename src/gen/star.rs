@@ -109,7 +109,7 @@ pub trait Star {
     ///
     /// # Arguments
     ///
-    /// * `order` - The number of vertices in the digraph
+    /// * `order` - The number of vertices in the digraph.
     #[must_use]
     fn star(order: usize) -> Self;
 }

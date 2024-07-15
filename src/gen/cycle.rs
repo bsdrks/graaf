@@ -113,7 +113,7 @@ pub trait Cycle {
     ///
     /// # Arguments
     ///
-    /// * `order` - The number of vertices in the digraph
+    /// * `order` - The number of vertices in the digraph.
     #[doc(alias = "circular")]
     #[must_use]
     fn cycle(order: usize) -> Self;

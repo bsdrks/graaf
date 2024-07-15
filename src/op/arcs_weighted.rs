@@ -27,8 +27,8 @@
 ///
 /// # How can I implement `ArcsWeighted`?
 ///
-/// Provide an implementation of `arcs_weighted` that returns an
-/// iterator over all arcs in a digraph.
+/// Provide an implementation of `arcs_weighted` that returns an iterator over
+/// the weighted arcs in a digraph.
 ///
 /// ```
 /// use graaf::op::ArcsWeighted;

@@ -1,6 +1,6 @@
-//! Get the degree of a vertex.
+//! Return the degree of a vertex.
 //!
-//! For digraphs, the degree is the sum of the indegree and outdegree.
+//! The degree of a vertex is the sum of its indegree and outdegree.
 //!
 //! # Examples
 //!
@@ -33,7 +33,7 @@ use super::{
     Outdegree,
 };
 
-/// Get the degree of a vertex.
+/// Return the degree of a vertex.
 ///
 /// # How can I implement `Degree`?
 ///

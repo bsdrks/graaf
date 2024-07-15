@@ -1,7 +1,7 @@
-//! Get the degree sequence of a digraph.
+//! Return the degree sequence of a digraph.
 //!
-//! For digraphs, the degree sequence is the list of its indegree and outdegree
-//! pairs.
+//! The degree sequence is the list of indegree and outdegree pairs of the
+//! vertices of a digraph.
 //!
 //! # Examples
 //!
@@ -34,7 +34,7 @@ use super::{
     Vertices,
 };
 
-/// Get the degree sequence of a digraph.
+/// Return the degree sequence of a digraph.
 ///
 /// # How can I implement `DegreeSequence`?
 ///

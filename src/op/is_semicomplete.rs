@@ -32,9 +32,8 @@ use super::{
 ///
 /// # How can I implement `IsSemicomplete`?
 ///
-/// Provide an implementation of `is_semicomplete` that returns `true` if there
-/// is an arc between every pair `u`, `v` of distinct vertices OR implement
-/// `HasArc` and `Order`.
+/// Provide an implementation of `is_semicomplete` that returns whether the
+/// digraph is semicomplete OR implement `HasArc` and `Order`.
 ///
 /// ```
 /// use {
@@ -113,7 +112,7 @@ use super::{
 /// assert!(Digraph::random_tournament(3).is_semicomplete());
 /// ```
 pub trait IsSemicomplete {
-    /// Determines whether the digraph is semicomplete.
+    /// Returns whether the digraph is semicomplete.
     #[must_use]
     fn is_semicomplete(&self) -> bool;
 }

@@ -1,4 +1,4 @@
-//! Breadth-first search
+//! Breadth-first search.
 //!
 //! Breadth-first search explores the vertices of an unweighted digraph in order
 //! of their distance from a source. For weighted digraphs, use [`dijkstra`].
@@ -342,7 +342,7 @@ where
 ///
 /// * `digraph`: The digraph.
 /// * `step`: The function that calculates the accumulated distance.
-/// * `is_target`: The function determining whether the vertex is a target.
+/// * `is_target`: The function determining if the vertex is a target.
 /// * `pred`: The breadth-first tree.
 /// * `dist`: The distances from the source vertices.
 /// * `source`: The source vertices.

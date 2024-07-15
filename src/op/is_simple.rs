@@ -38,8 +38,8 @@
 ///
 /// # How can I implement `IsSimple`?
 ///
-/// Provide an implementation of `is_simple` that returns `true` if the digraph
-/// is simple and `false` otherwise.
+/// Provide an implementation of `is_simple` that returns whether the digraph
+/// is simple.
 ///
 /// ```
 /// use {

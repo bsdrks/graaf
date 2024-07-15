@@ -1,4 +1,4 @@
-//! A distance matrix
+//! Distance matrices.
 //!
 //! A distance matrix contains the distance between each pair of vertices in a
 //! digraph.
@@ -62,10 +62,9 @@ use std::{
 /// A distance matrix.
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct DistanceMatrix<W> {
-    /// The distance between each pair of vertices.
     dist: Vec<Vec<W>>,
-    /// The maximum distance between two vertices.
-    pub max: W,
+    /// The distance between unconnected vertices.
+    pub infinity: W,
 }
 
 impl<W> DistanceMatrix<W> {
@@ -74,7 +73,7 @@ impl<W> DistanceMatrix<W> {
     /// # Arguments
     ///
     /// * `order`: The number of vertices.
-    /// * `max`: The maximum distance between two vertices.
+    /// * `infinity`: The distance between unconnected vertices.
     ///
     /// # Panics
     ///
@@ -87,22 +86,22 @@ impl<W> DistanceMatrix<W> {
     ///
     /// let dist = DistanceMatrix::new(4, 0);
     ///
-    /// assert_eq!(dist.max, 0);
+    /// assert_eq!(dist.infinity, 0);
     /// assert_eq!(dist[0], vec![0; 4]);
     /// assert_eq!(dist[1], vec![0; 4]);
     /// assert_eq!(dist[2], vec![0; 4]);
     /// assert_eq!(dist[3], vec![0; 4]);
     /// ```
     #[must_use]
-    pub fn new(order: usize, max: W) -> Self
+    pub fn new(order: usize, infinity: W) -> Self
     where
         W: Copy,
     {
         assert!(order > 0, "a distance matrix must have at least one vertex");
 
         Self {
-            dist: vec![vec![max; order]; order],
-            max,
+            dist: vec![vec![infinity; order]; order],
+            infinity,
         }
     }
 
@@ -162,7 +161,7 @@ impl<W> DistanceMatrix<W> {
     {
         let ecc = self.eccentricities();
         let mut center = Vec::new();
-        let mut min = self.max;
+        let mut min = self.infinity;
 
         for (i, &e) in ecc.iter().enumerate() {
             match e.cmp(&min) {
@@ -229,7 +228,7 @@ impl<W> DistanceMatrix<W> {
             .iter()
             .copied()
             .max()
-            .unwrap_or(self.max)
+            .unwrap_or(self.infinity)
     }
 
     /// Returns the eccentricities of the vertices.
@@ -281,7 +280,11 @@ impl<W> DistanceMatrix<W> {
     {
         self.dist
             .iter()
-            .map(|row| row.iter().reduce(|acc, x| acc.max(x)).unwrap_or(&self.max))
+            .map(|row| {
+                row.iter()
+                    .reduce(|acc, x| acc.max(x))
+                    .unwrap_or(&self.infinity)
+            })
             .copied()
             .collect()
     }
@@ -344,7 +347,7 @@ impl<W> DistanceMatrix<W> {
     where
         W: Copy + Ord,
     {
-        self.eccentricities().iter().all(|&e| e != self.max)
+        self.eccentricities().iter().all(|&e| e != self.infinity)
     }
 
     /// Returns the periphery of the digraph.
@@ -395,7 +398,7 @@ impl<W> DistanceMatrix<W> {
         W: Copy + Ord,
     {
         let ecc = self.eccentricities();
-        let diameter = ecc.iter().max().unwrap_or(&self.max);
+        let diameter = ecc.iter().max().unwrap_or(&self.infinity);
 
         ecc.iter()
             .enumerate()
@@ -617,7 +620,7 @@ mod tests {
     fn new() {
         let dist = DistanceMatrix::new(4, isize::MAX);
 
-        assert_eq!(dist.max, isize::MAX);
+        assert_eq!(dist.infinity, isize::MAX);
         assert!(dist[0].iter().eq(&[isize::MAX; 4]));
         assert!(dist[1].iter().eq(&[isize::MAX; 4]));
         assert!(dist[2].iter().eq(&[isize::MAX; 4]));

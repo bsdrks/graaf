@@ -1,4 +1,4 @@
-//! The Floyd-Warshall algorithm
+//! The Floyd-Warshall algorithm.
 //!
 //! The Floyd[^1]-Warshall algorithm finds the shortest paths between all
 //! pairs of vertices in an arc-weighted digraph.
@@ -68,7 +68,7 @@ use crate::{
 ///
 /// # Arguments
 ///
-/// * `digraph`: The weighted digraph.
+/// * `digraph`: The digraph.
 ///
 /// # Returns
 ///
@@ -316,6 +316,6 @@ mod tests {
         assert_eq!(dist[0][0], 0);
         assert_eq!(dist[0][1], 2);
         assert_eq!(dist[0][2], 4);
-        assert_eq!(dist[0][3], dist.max);
+        assert_eq!(dist[0][3], dist.infinity);
     }
 }

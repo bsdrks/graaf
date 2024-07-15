@@ -58,9 +58,9 @@ use super::IsSubdigraph;
 ///
 /// # How can I implement `IsSuperdigraph`?
 ///
-/// Provide an implementation of `is_subdigraph` that returns `true` if the
-/// digraph is a superdigraph of the digraph `d` and `false` otherwise OR
-/// implement `IsSubdigraph`.
+/// Provide an implementation of `is_superdigraph` that returns whether the
+/// digraph is a superdigraph of the given digraph OR implement `HasArc`,
+/// `Arcs`, and `Vertices`.
 ///
 /// ```
 /// use {
@@ -162,7 +162,7 @@ use super::IsSubdigraph;
 /// assert!(tournament.is_superdigraph(&tournament));
 /// ```
 pub trait IsSuperdigraph {
-    /// Determines whether the digraph is a superdigraph of another digraph.
+    /// Returns whether the digraph is a superdigraph of another digraph.
     ///
     /// # Arguments
     ///
