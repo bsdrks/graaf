@@ -38,14 +38,12 @@
 //!
 //! - The [`Biclique`](gen::Biclique) trait generates a complete bipartite
 //!   digraph.
-//! - The [`Complete`](gen::Complete) trait generates a digraph in which an arc
-//!   connects every ordered pair of distinct vertices.
+//! - The [`Complete`](gen::Complete) trait generates a complete digraph.
 //! - The [`Cycle`](gen::Cycle) trait generates a digraph with a cycle of a
 //!   given length.
 //! - The [`Empty`](gen::Empty) trait generates a digraph with no arcs.
 //! - The [`RandomTournament`](gen::RandomTournament) trait generates a random
-//!   digraph in which an arc connects every unordered pair of distinct
-//!   vertices.
+//!   tournament.
 //! - The [`Star`](gen::Star) trait generates a star digraph.
 //!
 //! # Operations
