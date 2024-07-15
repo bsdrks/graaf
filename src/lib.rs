@@ -79,6 +79,7 @@
 //! The extended traits derive their implementation from the basic
 //! operations.
 //!
+//! - [`Complement`](op::Complement) returns the complement of a digraph.
 //! - [`Degree`](op::Degree) returns the degree of a vertex.
 //! - [`DegreeSequence`](op::DegreeSequence) returns the degree sequence of a
 //!   digraph.

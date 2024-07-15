@@ -29,7 +29,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.70.2"
+graaf = "0.70.3"
 ```
 
 ## Digraph Types
@@ -82,6 +82,7 @@ The [`op`] module provides digraph operation traits. The [digraph types](#digrap
 
 The extended traits derive their implementation from the basic operations.
 
+- [`Complement`] returns the complement of a digraph.
 - [`Degree`] returns the degree of a vertex.
 - [`DegreeSequence`] returns the degree sequence of a digraph.
 - [`HasEdge`] checks if an edge exists in a digraph.
@@ -186,6 +187,7 @@ A distance matrix contains the shortest distances between all pairs of vertices 
 [`Arcs`]: https://docs.rs/graaf/latest/graaf/op/arcs/trait.Arcs.html
 [`Biclique`]: https://docs.rs/graaf/latest/graaf/gen/biclique/trait.Biclique.html
 [`Complete`]: https://docs.rs/graaf/latest/graaf/gen/complete/trait.Complete.html
+[`Complement`]: https://docs.rs/graaf/latest/graaf/op/complement/trait.Complement.html
 [`Converse`]: https://docs.rs/graaf/latest/graaf/op/converse/trait.Converse.html
 [`Cycle`]: https://docs.rs/graaf/latest/graaf/gen/cycle/trait.Cycle.html
 [`Degree`]: https://docs.rs/graaf/latest/graaf/op/degree/trait.Degree.html

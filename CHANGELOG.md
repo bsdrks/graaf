@@ -2,7 +2,6 @@
 
 ## Provisional roadmap
 
-- Add the `Complement` trait.
 - Add the `DeleteArc` trait.
 - Add the `DeleteVertex` trait.
 - Add the `IndegreeSequence` trait.
@@ -25,6 +24,22 @@
 - Resolve: Can there be a random tournament of order 1?
 - Resolve: Can there be a star digraph of order 1?
 - Subsume traits with one super trait into the super trait.
+
+## [0.70.3] - 2024-07-15
+
+Added
+
+- Add property test `biclique_complement_size` for `adjacency_list`.
+- Add property test `biclique_complement_size` for `adjacency_matrix`.
+- Add property test `complete_complement_eq_empty` for `adjacency_list`.
+- Add property test `complete_complement_eq_empty` for `adjacency_matrix`.
+- Add property test `cycle_complement_size` for `adjacency_list`.
+- Add property test `cycle_complement_size` for `adjacency_matrix`.
+- Add property test `empty_complement_eq_complete` for `adjacency_list`.
+- Add property test `empty_complement_eq_complete` for `adjacency_matrix`.
+- Add property test `star_complement_size` for `adjacency_list`.
+- Add property test `star_complement_size` for `adjacency_matrix`.
+- Add the `Complement` trait.
 
 ## [0.70.2] - 2024-07-15
 

@@ -120,7 +120,7 @@
 //! ```
 
 use {
-    crate::op::{
+    super::{
         Arcs,
         HasArc,
         Vertices,

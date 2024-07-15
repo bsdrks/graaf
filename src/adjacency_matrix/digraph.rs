@@ -288,6 +288,7 @@ mod tests {
                 Star,
             },
             op::{
+                Complement,
                 Degree,
                 DegreeSequence,
                 HasEdge,
@@ -396,6 +397,14 @@ mod tests {
         #[test]
         fn biclique_1_n_eq_star_n_plus_1(n in 1..25_usize) {
             assert_eq!(Digraph::biclique(1, n), Digraph::star(n + 1));
+        }
+
+        #[test]
+        fn biclique_complement_size(m in 1..25_usize, n in 1..25_usize) {
+            assert_eq!(
+                Digraph::biclique(m, n).complement().size(),
+                m * (m - 1) + n * (n - 1)
+            );
         }
 
         #[test]
@@ -653,6 +662,14 @@ mod tests {
         }
 
         #[test]
+        fn complete_complement_eq_empty(order in 1..25_usize) {
+            assert_eq!(
+                Digraph::complete(order).complement(),
+                Digraph::empty(order)
+            );
+        }
+
+        #[test]
         fn complete_degree(order in 1..25_usize) {
             let digraph = Digraph::complete(order);
 
@@ -797,6 +814,14 @@ mod tests {
             for u in digraph.vertices() {
                 assert_eq!(digraph.outdegree(u), order - 1);
             }
+        }
+
+        #[test]
+        fn cycle_complement_size(order in 1..25_usize) {
+            assert_eq!(
+                Digraph::cycle(order).complement().size(),
+                order * order.saturating_sub(2)
+            );
         }
 
         #[test]
@@ -950,6 +975,14 @@ mod tests {
         #[test]
         fn cycle_is_tournament(order in 4..25_usize) {
             assert!(!Digraph::cycle(order).is_tournament());
+        }
+
+        #[test]
+        fn empty_complement_eq_complete(order in 1..25_usize) {
+            assert_eq!(
+                Digraph::empty(order).complement(),
+                Digraph::complete(order)
+            );
         }
 
         #[test]
@@ -1256,6 +1289,14 @@ mod tests {
             let digraph = Digraph::random_tournament(order);
 
             assert_eq!(digraph.size(), order * (order - 1) / 2);
+        }
+
+        #[test]
+        fn star_complement_size(order in 1..25_usize) {
+            assert_eq!(
+                Digraph::star(order).complement().size(),
+                (order - 1) * order.saturating_sub(2)
+            );
         }
 
         #[test]

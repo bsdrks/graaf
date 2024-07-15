@@ -15,7 +15,18 @@
 //!     },
 //! };
 //!
+//! // 0 -> {1}
+//! // 1 -> {2}
+//! // 2 -> {3}
+//! // 3 -> {0}
+//!
 //! let digraph = Digraph::cycle(4);
+//!
+//! // 0 -> {3}
+//! // 1 -> {0}
+//! // 2 -> {1}
+//! // 3 -> {2}
+//!
 //! let converse = digraph.converse();
 //!
 //! assert!(converse.arcs().eq([(0, 3), (1, 0), (2, 1), (3, 2)]));
@@ -53,22 +64,34 @@
 ///     }
 /// }
 ///
+/// // 0 -> {1}
+/// // 1 -> {2}
+/// // 2 -> {3}
+/// // 3 -> {0}
+///
 /// let digraph = Digraph {
 ///     arcs: vec![
 ///         BTreeSet::from([1]),
 ///         BTreeSet::from([2]),
+///         BTreeSet::from([3]),
 ///         BTreeSet::from([0]),
 ///     ],
 /// };
+///
+/// // 0 -> {3}
+/// // 1 -> {0}
+/// // 2 -> {1}
+/// // 3 -> {2}
 ///
 /// let converse = digraph.converse();
 ///
 /// assert_eq!(
 ///     converse.arcs,
 ///     vec![
-///         BTreeSet::from([2]),
+///         BTreeSet::from([3]),
 ///         BTreeSet::from([0]),
 ///         BTreeSet::from([1]),
+///         BTreeSet::from([2]),
 ///     ],
 /// );
 /// ```

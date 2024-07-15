@@ -1,4 +1,4 @@
-//! Depth-first search
+//! Depth-first search.
 //!
 //! Depth-first search is a digraph traversal algorithm that explores a digraph
 //! by following a path as far as possible before backtracking.
