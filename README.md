@@ -36,9 +36,10 @@ graaf = "0.70.1"
 
 Graaf provides three representations of directed graphs.
 
-- [Adjacency List] represents unweighted sparse digraphs.
-- [Adjacency Matrix] represents unweighted dense digraphs.
-- [Weighted Adjacency List] represents arc-weighted sparse digraphs.
+- [`adjacency_list](https://docs.rs/graaf/latest/graaf/adjacency_list/digraph/struct.Digraph.html) represents unweighted sparse digraphs.
+p
+- [`adjacency_matrix`](https://docs.rs/graaf/latest/graaf/adjacency_matrix/digraph/struct.Digraph.html) represents unweighted dense digraphs.
+- [`adjacency_list_weighted](https://docs.rs/graaf/latest/graaf/adjacency_list_weighted/digraph/struct.Digraph.html) represents arc-weighted sparse digraphs.
 
 These types eagerly implement [digraph operations](#operations) and [digraph algorithms](#algorithms).
 
@@ -179,9 +180,6 @@ A distance matrix contains the shortest distances between all pairs of vertices 
 - [`is_connected`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.is_connected) checks if the digraph is connected.
 - [`periphery`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.periphery) finds the periphery of the digraph.
 
-[Adjacency List]: https://docs.rs/graaf/latest/graaf/adjacency_list/digraph/struct.Digraph.html
-[Adjacency Matrix]: https://docs.rs/graaf/latest/graaf/adjacency_matrix/digraph/struct.Digraph.html
-[Weighted Adjacency List]: https://docs.rs/graaf/latest/graaf/adjacency_list_weighted/digraph/struct.Digraph.html
 [`AddArcWeighted`]: https://docs.rs/graaf/latest/graaf/op/add_arc_weighted/trait.AddArcWeighted.html
 [`AddArc`]: https://docs.rs/graaf/latest/graaf/op/add_arc/trait.AddArc.html
 [`ArcWeight`]: https://docs.rs/graaf/latest/graaf/op/arc_weight/trait.ArcWeight.html
