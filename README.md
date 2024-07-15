@@ -47,10 +47,10 @@ These types eagerly implement [digraph operations](#operations) and [digraph alg
 The [`gen`] module provides six digraph generators.
 
 - The [`Biclique`] trait generates a complete bipartite digraph.
-- The [`Complete`] trait generates a digraph in which an arc connects every ordered pair of distinct vertices.
+- The [`Complete`] trait generates a complete digraph.
 - The [`Cycle`] trait generates a digraph with a cycle of a given length.
 - The [`Empty`] trait generates a digraph with no arcs.
-- The [`RandomTournament`] trait generates a random digraph in which an arc connects every unordered pair of distinct vertices.
+- The [`RandomTournament`] trait generates a random tournament.
 - The [`Star`] trait generates a star digraph.
 
 ## Operations

@@ -35,7 +35,9 @@
 //! digraph.add_arc_weighted(5, 3, 5);
 //! digraph.add_arc_weighted(5, 4, -3);
 //!
-//! assert!(single_source_distances(&digraph, 0)?.eq(&[0, 8, 3, 1, -4, -1]));
+//! assert!(single_source_distances(&digraph, 0)
+//!     .unwrap()
+//!     .eq(&[0, 8, 3, 1, -4, -1]));
 //!
 //! // 0 -> {1 (-2)}
 //! // 1 -> {2 (-1)}
@@ -98,7 +100,9 @@ use crate::op::{
 /// digraph.add_arc_weighted(5, 3, 5);
 /// digraph.add_arc_weighted(5, 4, -3);
 ///
-/// assert!(single_source_distances(&digraph, 0)?.eq(&[0, 8, 3, 1, -4, -1]));
+/// assert!(single_source_distances(&digraph, 0)
+///     .unwrap()
+///     .eq(&[0, 8, 3, 1, -4, -1]));
 ///
 /// // 0 -> {1 (-2)}
 /// // 1 -> {2 (-1)}
