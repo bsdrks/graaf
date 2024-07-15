@@ -36,10 +36,9 @@ graaf = "0.70.1"
 
 Graaf provides three representations of directed graphs.
 
-- [`adjacency_list](https://docs.rs/graaf/latest/graaf/adjacency_list/digraph/struct.Digraph.html) represents unweighted sparse digraphs.
-p
+- [`adjacency_list`](https://docs.rs/graaf/latest/graaf/adjacency_list/digraph/struct.Digraph.html) represents unweighted sparse digraphs.
 - [`adjacency_matrix`](https://docs.rs/graaf/latest/graaf/adjacency_matrix/digraph/struct.Digraph.html) represents unweighted dense digraphs.
-- [`adjacency_list_weighted](https://docs.rs/graaf/latest/graaf/adjacency_list_weighted/digraph/struct.Digraph.html) represents arc-weighted sparse digraphs.
+- [`adjacency_list_weighted`](https://docs.rs/graaf/latest/graaf/adjacency_list_weighted/digraph/struct.Digraph.html) represents arc-weighted sparse digraphs.
 
 These types eagerly implement [digraph operations](#operations) and [digraph algorithms](#algorithms).
 
