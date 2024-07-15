@@ -26,12 +26,17 @@
 - Resolve: Can there be a star digraph of order 1?
 - Subsume traits with one super trait into the super trait.
 
+## [0.70.2] - 2024-07-15
+
+Changed
+
+- Simplify documentation.
+
 ## [0.70.1] - 2024-07-15
 
 Changed
 
 - Improve documentation consistency.
-- Use `?` instead of `unwrap` in documentation examples.
 
 ## [0.70.0] - 2024-07-14
 
