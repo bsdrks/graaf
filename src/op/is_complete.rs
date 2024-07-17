@@ -9,8 +9,8 @@
 //! use graaf::{
 //!     adjacency_list::Digraph,
 //!     gen::{
-//!         Complete,
 //!         Circuit,
+//!         Complete,
 //!         Empty,
 //!         RandomTournament,
 //!     },
@@ -39,8 +39,8 @@ use super::{
 /// use {
 ///     graaf::{
 ///         gen::{
-///             Complete,
 ///             Circuit,
+///             Complete,
 ///             Empty,
 ///             RandomTournament,
 ///         },
