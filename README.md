@@ -29,7 +29,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.71.0"
+graaf = "0.71.1"
 ```
 
 ## Digraph Types
@@ -47,8 +47,9 @@ These types eagerly implement [digraph operations](#operations) and [digraph alg
 The [`gen`] module provides six digraph generators.
 
 - [`Biclique`] generates a complete bipartite digraph.
+- [`Circuit`] generates a circuit digraph.
 - [`Complete`] generates a complete digraph.
-- [`Cycle`] generates a digraph with a cycle of a given length.
+- [`Cycle`] generates a bidirectional circuit.
 - [`Empty`] generates a digraph with no arcs.
 - [`RandomTournament`] generates a random tournament.
 - [`Star`] generates a star digraph.
@@ -186,6 +187,7 @@ A distance matrix contains the shortest distances between all pairs of vertices 
 [`ArcsWeighted`]: https://docs.rs/graaf/latest/graaf/op/arcs_weighted/trait.ArcsWeighted.html
 [`Arcs`]: https://docs.rs/graaf/latest/graaf/op/arcs/trait.Arcs.html
 [`Biclique`]: https://docs.rs/graaf/latest/graaf/gen/biclique/trait.Biclique.html
+[`Circuit`]: https://docs.rs/graaf/latest/graaf/gen/circuit/trait.Circuit.html
 [`Complete`]: https://docs.rs/graaf/latest/graaf/gen/complete/trait.Complete.html
 [`Complement`]: https://docs.rs/graaf/latest/graaf/op/complement/trait.Complement.html
 [`Converse`]: https://docs.rs/graaf/latest/graaf/op/converse/trait.Converse.html

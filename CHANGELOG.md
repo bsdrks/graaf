@@ -21,7 +21,14 @@
 - Rename `DegreeSequence` to `SemidegreeSequence` and add a new `DegreeSequence` trait.
 - Subsume traits with one super trait into the super trait.
 
-## [0.71.0] - 2024-07-16
+## [0.71.1] - 2024-07-17
+
+Added
+
+- Add `Circuit` to the `README`.
+- Add `Circuit` to `lib.rs`.
+
+## [0.71.0] - 2024-07-17
 
 Added
 
