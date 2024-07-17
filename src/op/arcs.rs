@@ -5,14 +5,14 @@
 //! ```
 //! use graaf::{
 //!     adjacency_list::Digraph,
-//!     gen::Cycle,
+//!     gen::Circuit,
 //!     op::{
 //!         AddArc,
 //!         Arcs,
 //!     },
 //! };
 //!
-//! let digraph = Digraph::cycle(3);
+//! let digraph = Digraph::circuit(3);
 //!
 //! assert!(digraph.arcs().eq([(0, 1), (1, 2), (2, 0)]));
 //! ```
@@ -43,11 +43,11 @@
 /// ```
 /// use graaf::{
 ///     adjacency_list::Digraph,
-///     gen::Cycle,
+///     gen::Circuit,
 ///     op::Arcs,
 /// };
 ///
-/// let digraph = Digraph::cycle(3);
+/// let digraph = Digraph::circuit(3);
 ///
 /// assert!(digraph.arcs().eq([(0, 1), (1, 2), (2, 0)]));
 /// ```

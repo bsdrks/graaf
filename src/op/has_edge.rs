@@ -8,7 +8,7 @@
 //! use graaf::{
 //!     adjacency_list::Digraph,
 //!     gen::{
-//!         Cycle,
+//!         Circuit,
 //!         Empty,
 //!     },
 //!     op::{
@@ -17,7 +17,7 @@
 //!     },
 //! };
 //!
-//! let digraph = Digraph::cycle(2);
+//! let digraph = Digraph::circuit(2);
 //!
 //! assert!(digraph.has_edge(0, 1));
 //! assert!(digraph.has_edge(1, 0));
@@ -88,7 +88,7 @@ use super::HasArc;
 /// use graaf::{
 ///     adjacency_list::Digraph,
 ///     gen::{
-///         Cycle,
+///         Circuit,
 ///         Empty,
 ///     },
 ///     op::{
@@ -97,7 +97,7 @@ use super::HasArc;
 ///     },
 /// };
 ///
-/// let digraph = Digraph::cycle(2);
+/// let digraph = Digraph::circuit(2);
 ///
 /// assert!(digraph.has_edge(0, 1));
 /// assert!(digraph.has_edge(1, 0));

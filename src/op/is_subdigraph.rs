@@ -11,7 +11,7 @@
 //! use graaf::{
 //!     adjacency_list::Digraph,
 //!     gen::{
-//!         Cycle,
+//!         Circuit,
 //!         Empty,
 //!     },
 //!     op::{
@@ -24,7 +24,7 @@
 //!
 //! h.add_arc(0, 1);
 //!
-//! let d = Digraph::cycle(3);
+//! let d = Digraph::circuit(3);
 //!
 //! assert!(h.is_subdigraph(&d));
 //! ```

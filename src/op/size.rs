@@ -54,11 +54,11 @@
 /// ```
 /// use graaf::{
 ///     adjacency_list::Digraph,
-///     gen::Cycle,
+///     gen::Circuit,
 ///     op::Size,
 /// };
 ///
-/// let digraph = Digraph::cycle(3);
+/// let digraph = Digraph::circuit(3);
 ///
 /// assert_eq!(digraph.size(), 3);
 /// ```

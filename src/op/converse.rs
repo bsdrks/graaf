@@ -7,7 +7,7 @@
 //! ```
 //! use graaf::{
 //!     adjacency_list::Digraph,
-//!     gen::Cycle,
+//!     gen::Circuit,
 //!     op::{
 //!         AddArc,
 //!         Arcs,
@@ -20,7 +20,7 @@
 //! // 2 -> {3}
 //! // 3 -> {0}
 //!
-//! let digraph = Digraph::cycle(4);
+//! let digraph = Digraph::circuit(4);
 //!
 //! // 0 -> {3}
 //! // 1 -> {0}

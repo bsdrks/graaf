@@ -17,13 +17,85 @@
 - Add the `SetContraction` trait.
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
-- Expand the user guide.
+- Rename `Cycle` to `Circuit` and add a new `Cycle` trait.
 - Rename `DegreeSequence` to `SemidegreeSequence` and add a new `DegreeSequence` trait.
-- Resolve: Can there be a complete digraph of order 1?
-- Resolve: Can there be a cycle digraph of order 1?
-- Resolve: Can there be a random tournament of order 1?
-- Resolve: Can there be a star digraph of order 1?
 - Subsume traits with one super trait into the super trait.
+
+## [0.71.0] - 2024-07-16
+
+Added
+
+- Add a new `Cycle` trait that generates a bidirectional cycle.
+- Add unit test `biclique_1_1` for `adjacency_list`.
+- Add unit test `biclique_1_1` for `adjacency_matrix`.
+- Add unit test `biclique_1_2` for `adjacency_list`.
+- Add unit test `biclique_1_2` for `adjacency_matrix`.
+- Add unit test `biclique_2_1` for `adjacency_list`.
+- Add unit test `biclique_2_1` for `adjacency_matrix`.
+- Add unit test `biclique_2_2` for `adjacency_list`.
+- Add unit test `biclique_2_2` for `adjacency_matrix`.
+- Add unit test `circuit_1_degree_sequence` for `adjacency_list`.
+- Add unit test `circuit_1_degree_sequence` for `adjacency_matrix`.
+- Add unit test `circuit_1_degree` for `adjacency_list`.
+- Add unit test `circuit_1_degree` for `adjacency_matrix`.
+- Add unit test `circuit_1_is_sink` for `adjacency_list`.
+- Add unit test `circuit_1_is_sink` for `adjacency_matrix`.
+- Add unit test `circuit_1_is_source` for `adjacency_list`.
+- Add unit test `circuit_1_is_source` for `adjacency_matrix`.
+- Add unit test `circuit_1` for `adjacency_list`.
+- Add unit test `circuit_1` for `adjacency_matrix`.
+- Add unit test `circuit_2` for `adjacency_list`.
+- Add unit test `circuit_2` for `adjacency_matrix`.
+- Add unit test `circuit_3` for `adjacency_list`.
+- Add unit test `circuit_3` for `adjacency_matrix`.
+- Add unit test `complete_1` for `adjacency_list`.
+- Add unit test `complete_1` for `adjacency_matrix`.
+- Add unit test `complete_2` for `adjacency_list`.
+- Add unit test `complete_2` for `adjacency_matrix`.
+- Add unit test `complete_3` for `adjacency_list`.
+- Add unit test `complete_3` for `adjacency_matrix`.
+- Add unit test `cycle_1` for `adjacency_list`.
+- Add unit test `cycle_1` for `adjacency_matrix`.
+- Add unit test `cycle_2` for `adjacency_list`.
+- Add unit test `cycle_2` for `adjacency_matrix`.
+- Add unit test `cycle_3` for `adjacency_list`.
+- Add unit test `cycle_3` for `adjacency_matrix`.
+- Add unit test `cycle_degree_1` for `adjacency_list`.
+- Add unit test `cycle_degree_1` for `adjacency_matrix`.
+- Add unit test `cycle_degree_2` for `adjacency_list`.
+- Add unit test `cycle_degree_2` for `adjacency_matrix`.
+- Add unit test `empty_1` for `adjacency_list`.
+- Add unit test `empty_1` for `adjacency_matrix`.
+- Add unit test `empty_2` for `adjacency_list`.
+- Add unit test `empty_2` for `adjacency_matrix`.
+- Add unit test `empty_3` for `adjacency_list`.
+- Add unit test `empty_3` for `adjacency_matrix`.
+- Add unit test `star_1` for `adjacency_list`.
+- Add unit test `star_1` for `adjacency_matrix`.
+- Add unit test `star_2` for `adjacency_list`.
+- Add unit test `star_2` for `adjacency_matrix`.
+- Add unit test `star_3` for `adjacency_list`.
+- Add unit test `star_3` for `adjacency_matrix`.
+
+Changed
+
+- Breaking: Rename `Cycle` to `Circuit`.
+- Breaking: Return a trivial digraph for `Circuit::circuit` for `n = 1`.
+- Split `biclique` unit test into `biclique_1`, etc., in `adjacency_list`.
+- Split `circuit` unit test into `circuit_1`, etc., in `adjacency_list`.
+- Split `complete` unit test into `complete_1`, etc., in `adjacency_list`.
+- Split `cycle` unit test into `cycle_1`, etc., in `adjacency_list`.
+
+Removed
+
+- Remove unit test `circuit` for `adjacency_list`.
+- Remove unit test `circuit` for `adjacency_matrix`.
+- Remove unit test `complete` for `adjacency_list`.
+- Remove unit test `complete` for `adjacency_matrix`.
+- Remove unit test `cycle` for `adjacency_list`.
+- Remove unit test `cycle` for `adjacency_matrix`.
+- Remove unit test `empty` for `adjacency_list`.
+- Remove unit test `empty` for `adjacency_matrix`.
 
 ## [0.70.3] - 2024-07-15
 

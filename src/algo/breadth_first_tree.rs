@@ -277,7 +277,7 @@ mod tests {
     }
 
     #[test]
-    fn search_cycle() {
+    fn search_circuit() {
         assert_eq!(
             BreadthFirstTree::from(vec![Some(1), Some(2), Some(0), None]).search(0, 3),
             None
@@ -332,7 +332,7 @@ mod tests {
     }
 
     #[test]
-    fn search_by_cycle() {
+    fn search_by_circuit() {
         assert_eq!(
             BreadthFirstTree::from(vec![Some(1), Some(2), Some(0), None])
                 .search_by(0, |&t, _| t == 3),

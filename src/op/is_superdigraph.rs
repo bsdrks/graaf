@@ -11,7 +11,7 @@
 //! use graaf::{
 //!     adjacency_list::Digraph,
 //!     gen::{
-//!         Cycle,
+//!         Circuit,
 //!         Empty,
 //!     },
 //!     op::{
@@ -24,7 +24,7 @@
 //!
 //! h.add_arc(0, 1);
 //!
-//! let d = Digraph::cycle(3);
+//! let d = Digraph::circuit(3);
 //!
 //! assert!(d.is_superdigraph(&h));
 //!
@@ -65,7 +65,7 @@ use super::IsSubdigraph;
 /// ```
 /// use {
 ///     graaf::{
-///         gen::Cycle,
+///         gen::Circuit,
 ///         op::{
 ///             Arcs,
 ///             HasArc,
@@ -126,7 +126,7 @@ use super::IsSubdigraph;
 /// use graaf::{
 ///     adjacency_list::Digraph,
 ///     gen::{
-///         Cycle,
+///         Circuit,
 ///         Empty,
 ///     },
 ///     op::{
@@ -139,7 +139,7 @@ use super::IsSubdigraph;
 ///
 /// h.add_arc(0, 1);
 ///
-/// let d = Digraph::cycle(3);
+/// let d = Digraph::circuit(3);
 ///
 /// assert!(d.is_superdigraph(&h));
 ///

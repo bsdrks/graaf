@@ -68,7 +68,7 @@ use crate::op::{
 /// # Returns
 ///
 /// Returns the distances one the source vertex to all other vertices. Returns
-/// `None` if the digraph contains a negative cycle.
+/// `None` if the digraph contains a negative circuit.
 ///
 /// # Examples
 ///
@@ -235,7 +235,7 @@ mod tests {
     }
 
     #[test]
-    fn test_negative_cycle() {
+    fn test_negative_circuit() {
         let mut digraph = Digraph::<isize>::empty(3);
 
         digraph.add_arc_weighted(0, 1, -2);

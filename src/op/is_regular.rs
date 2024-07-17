@@ -8,14 +8,14 @@
 //! ```
 //! use graaf::{
 //!     adjacency_list::Digraph,
-//!     gen::Cycle,
+//!     gen::Circuit,
 //!     op::{
 //!         IsRegular,
 //!         RemoveArc,
 //!     },
 //! };
 //!
-//! let mut digraph = Digraph::cycle(7);
+//! let mut digraph = Digraph::circuit(7);
 //!
 //! assert!(digraph.is_regular());
 //!

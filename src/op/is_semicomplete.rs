@@ -10,7 +10,7 @@
 //!     adjacency_list::Digraph,
 //!     gen::{
 //!         Complete,
-//!         Cycle,
+//!         Circuit,
 //!         Empty,
 //!         RandomTournament,
 //!     },
@@ -19,7 +19,7 @@
 //!
 //! assert!(!Digraph::empty(3).is_semicomplete());
 //! assert!(Digraph::complete(3).is_semicomplete());
-//! assert!(Digraph::cycle(3).is_semicomplete());
+//! assert!(Digraph::circuit(3).is_semicomplete());
 //! assert!(Digraph::random_tournament(3).is_semicomplete());
 //! ```
 
@@ -40,7 +40,7 @@ use super::{
 ///     graaf::{
 ///         gen::{
 ///             Complete,
-///             Cycle,
+///             Circuit,
 ///             Empty,
 ///         },
 ///         op::{
@@ -99,7 +99,7 @@ use super::{
 ///     adjacency_list::Digraph,
 ///     gen::{
 ///         Complete,
-///         Cycle,
+///         Circuit,
 ///         Empty,
 ///         RandomTournament,
 ///     },
@@ -108,7 +108,7 @@ use super::{
 ///
 /// assert!(!Digraph::empty(3).is_semicomplete());
 /// assert!(Digraph::complete(3).is_semicomplete());
-/// assert!(Digraph::cycle(3).is_semicomplete());
+/// assert!(Digraph::circuit(3).is_semicomplete());
 /// assert!(Digraph::random_tournament(3).is_semicomplete());
 /// ```
 pub trait IsSemicomplete {

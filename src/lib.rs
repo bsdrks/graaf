@@ -37,7 +37,7 @@
 //!
 //! - [`Biclique`](gen::Biclique) generates a complete bipartite digraph.
 //! - [`Complete`](gen::Complete) generates a complete digraph.
-//! - [`Cycle`](gen::Cycle) generates a digraph with a cycle of a given length.
+//! - [`Circuit`](gen::Circuit) generates a circuit digraph.
 //! - [`Empty`](gen::Empty) generates a digraph with no arcs.
 //! - [`RandomTournament`](gen::RandomTournament) generates a random tournament.
 //! - [`Star`](gen::Star) generates a star digraph.

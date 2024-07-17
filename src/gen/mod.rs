@@ -7,11 +7,11 @@
 //! ```
 //! use graaf::{
 //!     adjacency_list::Digraph,
-//!     gen::Cycle,
+//!     gen::Circuit,
 //!     op::Arcs,
 //! };
 //!
-//! assert!(Digraph::cycle(4)
+//! assert!(Digraph::circuit(4)
 //!     .arcs()
 //!     .eq([(0, 1), (1, 2), (2, 3), (3, 0)]));
 //! ```
@@ -82,6 +82,7 @@
 //! ```
 
 pub mod biclique;
+pub mod circuit;
 pub mod complete;
 pub mod cycle;
 pub mod empty;
@@ -91,6 +92,7 @@ pub mod star;
 
 pub use {
     biclique::Biclique,
+    circuit::Circuit,
     complete::Complete,
     cycle::Cycle,
     empty::Empty,

@@ -7,12 +7,12 @@
 //! ```
 //! use graaf::{
 //!     adjacency_list::Digraph,
-//!     gen::Cycle,
+//!     gen::Circuit,
 //!     op::IsOriented,
 //! };
 //!
-//! assert!(!Digraph::cycle(2).is_oriented());
-//! assert!(Digraph::cycle(3).is_oriented());
+//! assert!(!Digraph::circuit(2).is_oriented());
+//! assert!(Digraph::circuit(3).is_oriented());
 //! ```
 
 use super::{
@@ -30,7 +30,7 @@ use super::{
 /// ```
 /// use {
 ///     graaf::{
-///         gen::Cycle,
+///         gen::Circuit,
 ///         op::{
 ///             Arcs,
 ///             HasArc,
@@ -78,12 +78,12 @@ use super::{
 /// ```
 /// use graaf::{
 ///     adjacency_list::Digraph,
-///     gen::Cycle,
+///     gen::Circuit,
 ///     op::IsOriented,
 /// };
 ///
-/// assert!(!Digraph::cycle(2).is_oriented());
-/// assert!(Digraph::cycle(3).is_oriented());
+/// assert!(!Digraph::circuit(2).is_oriented());
+/// assert!(Digraph::circuit(3).is_oriented());
 /// ```
 pub trait IsOriented {
     /// Returns whether the digraph is oriented.
