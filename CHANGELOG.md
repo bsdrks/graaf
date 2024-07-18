@@ -21,6 +21,88 @@
 - Rename `DegreeSequence` to `SemidegreeSequence` and add a new `DegreeSequence` trait.
 - Subsume traits with one super trait into the super trait.
 
+## [0.71.2] - 2024-07-18
+
+Added
+
+- Add property test `cycle_complement_size` for `adjacency_list`.
+- Add property test `cycle_complement_size` for `adjacency_matrix`.
+- Add property test `cycle_degree_sequence` for `adjacency_list`.
+- Add property test `cycle_degree_sequence` for `adjacency_matrix`.
+- Add property test `cycle_degree_sum_eq_2size` for `adjacency_list`.
+- Add property test `cycle_degree_sum_eq_2size` for `adjacency_matrix`.
+- Add property test `cycle_degree` for `adjacency_list`.
+- Add property test `cycle_degree` for `adjacency_matrix`.
+- Add property test `cycle_even_number_odd_degrees` for `adjacency_list`.
+- Add property test `cycle_even_number_odd_degrees` for `adjacency_matrix`.
+- Add property test `cycle_indegree` for `adjacency_list`.
+- Add property test `cycle_indegree` for `adjacency_matrix`.
+- Add property test `cycle_is_balanced` for `adjacency_list`.
+- Add property test `cycle_is_balanced` for `adjacency_matrix`.
+- Add property test `cycle_is_complete` for `adjacency_list`.
+- Add property test `cycle_is_complete` for `adjacency_matrix`.
+- Add property test `cycle_is_isolated` for `adjacency_list`.
+- Add property test `cycle_is_isolated` for `adjacency_matrix`.
+- Add property test `cycle_is_oriented` for `adjacency_list`.
+- Add property test `cycle_is_oriented` for `adjacency_matrix`.
+- Add property test `cycle_is_pendant` for `adjacency_list`.
+- Add property test `cycle_is_pendant` for `adjacency_matrix`.
+- Add property test `cycle_is_regular` for `adjacency_list`.
+- Add property test `cycle_is_regular` for `adjacency_matrix`.
+- Add property test `cycle_is_semicomplete` for `adjacency_list`.
+- Add property test `cycle_is_semicomplete` for `adjacency_matrix`.
+- Add property test `cycle_is_simple` for `adjacency_list`.
+- Add property test `cycle_is_simple` for `adjacency_matrix`.
+- Add property test `cycle_is_sink` for `adjacency_list`.
+- Add property test `cycle_is_sink` for `adjacency_matrix`.
+- Add property test `cycle_is_source` for `adjacency_list`.
+- Add property test `cycle_is_source` for `adjacency_matrix`.
+- Add property test `cycle_is_subdigraph` for `adjacency_list`.
+- Add property test `cycle_is_subdigraph` for `adjacency_matrix`.
+- Add property test `cycle_is_superdigraph` for `adjacency_list`.
+- Add property test `cycle_is_superdigraph` for `adjacency_matrix`.
+- Add property test `cycle_is_symmetric` for `adjacency_list`.
+- Add property test `cycle_is_symmetric` for `adjacency_matrix`.
+- Add property test `cycle_is_tournament` for `adjacency_list`.
+- Add property test `cycle_is_tournament` for `adjacency_matrix`.
+- Add unit test `cycle_1_degree` for `adjacency_list`.
+- Add unit test `cycle_1_degree` for `adjacency_matrix`.
+- Add unit test `cycle_1_indegree` for `adjacency_list`.
+- Add unit test `cycle_1_indegree` for `adjacency_matrix`.
+- Add unit test `cycle_1_is_complete` for `adjacency_list`.
+- Add unit test `cycle_1_is_complete` for `adjacency_matrix`.
+- Add unit test `cycle_1_is_isolated` for `adjacency_list`.
+- Add unit test `cycle_1_is_isolated` for `adjacency_matrix`.
+- Add unit test `cycle_1_is_oriented` for `adjacency_list`.
+- Add unit test `cycle_1_is_oriented` for `adjacency_matrix`.
+- Add unit test `cycle_1_is_semicomplete` for `adjacency_list`.
+- Add unit test `cycle_1_is_semicomplete` for `adjacency_matrix`.
+- Add unit test `cycle_1_is_sink` for `adjacency_list`.
+- Add unit test `cycle_1_is_sink` for `adjacency_matrix`.
+- Add unit test `cycle_1_is_source` for `adjacency_list`.
+- Add unit test `cycle_1_is_source` for `adjacency_matrix`.
+- Add unit test `cycle_1_is_tournament` for `adjacency_list`.
+- Add unit test `cycle_1_is_tournament` for `adjacency_matrix`.
+- Add unit test `cycle_2_degree` for `adjacency_list`.
+- Add unit test `cycle_2_degree` for `adjacency_matrix`.
+- Add unit test `cycle_2_indegree` for `adjacency_list`.
+- Add unit test `cycle_2_indegree` for `adjacency_matrix`.
+- Add unit test `cycle_2_is_complete` for `adjacency_list`.
+- Add unit test `cycle_2_is_complete` for `adjacency_matrix`.
+- Add unit test `cycle_2_is_semicomplete` for `adjacency_list`.
+- Add unit test `cycle_2_is_semicomplete` for `adjacency_matrix`.
+- Add unit test `from_adjacency_list_isize` for `adjacency_list_weighted`.
+- Add unit test `from_adjacency_list_usize` for `adjacency_list_weighted`.
+- Add unit test `from_adjacency_list` for `adjacency_matrix`.
+- Add unit test `from_adjacency_matrix_isize` for `adjacency_list_weighted`.
+- Add unit test `from_adjacency_matrix_usize` for `adjacency_list_weighted`.
+- Add unit test `from_vec` for `adjacency_matrix`.
+- Implement `From<adjacency_list::Digraph>` for `adjacency_list_weighted::Digraph<isize>`.
+- Implement `From<adjacency_list::Digraph>` for `adjacency_list_weighted::Digraph<usize>`.
+- Implement `From<adjacency_list::Digraph>` for `adjacency_matrix::Digraph`.
+- Implement `From<adjacency_matrix::Digraph>` for `adjacency_list_weighted::Digraph<isize>`.
+- Implement `From<adjacency_matrix::Digraph>` for `adjacency_list_weighted::Digraph<usize>`.
+
 ## [0.71.1] - 2024-07-17
 
 Added

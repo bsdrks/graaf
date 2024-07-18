@@ -25,6 +25,8 @@
 
 use {
     crate::{
+        adjacency_list,
+        adjacency_matrix,
         gen::Empty,
         op::{
             AddArcWeighted,
@@ -118,6 +120,54 @@ where
         Self {
             arcs: vec![BTreeMap::new(); order],
         }
+    }
+}
+
+impl From<adjacency_list::Digraph> for Digraph<isize> {
+    fn from(d: adjacency_list::Digraph) -> Self {
+        let mut h = Self::empty(d.order());
+
+        for (u, v) in d.arcs() {
+            h.add_arc_weighted(u, v, 1);
+        }
+
+        h
+    }
+}
+
+impl From<adjacency_list::Digraph> for Digraph<usize> {
+    fn from(d: adjacency_list::Digraph) -> Self {
+        let mut h = Self::empty(d.order());
+
+        for (u, v) in d.arcs() {
+            h.add_arc_weighted(u, v, 1);
+        }
+
+        h
+    }
+}
+
+impl From<adjacency_matrix::Digraph> for Digraph<isize> {
+    fn from(d: adjacency_matrix::Digraph) -> Self {
+        let mut h = Self::empty(d.order());
+
+        for (u, v) in d.arcs() {
+            h.add_arc_weighted(u, v, 1);
+        }
+
+        h
+    }
+}
+
+impl From<adjacency_matrix::Digraph> for Digraph<usize> {
+    fn from(d: adjacency_matrix::Digraph) -> Self {
+        let mut h = Self::empty(d.order());
+
+        for (u, v) in d.arcs() {
+            h.add_arc_weighted(u, v, 1);
+        }
+
+        h
     }
 }
 
@@ -1124,6 +1174,70 @@ mod tests {
     #[test]
     fn empty_trivial_is_tournament() {
         assert!(Digraph::<usize>::trivial().is_tournament());
+    }
+
+    #[test]
+    fn from_adjacency_list_isize() {
+        let digraph = Digraph::<isize>::from(adjacency_list::fixture::bang_jensen_34());
+
+        assert_eq!(digraph.order(), 6);
+
+        assert!(digraph.arcs_weighted().eq([
+            (0, 4, &1),
+            (1, 0, &1),
+            (2, 1, &1),
+            (2, 3, &1),
+            (2, 5, &1),
+            (5, 4, &1)
+        ]));
+    }
+
+    #[test]
+    fn from_adjacency_list_usize() {
+        let digraph = Digraph::<usize>::from(adjacency_list::fixture::bang_jensen_34());
+
+        assert_eq!(digraph.order(), 6);
+
+        assert!(digraph.arcs_weighted().eq([
+            (0, 4, &1),
+            (1, 0, &1),
+            (2, 1, &1),
+            (2, 3, &1),
+            (2, 5, &1),
+            (5, 4, &1)
+        ]));
+    }
+
+    #[test]
+    fn from_adjacency_matrix_isize() {
+        let digraph = Digraph::<isize>::from(adjacency_matrix::fixture::bang_jensen_34());
+
+        assert_eq!(digraph.order(), 6);
+
+        assert!(digraph.arcs_weighted().eq([
+            (0, 4, &1),
+            (1, 0, &1),
+            (2, 1, &1),
+            (2, 3, &1),
+            (2, 5, &1),
+            (5, 4, &1)
+        ]));
+    }
+
+    #[test]
+    fn from_adjacency_matrix_usize() {
+        let digraph = Digraph::<usize>::from(adjacency_matrix::fixture::bang_jensen_34());
+
+        assert_eq!(digraph.order(), 6);
+
+        assert!(digraph.arcs_weighted().eq([
+            (0, 4, &1),
+            (1, 0, &1),
+            (2, 1, &1),
+            (2, 3, &1),
+            (2, 5, &1),
+            (5, 4, &1)
+        ]));
     }
 
     #[test]

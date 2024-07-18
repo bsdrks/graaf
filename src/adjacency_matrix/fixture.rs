@@ -2,7 +2,7 @@
 
 use {
     super::Digraph,
-    std::collections::BTreeSet,
+    crate::adjacency_list::fixture,
 };
 
 /// Jørgen Bang-Jensen and Gregory Z. Gutin. 2009. Digraphs: Theory,
@@ -19,14 +19,7 @@ use {
 /// ```
 #[must_use]
 pub fn bang_jensen_34() -> Digraph {
-    Digraph::from(vec![
-        BTreeSet::from([4]),
-        BTreeSet::from([0]),
-        BTreeSet::from([1, 3, 5]),
-        BTreeSet::new(),
-        BTreeSet::new(),
-        BTreeSet::from([4]),
-    ])
+    Digraph::from(fixture::bang_jensen_34())
 }
 
 /// Jørgen Bang-Jensen and Gregory Z. Gutin. 2009. Digraphs: Theory,
@@ -44,15 +37,7 @@ pub fn bang_jensen_34() -> Digraph {
 /// ```
 #[must_use]
 pub fn bang_jensen_94() -> Digraph {
-    Digraph::from(vec![
-        BTreeSet::from([1, 2]),
-        BTreeSet::from([3]),
-        BTreeSet::from([1, 3, 4, 5]),
-        BTreeSet::from([5]),
-        BTreeSet::from([6]),
-        BTreeSet::new(),
-        BTreeSet::new(),
-    ])
+    Digraph::from(fixture::bang_jensen_94())
 }
 
 /// Jeroen Bransen. 2015. Build Dependencies. Kattis.
@@ -77,15 +62,9 @@ pub fn bang_jensen_94() -> Digraph {
 /// ```
 #[must_use]
 pub fn kattis_builddeps() -> Digraph {
-    Digraph::from(vec![
-        BTreeSet::from([3, 4]),
-        BTreeSet::new(),
-        BTreeSet::from([3, 4, 5]),
-        BTreeSet::from([1]),
-        BTreeSet::from([1]),
-        BTreeSet::from([1]),
-    ])
+    Digraph::from(fixture::kattis_builddeps())
 }
+
 /// Arash Behpour. 2019. Escape Wall Maria. Kattis. (Sample Input 1)
 /// <https://open.kattis.com/problems/escapewallmaria>
 ///
@@ -107,22 +86,7 @@ pub fn kattis_builddeps() -> Digraph {
 /// ```
 #[must_use]
 pub fn kattis_escapewallmaria_1() -> Digraph {
-    Digraph::from(vec![
-        BTreeSet::new(),
-        BTreeSet::new(),
-        BTreeSet::new(),
-        BTreeSet::new(),
-        BTreeSet::new(),
-        BTreeSet::from([6, 9]),
-        BTreeSet::from([5]),
-        BTreeSet::new(),
-        BTreeSet::new(),
-        BTreeSet::from([5, 13]),
-        BTreeSet::new(),
-        BTreeSet::new(),
-        BTreeSet::new(),
-        BTreeSet::from([9, 12]),
-    ])
+    Digraph::from(fixture::kattis_escapewallmaria_1())
 }
 
 /// Arash Behpour. 2019. Escape Wall Maria. Kattis. (Sample Input 2)
@@ -146,22 +110,7 @@ pub fn kattis_escapewallmaria_1() -> Digraph {
 /// ```
 #[must_use]
 pub fn kattis_escapewallmaria_2() -> Digraph {
-    Digraph::from(vec![
-        BTreeSet::new(),
-        BTreeSet::new(),
-        BTreeSet::new(),
-        BTreeSet::new(),
-        BTreeSet::new(),
-        BTreeSet::from([6, 9]),
-        BTreeSet::from([5]),
-        BTreeSet::new(),
-        BTreeSet::new(),
-        BTreeSet::from([5]),
-        BTreeSet::new(),
-        BTreeSet::new(),
-        BTreeSet::from([13]),
-        BTreeSet::from([9, 12]),
-    ])
+    Digraph::from(fixture::kattis_escapewallmaria_2())
 }
 
 /// Arash Behpour. 2019. Escape Wall Maria. Kattis. (Sample Input 3)
@@ -185,20 +134,5 @@ pub fn kattis_escapewallmaria_2() -> Digraph {
 /// ```
 #[must_use]
 pub fn kattis_escapewallmaria_3() -> Digraph {
-    Digraph::from(vec![
-        BTreeSet::new(),
-        BTreeSet::from([2, 5]),
-        BTreeSet::from([1, 6]),
-        BTreeSet::new(),
-        BTreeSet::new(),
-        BTreeSet::from([1, 6, 9]),
-        BTreeSet::from([2, 5]),
-        BTreeSet::new(),
-        BTreeSet::new(),
-        BTreeSet::from([5, 13]),
-        BTreeSet::new(),
-        BTreeSet::new(),
-        BTreeSet::from([13]),
-        BTreeSet::from([9, 12]),
-    ])
+    Digraph::from(fixture::kattis_escapewallmaria_3())
 }

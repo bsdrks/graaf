@@ -627,7 +627,7 @@ mod tests {
         }
 
         #[test]
-        fn circuit_even_number_odd_degrees(order in 3..25_usize) {
+        fn circuit_even_number_odd_degrees(order in 1..25_usize) {
             let digraph = Digraph::circuit(order);
 
             assert_eq!(
@@ -704,7 +704,7 @@ mod tests {
         }
 
         #[test]
-        fn circuit_is_simple(order in 2..25_usize) {
+        fn circuit_is_simple(order in 1..25_usize) {
             assert!(Digraph::circuit(order).is_simple());
         }
 
@@ -908,6 +908,156 @@ mod tests {
         #[test]
         fn complete_size(order in 1..25_usize) {
             assert_eq!(Digraph::complete(order).size(), order * (order - 1));
+        }
+
+        #[test]
+        fn cycle_complement_size(order in 1..25_usize) {
+            assert_eq!(
+                Digraph::cycle(order).complement().size(),
+                order * order.saturating_sub(3)
+            );
+        }
+
+        #[test]
+        fn cycle_degree(order in 3..25_usize) {
+            let digraph = Digraph::cycle(order);
+
+            for u in digraph.vertices() {
+                assert_eq!(digraph.degree(u), 4);
+            }
+        }
+
+        #[test]
+        fn cycle_degree_sequence(order in 3..25_usize) {
+            assert!(
+                Digraph::cycle(order)
+                    .degree_sequence()
+                    .iter()
+                    .all(|d| *d == (2, 2))
+            );
+        }
+
+        #[test]
+        fn cycle_degree_sum_eq_2size(order in 1..25_usize) {
+            let digraph = Digraph::cycle(order);
+
+            assert_eq!(
+                digraph.vertices().fold(0, |acc, u| acc + digraph.degree(u)),
+                2 * digraph.size()
+            );
+        }
+
+        #[test]
+        fn cycle_even_number_odd_degrees(order in 1..25_usize) {
+            let digraph = Digraph::cycle(order);
+
+            assert_eq!(
+                digraph
+                    .vertices()
+                    .filter(|&u| digraph.degree(u) % 2 == 1)
+                    .count()
+                    % 2,
+                0
+            );
+        }
+
+        #[test]
+        fn cycle_indegree(order in 3..25_usize) {
+            let digraph = Digraph::cycle(order);
+
+            for u in digraph.vertices() {
+                assert_eq!(digraph.indegree(u), 2);
+            }
+        }
+
+        #[test]
+        fn cycle_is_balanced(order in 1..25_usize) {
+            assert!(Digraph::cycle(order).is_balanced());
+        }
+
+        #[test]
+        fn cycle_is_complete(order in 4..25_usize) {
+            assert!(!Digraph::cycle(order).is_complete());
+        }
+
+        #[test]
+        fn cycle_is_isolated(order in 2..25_usize) {
+            let digraph = Digraph::cycle(order);
+
+            for u in digraph.vertices() {
+                assert!(!digraph.is_isolated(u));
+            }
+        }
+
+        #[test]
+        fn cycle_is_oriented(order in 2..25_usize) {
+            assert!(!Digraph::cycle(order).is_oriented());
+        }
+
+        #[test]
+        fn cycle_is_pendant(order in 1..25_usize) {
+            let digraph = Digraph::cycle(order);
+
+            for u in digraph.vertices() {
+                assert!(!digraph.is_pendant(u));
+            }
+        }
+
+        #[test]
+        fn cycle_is_regular(order in 1..25_usize) {
+            assert!(Digraph::cycle(order).is_regular());
+        }
+
+        #[test]
+        fn cycle_is_semicomplete(order in 4..25_usize) {
+            assert!(!Digraph::cycle(order).is_semicomplete());
+        }
+
+        #[test]
+        fn cycle_is_simple(order in 1..25_usize) {
+            assert!(Digraph::cycle(order).is_simple());
+        }
+
+        #[test]
+        fn cycle_is_sink(order in 2..25_usize) {
+            let digraph = Digraph::cycle(order);
+
+            for u in digraph.vertices() {
+                assert!(!digraph.is_sink(u));
+            }
+        }
+
+        #[test]
+        fn cycle_is_source(order in 2..25_usize) {
+            let digraph = Digraph::cycle(order);
+
+            for u in digraph.vertices() {
+                assert!(!digraph.is_source(u));
+            }
+        }
+
+        #[test]
+        fn cycle_is_subdigraph(order in 1..25_usize) {
+            let digraph = Digraph::cycle(order);
+
+            assert!(digraph.is_subdigraph(&digraph));
+        }
+
+        #[test]
+        fn cycle_is_superdigraph(order in 1..25_usize) {
+            let digraph = Digraph::cycle(order);
+
+            assert!(digraph.is_superdigraph(&digraph));
+        }
+
+        #[test]
+        fn cycle_is_symmetric(order in 1..25_usize) {
+            assert!(Digraph::cycle(order).is_symmetric());
+        }
+
+        #[test]
+        fn cycle_is_tournament(order in 2..25_usize) {
+            assert!(!Digraph::cycle(order).is_tournament());
         }
 
         #[test]
@@ -1711,11 +1861,6 @@ mod tests {
     }
 
     #[test]
-    fn circuit_1_is_simple() {
-        assert!(Digraph::circuit(1).is_simple());
-    }
-
-    #[test]
     fn circuit_1_is_sink() {
         assert!(Digraph::circuit(1).is_sink(0));
     }
@@ -1932,8 +2077,85 @@ mod tests {
     }
 
     #[test]
+    fn cycle_1_degree() {
+        let digraph = Digraph::cycle(1);
+
+        assert_eq!(digraph.degree(0), 0);
+    }
+
+    #[test]
+    fn cycle_1_indegree() {
+        let digraph = Digraph::cycle(1);
+
+        assert_eq!(digraph.indegree(0), 0);
+    }
+
+    #[test]
+    fn cycle_1_is_complete() {
+        assert!(Digraph::cycle(1).is_complete());
+    }
+
+    #[test]
+    fn cycle_1_is_isolated() {
+        assert!(Digraph::cycle(1).is_isolated(0));
+    }
+
+    #[test]
+    fn cycle_1_is_oriented() {
+        assert!(Digraph::cycle(1).is_oriented());
+    }
+
+    #[test]
+    fn cycle_1_is_semicomplete() {
+        assert!(Digraph::cycle(1).is_semicomplete());
+    }
+
+    #[test]
+    fn cycle_1_is_sink() {
+        assert!(Digraph::cycle(1).is_sink(0));
+    }
+
+    #[test]
+    fn cycle_1_is_source() {
+        assert!(Digraph::cycle(1).is_source(0));
+    }
+
+    #[test]
+    fn cycle_1_is_tournament() {
+        assert!(Digraph::cycle(1).is_tournament());
+    }
+
+    #[test]
     fn cycle_2() {
         assert!(Digraph::cycle(2).arcs().eq([(0, 1), (1, 0)]));
+    }
+
+    #[test]
+    fn cycle_2_degree() {
+        let digraph = Digraph::cycle(2);
+
+        for u in digraph.vertices() {
+            assert_eq!(digraph.degree(u), 2);
+        }
+    }
+
+    #[test]
+    fn cycle_2_indegree() {
+        let digraph = Digraph::cycle(2);
+
+        for u in digraph.vertices() {
+            assert_eq!(digraph.indegree(u), 1);
+        }
+    }
+
+    #[test]
+    fn cycle_2_is_complete() {
+        assert!(Digraph::cycle(2).is_complete());
+    }
+
+    #[test]
+    fn cycle_2_is_semicomplete() {
+        assert!(Digraph::cycle(2).is_semicomplete());
     }
 
     #[test]
@@ -1944,19 +2166,13 @@ mod tests {
     }
 
     #[test]
-    fn cycle_degree_1() {
-        let digraph = Digraph::cycle(1);
-
-        assert_eq!(digraph.degree(0), 0);
+    fn cycle_3_is_complete() {
+        assert!(Digraph::cycle(3).is_complete());
     }
 
     #[test]
-    fn cycle_degree_2() {
-        let digraph = Digraph::cycle(2);
-
-        for u in digraph.vertices() {
-            assert_eq!(digraph.degree(u), 2);
-        }
+    fn cycle_3_is_semicomplete() {
+        assert!(Digraph::cycle(3).is_semicomplete());
     }
 
     #[test]

@@ -2,6 +2,7 @@
 
 use {
     super::Digraph,
+    crate::adjacency_list::fixture::bang_jensen_94,
     std::collections::BTreeMap,
 };
 
@@ -20,15 +21,7 @@ use {
 /// ```
 #[must_use]
 pub fn bang_jensen_94_weighted_usize() -> Digraph<usize> {
-    Digraph::from(vec![
-        BTreeMap::from([(1, 1), (2, 1)]),
-        BTreeMap::from([(3, 1)]),
-        BTreeMap::from([(1, 1), (3, 1), (4, 1), (5, 1)]),
-        BTreeMap::from([(5, 1)]),
-        BTreeMap::from([(6, 1)]),
-        BTreeMap::new(),
-        BTreeMap::new(),
-    ])
+    Digraph::from(bang_jensen_94())
 }
 
 /// Jørgen Bang-Jensen and Gregory Z. Gutin. 2009. Digraphs: Theory,
@@ -46,15 +39,7 @@ pub fn bang_jensen_94_weighted_usize() -> Digraph<usize> {
 /// ```
 #[must_use]
 pub fn bang_jensen_94_weighted_isize() -> Digraph<isize> {
-    Digraph::from(vec![
-        BTreeMap::from([(1, 1), (2, 1)]),
-        BTreeMap::from([(3, 1)]),
-        BTreeMap::from([(1, 1), (3, 1), (4, 1), (5, 1)]),
-        BTreeMap::from([(5, 1)]),
-        BTreeMap::from([(6, 1)]),
-        BTreeMap::new(),
-        BTreeMap::new(),
-    ])
+    Digraph::from(bang_jensen_94())
 }
 
 /// Jørgen Bang-Jensen and Gregory Z. Gutin. 2009. Digraphs: Theory,
