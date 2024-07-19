@@ -21,6 +21,12 @@
 - Rename `DegreeSequence` to `SemidegreeSequence` and add a new `DegreeSequence` trait.
 - Subsume traits with one super trait into the super trait.
 
+## [0.71.3] - 2024-07-19
+
+Added
+
+- Add `algo::tarjan::strongly_connected_components`.
+
 ## [0.71.2] - 2024-07-18
 
 Added

@@ -137,6 +137,8 @@ impl Indegree for Digraph {
 }
 
 impl IsSimple for Digraph {
+    // We only check for self-loops. Parallel arcs can not exist in this
+    // representation.
     fn is_simple(&self) -> bool {
         self.arcs
             .iter()

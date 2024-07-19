@@ -15,6 +15,7 @@
 //!    - [Depth-first search (DFS)](#depth-first-search-dfs)
 //!    - [Dijkstra's algorithm](#dijkstras-algorithm)
 //!    - [Floyd-Warshall algorithm](#floyd-warshall)
+//!    - [Tarjan's algorithm](#tarjans-algorithm)
 //!    - [Breath-first tree](#breadth-first-tree)
 //!    - [Distance matrix](#distance-matrix)
 //! - [Naming Conventions](#naming-conventions)
@@ -175,6 +176,12 @@
 //!
 //! - [`distances`](algo::floyd_warshall::distances) finds the shortest
 //!   distances.
+//!
+//! ## Tarjan's algorithm
+//!
+//! Tarjan's algorithm finds the strongly connected components in a digraph.
+//!
+//! - [`strongly_connected_components`](algo::tarjan::strongly_connected_components) finds the strongly connected components.
 //!
 //! ## Breadth-first tree
 //!

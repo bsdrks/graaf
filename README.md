@@ -16,6 +16,7 @@ Work with directed graphs in Rust.
   - [Depth-First Search (DFS)](#depth-first-search-dfs)
   - [Dijkstra's Algorithm](#dijkstras-algorithm)
   - [Floyd-Warshall Algorithm](#floyd-warshall)
+  - [Tarjan's Algorithm](#tarjans-algorithm)
   - [Breath-First Tree](#breadth-first-tree)
   - [Distance Matrix](#distance-matrix)
 - [Naming Conventions](#naming-conventions)
@@ -29,7 +30,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.71.2"
+graaf = "0.71.3"
 ```
 
 ## Digraph Types
@@ -156,6 +157,12 @@ These functions start from one source vertex.
 The Floyd-Warshall algorithm finds the shortest paths between all pairs of vertices in an arc-weighted digraph.
 
 - [`distances`](https://docs.rs/graaf/latest/graaf/algo/floyd_warshall/fn.distances.html) finds the shortest distances.
+
+### Tarjan's Algorithm
+
+Tarjan's algorithm finds the strongly connected components in a digraph.
+
+- [`strongly_connected_components`](https://docs.rs/graaf/latest/graaf/algo/tarjan/fn.strongly_connected_components.html) finds the strongly connected components.
 
 ### Breadth-First Tree
 

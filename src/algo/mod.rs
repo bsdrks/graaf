@@ -9,3 +9,4 @@ pub mod dfs;
 pub mod dijkstra;
 pub mod distance_matrix;
 pub mod floyd_warshall;
+pub mod tarjan;
