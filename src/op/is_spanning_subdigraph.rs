@@ -1,8 +1,8 @@
-//! Determine whether a digraph is a subdigraph of another digraph.
+//! Determine whether a digraph is a spanning subdigraph of another digraph.
 //!
-//! A digraph `H` is a subdigraph of a digraph `D` if the vertex set of `H` is a
-//! subset of the vertex set of `D` and the arc set of `H` is a subset of the
-//! arc set of `D`.
+//! A digraph `H` is a spanning subdigraph of a digraph `D` if the vertex set of
+//! `H` is equal to the vertex set of `D` and the arc set of `H` is a subset of
+//! the arc set of `D`.
 //!
 //! # Examples
 //!
@@ -15,7 +15,7 @@
 //!     },
 //!     op::{
 //!         AddArc,
-//!         IsSubdigraph,
+//!         IsSpanningSubdigraph,
 //!     },
 //! };
 //!
@@ -25,25 +25,25 @@
 //!
 //! let d = Digraph::circuit(3);
 //!
-//! assert!(h.is_subdigraph(&d));
+//! assert!(h.is_spanning_subdigraph(&d));
 //! ```
 //!
-//! Every digraph is a subdigraph of itself.
+//! Every digraph is a spanning subdigraph of itself.
 //!
 //! ```
 //! use graaf::{
 //!     adjacency_list::Digraph,
 //!     gen::RandomTournament,
-//!     op::IsSubdigraph,
+//!     op::IsSpanningSubdigraph,
 //! };
 //!
 //! let tournament = Digraph::random_tournament(4);
 //!
-//! assert!(tournament.is_subdigraph(&tournament));
+//! assert!(tournament.is_spanning_subdigraph(&tournament));
 //! ```
 //!
 //! A digraph `H` with arcs not in the arc set of a digraph `D` is not a
-//! subdigraph of `D`.
+//! spanning subdigraph of `D`.
 //!
 //! ```
 //! use graaf::{
@@ -51,7 +51,7 @@
 //!     gen::Empty,
 //!     op::{
 //!         AddArc,
-//!         IsSubdigraph,
+//!         IsSpanningSubdigraph,
 //!     },
 //! };
 //!
@@ -64,11 +64,11 @@
 //!
 //! d.add_arc(0, 1);
 //!
-//! assert!(!h.is_subdigraph(&d));
+//! assert!(!h.is_spanning_subdigraph(&d));
 //! ```
 //!
 //! A digraph `H` with vertices not in the vertex set of a digraph `D` is not a
-//! subdigraph of `D`.
+//! spanning subdigraph of `D`.
 //!
 //! ```
 //! use graaf::{
@@ -76,7 +76,7 @@
 //!     gen::Empty,
 //!     op::{
 //!         AddArc,
-//!         IsSubdigraph,
+//!         IsSpanningSubdigraph,
 //!     },
 //! };
 //!
@@ -86,11 +86,11 @@
 //!
 //! let d = Digraph::empty(2);
 //!
-//! assert!(!h.is_subdigraph(&d));
+//! assert!(!h.is_spanning_subdigraph(&d));
 //! ```
 //!
 //! A digraph `H` with arcs whose end-vertices are not in the vertex set of `H`
-//! is not a subdigraph of a digraph `D`.
+//! is not a spanning subdigraph of a digraph `D`.
 //!
 //! ```
 //! use graaf::{
@@ -98,7 +98,7 @@
 //!     gen::Empty,
 //!     op::{
 //!         AddArc,
-//!         IsSubdigraph,
+//!         IsSpanningSubdigraph,
 //!     },
 //! };
 //!
@@ -115,32 +115,48 @@
 //! d.add_arc(0, 1);
 //! d.add_arc(1, 0);
 //!
-//! assert!(!h.is_subdigraph(&d));
+//! assert!(!h.is_spanning_subdigraph(&d));
+//! ```
+//!
+//! A digraph `H` is not a spanning subdigraph of a digraph `D` if the vertex
+//! set of `H` is not equal to the vertex set of `D`.
+//!
+//! ```
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     gen::Empty,
+//!     op::{
+//!         AddArc,
+//!         IsSpanningSubdigraph,
+//!     },
+//! };
+//!
+//! let h = Digraph::empty(2);
+//! let d = Digraph::empty(3);
+//!
+//! assert!(!h.is_spanning_subdigraph(&d));
 //! ```
 
-use {
-    super::{
-        Arcs,
-        HasArc,
-        Vertices,
-    },
-    std::collections::BTreeSet,
+use super::{
+    Arcs,
+    HasArc,
+    Vertices,
 };
 
-/// Determine whether a digraph is a subdigraph of another digraph.
+/// Determine whether a digraph is a spanning subdigraph of another digraph.
 ///
-/// # How can I implement `IsSubdigraph`?
+/// # How can I implement `IsSpanningSubdigraph`?
 ///
-/// Provide an implementation of `is_subdigraph` that returns whether the
-/// digraph is a subdigraph of the given digraph OR implement `HasArc`, `Arcs`,
-/// and `Vertices`.
+/// Provide an implementation of `is_spanning_subdigraph` that returns whether
+/// the digraph is a spanning subdigraph of the given digraph OR implement
+/// `HasArc`, `Arcs`, and `Vertices`.
 ///
 /// ```
 /// use {
 ///     graaf::op::{
 ///         Arcs,
 ///         HasArc,
-///         IsSubdigraph,
+///         IsSpanningSubdigraph,
 ///         Vertices,
 ///     },
 ///     std::collections::BTreeSet,
@@ -148,12 +164,6 @@ use {
 ///
 /// struct Digraph {
 ///     arcs: Vec<BTreeSet<usize>>,
-/// }
-///
-/// impl HasArc for Digraph {
-///     fn has_arc(&self, u: usize, v: usize) -> bool {
-///         self.arcs[u].contains(&v)
-///     }
 /// }
 ///
 /// impl Arcs for Digraph {
@@ -165,6 +175,12 @@ use {
 ///     }
 /// }
 ///
+/// impl HasArc for Digraph {
+///     fn has_arc(&self, u: usize, v: usize) -> bool {
+///         self.arcs[u].contains(&v)
+///     }
+/// }
+///
 /// impl Vertices for Digraph {
 ///     fn vertices(&self) -> impl Iterator<Item = usize> {
 ///         0..self.arcs.len()
@@ -172,7 +188,7 @@ use {
 /// }
 ///
 /// let h = Digraph {
-///     arcs: vec![BTreeSet::from([1]), BTreeSet::new()],
+///     arcs: vec![BTreeSet::from([1]), BTreeSet::new(), BTreeSet::new()],
 /// };
 ///
 /// let d = Digraph {
@@ -183,28 +199,23 @@ use {
 ///     ],
 /// };
 ///
-/// assert!(h.is_subdigraph(&d));
+/// assert!(h.is_spanning_subdigraph(&d));
 /// ```
-pub trait IsSubdigraph {
-    /// Returns whether the digraph is a subdigraph of another digraph.
+pub trait IsSpanningSubdigraph {
+    /// Returns whether the digraph is a spanning subdigraph of another digraph.
     ///
     /// # Arguments
     ///
     /// * `d`: The digraph to compare against.
     #[must_use]
-    fn is_subdigraph(&self, d: &Self) -> bool;
+    fn is_spanning_subdigraph(&self, d: &Self) -> bool;
 }
 
-impl<T> IsSubdigraph for T
+impl<T> IsSpanningSubdigraph for T
 where
     T: Arcs + HasArc + Vertices,
 {
-    fn is_subdigraph(&self, d: &Self) -> bool {
-        let hv = self.vertices().collect::<BTreeSet<_>>();
-        let dv = d.vertices().collect::<BTreeSet<_>>();
-
-        self.arcs()
-            .all(|(u, v)| d.has_arc(u, v) && hv.contains(&u) && hv.contains(&v))
-            && hv.iter().all(|u| dv.contains(u))
+    fn is_spanning_subdigraph(&self, d: &Self) -> bool {
+        self.vertices().eq(d.vertices()) && self.arcs().all(|(u, v)| d.has_arc(u, v))
     }
 }

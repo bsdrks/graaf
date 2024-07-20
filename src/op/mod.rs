@@ -54,6 +54,7 @@ pub mod is_pendant;
 pub mod is_regular;
 pub mod is_semicomplete;
 pub mod is_simple;
+pub mod is_spanning_subdigraph;
 pub mod is_subdigraph;
 pub mod is_superdigraph;
 pub mod is_symmetric;
@@ -89,6 +90,7 @@ pub use {
     is_regular::IsRegular,
     is_semicomplete::IsSemicomplete,
     is_simple::IsSimple,
+    is_spanning_subdigraph::IsSpanningSubdigraph,
     is_subdigraph::IsSubdigraph,
     is_superdigraph::IsSuperdigraph,
     is_symmetric::IsSymmetric,

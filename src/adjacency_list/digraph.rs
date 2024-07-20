@@ -237,6 +237,7 @@ mod tests {
                 IsRegular,
                 IsSemicomplete,
                 IsSimple,
+                IsSpanningSubdigraph,
                 IsSubdigraph,
                 IsSuperdigraph,
                 IsSymmetric,
@@ -512,6 +513,13 @@ mod tests {
         }
 
         #[test]
+        fn biclique_is_spanning_subdigraph(m in 1..25_usize, n in 1..25_usize) {
+            let digraph = Digraph::biclique(m, n);
+
+            assert!(digraph.is_spanning_subdigraph(&digraph));
+        }
+
+        #[test]
         fn biclique_is_subdigraph(m in 1..25_usize, n in 1..25_usize) {
             let digraph = Digraph::biclique(m, n);
 
@@ -729,6 +737,13 @@ mod tests {
         }
 
         #[test]
+        fn circuit_is_spanning_subdigraph(order in 1..25_usize) {
+            let digraph = Digraph::circuit(order);
+
+            assert!(digraph.is_spanning_subdigraph(&digraph));
+        }
+
+        #[test]
         fn circuit_is_subdigraph(order in 1..25_usize) {
             let digraph = Digraph::circuit(order);
 
@@ -867,6 +882,13 @@ mod tests {
         #[test]
         fn complete_is_simple(order in 2..25_usize) {
             assert!(Digraph::complete(order).is_simple());
+        }
+
+        #[test]
+        fn complete_is_spanning_subdigraph(order in 1..25_usize) {
+            let digraph = Digraph::complete(order);
+
+            assert!(digraph.is_spanning_subdigraph(&digraph));
         }
 
         #[test]
@@ -1039,6 +1061,13 @@ mod tests {
         }
 
         #[test]
+        fn cycle_is_spanning_subdigraph(order in 1..25_usize) {
+            let digraph = Digraph::cycle(order);
+
+            assert!(digraph.is_spanning_subdigraph(&digraph));
+        }
+
+        #[test]
         fn cycle_is_subdigraph(order in 1..25_usize) {
             let digraph = Digraph::cycle(order);
 
@@ -1187,6 +1216,13 @@ mod tests {
         }
 
         #[test]
+        fn empty_is_spanning_subdigraph(order in 1..25_usize) {
+            let digraph = Digraph::empty(order);
+
+            assert!(digraph.is_spanning_subdigraph(&digraph));
+        }
+
+        #[test]
         fn empty_is_subdigraph(order in 1..25_usize) {
             let digraph = Digraph::empty(order);
 
@@ -1329,6 +1365,13 @@ mod tests {
         #[test]
         fn random_tournament_is_simple(order in 1..25_usize) {
             assert!(Digraph::random_tournament(order).is_simple());
+        }
+
+        #[test]
+        fn random_tournament_is_spanning_subdigraph(order in 1..25_usize) {
+            let digraph = Digraph::random_tournament(order);
+
+            assert!(digraph.is_spanning_subdigraph(&digraph));
         }
 
         #[test]
@@ -1511,6 +1554,13 @@ mod tests {
             for u in digraph.vertices() {
                 assert!(!digraph.is_source(u));
             }
+        }
+
+        #[test]
+        fn star_is_spanning_subdigraph(order in 1..25_usize) {
+            let digraph = Digraph::star(order);
+
+            assert!(digraph.is_spanning_subdigraph(&digraph));
         }
 
         #[test]
