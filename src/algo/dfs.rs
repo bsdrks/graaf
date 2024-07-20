@@ -254,8 +254,27 @@ where
 mod tests {
     use {
         super::*,
-        crate::adjacency_list::fixture,
+        crate::{
+            adjacency_list::{
+                fixture,
+                Digraph,
+            },
+            gen::Empty,
+        },
     };
+
+    #[test]
+    fn dfsa_trivial() {
+        let digraph = Digraph::trivial();
+        let order = digraph.order();
+        let mut ordering = vec![0; order];
+        let mut t_visit = vec![0; order];
+        let mut t_expl = vec![0; order];
+
+        dfsa(&digraph, &mut ordering, &mut t_visit, &mut t_expl);
+
+        assert!(ordering.iter().eq(&[0]));
+    }
 
     #[test]
     fn dfsa_bang_jensen_34() {
@@ -352,6 +371,11 @@ mod tests {
     }
 
     #[test]
+    fn acyclic_ordering_trivial() {
+        assert!(acyclic_ordering(&Digraph::trivial()).iter().eq(&[0]));
+    }
+
+    #[test]
     fn acyclic_ordering_bang_jensen_34() {
         assert!(acyclic_ordering(&fixture::bang_jensen_34())
             .iter()
@@ -366,11 +390,6 @@ mod tests {
             .into_iter()
             .skip_while(|&u| u != 0)
             .collect::<Vec<usize>>();
-
-        // 0 = gmp
-        // 4 = map
-        // 3 = set
-        // 1 = solution
 
         assert!(dependencies.iter().eq(&[0, 4, 3, 1]));
     }

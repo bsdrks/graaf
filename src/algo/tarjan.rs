@@ -1,4 +1,4 @@
-//! Tarjan's algorithm.
+//! Tarjan
 //!
 //! Tarjan's algorithm finds strongly connected components in a digraph.
 //!
@@ -178,17 +178,30 @@ fn connect<D>(
 mod tests {
     use {
         super::*,
-        crate::adjacency_list::fixture::bang_jensen_196,
+        crate::{
+            adjacency_list::{
+                fixture::bang_jensen_196,
+                Digraph,
+            },
+            gen::Empty,
+        },
     };
 
     #[test]
     fn strongly_connected_components_bang_jensen_196() {
-        let scc = strongly_connected_components(&bang_jensen_196());
+        assert!(strongly_connected_components(&bang_jensen_196())
+            .iter()
+            .eq(&[
+                BTreeSet::from([2, 3, 4]),
+                BTreeSet::from([5, 6, 7]),
+                BTreeSet::from([0, 1]),
+            ]));
+    }
 
-        assert!(scc.iter().eq(&[
-            BTreeSet::from([2, 3, 4]),
-            BTreeSet::from([5, 6, 7]),
-            BTreeSet::from([0, 1]),
-        ]));
+    #[test]
+    fn strongly_connected_components_trivial() {
+        assert!(strongly_connected_components(&Digraph::trivial())
+            .iter()
+            .eq(&[BTreeSet::from([0])]));
     }
 }

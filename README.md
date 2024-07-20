@@ -14,9 +14,9 @@ Work with directed graphs in Rust.
   - [Bellman-Ford-Moore](#bellman-ford-moore)
   - [Breadth-First Search (BFS)](#breadth-first-search-bfs)
   - [Depth-First Search (DFS)](#depth-first-search-dfs)
-  - [Dijkstra's Algorithm](#dijkstras-algorithm)
+  - [Dijkstra](#dijkstra)
   - [Floyd-Warshall Algorithm](#floyd-warshall)
-  - [Tarjan's Algorithm](#tarjans-algorithm)
+  - [Tarjan](#tarjan)
   - [Breath-First Tree](#breadth-first-tree)
   - [Distance Matrix](#distance-matrix)
 - [Naming Conventions](#naming-conventions)
@@ -30,7 +30,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.71.6"
+graaf = "0.71.7"
 ```
 
 ## Digraph Types
@@ -137,7 +137,7 @@ A depth-first search explores the vertices of an unweighted digraph in order of 
 - [`dfsa_predecessors`](https://docs.rs/graaf/latest/graaf/algo/dfs/fn.dfsa_predecessors.html) finds the predecessors.
 - [`acyclic_ordering`](https://docs.rs/graaf/latest/graaf/algo/dfs/fn.acyclic_ordering.html) generates an acyclic ordering.
 
-### Dijkstra's Algorithm
+### Dijkstra
 
 Dijkstra's algorithm finds the shortest paths in an arc-weighted digraph.
 
@@ -159,7 +159,7 @@ The Floyd-Warshall algorithm finds the shortest paths between all pairs of verti
 
 - [`distances`](https://docs.rs/graaf/latest/graaf/algo/floyd_warshall/fn.distances.html) finds the shortest distances.
 
-### Tarjan's Algorithm
+### Tarjan
 
 Tarjan's algorithm finds the strongly connected components in a digraph.
 

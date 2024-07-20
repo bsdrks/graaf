@@ -166,7 +166,7 @@ mod tests {
     };
 
     #[test]
-    fn trivial() {
+    fn single_source_distances_trivial() {
         assert!(single_source_distances(&Digraph::<isize>::trivial(), 0)
             .unwrap()
             .iter()

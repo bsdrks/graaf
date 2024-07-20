@@ -1,4 +1,4 @@
-//! Dijkstra's algorithm with binary heap.
+//! Dijkstra
 //!
 //! Dijkstra's algorithm with binary heap finds the shortest path in an
 //! arc-weighted digraph.[^1]

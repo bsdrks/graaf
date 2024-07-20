@@ -20,6 +20,14 @@
 - Rename `DegreeSequence` to `SemidegreeSequence` and add a new `DegreeSequence` trait.
 - Subsume traits with one super trait into the super trait.
 
+## [0.71.7] - 2024-07-20
+
+Added
+
+- Add unit test `acyclic_ordering_trivial` for `dfs`.
+- Add unit test `dfsa_trivial` for `dfs`.
+- Add unit test `strongly_connected_components_trivial` for `tarjan`.
+
 ## [0.71.6] - 2024-07-20
 
 Added
