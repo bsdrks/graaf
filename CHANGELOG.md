@@ -17,7 +17,6 @@
 - Add the `SetContraction` trait.
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
-- Rename `Cycle` to `Circuit` and add a new `Cycle` trait.
 - Rename `DegreeSequence` to `SemidegreeSequence` and add a new `DegreeSequence` trait.
 - Subsume traits with one super trait into the super trait.
 
