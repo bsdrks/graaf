@@ -95,6 +95,8 @@
 //! - [`IsRegular`](op::IsRegular) checks if a digraph is regular.
 //! - [`IsSemicomplete`](op::IsSemicomplete) checks if a digraph is
 //!   semicomplete.
+//! - [`IsSpanningSubdigraph`](op::IsSpanningSubdigraph) checks if a digraph is
+//!   a spanning subdigraph.
 //! - [`IsSubdigraph`](op::IsSubdigraph) checks if a digraph is a subdigraph.
 //! - [`IsSuperdigraph`](op::IsSuperdigraph) checks if a digraph is a
 //!   superdigraph.

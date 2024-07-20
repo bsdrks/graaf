@@ -20,25 +20,32 @@
 - Rename `DegreeSequence` to `SemidegreeSequence` and add a new `DegreeSequence` trait.
 - Subsume traits with one super trait into the super trait.
 
+## [0.71.5] - 2024-07-20
+
+Added
+
+- Add `op::IsSpanningSubdigraph` to the `README`.
+- Add `op::IsSpanningSubdigraph` to `lib.rs`.
+
 ## [0.71.4] - 2024-07-20
 
 Added
 
-- Add `op::IsSpanningSubgraph`.
-- Add property test `biclique_is_spanning_subgraph` for `adjacency_list`.
-- Add property test `biclique_is_spanning_subgraph` for `adjacency_matrix`.
-- Add property test `circuit_is_spanning_subgraph` for `adjacency_list`.
-- Add property test `circuit_is_spanning_subgraph` for `adjacency_matrix`.
-- Add property test `complete_is_spanning_subgraph` for `adjacency_list`.
-- Add property test `complete_is_spanning_subgraph` for `adjacency_matrix`.
-- Add property test `cycle_is_spanning_subgraph` for `adjacency_list`.
-- Add property test `cycle_is_spanning_subgraph` for `adjacency_matrix`.
-- Add property test `empty_is_spanning_subgraph` for `adjacency_list`.
-- Add property test `empty_is_spanning_subgraph` for `adjacency_matrix`.
-- Add property test `random_tournament_is_spanning_subgraph` for `adjacency_list`.
-- Add property test `random_tournament_is_spanning_subgraph` for `adjacency_matrix`.
-- Add property test `star_is_spanning_subgraph` for `adjacency_list`.
-- Add property test `star_is_spanning_subgraph` for `adjacency_matrix`.
+- Add `op::IsSpanningSubdigraph`.
+- Add property test `biclique_is_spanning_subdigraph` for `adjacency_list`.
+- Add property test `biclique_is_spanning_subdigraph` for `adjacency_matrix`.
+- Add property test `circuit_is_spanning_subdigraph` for `adjacency_list`.
+- Add property test `circuit_is_spanning_subdigraph` for `adjacency_matrix`.
+- Add property test `complete_is_spanning_subdigraph` for `adjacency_list`.
+- Add property test `complete_is_spanning_subdigraph` for `adjacency_matrix`.
+- Add property test `cycle_is_spanning_subdigraph` for `adjacency_list`.
+- Add property test `cycle_is_spanning_subdigraph` for `adjacency_matrix`.
+- Add property test `empty_is_spanning_subdigraph` for `adjacency_list`.
+- Add property test `empty_is_spanning_subdigraph` for `adjacency_matrix`.
+- Add property test `random_tournament_is_spanning_subdigraph` for `adjacency_list`.
+- Add property test `random_tournament_is_spanning_subdigraph` for `adjacency_matrix`.
+- Add property test `star_is_spanning_subdigraph` for `adjacency_list`.
+- Add property test `star_is_spanning_subdigraph` for `adjacency_matrix`.
 
 ## [0.71.3] - 2024-07-19
 

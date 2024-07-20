@@ -30,7 +30,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.71.4"
+graaf = "0.71.5"
 ```
 
 ## Digraph Types
@@ -96,6 +96,7 @@ The extended traits derive their implementation from the basic operations.
 - [`IsPendant`] checks if a vertex is a pendant.
 - [`IsRegular`] checks if a digraph is regular.
 - [`IsSemicomplete`] checks if a digraph is semicomplete.
+- [`IsSpanningSubdigraph`] checks if a digraph is a spanning subdigraph.
 - [`IsSubdigraph`] checks if a digraph is a subdigraph.
 - [`IsSuperdigraph`] checks if a digraph is a superdigraph.
 - [`IsSymmetric`] checks if a digraph is symmetric.
@@ -214,6 +215,7 @@ A distance matrix contains the shortest distances between all pairs of vertices 
 [`IsRegular`]: https://docs.rs/graaf/latest/graaf/op/is_regular/trait.IsRegular.html
 [`IsSemicomplete`]: https://docs.rs/graaf/latest/graaf/op/is_semicomplete/trait.IsSemicomplete.html
 [`IsSimple`]: https://docs.rs/graaf/latest/graaf/op/is_simple/trait.IsSimple.html
+[`IsSpanningSubdigraph`]: https://docs.rs/graaf/latest/graaf/op/is_spanning_subdigraph/trait.IsSpanningSubdigraph.html
 [`IsSubdigraph`]: https://docs.rs/graaf/latest/graaf/op/is_subdigraph/trait.IsSubdigraph.html
 [`IsSuperdigraph`]: https://docs.rs/graaf/latest/graaf/op/is_superdigraph/trait.IsSuperdigraph.html
 [`IsSymmetric`]: https://docs.rs/graaf/latest/graaf/op/is_symmetric/trait.IsSymmetric.html
