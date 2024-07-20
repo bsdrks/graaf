@@ -543,6 +543,7 @@ where
 #[cfg(test)]
 mod tests {
     use {
+        super::*,
         crate::{
             adjacency_list::{
                 fixture,
@@ -552,8 +553,6 @@ mod tests {
         },
         std::collections::BTreeSet,
     };
-
-    use super::*;
 
     #[test]
     fn distances_trivial() {

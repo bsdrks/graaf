@@ -20,6 +20,13 @@
 - Rename `DegreeSequence` to `SemidegreeSequence` and add a new `DegreeSequence` trait.
 - Subsume traits with one super trait into the super trait.
 
+## [0.71.6] - 2024-07-20
+
+Added
+
+- Add fixture `bang_jensen_196` for `adjacency_list`.
+- Add unit test `strongly_connected_components_bang_jensen_196` for `algo::tarjan`.
+
 ## [0.71.5] - 2024-07-20
 
 Added

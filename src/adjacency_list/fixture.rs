@@ -6,6 +6,34 @@ use {
 };
 
 /// Jørgen Bang-Jensen and Gregory Z. Gutin. 2009. Digraphs: Theory,
+/// Algorithms and Applications (2nd ed.). Springer, London, 196.
+/// <https://doi.org/10.1007/978-1-84800-998-1>
+///
+/// ```text
+/// 0 -> {1, 4, 7}
+/// 1 -> {0, 2, 7}
+/// 2 -> {3}
+/// 3 -> {2, 4}
+/// 4 -> {2}
+/// 5 -> {6}
+/// 6 -> {7}
+/// 7 -> {5}
+/// ```
+#[must_use]
+pub fn bang_jensen_196() -> Digraph {
+    Digraph::from(vec![
+        BTreeSet::from([1, 4, 7]),
+        BTreeSet::from([0, 2, 7]),
+        BTreeSet::from([3]),
+        BTreeSet::from([2, 4]),
+        BTreeSet::from([2]),
+        BTreeSet::from([6]),
+        BTreeSet::from([7]),
+        BTreeSet::from([5]),
+    ])
+}
+
+/// Jørgen Bang-Jensen and Gregory Z. Gutin. 2009. Digraphs: Theory,
 /// Algorithms and Applications (2nd ed.). Springer, London, 34.
 /// <https://doi.org/10.1007/978-1-84800-998-1>
 ///

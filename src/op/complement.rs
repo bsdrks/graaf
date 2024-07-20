@@ -42,12 +42,13 @@
 //! ]));
 //! ```
 
-use crate::gen::Empty;
-
-use super::{
-    AddArc,
-    HasArc,
-    Order,
+use {
+    super::{
+        AddArc,
+        HasArc,
+        Order,
+    },
+    crate::gen::Empty,
 };
 
 /// Generate the complement of a digraph.

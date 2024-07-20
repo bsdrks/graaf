@@ -168,25 +168,26 @@ where
 
 #[cfg(test)]
 mod tests {
-    use crate::{
-        adjacency_list_weighted::{
-            fixture::{
-                bang_jensen_94_weighted_isize,
-                bang_jensen_96_isize,
-                bang_jensen_99,
-                kattis_bryr_1_isize,
-                kattis_bryr_2_isize,
-                kattis_bryr_3_isize,
-                kattis_crosscountry_isize,
-                kattis_shortestpath1_isize,
+    use {
+        super::*,
+        crate::{
+            adjacency_list_weighted::{
+                fixture::{
+                    bang_jensen_94_weighted_isize,
+                    bang_jensen_96_isize,
+                    bang_jensen_99,
+                    kattis_bryr_1_isize,
+                    kattis_bryr_2_isize,
+                    kattis_bryr_3_isize,
+                    kattis_crosscountry_isize,
+                    kattis_shortestpath1_isize,
+                },
+                Digraph,
             },
-            Digraph,
+            gen::Empty,
+            op::AddArcWeighted,
         },
-        gen::Empty,
-        op::AddArcWeighted,
     };
-
-    use super::*;
 
     #[test]
     fn distances_doctest() {

@@ -173,3 +173,22 @@ fn connect<D>(
         scc.push(component);
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use {
+        super::*,
+        crate::adjacency_list::fixture::bang_jensen_196,
+    };
+
+    #[test]
+    fn strongly_connected_components_bang_jensen_196() {
+        let scc = strongly_connected_components(&bang_jensen_196());
+
+        assert!(scc.iter().eq(&[
+            BTreeSet::from([2, 3, 4]),
+            BTreeSet::from([5, 6, 7]),
+            BTreeSet::from([0, 1]),
+        ]));
+    }
+}
