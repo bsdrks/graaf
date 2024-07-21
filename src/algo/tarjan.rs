@@ -41,11 +41,16 @@
 //! digraph.add_arc(7, 3);
 //! digraph.add_arc(7, 6);
 //!
-//! assert!(strongly_connected_components(&digraph).iter().eq(&[
-//!     BTreeSet::from([5, 6]),
-//!     BTreeSet::from([7, 3, 2]),
-//!     BTreeSet::from([4, 1, 0])
-//! ]));
+//! assert_eq!(
+//!     strongly_connected_components(&digraph)
+//!         .into_iter()
+//!         .collect::<BTreeSet<BTreeSet<usize>>>(),
+//!     BTreeSet::from([
+//!         BTreeSet::from([4, 1, 0]),
+//!         BTreeSet::from([5, 6]),
+//!         BTreeSet::from([7, 3, 2])
+//!     ])
+//! );
 //! ```
 
 use {
@@ -90,8 +95,12 @@ use {
 /// digraph.add_arc(2, 0);
 /// digraph.add_arc(3, 0);
 ///
-/// assert!(strongly_connected_components(&digraph)
-///     .eq(&[BTreeSet::from([0, 1, 2]), BTreeSet::from([3])]));
+/// assert_eq!(
+///     strongly_connected_components(&digraph)
+///         .into_iter()
+///         .collect::<BTreeSet<BTreeSet<usize>>>(),
+///     BTreeSet::from([BTreeSet::from([0, 1, 2]), BTreeSet::from([3])])
+/// );
 /// ```
 #[doc(alias = "scc")]
 #[must_use]
@@ -180,7 +189,10 @@ mod tests {
         super::*,
         crate::{
             adjacency_list::{
-                fixture::bang_jensen_196,
+                fixture::{
+                    bang_jensen_196,
+                    kattis_cantinaofbabel_1,
+                },
                 Digraph,
             },
             gen::Empty,
@@ -189,19 +201,39 @@ mod tests {
 
     #[test]
     fn strongly_connected_components_bang_jensen_196() {
-        assert!(strongly_connected_components(&bang_jensen_196())
-            .iter()
-            .eq(&[
+        assert_eq!(
+            strongly_connected_components(&bang_jensen_196())
+                .into_iter()
+                .collect::<BTreeSet<BTreeSet<usize>>>(),
+            BTreeSet::from([
+                BTreeSet::from([0, 1]),
                 BTreeSet::from([2, 3, 4]),
                 BTreeSet::from([5, 6, 7]),
-                BTreeSet::from([0, 1]),
-            ]));
+            ])
+        );
+    }
+
+    #[test]
+    fn strongly_connected_components_kattis_cantinaofbabel_1() {
+        assert_eq!(
+            strongly_connected_components(&kattis_cantinaofbabel_1())
+                .into_iter()
+                .collect::<BTreeSet<BTreeSet<usize>>>(),
+            BTreeSet::from([
+                BTreeSet::from([0, 1, 2, 3, 4, 7, 9, 11]),
+                BTreeSet::from([5, 6, 10]),
+                BTreeSet::from([8]),
+            ])
+        );
     }
 
     #[test]
     fn strongly_connected_components_trivial() {
-        assert!(strongly_connected_components(&Digraph::trivial())
-            .iter()
-            .eq(&[BTreeSet::from([0])]));
+        assert_eq!(
+            strongly_connected_components(&Digraph::trivial())
+                .into_iter()
+                .collect::<BTreeSet<BTreeSet<usize>>>(),
+            BTreeSet::from([BTreeSet::from([0])])
+        );
     }
 }

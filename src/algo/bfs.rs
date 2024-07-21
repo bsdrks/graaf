@@ -546,7 +546,12 @@ mod tests {
         super::*,
         crate::{
             adjacency_list::{
-                fixture,
+                fixture::{
+                    bang_jensen_94,
+                    kattis_escapewallmaria_1,
+                    kattis_escapewallmaria_2,
+                    kattis_escapewallmaria_3,
+                },
                 Digraph,
             },
             gen::Empty,
@@ -556,37 +561,39 @@ mod tests {
 
     #[test]
     fn distances_trivial() {
-        let digraph = Digraph::trivial();
         let mut dist = vec![0];
         let mut queue = VecDeque::new();
 
-        distances(&digraph, |w: usize| w + 1, &mut dist, &mut queue);
+        distances(&Digraph::trivial(), |w: usize| w + 1, &mut dist, &mut queue);
 
         assert!(dist.iter().eq(&[0]));
     }
 
     #[test]
     fn distances_bang_jensen_94() {
-        let digraph = fixture::bang_jensen_94();
         let mut dist = [usize::MAX; 7];
         let mut queue = VecDeque::from([(0, 0)]);
 
         dist[0] = 0;
 
-        distances(&digraph, |w| w + 1, &mut dist, &mut queue);
+        distances(&bang_jensen_94(), |w| w + 1, &mut dist, &mut queue);
 
         assert!(dist.iter().eq(&[0, 1, 1, 2, 2, 2, 3]));
     }
 
     #[test]
     fn distances_kattis_escapewallmaria_1() {
-        let digraph = fixture::kattis_escapewallmaria_1();
         let mut dist = [usize::MAX; 16];
         let mut queue = VecDeque::from([(5, 0)]);
 
         dist[5] = 0;
 
-        distances(&digraph, |w| w + 1, &mut dist, &mut queue);
+        distances(
+            &kattis_escapewallmaria_1(),
+            |w| w + 1,
+            &mut dist,
+            &mut queue,
+        );
 
         let mut dist_expected = [usize::MAX; 16];
 
@@ -601,13 +608,17 @@ mod tests {
 
     #[test]
     fn distances_kattis_escapewallmaria_2() {
-        let digraph = fixture::kattis_escapewallmaria_2();
         let mut dist = [usize::MAX; 16];
         let mut queue = VecDeque::from([(5, 0)]);
 
         dist[5] = 0;
 
-        distances(&digraph, |w| w + 1, &mut dist, &mut queue);
+        distances(
+            &kattis_escapewallmaria_2(),
+            |w| w + 1,
+            &mut dist,
+            &mut queue,
+        );
 
         let mut dist_expected = [usize::MAX; 16];
 
@@ -620,13 +631,17 @@ mod tests {
 
     #[test]
     fn distances_kattis_escapewallmaria_3() {
-        let digraph = fixture::kattis_escapewallmaria_3();
         let mut dist = [usize::MAX; 16];
         let mut queue = VecDeque::from([(1, 0)]);
 
         dist[1] = 0;
 
-        distances(&digraph, |w| w + 1, &mut dist, &mut queue);
+        distances(
+            &kattis_escapewallmaria_3(),
+            |w| w + 1,
+            &mut dist,
+            &mut queue,
+        );
 
         let mut dist_expected = [usize::MAX; 16];
 
@@ -650,19 +665,24 @@ mod tests {
 
     #[test]
     fn single_source_distancesbang_jensen_94() {
-        assert!(single_source_distances(&fixture::bang_jensen_94(), 0)
+        assert!(single_source_distances(&bang_jensen_94(), 0)
             .iter()
             .eq(&[0, 1, 1, 2, 2, 2, 3]));
     }
 
     #[test]
     fn predecessors_trivial() {
-        let digraph = Digraph::trivial();
         let mut pred = BreadthFirstTree::new(1);
         let mut dist = vec![0];
         let mut queue = VecDeque::new();
 
-        predecessors(&digraph, |w: usize| w + 1, &mut pred, &mut dist, &mut queue);
+        predecessors(
+            &Digraph::trivial(),
+            |w: usize| w + 1,
+            &mut pred,
+            &mut dist,
+            &mut queue,
+        );
 
         assert!(pred.into_iter().eq([None]));
         assert!(dist.iter().eq(&[0]));
@@ -670,7 +690,7 @@ mod tests {
 
     #[test]
     fn predecessors_bang_jensen_94() {
-        let digraph = fixture::bang_jensen_94();
+        let digraph = bang_jensen_94();
         let mut pred = BreadthFirstTree::new(7);
         let mut dist = [usize::MAX; 7];
         let mut queue = VecDeque::from([(0, 0)]);
@@ -688,14 +708,19 @@ mod tests {
 
     #[test]
     fn predecessors_kattis_escapewallmaria_1() {
-        let digraph = fixture::kattis_escapewallmaria_1();
         let mut pred = BreadthFirstTree::new(16);
         let mut dist = [usize::MAX; 16];
         let mut queue = VecDeque::from([(5, 0)]);
 
         dist[5] = 0;
 
-        predecessors(&digraph, |w| w + 1, &mut pred, &mut dist, &mut queue);
+        predecessors(
+            &kattis_escapewallmaria_1(),
+            |w| w + 1,
+            &mut pred,
+            &mut dist,
+            &mut queue,
+        );
 
         let mut pred_expected = [None; 16];
 
@@ -719,14 +744,19 @@ mod tests {
 
     #[test]
     fn predecessors_kattis_escapewallmaria_2() {
-        let digraph = fixture::kattis_escapewallmaria_2();
         let mut pred = BreadthFirstTree::new(16);
         let mut dist = [usize::MAX; 16];
         let mut queue = VecDeque::from([(5, 0)]);
 
         dist[5] = 0;
 
-        predecessors(&digraph, |w| w + 1, &mut pred, &mut dist, &mut queue);
+        predecessors(
+            &kattis_escapewallmaria_2(),
+            |w| w + 1,
+            &mut pred,
+            &mut dist,
+            &mut queue,
+        );
 
         let mut pred_expected = [None; 16];
 
@@ -746,14 +776,19 @@ mod tests {
 
     #[test]
     fn predecessors_kattis_escapewallmaria_3() {
-        let digraph = fixture::kattis_escapewallmaria_3();
         let mut pred = BreadthFirstTree::new(16);
         let mut dist = [usize::MAX; 16];
         let mut queue = VecDeque::from([(1, 0)]);
 
         dist[1] = 0;
 
-        predecessors(&digraph, |w| w + 1, &mut pred, &mut dist, &mut queue);
+        predecessors(
+            &kattis_escapewallmaria_3(),
+            |w| w + 1,
+            &mut pred,
+            &mut dist,
+            &mut queue,
+        );
 
         let mut pred_expected = [None; 16];
 
@@ -788,20 +823,19 @@ mod tests {
 
     #[test]
     fn single_source_predecessors_bang_jensen_94() {
-        assert!(single_source_predecessors(&fixture::bang_jensen_94(), 0)
+        assert!(single_source_predecessors(&bang_jensen_94(), 0)
             .into_iter()
             .eq([None, Some(0), Some(0), Some(1), Some(2), Some(2), Some(4)]));
     }
 
     #[test]
     fn shortest_path_trivial() {
-        let digraph = Digraph::trivial();
         let mut pred = BreadthFirstTree::new(1);
         let mut dist = vec![0];
         let mut queue = VecDeque::new();
 
         let path = shortest_path(
-            &digraph,
+            &Digraph::trivial(),
             |w: usize| w + 1,
             |t| t == 0,
             &mut pred,
@@ -816,7 +850,6 @@ mod tests {
 
     #[test]
     fn shortest_path_bang_jensen_94() {
-        let digraph = fixture::bang_jensen_94();
         let mut pred = BreadthFirstTree::new(7);
         let mut dist = [usize::MAX; 7];
         let mut queue = VecDeque::from([(0, 0)]);
@@ -824,7 +857,7 @@ mod tests {
         dist[0] = 0;
 
         let path = shortest_path(
-            &digraph,
+            &bang_jensen_94(),
             |w| w + 1,
             |t| t == 6,
             &mut pred,
@@ -842,7 +875,6 @@ mod tests {
 
     #[test]
     fn shortest_path_kattis_escapewallmaria_1() {
-        let digraph = fixture::kattis_escapewallmaria_1();
         let border = BTreeSet::from([0, 1, 2, 3, 4, 7, 8, 11, 12, 13, 14, 15]);
         let mut pred = BreadthFirstTree::new(16);
         let mut dist = [usize::MAX; 16];
@@ -851,7 +883,7 @@ mod tests {
         dist[5] = 0;
 
         let path = shortest_path(
-            &digraph,
+            &kattis_escapewallmaria_1(),
             |w| w + 1,
             |t| border.contains(&t),
             &mut pred,
@@ -880,7 +912,6 @@ mod tests {
 
     #[test]
     fn shortest_path_kattis_escapewallmaria_2() {
-        let digraph = fixture::kattis_escapewallmaria_2();
         let border = BTreeSet::from([0, 1, 2, 3, 4, 7, 8, 11, 12, 13, 14, 15]);
         let mut pred = BreadthFirstTree::new(16);
         let mut dist = [usize::MAX; 16];
@@ -889,7 +920,7 @@ mod tests {
         dist[5] = 0;
 
         let path = shortest_path(
-            &digraph,
+            &kattis_escapewallmaria_2(),
             |w| w + 1,
             |t| border.contains(&t),
             &mut pred,
@@ -916,7 +947,6 @@ mod tests {
 
     #[test]
     fn shortest_path_kattis_escapewallmaria_3() {
-        let digraph = fixture::kattis_escapewallmaria_3();
         let border = BTreeSet::from([0, 1, 2, 3, 4, 7, 8, 11, 12, 13, 14, 15]);
         let mut pred = BreadthFirstTree::new(16);
         let mut dist = [usize::MAX; 16];
@@ -925,7 +955,7 @@ mod tests {
         dist[1] = 0;
 
         let path = shortest_path(
-            &digraph,
+            &kattis_escapewallmaria_3(),
             |w| w + 1,
             |t| border.contains(&t),
             &mut pred,
@@ -953,7 +983,7 @@ mod tests {
 
     #[test]
     fn single_pair_shortest_path_bang_jensen_94() {
-        assert!(single_pair_shortest_path(&fixture::bang_jensen_94(), 0, 6)
+        assert!(single_pair_shortest_path(&bang_jensen_94(), 0, 6)
             .unwrap()
             .iter()
             .eq(&[0, 2, 4, 6]));

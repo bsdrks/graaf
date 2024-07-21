@@ -205,7 +205,7 @@ pub trait Biclique {
 
     /// Generates a claw digraph.
     ///
-    /// The claw digraph is also known as K{1,3}.
+    /// The claw digraph is also known as K{1, 3}.
     ///
     /// # Examples
     ///
@@ -235,7 +235,7 @@ pub trait Biclique {
 
     /// Generates a utility digraph.
     ///
-    /// The utility digraph is also known as K{3,3}.
+    /// The utility digraph is also known as K{3, 3}.
     ///
     /// # Examples
     ///

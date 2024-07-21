@@ -20,9 +20,16 @@
 - Rename `DegreeSequence` to `SemidegreeSequence` and add a new `DegreeSequence` trait.
 - Subsume traits with one super trait into the super trait.
 
+## [0.72.1] - 2024-07-21
+
+Added
+
+- Add fixture `kattis_cantinaofbabel_1` for `adjacency_list`.
+- Add unit test `strongly_connected_components_kattis_cantinaofbabel_1` for `algo::tarjan`.
+
 ## [0.72.0] - 2024-07-21
 
-Add
+Added
 
 - Add proptest strategy `arc`.
 - Add unit test `add_arc_out_of_bounds_u` for `adjacency_list`.

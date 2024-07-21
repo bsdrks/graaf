@@ -87,12 +87,12 @@ pub fn bang_jensen_94() -> Digraph {
 /// <https://open.kattis.com/problems/builddeps>
 ///
 /// ```text
-/// 0 = gmp
-/// 1 = solution
-/// 2 = base
-/// 3 = set
-/// 4 = map
-/// 5 = queue
+/// 0: gmp
+/// 1: solution
+/// 2: base
+/// 3: set
+/// 4: map
+/// 5: queue
 /// ```
 ///
 /// ```text
@@ -114,6 +114,67 @@ pub fn kattis_builddeps() -> Digraph {
         BTreeSet::from([1]),
     ])
 }
+
+/// David Sturgill. 2015. Cantina of Babel. (Sample Input 2). Kattis.
+/// <https://open.kattis.com/problems/cantinaofbabel>
+///
+/// ```text
+/// 0: Jabba-the-Hutt
+/// 1: Huttese
+/// 2: Bib-Fortuna
+/// 3: Basic
+/// 4: Boba-Fett
+/// 5: Chewbacca
+/// 6: Shyriiwook
+/// 7: Luke
+/// 8: Jawaese
+/// 9: Binary
+/// 10: Grakchawwaa
+/// 11: R2D2
+/// ```
+///
+/// ```text
+/// Jabba-the-Hutt Huttese
+/// Bib-Fortuna Huttese Basic
+/// Boba-Fett Basic Huttese
+/// Chewbacca Shyriiwook Basic
+/// Luke Basic Jawaese Binary
+/// Grakchawwaa Shyriiwook Basic Jawaese
+/// R2D2 Binary Basic
+/// ```
+///
+/// ```text
+/// 0 -> {1}
+/// 1 -> {0, 2, 4}
+/// 2 -> {1}
+/// 3 -> {2, 4, 5, 7, 10, 11}
+/// 4 -> {3}
+/// 5 -> {6}
+/// 6 -> {5, 10}
+/// 7 -> {3}
+/// 8 -> {7, 10}
+/// 9 -> {7, 11}
+/// 10 -> {6}
+/// 11 -> {9}
+/// ```
+#[must_use]
+pub fn kattis_cantinaofbabel_1() -> Digraph {
+    Digraph::from(vec![
+        BTreeSet::from([1]),
+        BTreeSet::from([0, 2, 4]),
+        BTreeSet::from([1]),
+        BTreeSet::from([2, 4, 5, 7, 10, 11]),
+        BTreeSet::from([3]),
+        BTreeSet::from([6]),
+        BTreeSet::from([5, 10]),
+        BTreeSet::from([3]),
+        BTreeSet::from([7, 10]),
+        BTreeSet::from([7, 11]),
+        BTreeSet::from([6]),
+        BTreeSet::from([9]),
+    ])
+}
+
 /// Arash Behpour. 2019. Escape Wall Maria. Kattis. (Sample Input 1)
 /// <https://open.kattis.com/problems/escapewallmaria>
 ///

@@ -13,9 +13,9 @@
 //!    - [Bellman-Ford-Moore](#bellman-ford-moore)
 //!    - [Breadth-first search (BFS)](#breadth-first-search-bfs)
 //!    - [Depth-first search (DFS)](#depth-first-search-dfs)
-//!    - [Dijkstra's algorithm](#dijkstras-algorithm)
-//!    - [Floyd-Warshall algorithm](#floyd-warshall)
-//!    - [Tarjan's algorithm](#tarjans-algorithm)
+//!    - [Dijkstra](#dijkstra)
+//!    - [Floyd-Warshall](#floyd-warshall)
+//!    - [Tarjan](#tarjan)
 //!    - [Breath-first tree](#breadth-first-tree)
 //!    - [Distance matrix](#distance-matrix)
 //! - [Naming Conventions](#naming-conventions)
@@ -149,7 +149,7 @@
 //! - [`acyclic_ordering`](algo::dfs::acyclic_ordering) generates an acyclic
 //!   ordering.
 //!
-//! ## Dijkstra's algorithm
+//! ## Dijkstra
 //!
 //! Dijkstra's algorithm finds the shortest paths from one or more source
 //! vertices in an arc-weighted digraph.
@@ -179,7 +179,7 @@
 //! - [`distances`](algo::floyd_warshall::distances) finds the shortest
 //!   distances.
 //!
-//! ## Tarjan's algorithm
+//! ## Tarjan
 //!
 //! Tarjan's algorithm finds the strongly connected components in a digraph.
 //!

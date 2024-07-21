@@ -256,7 +256,10 @@ mod tests {
         super::*,
         crate::{
             adjacency_list::{
-                fixture,
+                fixture::{
+                    bang_jensen_34,
+                    kattis_builddeps,
+                },
                 Digraph,
             },
             gen::Empty,
@@ -278,7 +281,7 @@ mod tests {
 
     #[test]
     fn dfsa_bang_jensen_34() {
-        let digraph = fixture::bang_jensen_34();
+        let digraph = bang_jensen_34();
         let order = digraph.order();
         let mut ordering = vec![0; order];
         let mut t_visit = vec![0; order];
@@ -291,7 +294,7 @@ mod tests {
 
     #[test]
     fn dfsa_kattis_builddeps() {
-        let digraph = fixture::kattis_builddeps();
+        let digraph = kattis_builddeps();
         let order = digraph.order();
         let mut ordering = vec![0; order];
         let mut t_visit = vec![0; order];
@@ -304,17 +307,12 @@ mod tests {
             .skip_while(|&u| u != 0)
             .collect::<Vec<usize>>();
 
-        // 0 = gmp
-        // 4 = map
-        // 3 = set
-        // 1 = solution
-
         assert!(dependencies.iter().eq(&[0, 4, 3, 1]));
     }
 
     #[test]
     fn dfsa_predecessors_bang_jensen_34() {
-        let digraph = fixture::bang_jensen_34();
+        let digraph = bang_jensen_34();
         let order = digraph.order();
         let mut ordering = vec![0; order];
         let mut pred = vec![None; order];
@@ -338,7 +336,7 @@ mod tests {
 
     #[test]
     fn dfsa_predecessors_kattis_builddeps() {
-        let digraph = fixture::kattis_builddeps();
+        let digraph = kattis_builddeps();
         let order = digraph.order();
         let mut ordering = vec![0; order];
         let mut pred = vec![None; order];
@@ -377,14 +375,14 @@ mod tests {
 
     #[test]
     fn acyclic_ordering_bang_jensen_34() {
-        assert!(acyclic_ordering(&fixture::bang_jensen_34())
+        assert!(acyclic_ordering(&bang_jensen_34())
             .iter()
             .eq(&[2, 5, 3, 1, 0, 4]));
     }
 
     #[test]
     fn acycling_ordering_kattis_builddeps() {
-        let ordering = acyclic_ordering(&fixture::kattis_builddeps());
+        let ordering = acyclic_ordering(&kattis_builddeps());
 
         let dependencies = ordering
             .into_iter()

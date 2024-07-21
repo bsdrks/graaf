@@ -557,7 +557,15 @@ mod tests {
         super::*,
         crate::{
             adjacency_list_weighted::{
-                fixture,
+                fixture::{
+                    bang_jensen_94_weighted_usize,
+                    bang_jensen_96_usize,
+                    kattis_bryr_1_usize,
+                    kattis_bryr_2_usize,
+                    kattis_bryr_3_usize,
+                    kattis_crosscountry_usize,
+                    kattis_shortestpath1_usize,
+                },
                 Digraph,
             },
             gen::Empty,
@@ -622,46 +630,37 @@ mod tests {
 
     #[test]
     fn distances_bang_jensen_94_weighted() {
-        test_distances!(
-            fixture::bang_jensen_94_weighted_usize(),
-            &[0, 1, 1, 2, 2, 2, 3]
-        );
+        test_distances!(bang_jensen_94_weighted_usize(), &[0, 1, 1, 2, 2, 2, 3]);
     }
 
     #[test]
     fn distances_bang_jensen_96() {
-        test_distances!(fixture::bang_jensen_96_usize(), &[0, 5, 3, 6, 4, 7]);
+        test_distances!(bang_jensen_96_usize(), &[0, 5, 3, 6, 4, 7]);
     }
 
     #[test]
     fn distances_kattis_bryr_1() {
-        test_distances!(fixture::kattis_bryr_1_usize(), &[0, 1, 1]);
+        test_distances!(kattis_bryr_1_usize(), &[0, 1, 1]);
     }
 
     #[test]
     fn distances_kattis_bryr_2() {
-        test_distances!(fixture::kattis_bryr_2_usize(), &[0, 1, 2, 1, 2, 3]);
+        test_distances!(kattis_bryr_2_usize(), &[0, 1, 2, 1, 2, 3]);
     }
 
     #[test]
     fn distances_kattis_bryr_3() {
-        test_distances!(
-            fixture::kattis_bryr_3_usize(),
-            &[0, 0, 1, 0, 0, 0, 1, 0, 0, 1]
-        );
+        test_distances!(kattis_bryr_3_usize(), &[0, 0, 1, 0, 0, 0, 1, 0, 0, 1]);
     }
 
     #[test]
     fn distances_kattis_crosscountry() {
-        test_distances!(fixture::kattis_crosscountry_usize(), &[0, 1, 3, 10]);
+        test_distances!(kattis_crosscountry_usize(), &[0, 1, 3, 10]);
     }
 
     #[test]
     fn distances_kattis_shortestpath1() {
-        test_distances!(
-            fixture::kattis_shortestpath1_usize(),
-            &[0, 2, 4, usize::MAX]
-        );
+        test_distances!(kattis_shortestpath1_usize(), &[0, 2, 4, usize::MAX]);
     }
 
     #[test]
@@ -673,57 +672,51 @@ mod tests {
 
     #[test]
     fn single_source_distances_bang_jensen_94_weighted() {
-        assert!(
-            single_source_distances(&fixture::bang_jensen_94_weighted_usize(), 0)
-                .iter()
-                .eq(&[0, 1, 1, 2, 2, 2, 3])
-        );
+        assert!(single_source_distances(&bang_jensen_94_weighted_usize(), 0)
+            .iter()
+            .eq(&[0, 1, 1, 2, 2, 2, 3]));
     }
 
     #[test]
     fn single_source_distances_bang_jensen_96() {
-        assert!(single_source_distances(&fixture::bang_jensen_96_usize(), 0)
+        assert!(single_source_distances(&bang_jensen_96_usize(), 0)
             .iter()
             .eq(&[0, 5, 3, 6, 4, 7]));
     }
 
     #[test]
     fn single_source_distances_kattis_bryr_1() {
-        assert!(single_source_distances(&fixture::kattis_bryr_1_usize(), 0)
+        assert!(single_source_distances(&kattis_bryr_1_usize(), 0)
             .iter()
             .eq(&[0, 1, 1]));
     }
 
     #[test]
     fn single_source_distances_kattis_bryr_2() {
-        assert!(single_source_distances(&fixture::kattis_bryr_2_usize(), 0)
+        assert!(single_source_distances(&kattis_bryr_2_usize(), 0)
             .iter()
             .eq(&[0, 1, 2, 1, 2, 3]));
     }
 
     #[test]
     fn single_source_distances_kattis_bryr_3() {
-        assert!(single_source_distances(&fixture::kattis_bryr_3_usize(), 0)
+        assert!(single_source_distances(&kattis_bryr_3_usize(), 0)
             .iter()
             .eq(&[0, 0, 1, 0, 0, 0, 1, 0, 0, 1]));
     }
 
     #[test]
     fn single_source_distances_kattis_crosscountry() {
-        assert!(
-            single_source_distances(&fixture::kattis_crosscountry_usize(), 0)
-                .iter()
-                .eq(&[0, 1, 3, 10])
-        );
+        assert!(single_source_distances(&kattis_crosscountry_usize(), 0)
+            .iter()
+            .eq(&[0, 1, 3, 10]));
     }
 
     #[test]
     fn single_source_distances_kattis_shortestpath1() {
-        assert!(
-            single_source_distances(&fixture::kattis_shortestpath1_usize(), 0)
-                .iter()
-                .eq(&[0, 2, 4, usize::MAX])
-        );
+        assert!(single_source_distances(&kattis_shortestpath1_usize(), 0)
+            .iter()
+            .eq(&[0, 2, 4, usize::MAX]));
     }
 
     #[test]
@@ -734,7 +727,7 @@ mod tests {
     #[test]
     fn predecessors_bang_jensen_94_weighted() {
         test_predecessors!(
-            fixture::bang_jensen_94_weighted_usize(),
+            bang_jensen_94_weighted_usize(),
             &[0, 1, 1, 2, 2, 2, 3],
             [None, Some(0), Some(0), Some(2), Some(2), Some(2), Some(4)]
         );
@@ -743,7 +736,7 @@ mod tests {
     #[test]
     fn predecessors_bang_jensen_96() {
         test_predecessors!(
-            fixture::bang_jensen_96_usize(),
+            bang_jensen_96_usize(),
             &[0, 5, 3, 6, 4, 7],
             [None, Some(2), Some(0), Some(4), Some(2), Some(3)]
         );
@@ -751,17 +744,13 @@ mod tests {
 
     #[test]
     fn predecessors_kattis_bryr_1() {
-        test_predecessors!(
-            fixture::kattis_bryr_1_usize(),
-            &[0, 1, 1],
-            [None, Some(0), Some(0)]
-        );
+        test_predecessors!(kattis_bryr_1_usize(), &[0, 1, 1], [None, Some(0), Some(0)]);
     }
 
     #[test]
     fn predecessors_kattis_bryr_2() {
         test_predecessors!(
-            fixture::kattis_bryr_2_usize(),
+            kattis_bryr_2_usize(),
             &[0, 1, 2, 1, 2, 3],
             [None, Some(0), Some(3), Some(0), Some(3), Some(4)]
         );
@@ -770,7 +759,7 @@ mod tests {
     #[test]
     fn predecessors_kattis_bryr_3() {
         test_predecessors!(
-            fixture::kattis_bryr_3_usize(),
+            kattis_bryr_3_usize(),
             &[0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
             [
                 None,
@@ -790,7 +779,7 @@ mod tests {
     #[test]
     fn predecessors_kattis_crosscountry() {
         test_predecessors!(
-            fixture::kattis_crosscountry_usize(),
+            kattis_crosscountry_usize(),
             &[0, 1, 3, 10],
             [None, Some(0), Some(0), Some(2)]
         );
@@ -799,7 +788,7 @@ mod tests {
     #[test]
     fn predecessors_kattis_shortestpath1() {
         test_predecessors!(
-            fixture::kattis_shortestpath1_usize(),
+            kattis_shortestpath1_usize(),
             &[0, 2, 4, usize::MAX],
             [None, Some(0), Some(1), None]
         );
@@ -815,7 +804,7 @@ mod tests {
     #[test]
     fn single_source_predecessors_bang_jensen_94_weighted() {
         assert!(
-            single_source_predecessors(&fixture::bang_jensen_94_weighted_usize(), 0)
+            single_source_predecessors(&bang_jensen_94_weighted_usize(), 0)
                 .into_iter()
                 .eq([None, Some(0), Some(0), Some(2), Some(2), Some(2), Some(4)])
         );
@@ -823,67 +812,55 @@ mod tests {
 
     #[test]
     fn single_source_predecessors_bang_jensen_96() {
-        assert!(
-            single_source_predecessors(&fixture::bang_jensen_96_usize(), 0)
-                .into_iter()
-                .eq([None, Some(2), Some(0), Some(4), Some(2), Some(3)])
-        );
+        assert!(single_source_predecessors(&bang_jensen_96_usize(), 0)
+            .into_iter()
+            .eq([None, Some(2), Some(0), Some(4), Some(2), Some(3)]));
     }
 
     #[test]
     fn single_source_predecessors_kattis_bryr_1() {
-        assert!(
-            single_source_predecessors(&fixture::kattis_bryr_1_usize(), 0)
-                .into_iter()
-                .eq([None, Some(0), Some(0)])
-        );
+        assert!(single_source_predecessors(&kattis_bryr_1_usize(), 0)
+            .into_iter()
+            .eq([None, Some(0), Some(0)]));
     }
 
     #[test]
     fn single_source_predecessors_kattis_bryr_2() {
-        assert!(
-            single_source_predecessors(&fixture::kattis_bryr_2_usize(), 0)
-                .into_iter()
-                .eq([None, Some(0), Some(3), Some(0), Some(3), Some(4)])
-        );
+        assert!(single_source_predecessors(&kattis_bryr_2_usize(), 0)
+            .into_iter()
+            .eq([None, Some(0), Some(3), Some(0), Some(3), Some(4)]));
     }
 
     #[test]
     fn single_source_predecessors_kattis_bryr_3() {
-        assert!(
-            single_source_predecessors(&fixture::kattis_bryr_3_usize(), 0)
-                .into_iter()
-                .eq([
-                    None,
-                    Some(7),
-                    Some(9),
-                    Some(0),
-                    Some(3),
-                    Some(3),
-                    Some(5),
-                    Some(3),
-                    Some(5),
-                    Some(1),
-                ])
-        );
+        assert!(single_source_predecessors(&kattis_bryr_3_usize(), 0)
+            .into_iter()
+            .eq([
+                None,
+                Some(7),
+                Some(9),
+                Some(0),
+                Some(3),
+                Some(3),
+                Some(5),
+                Some(3),
+                Some(5),
+                Some(1),
+            ]));
     }
 
     #[test]
     fn single_source_predecessors_kattis_crosscountry() {
-        assert!(
-            single_source_predecessors(&fixture::kattis_crosscountry_usize(), 0)
-                .into_iter()
-                .eq([None, Some(0), Some(0), Some(2)])
-        );
+        assert!(single_source_predecessors(&kattis_crosscountry_usize(), 0)
+            .into_iter()
+            .eq([None, Some(0), Some(0), Some(2)]));
     }
 
     #[test]
     fn single_source_predecessors_kattis_shortestpath1() {
-        assert!(
-            single_source_predecessors(&fixture::kattis_shortestpath1_usize(), 0)
-                .into_iter()
-                .eq([None, Some(0), Some(1), None])
-        );
+        assert!(single_source_predecessors(&kattis_shortestpath1_usize(), 0)
+            .into_iter()
+            .eq([None, Some(0), Some(1), None]));
     }
 
     #[test]
@@ -894,7 +871,7 @@ mod tests {
     #[test]
     fn shortest_path_bang_jensen_94_weighted() {
         test_shortest_path!(
-            fixture::bang_jensen_94_weighted_usize(),
+            bang_jensen_94_weighted_usize(),
             6,
             &[0, 1, 1, 2, 2, 2, 3],
             [None, Some(0), Some(0), Some(2), Some(2), Some(2), Some(4)],
@@ -905,7 +882,7 @@ mod tests {
     #[test]
     fn shortest_path_bang_jensen_96() {
         test_shortest_path!(
-            fixture::bang_jensen_96_usize(),
+            bang_jensen_96_usize(),
             5,
             &[0, 5, 3, 6, 4, 7],
             [None, Some(2), Some(0), Some(4), Some(2), Some(3)],
@@ -916,7 +893,7 @@ mod tests {
     #[test]
     fn shortest_path_kattis_bryr_1() {
         test_shortest_path!(
-            fixture::kattis_bryr_1_usize(),
+            kattis_bryr_1_usize(),
             2,
             &[0, 1, 1],
             [None, Some(0), Some(0)],
@@ -927,7 +904,7 @@ mod tests {
     #[test]
     fn shortest_path_kattis_bryr_2() {
         test_shortest_path!(
-            fixture::kattis_bryr_2_usize(),
+            kattis_bryr_2_usize(),
             5,
             &[0, 1, 2, 1, 2, 3],
             [None, Some(0), Some(3), Some(0), Some(3), Some(4)],
@@ -938,7 +915,7 @@ mod tests {
     #[test]
     fn shortest_path_kattis_bryr_3() {
         test_shortest_path!(
-            fixture::kattis_bryr_3_usize(),
+            kattis_bryr_3_usize(),
             9,
             &[0, 0, usize::MAX, 0, 0, 0, 1, 0, 0, 1],
             [
@@ -960,7 +937,7 @@ mod tests {
     #[test]
     fn shortest_path_kattis_crosscountry() {
         test_shortest_path!(
-            fixture::kattis_crosscountry_usize(),
+            kattis_crosscountry_usize(),
             2,
             &[0, 1, 3, 14],
             [None, Some(0), Some(0), Some(0)],
@@ -971,7 +948,7 @@ mod tests {
     #[test]
     fn shortest_path_kattis_shortestpath1() {
         test_shortest_path!(
-            fixture::kattis_shortestpath1_usize(),
+            kattis_shortestpath1_usize(),
             3,
             &[0, 2, 4, usize::MAX],
             [None, Some(0), Some(1), None],
@@ -990,7 +967,7 @@ mod tests {
     #[test]
     fn single_pair_shortest_path_bang_jensen_94_weighted() {
         assert!(
-            single_pair_shortest_path(&fixture::bang_jensen_94_weighted_usize(), 0, 6)
+            single_pair_shortest_path(&bang_jensen_94_weighted_usize(), 0, 6)
                 .unwrap()
                 .iter()
                 .eq(&[0, 2, 4, 6])
@@ -999,48 +976,40 @@ mod tests {
 
     #[test]
     fn single_pair_shortest_path_bang_jensen_96() {
-        assert!(
-            single_pair_shortest_path(&fixture::bang_jensen_96_usize(), 0, 5)
-                .unwrap()
-                .iter()
-                .eq(&[0, 2, 4, 3, 5])
-        );
+        assert!(single_pair_shortest_path(&bang_jensen_96_usize(), 0, 5)
+            .unwrap()
+            .iter()
+            .eq(&[0, 2, 4, 3, 5]));
     }
 
     #[test]
     fn single_pair_shortest_path_kattis_bryr_1() {
-        assert!(
-            single_pair_shortest_path(&fixture::kattis_bryr_1_usize(), 0, 2)
-                .unwrap()
-                .iter()
-                .eq(&[0, 2])
-        );
+        assert!(single_pair_shortest_path(&kattis_bryr_1_usize(), 0, 2)
+            .unwrap()
+            .iter()
+            .eq(&[0, 2]));
     }
 
     #[test]
     fn single_pair_shortest_path_kattis_bryr_2() {
-        assert!(
-            single_pair_shortest_path(&fixture::kattis_bryr_2_usize(), 0, 5)
-                .unwrap()
-                .iter()
-                .eq(&[0, 3, 4, 5])
-        );
+        assert!(single_pair_shortest_path(&kattis_bryr_2_usize(), 0, 5)
+            .unwrap()
+            .iter()
+            .eq(&[0, 3, 4, 5]));
     }
 
     #[test]
     fn single_pair_shortest_path_kattis_bryr_3() {
-        assert!(
-            single_pair_shortest_path(&fixture::kattis_bryr_3_usize(), 0, 9)
-                .unwrap()
-                .iter()
-                .eq(&[0, 3, 7, 1, 9])
-        );
+        assert!(single_pair_shortest_path(&kattis_bryr_3_usize(), 0, 9)
+            .unwrap()
+            .iter()
+            .eq(&[0, 3, 7, 1, 9]));
     }
 
     #[test]
     fn single_pair_shortest_path_kattis_crosscountry() {
         assert!(
-            single_pair_shortest_path(&fixture::kattis_crosscountry_usize(), 0, 2)
+            single_pair_shortest_path(&kattis_crosscountry_usize(), 0, 2)
                 .unwrap()
                 .iter()
                 .eq(&[0, 2])
@@ -1050,7 +1019,7 @@ mod tests {
     #[test]
     fn single_pair_shortest_path_kattis_shortestpath1() {
         assert_eq!(
-            single_pair_shortest_path(&fixture::kattis_shortestpath1_usize(), 0, 3),
+            single_pair_shortest_path(&kattis_shortestpath1_usize(), 0, 3),
             None
         );
     }
