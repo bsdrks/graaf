@@ -5,3 +5,7 @@
 # It is recommended to check this file in to source control so that
 # everyone who runs the test benefits from these saved cases.
 cc c219ee90f2d2ab5bba452a8c1fe8ff4c8cef49d40715e0aa5fed7662bce94f6b # shrinks to s = 1, t = 2, w = 1
+cc f6d17ac2d7eda99776f48b26af6e4da3d8fd8d39cd90b297334e1e10c483852b # shrinks to u = 13, v = 13, w = 1
+cc 679e62648e9ef1f0a02fef6828646e0ed7dbd2719a81f3c89583521e73b0e889 # shrinks to u = 5, v = 5, w = 1
+cc a05d6514f39363cc20ecb008f27e2088604c6c954b3cae511961e9b162c1c0af # shrinks to u = 14, v = 14, w = 1
+cc c43d59c8001233afea35c281a6b3a1833688577aa5bc4316587d2d357aba6488 # shrinks to u = 4, v = 4, w = 1

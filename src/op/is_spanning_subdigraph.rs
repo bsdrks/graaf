@@ -1,7 +1,7 @@
 //! Determine whether a digraph is a spanning subdigraph of another digraph.
 //!
 //! A digraph `H` is a spanning subdigraph of a digraph `D` if the vertex set of
-//! `H` is equal to the vertex set of `D` and the arc set of `H` is a subset of
+//! `H` equals the vertex set of `D` and the arc set of `H` is a subset of
 //! the arc set of `D`.
 //!
 //! # Examples

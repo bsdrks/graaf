@@ -1,6 +1,6 @@
 //! Determine whether a digraph is balanced.
 //!
-//! A digraph is balanced if the indegree of each vertex is equal to its
+//! A digraph is balanced if the indegree of each vertex equals its
 //! outdegree.
 //!
 //! # Examples

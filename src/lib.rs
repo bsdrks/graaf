@@ -283,3 +283,5 @@ pub mod adjacency_matrix;
 pub mod algo;
 pub mod gen;
 pub mod op;
+#[cfg(test)]
+pub mod proptest_strategy;

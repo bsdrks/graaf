@@ -94,5 +94,11 @@ pub trait AddArcWeighted<W> {
     /// * `u`: The tail vertex.
     /// * `v`: The head vertex.
     /// * `w`: The weight of the arc.
+    ///
+    /// # Panics
+    ///
+    /// * Should panic if `u` is out of bounds.
+    /// * Should panic if `v` is out of bounds.
+    /// * Should panic if `u` equals `v`.
     fn add_arc_weighted(&mut self, u: usize, v: usize, w: W);
 }

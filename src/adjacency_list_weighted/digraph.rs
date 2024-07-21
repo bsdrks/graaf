@@ -8,19 +8,19 @@
 //!     gen::Empty,
 //!     op::{
 //!         AddArcWeighted,
-//!         IsSimple,
+//!         ArcsWeighted,
 //!     },
 //! };
 //!
 //! let mut digraph = Digraph::<isize>::empty(3);
 //!
 //! digraph.add_arc_weighted(0, 1, 2);
+//! digraph.add_arc_weighted(1, 2, 3);
+//! digraph.add_arc_weighted(2, 0, 4);
 //!
-//! assert!(digraph.is_simple());
-//!
-//! digraph.add_arc_weighted(1, 1, 3);
-//!
-//! assert!(!digraph.is_simple());
+//! assert!(digraph
+//!     .arcs_weighted()
+//!     .eq([(0, 1, &2), (1, 2, &3), (2, 0, &4),]));
 //! ```
 
 use {
@@ -58,8 +58,16 @@ pub struct Digraph<W> {
 impl<W> AddArcWeighted<W> for Digraph<W> {
     /// # Panics
     ///
-    /// Panics if `u` is out of bounds.
+    /// * Panics if `u` is out of bounds.
+    /// * Panics if `v` is out of bounds.
+    /// * Panics if `u` equals `v`.
     fn add_arc_weighted(&mut self, u: usize, v: usize, w: W) {
+        let order = self.order();
+
+        assert!(u < order, "u = {u} is out of bounds");
+        assert!(v < order, "v = {v} is out of bounds");
+        assert_ne!(u, v, "u = {u} equals v = {v}");
+
         let _ = self.arcs[u].insert(v, w);
     }
 }
@@ -172,8 +180,19 @@ impl From<adjacency_matrix::Digraph> for Digraph<usize> {
 }
 
 impl<W> From<Vec<BTreeMap<usize, W>>> for Digraph<W> {
+    /// # Panics
+    ///
+    /// * Panics if, for any arc `u -> v` in `arcs`, `u` equals `v`.
+    /// * Panics if, for any arc `u -> v` in `arcs`, `v` is out of bounds.
     fn from(arcs: Vec<BTreeMap<usize, W>>) -> Self {
-        Self { arcs }
+        let digraph = Self { arcs };
+
+        for (u, v) in digraph.arcs() {
+            assert_ne!(u, v, "u = {u} equals v = {v}");
+            assert!(v < digraph.order(), "v = {v} is out of bounds");
+        }
+
+        digraph
     }
 }
 
@@ -295,13 +314,14 @@ mod tests {
                 IsSymmetric,
                 IsTournament,
             },
+            proptest_strategy::arc,
         },
         proptest::proptest,
     };
 
     proptest! {
         #[test]
-        fn add_arc_weighted_arc_weight(u in 1..25_usize, v in 1..25_usize, w in 1..25_usize) {
+        fn add_arc_weighted_arc_weight((u, v) in arc(), w in 1..25_usize) {
             let mut digraph = Digraph::empty(100);
 
             digraph.add_arc_weighted(u, v, w);
@@ -317,7 +337,7 @@ mod tests {
         }
 
         #[test]
-        fn add_arc_weighted_degree(u in 1..25_usize, v in 1..25_usize, w in 1..25_usize) {
+        fn add_arc_weighted_degree((u, v) in arc(), w in 1..25_usize) {
             let mut digraph = Digraph::empty(100);
 
             digraph.add_arc_weighted(u, v, w);
@@ -328,7 +348,7 @@ mod tests {
         }
 
         #[test]
-        fn add_arc_weighted_has_arc(u in 1..25_usize, v in 1..25_usize, w in 1..25_usize) {
+        fn add_arc_weighted_has_arc((u, v) in arc(), w in 1..25_usize) {
             let mut digraph = Digraph::empty(100);
 
             digraph.add_arc_weighted(u, v, w);
@@ -337,7 +357,7 @@ mod tests {
         }
 
         #[test]
-        fn add_arc_weighted_indegree(u in 1..25_usize, v in 1..25_usize, w in 1..25_usize) {
+        fn add_arc_weighted_indegree((u, v) in arc(), w in 1..25_usize) {
             let mut digraph = Digraph::empty(100);
 
             digraph.add_arc_weighted(u, v, w);
@@ -348,7 +368,7 @@ mod tests {
         }
 
         #[test]
-        fn add_arc_weighted_outdegree(u in 1..25_usize, v in 1..25_usize, w in 1..25_usize) {
+        fn add_arc_weighted_outdegree((u, v) in arc(), w in 1..25_usize) {
             let mut digraph = Digraph::empty(100);
 
             digraph.add_arc_weighted(u, v, w);
@@ -359,7 +379,7 @@ mod tests {
         }
 
         #[test]
-        fn add_arc_weighted_remove_arc(u in 1..25_usize, v in 1..25_usize, w in 1..25_usize) {
+        fn add_arc_weighted_remove_arc((u, v) in arc(), w in 1..25_usize) {
             let d = Digraph::empty(100);
             let mut h = d.clone();
 
@@ -534,9 +554,21 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "index out of bounds: the len is 1 but the index is 1")]
-    fn add_weighted_arc_out_of_bounds() {
+    #[should_panic(expected = "v = 1 is out of bounds")]
+    fn add_arc_weighted_out_of_bounds_u() {
+        Digraph::trivial().add_arc_weighted(0, 1, 1);
+    }
+
+    #[test]
+    #[should_panic(expected = "u = 1 is out of bounds")]
+    fn add_arc_weighted_out_of_bounds_v() {
         Digraph::trivial().add_arc_weighted(1, 0, 1);
+    }
+
+    #[test]
+    #[should_panic(expected = "u = 0 equals v = 0")]
+    fn add_arc_weighted_u_equals_v() {
+        Digraph::trivial().add_arc_weighted(0, 0, 1);
     }
 
     #[test]
@@ -1238,6 +1270,34 @@ mod tests {
             (2, 5, &1),
             (5, 4, &1)
         ]));
+    }
+
+    #[test]
+    fn from_vec() {
+        let arcs = vec![
+            BTreeMap::from([(1, -2)]),
+            BTreeMap::from([(2, -1)]),
+            BTreeMap::new(),
+        ];
+
+        let digraph = Digraph::from(arcs);
+
+        assert_eq!(digraph.order(), 3);
+        assert!(digraph.arcs_weighted().eq([(0, 1, &-2), (1, 2, &-1)]));
+    }
+
+    #[test]
+    #[should_panic(expected = "v = 1 is out of bounds")]
+    fn from_vec_out_of_bounds_v() {
+        let vec = vec![BTreeMap::from([(1, -1)])];
+        let _ = Digraph::from(vec);
+    }
+
+    #[test]
+    #[should_panic(expected = "u = 0 equals v = 0")]
+    fn from_vec_u_equals_v() {
+        let vec = vec![BTreeMap::from([(0, -1)])];
+        let _ = Digraph::from(vec);
     }
 
     #[test]

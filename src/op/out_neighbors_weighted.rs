@@ -12,7 +12,7 @@
 //!     },
 //! };
 //!
-//! let mut digraph = Digraph::empty(3);
+//! let mut digraph = Digraph::empty(6);
 //!
 //! digraph.add_arc_weighted(0, 1, 2);
 //! digraph.add_arc_weighted(0, 2, 3);
@@ -80,7 +80,7 @@
 ///     },
 /// };
 ///
-/// let mut digraph = Digraph::empty(3);
+/// let mut digraph = Digraph::empty(6);
 ///
 /// digraph.add_arc_weighted(0, 1, 2);
 /// digraph.add_arc_weighted(0, 2, 3);

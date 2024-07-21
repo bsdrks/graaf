@@ -8,19 +8,17 @@
 //!     gen::Empty,
 //!     op::{
 //!         AddArc,
-//!         IsSimple,
+//!         Arcs,
 //!     },
 //! };
 //!
 //! let mut digraph = Digraph::empty(3);
 //!
 //! digraph.add_arc(0, 1);
+//! digraph.add_arc(0, 2);
+//! digraph.add_arc(1, 0);
 //!
-//! assert!(digraph.is_simple());
-//!
-//! digraph.add_arc(1, 1);
-//!
-//! assert!(!digraph.is_simple());
+//! assert!(digraph.arcs().eq([(0, 1), (0, 2), (1, 0)]));
 //! ```
 
 use {
@@ -56,8 +54,16 @@ pub struct Digraph {
 impl AddArc for Digraph {
     /// # Panics
     ///
-    /// Panics if `u` is out of bounds.
+    /// * Panics if `u` is out of bounds.
+    /// * Panics if `v` is out of bounds.
+    /// * Panics if `u` equals `v`.
     fn add_arc(&mut self, u: usize, v: usize) {
+        let order = self.order();
+
+        assert!(v < order, "v = {v} is out of bounds");
+        assert!(u < order, "u = {u} is out of bounds");
+        assert_ne!(u, v, "u = {u} equals v = {v}");
+
         let _ = self.arcs[u].insert(v);
     }
 }
@@ -114,8 +120,19 @@ impl Empty for Digraph {
 }
 
 impl From<Vec<BTreeSet<usize>>> for Digraph {
+    /// # Panics
+    ///
+    /// * Panics if, for any arc `u -> v` in `arcs`, `u` equals `v`.
+    /// * Panics if, for any arc `u -> v` in `arcs`, `v` is out of bounds.
     fn from(arcs: Vec<BTreeSet<usize>>) -> Self {
-        Self { arcs }
+        let digraph = Self { arcs };
+
+        for (u, v) in digraph.arcs() {
+            assert_ne!(u, v, "u = {u} equals v = {v}");
+            assert!(v < digraph.order(), "v = {v} is out of bounds");
+        }
+
+        digraph
     }
 }
 
@@ -244,13 +261,14 @@ mod tests {
                 IsTournament,
                 IsWalk,
             },
+            proptest_strategy::arc,
         },
         proptest::proptest,
     };
 
     proptest! {
         #[test]
-        fn add_arc_arc_weight(u in 1..25_usize, v in 1..25_usize) {
+        fn add_arc_arc_weight((u, v) in arc()) {
             let mut digraph = Digraph::empty(100);
 
             digraph.add_arc(u, v);
@@ -266,7 +284,7 @@ mod tests {
         }
 
         #[test]
-        fn add_arc_degree(u in 1..25_usize, v in 1..25_usize) {
+        fn add_arc_degree((u, v) in arc()) {
             let mut digraph = Digraph::empty(100);
 
             digraph.add_arc(u, v);
@@ -280,7 +298,7 @@ mod tests {
         }
 
         #[test]
-        fn add_arc_has_arc(u in 1..25_usize, v in 1..25_usize) {
+        fn add_arc_has_arc((u, v) in arc()) {
             let mut digraph = Digraph::empty(100);
 
             digraph.add_arc(u, v);
@@ -289,7 +307,7 @@ mod tests {
         }
 
         #[test]
-        fn add_arc_indegree(u in 1..25_usize, v in 1..25_usize) {
+        fn add_arc_indegree((u, v) in arc()) {
             let mut digraph = Digraph::empty(100);
 
             digraph.add_arc(u, v);
@@ -300,7 +318,7 @@ mod tests {
         }
 
         #[test]
-        fn add_arc_outdegree(u in 1..25_usize, v in 1..25_usize) {
+        fn add_arc_outdegree((u, v) in arc()) {
             let mut digraph = Digraph::empty(100);
 
             digraph.add_arc(u, v);
@@ -311,7 +329,7 @@ mod tests {
         }
 
         #[test]
-        fn add_arc_remove_arc(u in 1..25_usize, v in 1..25_usize) {
+        fn add_arc_remove_arc((u, v) in arc()) {
             let d = Digraph::empty(100);
             let mut h = d.clone();
 
@@ -331,7 +349,7 @@ mod tests {
         }
 
         #[test]
-        fn biclique_1_n_eq_star_n_plus_1(n in 1..25_usize) {
+        fn biclique_1_n_equals_star_n_plus_1(n in 1..25_usize) {
             assert_eq!(Digraph::biclique(1, n), Digraph::star(n + 1));
         }
 
@@ -365,7 +383,7 @@ mod tests {
         }
 
         #[test]
-        fn biclique_degree_sum_eq_2size(m in 1..25_usize, n in 1..25_usize) {
+        fn biclique_degree_sum_equals_2size(m in 1..25_usize, n in 1..25_usize) {
             let digraph = Digraph::biclique(m, n);
 
             assert_eq!(
@@ -627,7 +645,7 @@ mod tests {
         }
 
         #[test]
-        fn circuit_degree_sum_eq_2size(order in 1..25_usize) {
+        fn circuit_degree_sum_equals_2size(order in 1..25_usize) {
             let digraph = Digraph::circuit(order);
 
             assert_eq!(
@@ -768,7 +786,7 @@ mod tests {
         }
 
         #[test]
-        fn complete_complement_eq_empty(order in 1..25_usize) {
+        fn complete_complement_equals_empty(order in 1..25_usize) {
             assert_eq!(
                 Digraph::complete(order).complement(),
                 Digraph::empty(order)
@@ -793,7 +811,7 @@ mod tests {
         }
 
         #[test]
-        fn complete_degree_sum_eq_2size(order in 1..25_usize) {
+        fn complete_degree_sum_equals_2size(order in 1..25_usize) {
             let digraph = Digraph::complete(order);
 
             assert_eq!(
@@ -962,7 +980,7 @@ mod tests {
         }
 
         #[test]
-        fn cycle_degree_sum_eq_2size(order in 1..25_usize) {
+        fn cycle_degree_sum_equals_2size(order in 1..25_usize) {
             let digraph = Digraph::cycle(order);
 
             assert_eq!(
@@ -1097,7 +1115,7 @@ mod tests {
         }
 
         #[test]
-        fn empty_complement_eq_complete(order in 1..25_usize) {
+        fn empty_complement_equals_complete(order in 1..25_usize) {
             assert_eq!(
                 Digraph::empty(order).complement(),
                 Digraph::complete(order)
@@ -1286,7 +1304,7 @@ mod tests {
         }
 
         #[test]
-        fn random_tournament_degree_sum_eq_2size(order in 1..25_usize) {
+        fn random_tournament_degree_sum_equals_2size(order in 1..25_usize) {
             let digraph = Digraph::random_tournament(order);
 
             assert_eq!(
@@ -1447,7 +1465,7 @@ mod tests {
         }
 
         #[test]
-        fn star_degree_sum_eq_2size(order in 1..25_usize) {
+        fn star_degree_sum_equals_2size(order in 1..25_usize) {
             let digraph = Digraph::star(order);
 
             assert_eq!(
@@ -1589,9 +1607,21 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "index out of bounds: the len is 1 but the index is 1")]
-    fn add_arc_out_of_bounds() {
+    #[should_panic(expected = "v = 1 is out of bounds")]
+    fn add_arc_out_of_bounds_u() {
+        Digraph::trivial().add_arc(0, 1);
+    }
+
+    #[test]
+    #[should_panic(expected = "u = 1 is out of bounds")]
+    fn add_arc_out_of_bounds_v() {
         Digraph::trivial().add_arc(1, 0);
+    }
+
+    #[test]
+    #[should_panic(expected = "u = 0 equals v = 0")]
+    fn add_arc_u_equals_v() {
+        Digraph::trivial().add_arc(0, 0);
     }
 
     #[test]
@@ -2460,6 +2490,29 @@ mod tests {
     #[test]
     fn empty_trivial_is_tournament() {
         assert!(Digraph::trivial().is_tournament());
+    }
+
+    #[test]
+    fn from_vec() {
+        let arcs = vec![BTreeSet::from([1]), BTreeSet::from([2]), BTreeSet::new()];
+        let digraph = Digraph::from(arcs);
+
+        assert_eq!(digraph.order(), 3);
+        assert!(digraph.arcs().eq([(0, 1), (1, 2)]));
+    }
+
+    #[test]
+    #[should_panic(expected = "v = 1 is out of bounds")]
+    fn from_vec_out_of_bounds_v() {
+        let vec = vec![BTreeSet::from([1])];
+        let _ = Digraph::from(vec);
+    }
+
+    #[test]
+    #[should_panic(expected = "u = 0 equals v = 0")]
+    fn from_vec_u_equals_v() {
+        let vec = vec![BTreeSet::from([0])];
+        let _ = Digraph::from(vec);
     }
 
     #[test]

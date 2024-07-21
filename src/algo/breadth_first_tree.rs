@@ -260,7 +260,7 @@ mod tests {
     }
 
     #[test]
-    fn search_singleton_s_eq_t() {
+    fn search_singleton_s_equals_t() {
         assert!(BreadthFirstTree::from(vec![Some(0)])
             .search(0, 0)
             .unwrap()
@@ -285,7 +285,7 @@ mod tests {
     }
 
     #[test]
-    fn search_path_s_eq_t() {
+    fn search_path_s_equals_t() {
         assert!(
             BreadthFirstTree::from(vec![Some(1), Some(2), Some(0), None])
                 .search(0, 0)
@@ -307,7 +307,7 @@ mod tests {
     }
 
     #[test]
-    fn search_by_singleton_s_eq_t() {
+    fn search_by_singleton_s_equals_t() {
         assert!(BreadthFirstTree::from(vec![Some(0)])
             .search_by(0, |&t, _| t == 0)
             .unwrap()
@@ -341,7 +341,7 @@ mod tests {
     }
 
     #[test]
-    fn search_by_path_s_eq_t() {
+    fn search_by_path_s_equals_t() {
         assert!(
             BreadthFirstTree::from(vec![Some(1), Some(2), Some(0), None])
                 .search_by(0, |&t, _| t == 0)

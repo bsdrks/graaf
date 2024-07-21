@@ -81,5 +81,11 @@ pub trait AddArc {
     ///
     /// * `u`: The tail vertex.
     /// * `v`: The head vertex.
+    ///
+    /// # Panics
+    ///
+    /// * Should panic if `u` is out of bounds.
+    /// * Should panic if `v` is out of bounds.
+    /// * Should panic if `u` equals `v`.
     fn add_arc(&mut self, u: usize, v: usize);
 }

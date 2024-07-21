@@ -21,17 +21,6 @@
 //! digraph.add_arc(2, 0);
 //!
 //! assert!(digraph.is_simple());
-//!
-//! let mut digraph = Digraph::empty(3);
-//!
-//! digraph.add_arc(0, 0);
-//! digraph.add_arc(0, 1);
-//! digraph.add_arc(0, 2);
-//! digraph.add_arc(1, 0);
-//! digraph.add_arc(1, 2);
-//! digraph.add_arc(2, 0);
-//!
-//! assert!(!digraph.is_simple());
 //! ```
 
 /// Determine whether a digraph is simple.
@@ -80,17 +69,6 @@
 /// digraph.add_arc(1, 2);
 ///
 /// assert!(digraph.is_simple());
-///
-/// let mut digraph = Digraph::empty(3);
-///
-/// digraph.add_arc(0, 0);
-/// digraph.add_arc(0, 1);
-/// digraph.add_arc(0, 2);
-/// digraph.add_arc(1, 0);
-/// digraph.add_arc(1, 2);
-/// digraph.add_arc(2, 0);
-///
-/// assert!(!digraph.is_simple());
 /// ```
 pub trait IsSimple {
     /// Returns whether the digraph is simple.

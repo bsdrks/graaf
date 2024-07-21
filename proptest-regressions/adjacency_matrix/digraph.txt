@@ -6,3 +6,9 @@
 # everyone who runs the test benefits from these saved cases.
 cc 07ed73cb5c01c9f329a7352f78c34bd7fc0a852a02a918b3e847a0da03a26d3b # shrinks to v = 1
 cc 25fd59d28e36b1ac5edf7c3d151d2efcd4af0f72f8488925f6449e9701a29dfc # shrinks to order = 1
+cc bd8c05790deeebdf9c91c9ad5915417fb297233dfae4ee91b6da277975139cff # shrinks to u = 13, v = 13
+cc 99b41cf495baa868fb1d678329f4b49a8ecf8eda2d69e8c31eb02846ea5bf520 # shrinks to u = 23, v = 23
+cc e1b86b2f0851780db8c53b8ca45a3e1300d5f47e9a1689bd649d703143fd8302 # shrinks to u = 16, v = 16
+cc a1d3a64c74d89343abb15ae389e8b6fa7f03c572ba69df34cdbd80f9bcd0d436 # shrinks to u = 19, v = 19
+cc 5bed00b6e691f62d7aa2015e805dfb64891a8f76190fcd4c0a99f628db21ca8d # shrinks to u = 8, v = 8
+cc e01471be4180bebed1c648ee400c3607d3d737e87e474b616b49c95252382296 # shrinks to u = 5, v = 5

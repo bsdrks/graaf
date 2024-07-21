@@ -135,11 +135,11 @@ use super::IsSubdigraph;
 ///     },
 /// };
 ///
-/// let mut h = Digraph::empty(2);
+/// let mut h = Digraph::empty(3);
 ///
 /// h.add_arc(0, 1);
 ///
-/// let d = Digraph::circuit(3);
+/// let d = Digraph::circuit(4);
 ///
 /// assert!(d.is_superdigraph(&h));
 ///

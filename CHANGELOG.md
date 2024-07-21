@@ -20,6 +20,48 @@
 - Rename `DegreeSequence` to `SemidegreeSequence` and add a new `DegreeSequence` trait.
 - Subsume traits with one super trait into the super trait.
 
+## [0.72.0] - 2024-07-21
+
+Add
+
+- Add proptest strategy `arc`.
+- Add unit test `add_arc_out_of_bounds_u` for `adjacency_list`.
+- Add unit test `add_arc_out_of_bounds_u` for `adjacency_matrix`.
+- Add unit test `add_arc_out_of_bounds_v` for `adjacency_list`.
+- Add unit test `add_arc_out_of_bounds_v` for `adjacency_matrix`.
+- Add unit test `add_arc_u_equals_v` for `adjacency_list`.
+- Add unit test `add_arc_u_equals_v` for `adjacency_matrix`.
+- Add unit test `add_arc_weighted_out_of_bounds_u` for `adjacency_list_weighted`.
+- Add unit test `add_arc_weighted_out_of_bounds_v` for `adjacency_list_weighted`.
+- Add unit test `add_arc_weighted_u_equals_v` for `adjacency_list_weighted`.
+- Add unit test `from_vec_out_of_bounds_v` for `adjacency_list`.
+- Add unit test `from_vec_out_of_bounds_v` for `adjacency_matrix`.
+- Add unit test `from_vec_u_equals_v` for `adjacency_list`.
+- Add unit test `from_vec_u_equals_v` for `adjacency_matrix`.
+- Add unit test `from_vec` for `adjacency_list`.
+
+Changed
+
+- Breaking: `From<Vec<BTreeMap<usize, W>>>` for `adjacency_list_weighted::Digraph` panics if for any arc `u -> v`, `u` equals `v`.
+- Breaking: `From<Vec<BTreeMap<usize, W>>>` for `adjacency_list_weighted::Digraph` panics if for any arc `u -> v`, `v` is out of bounds.
+- Breaking: `From<Vec<BTreeSet<usize>>>` for `adjacency_list::Digraph` panics if for any arc `u -> v`, `u` equals `v`.
+- Breaking: `From<Vec<BTreeSet<usize>>>` for `adjacency_list::Digraph` panics if for any arc `u -> v`, `v` is out of bounds.
+- Breaking: `adjacency_list::Digraph::add_arc` panics if `u` equals `v`.
+- Breaking: `adjacency_list::Digraph::add_arc` panics if `u` is out of bounds.
+- Breaking: `adjacency_list::Digraph::add_arc` panics if `v` is out of bounds.
+- Breaking: `adjacency_list_weighted::Digraph::add_arc_weighted` panics if `u` equals `v`.
+- Breaking: `adjacency_list_weighted::Digraph::add_arc_weighted` panics if `u` is out of bounds.
+- Breaking: `adjacency_list_weighted::Digraph::add_arc_weighted` panics if `v` is out of bounds.
+- Breaking: `adjacency_matrix::Digraph::add_arc` panics if `u` equals `v`.
+- Breaking: `adjacency_matrix::Digraph::toggle` panics if `u` equals `v`.
+- Change unit test `from_vec` for `adjacency_matrix` to match `adjacency_list`.
+- Rename `*_eq_*` unit tests to `*_equals_*`.
+
+Fixed
+
+- Fix doctests for `op::is_superdigraph`.
+- Fix doctests for `op::out_neighbors_weighted`.
+
 ## [0.71.7] - 2024-07-20
 
 Added
@@ -362,22 +404,22 @@ Added
 
 Changed
 
-- Breaking: `bellman_ford_moore::single_source_distances` is now `#[must_use]`.
-- Breaking: `bfs::single_source_distances` is now `#[must_use]`.
-- Breaking: `bfs::single_source_predecessors` is now `#[must_use]`.
-- Breaking: `bfs::shortest_path` is now `#[must_use]`.
-- Breaking: `bfs::single_pair_shortest_path` is now `#[must_use]`.
-- Breaking: `dfs::acyclic_ordering` is now `#[must_use]`.
-- Breaking: `dijkstra::single_source_distances` is now `#[must_use]`.
-- Breaking: `dijkstra::single_source_predecessors` is now `#[must_use]`.
-- Breaking: `dijkstra::shortest_path` is now `#[must_use]`.
-- Breaking: `dijkstra::single_pair_shortest_path` is now `#[must_use]`.
-- Breaking: `DistanceMatrix::new` is now `#[must_use]`.
-- Breaking: `DistanceMatrix::center` is now `#[must_use]`.
-- Breaking: `DistanceMatrix::diameter` is now `#[must_use]`.
-- Breaking: `DistanceMatrix::eccentricities` is now `#[must_use]`.
-- Breaking: `DistanceMatrix::is_connected` is now `#[must_use]`.
-- Breaking: `floyd_warshall::distances` is now `#[must_use]`.
+- Breaking: `bellman_ford_moore::single_source_distances` is `#[must_use]`.
+- Breaking: `bfs::single_source_distances` is `#[must_use]`.
+- Breaking: `bfs::single_source_predecessors` is `#[must_use]`.
+- Breaking: `bfs::shortest_path` is `#[must_use]`.
+- Breaking: `bfs::single_pair_shortest_path` is `#[must_use]`.
+- Breaking: `dfs::acyclic_ordering` is `#[must_use]`.
+- Breaking: `dijkstra::single_source_distances` is `#[must_use]`.
+- Breaking: `dijkstra::single_source_predecessors` is `#[must_use]`.
+- Breaking: `dijkstra::shortest_path` is `#[must_use]`.
+- Breaking: `dijkstra::single_pair_shortest_path` is `#[must_use]`.
+- Breaking: `DistanceMatrix::new` is `#[must_use]`.
+- Breaking: `DistanceMatrix::center` is `#[must_use]`.
+- Breaking: `DistanceMatrix::diameter` is `#[must_use]`.
+- Breaking: `DistanceMatrix::eccentricities` is `#[must_use]`.
+- Breaking: `DistanceMatrix::is_connected` is `#[must_use]`.
+- Breaking: `floyd_warshall::distances` is `#[must_use]`.
 - Rename non `Empty` `*_trivial` tests to `*_1_*`.
 - Rename non `Empty` `*_pair` tests to `*_2_*`.
 - Rename non `Empty` `*_triplet` tests to `*_3_*`.
@@ -407,8 +449,8 @@ Added
 
 Changed
 
-- Breaking: `indegree` now panics if `v` is out of bounds in `adjacency_list_weighted`.
-- Breaking: `indegree` now panics if `v` is out of bounds in `adjacency_list`.
+- Breaking: `indegree` panics if `v` is out of bounds in `adjacency_list_weighted`.
+- Breaking: `indegree` panics if `v` is out of bounds in `adjacency_list`.
 
 ## [0.67.2] - 2024-07-13
 
@@ -459,7 +501,7 @@ Added
 
 Changed
 
-- Breaking: `biclique` now panics if `a` or `b` is zero in the blanket implementation of `Biclique`.
+- Breaking: `biclique` panics if `a` or `b` is zero in the blanket implementation of `Biclique`.
 
 Fixed
 
@@ -641,7 +683,7 @@ Added
 
 Changed
 
-- Breaking: `Complete::complete` is now `#[must_use]`.
+- Breaking: `Complete::complete` is `#[must_use]`.
 - Breaking: `remove_arc` no longer panics for `adjacency_matrix` if `u` or `v` is out of bounds.
 
 ## [0.64.18] - 2024-07-07
@@ -857,7 +899,7 @@ Added
 
 Changed
 
-- Breaking: Fixtures are now `cfg(test)`.
+- Breaking: Fixtures are `cfg(test)`.
 
 ## [0.62.3] - 2024-06-25
 
@@ -888,7 +930,7 @@ Added
 
 Changed
 
-- Breaking: `DistanceMatrix::new` now panics if `v` is zero.
+- Breaking: `DistanceMatrix::new` panics if `v` is zero.
 - Rename `distance_matrix::tests::test_index_mut` to `distance_matrix::tests::index_mut`.
 - Rename `distance_matrix::tests::test_index` to `distance_matrix::tests::index`.
 - Rename `distance_matrix::tests::test_new` to `distance_matrix::tests::new`.
@@ -919,7 +961,7 @@ Changed
 
 - Breaking: Rename `BfTree` to `BreadthFirstTree`.
 - Breaking: Rename `bf_tree` to `breadth_first_tree`.
-- Breaking: `FloydWarshall::distances` now returns a `DistanceMatrix`.
+- Breaking: `FloydWarshall::distances` returns a `DistanceMatrix`.
 
 ## [0.60.0] - 2024-06-19
 
@@ -943,9 +985,9 @@ Added
 Changed
 
 - Breaking: Rename `BfsTree` to `BfTree`.
-- Breaking: `BfTree::new` now panics if `v` is zero.
-- Breaking: `BfTree::search_by` now immediately returns if `s` is a target.
-- Breaking: `BfTree::search` now immediately returns if `s` equals `t`.
+- Breaking: `BfTree::new` panics if `v` is zero.
+- Breaking: `BfTree::search_by` immediately returns if `s` is a target.
+- Breaking: `BfTree::search` immediately returns if `s` equals `t`.
 
 ## [0.59.0] - 2024-06-18
 
@@ -962,12 +1004,12 @@ Added
 
 Changed
 
-- Breaking: `bfs::predecessors` now accepts a `BfsTree` instead of a `Vec<Option<usize>>`.
-- Breaking: `bfs::shortest_path` now accepts a `BfsTree` instead of a `Vec<Option<usize>>`.
-- Breaking: `bfs::single_source_predecessors` now returns a `BfsTree`.
-- Breaking: `dijkstra::predecessors` now accepts a `BfsTree` instead of a `Vec<Option<usize>>`.
-- Breaking: `dijkstra::shortest_path` now accepts a `BfsTree` instead of a `Vec<Option<usize>>`.
-- Breaking: `dijkstra::single_source_predecessors` now returns a `BfsTree`.
+- Breaking: `bfs::predecessors` accepts a `BfsTree` instead of a `Vec<Option<usize>>`.
+- Breaking: `bfs::shortest_path` accepts a `BfsTree` instead of a `Vec<Option<usize>>`.
+- Breaking: `bfs::single_source_predecessors` returns a `BfsTree`.
+- Breaking: `dijkstra::predecessors` accepts a `BfsTree` instead of a `Vec<Option<usize>>`.
+- Breaking: `dijkstra::shortest_path` accepts a `BfsTree` instead of a `Vec<Option<usize>>`.
+- Breaking: `dijkstra::single_source_predecessors` returns a `BfsTree`.
 
 Removed
 
@@ -1230,7 +1272,7 @@ Added
 
 Changed
 
-- Breaking: `AdjacencyMatrix::empty` now panics if `V` is zero.
+- Breaking: `AdjacencyMatrix::empty` panics if `V` is zero.
 
 ## [0.54.5] - 2024-06-08
 
@@ -1657,7 +1699,7 @@ Added
 
 Changed
 
-- Breaking: `bellman_ford_moore::distances` now returns an `Option` if a negative cycle is detected.
+- Breaking: `bellman_ford_moore::distances` returns an `Option` if a negative cycle is detected.
 
 ## [0.50.2] - 2024-05-24
 
@@ -2147,7 +2189,7 @@ Added
 
 Changed
 
-- Breaking: `AdjacencyMatrix::<0>::new` now panics.
+- Breaking: `AdjacencyMatrix::<0>::new` panics.
 - Simplify `AdjacencyMatrix<V>` op implementations with `IterVertices`.
 - Simplify `AdjacencyMatrix<V>` tests with `Iterator::eq`.
 - Simplify `IsSymmetric` implementations with `HasArc`.
@@ -2157,12 +2199,12 @@ Changed
 
 Changed
 
-- Breaking: `Complete::complete` now panics if `v` is zero.
-- Breaking: `CompleteConst::complete_const` now panics if `V` is zero.
-- Breaking: `Cycle::cycle` now panics if `v` is zero.
-- Breaking: `CycleConst::cycle_const` now panics if `V` is zero.
-- Breaking: `Empty::empty` now panics if `v` is zero.
-- Breaking: `EmptyConst::empty_const` now panics if `V` is zero.
+- Breaking: `Complete::complete` panics if `v` is zero.
+- Breaking: `CompleteConst::complete_const` panics if `V` is zero.
+- Breaking: `Cycle::cycle` panics if `v` is zero.
+- Breaking: `CycleConst::cycle_const` panics if `V` is zero.
+- Breaking: `Empty::empty` panics if `v` is zero.
+- Breaking: `EmptyConst::empty_const` panics if `V` is zero.
 
 ## [0.40.0] - 2024-05-10
 
@@ -3054,14 +3096,14 @@ Changed
 
 Changed
 
-- Breaking: `bfs::predecessors_single_source` now only returns the breadth-first tree.
-- Breaking: `dijkstra::predecessors_single_source` now only returns the breadth-first tree.
+- Breaking: `bfs::predecessors_single_source` only returns the breadth-first tree.
+- Breaking: `dijkstra::predecessors_single_source` only returns the breadth-first tree.
 
 ## [0.18.0] - 2024-04-20
 
 Changed
 
-- Breaking: `repr::AdjacenyMatrix` is now a feature.
+- Breaking: `repr::AdjacenyMatrix` is a feature.
 
 ## [0.17.2] - 2024-04-19
 
@@ -3137,7 +3179,7 @@ Added
 
 Changed
 
-- `RemoveArc::remove_arc` now returns a `bool` indicating whether it removed the arc.
+- `RemoveArc::remove_arc` returns a `bool` indicating whether it removed the arc.
 
 ## [0.16.0] - 2024-04-17
 
@@ -3341,7 +3383,7 @@ Added
 
 Changed
 
-- Breaking: `AddWeightedArc` for `HashMap<_>` now panics if `s` is not in the graph.
+- Breaking: `AddWeightedArc` for `HashMap<_>` panics if `s` is not in the graph.
 
 ## [0.11.1] - 2024-04-14
 
@@ -3421,15 +3463,15 @@ Added
 
 Fixed
 
-- `IsSimple` now checks for parallel arcs in `HashSet<(usize, usize, W)>`.
+- `IsSimple` checks for parallel arcs in `HashSet<(usize, usize, W)>`.
 
 ## [0.9.0] - 2024-04-12
 
 Fixed
 
-- `IsSimple` now checks for parallel arcs in `HashSet<(usize, usize)>`.
-- `IsSimple` now checks for parallel arcs in `[(usize, usize)]`.
-- `IsSimple` now checks for parallel arcs in `[(usize, usize, W)]`.
+- `IsSimple` checks for parallel arcs in `HashSet<(usize, usize)>`.
+- `IsSimple` checks for parallel arcs in `[(usize, usize)]`.
+- `IsSimple` checks for parallel arcs in `[(usize, usize, W)]`.
 
 ## [0.8.4] - 2024-04-11
 
