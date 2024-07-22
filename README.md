@@ -15,10 +15,11 @@ Work with directed graphs in Rust.
   - [Breadth-First Search (BFS)](#breadth-first-search-bfs)
   - [Depth-First Search (DFS)](#depth-first-search-dfs)
   - [Dijkstra](#dijkstra)
-  - [Floyd-Warshall Algorithm](#floyd-warshall)
+  - [Floyd-Warshall](#floyd-warshall)
   - [Tarjan](#tarjan)
-  - [Breath-First Tree](#breadth-first-tree)
-  - [Distance Matrix](#distance-matrix)
+  - [Types](#types)
+    - [Breath-First Tree](#breadth-first-tree)
+    - [Distance Matrix](#distance-matrix)
 - [Naming Conventions](#naming-conventions)
 - [Project Goals](#project-goals)
 - [Changelog](#changelog)
@@ -165,21 +166,25 @@ Tarjan's algorithm finds the strongly connected components in a digraph.
 
 - [`strongly_connected_components`](https://docs.rs/graaf/latest/graaf/algo/tarjan/fn.strongly_connected_components.html) finds the strongly connected components.
 
-### Breadth-First Tree
+### Types
+
+These types are produced by the algorithms.
+
+#### Breadth-First Tree
 
 A breadth-first tree is the result of a breadth-first search.
 
-- [`search`](https://docs.rs/graaf/latest/graaf/algo/breadth_first_tree/struct.BreadthFirstTree.html#method.search) finds a vertex by value.
-- [`search_by`](https://docs.rs/graaf/latest/graaf/algo/breadth_first_tree/struct.BreadthFirstTree.html#method.search_by) finds a vertex by predicate.
+- [`search`](https://docs.rs/graaf/latest/graaf/algo/types/breadth_first_tree/struct.BreadthFirstTree.html#method.search) finds a vertex by value.
+- [`search_by`](https://docs.rs/graaf/latest/graaf/algo/types/breadth_first_tree/struct.BreadthFirstTree.html#method.search_by) finds a vertex by predicate.
 
 These functions produce a breadth-first tree.
 
-- [`bfs::single_source_predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.single_source_predecessors.html)
-- [`bfs::predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.predecessors.html)
-- [`dijkstra::single_source_predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.single_source_predecessors.html)
-- [`dijkstra::predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.predecessors.html)
+- [`bfs::single_source_predecessors`](https://docs.rs/graaf/latest/graaf/algo/types/bfs/fn.single_source_predecessors.html)
+- [`bfs::predecessors`](https://docs.rs/graaf/latest/graaf/algo/types/bfs/fn.predecessors.html)
+- [`dijkstra::single_source_predecessors`](https://docs.rs/graaf/latest/graaf/algo/types/dijkstra/fn.single_source_predecessors.html)
+- [`dijkstra::predecessors`](https://docs.rs/graaf/latest/graaf/algo/types/dijkstra/fn.predecessors.html)
 
-### Distance Matrix
+#### Distance Matrix
 
 A distance matrix contains the shortest distances between all pairs of vertices in a digraph.
 

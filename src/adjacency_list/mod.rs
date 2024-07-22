@@ -1,4 +1,4 @@
-//! An adjacency list representation of an unweighted digraph.
+//! An adjacency list representation of an unweighted digraph
 
 pub mod digraph;
 pub mod fixture;

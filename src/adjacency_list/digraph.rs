@@ -1,4 +1,4 @@
-//! An adjacency list representation of an unweighted digraph.
+//! An adjacency list representation of an unweighted digraph
 //!
 //! # Examples
 //!
@@ -262,6 +262,7 @@ mod tests {
                 IsWalk,
             },
             proptest_strategy::arc,
+            r#gen::Path,
         },
         proptest::proptest,
     };
@@ -1284,6 +1285,191 @@ mod tests {
         }
 
         #[test]
+        fn path_complement_size(order in 1..25_usize) {
+            assert_eq!(
+                Digraph::path(order).complement().size(),
+                (order - 1).pow(2)
+            );
+        }
+
+        #[test]
+        fn path_degree(order in 2..25_usize) {
+            let digraph = Digraph::path(order);
+            let last = order - 1;
+
+            assert_eq!(digraph.degree(0), 1);
+
+            for u in 1..last {
+                assert_eq!(digraph.degree(u), 2);
+            }
+
+            assert_eq!(digraph.degree(last), 1);
+        }
+
+        #[test]
+        fn path_degree_sequence(order in 2..25_usize) {
+            let degree_sequence = Digraph::path(order).degree_sequence();
+            let last = order - 1;
+
+            assert_eq!(degree_sequence[0], (0, 1));
+            assert!(degree_sequence[1..last].iter().all(|d| *d == (1, 1)));
+            assert_eq!(degree_sequence[last], (1, 0));
+        }
+
+        #[test]
+        fn path_degree_sum_equals_2size(order in 1..25_usize) {
+            let digraph = Digraph::path(order);
+
+            assert_eq!(
+                digraph.vertices().fold(0, |acc, u| acc + digraph.degree(u)),
+                2 * digraph.size()
+            );
+        }
+
+        #[test]
+        fn path_even_number_odd_degrees(order in 1..25_usize) {
+            let digraph = Digraph::path(order);
+
+            assert_eq!(
+                digraph
+                    .vertices()
+                    .filter(|&u| digraph.degree(u) % 2 == 1)
+                    .count()
+                    % 2,
+                0
+            );
+        }
+
+        #[test]
+        fn path_has_edge(order in 2..25_usize) {
+            let digraph = Digraph::path(order);
+
+            for u in 0..order {
+                for v in u..order {
+                    assert!(!digraph.has_edge(u, v));
+                }
+            }
+        }
+
+        #[test]
+        fn path_indegree(order in 1..25_usize) {
+            let digraph = Digraph::path(order);
+
+            assert_eq!(digraph.indegree(0), 0);
+
+            for u in 1..order {
+                assert_eq!(digraph.indegree(u), 1);
+            }
+        }
+
+        #[test]
+        fn path_is_balanced(order in 2..25_usize) {
+            assert!(!Digraph::path(order).is_balanced());
+        }
+
+        #[test]
+        fn path_is_complete(order in 2..25_usize) {
+            assert!(!Digraph::path(order).is_complete());
+        }
+
+        #[test]
+        fn path_is_isolated(order in 2..25_usize) {
+            let digraph = Digraph::path(order);
+
+            for u in digraph.vertices() {
+                assert!(!digraph.is_isolated(u));
+            }
+        }
+
+        #[test]
+        fn path_is_oriented(order in 1..25_usize) {
+            assert!(Digraph::path(order).is_oriented());
+        }
+
+        #[test]
+        fn path_is_pendant(order in 2..25_usize) {
+            let digraph = Digraph::path(order);
+            let last = order - 1;
+
+            assert!(digraph.is_pendant(0));
+
+            for u in 1..last {
+                assert!(!digraph.is_pendant(u));
+            }
+
+            assert!(digraph.is_pendant(last));
+        }
+
+        #[test]
+        fn path_is_regular(order in 2..25_usize) {
+            assert!(!Digraph::path(order).is_regular());
+        }
+
+        #[test]
+        fn path_is_semicomplete(order in 3..25_usize) {
+            assert!(!Digraph::path(order).is_semicomplete());
+        }
+
+        #[test]
+        fn path_is_simple(order in 1..25_usize) {
+            assert!(Digraph::path(order).is_simple());
+        }
+
+        #[test]
+        fn path_is_sink(order in 2..25_usize) {
+            let digraph = Digraph::path(order);
+            let last = order - 1;
+
+            for u in 0..last {
+                assert!(!digraph.is_sink(u));
+            }
+
+            assert!(digraph.is_sink(last));
+        }
+
+        #[test]
+        fn path_is_source(order in 1..25_usize) {
+            let digraph = Digraph::path(order);
+
+            assert!(digraph.is_source(0));
+
+            for u in 1..order {
+                assert!(!digraph.is_source(u));
+            }
+        }
+
+        #[test]
+        fn path_is_spanning_subdigraph(order in 1..25_usize) {
+            let digraph = Digraph::path(order);
+
+            assert!(digraph.is_spanning_subdigraph(&digraph));
+        }
+
+        #[test]
+        fn path_is_subdigraph(order in 1..25_usize) {
+            let digraph = Digraph::path(order);
+
+            assert!(digraph.is_subdigraph(&digraph));
+        }
+
+        #[test]
+        fn path_is_superdigraph(order in 1..25_usize) {
+            let digraph = Digraph::path(order);
+
+            assert!(digraph.is_superdigraph(&digraph));
+        }
+
+        #[test]
+        fn path_is_symmetric(order in 3..25_usize) {
+            assert!(!Digraph::path(order).is_symmetric());
+        }
+
+        #[test]
+        fn path_is_tournament(order in 3..25_usize) {
+            assert!(!Digraph::path(order).is_tournament());
+        }
+
+        #[test]
         fn random_tournament_degree(order in 1..25_usize) {
             let digraph = Digraph::random_tournament(order);
 
@@ -1494,6 +1680,12 @@ mod tests {
 
             for u in 1..order {
                 assert!(digraph.has_edge(0, u));
+            }
+
+            for u in 1..order {
+                for v in u..order {
+                    assert!(!digraph.has_edge(u, v));
+                }
             }
         }
 
@@ -1811,6 +2003,11 @@ mod tests {
     }
 
     #[test]
+    fn biclique_1_1_complement() {
+        assert!(Digraph::biclique(1, 1).complement().arcs().eq([]));
+    }
+
+    #[test]
     fn biclique_1_1_is_complete() {
         assert!(Digraph::biclique(1, 1).is_balanced());
     }
@@ -1828,6 +2025,14 @@ mod tests {
     }
 
     #[test]
+    fn biclique_1_2_complement() {
+        assert!(Digraph::biclique(1, 2)
+            .complement()
+            .arcs()
+            .eq([(1, 2), (2, 1)]));
+    }
+
+    #[test]
     fn biclique_1_2_is_complete() {
         assert!(!Digraph::biclique(1, 2).is_complete());
     }
@@ -1842,6 +2047,14 @@ mod tests {
         assert!(Digraph::biclique(2, 1)
             .arcs()
             .eq([(0, 2), (1, 2), (2, 0), (2, 1)]));
+    }
+
+    #[test]
+    fn biclique_2_1_complement() {
+        assert!(Digraph::biclique(2, 1)
+            .complement()
+            .arcs()
+            .eq([(0, 1), (1, 0)]));
     }
 
     #[test]
@@ -1866,6 +2079,14 @@ mod tests {
             (3, 0),
             (3, 1)
         ]));
+    }
+
+    #[test]
+    fn biclique_2_2_complement() {
+        assert!(Digraph::biclique(2, 2)
+            .complement()
+            .arcs()
+            .eq([(0, 1), (1, 0), (2, 3), (3, 2),]));
     }
 
     #[test]
@@ -1902,6 +2123,11 @@ mod tests {
     #[test]
     fn circuit_1() {
         assert!(Digraph::circuit(1).arcs().eq([]));
+    }
+
+    #[test]
+    fn circuit_1_complement() {
+        assert!(Digraph::circuit(1).complement().arcs().eq([]));
     }
 
     #[test]
@@ -1968,6 +2194,11 @@ mod tests {
     }
 
     #[test]
+    fn circuit_2_complement() {
+        assert!(Digraph::circuit(2).complement().arcs().eq([]));
+    }
+
+    #[test]
     fn circuit_2_has_edge() {
         let digraph = Digraph::circuit(2);
 
@@ -2009,6 +2240,14 @@ mod tests {
     }
 
     #[test]
+    fn circuit_3_complement() {
+        assert!(Digraph::circuit(3)
+            .complement()
+            .arcs()
+            .eq([(0, 2), (1, 0), (2, 1)]));
+    }
+
+    #[test]
     fn circuit_3_is_semicomplete() {
         assert!(Digraph::circuit(3).is_semicomplete());
     }
@@ -2021,6 +2260,11 @@ mod tests {
     #[test]
     fn complete_1() {
         assert!(Digraph::complete(1).arcs().eq([]));
+    }
+
+    #[test]
+    fn complete_1_complement() {
+        assert!(Digraph::complete(1).complement().arcs().eq([]));
     }
 
     #[test]
@@ -2054,10 +2298,20 @@ mod tests {
     }
 
     #[test]
+    fn complete_2_complement() {
+        assert!(Digraph::complete(2).complement().arcs().eq([]));
+    }
+
+    #[test]
     fn complete_3() {
         assert!(Digraph::complete(3)
             .arcs()
             .eq([(0, 1), (0, 2), (1, 0), (1, 2), (2, 0), (2, 1)]));
+    }
+
+    #[test]
+    fn complete_3_complement() {
+        assert!(Digraph::complete(3).complement().arcs().eq([]));
     }
 
     #[test]
@@ -2159,6 +2413,11 @@ mod tests {
     }
 
     #[test]
+    fn cycle_1_complement() {
+        assert!(Digraph::cycle(1).complement().arcs().eq([]));
+    }
+
+    #[test]
     fn cycle_1_degree() {
         let digraph = Digraph::cycle(1);
 
@@ -2213,6 +2472,11 @@ mod tests {
     }
 
     #[test]
+    fn cycle_2_complement() {
+        assert!(Digraph::cycle(2).complement().arcs().eq([]));
+    }
+
+    #[test]
     fn cycle_2_degree() {
         let digraph = Digraph::cycle(2);
 
@@ -2245,6 +2509,11 @@ mod tests {
         assert!(Digraph::cycle(3)
             .arcs()
             .eq([(0, 1), (0, 2), (1, 0), (1, 2), (2, 0), (2, 1)]));
+    }
+
+    #[test]
+    fn cycle_3_complement() {
+        assert!(Digraph::cycle(3).complement().arcs().eq([]));
     }
 
     #[test]
@@ -2463,13 +2732,35 @@ mod tests {
     }
 
     #[test]
+    fn empty_1_complement() {
+        assert!(Digraph::empty(1).complement().arcs().eq([]));
+    }
+
+    #[test]
     fn empty_2() {
         assert!(Digraph::empty(2).arcs().eq([]));
     }
 
     #[test]
+    fn empty_2_complement() {
+        assert!(Digraph::empty(2).complement().arcs().eq([(0, 1), (1, 0)]));
+    }
+
+    #[test]
     fn empty_3() {
         assert!(Digraph::empty(3).arcs().eq([]));
+    }
+
+    #[test]
+    fn empty_3_complement() {
+        assert!(Digraph::empty(3).complement().arcs().eq([
+            (0, 1),
+            (0, 2),
+            (1, 0),
+            (1, 2),
+            (2, 0),
+            (2, 1)
+        ]));
     }
 
     #[test]
@@ -3737,6 +4028,99 @@ mod tests {
     }
 
     #[test]
+    fn path_1() {
+        assert!(Digraph::path(1).arcs().eq([]));
+    }
+
+    #[test]
+    fn path_1_complement() {
+        assert!(Digraph::path(1).complement().arcs().eq([]));
+    }
+
+    #[test]
+    fn path_1_is_balanced() {
+        assert!(Digraph::path(1).is_balanced());
+    }
+
+    #[test]
+    fn path_1_is_complete() {
+        assert!(Digraph::path(1).is_complete());
+    }
+
+    #[test]
+    fn path_1_is_isolated() {
+        assert!(Digraph::path(1).is_isolated(0));
+    }
+
+    #[test]
+    fn path_1_is_pendant() {
+        assert!(!Digraph::path(1).is_pendant(0));
+    }
+
+    #[test]
+    fn path_1_is_regular() {
+        assert!(Digraph::path(1).is_regular());
+    }
+
+    #[test]
+    fn path_1_is_semicomplete() {
+        assert!(Digraph::path(1).is_semicomplete());
+    }
+
+    #[test]
+    fn path_1_is_sink() {
+        assert!(Digraph::path(1).is_sink(0));
+    }
+
+    #[test]
+    fn path_1_is_symmetric() {
+        assert!(Digraph::path(1).is_symmetric());
+    }
+
+    #[test]
+    fn path_1_is_tournament() {
+        assert!(Digraph::path(1).is_tournament());
+    }
+
+    #[test]
+    fn path_2() {
+        assert!(Digraph::path(2).arcs().eq([(0, 1)]));
+    }
+
+    #[test]
+    fn path_2_complement() {
+        assert!(Digraph::path(2).complement().arcs().eq([(1, 0)]));
+    }
+
+    #[test]
+    fn path_2_is_semicomplete() {
+        assert!(Digraph::path(2).is_semicomplete());
+    }
+
+    #[test]
+    fn path_2_is_symmetric() {
+        assert!(!Digraph::path(2).is_symmetric());
+    }
+
+    #[test]
+    fn path_2_is_tournament() {
+        assert!(Digraph::path(2).is_tournament());
+    }
+
+    #[test]
+    fn path_3() {
+        assert!(Digraph::path(3).arcs().eq([(0, 1), (1, 2)]));
+    }
+
+    #[test]
+    fn path_3_complement() {
+        assert!(Digraph::path(3)
+            .complement()
+            .arcs()
+            .eq([(0, 2), (1, 0), (2, 0), (2, 1)]));
+    }
+
+    #[test]
     fn random_tournament_1_is_complete() {
         assert!(Digraph::random_tournament(1).is_complete());
     }
@@ -4028,6 +4412,11 @@ mod tests {
     }
 
     #[test]
+    fn star_1_complement() {
+        assert!(Digraph::star(1).complement().arcs().eq([]));
+    }
+
+    #[test]
     fn star_1_is_balanced() {
         assert!(Digraph::star(1).is_balanced());
     }
@@ -4078,6 +4467,11 @@ mod tests {
     }
 
     #[test]
+    fn star_2_complement() {
+        assert!(Digraph::star(2).complement().arcs().eq([]));
+    }
+
+    #[test]
     fn star_2_is_balanced() {
         assert!(Digraph::star(2).is_complete());
     }
@@ -4100,5 +4494,10 @@ mod tests {
     #[test]
     fn star_3() {
         assert!(Digraph::star(3).arcs().eq([(0, 1), (0, 2), (1, 0), (2, 0)]));
+    }
+
+    #[test]
+    fn star_3_complement() {
+        assert!(Digraph::star(3).complement().arcs().eq([(1, 2), (2, 1)]));
     }
 }

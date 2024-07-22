@@ -1,4 +1,4 @@
-//! Breadth-first trees.
+//! Breadth-first trees
 //!
 //! A breadth-first tree contains the predecessor of each vertex on the shortest
 //! path from the source vertex.
@@ -12,7 +12,7 @@
 //!         adjacency_list::Digraph,
 //!         algo::{
 //!             bfs::predecessors,
-//!             breadth_first_tree::BreadthFirstTree,
+//!             BreadthFirstTree,
 //!         },
 //!         gen::Empty,
 //!         op::AddArc,
@@ -51,7 +51,7 @@ use std::{
     vec::IntoIter,
 };
 
-/// A breadth-first tree.
+/// A breadth-first tree
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct BreadthFirstTree {
     pred: Vec<Option<usize>>,
@@ -96,7 +96,7 @@ impl BreadthFirstTree {
     /// # Examples
     ///
     /// ```
-    /// use graaf::algo::breadth_first_tree::BreadthFirstTree;
+    /// use graaf::algo::BreadthFirstTree;
     ///
     /// let pred = BreadthFirstTree::from(vec![Some(1), Some(2), Some(3), None]);
     ///
@@ -127,7 +127,7 @@ impl BreadthFirstTree {
     /// # Examples
     ///
     /// ```
-    /// use graaf::algo::breadth_first_tree::BreadthFirstTree;
+    /// use graaf::algo::BreadthFirstTree;
     ///
     /// let pred = BreadthFirstTree::from(vec![Some(1), Some(2), Some(3), None]);
     ///
@@ -138,7 +138,7 @@ impl BreadthFirstTree {
     /// ```
     ///
     /// ```
-    /// use graaf::algo::breadth_first_tree::BreadthFirstTree;
+    /// use graaf::algo::BreadthFirstTree;
     ///
     /// let pred = BreadthFirstTree::from(vec![Some(1), Some(2), Some(3), None, Some(0)]);
     ///

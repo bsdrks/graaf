@@ -20,6 +20,84 @@
 - Rename `DegreeSequence` to `SemidegreeSequence` and add a new `DegreeSequence` trait.
 - Subsume traits with one super trait into the super trait.
 
+## [0.73.0] - 2024-07-22
+
+Added
+
+- Add property test `path_complement_size` for `adjacency_list`.
+- Add property test `path_degree_sequence` for `adjacency_list`.
+- Add property test `path_degree_sum_equals_2size` for `adjacency_list`.
+- Add property test `path_degree` for `adjacency_list`.
+- Add property test `path_even_number_odd_degrees` for `adjacency_list`.
+- Add property test `path_has_edge` for `adjacency_list`.
+- Add property test `path_indegree` for `adjacency_list`.
+- Add property test `path_is_balanced` for `adjacency_list`.
+- Add property test `path_is_complete` for `adjacency_list`.
+- Add property test `path_is_isolated` for `adjacency_list`.
+- Add property test `path_is_oriented` for `adjacency_list`.
+- Add property test `path_is_pendant` for `adjacency_list`.
+- Add property test `path_is_regular` for `adjacency_list`.
+- Add property test `path_is_semicomplete` for `adjacency_list`.
+- Add property test `path_is_simple` for `adjacency_list`.
+- Add property test `path_is_sink` for `adjacency_list`.
+- Add property test `path_is_source` for `adjacency_list`.
+- Add property test `path_is_spanning_subdigraph` for `adjacency_list`.
+- Add property test `path_is_subdigraph` for `adjacency_list`.
+- Add property test `path_is_superdigraph` for `adjacency_list`.
+- Add property test `path_is_symmetric` for `adjacency_list`.
+- Add property test `path_is_tournament` for `adjacency_list`.
+- Add property test `star_complement_size` for `adjacency_list`.
+- Add unit test `biclique_1_1_complement` for `adjacency_list`.
+- Add unit test `biclique_1_2_complement` for `adjacency_list`.
+- Add unit test `biclique_2_1_complement` for `adjacency_list`.
+- Add unit test `biclique_2_2_complement` for `adjacency_list`.
+- Add unit test `circuit_1_complement` for `adjacency_list`.
+- Add unit test `circuit_2_complement` for `adjacency_list`.
+- Add unit test `circuit_3_complement` for `adjacency_list`.
+- Add unit test `complete_1_complement` for `adjacency_list`.
+- Add unit test `complete_2_complement` for `adjacency_list`.
+- Add unit test `complete_3_complement` for `adjacency_list`.
+- Add unit test `cycle_1_complement` for `adjacency_list`.
+- Add unit test `cycle_2_complement` for `adjacency_list`.
+- Add unit test `cycle_3_complement` for `adjacency_list`.
+- Add unit test `empty_1_complement` for `adjacency_list`.
+- Add unit test `empty_2_complement` for `adjacency_list`.
+- Add unit test `empty_3_complement` for `adjacency_list`.
+- Add unit test `path_1_complement` for `adjacency_list`.
+- Add unit test `path_1_is_balanced` for `adjacency_list`.
+- Add unit test `path_1_is_complete` for `adjacency_list`.
+- Add unit test `path_1_is_isolated` for `adjacency_list`.
+- Add unit test `path_1_is_pendant` for `adjacency_list`.
+- Add unit test `path_1_is_regular` for `adjacency_list`.
+- Add unit test `path_1_is_semicomplete` for `adjacency_list`.
+- Add unit test `path_1_is_sink` for `adjacency_list`.
+- Add unit test `path_1_is_symmetric` for `adjacency_list`.
+- Add unit test `path_1_is_tournament` for `adjacency_list`.
+- Add unit test `path_1` for `adjacency_list`.
+- Add unit test `path_2_complement` for `adjacency_list`.
+- Add unit test `path_2_is_balanced` for `adjacency_list`.
+- Add unit test `path_2_is_complete` for `adjacency_list`.
+- Add unit test `path_2_is_regular` for `adjacency_list`.
+- Add unit test `path_2_is_semicomplete` for `adjacency_list`.
+- Add unit test `path_2_is_symmetric` for `adjacency_list`.
+- Add unit test `path_2_is_tournament` for `adjacency_list`.
+- Add unit test `path_2` for `adjacency_list`.
+- Add unit test `path_3_complement` for `adjacency_list`.
+- Add unit test `path_3` for `adjacency_list`.
+- Add unit test `star_1_complement` for `adjacency_list`.
+- Add unit test `star_2_complement` for `adjacency_list`.
+- Add unit test `star_3_complement` for `adjacency_list`.
+- Export `algo::BreadthFirstTree`.
+- Export `algo::DistanceMatrix`.
+
+Changed
+
+- Breaking: Move `algo::breadth_first_tree` to `algo::types::breadth_first_tree`.
+- Breaking: Move `algo::distance_matrix` to `algo::types::distance_matrix`.
+- Expand property test `star_has_edge` for `adjacency_list`.
+- Expand property test `star_has_edge` for `adjacency_matrix`.
+- Improve documentation consistency.
+
 ## [0.72.1] - 2024-07-21
 
 Added

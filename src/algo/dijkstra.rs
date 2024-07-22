@@ -72,12 +72,10 @@
 //!   <https://doi.org/10.1007/BF01386390>
 
 use {
-    crate::{
-        algo::breadth_first_tree::BreadthFirstTree,
-        op::{
-            Order,
-            OutNeighborsWeighted,
-        },
+    super::BreadthFirstTree,
+    crate::op::{
+        Order,
+        OutNeighborsWeighted,
     },
     core::cmp::Reverse,
     std::collections::BinaryHeap,
@@ -246,8 +244,8 @@ where
 ///     graaf::{
 ///         adjacency_list_weighted::Digraph,
 ///         algo::{
-///             breadth_first_tree::BreadthFirstTree,
 ///             dijkstra::predecessors,
+///             BreadthFirstTree,
 ///         },
 ///         gen::Empty,
 ///         op::AddArcWeighted,
@@ -393,8 +391,8 @@ where
 ///     graaf::{
 ///         adjacency_list_weighted::Digraph,
 ///         algo::{
-///             breadth_first_tree::BreadthFirstTree,
 ///             dijkstra::shortest_path,
+///             BreadthFirstTree,
 ///         },
 ///         gen::Empty,
 ///         op::AddArcWeighted,

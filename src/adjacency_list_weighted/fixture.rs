@@ -1,4 +1,4 @@
-//! Weighted digraph fixtures for testing and benchmarking.
+//! Weighted adjacency list fixtures for testing and benchmarking
 
 use {
     super::Digraph,

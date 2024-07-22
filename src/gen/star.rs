@@ -34,8 +34,8 @@ use crate::{
 ///
 /// # How can I implement `Star`?
 ///
-/// Provide an implementation of `star` that generates a star digraph with
-/// `order` vertices OR implement `AddArc` and `Empty`.
+/// Provide an implementation of `star` that generates a star digraph of a given
+/// `order` OR implement `AddArc` and `Empty`.
 ///
 /// ```
 /// use {

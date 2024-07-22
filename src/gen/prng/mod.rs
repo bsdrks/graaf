@@ -1,4 +1,4 @@
-//! Pseudo-random number generators.
+//! Pseudo-random number generators
 //!
 //! # Examples
 //!

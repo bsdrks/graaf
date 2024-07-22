@@ -44,7 +44,7 @@ use {
 /// # How can I implement `RandomTournament`?
 ///
 /// Provide an implementation of `random_tournament` that generates a random
-/// tournament with `v` vertices OR implement `AddArc` and `Empty`.
+/// tournament of a given `order` OR implement `AddArc` and `Empty`.
 ///
 /// ```
 /// use {

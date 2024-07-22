@@ -7,17 +7,18 @@
 //! - [Digraph Types](#digraph-types)
 //! - [Creating Digraphs](#creating-digraphs)
 //! - [Operations](#operations)
-//!    - [Basic operations](#basic-operations)
-//!    - [Extended operations](#extended-operations)
+//!    - [Basic Operations](#basic-operations)
+//!    - [Extended Operations](#extended-operations)
 //! - [Algorithms](#algorithms)
 //!    - [Bellman-Ford-Moore](#bellman-ford-moore)
-//!    - [Breadth-first search (BFS)](#breadth-first-search-bfs)
-//!    - [Depth-first search (DFS)](#depth-first-search-dfs)
+//!    - [Breadth-First Search (BFS)](#breadth-first-search-bfs)
+//!    - [Depth-First Search (DFS)](#depth-first-search-dfs)
 //!    - [Dijkstra](#dijkstra)
 //!    - [Floyd-Warshall](#floyd-warshall)
 //!    - [Tarjan](#tarjan)
-//!    - [Breath-first tree](#breadth-first-tree)
-//!    - [Distance matrix](#distance-matrix)
+//!    - [Types](#types)
+//!       - [Breath-First Tree](#breadth-first-tree)
+//!       - [Distance Matrix](#distance-matrix)
 //! - [Naming Conventions](#naming-conventions)
 //! - [Project Goals](#project-goals)
 //!
@@ -51,7 +52,7 @@
 //! traits for custom digraph types. Operations form the foundation for
 //! [algorithms](#algorithms).
 //!
-//! ## Basic operations
+//! ## Basic Operations
 //!
 //! [Individual digraph types](#digraph-types) implement the basic operations.
 //!
@@ -76,7 +77,7 @@
 //! - [`Size`](op::Size) returns the number of arcs in a digraph.
 //! - [`Vertices`](op::Vertices) returns the vertices in a digraph.
 //!
-//! ## Extended operations
+//! ## Extended Operations
 //!
 //! The extended traits derive their implementation from the basic
 //! operations.
@@ -116,7 +117,7 @@
 //!
 //! - [`single_source_distances`](algo::bellman_ford_moore::single_source_distances) finds the shortest distances.
 //!
-//! ## Breadth-first search (BFS)
+//! ## Breadth-First Search (BFS)
 //!
 //! A breadth-first search explores the vertices of an unweighted digraph in
 //! order of their distance from a source.
@@ -138,7 +139,7 @@
 //! - [`single_pair_shortest_path`](algo::bfs::single_pair_shortest_path) finds
 //!   the shortest path.
 //!
-//! ## Depth-first search (DFS)
+//! ## Depth-First Search (DFS)
 //!
 //! A depth-first search explores the vertices of an unweighted digraph in order
 //! of their depth from a source.
@@ -185,15 +186,18 @@
 //!
 //! - [`strongly_connected_components`](algo::tarjan::strongly_connected_components) finds the strongly connected components.
 //!
-//! ## Breadth-first tree
+//! ## Types
+//!
+//! These types are produced by the algorithms.
+//!
+//! ### Breadth-First Tree
 //!
 //! A breadth-first tree is the result of a breadth-first search and contains
 //! the predecessors of the vertices on the shortest paths.
 //!
-//! - [`search`](algo::breadth_first_tree::BreadthFirstTree::search) finds a
-//!   vertex by value.
-//! - [`search_by`](algo::breadth_first_tree::BreadthFirstTree::search_by) finds
-//!   a vertex by predicate.
+//! - [`search`](algo::BreadthFirstTree::search) finds a vertex by value.
+//! - [`search_by`](algo::BreadthFirstTree::search_by) finds a vertex by
+//!   predicate.
 //!
 //! These functions produce a breadth-first tree.
 //!
@@ -202,21 +206,20 @@
 //! - [`dijkstra::single_source_predecessors`](algo::dijkstra::single_source_predecessors)
 //! - [`dijkstra::predecessors`](algo::dijkstra::predecessors)
 //!
-//! ## Distance matrix
+//! ### Distance Matrix
 //!
 //! A distance matrix contains the shortest distances between all pairs of
 //! vertices in a digraph.
 //!
-//! - [`center`](algo::distance_matrix::DistanceMatrix::center) finds the center
-//!   of the digraph.
-//! - [`diameter`](algo::distance_matrix::DistanceMatrix::diameter) finds the
-//!   diameter of the digraph.
-//! - [`eccentricities`](algo::distance_matrix::DistanceMatrix::eccentricities)
-//!   returns the eccentricities of the vertices.
-//! - [`is_connected`](algo::distance_matrix::DistanceMatrix::is_connected)
-//!   checks if the digraph is connected.
-//! - [`periphery`](algo::distance_matrix::DistanceMatrix::periphery) finds the
-//!   periphery of the digraph.
+//! - [`center`](algo::DistanceMatrix::center) finds the center of the digraph.
+//! - [`diameter`](algo::DistanceMatrix::diameter) finds the diameter of the
+//!   digraph.
+//! - [`eccentricities`](algo::DistanceMatrix::eccentricities) returns the
+//!   eccentricities of the vertices.
+//! - [`is_connected`](algo::DistanceMatrix::is_connected) checks if the digraph
+//!   is connected.
+//! - [`periphery`](algo::DistanceMatrix::periphery) finds the periphery of the
+//!   digraph.
 //!
 //! ## Naming Conventions
 //!

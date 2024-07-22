@@ -204,7 +204,7 @@ mod tests {
         assert_eq!(
             strongly_connected_components(&bang_jensen_196())
                 .into_iter()
-                .collect::<BTreeSet<BTreeSet<usize>>>(),
+                .collect::<BTreeSet<BTreeSet<_>>>(),
             BTreeSet::from([
                 BTreeSet::from([0, 1]),
                 BTreeSet::from([2, 3, 4]),
@@ -218,7 +218,7 @@ mod tests {
         assert_eq!(
             strongly_connected_components(&kattis_cantinaofbabel_1())
                 .into_iter()
-                .collect::<BTreeSet<BTreeSet<usize>>>(),
+                .collect::<BTreeSet<BTreeSet<_>>>(),
             BTreeSet::from([
                 BTreeSet::from([0, 1, 2, 3, 4, 7, 9, 11]),
                 BTreeSet::from([5, 6, 10]),
@@ -232,7 +232,7 @@ mod tests {
         assert_eq!(
             strongly_connected_components(&Digraph::trivial())
                 .into_iter()
-                .collect::<BTreeSet<BTreeSet<usize>>>(),
+                .collect::<BTreeSet<BTreeSet<_>>>(),
             BTreeSet::from([BTreeSet::from([0])])
         );
     }

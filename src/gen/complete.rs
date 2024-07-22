@@ -38,8 +38,8 @@ use crate::{
 ///
 /// # How can I implement `Complete`?
 ///
-/// Provide an implementation of `complete` that generates a complete digraph
-/// with `v` vertices OR implement `AddArc` and `Empty`.
+/// Provide an implementation of `complete` that generates a complete digraph of
+/// a given `order` OR implement `AddArc` and `Empty`.
 ///
 /// ```
 /// use {

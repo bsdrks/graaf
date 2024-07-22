@@ -1,4 +1,4 @@
-//! Unweighted digraph fixtures for testing and benchmarking.
+//! Unweighted adjacency matrix fixtures for testing and benchmarking
 
 use {
     super::Digraph,

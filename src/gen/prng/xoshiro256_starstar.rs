@@ -1,4 +1,4 @@
-//! A general-purpose PRNG.
+//! A general-purpose PRNG
 //!
 //! # Examples
 //!

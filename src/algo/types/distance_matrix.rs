@@ -1,4 +1,4 @@
-//! Distance matrices.
+//! Distance matrices
 //!
 //! A distance matrix contains the distance between each pair of vertices in a
 //! digraph.
@@ -9,8 +9,8 @@
 //! use graaf::{
 //!     adjacency_list_weighted::Digraph,
 //!     algo::{
-//!         distance_matrix::DistanceMatrix,
 //!         floyd_warshall::distances,
+//!         DistanceMatrix,
 //!     },
 //!     gen::Empty,
 //!     op::{
@@ -59,7 +59,7 @@ use std::{
     },
 };
 
-/// A distance matrix.
+/// A distance matrix
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct DistanceMatrix<W> {
     dist: Vec<Vec<W>>,
@@ -82,7 +82,7 @@ impl<W> DistanceMatrix<W> {
     /// # Examples
     ///
     /// ```
-    /// use graaf::algo::distance_matrix::DistanceMatrix;
+    /// use graaf::algo::DistanceMatrix;
     ///
     /// let dist = DistanceMatrix::new(4, 0);
     ///
@@ -120,8 +120,8 @@ impl<W> DistanceMatrix<W> {
     /// use graaf::{
     ///     adjacency_list_weighted::Digraph,
     ///     algo::{
-    ///         distance_matrix::DistanceMatrix,
     ///         floyd_warshall::distances,
+    ///         DistanceMatrix,
     ///     },
     ///     gen::Empty,
     ///     op::AddArcWeighted,
@@ -188,8 +188,8 @@ impl<W> DistanceMatrix<W> {
     /// use graaf::{
     ///     adjacency_list_weighted::Digraph,
     ///     algo::{
-    ///         distance_matrix::DistanceMatrix,
     ///         floyd_warshall::distances,
+    ///         DistanceMatrix,
     ///     },
     ///     gen::Empty,
     ///     op::AddArcWeighted,
@@ -242,8 +242,8 @@ impl<W> DistanceMatrix<W> {
     /// use graaf::{
     ///     adjacency_list_weighted::Digraph,
     ///     algo::{
-    ///         distance_matrix::DistanceMatrix,
     ///         floyd_warshall::distances,
+    ///         DistanceMatrix,
     ///     },
     ///     gen::Empty,
     ///     op::AddArcWeighted,
@@ -300,8 +300,8 @@ impl<W> DistanceMatrix<W> {
     /// use graaf::{
     ///     adjacency_list_weighted::Digraph,
     ///     algo::{
-    ///         distance_matrix::DistanceMatrix,
     ///         floyd_warshall::distances,
+    ///         DistanceMatrix,
     ///     },
     ///     gen::Empty,
     ///     op::AddArcWeighted,
@@ -361,8 +361,8 @@ impl<W> DistanceMatrix<W> {
     /// use graaf::{
     ///     adjacency_list_weighted::Digraph,
     ///     algo::{
-    ///         distance_matrix::DistanceMatrix,
     ///         floyd_warshall::distances,
+    ///         DistanceMatrix,
     ///     },
     ///     gen::Empty,
     ///     op::AddArcWeighted,

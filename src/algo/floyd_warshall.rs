@@ -1,4 +1,4 @@
-//! The Floyd-Warshall algorithm.
+//! Floyd-Warshall
 //!
 //! The Floyd[^1]-Warshall algorithm finds the shortest paths between all
 //! pairs of vertices in an arc-weighted digraph.
@@ -11,8 +11,8 @@
 //! use graaf::{
 //!     adjacency_list_weighted::Digraph,
 //!     algo::{
-//!         distance_matrix::DistanceMatrix,
 //!         floyd_warshall::distances,
+//!         DistanceMatrix,
 //!     },
 //!     gen::Empty,
 //!     op::AddArcWeighted,
@@ -54,9 +54,9 @@
 //! [^1]: Robert W. Floyd. 1962. Algorithm 97: Shortest path. Commun.
 //!   ACM 5, 6 (June 1962), 345. <https://doi.org/10.1145/367766.368168>
 
-use crate::{
-    algo::distance_matrix::DistanceMatrix,
-    op::{
+use {
+    super::DistanceMatrix,
+    crate::op::{
         ArcsWeighted,
         Order,
         Vertices,
@@ -80,8 +80,8 @@ use crate::{
 /// use graaf::{
 ///     adjacency_list_weighted::Digraph,
 ///     algo::{
-///         distance_matrix::DistanceMatrix,
 ///         floyd_warshall::distances,
+///         DistanceMatrix,
 ///     },
 ///     gen::Empty,
 ///     op::AddArcWeighted,

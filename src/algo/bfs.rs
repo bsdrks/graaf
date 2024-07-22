@@ -1,4 +1,4 @@
-//! Breadth-first search.
+//! Breadth-first search
 //!
 //! Breadth-first search explores the vertices of an unweighted digraph in order
 //! of their distance from a source. For weighted digraphs, use [`dijkstra`].
@@ -66,12 +66,10 @@
 //! [`dijkstra`]: crate::algo::dijkstra
 
 use {
-    crate::{
-        algo::breadth_first_tree::BreadthFirstTree,
-        op::{
-            Order,
-            OutNeighbors,
-        },
+    super::BreadthFirstTree,
+    crate::op::{
+        Order,
+        OutNeighbors,
     },
     std::collections::VecDeque,
 };
@@ -222,7 +220,7 @@ where
 ///         adjacency_list::Digraph,
 ///         algo::{
 ///             bfs::predecessors,
-///             breadth_first_tree::BreadthFirstTree,
+///             BreadthFirstTree,
 ///         },
 ///         gen::Empty,
 ///         op::AddArc,
@@ -368,7 +366,7 @@ where
 ///         adjacency_list::Digraph,
 ///         algo::{
 ///             bfs::shortest_path,
-///             breadth_first_tree::BreadthFirstTree,
+///             BreadthFirstTree,
 ///         },
 ///         gen::Empty,
 ///         op::AddArc,

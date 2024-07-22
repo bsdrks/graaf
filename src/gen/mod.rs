@@ -86,6 +86,7 @@ pub mod circuit;
 pub mod complete;
 pub mod cycle;
 pub mod empty;
+pub mod path;
 pub mod prng;
 pub mod random_tournament;
 pub mod star;
@@ -96,6 +97,7 @@ pub use {
     complete::Complete,
     cycle::Cycle,
     empty::Empty,
+    path::Path,
     random_tournament::RandomTournament,
     star::Star,
 };

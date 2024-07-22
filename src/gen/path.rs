@@ -1,32 +1,30 @@
-//! Generate cycle digraphs.
+//! Generate path digraphs.
 //!
-//! A cycle is a digraph with a single bidirectional cycle.
+//! A path digraph is a chain of arcs that connect vertices in a linear
+//! sequence.
 //!
 //! # Examples
 //!
 //! ```
 //! use graaf::{
 //!     adjacency_list::Digraph,
-//!     gen::Cycle,
+//!     gen::Path,
 //!     op::Arcs,
 //! };
 //!
 //! // 0 -> {}
 //!
-//! assert!(Digraph::cycle(1).arcs().eq([]));
+//! assert!(Digraph::path(1).arcs().eq([]));
 //!
 //! // 0 -> {1}
-//! // 1 -> {0}
 //!
-//! assert!(Digraph::cycle(2).arcs().eq([(0, 1), (1, 0)]));
+//! assert!(Digraph::path(2).arcs().eq([(0, 1)]));
 //!
-//! // 0 -> {1, 2}
-//! // 1 -> {2, 0}
-//! // 2 -> {0, 1}
+//! // 0 -> {1}
+//! // 1 -> {2}
+//! // 2 -> {}
 //!
-//! assert!(Digraph::cycle(3)
-//!     .arcs()
-//!     .eq([(0, 1), (0, 2), (1, 0), (1, 2), (2, 0), (2, 1)]));
+//! assert!(Digraph::path(3).arcs().eq([(0, 1), (1, 2)]));
 //! ```
 
 use crate::{
@@ -34,19 +32,19 @@ use crate::{
     op::AddArc,
 };
 
-/// Generate cycle digraphs.
+/// Generate path digraphs.
 ///
-/// # How can I implement `Cycle`?
+/// # How can I implement `Path`?
 ///
-/// Provide an implementation of `cycle` that generates a cycle digraph of a
-/// given `order` OR implement `AddArc` and `Empty`.
+/// Provide an implementation of `path` that generates a path digraph of a given
+/// `order` OR implement `AddArc` and `Empty`.
 ///
 /// ```
 /// use {
 ///     graaf::{
 ///         gen::{
-///             Cycle,
 ///             Empty,
+///             Path,
 ///         },
 ///         op::AddArc,
 ///     },
@@ -71,17 +69,16 @@ use crate::{
 ///     }
 /// }
 ///
-/// // 0 -> {1, 2}
-/// // 1 -> {0, 2}
-/// // 2 -> {0, 1}
+/// // 0 -> {1}
+/// // 1 -> {2}
+/// // 2 -> {}
 ///
-/// let digraph = Digraph::cycle(3);
+/// let digraph = Digraph::path(3);
 ///
-/// assert!(digraph.arcs.iter().eq(&[
-///     BTreeSet::from([1, 2]),
-///     BTreeSet::from([0, 2]),
-///     BTreeSet::from([0, 1])
-/// ]));
+/// assert!(digraph
+///     .arcs
+///     .iter()
+///     .eq(&[BTreeSet::from([1]), BTreeSet::from([2]), BTreeSet::new()]));
 /// ```
 ///
 /// # Examples
@@ -89,45 +86,41 @@ use crate::{
 /// ```
 /// use graaf::{
 ///     adjacency_list::Digraph,
-///     gen::Cycle,
+///     gen::Path,
 ///     op::Arcs,
 /// };
 ///
 /// // 0 -> {}
 ///
-/// assert!(Digraph::cycle(1).arcs().eq([]));
+/// assert!(Digraph::path(1).arcs().eq([]));
 ///
 /// // 0 -> {1}
-/// // 1 -> {0}
 ///
-/// assert!(Digraph::cycle(2).arcs().eq([(0, 1), (1, 0)]));
+/// assert!(Digraph::path(2).arcs().eq([(0, 1)]));
 ///
 /// // 0 -> {1}
 /// // 1 -> {2}
-/// // 2 -> {0}
 ///
-/// assert!(Digraph::cycle(3)
-///     .arcs()
-///     .eq([(0, 1), (0, 2), (1, 0), (1, 2), (2, 0), (2, 1)]));
+/// assert!(Digraph::path(3).arcs().eq([(0, 1), (1, 2)]));
 /// ```
-pub trait Cycle {
-    /// Generates a cycle digraph.
+pub trait Path {
+    /// Generates a path digraph.
     ///
     /// # Arguments
     ///
     /// * `order` - The number of vertices in the digraph.
     #[must_use]
-    fn cycle(order: usize) -> Self;
+    fn path(order: usize) -> Self;
 }
 
-impl<D> Cycle for D
+impl<D> Path for D
 where
     D: AddArc + Empty,
 {
     /// # Panics
     ///
     /// Panics if `order` is zero.
-    fn cycle(order: usize) -> Self {
+    fn path(order: usize) -> Self {
         let mut digraph = D::empty(order);
 
         if order == 1 {
@@ -138,13 +131,7 @@ where
             let v = u + 1;
 
             digraph.add_arc(u, v);
-            digraph.add_arc(v, u);
         }
-
-        let u = order - 1;
-
-        digraph.add_arc(u, 0);
-        digraph.add_arc(0, u);
 
         digraph
     }
