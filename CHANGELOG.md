@@ -20,6 +20,13 @@
 - Rename `DegreeSequence` to `SemidegreeSequence` and add a new `DegreeSequence` trait.
 - Subsume traits with one super trait into the super trait.
 
+## [0.73.1] - 2024-07-22
+
+Changed
+
+- Add `gen::Path` to `README`.
+- Add `gen::Path` to `lib.rs`.
+
 ## [0.73.0] - 2024-07-22
 
 Added

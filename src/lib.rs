@@ -35,7 +35,7 @@
 //!
 //! # Creating Digraphs
 //!
-//! Graaf provides six digraph generators.
+//! Graaf provides eight digraph generators.
 //!
 //! - [`Biclique`](gen::Biclique) generates a complete bipartite digraph.
 //! - [`Circuit`](gen::Circuit) generates a circuit digraph.
@@ -44,6 +44,7 @@
 //! - [`Empty`](gen::Empty) generates a digraph with no arcs.
 //! - [`RandomTournament`](gen::RandomTournament) generates a random tournament.
 //! - [`Star`](gen::Star) generates a star digraph.
+//! - [`Path`](gen::Path) generates a path digraph.
 //!
 //! # Operations
 //!

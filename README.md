@@ -31,7 +31,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.73.0"
+graaf = "0.73.1"
 ```
 
 ## Digraph Types
@@ -46,13 +46,14 @@ These types eagerly implement [digraph operations](#operations) and [digraph alg
 
 ## Creating Digraphs
 
-The [`gen`] module provides six digraph generators.
+The [`gen`] module provides eight digraph generators.
 
 - [`Biclique`] generates a complete bipartite digraph.
 - [`Circuit`] generates a circuit digraph.
 - [`Complete`] generates a complete digraph.
 - [`Cycle`] generates a bidirectional circuit.
 - [`Empty`] generates a digraph with no arcs.
+- [`Path`] generates a path digraph.
 - [`RandomTournament`] generates a random tournament.
 - [`Star`] generates a star digraph.
 
@@ -230,6 +231,7 @@ A distance matrix contains the shortest distances between all pairs of vertices 
 [`OutNeighborsWeighted`]: https://docs.rs/graaf/latest/graaf/op/out_neighbors_weighted/trait.OutNeighborsWeighted.html
 [`OutNeighbors`]: https://docs.rs/graaf/latest/graaf/op/out_neighbors/trait.OutNeighbors.html
 [`Outdegree`]: https://docs.rs/graaf/latest/graaf/op/outdegree/trait.Outdegree.html
+[`Path`]: https://docs.rs/graaf/latest/graaf/gen/path/trait.Path.html
 [`RandomTournament`]: https://docs.rs/graaf/latest/graaf/gen/random_tournament/trait.RandomTournament.html
 [`RemoveArc`]: https://docs.rs/graaf/latest/graaf/op/remove_arc/trait.RemoveArc.html
 [`Size`]: https://docs.rs/graaf/latest/graaf/op/size/trait.Size.html
