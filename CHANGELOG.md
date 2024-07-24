@@ -19,6 +19,12 @@
 - Benchmark trait implementations.
 - Subsume traits with one super trait into the super trait?
 
+## [0.74.3] - 2024-07-24
+
+Fixed
+
+- Fix misc. documentation errors.
+
 ## [0.74.2] - 2024-07-24
 
 Added

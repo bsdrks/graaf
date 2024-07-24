@@ -35,12 +35,12 @@ use super::{
     Vertices,
 };
 
-/// Return the degree sequence of a digraph.
+/// Return the semidegree sequence of a digraph.
 ///
 /// # How can I implement `SemidegreeSequence`?
 ///
-/// Provide an implementation of `SemidegreeSequence` that returns the degree
-/// sequence of the digraph OR implement `Indegree`, `Outdegree`, and
+/// Provide an implementation of `SemidegreeSequence` that returns the
+/// semidegree sequence of the digraph OR implement `Indegree`, `Outdegree`, and
 /// `Vertices`.
 ///
 /// ```
