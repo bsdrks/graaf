@@ -85,9 +85,9 @@
 //!
 //! - [`Complement`](op::Complement) returns the complement of a digraph.
 //! - [`Degree`](op::Degree) returns the degree of a vertex.
-//! - [`SemidegreeSequence`](op::SemidegreeSequence) returns the degree sequence
-//!   of a digraph.
 //! - [`HasEdge`](op::HasEdge) checks if an edge exists in a digraph.
+//! - [`IndegreeSequence`](op::IndegreeSequence) returns the indegree sequence
+//!   of a digraph.
 //! - [`InNeighbors`](op::InNeighbors) returns the in-neighbors of a vertex.
 //! - [`IsBalanced`](op::IsBalanced) checks if a digraph is balanced.
 //! - [`IsComplete`](op::IsComplete) checks if a digraph is complete.
@@ -106,6 +106,8 @@
 //! - [`IsTournament`](op::IsTournament) checks if a digraph is a tournament.
 //! - [`IsWalk`](op::IsWalk) checks if a sequence of vertices is a walk in a
 //!   digraph.
+//! - [`SemidegreeSequence`](op::SemidegreeSequence) returns the semidegree
+//!   sequence of a digraph.
 //!
 //! # Algorithms
 //!

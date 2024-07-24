@@ -31,7 +31,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.74.0"
+graaf = "0.74.1"
 ```
 
 ## Digraph Types
@@ -88,8 +88,8 @@ The extended traits derive their implementation from the basic operations.
 
 - [`Complement`] returns the complement of a digraph.
 - [`Degree`] returns the degree of a vertex.
-- [`DegreeSequence`] returns the degree sequence of a digraph.
 - [`HasEdge`] checks if an edge exists in a digraph.
+- [`IndegreeSequence`] returns the indegree sequence of a digraph.
 - [`InNeighbors`] returns the in-neighbors of a vertex.
 - [`IsBalanced`] checks if a digraph is balanced.
 - [`IsComplete`] checks if a digraph is complete.
@@ -104,6 +104,7 @@ The extended traits derive their implementation from the basic operations.
 - [`IsSymmetric`] checks if a digraph is symmetric.
 - [`IsTournament`] checks if a digraph is a tournament.
 - [`IsWalk`] checks if a sequence of vertices is a walk in a digraph.
+- [`SemidegreeSequence`] returns the semidegree sequence of a digraph.
 
 ## Algorithms
 
@@ -202,16 +203,16 @@ A distance matrix contains the shortest distances between all pairs of vertices 
 [`Arcs`]: https://docs.rs/graaf/latest/graaf/op/arcs/trait.Arcs.html
 [`Biclique`]: https://docs.rs/graaf/latest/graaf/gen/biclique/trait.Biclique.html
 [`Circuit`]: https://docs.rs/graaf/latest/graaf/gen/circuit/trait.Circuit.html
-[`Complete`]: https://docs.rs/graaf/latest/graaf/gen/complete/trait.Complete.html
 [`Complement`]: https://docs.rs/graaf/latest/graaf/op/complement/trait.Complement.html
+[`Complete`]: https://docs.rs/graaf/latest/graaf/gen/complete/trait.Complete.html
 [`Converse`]: https://docs.rs/graaf/latest/graaf/op/converse/trait.Converse.html
 [`Cycle`]: https://docs.rs/graaf/latest/graaf/gen/cycle/trait.Cycle.html
 [`Degree`]: https://docs.rs/graaf/latest/graaf/op/degree/trait.Degree.html
-[`DegreeSequence`]: https://docs.rs/graaf/latest/graaf/op/degree_sequence/trait.DegreeSequence.html
 [`Empty`]: https://docs.rs/graaf/latest/graaf/gen/empty/trait.Empty.html
 [`HasArc`]: https://docs.rs/graaf/latest/graaf/op/has_arc/trait.HasArc.html
 [`HasEdge`]: https://docs.rs/graaf/latest/graaf/op/has_edge/trait.HasEdge.html
 [`InNeighbors`]: https://docs.rs/graaf/latest/graaf/op/in_neighbors/trait.InNeighbors.html
+[`IndegreeSequence`]: https://docs.rs/graaf/latest/graaf/op/indegree_sequence/trait.IndegreeSequence.html
 [`Indegree`]: https://docs.rs/graaf/latest/graaf/op/indegree/trait.Indegree.html
 [`IsBalanced`]: https://docs.rs/graaf/latest/graaf/op/is_balanced/trait.IsBalanced.html
 [`IsComplete`]: https://docs.rs/graaf/latest/graaf/op/is_complete/trait.IsComplete.html
@@ -234,6 +235,7 @@ A distance matrix contains the shortest distances between all pairs of vertices 
 [`Path`]: https://docs.rs/graaf/latest/graaf/gen/path/trait.Path.html
 [`RandomTournament`]: https://docs.rs/graaf/latest/graaf/gen/random_tournament/trait.RandomTournament.html
 [`RemoveArc`]: https://docs.rs/graaf/latest/graaf/op/remove_arc/trait.RemoveArc.html
+[`SemidegreeSequence`]: https://docs.rs/graaf/latest/graaf/op/semidegree_sequence/trait.SemidegreeSequence.html
 [`Size`]: https://docs.rs/graaf/latest/graaf/op/size/trait.Size.html
 [`Star`]: https://docs.rs/graaf/latest/graaf/gen/star/trait.Star.html
 [`Vertices`]: https://docs.rs/graaf/latest/graaf/op/vertices/trait.Vertices.html

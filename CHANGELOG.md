@@ -2,9 +2,9 @@
 
 ## Provisional roadmap
 
+- Add the `DegreeSequence` trait.
 - Add the `DeleteArc` trait.
 - Add the `DeleteVertex` trait.
-- Add the `IndegreeSequence` trait.
 - Add the `IsIsomorphic` trait.
 - Add the `MaxIndegree` trait.
 - Add the `MaxOutdegree` trait.
@@ -17,8 +17,14 @@
 - Add the `SetContraction` trait.
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
-- Rename `DegreeSequence` to `SemidegreeSequence` and add a new `DegreeSequence` trait.
-- Subsume traits with one super trait into the super trait.
+- Subsume traits with one super trait into the super trait?
+
+## [0.74.1] - 2024-07-24
+
+Added
+
+- Add `IndegreeSequence` to the `README`.
+- Add `IndegreeSequence` to `lib.rs`.
 
 ## [0.74.0] - 2024-07-24
 
