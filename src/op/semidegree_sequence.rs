@@ -1,7 +1,7 @@
-//! Return the degree sequence of a digraph.
+//! Return the semidegree sequence of a digraph.
 //!
-//! The degree sequence is the list of indegree and outdegree pairs of the
-//! vertices of a digraph.
+//! The semidegree sequence is an iterator over the indegree and outdegree pairs
+//! of the vertices of a digraph.
 //!
 //! # Examples
 //!
@@ -11,9 +11,13 @@
 //!     gen::Empty,
 //!     op::{
 //!         AddArc,
-//!         DegreeSequence,
+//!         SemidegreeSequence,
 //!     },
 //! };
+//!
+//! // 0 -> {1, 2}
+//! // 1 -> {2}
+//! // 2 -> {0}
 //!
 //! let mut digraph = Digraph::empty(3);
 //!
@@ -22,10 +26,7 @@
 //! digraph.add_arc(1, 2);
 //! digraph.add_arc(2, 0);
 //!
-//! assert!(digraph
-//!     .degree_sequence()
-//!     .iter()
-//!     .eq(&[(1, 2), (1, 1), (2, 1)]));
+//! assert!(digraph.semidegree_sequence().eq(&[(1, 2), (1, 1), (2, 1)]));
 //! ```
 
 use super::{
@@ -36,18 +37,18 @@ use super::{
 
 /// Return the degree sequence of a digraph.
 ///
-/// # How can I implement `DegreeSequence`?
+/// # How can I implement `SemidegreeSequence`?
 ///
-/// Provide an implementation of `DegreeSequence` that returns the degree
+/// Provide an implementation of `SemidegreeSequence` that returns the degree
 /// sequence of the digraph OR implement `Indegree`, `Outdegree`, and
 /// `Vertices`.
 ///
 /// ```
 /// use {
 ///     graaf::op::{
-///         DegreeSequence,
 ///         Indegree,
 ///         Outdegree,
+///         SemidegreeSequence,
 ///         Vertices,
 ///     },
 ///     std::collections::BTreeSet,
@@ -75,19 +76,19 @@ use super::{
 ///     }
 /// }
 ///
+/// // 0 -> {1, 2}
+/// // 1 -> {2}
+/// // 2 -> {0}
+///
 /// let digraph = Digraph {
 ///     arcs: vec![
 ///         BTreeSet::from([1, 2]),
 ///         BTreeSet::from([2]),
 ///         BTreeSet::from([0]),
-///         BTreeSet::new(),
 ///     ],
 /// };
 ///
-/// assert!(digraph
-///     .degree_sequence()
-///     .iter()
-///     .eq(&[(1, 2), (1, 1), (2, 1), (0, 0)]));
+/// assert!(digraph.semidegree_sequence().eq(&[(1, 2), (1, 1), (2, 1)]));
 /// ```
 ///
 /// # Examples
@@ -98,9 +99,13 @@ use super::{
 ///     gen::Empty,
 ///     op::{
 ///         AddArc,
-///         DegreeSequence,
+///         SemidegreeSequence,
 ///     },
 /// };
+///
+/// // 0 -> {1, 2}
+/// // 1 -> {2}
+/// // 2 -> {0}
 ///
 /// let mut digraph = Digraph::empty(3);
 ///
@@ -109,24 +114,20 @@ use super::{
 /// digraph.add_arc(1, 2);
 /// digraph.add_arc(2, 0);
 ///
-/// assert!(digraph
-///     .degree_sequence()
-///     .iter()
-///     .eq(&[(1, 2), (1, 1), (2, 1)]));
+/// assert!(digraph.semidegree_sequence().eq(&[(1, 2), (1, 1), (2, 1)]));
 /// ```
-pub trait DegreeSequence {
-    /// Returns the degree sequence of a digraph.
+pub trait SemidegreeSequence {
+    /// Returns the semidegree sequence of a digraph.
     #[must_use]
-    fn degree_sequence(&self) -> Vec<(usize, usize)>;
+    fn semidegree_sequence(&self) -> impl Iterator<Item = (usize, usize)>;
 }
 
-impl<T> DegreeSequence for T
+impl<D> SemidegreeSequence for D
 where
-    T: Indegree + Outdegree + Vertices,
+    D: Indegree + Outdegree + Vertices,
 {
-    fn degree_sequence(&self) -> Vec<(usize, usize)> {
+    fn semidegree_sequence(&self) -> impl Iterator<Item = (usize, usize)> {
         self.vertices()
             .map(|u| (self.indegree(u), self.outdegree(u)))
-            .collect()
     }
 }

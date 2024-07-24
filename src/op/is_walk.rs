@@ -94,9 +94,9 @@ pub trait IsWalk {
     fn is_walk(&self, walk: &[usize]) -> bool;
 }
 
-impl<T> IsWalk for T
+impl<D> IsWalk for D
 where
-    T: HasArc,
+    D: HasArc,
 {
     fn is_walk(&self, walk: &[usize]) -> bool {
         let mut arcs = walk.iter().zip(walk.iter().skip(1));

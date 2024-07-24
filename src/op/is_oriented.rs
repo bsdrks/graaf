@@ -91,9 +91,9 @@ pub trait IsOriented {
     fn is_oriented(&self) -> bool;
 }
 
-impl<T> IsOriented for T
+impl<D> IsOriented for D
 where
-    T: Arcs + HasArc,
+    D: Arcs + HasArc,
 {
     fn is_oriented(&self) -> bool {
         self.arcs().all(|(u, v)| !self.has_arc(v, u))

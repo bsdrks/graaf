@@ -87,9 +87,9 @@ pub trait IsPendant {
     fn is_pendant(&self, u: usize) -> bool;
 }
 
-impl<T> IsPendant for T
+impl<D> IsPendant for D
 where
-    T: Degree,
+    D: Degree,
 {
     fn is_pendant(&self, u: usize) -> bool {
         self.degree(u) == 1

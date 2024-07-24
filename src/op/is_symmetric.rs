@@ -120,9 +120,9 @@ pub trait IsSymmetric {
     fn is_symmetric(&self) -> bool;
 }
 
-impl<T> IsSymmetric for T
+impl<D> IsSymmetric for D
 where
-    T: Arcs + HasArc,
+    D: Arcs + HasArc,
 {
     fn is_symmetric(&self) -> bool {
         self.arcs().all(|(u, v)| self.has_arc(v, u))

@@ -96,9 +96,9 @@ pub trait IsRegular {
     fn is_regular(&self) -> bool;
 }
 
-impl<T> IsRegular for T
+impl<D> IsRegular for D
 where
-    T: Indegree + Outdegree + Vertices,
+    D: Indegree + Outdegree + Vertices,
 {
     /// # Panics
     ///

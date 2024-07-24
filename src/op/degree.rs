@@ -118,9 +118,9 @@ pub trait Degree {
     fn degree(&self, u: usize) -> usize;
 }
 
-impl<T> Degree for T
+impl<D> Degree for D
 where
-    T: Indegree + Outdegree,
+    D: Indegree + Outdegree,
 {
     fn degree(&self, u: usize) -> usize {
         self.indegree(u) + self.outdegree(u)

@@ -41,11 +41,11 @@ pub mod arcs_weighted;
 pub mod complement;
 pub mod converse;
 pub mod degree;
-pub mod degree_sequence;
 pub mod has_arc;
 pub mod has_edge;
 pub mod in_neighbors;
 pub mod indegree;
+pub mod indegree_sequence;
 pub mod is_balanced;
 pub mod is_complete;
 pub mod is_isolated;
@@ -65,6 +65,7 @@ pub mod out_neighbors;
 pub mod out_neighbors_weighted;
 pub mod outdegree;
 pub mod remove_arc;
+pub mod semidegree_sequence;
 pub mod size;
 pub mod vertices;
 
@@ -77,11 +78,11 @@ pub use {
     complement::Complement,
     converse::Converse,
     degree::Degree,
-    degree_sequence::DegreeSequence,
     has_arc::HasArc,
     has_edge::HasEdge,
     in_neighbors::InNeighbors,
     indegree::Indegree,
+    indegree_sequence::IndegreeSequence,
     is_balanced::IsBalanced,
     is_complete::IsComplete,
     is_isolated::IsIsolated,
@@ -101,6 +102,7 @@ pub use {
     out_neighbors_weighted::OutNeighborsWeighted,
     outdegree::Outdegree,
     remove_arc::RemoveArc,
+    semidegree_sequence::SemidegreeSequence,
     size::Size,
     vertices::Vertices,
 };

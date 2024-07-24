@@ -20,6 +20,52 @@
 - Rename `DegreeSequence` to `SemidegreeSequence` and add a new `DegreeSequence` trait.
 - Subsume traits with one super trait into the super trait.
 
+## [0.74.0] - 2024-07-24
+
+Added
+
+- Add property test `biclique_indegree_sequence` for `adjacency_list`.
+- Add property test `biclique_indegree_sequence` for `adjacency_matrix`.
+- Add property test `circuit_indegree_sequence` for `adjacency_list`.
+- Add property test `circuit_indegree_sequence` for `adjacency_matrix`.
+- Add property test `complete_indegree_sequence` for `adjacency_list`.
+- Add property test `complete_indegree_sequence` for `adjacency_matrix`.
+- Add property test `cycle_indegree_sequence` for `adjacency_list`.
+- Add property test `cycle_indegree_sequence` for `adjacency_matrix`.
+- Add property test `empty_indegree_sequence` for `adjacency_list`.
+- Add property test `empty_indegree_sequence` for `adjacency_matrix`.
+- Add property test `path_indegree_sequence` for `adjacency_list`.
+- Add property test `path_indegree_sequence` for `adjacency_matrix`.
+- Add property test `random_tournament_indegree_sequence` for `adjacency_list`.
+- Add property test `random_tournament_indegree_sequence` for `adjacency_matrix`.
+- Add property test `star_indegree_sequence` for `adjacency_list`.
+- Add property test `star_indegree_sequence` for `adjacency_matrix`.
+- Add the `IndegreeSequence` trait.
+- Add unit test `circuit_1_indegree_sequence` for `adjacency_list`.
+- Add unit test `circuit_1_indegree_sequence` for `adjacency_matrix`.
+- Add unit test `cycle_1_indegree_sequence` for `adjacency_list`.
+- Add unit test `cycle_1_indegree_sequence` for `adjacency_matrix`.
+- Add unit test `cycle_2_indegree_sequence` for `adjacency_list`.
+- Add unit test `cycle_2_indegree_sequence` for `adjacency_matrix`.
+- Add unit test `indegree_sequence_bang_jensen_34` for `adjacency_list`.
+- Add unit test `indegree_sequence_bang_jensen_34` for `adjacency_matrix`.
+- Add unit test `indegree_sequence_bang_jensen_94` for `adjacency_list`.
+- Add unit test `indegree_sequence_bang_jensen_94` for `adjacency_matrix`.
+- Add unit test `indegree_sequence_kattis_builddeps` for `adjacency_list`.
+- Add unit test `indegree_sequence_kattis_builddeps` for `adjacency_matrix`.
+- Add unit test `indegree_sequence_kattis_escapewallmaria_1` for `adjacency_list`.
+- Add unit test `indegree_sequence_kattis_escapewallmaria_1` for `adjacency_matrix`.
+- Add unit test `indegree_sequence_kattis_escapewallmaria_2` for `adjacency_list`.
+- Add unit test `indegree_sequence_kattis_escapewallmaria_2` for `adjacency_matrix`.
+- Add unit test `indegree_sequence_kattis_escapewallmaria_3` for `adjacency_list`.
+- Add unit test `indegree_sequence_kattis_escapewallmaria_3` for `adjacency_matrix`.
+
+Changed
+
+- Breaking: Rename `DegreeSequence::degree_sequence` to `SemidegreeSequence::semidegree_sequence`.
+- Breaking: Rename `DegreeSequence` to `SemidegreeSequence`.
+- Breaking: `SemidegreeSequence::semidegree_sequence` now returns an iterator.
+
 ## [0.73.1] - 2024-07-22
 
 Changed

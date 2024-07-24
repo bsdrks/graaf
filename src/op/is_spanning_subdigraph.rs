@@ -211,9 +211,9 @@ pub trait IsSpanningSubdigraph {
     fn is_spanning_subdigraph(&self, d: &Self) -> bool;
 }
 
-impl<T> IsSpanningSubdigraph for T
+impl<D> IsSpanningSubdigraph for D
 where
-    T: Arcs + HasArc + Vertices,
+    D: Arcs + HasArc + Vertices,
 {
     fn is_spanning_subdigraph(&self, d: &Self) -> bool {
         self.vertices().eq(d.vertices()) && self.arcs().all(|(u, v)| d.has_arc(u, v))

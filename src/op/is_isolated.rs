@@ -110,9 +110,9 @@ pub trait IsIsolated {
     fn is_isolated(&self, u: usize) -> bool;
 }
 
-impl<T> IsIsolated for T
+impl<D> IsIsolated for D
 where
-    T: Indegree + Outdegree,
+    D: Indegree + Outdegree,
 {
     fn is_isolated(&self, u: usize) -> bool {
         self.indegree(u) == 0 && self.outdegree(u) == 0

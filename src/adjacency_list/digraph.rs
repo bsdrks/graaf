@@ -243,9 +243,9 @@ mod tests {
                 Complement,
                 Converse,
                 Degree,
-                DegreeSequence,
                 HasEdge,
                 InNeighbors,
+                IndegreeSequence,
                 IsBalanced,
                 IsComplete,
                 IsIsolated,
@@ -260,6 +260,7 @@ mod tests {
                 IsSymmetric,
                 IsTournament,
                 IsWalk,
+                SemidegreeSequence,
             },
             proptest_strategy::arc,
             r#gen::Path,
@@ -376,14 +377,6 @@ mod tests {
         }
 
         #[test]
-        fn biclique_degree_sequence(m in 1..25_usize, n in 1..25_usize) {
-            let degree_sequence = Digraph::biclique(m, n).degree_sequence();
-
-            assert!(degree_sequence[..m].iter().all(|&d| d == (n, n)));
-            assert!(degree_sequence[m..].iter().all(|&d| d == (m, m)));
-        }
-
-        #[test]
         fn biclique_degree_sum_equals_2size(m in 1..25_usize, n in 1..25_usize) {
             let digraph = Digraph::biclique(m, n);
 
@@ -481,6 +474,15 @@ mod tests {
             for u in m..m + n {
                 assert_eq!(digraph.indegree(u), m);
             }
+        }
+
+        #[test]
+        fn biclique_indegree_sequence(m in 1..25_usize, n in 1..25_usize) {
+            let digraph = Digraph::biclique(m, n);
+            let indegree_sequence = &mut digraph.indegree_sequence();
+
+            assert!(indegree_sequence.take(m).all(|d| d == n));
+            assert!(indegree_sequence.all(|d| d == m));
         }
 
         #[test]
@@ -619,6 +621,15 @@ mod tests {
         }
 
         #[test]
+        fn biclique_semidegree_sequence(m in 1..25_usize, n in 1..25_usize) {
+            let digraph = Digraph::biclique(m, n);
+            let semidegree_sequence = &mut digraph.semidegree_sequence();
+
+            assert!(semidegree_sequence.take(m).all(|d| d == (n, n)));
+            assert!(semidegree_sequence.all(|d| d == (m, m)));
+        }
+
+        #[test]
         fn biclique_size(m in 1..25_usize, n in 1..25_usize) {
             assert_eq!(Digraph::biclique(m, n).size(), m * n * 2);
         }
@@ -638,11 +649,6 @@ mod tests {
             for u in digraph.vertices() {
                 assert_eq!(digraph.degree(u), 2);
             }
-        }
-
-        #[test]
-        fn circuit_degree_sequence(order in 2..25_usize) {
-            assert!(Digraph::circuit(order).degree_sequence().iter().all(|d| *d == (1, 1)));
         }
 
         #[test]
@@ -687,6 +693,11 @@ mod tests {
             for u in digraph.vertices() {
                 assert_eq!(digraph.indegree(u), 1);
             }
+        }
+
+        #[test]
+        fn circuit_indegree_sequence(order in 2..25_usize) {
+            assert!(Digraph::circuit(order).indegree_sequence().all(|d| d == 1));
         }
 
         #[test]
@@ -787,6 +798,11 @@ mod tests {
         }
 
         #[test]
+        fn circuit_semidegree_sequence(order in 2..25_usize) {
+            assert!(Digraph::circuit(order).semidegree_sequence().all(|d| d == (1, 1)));
+        }
+
+        #[test]
         fn complete_complement_equals_empty(order in 1..25_usize) {
             assert_eq!(
                 Digraph::complete(order).complement(),
@@ -801,14 +817,6 @@ mod tests {
             for u in digraph.vertices() {
                 assert_eq!(digraph.degree(u), order * 2 - 2);
             }
-        }
-
-        #[test]
-        fn complete_degree_sequence(order in 1..25_usize) {
-            let degree = order - 1;
-            let degree_pair = (degree, degree);
-
-            assert!(Digraph::complete(order).degree_sequence().iter().all(|&d| d == degree_pair));
         }
 
         #[test]
@@ -853,6 +861,11 @@ mod tests {
             for u in digraph.vertices() {
                 assert_eq!(digraph.indegree(u), order - 1);
             }
+        }
+
+        #[test]
+        fn complete_indegree_sequence(order in 1..25_usize) {
+            assert!(Digraph::complete(order).indegree_sequence().all(|d| d == order - 1));
         }
 
         #[test]
@@ -949,6 +962,14 @@ mod tests {
         }
 
         #[test]
+        fn complete_semidegree_sequence(order in 1..25_usize) {
+            let degree = order - 1;
+            let degree_pair = (degree, degree);
+
+            assert!(Digraph::complete(order).semidegree_sequence().all(|d| d == degree_pair));
+        }
+
+        #[test]
         fn complete_size(order in 1..25_usize) {
             assert_eq!(Digraph::complete(order).size(), order * (order - 1));
         }
@@ -968,16 +989,6 @@ mod tests {
             for u in digraph.vertices() {
                 assert_eq!(digraph.degree(u), 4);
             }
-        }
-
-        #[test]
-        fn cycle_degree_sequence(order in 3..25_usize) {
-            assert!(
-                Digraph::cycle(order)
-                    .degree_sequence()
-                    .iter()
-                    .all(|d| *d == (2, 2))
-            );
         }
 
         #[test]
@@ -1011,6 +1022,11 @@ mod tests {
             for u in digraph.vertices() {
                 assert_eq!(digraph.indegree(u), 2);
             }
+        }
+
+        #[test]
+        fn cycle_indegree_sequence(order in 3..25_usize) {
+            assert!(Digraph::cycle(order).indegree_sequence().all(|d| d == 2));
         }
 
         #[test]
@@ -1111,6 +1127,15 @@ mod tests {
         }
 
         #[test]
+        fn cycle_semidegree_sequence(order in 3..25_usize) {
+            assert!(
+                Digraph::cycle(order)
+                    .semidegree_sequence()
+                    .all(|d| d == (2, 2))
+            );
+        }
+
+        #[test]
         fn empty_arcs(order in 1..25_usize) {
             assert!(Digraph::empty(order).arcs().eq([]));
         }
@@ -1130,11 +1155,6 @@ mod tests {
             for u in digraph.vertices() {
                 assert_eq!(digraph.degree(u), 0);
             }
-        }
-
-        #[test]
-        fn empty_degree_sequence(order in 1..25_usize) {
-            assert!(Digraph::empty(order).degree_sequence().iter().all(|d| *d == (0, 0)));
         }
 
         #[test]
@@ -1166,6 +1186,11 @@ mod tests {
             for u in digraph.vertices() {
                 assert_eq!(digraph.indegree(u), 0);
             }
+        }
+
+        #[test]
+        fn empty_indegree_sequence(order in 1..25_usize) {
+            assert!(Digraph::empty(order).indegree_sequence().all(|d| d == 0));
         }
 
         #[test]
@@ -1275,6 +1300,11 @@ mod tests {
         }
 
         #[test]
+        fn empty_semidegree_sequence(order in 1..25_usize) {
+            assert!(Digraph::empty(order).semidegree_sequence().all(|d| d == (0, 0)));
+        }
+
+        #[test]
         fn has_arc_out_of_bounds(order in 1..25_usize) {
             let digraph = Digraph::empty(order);
 
@@ -1304,16 +1334,6 @@ mod tests {
             }
 
             assert_eq!(digraph.degree(last), 1);
-        }
-
-        #[test]
-        fn path_degree_sequence(order in 2..25_usize) {
-            let degree_sequence = Digraph::path(order).degree_sequence();
-            let last = order - 1;
-
-            assert_eq!(degree_sequence[0], (0, 1));
-            assert!(degree_sequence[1..last].iter().all(|d| *d == (1, 1)));
-            assert_eq!(degree_sequence[last], (1, 0));
         }
 
         #[test]
@@ -1360,6 +1380,15 @@ mod tests {
             for u in 1..order {
                 assert_eq!(digraph.indegree(u), 1);
             }
+        }
+
+        #[test]
+        fn path_indegree_sequence(order in 1..25_usize) {
+            let digraph = Digraph::path(order);
+            let indegree_sequence = &mut digraph.indegree_sequence();
+
+            assert_eq!(indegree_sequence.next(), Some(0));
+            assert!(indegree_sequence.all(|d| d == 1));
         }
 
         #[test]
@@ -1470,23 +1499,22 @@ mod tests {
         }
 
         #[test]
+        fn path_semidegree_sequence(order in 2..25_usize) {
+            let digraph = Digraph::path(order);
+            let semidegree_sequence = &mut digraph.semidegree_sequence();
+
+            assert_eq!(semidegree_sequence.next(), Some((0, 1)));
+            assert!(semidegree_sequence.take(order - 2).all(|d| d == (1, 1)));
+            assert_eq!(semidegree_sequence.next(), Some((1, 0)));
+        }
+
+        #[test]
         fn random_tournament_degree(order in 1..25_usize) {
             let digraph = Digraph::random_tournament(order);
 
             for u in digraph.vertices() {
                 assert_eq!(digraph.degree(u), order - 1);
             }
-        }
-
-        #[test]
-        fn random_tournament_degree_sequence(order in 1..25_usize) {
-            assert_eq!(
-                Digraph::random_tournament(order)
-                    .degree_sequence()
-                    .iter()
-                    .fold(0, |acc, (indegree, outdegree)| acc + indegree + outdegree),
-                order * (order - 1)
-            );
         }
 
         #[test]
@@ -1531,6 +1559,14 @@ mod tests {
             for u in digraph.vertices() {
                 assert!((0..order).contains(&digraph.indegree(u)));
             }
+        }
+
+        #[test]
+        fn random_tournament_indegree_sequence(order in 1..25_usize) {
+            let digraph = Digraph::random_tournament(order);
+            let indegree_sequence = &mut digraph.indegree_sequence();
+
+            assert!(indegree_sequence.all(|d| (0..order).contains(&d)));
         }
 
         #[test]
@@ -1617,6 +1653,16 @@ mod tests {
         }
 
         #[test]
+        fn random_tournament_semidegree_sequence(order in 1..25_usize) {
+            assert_eq!(
+                Digraph::random_tournament(order)
+                    .semidegree_sequence()
+                    .fold(0, |acc, (indegree, outdegree)| acc + indegree + outdegree),
+                order * (order - 1)
+            );
+        }
+
+        #[test]
         fn random_tournament_size(order in 1..25_usize) {
             let digraph = Digraph::random_tournament(order);
 
@@ -1640,14 +1686,6 @@ mod tests {
             for u in 1..order {
                 assert_eq!(digraph.degree(u), 2);
             }
-        }
-
-        #[test]
-        fn star_degree_sequence(order in 1..25_usize) {
-            let degree_sequence = Digraph::star(order).degree_sequence();
-
-            assert_eq!(degree_sequence[0], (order - 1, order - 1));
-            assert!(degree_sequence[1..].iter().all(|d| *d == (1, 1)));
         }
 
         #[test]
@@ -1698,6 +1736,15 @@ mod tests {
             for u in 1..order {
                 assert_eq!(digraph.indegree(u), 1);
             }
+        }
+
+        #[test]
+        fn star_indegree_sequence(order in 1..25_usize) {
+            let digraph = Digraph::star(order);
+            let indegree_sequence = &mut digraph.indegree_sequence();
+
+            assert_eq!(indegree_sequence.next(), Some(order - 1));
+            assert!(indegree_sequence.all(|d| d == 1));
         }
 
         #[test]
@@ -1795,6 +1842,15 @@ mod tests {
         #[test]
         fn star_is_tournament(order in 2..25_usize) {
             assert!(!Digraph::star(order).is_tournament());
+        }
+
+        #[test]
+        fn star_semidegree_sequence(order in 1..25_usize) {
+            let digraph = Digraph::star(order);
+            let mut semidegree_sequence = digraph.semidegree_sequence();
+
+            assert_eq!(semidegree_sequence.next(), Some((order - 1, order - 1)));
+            assert!(semidegree_sequence.all(|d| d == (1, 1)));
         }
     }
 
@@ -2136,16 +2192,13 @@ mod tests {
     }
 
     #[test]
-    fn circuit_1_degree_sequence() {
-        assert!(Digraph::circuit(1)
-            .degree_sequence()
-            .iter()
-            .all(|d| *d == (0, 0)));
+    fn circuit_1_indegree() {
+        assert_eq!(Digraph::circuit(1).indegree(0), 0);
     }
 
     #[test]
-    fn circuit_1_indegree() {
-        assert_eq!(Digraph::circuit(1).indegree(0), 0);
+    fn circuit_1_indegree_sequence() {
+        assert!(Digraph::circuit(1).indegree_sequence().all(|d| d == 0));
     }
 
     #[test]
@@ -2186,6 +2239,13 @@ mod tests {
     #[test]
     fn circuit_1_is_tournament() {
         assert!(Digraph::circuit(1).is_tournament());
+    }
+
+    #[test]
+    fn circuit_1_semidegree_sequence() {
+        assert!(Digraph::circuit(1)
+            .semidegree_sequence()
+            .all(|d| d == (0, 0)));
     }
 
     #[test]
@@ -2432,6 +2492,11 @@ mod tests {
     }
 
     #[test]
+    fn cycle_1_indegree_sequence() {
+        assert!(Digraph::cycle(1).indegree_sequence().all(|d| d == 0));
+    }
+
+    #[test]
     fn cycle_1_is_complete() {
         assert!(Digraph::cycle(1).is_complete());
     }
@@ -2492,6 +2557,11 @@ mod tests {
         for u in digraph.vertices() {
             assert_eq!(digraph.indegree(u), 1);
         }
+    }
+
+    #[test]
+    fn cycle_2_indegree_sequence() {
+        assert!(Digraph::cycle(2).indegree_sequence().all(|d| d == 1));
     }
 
     #[test]
@@ -2621,103 +2691,6 @@ mod tests {
         assert!(digraph.degree(11) == 0);
         assert!(digraph.degree(12) == 2);
         assert!(digraph.degree(13) == 4);
-    }
-
-    #[test]
-    fn degree_sequence_bang_jensen_34() {
-        assert!(bang_jensen_34().degree_sequence().iter().eq(&[
-            (1, 1),
-            (1, 1),
-            (0, 3),
-            (1, 0),
-            (2, 0),
-            (1, 1)
-        ]));
-    }
-
-    #[test]
-    fn degree_sequence_bang_jensen_94() {
-        assert!(bang_jensen_94().degree_sequence().iter().eq(&[
-            (0, 2),
-            (2, 1),
-            (1, 4),
-            (2, 1),
-            (1, 1),
-            (2, 0),
-            (1, 0)
-        ]));
-    }
-
-    #[test]
-    fn degree_sequence_kattis_builddeps() {
-        assert!(kattis_builddeps().degree_sequence().iter().eq(&[
-            (0, 2),
-            (3, 0),
-            (0, 3),
-            (2, 1),
-            (2, 1),
-            (1, 1)
-        ]));
-    }
-
-    #[test]
-    fn degree_sequence_kattis_escapewallmaria_1() {
-        assert!(kattis_escapewallmaria_1().degree_sequence().iter().eq(&[
-            (0, 0),
-            (0, 0),
-            (0, 0),
-            (0, 0),
-            (0, 0),
-            (2, 2),
-            (1, 1),
-            (0, 0),
-            (0, 0),
-            (2, 2),
-            (0, 0),
-            (0, 0),
-            (1, 0),
-            (1, 2)
-        ]));
-    }
-
-    #[test]
-    fn degree_sequence_kattis_escapewallmaria_2() {
-        assert!(kattis_escapewallmaria_2().degree_sequence().iter().eq(&[
-            (0, 0),
-            (0, 0),
-            (0, 0),
-            (0, 0),
-            (0, 0),
-            (2, 2),
-            (1, 1),
-            (0, 0),
-            (0, 0),
-            (2, 1),
-            (0, 0),
-            (0, 0),
-            (1, 1),
-            (1, 2)
-        ]));
-    }
-
-    #[test]
-    fn degree_sequence_kattis_escapewallmaria_3() {
-        assert!(kattis_escapewallmaria_3().degree_sequence().iter().eq(&[
-            (0, 0),
-            (2, 2),
-            (2, 2),
-            (0, 0),
-            (0, 0),
-            (3, 3),
-            (2, 2),
-            (0, 0),
-            (0, 0),
-            (2, 2),
-            (0, 0),
-            (0, 0),
-            (1, 1),
-            (2, 2)
-        ]));
     }
 
     #[test]
@@ -3004,6 +2977,46 @@ mod tests {
     #[should_panic(expected = "v = 1 is out of bounds")]
     fn indegree_out_of_bounds() {
         let _ = Digraph::trivial().indegree(1);
+    }
+
+    #[test]
+    fn indegree_sequence_bang_jensen_34() {
+        assert!(bang_jensen_34().indegree_sequence().eq([1, 1, 0, 1, 2, 1]));
+    }
+
+    #[test]
+    fn indegree_sequence_bang_jensen_94() {
+        assert!(bang_jensen_94()
+            .indegree_sequence()
+            .eq([0, 2, 1, 2, 1, 2, 1]));
+    }
+
+    #[test]
+    fn indegree_sequence_kattis_builddeps() {
+        assert!(kattis_builddeps()
+            .indegree_sequence()
+            .eq([0, 3, 0, 2, 2, 1]));
+    }
+
+    #[test]
+    fn indegree_sequence_kattis_escapewallmaria_1() {
+        assert!(kattis_escapewallmaria_1()
+            .indegree_sequence()
+            .eq([0, 0, 0, 0, 0, 2, 1, 0, 0, 2, 0, 0, 1, 1]));
+    }
+
+    #[test]
+    fn indegree_sequence_kattis_escapewallmaria_2() {
+        assert!(kattis_escapewallmaria_2()
+            .indegree_sequence()
+            .eq([0, 0, 0, 0, 0, 2, 1, 0, 0, 2, 0, 0, 1, 1]));
+    }
+
+    #[test]
+    fn indegree_sequence_kattis_escapewallmaria_3() {
+        assert!(kattis_escapewallmaria_3()
+            .indegree_sequence()
+            .eq([0, 2, 2, 0, 0, 3, 2, 0, 0, 2, 0, 0, 1, 2]));
     }
 
     #[test]
@@ -4374,6 +4387,103 @@ mod tests {
     fn remove_arc_out_of_bounds() {
         assert!(!Digraph::trivial().remove_arc(0, 1));
         assert!(!Digraph::trivial().remove_arc(1, 0));
+    }
+
+    #[test]
+    fn semidegree_sequence_bang_jensen_34() {
+        assert!(bang_jensen_34().semidegree_sequence().eq([
+            (1, 1),
+            (1, 1),
+            (0, 3),
+            (1, 0),
+            (2, 0),
+            (1, 1)
+        ]));
+    }
+
+    #[test]
+    fn semidegree_sequence_bang_jensen_94() {
+        assert!(bang_jensen_94().semidegree_sequence().eq([
+            (0, 2),
+            (2, 1),
+            (1, 4),
+            (2, 1),
+            (1, 1),
+            (2, 0),
+            (1, 0)
+        ]));
+    }
+
+    #[test]
+    fn semidegree_sequence_kattis_builddeps() {
+        assert!(kattis_builddeps().semidegree_sequence().eq([
+            (0, 2),
+            (3, 0),
+            (0, 3),
+            (2, 1),
+            (2, 1),
+            (1, 1)
+        ]));
+    }
+
+    #[test]
+    fn semidegree_sequence_kattis_escapewallmaria_1() {
+        assert!(kattis_escapewallmaria_1().semidegree_sequence().eq([
+            (0, 0),
+            (0, 0),
+            (0, 0),
+            (0, 0),
+            (0, 0),
+            (2, 2),
+            (1, 1),
+            (0, 0),
+            (0, 0),
+            (2, 2),
+            (0, 0),
+            (0, 0),
+            (1, 0),
+            (1, 2)
+        ]));
+    }
+
+    #[test]
+    fn semidegree_sequence_kattis_escapewallmaria_2() {
+        assert!(kattis_escapewallmaria_2().semidegree_sequence().eq([
+            (0, 0),
+            (0, 0),
+            (0, 0),
+            (0, 0),
+            (0, 0),
+            (2, 2),
+            (1, 1),
+            (0, 0),
+            (0, 0),
+            (2, 1),
+            (0, 0),
+            (0, 0),
+            (1, 1),
+            (1, 2)
+        ]));
+    }
+
+    #[test]
+    fn semidegree_sequence_kattis_escapewallmaria_3() {
+        assert!(kattis_escapewallmaria_3().semidegree_sequence().eq([
+            (0, 0),
+            (2, 2),
+            (2, 2),
+            (0, 0),
+            (0, 0),
+            (3, 3),
+            (2, 2),
+            (0, 0),
+            (0, 0),
+            (2, 2),
+            (0, 0),
+            (0, 0),
+            (1, 1),
+            (2, 2)
+        ]));
     }
 
     #[test]

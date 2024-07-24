@@ -171,9 +171,9 @@ pub trait IsSuperdigraph {
     fn is_superdigraph(&self, d: &Self) -> bool;
 }
 
-impl<T> IsSuperdigraph for T
+impl<D> IsSuperdigraph for D
 where
-    T: IsSubdigraph,
+    D: IsSubdigraph,
 {
     fn is_superdigraph(&self, d: &Self) -> bool {
         d.is_subdigraph(self)
