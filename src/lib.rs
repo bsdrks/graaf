@@ -106,6 +106,8 @@
 //! - [`IsTournament`](op::IsTournament) checks if a digraph is a tournament.
 //! - [`IsWalk`](op::IsWalk) checks if a sequence of vertices is a walk in a
 //!   digraph.
+//! - [`OutdegreeSequence`](op::OutdegreeSequence) returns the outdegree
+//!   sequence of a digraph.
 //! - [`SemidegreeSequence`](op::SemidegreeSequence) returns the semidegree
 //!   sequence of a digraph.
 //!

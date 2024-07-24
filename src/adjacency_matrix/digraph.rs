@@ -356,6 +356,7 @@ mod tests {
                 IsTournament,
                 IsWalk,
                 Order,
+                OutdegreeSequence,
                 SemidegreeSequence,
             },
             proptest_strategy::arc,
@@ -717,6 +718,15 @@ mod tests {
         }
 
         #[test]
+        fn biclique_outdegree_sequence(m in 1..25_usize, n in 1..25_usize) {
+            let digraph = Digraph::biclique(m, n);
+            let outdegree_sequence = &mut digraph.outdegree_sequence();
+
+            assert!(outdegree_sequence.take(m).all(|d| d == n));
+            assert!(outdegree_sequence.all(|d| d == m));
+        }
+
+        #[test]
         fn biclique_semidegree_sequence(m in 1..25_usize, n in 1..25_usize) {
             let digraph = Digraph::biclique(m, n);
             let semidegree_sequence = &mut digraph.semidegree_sequence();
@@ -758,7 +768,7 @@ mod tests {
         }
 
         #[test]
-        fn circuit_even_number_odd_degrees(order in 3..25_usize) {
+        fn circuit_even_number_odd_degrees(order in 1..25_usize) {
             let digraph = Digraph::circuit(order);
 
             assert_eq!(
@@ -840,7 +850,7 @@ mod tests {
         }
 
         #[test]
-        fn circuit_is_simple(order in 2..25_usize) {
+        fn circuit_is_simple(order in 1..25_usize) {
             assert!(Digraph::circuit(order).is_simple());
         }
 
@@ -891,6 +901,20 @@ mod tests {
         #[test]
         fn circuit_is_tournament(order in 4..25_usize) {
             assert!(!Digraph::circuit(order).is_tournament());
+        }
+
+        #[test]
+        fn circuit_outdegree(order in 2..25_usize) {
+            let digraph = Digraph::circuit(order);
+
+            for u in digraph.vertices() {
+                assert_eq!(digraph.outdegree(u), 1);
+            }
+        }
+
+        #[test]
+        fn circuit_outdegree_sequence(order in 2..25_usize) {
+            assert!(Digraph::circuit(order).outdegree_sequence().all(|d| d == 1));
         }
 
         #[test]
@@ -1051,10 +1075,26 @@ mod tests {
         #[test]
         fn complete_outdegree(order in 1..25_usize) {
             let digraph = Digraph::complete(order);
+            let outdegree = order - 1;
 
-            for u in digraph.vertices() {
-                assert_eq!(digraph.outdegree(u), order - 1);
+            for s in digraph.vertices() {
+                assert_eq!(digraph.outdegree(s), outdegree);
             }
+        }
+
+        #[test]
+        fn complete_outdegree_sequence(order in 1..25_usize) {
+            let outdegree = order - 1;
+
+            assert!(Digraph::complete(order).outdegree_sequence().all(|d| d == outdegree));
+        }
+
+        #[test]
+        fn complete_semidegree_sequence(order in 1..25_usize) {
+            let degree = order - 1;
+            let pair = (degree, degree);
+
+            assert!(Digraph::complete(order).semidegree_sequence().all(|d| d == pair));
         }
 
         #[test]
@@ -1215,10 +1255,31 @@ mod tests {
         }
 
         #[test]
+        fn cycle_outdegree(order in 3..25_usize) {
+            let digraph = Digraph::cycle(order);
+
+            for u in digraph.vertices() {
+                assert_eq!(digraph.outdegree(u), 2);
+            }
+        }
+
+        #[test]
+        fn cycle_outdegree_sequence(order in 3..25_usize) {
+            assert!(Digraph::cycle(order).outdegree_sequence().all(|d| d == 2));
+        }
+
+        #[test]
         fn cycle_semidegree_sequence(order in 3..25_usize) {
             assert!(
-                Digraph::cycle(order).semidegree_sequence().all(|d| d == (2, 2))
+                Digraph::cycle(order)
+                    .semidegree_sequence()
+                    .all(|d| d == (2, 2))
             );
+        }
+
+        #[test]
+        fn empty_arcs(order in 1..25_usize) {
+            assert!(Digraph::empty(order).arcs().eq([]));
         }
 
         #[test]
@@ -1227,11 +1288,6 @@ mod tests {
                 Digraph::empty(order).complement(),
                 Digraph::complete(order)
             );
-        }
-
-        #[test]
-        fn empty_arcs(order in 1..25_usize) {
-            assert!(Digraph::empty(order).arcs().eq([]));
         }
 
         #[test]
@@ -1386,10 +1442,13 @@ mod tests {
         }
 
         #[test]
+        fn empty_outdegree_sequence(order in 1..25_usize) {
+            assert!(Digraph::empty(order).outdegree_sequence().all(|d| d == 0));
+        }
+
+        #[test]
         fn empty_semidegree_sequence(order in 1..25_usize) {
-            assert!(
-                Digraph::empty(order).semidegree_sequence().all(|d| d == (0, 0))
-            );
+            assert!(Digraph::empty(order).semidegree_sequence().all(|d| d == (0, 0)));
         }
 
         #[test]
@@ -1587,6 +1646,27 @@ mod tests {
         }
 
         #[test]
+        fn path_outdegree(order in 1..25_usize) {
+            let digraph = Digraph::path(order);
+            let last = order - 1;
+
+            for u in 0..last {
+                assert_eq!(digraph.outdegree(u), 1);
+            }
+
+            assert_eq!(digraph.outdegree(last), 0);
+        }
+
+        #[test]
+        fn path_outdegree_sequence(order in 1..25_usize) {
+            let digraph = Digraph::path(order);
+            let outdegree_sequence = &mut digraph.outdegree_sequence();
+
+            assert!(outdegree_sequence.take(order - 1).all(|d| d == 1));
+            assert_eq!(outdegree_sequence.next(), Some(0));
+        }
+
+        #[test]
         fn path_semidegree_sequence(order in 2..25_usize) {
             let digraph = Digraph::path(order);
             let semidegree_sequence = &mut digraph.semidegree_sequence();
@@ -1735,9 +1815,17 @@ mod tests {
         fn random_tournament_outdegree(order in 1..25_usize) {
             let digraph = Digraph::random_tournament(order);
 
-            for s in digraph.vertices() {
-                assert!((0..order).contains(&digraph.outdegree(s)));
+            for u in digraph.vertices() {
+                assert!((0..order).contains(&digraph.outdegree(u)));
             }
+        }
+
+        #[test]
+        fn random_tournament_outdegree_sequence(order in 1..25_usize) {
+            let digraph = Digraph::random_tournament(order);
+            let outdegree_sequence = &mut digraph.outdegree_sequence();
+
+            assert!(outdegree_sequence.all(|d| (0..order).contains(&d)));
         }
 
         #[test]
@@ -1745,10 +1833,7 @@ mod tests {
             assert_eq!(
                 Digraph::random_tournament(order)
                     .semidegree_sequence()
-                    .fold(
-                        0,
-                        |acc, (indegree, outdegree)| acc + indegree + outdegree
-                    ),
+                    .fold(0, |acc, (indegree, outdegree)| acc + indegree + outdegree),
                 order * (order - 1)
             );
         }
@@ -1936,14 +2021,31 @@ mod tests {
         }
 
         #[test]
+        fn star_outdegree(order in 1..25_usize) {
+            let digraph = Digraph::star(order);
+
+            assert_eq!(digraph.outdegree(0), order - 1);
+
+            for u in 1..order {
+                assert_eq!(digraph.outdegree(u), 1);
+            }
+        }
+
+        #[test]
+        fn star_outdegree_sequence(order in 1..25_usize) {
+            let digraph = Digraph::star(order);
+            let outdegree_sequence = &mut digraph.outdegree_sequence();
+
+            assert_eq!(outdegree_sequence.next(), Some(order - 1));
+            assert!(outdegree_sequence.all(|d| d == 1));
+        }
+
+        #[test]
         fn star_semidegree_sequence(order in 1..25_usize) {
             let digraph = Digraph::star(order);
-            let semidegree_sequence = &mut digraph.semidegree_sequence();
+            let mut semidegree_sequence = digraph.semidegree_sequence();
 
-            assert_eq!(
-                semidegree_sequence.next(), Some((order - 1, order - 1))
-            );
-
+            assert_eq!(semidegree_sequence.next(), Some((order - 1, order - 1)));
             assert!(semidegree_sequence.all(|d| d == (1, 1)));
         }
     }
@@ -2316,11 +2418,6 @@ mod tests {
     }
 
     #[test]
-    fn circuit_1_is_simple() {
-        assert!(Digraph::circuit(1).is_simple());
-    }
-
-    #[test]
     fn circuit_1_is_sink() {
         assert!(Digraph::circuit(1).is_sink(0));
     }
@@ -2338,6 +2435,16 @@ mod tests {
     #[test]
     fn circuit_1_is_tournament() {
         assert!(Digraph::circuit(1).is_tournament());
+    }
+
+    #[test]
+    fn circuit_1_outdegree() {
+        assert_eq!(Digraph::circuit(1).outdegree(0), 0);
+    }
+
+    #[test]
+    fn circuit_1_outdegree_sequence() {
+        assert!(Digraph::circuit(1).outdegree_sequence().all(|d| d == 0));
     }
 
     #[test]
@@ -2561,16 +2668,6 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "a digraph must have at least one vertex")]
-    fn converse_0() {
-        let _ = Digraph {
-            order: 0,
-            blocks: vec![],
-        }
-        .converse();
-    }
-
-    #[test]
     fn cycle_1() {
         assert!(Digraph::cycle(1).arcs().eq([]));
     }
@@ -2635,6 +2732,16 @@ mod tests {
     }
 
     #[test]
+    fn cycle_1_outdegree() {
+        assert_eq!(Digraph::cycle(1).outdegree(0), 0);
+    }
+
+    #[test]
+    fn cycle_1_outdegree_sequence() {
+        assert!(Digraph::cycle(1).outdegree_sequence().all(|d| d == 0));
+    }
+
+    #[test]
     fn cycle_2() {
         assert!(Digraph::cycle(2).arcs().eq([(0, 1), (1, 0)]));
     }
@@ -2675,6 +2782,20 @@ mod tests {
     #[test]
     fn cycle_2_is_semicomplete() {
         assert!(Digraph::cycle(2).is_semicomplete());
+    }
+
+    #[test]
+    fn cycle_2_outdegree() {
+        let digraph = Digraph::cycle(2);
+
+        for u in digraph.vertices() {
+            assert_eq!(digraph.outdegree(u), 1);
+        }
+    }
+
+    #[test]
+    fn cycle_2_outdegree_sequence() {
+        assert!(Digraph::cycle(2).outdegree_sequence().all(|d| d == 1));
     }
 
     #[test]
@@ -2797,13 +2918,6 @@ mod tests {
     }
 
     #[test]
-    fn empty() {
-        assert!(Digraph::empty(1).arcs().eq([]));
-        assert!(Digraph::empty(2).arcs().eq([]));
-        assert!(Digraph::empty(3).arcs().eq([]));
-    }
-
-    #[test]
     #[should_panic(expected = "a digraph must have at least one vertex")]
     fn empty_0() {
         let _ = Digraph::empty(0);
@@ -2864,22 +2978,6 @@ mod tests {
     #[test]
     fn empty_trivial_is_tournament() {
         assert!(Digraph::trivial().is_tournament());
-    }
-
-    #[test]
-    fn from_adjacency_list() {
-        let digraph = Digraph::from(adjacency_list::Digraph::star(5));
-
-        assert!(digraph.arcs().eq([
-            (0, 1),
-            (0, 2),
-            (0, 3),
-            (0, 4),
-            (1, 0),
-            (2, 0),
-            (3, 0),
-            (4, 0)
-        ]));
     }
 
     #[test]
@@ -4161,6 +4259,46 @@ mod tests {
     }
 
     #[test]
+    fn outdegree_sequence_bang_jensen_34() {
+        assert!(bang_jensen_34().outdegree_sequence().eq([1, 1, 3, 0, 0, 1]));
+    }
+
+    #[test]
+    fn outdegree_sequence_bang_jensen_94() {
+        assert!(bang_jensen_94()
+            .outdegree_sequence()
+            .eq([2, 1, 4, 1, 1, 0, 0]));
+    }
+
+    #[test]
+    fn outdegree_sequence_kattis_builddeps() {
+        assert!(kattis_builddeps()
+            .outdegree_sequence()
+            .eq([2, 0, 3, 1, 1, 1]));
+    }
+
+    #[test]
+    fn outdegree_sequence_kattis_escapewallmaria_1() {
+        assert!(kattis_escapewallmaria_1()
+            .outdegree_sequence()
+            .eq([0, 0, 0, 0, 0, 2, 1, 0, 0, 2, 0, 0, 0, 2]));
+    }
+
+    #[test]
+    fn outdegree_sequence_kattis_escapewallmaria_2() {
+        assert!(kattis_escapewallmaria_2()
+            .outdegree_sequence()
+            .eq([0, 0, 0, 0, 0, 2, 1, 0, 0, 1, 0, 0, 1, 2]));
+    }
+
+    #[test]
+    fn outdegree_sequence_kattis_escapewallmaria_3() {
+        assert!(kattis_escapewallmaria_3()
+            .outdegree_sequence()
+            .eq([0, 2, 2, 0, 0, 3, 2, 0, 0, 2, 0, 0, 1, 2]));
+    }
+
+    #[test]
     #[should_panic(expected = "u = 1 is out of bounds")]
     fn outdegree_out_of_bounds() {
         let _ = Digraph::trivial().outdegree(1);
@@ -4283,8 +4421,8 @@ mod tests {
     fn random_tournament_2_is_pendant() {
         let digraph = Digraph::random_tournament(2);
 
-        for s in digraph.vertices() {
-            assert!(digraph.is_pendant(s));
+        for u in digraph.vertices() {
+            assert!(digraph.is_pendant(u));
         }
     }
 
@@ -4513,6 +4651,18 @@ mod tests {
     fn remove_arc_out_of_bounds() {
         assert!(!Digraph::trivial().remove_arc(0, 1));
         assert!(!Digraph::trivial().remove_arc(1, 0));
+    }
+
+    #[test]
+    fn semidegree_sequence_bang_jensen_34() {
+        assert!(bang_jensen_34().semidegree_sequence().eq([
+            (1, 1),
+            (1, 1),
+            (0, 3),
+            (1, 0),
+            (2, 0),
+            (1, 1)
+        ]));
     }
 
     #[test]

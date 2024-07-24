@@ -19,6 +19,58 @@
 - Benchmark trait implementations.
 - Subsume traits with one super trait into the super trait?
 
+## [0.74.2] - 2024-07-24
+
+Added
+
+- Add property test `biclique_outdegree_sequence` for `adjacency_list`.
+- Add property test `biclique_outdegree_sequence` for `adjacency_matrix`.
+- Add property test `circuit_outdegree_sequence` for `adjacency_list`.
+- Add property test `circuit_outdegree_sequence` for `adjacency_matrix`.
+- Add property test `circuit_outdegree` for `adjacency_list`.
+- Add property test `circuit_outdegree` for `adjacency_matrix`.
+- Add property test `complete_outdegree_sequence` for `adjacency_list`.
+- Add property test `complete_outdegree_sequence` for `adjacency_matrix`.
+- Add property test `cycle_outdegree_sequence` for `adjacency_list`.
+- Add property test `cycle_outdegree_sequence` for `adjacency_matrix`.
+- Add property test `cycle_outdegree` for `adjacency_list`.
+- Add property test `cycle_outdegree` for `adjacency_matrix`.
+- Add property test `empty_outdegree_sequence` for `adjacency_list`.
+- Add property test `empty_outdegree_sequence` for `adjacency_matrix`.
+- Add property test `path_outdegree_sequence` for `adjacency_list`.
+- Add property test `path_outdegree_sequence` for `adjacency_matrix`.
+- Add property test `path_outdegree` for `adjacency_list`.
+- Add property test `path_outdegree` for `adjacency_matrix`.
+- Add property test `random_tournament_outdegree_sequence` for `adjacency_list`.
+- Add property test `random_tournament_outdegree_sequence` for `adjacency_matrix`.
+- Add property test `star_outdegree_sequence` for `adjacency_list`.
+- Add property test `star_outdegree_sequence` for `adjacency_matrix`.
+- Add property test `star_outdegree` for `adjacency_list`.
+- Add property test `star_outdegree` for `adjacency_matrix`.
+- Add the `OutdegreeSequence` trait.
+- Add unit test `circuit_1_outdegree_sequence` for `adjacency_list`.
+- Add unit test `circuit_1_outdegree_sequence` for `adjacency_matrix`.
+- Add unit test `circuit_1_outdegree` for `adjacency_list`.
+- Add unit test `circuit_1_outdegree` for `adjacency_matrix`.
+- Add unit test `cycle_1_outdegree_sequence` for `adjacency_list`.
+- Add unit test `cycle_1_outdegree_sequence` for `adjacency_matrix`.
+- Add unit test `cycle_1_outdegree` for `adjacency_list`.
+- Add unit test `cycle_1_outdegree` for `adjacency_matrix`.
+- Add unit test `cycle_2_outdegree` for `adjacency_list`.
+- Add unit test `cycle_2_outdegree` for `adjacency_matrix`.
+- Add unit test `outdegree_sequence_bang_jensen_34` for `adjacency_list`.
+- Add unit test `outdegree_sequence_bang_jensen_34` for `adjacency_matrix`.
+- Add unit test `outdegree_sequence_bang_jensen_94` for `adjacency_list`.
+- Add unit test `outdegree_sequence_bang_jensen_94` for `adjacency_matrix`.
+- Add unit test `outdegree_sequence_kattis_builddeps` for `adjacency_list`.
+- Add unit test `outdegree_sequence_kattis_builddeps` for `adjacency_matrix`.
+- Add unit test `outdegree_sequence_kattis_escapewallmaria_1` for `adjacency_list`.
+- Add unit test `outdegree_sequence_kattis_escapewallmaria_1` for `adjacency_matrix`.
+- Add unit test `outdegree_sequence_kattis_escapewallmaria_2` for `adjacency_list`.
+- Add unit test `outdegree_sequence_kattis_escapewallmaria_2` for `adjacency_matrix`.
+- Add unit test `outdegree_sequence_kattis_escapewallmaria_3` for `adjacency_list`.
+- Add unit test `outdegree_sequence_kattis_escapewallmaria_3` for `adjacency_matrix`.
+
 ## [0.74.1] - 2024-07-24
 
 Added

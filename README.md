@@ -31,7 +31,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.74.1"
+graaf = "0.74.2"
 ```
 
 ## Digraph Types
@@ -104,6 +104,7 @@ The extended traits derive their implementation from the basic operations.
 - [`IsSymmetric`] checks if a digraph is symmetric.
 - [`IsTournament`] checks if a digraph is a tournament.
 - [`IsWalk`] checks if a sequence of vertices is a walk in a digraph.
+- [`OutdegreeSequence`] returns the outdegree sequence of a digraph.
 - [`SemidegreeSequence`] returns the semidegree sequence of a digraph.
 
 ## Algorithms
@@ -232,8 +233,7 @@ A distance matrix contains the shortest distances between all pairs of vertices 
 [`OutNeighborsWeighted`]: https://docs.rs/graaf/latest/graaf/op/out_neighbors_weighted/trait.OutNeighborsWeighted.html
 [`OutNeighbors`]: https://docs.rs/graaf/latest/graaf/op/out_neighbors/trait.OutNeighbors.html
 [`Outdegree`]: https://docs.rs/graaf/latest/graaf/op/outdegree/trait.Outdegree.html
-[`Path`]: https://docs.rs/graaf/latest/graaf/gen/path/trait.Path.html
-[`RandomTournament`]: https://docs.rs/graaf/latest/graaf/gen/random_tournament/trait.RandomTournament.html
+[`OutdegreeSequence`]: https://docs.rs/graaf/latest/graaf/op/outdegree_sequence/trait.OutdegreeSequence.html
 [`RemoveArc`]: https://docs.rs/graaf/latest/graaf/op/remove_arc/trait.RemoveArc.html
 [`SemidegreeSequence`]: https://docs.rs/graaf/latest/graaf/op/semidegree_sequence/trait.SemidegreeSequence.html
 [`Size`]: https://docs.rs/graaf/latest/graaf/op/size/trait.Size.html

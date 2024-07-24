@@ -64,6 +64,7 @@ pub mod order;
 pub mod out_neighbors;
 pub mod out_neighbors_weighted;
 pub mod outdegree;
+pub mod outdegree_sequence;
 pub mod remove_arc;
 pub mod semidegree_sequence;
 pub mod size;
@@ -101,6 +102,7 @@ pub use {
     out_neighbors::OutNeighbors,
     out_neighbors_weighted::OutNeighborsWeighted,
     outdegree::Outdegree,
+    outdegree_sequence::OutdegreeSequence,
     remove_arc::RemoveArc,
     semidegree_sequence::SemidegreeSequence,
     size::Size,
