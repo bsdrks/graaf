@@ -26,7 +26,7 @@
 //! digraph.add_arc(1, 2);
 //! digraph.add_arc(2, 0);
 //!
-//! assert!(digraph.semidegree_sequence().eq(&[(1, 2), (1, 1), (2, 1)]));
+//! assert!(digraph.semidegree_sequence().eq([(1, 2), (1, 1), (2, 1)]));
 //! ```
 
 use super::{
@@ -88,7 +88,7 @@ use super::{
 ///     ],
 /// };
 ///
-/// assert!(digraph.semidegree_sequence().eq(&[(1, 2), (1, 1), (2, 1)]));
+/// assert!(digraph.semidegree_sequence().eq([(1, 2), (1, 1), (2, 1)]));
 /// ```
 ///
 /// # Examples
@@ -114,7 +114,7 @@ use super::{
 /// digraph.add_arc(1, 2);
 /// digraph.add_arc(2, 0);
 ///
-/// assert!(digraph.semidegree_sequence().eq(&[(1, 2), (1, 1), (2, 1)]));
+/// assert!(digraph.semidegree_sequence().eq([(1, 2), (1, 1), (2, 1)]));
 /// ```
 pub trait SemidegreeSequence {
     /// Returns the semidegree sequence of a digraph.
