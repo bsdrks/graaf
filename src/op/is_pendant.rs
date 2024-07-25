@@ -34,8 +34,8 @@ use super::Degree;
 ///
 /// # How can I implement `IsPendant`?
 ///
-/// Provide an implementation of `is_pendant` that returns whether the vertex is
-/// pendant OR implement `Degree`.
+/// Provide an implementation of `is_pendant` that returns whether the vertex
+/// is pendant OR implement `Degree`.
 ///
 /// ```
 /// use {

@@ -46,7 +46,8 @@ use super::{
 ///
 /// impl Arcs for Digraph {
 ///     fn arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-///         (0..self.arcs.len()).flat_map(move |u| self.arcs[u].iter().map(move |&v| (u, v)))
+///         (0..self.arcs.len())
+///             .flat_map(move |u| self.arcs[u].iter().map(move |&v| (u, v)))
 ///     }
 /// }
 ///

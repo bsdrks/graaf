@@ -19,6 +19,13 @@
 - Benchmark trait implementations.
 - Subsume traits with one super trait into the super trait?
 
+## [0.74.5] - 2024-07-25
+
+Changed
+
+- Format source code with `max_length = 79`.
+- Remove macros from `dijkstra` tests.
+
 ## [0.74.4] - 2024-07-25
 
 Added

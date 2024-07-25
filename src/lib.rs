@@ -42,7 +42,8 @@
 //! - [`Complete`](gen::Complete) generates a complete digraph.
 //! - [`Cycle`](gen::Cycle) generates a bidirectional circuit.
 //! - [`Empty`](gen::Empty) generates a digraph with no arcs.
-//! - [`RandomTournament`](gen::RandomTournament) generates a random tournament.
+//! - [`RandomTournament`](gen::RandomTournament) generates a random
+//!   tournament.
 //! - [`Star`](gen::Star) generates a star digraph.
 //! - [`Path`](gen::Path) generates a path digraph.
 //!
@@ -61,8 +62,8 @@
 //!   digraph.
 //! - [`AddArc`](op::AddArc) adds an arc to an unweighted digraph.
 //! - [`ArcWeight`](op::ArcWeight) returns the weight of an arc.
-//! - [`ArcsWeighted`](op::ArcsWeighted) returns the arcs and their weights in a
-//!   digraph.
+//! - [`ArcsWeighted`](op::ArcsWeighted) returns the arcs and their weights in
+//!   a digraph.
 //! - [`Arcs`](op::Arcs) returns the arcs in a digraph.
 //! - [`Converse`](op::Converse) returns the converse of a digraph.
 //! - [`HasArc`](op::HasArc) checks if an arc exists in a digraph.
@@ -117,8 +118,8 @@
 //!
 //! ## Bellman-Ford-Moore
 //!
-//! The Bellman-Ford-Moore algorithm finds the shortest paths in an arc-weighted
-//! digraph with negative weights.
+//! The Bellman-Ford-Moore algorithm finds the shortest paths in an
+//! arc-weighted digraph with negative weights.
 //!
 //! - [`single_source_distances`](algo::bellman_ford_moore::single_source_distances) finds the shortest distances.
 //!
@@ -146,8 +147,8 @@
 //!
 //! ## Depth-First Search (DFS)
 //!
-//! A depth-first search explores the vertices of an unweighted digraph in order
-//! of their depth from a source.
+//! A depth-first search explores the vertices of an unweighted digraph in
+//! order of their depth from a source.
 //!
 //! - [`dfsa`](algo::dfs::dfsa) traverses the digraph.
 //! - [`dfsa_predecessors`](algo::dfs::dfsa_predecessors) finds the
@@ -170,8 +171,8 @@
 //!
 //! These functions start from one source vertex.
 //!
-//! - [`single_source_distances`](algo::dijkstra::single_source_distances) finds
-//!   the shortest distances.
+//! - [`single_source_distances`](algo::dijkstra::single_source_distances)
+//!   finds the shortest distances.
 //! - [`single_source_predecessors`](algo::dijkstra::single_source_predecessors)
 //!   finds the predecessors.
 //! - [`single_pair_shortest_path`](algo::dijkstra::single_pair_shortest_path)
@@ -221,8 +222,8 @@
 //!   digraph.
 //! - [`eccentricities`](algo::DistanceMatrix::eccentricities) returns the
 //!   eccentricities of the vertices.
-//! - [`is_connected`](algo::DistanceMatrix::is_connected) checks if the digraph
-//!   is connected.
+//! - [`is_connected`](algo::DistanceMatrix::is_connected) checks if the
+//!   digraph is connected.
 //! - [`periphery`](algo::DistanceMatrix::periphery) finds the periphery of the
 //!   digraph.
 //!

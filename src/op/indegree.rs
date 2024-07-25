@@ -50,7 +50,11 @@
 /// }
 ///
 /// let digraph = Digraph {
-///     arcs: vec![BTreeSet::from([1, 2]), BTreeSet::from([2]), BTreeSet::new()],
+///     arcs: vec![
+///         BTreeSet::from([1, 2]),
+///         BTreeSet::from([2]),
+///         BTreeSet::new(),
+///     ],
 /// };
 ///
 /// assert_eq!(digraph.indegree(0), 0);

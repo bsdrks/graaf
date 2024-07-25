@@ -114,7 +114,10 @@ pub trait OutNeighborsWeighted<W> {
     /// * `u`: The vertex.
     #[doc(alias = "out_neighbours_weighted")]
     #[must_use]
-    fn out_neighbors_weighted<'a>(&'a self, u: usize) -> impl Iterator<Item = (usize, &'a W)>
+    fn out_neighbors_weighted<'a>(
+        &'a self,
+        u: usize,
+    ) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a;
 }

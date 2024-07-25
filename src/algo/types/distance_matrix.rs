@@ -628,7 +628,9 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "a distance matrix must have at least one vertex")]
+    #[should_panic(
+        expected = "a distance matrix must have at least one vertex"
+    )]
     fn new_0() {
         let _ = DistanceMatrix::new(0, isize::MAX);
     }

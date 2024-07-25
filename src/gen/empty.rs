@@ -66,10 +66,11 @@
 /// // 1 -> {}
 /// // 2 -> {}
 ///
-/// assert!(Digraph::empty(3)
-///     .arcs
-///     .iter()
-///     .eq(&[BTreeSet::new(), BTreeSet::new(), BTreeSet::new()]));
+/// assert!(Digraph::empty(3).arcs.iter().eq(&[
+///     BTreeSet::new(),
+///     BTreeSet::new(),
+///     BTreeSet::new()
+/// ]));
 /// ```
 ///
 /// # Examples

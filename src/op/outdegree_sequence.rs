@@ -1,7 +1,7 @@
 //! Return the outdegree sequence of a digraph.
 //!
-//! The outdegree sequence is an iterator over the outdegrees of the vertices of
-//! a digraph.
+//! The outdegree sequence is an iterator over the outdegrees of the vertices
+//! of a digraph.
 //!
 //! # Examples
 //!

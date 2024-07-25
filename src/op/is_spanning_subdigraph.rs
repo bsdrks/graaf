@@ -1,7 +1,7 @@
 //! Determine whether a digraph is a spanning subdigraph of another digraph.
 //!
-//! A digraph `H` is a spanning subdigraph of a digraph `D` if the vertex set of
-//! `H` equals the vertex set of `D` and the arc set of `H` is a subset of
+//! A digraph `H` is a spanning subdigraph of a digraph `D` if the vertex set
+//! of `H` equals the vertex set of `D` and the arc set of `H` is a subset of
 //! the arc set of `D`.
 //!
 //! # Examples
@@ -202,7 +202,8 @@ use super::{
 /// assert!(h.is_spanning_subdigraph(&d));
 /// ```
 pub trait IsSpanningSubdigraph {
-    /// Returns whether the digraph is a spanning subdigraph of another digraph.
+    /// Returns whether the digraph is a spanning subdigraph of another
+    /// digraph.
     ///
     /// # Arguments
     ///
@@ -216,6 +217,7 @@ where
     D: Arcs + HasArc + Vertices,
 {
     fn is_spanning_subdigraph(&self, d: &Self) -> bool {
-        self.vertices().eq(d.vertices()) && self.arcs().all(|(u, v)| d.has_arc(u, v))
+        self.vertices().eq(d.vertices())
+            && self.arcs().all(|(u, v)| d.has_arc(u, v))
     }
 }

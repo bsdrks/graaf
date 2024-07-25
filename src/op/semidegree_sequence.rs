@@ -1,7 +1,7 @@
 //! Return the semidegree sequence of a digraph.
 //!
-//! The semidegree sequence is an iterator over the indegree and outdegree pairs
-//! of the vertices of a digraph.
+//! The semidegree sequence is an iterator over the indegree and outdegree
+//! pairs of the vertices of a digraph.
 //!
 //! # Examples
 //!
@@ -40,8 +40,8 @@ use super::{
 /// # How can I implement `SemidegreeSequence`?
 ///
 /// Provide an implementation of `SemidegreeSequence` that returns the
-/// semidegree sequence of the digraph OR implement `Indegree`, `Outdegree`, and
-/// `Vertices`.
+/// semidegree sequence of the digraph OR implement `Indegree`, `Outdegree`,
+/// and `Vertices`.
 ///
 /// ```
 /// use {

@@ -1,7 +1,7 @@
 //! Breadth-first trees
 //!
-//! A breadth-first tree contains the predecessor of each vertex on the shortest
-//! path from the source vertex.
+//! A breadth-first tree contains the predecessor of each vertex on the
+//! shortest path from the source vertex.
 //!
 //! # Examples
 //!
@@ -117,8 +117,8 @@ impl BreadthFirstTree {
     ///
     /// # Returns
     ///
-    /// If it finds a target, it returns the path from the source to the target.
-    /// Otherwise, it returns `None`.
+    /// If it finds a target, it returns the path from the source to the
+    /// target. Otherwise, it returns `None`.
     ///
     /// # Panics
     ///
@@ -140,7 +140,8 @@ impl BreadthFirstTree {
     /// ```
     /// use graaf::algo::BreadthFirstTree;
     ///
-    /// let pred = BreadthFirstTree::from(vec![Some(1), Some(2), Some(3), None, Some(0)]);
+    /// let pred =
+    ///     BreadthFirstTree::from(vec![Some(1), Some(2), Some(3), None, Some(0)]);
     ///
     /// assert!(pred
     ///     .search_by(0, |_, v| v.is_none())
@@ -148,7 +149,11 @@ impl BreadthFirstTree {
     ///     .eq(Some(vec![0, 1, 2, 3])));
     /// ```
     #[must_use]
-    pub fn search_by<F>(&self, mut s: usize, is_target: F) -> Option<Vec<usize>>
+    pub fn search_by<F>(
+        &self,
+        mut s: usize,
+        is_target: F,
+    ) -> Option<Vec<usize>>
     where
         F: Fn(&usize, &Option<usize>) -> bool,
     {
@@ -218,7 +223,8 @@ mod tests {
 
     #[test]
     fn index() {
-        let pred = BreadthFirstTree::from(vec![Some(1), Some(2), Some(3), None]);
+        let pred =
+            BreadthFirstTree::from(vec![Some(1), Some(2), Some(3), None]);
 
         assert_eq!(pred[0], Some(1));
         assert_eq!(pred[1], Some(2));
@@ -228,7 +234,8 @@ mod tests {
 
     #[test]
     fn index_mut() {
-        let mut pred = BreadthFirstTree::from(vec![Some(1), Some(2), Some(3), None]);
+        let mut pred =
+            BreadthFirstTree::from(vec![Some(1), Some(2), Some(3), None]);
 
         pred[0] = Some(0);
         pred[1] = None;
@@ -249,7 +256,9 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "a breadth-first tree must have at least one vertex")]
+    #[should_panic(
+        expected = "a breadth-first tree must have at least one vertex"
+    )]
     fn new_0() {
         let _ = BreadthFirstTree::new(0);
     }
@@ -271,7 +280,8 @@ mod tests {
     #[test]
     fn search_no_path() {
         assert_eq!(
-            BreadthFirstTree::from(vec![Some(1), Some(2), None, None]).search(0, 3),
+            BreadthFirstTree::from(vec![Some(1), Some(2), None, None])
+                .search(0, 3),
             None
         );
     }
@@ -279,7 +289,8 @@ mod tests {
     #[test]
     fn search_circuit() {
         assert_eq!(
-            BreadthFirstTree::from(vec![Some(1), Some(2), Some(0), None]).search(0, 3),
+            BreadthFirstTree::from(vec![Some(1), Some(2), Some(0), None])
+                .search(0, 3),
             None
         );
     }
@@ -326,7 +337,8 @@ mod tests {
     #[test]
     fn search_by_no_path() {
         assert_eq!(
-            BreadthFirstTree::from(vec![Some(1), Some(2), None, None]).search_by(0, |&t, _| t == 3),
+            BreadthFirstTree::from(vec![Some(1), Some(2), None, None])
+                .search_by(0, |&t, _| t == 3),
             None
         );
     }

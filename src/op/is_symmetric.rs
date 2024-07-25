@@ -46,8 +46,8 @@ use super::{
 ///
 /// # How can I implement `IsSymmetric`?
 ///
-/// Provide an implementation of `is_symmetric` that returns whether the digraph
-/// is symmetric OR implement `Arcs` and `HasArc`.
+/// Provide an implementation of `is_symmetric` that returns whether the
+/// digraph is symmetric OR implement `Arcs` and `HasArc`.
 ///
 /// ```
 /// use {

@@ -88,7 +88,9 @@ impl<W> Arcs for Digraph<W> {
 }
 
 impl<W> ArcsWeighted<W> for Digraph<W> {
-    fn arcs_weighted<'a>(&'a self) -> impl Iterator<Item = (usize, usize, &'a W)>
+    fn arcs_weighted<'a>(
+        &'a self,
+    ) -> impl Iterator<Item = (usize, usize, &'a W)>
     where
         W: 'a,
     {
@@ -238,7 +240,10 @@ impl<W> OutNeighborsWeighted<W> for Digraph<W> {
     /// # Panics
     ///
     /// Panics if `u` is out of bounds.
-    fn out_neighbors_weighted<'a>(&'a self, u: usize) -> impl Iterator<Item = (usize, &'a W)>
+    fn out_neighbors_weighted<'a>(
+        &'a self,
+        u: usize,
+    ) -> impl Iterator<Item = (usize, &'a W)>
     where
         W: 'a,
     {
@@ -343,7 +348,10 @@ mod tests {
             digraph.add_arc_weighted(u, v, w);
 
             for x in digraph.vertices() {
-                assert_eq!(digraph.degree(x), usize::from(x == u) + usize::from(x == v));
+                assert_eq!(
+                    digraph.degree(x),
+                    usize::from(x == u) + usize::from(x == v)
+                );
             }
         }
 
@@ -621,9 +629,14 @@ mod tests {
 
     #[test]
     fn arcs_kattis_bryr_1() {
-        assert!(kattis_bryr_1_usize()
-            .arcs()
-            .eq([(0, 1), (0, 2), (1, 0), (1, 2), (2, 0), (2, 1)]));
+        assert!(kattis_bryr_1_usize().arcs().eq([
+            (0, 1),
+            (0, 2),
+            (1, 0),
+            (1, 2),
+            (2, 0),
+            (2, 1)
+        ]));
     }
 
     #[test]
@@ -695,9 +708,11 @@ mod tests {
 
     #[test]
     fn arcs_kattis_shortestpath1() {
-        assert!(kattis_shortestpath1_usize()
-            .arcs()
-            .eq([(0, 1), (1, 2), (3, 0)]));
+        assert!(kattis_shortestpath1_usize().arcs().eq([
+            (0, 1),
+            (1, 2),
+            (3, 0)
+        ]));
     }
 
     #[test]
@@ -1115,9 +1130,11 @@ mod tests {
 
     #[test]
     fn semidegree_sequence_kattis_bryr_1() {
-        assert!(kattis_bryr_1_usize()
-            .semidegree_sequence()
-            .eq([(2, 2), (2, 2), (2, 2)]));
+        assert!(kattis_bryr_1_usize().semidegree_sequence().eq([
+            (2, 2),
+            (2, 2),
+            (2, 2)
+        ]));
     }
 
     #[test]
@@ -1214,7 +1231,8 @@ mod tests {
 
     #[test]
     fn from_adjacency_list_isize() {
-        let digraph = Digraph::<isize>::from(adjacency_list::fixture::bang_jensen_34());
+        let digraph =
+            Digraph::<isize>::from(adjacency_list::fixture::bang_jensen_34());
 
         assert_eq!(digraph.order(), 6);
 
@@ -1230,7 +1248,8 @@ mod tests {
 
     #[test]
     fn from_adjacency_list_usize() {
-        let digraph = Digraph::<usize>::from(adjacency_list::fixture::bang_jensen_34());
+        let digraph =
+            Digraph::<usize>::from(adjacency_list::fixture::bang_jensen_34());
 
         assert_eq!(digraph.order(), 6);
 
@@ -1246,7 +1265,9 @@ mod tests {
 
     #[test]
     fn from_adjacency_matrix_isize() {
-        let digraph = Digraph::<isize>::from(adjacency_matrix::fixture::bang_jensen_34());
+        let digraph = Digraph::<isize>::from(
+            adjacency_matrix::fixture::bang_jensen_34(),
+        );
 
         assert_eq!(digraph.order(), 6);
 
@@ -1262,7 +1283,9 @@ mod tests {
 
     #[test]
     fn from_adjacency_matrix_usize() {
-        let digraph = Digraph::<usize>::from(adjacency_matrix::fixture::bang_jensen_34());
+        let digraph = Digraph::<usize>::from(
+            adjacency_matrix::fixture::bang_jensen_34(),
+        );
 
         assert_eq!(digraph.order(), 6);
 
@@ -2072,13 +2095,17 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "index out of bounds: the len is 1 but the index is 1")]
+    #[should_panic(
+        expected = "index out of bounds: the len is 1 but the index is 1"
+    )]
     fn out_neighbors_out_of_bounds() {
         let _ = Digraph::<usize>::trivial().out_neighbors(1);
     }
 
     #[test]
-    #[should_panic(expected = "index out of bounds: the len is 1 but the index is 1")]
+    #[should_panic(
+        expected = "index out of bounds: the len is 1 but the index is 1"
+    )]
     fn out_neighbors_weighted_out_of_bounds() {
         let _ = Digraph::<usize>::trivial().out_neighbors_weighted(1);
     }
@@ -2178,7 +2205,9 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "index out of bounds: the len is 1 but the index is 1")]
+    #[should_panic(
+        expected = "index out of bounds: the len is 1 but the index is 1"
+    )]
     fn outdegree_out_of_bounds() {
         let _ = Digraph::<usize>::trivial().outdegree(1);
     }

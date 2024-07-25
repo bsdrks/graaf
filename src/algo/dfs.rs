@@ -53,8 +53,12 @@ use crate::op::{
 ///
 /// assert!(ordering.iter().eq(&[2, 5, 3, 1, 0, 4]));
 /// ```
-pub fn dfsa<D>(digraph: &D, ordering: &mut [usize], t_visit: &mut [usize], t_expl: &mut [usize])
-where
+pub fn dfsa<D>(
+    digraph: &D,
+    ordering: &mut [usize],
+    t_visit: &mut [usize],
+    t_expl: &mut [usize],
+) where
     D: OutNeighbors + Order,
 {
     let order = digraph.order();
@@ -162,7 +166,9 @@ pub fn dfsa_predecessors<D>(
 
     for u in 0..order {
         if t_visit[u] == 0 {
-            dfsa_predecessors_visit(digraph, u, ordering, pred, t_visit, t_expl, &mut i, &mut t);
+            dfsa_predecessors_visit(
+                digraph, u, ordering, pred, t_visit, t_expl, &mut i, &mut t,
+            );
         }
     }
 }
@@ -187,7 +193,9 @@ fn dfsa_predecessors_visit<D>(
         if t_visit[v] == 0 {
             pred[v] = Some(u);
 
-            dfsa_predecessors_visit(digraph, v, ordering, pred, t_visit, t_expl, i, t);
+            dfsa_predecessors_visit(
+                digraph, v, ordering, pred, t_visit, t_expl, i, t,
+            );
         }
     }
 
@@ -329,9 +337,14 @@ mod tests {
 
         assert!(ordering.iter().eq(&[2, 5, 3, 1, 0, 4]));
 
-        assert!(pred
-            .iter()
-            .eq(&[None, None, None, Some(2), Some(0), Some(2)]));
+        assert!(pred.iter().eq(&[
+            None,
+            None,
+            None,
+            Some(2),
+            Some(0),
+            Some(2)
+        ]));
     }
 
     #[test]
@@ -363,9 +376,14 @@ mod tests {
 
         assert!(dependencies.iter().eq(&[0, 4, 3, 1]));
 
-        assert!(pred
-            .iter()
-            .eq(&[None, Some(3), None, Some(0), Some(0), Some(2)]));
+        assert!(pred.iter().eq(&[
+            None,
+            Some(3),
+            None,
+            Some(0),
+            Some(0),
+            Some(2)
+        ]));
     }
 
     #[test]

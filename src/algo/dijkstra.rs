@@ -531,7 +531,11 @@ where
 /// ```
 #[doc(alias = "spsp")]
 #[must_use]
-pub fn single_pair_shortest_path<D>(digraph: &D, s: usize, t: usize) -> Option<Vec<usize>>
+pub fn single_pair_shortest_path<D>(
+    digraph: &D,
+    s: usize,
+    t: usize,
+) -> Option<Vec<usize>>
 where
     D: Order + OutNeighborsWeighted<usize>,
 {
@@ -570,95 +574,135 @@ mod tests {
         },
     };
 
-    macro_rules! test_distances {
-        ($digraph:expr, $dist:expr) => {
-            let mut dist = vec![usize::MAX; $dist.len()];
-            let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-
-            dist[0] = 0;
-
-            distances(&$digraph, |acc, w| acc + w, &mut dist, &mut heap);
-
-            assert!(dist.iter().eq($dist));
-        };
-    }
-
-    macro_rules! test_predecessors {
-        ($digraph:expr, $dist:expr, $pred:expr) => {
-            let mut pred = BreadthFirstTree::new($dist.len());
-            let mut dist = vec![usize::MAX; $dist.len()];
-            let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-
-            dist[0] = 0;
-
-            predecessors(&$digraph, |acc, w| acc + w, &mut pred, &mut dist, &mut heap);
-
-            assert!(dist.iter().eq($dist));
-            assert!(pred.into_iter().eq($pred));
-        };
-    }
-
-    macro_rules! test_shortest_path {
-        ($digraph:expr, $t:expr, $dist:expr, $pred:expr, $path:expr) => {
-            let mut pred = BreadthFirstTree::new($dist.len());
-            let mut dist = vec![usize::MAX; $dist.len()];
-            let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
-
-            dist[0] = 0;
-
-            let path = shortest_path(
-                &$digraph,
-                |acc, w| acc + w,
-                |v, _| v == $t,
-                &mut pred,
-                &mut dist,
-                &mut heap,
-            );
-
-            assert!(dist.iter().eq($dist));
-            assert!(pred.into_iter().eq($pred));
-            assert_eq!(path, $path);
-        };
-    }
-
     #[test]
     fn distances_trivial() {
-        test_distances!(Digraph::trivial(), &[0]);
+        let mut dist = vec![usize::MAX; 1];
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        dist[0] = 0;
+
+        distances(&Digraph::trivial(), |acc, w| acc + w, &mut dist, &mut heap);
+
+        assert!(dist.iter().eq(&[0]));
     }
 
     #[test]
     fn distances_bang_jensen_94_weighted() {
-        test_distances!(bang_jensen_94_weighted_usize(), &[0, 1, 1, 2, 2, 2, 3]);
+        let mut dist = vec![usize::MAX; 7];
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        dist[0] = 0;
+
+        distances(
+            &bang_jensen_94_weighted_usize(),
+            |acc, w| acc + w,
+            &mut dist,
+            &mut heap,
+        );
+
+        assert!(dist.iter().eq(&[0, 1, 1, 2, 2, 2, 3]));
     }
 
     #[test]
     fn distances_bang_jensen_96() {
-        test_distances!(bang_jensen_96_usize(), &[0, 5, 3, 6, 4, 7]);
+        let mut dist = vec![usize::MAX; 6];
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        dist[0] = 0;
+
+        distances(
+            &bang_jensen_96_usize(),
+            |acc, w| acc + w,
+            &mut dist,
+            &mut heap,
+        );
+
+        assert!(dist.iter().eq(&[0, 5, 3, 6, 4, 7]));
     }
 
     #[test]
     fn distances_kattis_bryr_1() {
-        test_distances!(kattis_bryr_1_usize(), &[0, 1, 1]);
+        let mut dist = vec![usize::MAX; 3];
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        dist[0] = 0;
+
+        distances(
+            &kattis_bryr_1_usize(),
+            |acc, w| acc + w,
+            &mut dist,
+            &mut heap,
+        );
+
+        assert!(dist.iter().eq(&[0, 1, 1]));
     }
 
     #[test]
     fn distances_kattis_bryr_2() {
-        test_distances!(kattis_bryr_2_usize(), &[0, 1, 2, 1, 2, 3]);
+        let mut dist = vec![usize::MAX; 6];
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        dist[0] = 0;
+
+        distances(
+            &kattis_bryr_2_usize(),
+            |acc, w| acc + w,
+            &mut dist,
+            &mut heap,
+        );
+
+        assert!(dist.iter().eq(&[0, 1, 2, 1, 2, 3]));
     }
 
     #[test]
     fn distances_kattis_bryr_3() {
-        test_distances!(kattis_bryr_3_usize(), &[0, 0, 1, 0, 0, 0, 1, 0, 0, 1]);
+        let mut dist = vec![usize::MAX; 10];
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        dist[0] = 0;
+
+        distances(
+            &kattis_bryr_3_usize(),
+            |acc, w| acc + w,
+            &mut dist,
+            &mut heap,
+        );
+
+        assert!(dist.iter().eq(&[0, 0, 1, 0, 0, 0, 1, 0, 0, 1]));
     }
 
     #[test]
     fn distances_kattis_crosscountry() {
-        test_distances!(kattis_crosscountry_usize(), &[0, 1, 3, 10]);
+        let mut dist = vec![usize::MAX; 4];
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        dist[0] = 0;
+
+        distances(
+            &kattis_crosscountry_usize(),
+            |acc, w| acc + w,
+            &mut dist,
+            &mut heap,
+        );
+
+        assert!(dist.iter().eq(&[0, 1, 3, 10]));
     }
 
     #[test]
     fn distances_kattis_shortestpath1() {
-        test_distances!(kattis_shortestpath1_usize(), &[0, 2, 4, usize::MAX]);
+        let mut dist = vec![usize::MAX; 4];
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        dist[0] = 0;
+
+        distances(
+            &kattis_shortestpath1_usize(),
+            |acc, w| acc + w,
+            &mut dist,
+            &mut heap,
+        );
+
+        assert!(dist.iter().eq(&[0, 2, 4, usize::MAX]));
     }
 
     #[test]
@@ -719,77 +763,199 @@ mod tests {
 
     #[test]
     fn predecessors_trivial() {
-        test_predecessors!(Digraph::trivial(), &[0], [None]);
+        let mut pred = BreadthFirstTree::new(1);
+        let mut dist = vec![usize::MAX; 1];
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        dist[0] = 0;
+
+        predecessors(
+            &Digraph::trivial(),
+            |acc, w| acc + w,
+            &mut pred,
+            &mut dist,
+            &mut heap,
+        );
+
+        assert!(dist.iter().eq(&[0]));
+        assert!(pred.into_iter().eq([None]));
     }
 
     #[test]
     fn predecessors_bang_jensen_94_weighted() {
-        test_predecessors!(
-            bang_jensen_94_weighted_usize(),
-            &[0, 1, 1, 2, 2, 2, 3],
-            [None, Some(0), Some(0), Some(2), Some(2), Some(2), Some(4)]
+        let mut pred = BreadthFirstTree::new(7);
+        let mut dist = vec![usize::MAX; 7];
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        dist[0] = 0;
+
+        predecessors(
+            &bang_jensen_94_weighted_usize(),
+            |acc, w| acc + w,
+            &mut pred,
+            &mut dist,
+            &mut heap,
         );
+
+        assert!(dist.iter().eq(&[0, 1, 1, 2, 2, 2, 3]));
+
+        assert!(pred.into_iter().eq([
+            None,
+            Some(0),
+            Some(0),
+            Some(2),
+            Some(2),
+            Some(2),
+            Some(4)
+        ]));
     }
 
     #[test]
     fn predecessors_bang_jensen_96() {
-        test_predecessors!(
-            bang_jensen_96_usize(),
-            &[0, 5, 3, 6, 4, 7],
-            [None, Some(2), Some(0), Some(4), Some(2), Some(3)]
+        let mut pred = BreadthFirstTree::new(6);
+        let mut dist = vec![usize::MAX; 6];
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        dist[0] = 0;
+
+        predecessors(
+            &bang_jensen_96_usize(),
+            |acc, w| acc + w,
+            &mut pred,
+            &mut dist,
+            &mut heap,
         );
+
+        assert!(dist.iter().eq(&[0, 5, 3, 6, 4, 7]));
+
+        assert!(pred.into_iter().eq([
+            None,
+            Some(2),
+            Some(0),
+            Some(4),
+            Some(2),
+            Some(3)
+        ]));
     }
 
     #[test]
     fn predecessors_kattis_bryr_1() {
-        test_predecessors!(kattis_bryr_1_usize(), &[0, 1, 1], [None, Some(0), Some(0)]);
+        let mut pred = BreadthFirstTree::new(3);
+        let mut dist = vec![usize::MAX; 3];
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        dist[0] = 0;
+
+        predecessors(
+            &kattis_bryr_1_usize(),
+            |acc, w| acc + w,
+            &mut pred,
+            &mut dist,
+            &mut heap,
+        );
+
+        assert!(dist.iter().eq(&[0, 1, 1]));
+        assert!(pred.into_iter().eq([None, Some(0), Some(0)]));
     }
 
     #[test]
     fn predecessors_kattis_bryr_2() {
-        test_predecessors!(
-            kattis_bryr_2_usize(),
-            &[0, 1, 2, 1, 2, 3],
-            [None, Some(0), Some(3), Some(0), Some(3), Some(4)]
+        let mut pred = BreadthFirstTree::new(6);
+        let mut dist = vec![usize::MAX; 6];
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        dist[0] = 0;
+
+        predecessors(
+            &kattis_bryr_2_usize(),
+            |acc, w| acc + w,
+            &mut pred,
+            &mut dist,
+            &mut heap,
         );
+
+        assert!(dist.iter().eq(&[0, 1, 2, 1, 2, 3]));
+
+        assert!(pred.into_iter().eq([
+            None,
+            Some(0),
+            Some(3),
+            Some(0),
+            Some(3),
+            Some(4)
+        ]));
     }
 
     #[test]
     fn predecessors_kattis_bryr_3() {
-        test_predecessors!(
-            kattis_bryr_3_usize(),
-            &[0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
-            [
-                None,
-                Some(7),
-                Some(9),
-                Some(0),
-                Some(3),
-                Some(3),
-                Some(5),
-                Some(3),
-                Some(5),
-                Some(1),
-            ]
+        let mut pred = BreadthFirstTree::new(10);
+        let mut dist = vec![usize::MAX; 10];
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        dist[0] = 0;
+
+        predecessors(
+            &kattis_bryr_3_usize(),
+            |acc, w| acc + w,
+            &mut pred,
+            &mut dist,
+            &mut heap,
         );
+
+        assert!(dist.iter().eq(&[0, 0, 1, 0, 0, 0, 1, 0, 0, 1]));
+
+        assert!(pred.into_iter().eq([
+            None,
+            Some(7),
+            Some(9),
+            Some(0),
+            Some(3),
+            Some(3),
+            Some(5),
+            Some(3),
+            Some(5),
+            Some(1),
+        ]));
     }
 
     #[test]
     fn predecessors_kattis_crosscountry() {
-        test_predecessors!(
-            kattis_crosscountry_usize(),
-            &[0, 1, 3, 10],
-            [None, Some(0), Some(0), Some(2)]
+        let mut pred = BreadthFirstTree::new(4);
+        let mut dist = vec![usize::MAX; 4];
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        dist[0] = 0;
+
+        predecessors(
+            &kattis_crosscountry_usize(),
+            |acc, w| acc + w,
+            &mut pred,
+            &mut dist,
+            &mut heap,
         );
+
+        assert!(dist.iter().eq(&[0, 1, 3, 10]));
+        assert!(pred.into_iter().eq([None, Some(0), Some(0), Some(2)]));
     }
 
     #[test]
     fn predecessors_kattis_shortestpath1() {
-        test_predecessors!(
-            kattis_shortestpath1_usize(),
-            &[0, 2, 4, usize::MAX],
-            [None, Some(0), Some(1), None]
+        let mut pred = BreadthFirstTree::new(4);
+        let mut dist = vec![usize::MAX; 4];
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        dist[0] = 0;
+
+        predecessors(
+            &kattis_shortestpath1_usize(),
+            |acc, w| acc + w,
+            &mut pred,
+            &mut dist,
+            &mut heap,
         );
+
+        assert!(dist.iter().eq(&[0, 2, 4, usize::MAX]));
+        assert!(pred.into_iter().eq([None, Some(0), Some(1), None]));
     }
 
     #[test]
@@ -801,11 +967,20 @@ mod tests {
 
     #[test]
     fn single_source_predecessors_bang_jensen_94_weighted() {
-        assert!(
-            single_source_predecessors(&bang_jensen_94_weighted_usize(), 0)
-                .into_iter()
-                .eq([None, Some(0), Some(0), Some(2), Some(2), Some(2), Some(4)])
-        );
+        assert!(single_source_predecessors(
+            &bang_jensen_94_weighted_usize(),
+            0
+        )
+        .into_iter()
+        .eq([
+            None,
+            Some(0),
+            Some(0),
+            Some(2),
+            Some(2),
+            Some(2),
+            Some(4)
+        ]));
     }
 
     #[test]
@@ -863,95 +1038,219 @@ mod tests {
 
     #[test]
     fn shortest_path_trivial() {
-        test_shortest_path!(Digraph::trivial(), 0, &[0], [None], Some(vec![0]));
+        let mut pred = BreadthFirstTree::new(1);
+        let mut dist = vec![usize::MAX; 1];
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        dist[0] = 0;
+
+        let path = shortest_path(
+            &Digraph::trivial(),
+            |acc, w| acc + w,
+            |v, _| v == 0,
+            &mut pred,
+            &mut dist,
+            &mut heap,
+        );
+
+        assert!(dist.iter().eq(&[0]));
+        assert!(pred.into_iter().eq([None]));
+        assert!(path.unwrap().iter().eq(&[0]));
     }
 
     #[test]
     fn shortest_path_bang_jensen_94_weighted() {
-        test_shortest_path!(
-            bang_jensen_94_weighted_usize(),
-            6,
-            &[0, 1, 1, 2, 2, 2, 3],
-            [None, Some(0), Some(0), Some(2), Some(2), Some(2), Some(4)],
-            Some(vec![0, 2, 4, 6])
+        let mut pred = BreadthFirstTree::new(7);
+        let mut dist = vec![usize::MAX; 7];
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        dist[0] = 0;
+
+        let path = shortest_path(
+            &bang_jensen_94_weighted_usize(),
+            |acc, w| acc + w,
+            |v, _| v == 6,
+            &mut pred,
+            &mut dist,
+            &mut heap,
         );
+
+        assert!(dist.iter().eq(&[0, 1, 1, 2, 2, 2, 3]));
+
+        assert!(pred.into_iter().eq([
+            None,
+            Some(0),
+            Some(0),
+            Some(2),
+            Some(2),
+            Some(2),
+            Some(4)
+        ]));
+
+        assert!(path.unwrap().iter().eq(&[0, 2, 4, 6]));
     }
 
     #[test]
     fn shortest_path_bang_jensen_96() {
-        test_shortest_path!(
-            bang_jensen_96_usize(),
-            5,
-            &[0, 5, 3, 6, 4, 7],
-            [None, Some(2), Some(0), Some(4), Some(2), Some(3)],
-            Some(vec![0, 2, 4, 3, 5])
+        let mut pred = BreadthFirstTree::new(6);
+        let mut dist = vec![usize::MAX; 6];
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        dist[0] = 0;
+
+        let path = shortest_path(
+            &bang_jensen_96_usize(),
+            |acc, w| acc + w,
+            |v, _| v == 5,
+            &mut pred,
+            &mut dist,
+            &mut heap,
         );
+
+        assert!(dist.iter().eq(&[0, 5, 3, 6, 4, 7]));
+
+        assert!(pred.into_iter().eq([
+            None,
+            Some(2),
+            Some(0),
+            Some(4),
+            Some(2),
+            Some(3)
+        ]));
+
+        assert!(path.unwrap().iter().eq(&[0, 2, 4, 3, 5]));
     }
 
     #[test]
     fn shortest_path_kattis_bryr_1() {
-        test_shortest_path!(
-            kattis_bryr_1_usize(),
-            2,
-            &[0, 1, 1],
-            [None, Some(0), Some(0)],
-            Some(vec![0, 2])
+        let mut pred = BreadthFirstTree::new(3);
+        let mut dist = vec![usize::MAX; 3];
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        dist[0] = 0;
+
+        let path = shortest_path(
+            &kattis_bryr_1_usize(),
+            |acc, w| acc + w,
+            |v, _| v == 2,
+            &mut pred,
+            &mut dist,
+            &mut heap,
         );
+
+        assert!(dist.iter().eq(&[0, 1, 1]));
+        assert!(pred.into_iter().eq([None, Some(0), Some(0)]));
+        assert!(path.unwrap().iter().eq(&[0, 2]));
     }
 
     #[test]
     fn shortest_path_kattis_bryr_2() {
-        test_shortest_path!(
-            kattis_bryr_2_usize(),
-            5,
-            &[0, 1, 2, 1, 2, 3],
-            [None, Some(0), Some(3), Some(0), Some(3), Some(4)],
-            Some(vec![0, 3, 4, 5])
+        let mut pred = BreadthFirstTree::new(6);
+        let mut dist = vec![usize::MAX; 6];
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        dist[0] = 0;
+
+        let path = shortest_path(
+            &kattis_bryr_2_usize(),
+            |acc, w| acc + w,
+            |v, _| v == 5,
+            &mut pred,
+            &mut dist,
+            &mut heap,
         );
+
+        assert!(dist.iter().eq(&[0, 1, 2, 1, 2, 3]));
+
+        assert!(pred.into_iter().eq([
+            None,
+            Some(0),
+            Some(3),
+            Some(0),
+            Some(3),
+            Some(4)
+        ]));
+
+        assert!(path.unwrap().iter().eq(&[0, 3, 4, 5]));
     }
 
     #[test]
     fn shortest_path_kattis_bryr_3() {
-        test_shortest_path!(
-            kattis_bryr_3_usize(),
-            9,
-            &[0, 0, usize::MAX, 0, 0, 0, 1, 0, 0, 1],
-            [
-                None,
-                Some(7),
-                None,
-                Some(0),
-                Some(3),
-                Some(3),
-                Some(5),
-                Some(3),
-                Some(5),
-                Some(1),
-            ],
-            Some(vec![0, 3, 7, 1, 9])
+        let mut pred = BreadthFirstTree::new(10);
+        let mut dist = vec![usize::MAX; 10];
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        dist[0] = 0;
+
+        let path = shortest_path(
+            &kattis_bryr_3_usize(),
+            |acc, w| acc + w,
+            |v, _| v == 9,
+            &mut pred,
+            &mut dist,
+            &mut heap,
         );
+
+        assert!(dist.iter().eq(&[0, 0, 1, 0, 0, 0, 1, 0, 0, 1]));
+
+        assert!(pred.into_iter().eq([
+            None,
+            Some(7),
+            Some(9),
+            Some(0),
+            Some(3),
+            Some(3),
+            Some(5),
+            Some(3),
+            Some(5),
+            Some(1),
+        ]));
+
+        assert!(path.unwrap().iter().eq(&[0, 3, 7, 1, 9]));
     }
 
     #[test]
     fn shortest_path_kattis_crosscountry() {
-        test_shortest_path!(
-            kattis_crosscountry_usize(),
-            2,
-            &[0, 1, 3, 14],
-            [None, Some(0), Some(0), Some(0)],
-            Some(vec![0, 2])
+        let mut pred = BreadthFirstTree::new(4);
+        let mut dist = vec![usize::MAX; 4];
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        dist[0] = 0;
+
+        let path = shortest_path(
+            &kattis_crosscountry_usize(),
+            |acc, w| acc + w,
+            |v, _| v == 2,
+            &mut pred,
+            &mut dist,
+            &mut heap,
         );
+
+        assert!(dist.iter().eq(&[0, 1, 3, 10]));
+        assert!(pred.into_iter().eq([None, Some(0), Some(0), Some(2)]));
+        assert!(path.unwrap().iter().eq(&[0, 2]));
     }
 
     #[test]
     fn shortest_path_kattis_shortestpath1() {
-        test_shortest_path!(
-            kattis_shortestpath1_usize(),
-            3,
-            &[0, 2, 4, usize::MAX],
-            [None, Some(0), Some(1), None],
-            None
+        let mut pred = BreadthFirstTree::new(4);
+        let mut dist = vec![usize::MAX; 4];
+        let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
+
+        dist[0] = 0;
+
+        let path = shortest_path(
+            &kattis_shortestpath1_usize(),
+            |acc, w| acc + w,
+            |v, _| v == 3,
+            &mut pred,
+            &mut dist,
+            &mut heap,
         );
+
+        assert!(dist.iter().eq(&[0, 2, 4, usize::MAX]));
+        assert!(pred.into_iter().eq([None, Some(0), Some(1), None]));
+        assert_eq!(path, None);
     }
 
     #[test]
@@ -964,12 +1263,14 @@ mod tests {
 
     #[test]
     fn single_pair_shortest_path_bang_jensen_94_weighted() {
-        assert!(
-            single_pair_shortest_path(&bang_jensen_94_weighted_usize(), 0, 6)
-                .unwrap()
-                .iter()
-                .eq(&[0, 2, 4, 6])
-        );
+        assert!(single_pair_shortest_path(
+            &bang_jensen_94_weighted_usize(),
+            0,
+            6
+        )
+        .unwrap()
+        .iter()
+        .eq(&[0, 2, 4, 6]));
     }
 
     #[test]

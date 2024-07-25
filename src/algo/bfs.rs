@@ -1,11 +1,12 @@
 //! Breadth-first search
 //!
-//! Breadth-first search explores the vertices of an unweighted digraph in order
-//! of their distance from a source. For weighted digraphs, use [`dijkstra`].
+//! Breadth-first search explores the vertices of an unweighted digraph in
+//! order of their distance from a source. For weighted digraphs, use
+//! [`dijkstra`].
 //!
-//! The implementations use distances instead of a set or boolean array to check
-//! if it has already visited a vertex because it already calculates these
-//! distances during traversal.
+//! The implementations use distances instead of a set or boolean array to
+//! check if it has already visited a vertex because it already calculates
+//! these distances during traversal.
 //!
 //! The time complexity is *O*(*v* + *a*).
 //!
@@ -121,8 +122,12 @@ use {
 ///
 /// assert_eq!(dist, [0, 1, 2, usize::MAX]);
 /// ```
-pub fn distances<D, S, W>(digraph: &D, step: S, dist: &mut [W], queue: &mut VecDeque<(usize, W)>)
-where
+pub fn distances<D, S, W>(
+    digraph: &D,
+    step: S,
+    dist: &mut [W],
+    queue: &mut VecDeque<(usize, W)>,
+) where
     D: OutNeighbors,
     S: Fn(W) -> W,
     W: Copy + Ord,
@@ -347,8 +352,8 @@ where
 ///
 /// # Returns
 ///
-/// If it finds a target vertex, the function returns the shortest path from the
-/// source vertex to this target vertex. Otherwise, it returns `None`.
+/// If it finds a target vertex, the function returns the shortest path from
+/// the source vertex to this target vertex. Otherwise, it returns `None`.
 ///
 /// # Panics
 ///
@@ -434,11 +439,13 @@ where
             pred[v] = Some(u);
 
             if is_target(v) {
-                return pred.search_by(v, |_, b| b.is_none()).map(|mut path| {
-                    path.reverse();
+                return pred.search_by(v, |_, b| b.is_none()).map(
+                    |mut path| {
+                        path.reverse();
 
-                    path
-                });
+                        path
+                    },
+                );
             }
 
             queue.push_back((v, w));
@@ -513,7 +520,11 @@ where
 /// ```
 #[doc(alias = "spsp")]
 #[must_use]
-pub fn single_pair_shortest_path<D>(digraph: &D, s: usize, t: usize) -> Option<Vec<usize>>
+pub fn single_pair_shortest_path<D>(
+    digraph: &D,
+    s: usize,
+    t: usize,
+) -> Option<Vec<usize>>
 where
     D: Order + OutNeighbors,
 {
@@ -562,7 +573,12 @@ mod tests {
         let mut dist = vec![0];
         let mut queue = VecDeque::new();
 
-        distances(&Digraph::trivial(), |w: usize| w + 1, &mut dist, &mut queue);
+        distances(
+            &Digraph::trivial(),
+            |w: usize| w + 1,
+            &mut dist,
+            &mut queue,
+        );
 
         assert!(dist.iter().eq(&[0]));
     }
@@ -697,9 +713,15 @@ mod tests {
 
         predecessors(&digraph, |w| w + 1, &mut pred, &mut dist, &mut queue);
 
-        assert!(pred
-            .into_iter()
-            .eq([None, Some(0), Some(0), Some(1), Some(2), Some(2), Some(4)]));
+        assert!(pred.into_iter().eq([
+            None,
+            Some(0),
+            Some(0),
+            Some(1),
+            Some(2),
+            Some(2),
+            Some(4)
+        ]));
 
         assert_eq!(dist, [0, 1, 1, 2, 2, 2, 3]);
     }
@@ -863,9 +885,15 @@ mod tests {
             &mut queue,
         );
 
-        assert!(pred
-            .into_iter()
-            .eq([None, Some(0), Some(0), Some(1), Some(2), Some(2), Some(4)]));
+        assert!(pred.into_iter().eq([
+            None,
+            Some(0),
+            Some(0),
+            Some(1),
+            Some(2),
+            Some(2),
+            Some(4)
+        ]));
 
         assert!(dist.iter().eq(&[0, 1, 1, 2, 2, 2, 3]));
         assert!(path.unwrap().iter().eq(&[0, 2, 4, 6]));

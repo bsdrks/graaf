@@ -24,9 +24,14 @@
 //! // 1 -> {0, 2}
 //! // 2 -> {0, 1}
 //!
-//! assert!(Digraph::complete(3)
-//!     .arcs()
-//!     .eq([(0, 1), (0, 2), (1, 0), (1, 2), (2, 0), (2, 1)]));
+//! assert!(Digraph::complete(3).arcs().eq([
+//!     (0, 1),
+//!     (0, 2),
+//!     (1, 0),
+//!     (1, 2),
+//!     (2, 0),
+//!     (2, 1)
+//! ]));
 //! ```
 
 use crate::{
@@ -38,8 +43,8 @@ use crate::{
 ///
 /// # How can I implement `Complete`?
 ///
-/// Provide an implementation of `complete` that generates a complete digraph of
-/// a given `order` OR implement `AddArc` and `Empty`.
+/// Provide an implementation of `complete` that generates a complete digraph
+/// of a given `order` OR implement `AddArc` and `Empty`.
 ///
 /// ```
 /// use {

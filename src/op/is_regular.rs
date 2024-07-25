@@ -114,6 +114,8 @@ where
         let outdegree = self.outdegree(order);
 
         indegree == outdegree
-            && vertices.all(|u| self.indegree(u) == indegree && self.outdegree(u) == outdegree)
+            && vertices.all(|u| {
+                self.indegree(u) == indegree && self.outdegree(u) == outdegree
+            })
     }
 }

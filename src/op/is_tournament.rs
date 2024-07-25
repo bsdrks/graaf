@@ -69,7 +69,11 @@ use super::{
 /// }
 ///
 /// assert!(Digraph {
-///     arcs: vec![BTreeSet::from([1, 2]), BTreeSet::from([2]), BTreeSet::new()]
+///     arcs: vec![
+///         BTreeSet::from([1, 2]),
+///         BTreeSet::from([2]),
+///         BTreeSet::new()
+///     ]
 /// }
 /// .is_tournament());
 ///
@@ -122,7 +126,10 @@ where
 
         for u in 0..order {
             for v in (u + 1)..order {
-                if usize::from(self.has_arc(u, v)) + usize::from(self.has_arc(v, u)) != 1 {
+                if usize::from(self.has_arc(u, v))
+                    + usize::from(self.has_arc(v, u))
+                    != 1
+                {
                     return false;
                 }
             }

@@ -1,9 +1,9 @@
 //! Determine whether a digraph is a superdigraph of another digraph.
 //!
-//! If digraph `H` is a subdigraph of digraph `D`, then `D` is a superdigraph of
-//! `H`; the vertex set of `H` is a subset of the vertex set of `D` and the arc
-//! set of `H` is a subset of the arc set of `D`. Additionally, the end-vertices
-//! of each arc in `H` must be vertices in `H`.
+//! If digraph `H` is a subdigraph of digraph `D`, then `D` is a superdigraph
+//! of `H`; the vertex set of `H` is a subset of the vertex set of `D` and the
+//! arc set of `H` is a subset of the arc set of `D`. Additionally, the
+//! end-vertices of each arc in `H` must be vertices in `H`.
 //!
 //! # Examples
 //!
@@ -51,10 +51,10 @@ use super::IsSubdigraph;
 
 /// Determine whether a digraph is a superdigraph of another digraph.
 ///
-/// If digraph `H` is a subdigraph of digraph `D`, then `D` is a superdigraph of
-/// `H`; the vertex set of `H` is a subset of the vertex set of `D` and the arc
-/// set of `H` is a subset of the arc set of `D`. Additionally, the end-vertices
-/// of each arc in `H` must be vertices in `H`.
+/// If digraph `H` is a subdigraph of digraph `D`, then `D` is a superdigraph
+/// of `H`; the vertex set of `H` is a subset of the vertex set of `D` and the
+/// arc set of `H` is a subset of the arc set of `D`. Additionally, the
+/// end-vertices of each arc in `H` must be vertices in `H`.
 ///
 /// # How can I implement `IsSuperdigraph`?
 ///

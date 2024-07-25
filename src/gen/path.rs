@@ -36,8 +36,8 @@ use crate::{
 ///
 /// # How can I implement `Path`?
 ///
-/// Provide an implementation of `path` that generates a path digraph of a given
-/// `order` OR implement `AddArc` and `Empty`.
+/// Provide an implementation of `path` that generates a path digraph of a
+/// given `order` OR implement `AddArc` and `Empty`.
 ///
 /// ```
 /// use {
@@ -75,10 +75,11 @@ use crate::{
 ///
 /// let digraph = Digraph::path(3);
 ///
-/// assert!(digraph
-///     .arcs
-///     .iter()
-///     .eq(&[BTreeSet::from([1]), BTreeSet::from([2]), BTreeSet::new()]));
+/// assert!(digraph.arcs.iter().eq(&[
+///     BTreeSet::from([1]),
+///     BTreeSet::from([2]),
+///     BTreeSet::new()
+/// ]));
 /// ```
 ///
 /// # Examples

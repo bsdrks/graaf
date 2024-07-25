@@ -141,7 +141,9 @@ impl Arcs for Digraph {
 }
 
 impl ArcsWeighted<usize> for Digraph {
-    fn arcs_weighted<'a>(&'a self) -> impl Iterator<Item = (usize, usize, &'a usize)>
+    fn arcs_weighted<'a>(
+        &'a self,
+    ) -> impl Iterator<Item = (usize, usize, &'a usize)>
     where
         usize: 'a,
     {
@@ -261,7 +263,10 @@ impl OutNeighborsWeighted<usize> for Digraph {
     /// # Panics
     ///
     /// Panics if `u` is out of bounds.
-    fn out_neighbors_weighted<'a>(&'a self, u: usize) -> impl Iterator<Item = (usize, &'a usize)>
+    fn out_neighbors_weighted<'a>(
+        &'a self,
+        u: usize,
+    ) -> impl Iterator<Item = (usize, &'a usize)>
     where
         usize: 'a,
     {
@@ -474,7 +479,10 @@ mod tests {
         }
 
         #[test]
-        fn biclique_degree_sum_equals_2size(m in 1..25_usize, n in 1..25_usize) {
+        fn biclique_degree_sum_equals_2size(
+            m in 1..25_usize,
+            n in 1..25_usize
+        ) {
             let digraph = Digraph::biclique(m, n);
 
             assert_eq!(
@@ -484,7 +492,10 @@ mod tests {
         }
 
         #[test]
-        fn biclique_even_number_odd_degrees(m in 1..25_usize, n in 1..25_usize) {
+        fn biclique_even_number_odd_degrees(
+            m in 1..25_usize,
+            n in 1..25_usize
+        ) {
             let digraph = Digraph::biclique(m, n);
 
             assert_eq!(
@@ -631,7 +642,10 @@ mod tests {
         }
 
         #[test]
-        fn biclique_is_spanning_subdigraph(m in 1..25_usize, n in 1..25_usize) {
+        fn biclique_is_spanning_subdigraph(
+            m in 1..25_usize,
+            n in 1..25_usize
+        ) {
             let digraph = Digraph::biclique(m, n);
 
             assert!(digraph.is_spanning_subdigraph(&digraph));
@@ -681,7 +695,10 @@ mod tests {
         }
 
         #[test]
-        fn biclique_out_neighbors_weighted(m in 1..25_usize, n in 1..25_usize) {
+        fn biclique_out_neighbors_weighted(
+            m in 1..25_usize,
+            n in 1..25_usize
+        ) {
             let digraph = Digraph::biclique(m, n);
             let order = m + n;
 
@@ -803,7 +820,9 @@ mod tests {
 
         #[test]
         fn circuit_indegree_sequence(order in 2..25_usize) {
-            assert!(Digraph::circuit(order).indegree_sequence().all(|d| d == 1));
+            assert!(
+                Digraph::circuit(order).indegree_sequence().all(|d| d == 1)
+            );
         }
 
         #[test]
@@ -914,12 +933,16 @@ mod tests {
 
         #[test]
         fn circuit_outdegree_sequence(order in 2..25_usize) {
-            assert!(Digraph::circuit(order).outdegree_sequence().all(|d| d == 1));
+            assert!(Digraph::circuit(order)
+                .outdegree_sequence()
+                .all(|d| d == 1));
         }
 
         #[test]
         fn circuit_semidegree_sequence(order in 2..25_usize) {
-            assert!(Digraph::circuit(order).semidegree_sequence().all(|d| d == (1, 1)));
+            assert!(Digraph::circuit(order)
+                .semidegree_sequence()
+                .all(|d| d == (1, 1)));
         }
 
         #[test]
@@ -985,7 +1008,9 @@ mod tests {
 
         #[test]
         fn complete_indegree_sequence(order in 1..25_usize) {
-            assert!(Digraph::complete(order).indegree_sequence().all(|d| d == order - 1));
+            assert!(Digraph::complete(order)
+                .indegree_sequence()
+                .all(|d| d == order - 1));
         }
 
         #[test]
@@ -1086,7 +1111,9 @@ mod tests {
         fn complete_outdegree_sequence(order in 1..25_usize) {
             let outdegree = order - 1;
 
-            assert!(Digraph::complete(order).outdegree_sequence().all(|d| d == outdegree));
+            assert!(Digraph::complete(order)
+                .outdegree_sequence()
+                .all(|d| d == outdegree));
         }
 
         #[test]
@@ -1094,7 +1121,9 @@ mod tests {
             let degree = order - 1;
             let pair = (degree, degree);
 
-            assert!(Digraph::complete(order).semidegree_sequence().all(|d| d == pair));
+            assert!(Digraph::complete(order)
+                .semidegree_sequence()
+                .all(|d| d == pair));
         }
 
         #[test]
@@ -1265,7 +1294,9 @@ mod tests {
 
         #[test]
         fn cycle_outdegree_sequence(order in 3..25_usize) {
-            assert!(Digraph::cycle(order).outdegree_sequence().all(|d| d == 2));
+            assert!(Digraph::cycle(order)
+                .outdegree_sequence()
+                .all(|d| d == 2));
         }
 
         #[test]
@@ -1443,12 +1474,16 @@ mod tests {
 
         #[test]
         fn empty_outdegree_sequence(order in 1..25_usize) {
-            assert!(Digraph::empty(order).outdegree_sequence().all(|d| d == 0));
+            assert!(Digraph::empty(order)
+                .outdegree_sequence()
+                .all(|d| d == 0));
         }
 
         #[test]
         fn empty_semidegree_sequence(order in 1..25_usize) {
-            assert!(Digraph::empty(order).semidegree_sequence().all(|d| d == (0, 0)));
+            assert!(Digraph::empty(order)
+                .semidegree_sequence()
+                .all(|d| d == (0, 0)));
         }
 
         #[test]
@@ -1833,7 +1868,10 @@ mod tests {
             assert_eq!(
                 Digraph::random_tournament(order)
                     .semidegree_sequence()
-                    .fold(0, |acc, (indegree, outdegree)| acc + indegree + outdegree),
+                    .fold(
+                        0,
+                        |acc, (indegree, outdegree)| acc + indegree + outdegree
+                    ),
                 order * (order - 1)
             );
         }
@@ -2045,7 +2083,11 @@ mod tests {
             let digraph = Digraph::star(order);
             let mut semidegree_sequence = digraph.semidegree_sequence();
 
-            assert_eq!(semidegree_sequence.next(), Some((order - 1, order - 1)));
+            assert_eq!(
+                semidegree_sequence.next(),
+                Some((order - 1, order - 1))
+            );
+
             assert!(semidegree_sequence.all(|d| d == (1, 1)));
         }
     }
@@ -2070,9 +2112,14 @@ mod tests {
 
     #[test]
     fn arcs_bang_jensen_34() {
-        assert!(bang_jensen_34()
-            .arcs()
-            .eq(vec![(0, 4), (1, 0), (2, 1), (2, 3), (2, 5), (5, 4)]));
+        assert!(bang_jensen_34().arcs().eq(vec![
+            (0, 4),
+            (1, 0),
+            (2, 1),
+            (2, 3),
+            (2, 5),
+            (5, 4)
+        ]));
     }
 
     #[test]
@@ -2271,9 +2318,12 @@ mod tests {
 
     #[test]
     fn biclique_1_2() {
-        assert!(Digraph::biclique(1, 2)
-            .arcs()
-            .eq([(0, 1), (0, 2), (1, 0), (2, 0)]));
+        assert!(Digraph::biclique(1, 2).arcs().eq([
+            (0, 1),
+            (0, 2),
+            (1, 0),
+            (2, 0)
+        ]));
     }
 
     #[test]
@@ -2296,9 +2346,12 @@ mod tests {
 
     #[test]
     fn biclique_2_1() {
-        assert!(Digraph::biclique(2, 1)
-            .arcs()
-            .eq([(0, 2), (1, 2), (2, 0), (2, 1)]));
+        assert!(Digraph::biclique(2, 1).arcs().eq([
+            (0, 2),
+            (1, 2),
+            (2, 0),
+            (2, 1)
+        ]));
     }
 
     #[test]
@@ -2335,17 +2388,24 @@ mod tests {
 
     #[test]
     fn biclique_2_2_complement() {
-        assert!(Digraph::biclique(2, 2)
-            .complement()
-            .arcs()
-            .eq([(0, 1), (1, 0), (2, 3), (3, 2),]));
+        assert!(Digraph::biclique(2, 2).complement().arcs().eq([
+            (0, 1),
+            (1, 0),
+            (2, 3),
+            (3, 2),
+        ]));
     }
 
     #[test]
     fn biclique_claw() {
-        assert!(Digraph::claw()
-            .arcs()
-            .eq([(0, 1), (0, 2), (0, 3), (1, 0), (2, 0), (3, 0)]));
+        assert!(Digraph::claw().arcs().eq([
+            (0, 1),
+            (0, 2),
+            (0, 3),
+            (1, 0),
+            (2, 0),
+            (3, 0)
+        ]));
     }
 
     #[test]
@@ -2507,10 +2567,11 @@ mod tests {
 
     #[test]
     fn circuit_3_complement() {
-        assert!(Digraph::circuit(3)
-            .complement()
-            .arcs()
-            .eq([(0, 2), (1, 0), (2, 1)]));
+        assert!(Digraph::circuit(3).complement().arcs().eq([
+            (0, 2),
+            (1, 0),
+            (2, 1)
+        ]));
     }
 
     #[test]
@@ -2570,9 +2631,14 @@ mod tests {
 
     #[test]
     fn complete_3() {
-        assert!(Digraph::complete(3)
-            .arcs()
-            .eq([(0, 1), (0, 2), (1, 0), (1, 2), (2, 0), (2, 1)]));
+        assert!(Digraph::complete(3).arcs().eq([
+            (0, 1),
+            (0, 2),
+            (1, 0),
+            (1, 2),
+            (2, 0),
+            (2, 1)
+        ]));
     }
 
     #[test]
@@ -2800,9 +2866,14 @@ mod tests {
 
     #[test]
     fn cycle_3() {
-        assert!(Digraph::cycle(3)
-            .arcs()
-            .eq([(0, 1), (0, 2), (1, 0), (1, 2), (2, 0), (2, 1)]));
+        assert!(Digraph::cycle(3).arcs().eq([
+            (0, 1),
+            (0, 2),
+            (1, 0),
+            (1, 2),
+            (2, 0),
+            (2, 1)
+        ]));
     }
 
     #[test]
@@ -2982,7 +3053,8 @@ mod tests {
 
     #[test]
     fn from_vec() {
-        let arcs = vec![BTreeSet::from([1]), BTreeSet::from([2]), BTreeSet::new()];
+        let arcs =
+            vec![BTreeSet::from([1]), BTreeSet::from([2]), BTreeSet::new()];
         let digraph = Digraph::from(arcs);
 
         assert_eq!(digraph.order(), 3);
@@ -4048,9 +4120,11 @@ mod tests {
         assert!(digraph.out_neighbors_weighted(0).eq([(4, &1)]));
         assert!(digraph.out_neighbors_weighted(1).eq([(0, &1)]));
 
-        assert!(digraph
-            .out_neighbors_weighted(2)
-            .eq([(1, &1), (3, &1), (5, &1)]));
+        assert!(digraph.out_neighbors_weighted(2).eq([
+            (1, &1),
+            (3, &1),
+            (5, &1)
+        ]));
 
         assert!(digraph.out_neighbors_weighted(3).eq([]));
         assert!(digraph.out_neighbors_weighted(4).eq([]));
@@ -4064,9 +4138,12 @@ mod tests {
         assert!(digraph.out_neighbors_weighted(0).eq([(1, &1), (2, &1)]));
         assert!(digraph.out_neighbors_weighted(1).eq([(3, &1)]));
 
-        assert!(digraph
-            .out_neighbors_weighted(2)
-            .eq([(1, &1), (3, &1), (4, &1), (5, &1)]));
+        assert!(digraph.out_neighbors_weighted(2).eq([
+            (1, &1),
+            (3, &1),
+            (4, &1),
+            (5, &1)
+        ]));
 
         assert!(digraph.out_neighbors_weighted(3).eq([(5, &1)]));
         assert!(digraph.out_neighbors_weighted(4).eq([(6, &1)]));
@@ -4081,9 +4158,11 @@ mod tests {
         assert!(digraph.out_neighbors_weighted(0).eq([(3, &1), (4, &1)]));
         assert!(digraph.out_neighbors_weighted(1).eq([]));
 
-        assert!(digraph
-            .out_neighbors_weighted(2)
-            .eq([(3, &1), (4, &1), (5, &1)]));
+        assert!(digraph.out_neighbors_weighted(2).eq([
+            (3, &1),
+            (4, &1),
+            (5, &1)
+        ]));
 
         assert!(digraph.out_neighbors_weighted(3).eq([(1, &1)]));
         assert!(digraph.out_neighbors_weighted(4).eq([(1, &1)]));
@@ -4141,9 +4220,11 @@ mod tests {
         assert!(digraph.out_neighbors_weighted(3).eq([]));
         assert!(digraph.out_neighbors_weighted(4).eq([]));
 
-        assert!(digraph
-            .out_neighbors_weighted(5)
-            .eq([(1, &1), (6, &1), (9, &1)]));
+        assert!(digraph.out_neighbors_weighted(5).eq([
+            (1, &1),
+            (6, &1),
+            (9, &1)
+        ]));
 
         assert!(digraph.out_neighbors_weighted(6).eq([(2, &1), (5, &1)]));
         assert!(digraph.out_neighbors_weighted(7).eq([]));
@@ -4391,10 +4472,12 @@ mod tests {
 
     #[test]
     fn path_3_complement() {
-        assert!(Digraph::path(3)
-            .complement()
-            .arcs()
-            .eq([(0, 2), (1, 0), (2, 0), (2, 1)]));
+        assert!(Digraph::path(3).complement().arcs().eq([
+            (0, 2),
+            (1, 0),
+            (2, 0),
+            (2, 1)
+        ]));
     }
 
     #[test]
@@ -4430,9 +4513,14 @@ mod tests {
     fn remove_arc_bang_jensen_34() {
         let mut digraph = bang_jensen_34();
 
-        assert!(digraph
-            .arcs()
-            .eq([(0, 4), (1, 0), (2, 1), (2, 3), (2, 5), (5, 4)]));
+        assert!(digraph.arcs().eq([
+            (0, 4),
+            (1, 0),
+            (2, 1),
+            (2, 3),
+            (2, 5),
+            (5, 4)
+        ]));
 
         assert!(!digraph.remove_arc(0, 1));
 
@@ -4536,9 +4624,15 @@ mod tests {
     fn remove_arc_kattis_escapewallmaria_1() {
         let mut digraph = kattis_escapewallmaria_1();
 
-        assert!(digraph
-            .arcs()
-            .eq([(5, 6), (5, 9), (6, 5), (9, 5), (9, 13), (13, 9), (13, 12)]));
+        assert!(digraph.arcs().eq([
+            (5, 6),
+            (5, 9),
+            (6, 5),
+            (9, 5),
+            (9, 13),
+            (13, 9),
+            (13, 12)
+        ]));
 
         assert!(!digraph.remove_arc(0, 1));
 
@@ -4565,9 +4659,15 @@ mod tests {
     fn remove_arc_kattis_escapewallmaria_2() {
         let mut digraph = kattis_escapewallmaria_2();
 
-        assert!(digraph
-            .arcs()
-            .eq([(5, 6), (5, 9), (6, 5), (9, 5), (12, 13), (13, 9), (13, 12)]));
+        assert!(digraph.arcs().eq([
+            (5, 6),
+            (5, 9),
+            (6, 5),
+            (9, 5),
+            (12, 13),
+            (13, 9),
+            (13, 12)
+        ]));
 
         assert!(!digraph.remove_arc(0, 1));
 

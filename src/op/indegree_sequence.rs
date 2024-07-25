@@ -1,7 +1,7 @@
 //! Return the indegree sequence of a digraph.
 //!
-//! The indegree sequence is an iterator over the indegrees of the vertices of a
-//! digraph.
+//! The indegree sequence is an iterator over the indegrees of the vertices of
+//! a digraph.
 //!
 //! # Examples
 //!

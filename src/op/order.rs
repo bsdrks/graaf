@@ -18,8 +18,8 @@
 ///
 /// # How can I implement `Order`?
 ///
-/// Provides an implementation of `order` that returns the number of vertices in
-/// the digraph.
+/// Provides an implementation of `order` that returns the number of vertices
+/// in the digraph.
 ///
 /// ```
 /// use graaf::op::Order;

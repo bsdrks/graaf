@@ -1,7 +1,7 @@
 //! Determine whether a digraph is a subdigraph of another digraph.
 //!
-//! A digraph `H` is a subdigraph of a digraph `D` if the vertex set of `H` is a
-//! subset of the vertex set of `D` and the arc set of `H` is a subset of the
+//! A digraph `H` is a subdigraph of a digraph `D` if the vertex set of `H` is
+//! a subset of the vertex set of `D` and the arc set of `H` is a subset of the
 //! arc set of `D`.
 //!
 //! # Examples
@@ -203,8 +203,8 @@ where
         let hv = self.vertices().collect::<BTreeSet<_>>();
         let dv = d.vertices().collect::<BTreeSet<_>>();
 
-        self.arcs()
-            .all(|(u, v)| d.has_arc(u, v) && hv.contains(&u) && hv.contains(&v))
-            && hv.iter().all(|u| dv.contains(u))
+        self.arcs().all(|(u, v)| {
+            d.has_arc(u, v) && hv.contains(&u) && hv.contains(&v)
+        }) && hv.iter().all(|u| dv.contains(u))
     }
 }
