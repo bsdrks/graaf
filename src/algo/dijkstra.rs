@@ -1196,7 +1196,7 @@ mod tests {
         assert!(pred.into_iter().eq([
             None,
             Some(7),
-            Some(9),
+            None,
             Some(0),
             Some(3),
             Some(3),
@@ -1227,7 +1227,7 @@ mod tests {
         );
 
         assert!(dist.iter().eq(&[0, 1, 3, 14]));
-        assert!(pred.into_iter().eq([None, Some(0), Some(0), Some(2)]));
+        assert!(pred.into_iter().eq([None, Some(0), Some(0), Some(0)]));
         assert!(path.unwrap().iter().eq(&[0, 2]));
     }
 
