@@ -19,6 +19,13 @@
 - Benchmark trait implementations.
 - Subsume traits with one super trait into the super trait?
 
+## [0.74.4] - 2024-07-25
+
+Added
+
+- Add doctest example for `IndegreeSequence`.
+- Add doctest example for `OutdegreeSequence`.
+
 ## [0.74.3] - 2024-07-24
 
 Fixed
