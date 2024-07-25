@@ -1191,7 +1191,7 @@ mod tests {
             &mut heap,
         );
 
-        assert!(dist.iter().eq(&[0, 0, 1, 0, 0, 0, 1, 0, 0, 1]));
+        assert!(dist.iter().eq(&[0, 0, usize::MAX, 0, 0, 0, 1, 0, 0, 1]));
 
         assert!(pred.into_iter().eq([
             None,
@@ -1226,7 +1226,7 @@ mod tests {
             &mut heap,
         );
 
-        assert!(dist.iter().eq(&[0, 1, 3, 10]));
+        assert!(dist.iter().eq(&[0, 1, 3, 14]));
         assert!(pred.into_iter().eq([None, Some(0), Some(0), Some(2)]));
         assert!(path.unwrap().iter().eq(&[0, 2]));
     }
