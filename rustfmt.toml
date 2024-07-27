@@ -1,11 +1,12 @@
 format_code_in_doc_comments = true
+format_macro_bodies = true
 format_macro_matchers = true
 format_strings = true
 imports_granularity = "One"
 imports_layout = "Vertical"
+max_width = 79
 merge_derives = true
 normalize_comments = true
 reorder_impl_items = true
 unstable_features = true
 wrap_comments = true
-max_width = 79

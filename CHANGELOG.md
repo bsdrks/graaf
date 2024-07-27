@@ -19,6 +19,12 @@
 - Benchmark trait implementations.
 - Subsume traits with one super trait into the super trait?
 
+## [0.75.0] - 2024-07-27
+
+Changed
+
+- Clean up tests; make proptests complete.
+
 ## [0.74.5] - 2024-07-25
 
 Changed
