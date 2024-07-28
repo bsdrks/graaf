@@ -380,6 +380,11 @@ mod tests {
             proptest_strategy::arc,
             r#gen::Path,
         },
+        adjacency_list::fixture::{
+            bang_jensen_196,
+            kattis_cantinaofbabel_1,
+            kattis_cantinaofbabel_2,
+        },
         proptest::proptest,
     };
 
@@ -2174,6 +2179,25 @@ mod tests {
     }
 
     #[test]
+    fn arcs_bang_jensen_196() {
+        assert!(bang_jensen_196().arcs().eq(vec![
+            (0, 1),
+            (0, 4),
+            (0, 7),
+            (1, 0),
+            (1, 2),
+            (1, 7),
+            (2, 3),
+            (3, 2),
+            (3, 4),
+            (4, 2),
+            (5, 6),
+            (6, 7),
+            (7, 5)
+        ]));
+    }
+
+    #[test]
     fn arcs_bang_jensen_34() {
         assert!(bang_jensen_34().arcs().eq(vec![
             (0, 4),
@@ -2211,6 +2235,59 @@ mod tests {
             (3, 1),
             (4, 1),
             (5, 1)
+        ]));
+    }
+
+    #[test]
+    fn arcs_kattis_cantinaofbabel_1() {
+        assert!(kattis_cantinaofbabel_1().arcs().eq(vec![
+            (0, 1),
+            (1, 0),
+            (1, 2),
+            (1, 4),
+            (2, 1),
+            (3, 2),
+            (3, 4),
+            (3, 5),
+            (3, 7),
+            (3, 10),
+            (3, 11),
+            (4, 3),
+            (5, 6),
+            (6, 5),
+            (6, 10),
+            (7, 3),
+            (8, 7),
+            (8, 10),
+            (9, 7),
+            (9, 11),
+            (10, 6),
+            (11, 9)
+        ]));
+    }
+
+    #[test]
+    fn arcs_kattis_cantinaofbabel_2() {
+        assert!(kattis_cantinaofbabel_2().arcs().eq(vec![
+            (0, 1),
+            (1, 0),
+            (1, 7),
+            (2, 0),
+            (2, 5),
+            (2, 7),
+            (3, 4),
+            (4, 3),
+            (5, 3),
+            (5, 6),
+            (6, 5),
+            (7, 2),
+            (8, 7),
+            (8, 9),
+            (8, 11),
+            (9, 8),
+            (10, 9),
+            (10, 11),
+            (11, 10)
         ]));
     }
 
@@ -2261,6 +2338,25 @@ mod tests {
     }
 
     #[test]
+    fn arcs_weighted_bang_jensen_196() {
+        assert!(bang_jensen_196().arcs_weighted().eq(vec![
+            (0, 1, &1),
+            (0, 4, &1),
+            (0, 7, &1),
+            (1, 0, &1),
+            (1, 2, &1),
+            (1, 7, &1),
+            (2, 3, &1),
+            (3, 2, &1),
+            (3, 4, &1),
+            (4, 2, &1),
+            (5, 6, &1),
+            (6, 7, &1),
+            (7, 5, &1)
+        ]));
+    }
+
+    #[test]
     fn arcs_weighted_bang_jensen_34() {
         assert!(bang_jensen_34().arcs_weighted().eq(vec![
             (0, 4, &1),
@@ -2298,6 +2394,59 @@ mod tests {
             (3, 1, &1),
             (4, 1, &1),
             (5, 1, &1)
+        ]));
+    }
+
+    #[test]
+    fn arcs_weighted_kattis_cantinaofbabel_1() {
+        assert!(kattis_cantinaofbabel_1().arcs_weighted().eq(vec![
+            (0, 1, &1),
+            (1, 0, &1),
+            (1, 2, &1),
+            (1, 4, &1),
+            (2, 1, &1),
+            (3, 2, &1),
+            (3, 4, &1),
+            (3, 5, &1),
+            (3, 7, &1),
+            (3, 10, &1),
+            (3, 11, &1),
+            (4, 3, &1),
+            (5, 6, &1),
+            (6, 5, &1),
+            (6, 10, &1),
+            (7, 3, &1),
+            (8, 7, &1),
+            (8, 10, &1),
+            (9, 7, &1),
+            (9, 11, &1),
+            (10, 6, &1),
+            (11, 9, &1)
+        ]));
+    }
+
+    #[test]
+    fn arcs_weighted_kattis_cantinaofbabel_2() {
+        assert!(kattis_cantinaofbabel_2().arcs_weighted().eq(vec![
+            (0, 1, &1),
+            (1, 0, &1),
+            (1, 7, &1),
+            (2, 0, &1),
+            (2, 5, &1),
+            (2, 7, &1),
+            (3, 4, &1),
+            (4, 3, &1),
+            (5, 3, &1),
+            (5, 6, &1),
+            (6, 5, &1),
+            (7, 2, &1),
+            (8, 7, &1),
+            (8, 9, &1),
+            (8, 11, &1),
+            (9, 8, &1),
+            (10, 9, &1),
+            (10, 11, &1),
+            (11, 10, &1)
         ]));
     }
 
@@ -2537,6 +2686,25 @@ mod tests {
     }
 
     #[test]
+    fn converse_bang_jensen_196() {
+        assert!(bang_jensen_196().converse().arcs().eq([
+            (0, 1),
+            (1, 0),
+            (2, 1),
+            (2, 3),
+            (2, 4),
+            (3, 2),
+            (4, 0),
+            (4, 3),
+            (5, 7),
+            (6, 5),
+            (7, 0),
+            (7, 1),
+            (7, 6),
+        ]));
+    }
+
+    #[test]
     fn converse_bang_jensen_34() {
         assert!(bang_jensen_34().converse().arcs().eq([
             (0, 1),
@@ -2574,6 +2742,59 @@ mod tests {
             (4, 0),
             (4, 2),
             (5, 2)
+        ]));
+    }
+
+    #[test]
+    fn converse_kattis_cantinaofbabel_1() {
+        assert!(kattis_cantinaofbabel_1().converse().arcs().eq([
+            (0, 1),
+            (1, 0),
+            (1, 2),
+            (2, 1),
+            (2, 3),
+            (3, 4),
+            (3, 7),
+            (4, 1),
+            (4, 3),
+            (5, 3),
+            (5, 6),
+            (6, 5),
+            (6, 10),
+            (7, 3),
+            (7, 8),
+            (7, 9),
+            (9, 11),
+            (10, 3),
+            (10, 6),
+            (10, 8),
+            (11, 3),
+            (11, 9)
+        ]));
+    }
+
+    #[test]
+    fn converse_kattis_cantinaofbabel_2() {
+        assert!(kattis_cantinaofbabel_2().converse().arcs().eq([
+            (0, 1),
+            (0, 2),
+            (1, 0),
+            (2, 7),
+            (3, 4),
+            (3, 5),
+            (4, 3),
+            (5, 2),
+            (5, 6),
+            (6, 5),
+            (7, 1),
+            (7, 2),
+            (7, 8),
+            (8, 9),
+            (9, 8),
+            (9, 10),
+            (10, 11),
+            (11, 8),
+            (11, 10)
         ]));
     }
 
@@ -2661,6 +2882,20 @@ mod tests {
     }
 
     #[test]
+    fn degree_bang_jensen_196() {
+        let digraph = bang_jensen_196();
+
+        assert!(digraph.degree(0) == 4);
+        assert!(digraph.degree(1) == 4);
+        assert!(digraph.degree(2) == 4);
+        assert!(digraph.degree(3) == 3);
+        assert!(digraph.degree(4) == 3);
+        assert!(digraph.degree(5) == 2);
+        assert!(digraph.degree(6) == 2);
+        assert!(digraph.degree(7) == 4);
+    }
+
+    #[test]
     fn degree_bang_jensen_34() {
         let digraph = bang_jensen_34();
 
@@ -2698,7 +2933,43 @@ mod tests {
     }
 
     #[test]
-    fn degree_escapewallmaria_1() {
+    fn degree_kattis_cantinaofbabel_1() {
+        let digraph = kattis_cantinaofbabel_1();
+
+        assert!(digraph.degree(0) == 2);
+        assert!(digraph.degree(1) == 5);
+        assert!(digraph.degree(2) == 3);
+        assert!(digraph.degree(3) == 8);
+        assert!(digraph.degree(4) == 3);
+        assert!(digraph.degree(5) == 3);
+        assert!(digraph.degree(6) == 4);
+        assert!(digraph.degree(7) == 4);
+        assert!(digraph.degree(8) == 2);
+        assert!(digraph.degree(9) == 3);
+        assert!(digraph.degree(10) == 4);
+        assert!(digraph.degree(11) == 3);
+    }
+
+    #[test]
+    fn degree_kattis_cantinaofbabel_2() {
+        let digraph = kattis_cantinaofbabel_2();
+
+        assert!(digraph.degree(0) == 3);
+        assert!(digraph.degree(1) == 3);
+        assert!(digraph.degree(2) == 4);
+        assert!(digraph.degree(3) == 3);
+        assert!(digraph.degree(4) == 2);
+        assert!(digraph.degree(5) == 4);
+        assert!(digraph.degree(6) == 2);
+        assert!(digraph.degree(7) == 4);
+        assert!(digraph.degree(8) == 4);
+        assert!(digraph.degree(9) == 3);
+        assert!(digraph.degree(10) == 3);
+        assert!(digraph.degree(11) == 3);
+    }
+
+    #[test]
+    fn degree_kattis_escapewallmaria_1() {
         let digraph = kattis_escapewallmaria_1();
 
         assert!(digraph.degree(0) == 0);
@@ -2718,7 +2989,7 @@ mod tests {
     }
 
     #[test]
-    fn degree_escapewallmaria_2() {
+    fn degree_kattis_escapewallmaria_2() {
         let digraph = kattis_escapewallmaria_2();
 
         assert!(digraph.degree(0) == 0);
@@ -2738,7 +3009,7 @@ mod tests {
     }
 
     #[test]
-    fn degree_escapewallmaria_3() {
+    fn degree_kattis_escapewallmaria_3() {
         let digraph = kattis_escapewallmaria_3();
 
         assert!(digraph.degree(0) == 0);
@@ -2830,6 +3101,20 @@ mod tests {
     }
 
     #[test]
+    fn in_neighbors_bang_jensen_196() {
+        let digraph = bang_jensen_196();
+
+        assert!(digraph.in_neighbors(0).eq([1]));
+        assert!(digraph.in_neighbors(1).eq([0]));
+        assert!(digraph.in_neighbors(2).eq([1, 3, 4]));
+        assert!(digraph.in_neighbors(3).eq([2]));
+        assert!(digraph.in_neighbors(4).eq([0, 3]));
+        assert!(digraph.in_neighbors(5).eq([7]));
+        assert!(digraph.in_neighbors(6).eq([5]));
+        assert!(digraph.in_neighbors(7).eq([0, 1, 6]));
+    }
+
+    #[test]
     fn in_neighbors_bang_jensen_34() {
         let digraph = bang_jensen_34();
 
@@ -2864,6 +3149,42 @@ mod tests {
         assert!(digraph.in_neighbors(3).eq([0, 2]));
         assert!(digraph.in_neighbors(4).eq([0, 2]));
         assert!(digraph.in_neighbors(5).eq([2]));
+    }
+
+    #[test]
+    fn in_neighbors_kattis_cantinaofbabel_1() {
+        let digraph = kattis_cantinaofbabel_1();
+
+        assert!(digraph.in_neighbors(0).eq([1]));
+        assert!(digraph.in_neighbors(1).eq([0, 2]));
+        assert!(digraph.in_neighbors(2).eq([1, 3]));
+        assert!(digraph.in_neighbors(3).eq([4, 7]));
+        assert!(digraph.in_neighbors(4).eq([1, 3]));
+        assert!(digraph.in_neighbors(5).eq([3, 6]));
+        assert!(digraph.in_neighbors(6).eq([5, 10]));
+        assert!(digraph.in_neighbors(7).eq([3, 8, 9]));
+        assert!(digraph.in_neighbors(8).eq([]));
+        assert!(digraph.in_neighbors(9).eq([11]));
+        assert!(digraph.in_neighbors(10).eq([3, 6, 8]));
+        assert!(digraph.in_neighbors(11).eq([3, 9]));
+    }
+
+    #[test]
+    fn in_neighbors_kattis_canitnaofbabel_2() {
+        let digraph = kattis_cantinaofbabel_2();
+
+        assert!(digraph.in_neighbors(0).eq([1, 2]));
+        assert!(digraph.in_neighbors(1).eq([0]));
+        assert!(digraph.in_neighbors(2).eq([7]));
+        assert!(digraph.in_neighbors(3).eq([4, 5]));
+        assert!(digraph.in_neighbors(4).eq([3]));
+        assert!(digraph.in_neighbors(5).eq([2, 6]));
+        assert!(digraph.in_neighbors(6).eq([5]));
+        assert!(digraph.in_neighbors(7).eq([1, 2, 8]));
+        assert!(digraph.in_neighbors(8).eq([9]));
+        assert!(digraph.in_neighbors(9).eq([8, 10]));
+        assert!(digraph.in_neighbors(10).eq([11]));
+        assert!(digraph.in_neighbors(11).eq([8, 10]));
     }
 
     #[test]
@@ -2927,6 +3248,20 @@ mod tests {
     }
 
     #[test]
+    fn indegree_bang_jensen_196() {
+        let digraph = bang_jensen_196();
+
+        assert!(digraph.indegree(0) == 1);
+        assert!(digraph.indegree(1) == 1);
+        assert!(digraph.indegree(2) == 3);
+        assert!(digraph.indegree(3) == 1);
+        assert!(digraph.indegree(4) == 2);
+        assert!(digraph.indegree(5) == 1);
+        assert!(digraph.indegree(6) == 1);
+        assert!(digraph.indegree(7) == 3);
+    }
+
+    #[test]
     fn indegree_bang_jensen_34() {
         let digraph = bang_jensen_34();
 
@@ -2964,7 +3299,43 @@ mod tests {
     }
 
     #[test]
-    fn indegree_escapewallmaria_1() {
+    fn indegree_kattis_cantinaofbabel_1() {
+        let digraph = kattis_cantinaofbabel_1();
+
+        assert!(digraph.indegree(0) == 1);
+        assert!(digraph.indegree(1) == 2);
+        assert!(digraph.indegree(2) == 2);
+        assert!(digraph.indegree(3) == 2);
+        assert!(digraph.indegree(4) == 2);
+        assert!(digraph.indegree(5) == 2);
+        assert!(digraph.indegree(6) == 2);
+        assert!(digraph.indegree(7) == 3);
+        assert!(digraph.indegree(8) == 0);
+        assert!(digraph.indegree(9) == 1);
+        assert!(digraph.indegree(10) == 3);
+        assert!(digraph.indegree(11) == 2);
+    }
+
+    #[test]
+    fn indegree_kattis_cantinaofbabel_2() {
+        let digraph = kattis_cantinaofbabel_2();
+
+        assert!(digraph.indegree(0) == 2);
+        assert!(digraph.indegree(1) == 1);
+        assert!(digraph.indegree(2) == 1);
+        assert!(digraph.indegree(3) == 2);
+        assert!(digraph.indegree(4) == 1);
+        assert!(digraph.indegree(5) == 2);
+        assert!(digraph.indegree(6) == 1);
+        assert!(digraph.indegree(7) == 3);
+        assert!(digraph.indegree(8) == 1);
+        assert!(digraph.indegree(9) == 2);
+        assert!(digraph.indegree(10) == 1);
+        assert!(digraph.indegree(11) == 2);
+    }
+
+    #[test]
+    fn indegree_kattis_escapewallmaria_1() {
         let digraph = kattis_escapewallmaria_1();
 
         assert!(digraph.indegree(0) == 0);
@@ -2984,7 +3355,7 @@ mod tests {
     }
 
     #[test]
-    fn indegree_escapewallmaria_2() {
+    fn indegree_kattis_escapewallmaria_2() {
         let digraph = kattis_escapewallmaria_2();
 
         assert!(digraph.indegree(0) == 0);
@@ -3004,7 +3375,7 @@ mod tests {
     }
 
     #[test]
-    fn indegree_escapewallmaria_3() {
+    fn indegree_kattis_escapewallmaria_3() {
         let digraph = kattis_escapewallmaria_3();
 
         assert!(digraph.indegree(0) == 0);
@@ -3030,6 +3401,13 @@ mod tests {
     }
 
     #[test]
+    fn indegree_sequence_bang_jensen_196() {
+        assert!(bang_jensen_196()
+            .indegree_sequence()
+            .eq([1, 1, 3, 1, 2, 1, 1, 3]));
+    }
+
+    #[test]
     fn indegree_sequence_bang_jensen_34() {
         assert!(bang_jensen_34().indegree_sequence().eq([1, 1, 0, 1, 2, 1]));
     }
@@ -3046,6 +3424,20 @@ mod tests {
         assert!(kattis_builddeps()
             .indegree_sequence()
             .eq([0, 3, 0, 2, 2, 1]));
+    }
+
+    #[test]
+    fn indegree_sequence_kattis_cantinaofbabel_1() {
+        assert!(kattis_cantinaofbabel_1()
+            .indegree_sequence()
+            .eq([1, 2, 2, 2, 2, 2, 2, 3, 0, 1, 3, 2]));
+    }
+
+    #[test]
+    fn indegree_sequence_kattis_cantinaofbabel_2() {
+        assert!(kattis_cantinaofbabel_2()
+            .indegree_sequence()
+            .eq([2, 1, 1, 2, 1, 2, 1, 3, 1, 2, 1, 2]));
     }
 
     #[test]
@@ -3070,6 +3462,11 @@ mod tests {
     }
 
     #[test]
+    fn is_balanced_bang_jensen_196() {
+        assert!(!bang_jensen_196().is_balanced());
+    }
+
+    #[test]
     fn is_balanced_bang_jensen_34() {
         assert!(!bang_jensen_34().is_balanced());
     }
@@ -3082,6 +3479,16 @@ mod tests {
     #[test]
     fn is_balanced_kattis_builddeps() {
         assert!(!kattis_builddeps().is_balanced());
+    }
+
+    #[test]
+    fn is_balanced_kattis_cantinaofbabel_1() {
+        assert!(!kattis_cantinaofbabel_1().is_balanced());
+    }
+
+    #[test]
+    fn is_balanced_kattis_cantinaofbabel_2() {
+        assert!(!kattis_cantinaofbabel_2().is_balanced());
     }
 
     #[test]
@@ -3100,6 +3507,11 @@ mod tests {
     }
 
     #[test]
+    fn is_complete_bang_jensen_196() {
+        assert!(!bang_jensen_196().is_complete());
+    }
+
+    #[test]
     fn is_complete_bang_jensen_34() {
         assert!(!bang_jensen_34().is_complete());
     }
@@ -3115,6 +3527,16 @@ mod tests {
     }
 
     #[test]
+    fn is_complete_kattis_cantinaofbabel_1() {
+        assert!(!kattis_cantinaofbabel_1().is_complete());
+    }
+
+    #[test]
+    fn is_complete_kattis_cantinaofbabel_2() {
+        assert!(!kattis_cantinaofbabel_2().is_complete());
+    }
+
+    #[test]
     fn is_complete_kattis_escapewallmaria_1() {
         assert!(!kattis_escapewallmaria_1().is_complete());
     }
@@ -3127,6 +3549,20 @@ mod tests {
     #[test]
     fn is_complete_kattis_escapewallmaria_3() {
         assert!(!kattis_escapewallmaria_3().is_complete());
+    }
+
+    #[test]
+    fn is_isolated_bang_jensen_196() {
+        let digraph = bang_jensen_196();
+
+        assert!(!digraph.is_isolated(0));
+        assert!(!digraph.is_isolated(1));
+        assert!(!digraph.is_isolated(2));
+        assert!(!digraph.is_isolated(3));
+        assert!(!digraph.is_isolated(4));
+        assert!(!digraph.is_isolated(5));
+        assert!(!digraph.is_isolated(6));
+        assert!(!digraph.is_isolated(7));
     }
 
     #[test]
@@ -3164,6 +3600,42 @@ mod tests {
         assert!(!digraph.is_isolated(3));
         assert!(!digraph.is_isolated(4));
         assert!(!digraph.is_isolated(5));
+    }
+
+    #[test]
+    fn is_isolated_kattis_cantinaofbabel_1() {
+        let digraph = kattis_cantinaofbabel_1();
+
+        assert!(!digraph.is_isolated(0));
+        assert!(!digraph.is_isolated(1));
+        assert!(!digraph.is_isolated(2));
+        assert!(!digraph.is_isolated(3));
+        assert!(!digraph.is_isolated(4));
+        assert!(!digraph.is_isolated(5));
+        assert!(!digraph.is_isolated(6));
+        assert!(!digraph.is_isolated(7));
+        assert!(!digraph.is_isolated(8));
+        assert!(!digraph.is_isolated(9));
+        assert!(!digraph.is_isolated(10));
+        assert!(!digraph.is_isolated(11));
+    }
+
+    #[test]
+    fn is_isolated_kattis_cantinaofbabel_2() {
+        let digraph = kattis_cantinaofbabel_2();
+
+        assert!(!digraph.is_isolated(0));
+        assert!(!digraph.is_isolated(1));
+        assert!(!digraph.is_isolated(2));
+        assert!(!digraph.is_isolated(3));
+        assert!(!digraph.is_isolated(4));
+        assert!(!digraph.is_isolated(5));
+        assert!(!digraph.is_isolated(6));
+        assert!(!digraph.is_isolated(7));
+        assert!(!digraph.is_isolated(8));
+        assert!(!digraph.is_isolated(9));
+        assert!(!digraph.is_isolated(10));
+        assert!(!digraph.is_isolated(11));
     }
 
     #[test]
@@ -3227,6 +3699,11 @@ mod tests {
     }
 
     #[test]
+    fn is_oriented_bang_jensen_196() {
+        assert!(!bang_jensen_196().is_oriented());
+    }
+
+    #[test]
     fn is_oriented_bang_jensen_34() {
         assert!(bang_jensen_34().is_oriented());
     }
@@ -3242,6 +3719,16 @@ mod tests {
     }
 
     #[test]
+    fn is_oriented_kattis_cantinaofbabel_1() {
+        assert!(!kattis_cantinaofbabel_1().is_oriented());
+    }
+
+    #[test]
+    fn is_oriented_kattis_cantinaofbabel_2() {
+        assert!(!kattis_cantinaofbabel_2().is_oriented());
+    }
+
+    #[test]
     fn is_oriented_kattis_escapewallmaria_1() {
         assert!(!kattis_escapewallmaria_1().is_oriented());
     }
@@ -3254,6 +3741,20 @@ mod tests {
     #[test]
     fn is_oriented_kattis_escapewallmaria_3() {
         assert!(!kattis_escapewallmaria_3().is_oriented());
+    }
+
+    #[test]
+    fn is_pendant_bang_jensen_196() {
+        let digraph = bang_jensen_196();
+
+        assert!(!digraph.is_pendant(0));
+        assert!(!digraph.is_pendant(1));
+        assert!(!digraph.is_pendant(2));
+        assert!(!digraph.is_pendant(3));
+        assert!(!digraph.is_pendant(4));
+        assert!(!digraph.is_pendant(5));
+        assert!(!digraph.is_pendant(6));
+        assert!(!digraph.is_pendant(7));
     }
 
     #[test]
@@ -3291,6 +3792,42 @@ mod tests {
         assert!(!digraph.is_pendant(3));
         assert!(!digraph.is_pendant(4));
         assert!(!digraph.is_pendant(5));
+    }
+
+    #[test]
+    fn is_pendant_kattis_cantinaofbabel_1() {
+        let digraph = kattis_cantinaofbabel_1();
+
+        assert!(!digraph.is_pendant(0));
+        assert!(!digraph.is_pendant(1));
+        assert!(!digraph.is_pendant(2));
+        assert!(!digraph.is_pendant(3));
+        assert!(!digraph.is_pendant(4));
+        assert!(!digraph.is_pendant(5));
+        assert!(!digraph.is_pendant(6));
+        assert!(!digraph.is_pendant(7));
+        assert!(!digraph.is_pendant(8));
+        assert!(!digraph.is_pendant(9));
+        assert!(!digraph.is_pendant(10));
+        assert!(!digraph.is_pendant(11));
+    }
+
+    #[test]
+    fn is_pendant_kattis_cantinaofbabel_2() {
+        let digraph = kattis_cantinaofbabel_2();
+
+        assert!(!digraph.is_pendant(0));
+        assert!(!digraph.is_pendant(1));
+        assert!(!digraph.is_pendant(2));
+        assert!(!digraph.is_pendant(3));
+        assert!(!digraph.is_pendant(4));
+        assert!(!digraph.is_pendant(5));
+        assert!(!digraph.is_pendant(6));
+        assert!(!digraph.is_pendant(7));
+        assert!(!digraph.is_pendant(8));
+        assert!(!digraph.is_pendant(9));
+        assert!(!digraph.is_pendant(10));
+        assert!(!digraph.is_pendant(11));
     }
 
     #[test]
@@ -3354,6 +3891,11 @@ mod tests {
     }
 
     #[test]
+    fn is_regular_bang_jensen_196() {
+        assert!(!bang_jensen_196().is_regular());
+    }
+
+    #[test]
     fn is_regular_bang_jensen_34() {
         assert!(!bang_jensen_34().is_regular());
     }
@@ -3366,6 +3908,16 @@ mod tests {
     #[test]
     fn is_regular_kattis_builddeps() {
         assert!(!kattis_builddeps().is_regular());
+    }
+
+    #[test]
+    fn is_regular_kattis_cantinaofbabel_1() {
+        assert!(!kattis_cantinaofbabel_1().is_regular());
+    }
+
+    #[test]
+    fn is_regular_kattis_cantinaofbabel_2() {
+        assert!(!kattis_cantinaofbabel_2().is_regular());
     }
 
     #[test]
@@ -3384,6 +3936,11 @@ mod tests {
     }
 
     #[test]
+    fn is_semicomplete_bang_jensen_196() {
+        assert!(!bang_jensen_196().is_semicomplete());
+    }
+
+    #[test]
     fn is_semicomplete_bang_jensen_34() {
         assert!(!bang_jensen_34().is_semicomplete());
     }
@@ -3396,6 +3953,16 @@ mod tests {
     #[test]
     fn is_semicomplete_kattis_builddeps() {
         assert!(!kattis_builddeps().is_semicomplete());
+    }
+
+    #[test]
+    fn is_semicomplete_kattis_cantinaofbabel_1() {
+        assert!(!kattis_cantinaofbabel_1().is_semicomplete());
+    }
+
+    #[test]
+    fn is_semicomplete_kattis_cantinaofbabel_2() {
+        assert!(!kattis_cantinaofbabel_2().is_semicomplete());
     }
 
     #[test]
@@ -3414,6 +3981,11 @@ mod tests {
     }
 
     #[test]
+    fn is_simple_bang_jensen_196() {
+        assert!(bang_jensen_196().is_simple());
+    }
+
+    #[test]
     fn is_simple_bang_jensen_34() {
         assert!(bang_jensen_34().is_simple());
     }
@@ -3426,6 +3998,16 @@ mod tests {
     #[test]
     fn is_simple_kattis_builddeps() {
         assert!(kattis_builddeps().is_simple());
+    }
+
+    #[test]
+    fn is_simple_kattis_cantinaofbabel_1() {
+        assert!(kattis_cantinaofbabel_1().is_simple());
+    }
+
+    #[test]
+    fn is_simple_kattis_cantinaofbabel_2() {
+        assert!(kattis_cantinaofbabel_2().is_simple());
     }
 
     #[test]
@@ -3444,6 +4026,11 @@ mod tests {
     }
 
     #[test]
+    fn is_symmetric_bang_jensen_196() {
+        assert!(!bang_jensen_196().is_symmetric());
+    }
+
+    #[test]
     fn is_symmetric_bang_jensen_34() {
         assert!(!bang_jensen_34().is_symmetric());
     }
@@ -3456,6 +4043,16 @@ mod tests {
     #[test]
     fn is_symmetric_kattis_builddeps() {
         assert!(!kattis_builddeps().is_symmetric());
+    }
+
+    #[test]
+    fn is_symmetric_kattis_cantinaofbabel_1() {
+        assert!(!kattis_cantinaofbabel_1().is_symmetric());
+    }
+
+    #[test]
+    fn is_symmetric_kattis_cantinaofbabel_2() {
+        assert!(!kattis_cantinaofbabel_2().is_symmetric());
     }
 
     #[test]
@@ -3474,6 +4071,11 @@ mod tests {
     }
 
     #[test]
+    fn is_tournament_bang_jensen_196() {
+        assert!(!bang_jensen_196().is_tournament());
+    }
+
+    #[test]
     fn is_tournament_bang_jensen_34() {
         assert!(!bang_jensen_34().is_tournament());
     }
@@ -3486,6 +4088,16 @@ mod tests {
     #[test]
     fn is_tournament_kattis_builddeps() {
         assert!(!kattis_builddeps().is_tournament());
+    }
+
+    #[test]
+    fn is_tournament_kattis_cantinaofbabel_1() {
+        assert!(!kattis_cantinaofbabel_1().is_tournament());
+    }
+
+    #[test]
+    fn is_tournament_kattis_cantinaofbabel_2() {
+        assert!(!kattis_cantinaofbabel_2().is_tournament());
     }
 
     #[test]
@@ -3735,6 +4347,11 @@ mod tests {
     }
 
     #[test]
+    fn order_bang_jensen_196() {
+        assert_eq!(bang_jensen_196().order(), 8);
+    }
+
+    #[test]
     fn order_bang_jensen_34() {
         assert_eq!(bang_jensen_34().order(), 6);
     }
@@ -3750,6 +4367,16 @@ mod tests {
     }
 
     #[test]
+    fn order_kattis_cantinaofbabel_1() {
+        assert_eq!(kattis_cantinaofbabel_1().order(), 12);
+    }
+
+    #[test]
+    fn order_kattis_cantinaofbabel_2() {
+        assert_eq!(kattis_cantinaofbabel_2().order(), 12);
+    }
+
+    #[test]
     fn order_kattis_escapewallmaria_1() {
         assert_eq!(kattis_escapewallmaria_1().order(), 14);
     }
@@ -3762,6 +4389,20 @@ mod tests {
     #[test]
     fn order_kattis_escapewallmaria_3() {
         assert_eq!(kattis_escapewallmaria_3().order(), 14);
+    }
+
+    #[test]
+    fn out_neighbors_bang_jensen_196() {
+        let digraph = bang_jensen_196();
+
+        assert!(digraph.out_neighbors(0).eq([1, 4, 7]));
+        assert!(digraph.out_neighbors(1).eq([0, 2, 7]));
+        assert!(digraph.out_neighbors(2).eq([3]));
+        assert!(digraph.out_neighbors(3).eq([2, 4]));
+        assert!(digraph.out_neighbors(4).eq([2]));
+        assert!(digraph.out_neighbors(5).eq([6]));
+        assert!(digraph.out_neighbors(6).eq([7]));
+        assert!(digraph.out_neighbors(7).eq([5]));
     }
 
     #[test]
@@ -3799,6 +4440,42 @@ mod tests {
         assert!(digraph.out_neighbors(3).eq([1]));
         assert!(digraph.out_neighbors(4).eq([1]));
         assert!(digraph.out_neighbors(5).eq([1]));
+    }
+
+    #[test]
+    fn out_neighbors_kattis_cantinaofbabel_1() {
+        let digraph = kattis_cantinaofbabel_1();
+
+        assert!(digraph.out_neighbors(0).eq([1]));
+        assert!(digraph.out_neighbors(1).eq([0, 2, 4]));
+        assert!(digraph.out_neighbors(2).eq([1]));
+        assert!(digraph.out_neighbors(3).eq([2, 4, 5, 7, 10, 11]));
+        assert!(digraph.out_neighbors(4).eq([3]));
+        assert!(digraph.out_neighbors(5).eq([6]));
+        assert!(digraph.out_neighbors(6).eq([5, 10]));
+        assert!(digraph.out_neighbors(7).eq([3]));
+        assert!(digraph.out_neighbors(8).eq([7, 10]));
+        assert!(digraph.out_neighbors(9).eq([7, 11]));
+        assert!(digraph.out_neighbors(10).eq([6]));
+        assert!(digraph.out_neighbors(11).eq([9]));
+    }
+
+    #[test]
+    fn out_neighbors_kattis_cantinaofbabel_2() {
+        let digraph = kattis_cantinaofbabel_2();
+
+        assert!(digraph.out_neighbors(0).eq([1]));
+        assert!(digraph.out_neighbors(1).eq([0, 7]));
+        assert!(digraph.out_neighbors(2).eq([0, 5, 7]));
+        assert!(digraph.out_neighbors(3).eq([4]));
+        assert!(digraph.out_neighbors(4).eq([3]));
+        assert!(digraph.out_neighbors(5).eq([3, 6]));
+        assert!(digraph.out_neighbors(6).eq([5]));
+        assert!(digraph.out_neighbors(7).eq([2]));
+        assert!(digraph.out_neighbors(8).eq([7, 9, 11]));
+        assert!(digraph.out_neighbors(9).eq([8]));
+        assert!(digraph.out_neighbors(10).eq([9, 11]));
+        assert!(digraph.out_neighbors(11).eq([10]));
     }
 
     #[test]
@@ -3868,6 +4545,30 @@ mod tests {
     }
 
     #[test]
+    fn out_neighbors_weighted_bang_jensen_196() {
+        let digraph = bang_jensen_196();
+
+        assert!(digraph.out_neighbors_weighted(0).eq([
+            (1, &1),
+            (4, &1),
+            (7, &1)
+        ]));
+
+        assert!(digraph.out_neighbors_weighted(1).eq([
+            (0, &1),
+            (2, &1),
+            (7, &1)
+        ]));
+
+        assert!(digraph.out_neighbors_weighted(2).eq([(3, &1)]));
+        assert!(digraph.out_neighbors_weighted(3).eq([(2, &1), (4, &1)]));
+        assert!(digraph.out_neighbors_weighted(4).eq([(2, &1)]));
+        assert!(digraph.out_neighbors_weighted(5).eq([(6, &1)]));
+        assert!(digraph.out_neighbors_weighted(6).eq([(7, &1)]));
+        assert!(digraph.out_neighbors_weighted(7).eq([(5, &1)]));
+    }
+
+    #[test]
     fn out_neighbors_weighted_bang_jensen_34() {
         let digraph = bang_jensen_34();
 
@@ -3921,6 +4622,69 @@ mod tests {
         assert!(digraph.out_neighbors_weighted(3).eq([(1, &1)]));
         assert!(digraph.out_neighbors_weighted(4).eq([(1, &1)]));
         assert!(digraph.out_neighbors_weighted(5).eq([(1, &1)]));
+    }
+
+    #[test]
+    fn out_neighbors_weighted_kattis_cantinaofbabel_1() {
+        let digraph = kattis_cantinaofbabel_1();
+
+        assert!(digraph.out_neighbors_weighted(0).eq([(1, &1)]));
+
+        assert!(digraph.out_neighbors_weighted(1).eq([
+            (0, &1),
+            (2, &1),
+            (4, &1)
+        ]));
+
+        assert!(digraph.out_neighbors_weighted(2).eq([(1, &1)]));
+
+        assert!(digraph.out_neighbors_weighted(3).eq([
+            (2, &1),
+            (4, &1),
+            (5, &1),
+            (7, &1),
+            (10, &1),
+            (11, &1)
+        ]));
+
+        assert!(digraph.out_neighbors_weighted(4).eq([(3, &1)]));
+        assert!(digraph.out_neighbors_weighted(5).eq([(6, &1)]));
+        assert!(digraph.out_neighbors_weighted(6).eq([(5, &1), (10, &1)]));
+        assert!(digraph.out_neighbors_weighted(7).eq([(3, &1)]));
+        assert!(digraph.out_neighbors_weighted(8).eq([(7, &1), (10, &1)]));
+        assert!(digraph.out_neighbors_weighted(9).eq([(7, &1), (11, &1)]));
+        assert!(digraph.out_neighbors_weighted(10).eq([(6, &1)]));
+        assert!(digraph.out_neighbors_weighted(11).eq([(9, &1)]));
+    }
+
+    #[test]
+    fn out_neighbors_weighted_kattis_cantinaofbabel_2() {
+        let digraph = kattis_cantinaofbabel_2();
+
+        assert!(digraph.out_neighbors_weighted(0).eq([(1, &1)]));
+        assert!(digraph.out_neighbors_weighted(1).eq([(0, &1), (7, &1)]));
+
+        assert!(digraph.out_neighbors_weighted(2).eq([
+            (0, &1),
+            (5, &1),
+            (7, &1)
+        ]));
+
+        assert!(digraph.out_neighbors_weighted(3).eq([(4, &1)]));
+        assert!(digraph.out_neighbors_weighted(4).eq([(3, &1)]));
+        assert!(digraph.out_neighbors_weighted(5).eq([(3, &1), (6, &1)]));
+        assert!(digraph.out_neighbors_weighted(6).eq([(5, &1)]));
+        assert!(digraph.out_neighbors_weighted(7).eq([(2, &1)]));
+
+        assert!(digraph.out_neighbors_weighted(8).eq([
+            (7, &1),
+            (9, &1),
+            (11, &1)
+        ]));
+
+        assert!(digraph.out_neighbors_weighted(9).eq([(8, &1)]));
+        assert!(digraph.out_neighbors_weighted(10).eq([(9, &1), (11, &1)]));
+        assert!(digraph.out_neighbors_weighted(11).eq([(10, &1)]));
     }
 
     #[test]
@@ -3997,6 +4761,20 @@ mod tests {
     }
 
     #[test]
+    fn outdegree_bang_jensen_196() {
+        let digraph = bang_jensen_196();
+
+        assert_eq!(digraph.outdegree(0), 3);
+        assert_eq!(digraph.outdegree(1), 3);
+        assert_eq!(digraph.outdegree(2), 1);
+        assert_eq!(digraph.outdegree(3), 2);
+        assert_eq!(digraph.outdegree(4), 1);
+        assert_eq!(digraph.outdegree(5), 1);
+        assert_eq!(digraph.outdegree(6), 1);
+        assert_eq!(digraph.outdegree(7), 1);
+    }
+
+    #[test]
     fn outdegree_bang_jensen_34() {
         let digraph = bang_jensen_34();
 
@@ -4031,6 +4809,42 @@ mod tests {
         assert_eq!(digraph.outdegree(3), 1);
         assert_eq!(digraph.outdegree(4), 1);
         assert_eq!(digraph.outdegree(5), 1);
+    }
+
+    #[test]
+    fn outdegree_kattis_cantinaofbabel_1() {
+        let digraph = kattis_cantinaofbabel_1();
+
+        assert_eq!(digraph.outdegree(0), 1);
+        assert_eq!(digraph.outdegree(1), 3);
+        assert_eq!(digraph.outdegree(2), 1);
+        assert_eq!(digraph.outdegree(3), 6);
+        assert_eq!(digraph.outdegree(4), 1);
+        assert_eq!(digraph.outdegree(5), 1);
+        assert_eq!(digraph.outdegree(6), 2);
+        assert_eq!(digraph.outdegree(7), 1);
+        assert_eq!(digraph.outdegree(8), 2);
+        assert_eq!(digraph.outdegree(9), 2);
+        assert_eq!(digraph.outdegree(10), 1);
+        assert_eq!(digraph.outdegree(11), 1);
+    }
+
+    #[test]
+    fn outdegree_kattis_cantinaofbabel_2() {
+        let digraph = kattis_cantinaofbabel_2();
+
+        assert_eq!(digraph.outdegree(0), 1);
+        assert_eq!(digraph.outdegree(1), 2);
+        assert_eq!(digraph.outdegree(2), 3);
+        assert_eq!(digraph.outdegree(3), 1);
+        assert_eq!(digraph.outdegree(4), 1);
+        assert_eq!(digraph.outdegree(5), 2);
+        assert_eq!(digraph.outdegree(6), 1);
+        assert_eq!(digraph.outdegree(7), 1);
+        assert_eq!(digraph.outdegree(8), 3);
+        assert_eq!(digraph.outdegree(9), 1);
+        assert_eq!(digraph.outdegree(10), 2);
+        assert_eq!(digraph.outdegree(11), 1);
     }
 
     #[test]
@@ -4094,6 +4908,13 @@ mod tests {
     }
 
     #[test]
+    fn outdegree_sequence_bang_jensen_196() {
+        assert!(bang_jensen_196()
+            .outdegree_sequence()
+            .eq([3, 3, 1, 2, 1, 1, 1, 1]));
+    }
+
+    #[test]
     fn outdegree_sequence_bang_jensen_34() {
         assert!(bang_jensen_34().outdegree_sequence().eq([1, 1, 3, 0, 0, 1]));
     }
@@ -4110,6 +4931,20 @@ mod tests {
         assert!(kattis_builddeps()
             .outdegree_sequence()
             .eq([2, 0, 3, 1, 1, 1]));
+    }
+
+    #[test]
+    fn outdegree_sequence_kattis_cantinaofbabel_1() {
+        assert!(kattis_cantinaofbabel_1()
+            .outdegree_sequence()
+            .eq([1, 3, 1, 6, 1, 1, 2, 1, 2, 2, 1, 1]));
+    }
+
+    #[test]
+    fn outdegree_sequence_kattis_cantinaofbabel_2() {
+        assert!(kattis_cantinaofbabel_2()
+            .outdegree_sequence()
+            .eq([1, 2, 3, 1, 1, 2, 1, 1, 3, 1, 2, 1]));
     }
 
     #[test]
@@ -4172,6 +5007,61 @@ mod tests {
             (2, 0),
             (2, 1)
         ]));
+    }
+
+    #[test]
+    #[allow(clippy::cognitive_complexity)]
+    fn remove_arc_bang_jensen_196() {
+        let mut digraph = bang_jensen_196();
+
+        println!("{:?}", digraph.arcs().collect::<Vec<_>>());
+        assert!(digraph.arcs().eq([
+            (0, 1),
+            (0, 4),
+            (0, 7),
+            (1, 0),
+            (1, 2),
+            (1, 7),
+            (2, 3),
+            (3, 2),
+            (3, 4),
+            (4, 2),
+            (5, 6),
+            (6, 7),
+            (7, 5)
+        ]));
+
+        assert!(!digraph.remove_arc(0, 3));
+
+        assert!(digraph.remove_arc(0, 1));
+        assert!(digraph.remove_arc(0, 4));
+        assert!(digraph.remove_arc(0, 7));
+        assert!(digraph.remove_arc(1, 0));
+        assert!(digraph.remove_arc(1, 2));
+        assert!(digraph.remove_arc(1, 7));
+        assert!(digraph.remove_arc(2, 3));
+        assert!(digraph.remove_arc(3, 2));
+        assert!(digraph.remove_arc(3, 4));
+        assert!(digraph.remove_arc(4, 2));
+        assert!(digraph.remove_arc(5, 6));
+        assert!(digraph.remove_arc(6, 7));
+        assert!(digraph.remove_arc(7, 5));
+
+        assert!(digraph.arcs().eq([]));
+
+        assert!(!digraph.remove_arc(0, 1));
+        assert!(!digraph.remove_arc(0, 4));
+        assert!(!digraph.remove_arc(0, 7));
+        assert!(!digraph.remove_arc(1, 0));
+        assert!(!digraph.remove_arc(1, 2));
+        assert!(!digraph.remove_arc(1, 7));
+        assert!(!digraph.remove_arc(2, 3));
+        assert!(!digraph.remove_arc(3, 2));
+        assert!(!digraph.remove_arc(3, 4));
+        assert!(!digraph.remove_arc(4, 2));
+        assert!(!digraph.remove_arc(5, 6));
+        assert!(!digraph.remove_arc(6, 7));
+        assert!(!digraph.remove_arc(7, 5));
     }
 
     #[test]
@@ -4283,6 +5173,159 @@ mod tests {
         assert!(!digraph.remove_arc(3, 1));
         assert!(!digraph.remove_arc(4, 1));
         assert!(!digraph.remove_arc(5, 1));
+    }
+
+    #[test]
+    #[allow(clippy::cognitive_complexity)]
+    fn remove_arc_kattis_cantinaofbabel_1() {
+        let mut digraph = kattis_cantinaofbabel_1();
+
+        assert!(digraph.arcs().eq([
+            (0, 1),
+            (1, 0),
+            (1, 2),
+            (1, 4),
+            (2, 1),
+            (3, 2),
+            (3, 4),
+            (3, 5),
+            (3, 7),
+            (3, 10),
+            (3, 11),
+            (4, 3),
+            (5, 6),
+            (6, 5),
+            (6, 10),
+            (7, 3),
+            (8, 7),
+            (8, 10),
+            (9, 7),
+            (9, 11),
+            (10, 6),
+            (11, 9)
+        ]));
+
+        assert!(!digraph.remove_arc(0, 3));
+
+        assert!(digraph.remove_arc(0, 1));
+        assert!(digraph.remove_arc(1, 0));
+        assert!(digraph.remove_arc(1, 2));
+        assert!(digraph.remove_arc(1, 4));
+        assert!(digraph.remove_arc(2, 1));
+        assert!(digraph.remove_arc(3, 2));
+        assert!(digraph.remove_arc(3, 4));
+        assert!(digraph.remove_arc(3, 5));
+        assert!(digraph.remove_arc(3, 7));
+        assert!(digraph.remove_arc(3, 10));
+        assert!(digraph.remove_arc(3, 11));
+        assert!(digraph.remove_arc(4, 3));
+        assert!(digraph.remove_arc(5, 6));
+        assert!(digraph.remove_arc(6, 5));
+        assert!(digraph.remove_arc(6, 10));
+        assert!(digraph.remove_arc(7, 3));
+        assert!(digraph.remove_arc(8, 7));
+        assert!(digraph.remove_arc(8, 10));
+        assert!(digraph.remove_arc(9, 7));
+        assert!(digraph.remove_arc(9, 11));
+        assert!(digraph.remove_arc(10, 6));
+        assert!(digraph.remove_arc(11, 9));
+
+        assert!(digraph.arcs().eq([]));
+
+        assert!(!digraph.remove_arc(0, 1));
+        assert!(!digraph.remove_arc(1, 0));
+        assert!(!digraph.remove_arc(1, 2));
+        assert!(!digraph.remove_arc(1, 4));
+        assert!(!digraph.remove_arc(2, 1));
+        assert!(!digraph.remove_arc(3, 2));
+        assert!(!digraph.remove_arc(3, 4));
+        assert!(!digraph.remove_arc(3, 5));
+        assert!(!digraph.remove_arc(3, 7));
+        assert!(!digraph.remove_arc(3, 10));
+        assert!(!digraph.remove_arc(3, 11));
+        assert!(!digraph.remove_arc(4, 3));
+        assert!(!digraph.remove_arc(5, 6));
+        assert!(!digraph.remove_arc(6, 5));
+        assert!(!digraph.remove_arc(6, 10));
+        assert!(!digraph.remove_arc(7, 3));
+        assert!(!digraph.remove_arc(8, 7));
+        assert!(!digraph.remove_arc(8, 10));
+        assert!(!digraph.remove_arc(9, 7));
+        assert!(!digraph.remove_arc(9, 11));
+        assert!(!digraph.remove_arc(10, 6));
+        assert!(!digraph.remove_arc(11, 9));
+    }
+
+    #[test]
+    #[allow(clippy::cognitive_complexity)]
+    fn remove_arc_kattis_cantinaofbabel_2() {
+        let mut digraph = kattis_cantinaofbabel_2();
+
+        assert!(digraph.arcs().eq([
+            (0, 1),
+            (1, 0),
+            (1, 7),
+            (2, 0),
+            (2, 5),
+            (2, 7),
+            (3, 4),
+            (4, 3),
+            (5, 3),
+            (5, 6),
+            (6, 5),
+            (7, 2),
+            (8, 7),
+            (8, 9),
+            (8, 11),
+            (9, 8),
+            (10, 9),
+            (10, 11),
+            (11, 10),
+        ]));
+
+        assert!(!digraph.remove_arc(0, 3));
+
+        assert!(digraph.remove_arc(0, 1));
+        assert!(digraph.remove_arc(1, 0));
+        assert!(digraph.remove_arc(1, 7));
+        assert!(digraph.remove_arc(2, 0));
+        assert!(digraph.remove_arc(2, 5));
+        assert!(digraph.remove_arc(2, 7));
+        assert!(digraph.remove_arc(3, 4));
+        assert!(digraph.remove_arc(4, 3));
+        assert!(digraph.remove_arc(5, 3));
+        assert!(digraph.remove_arc(5, 6));
+        assert!(digraph.remove_arc(6, 5));
+        assert!(digraph.remove_arc(7, 2));
+        assert!(digraph.remove_arc(8, 7));
+        assert!(digraph.remove_arc(8, 9));
+        assert!(digraph.remove_arc(8, 11));
+        assert!(digraph.remove_arc(9, 8));
+        assert!(digraph.remove_arc(10, 9));
+        assert!(digraph.remove_arc(10, 11));
+        assert!(digraph.remove_arc(11, 10));
+
+        assert!(digraph.arcs().eq([]));
+
+        assert!(!digraph.remove_arc(0, 1));
+        assert!(!digraph.remove_arc(1, 0));
+        assert!(!digraph.remove_arc(1, 7));
+        assert!(!digraph.remove_arc(2, 0));
+        assert!(!digraph.remove_arc(2, 5));
+        assert!(!digraph.remove_arc(2, 7));
+        assert!(!digraph.remove_arc(3, 4));
+        assert!(!digraph.remove_arc(4, 3));
+        assert!(!digraph.remove_arc(5, 3));
+        assert!(!digraph.remove_arc(5, 6));
+        assert!(!digraph.remove_arc(6, 5));
+        assert!(!digraph.remove_arc(7, 2));
+        assert!(!digraph.remove_arc(8, 7));
+        assert!(!digraph.remove_arc(8, 9));
+        assert!(!digraph.remove_arc(8, 11));
+        assert!(!digraph.remove_arc(9, 8));
+        assert!(!digraph.remove_arc(10, 9));
+        assert!(!digraph.remove_arc(10, 11));
+        assert!(!digraph.remove_arc(11, 10));
     }
 
     #[test]
@@ -4419,6 +5462,20 @@ mod tests {
     }
 
     #[test]
+    fn semidegree_sequence_bang_jensen_196() {
+        assert!(bang_jensen_196().semidegree_sequence().eq([
+            (1, 3),
+            (1, 3),
+            (3, 1),
+            (1, 2),
+            (2, 1),
+            (1, 1),
+            (1, 1),
+            (3, 1)
+        ]));
+    }
+
+    #[test]
     fn semidegree_sequence_bang_jensen_34() {
         assert!(bang_jensen_34().semidegree_sequence().eq([
             (1, 1),
@@ -4452,6 +5509,42 @@ mod tests {
             (2, 1),
             (2, 1),
             (1, 1)
+        ]));
+    }
+
+    #[test]
+    fn semidegree_sequence_kattis_cantinaofbabel_1() {
+        assert!(kattis_cantinaofbabel_1().semidegree_sequence().eq([
+            (1, 1),
+            (2, 3),
+            (2, 1),
+            (2, 6),
+            (2, 1),
+            (2, 1),
+            (2, 2),
+            (3, 1),
+            (0, 2),
+            (1, 2),
+            (3, 1),
+            (2, 1)
+        ]));
+    }
+
+    #[test]
+    fn semidegree_sequence_kattis_cantinaofbabel_2() {
+        assert!(kattis_cantinaofbabel_2().semidegree_sequence().eq([
+            (2, 1),
+            (1, 2),
+            (1, 3),
+            (2, 1),
+            (1, 1),
+            (2, 2),
+            (1, 1),
+            (3, 1),
+            (1, 3),
+            (2, 1),
+            (1, 2),
+            (2, 1)
         ]));
     }
 
@@ -4516,6 +5609,62 @@ mod tests {
     }
 
     #[test]
+    fn sinks_bang_jensen_196() {
+        assert!(bang_jensen_196().sinks().eq([]));
+    }
+
+    #[test]
+    fn sinks_bang_jensen_34() {
+        assert!(bang_jensen_34().sinks().eq([3, 4]));
+    }
+
+    #[test]
+    fn sinks_bang_jensen_94() {
+        assert!(bang_jensen_94().sinks().eq([5, 6]));
+    }
+
+    #[test]
+    fn sinks_kattis_builddeps() {
+        assert!(kattis_builddeps().sinks().eq([1]));
+    }
+
+    #[test]
+    fn sinks_kattis_cantinaofbabel_1() {
+        assert!(kattis_cantinaofbabel_1().sinks().eq([]));
+    }
+
+    #[test]
+    fn sinks_kattis_cantinaofbabel_2() {
+        assert!(kattis_cantinaofbabel_2().sinks().eq([]));
+    }
+
+    #[test]
+    fn sinks_kattis_escapewallmaria_1() {
+        assert!(kattis_escapewallmaria_1()
+            .sinks()
+            .eq([0, 1, 2, 3, 4, 7, 8, 10, 11, 12]));
+    }
+
+    #[test]
+    fn sinks_kattis_escapewallmaria_2() {
+        assert!(kattis_escapewallmaria_2()
+            .sinks()
+            .eq([0, 1, 2, 3, 4, 7, 8, 10, 11]));
+    }
+
+    #[test]
+    fn sinks_kattis_escapewallmaria_3() {
+        assert!(kattis_escapewallmaria_3()
+            .sinks()
+            .eq([0, 3, 4, 7, 8, 10, 11]));
+    }
+
+    #[test]
+    fn size_bang_jensen_196() {
+        assert_eq!(bang_jensen_196().size(), 13);
+    }
+
+    #[test]
     fn size_bang_jensen_34() {
         assert_eq!(bang_jensen_34().size(), 6);
     }
@@ -4528,6 +5677,16 @@ mod tests {
     #[test]
     fn size_kattis_builddeps() {
         assert_eq!(kattis_builddeps().size(), 8);
+    }
+
+    #[test]
+    fn size_kattis_cantinaofbabel_1() {
+        assert_eq!(kattis_cantinaofbabel_1().size(), 22);
+    }
+
+    #[test]
+    fn size_kattis_cantinaofbabel_2() {
+        assert_eq!(kattis_cantinaofbabel_2().size(), 19);
     }
 
     #[test]
