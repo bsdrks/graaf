@@ -17,13 +17,52 @@
 - Add the `MinIndegree` trait.
 - Add the `MinOutdegree` trait.
 - Add the `MinSemidegree` trait.
-- Add the `Sources` trait.
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
 - Implement `Debug` for `adjacency_list::Digraph` to show arcs.
 - Implement `Debug` for `adjacency_list_weighted::Digraph` to show arcs.
 - Implement `Debug` for `adjacency_matrix::Digraph` to show arcs.
 - Subsume traits with one super trait into the super trait?
+
+## [0.75.3] - 2024-07-28
+
+Added
+
+- Add the `Sources` trait.
+- Add property test `biclique_sources` for `adjacency_list`.
+- Add property test `biclique_sources` for `adjacency_matrix`.
+- Add property test `circuit_sources` for `adjacency_list`.
+- Add property test `circuit_sources` for `adjacency_matrix`.
+- Add property test `complete_sources` for `adjacency_list`.
+- Add property test `complete_sources` for `adjacency_matrix`.
+- Add property test `cycle_sources` for `adjacency_list`.
+- Add property test `cycle_sources` for `adjacency_matrix`.
+- Add property test `empty_sources` for `adjacency_list`.
+- Add property test `empty_sources` for `adjacency_matrix`.
+- Add property test `path_sources` for `adjacency_list`.
+- Add property test `path_sources` for `adjacency_matrix`.
+- Add property test `random_tournament_sources` for `adjacency_list`.
+- Add property test `random_tournament_sources` for `adjacency_matrix`.
+- Add property test `star_sources` for `adjacency_list`.
+- Add property test `star_sources` for `adjacency_matrix`.
+- Add unit test `sources_bang_jensen_196` for `adjacency_list`.
+- Add unit test `sources_bang_jensen_196` for `adjacency_matrix`.
+- Add unit test `sources_bang_jensen_34` for `adjacency_list`.
+- Add unit test `sources_bang_jensen_34` for `adjacency_matrix`.
+- Add unit test `sources_bang_jensen_94` for `adjacency_list`.
+- Add unit test `sources_bang_jensen_94` for `adjacency_matrix`.
+- Add unit test `sources_kattis_builddeps` for `adjacency_list`.
+- Add unit test `sources_kattis_builddeps` for `adjacency_matrix`.
+- Add unit test `sources_kattis_cantinaofbabel_1` for `adjacency_list`.
+- Add unit test `sources_kattis_cantinaofbabel_1` for `adjacency_matrix`.
+- Add unit test `sources_kattis_cantinaofbabel_2` for `adjacency_list`.
+- Add unit test `sources_kattis_cantinaofbabel_2` for `adjacency_matrix`.
+- Add unit test `sources_kattis_escapewallmaria_1` for `adjacency_list`.
+- Add unit test `sources_kattis_escapewallmaria_1` for `adjacency_matrix`.
+- Add unit test `sources_kattis_escapewallmaria_2` for `adjacency_list`.
+- Add unit test `sources_kattis_escapewallmaria_2` for `adjacency_matrix`.
+- Add unit test `sources_kattis_escapewallmaria_3` for `adjacency_list`.
+- Add unit test `sources_kattis_escapewallmaria_3` for `adjacency_matrix`.
 
 ## [0.75.2] - 2024-07-28
 

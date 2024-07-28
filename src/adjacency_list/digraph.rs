@@ -279,6 +279,7 @@ mod tests {
                 OutdegreeSequence,
                 SemidegreeSequence,
                 Sinks,
+                Sources,
             },
             proptest_strategy::arc,
             r#gen::Path,
@@ -623,6 +624,11 @@ mod tests {
         }
 
         #[test]
+        fn biclique_sources(m in 1..25_usize, n in 1..25_usize) {
+            assert!(Digraph::biclique(m, n).sources().eq([]));
+        }
+
+        #[test]
         fn circuit_complement_size(order in 1..25_usize) {
             assert_eq!(
                 Digraph::circuit(order).complement().size(),
@@ -826,6 +832,14 @@ mod tests {
         }
 
         #[test]
+        fn circuit_sources(order in 1..25_usize) {
+            let digraph = Digraph::circuit(order);
+            let sources = digraph.sources();
+
+            assert!(if order == 1 { sources.eq([0]) } else { sources.eq([]) });
+        }
+
+        #[test]
         fn complete_complement_equals_empty(order in 1..25_usize) {
             assert_eq!(
                 Digraph::complete(order).complement(),
@@ -1019,6 +1033,15 @@ mod tests {
         #[test]
         fn complete_size(order in 1..25_usize) {
             assert_eq!(Digraph::complete(order).size(), order * (order - 1));
+        }
+
+        #[test]
+        fn complete_sources(order in 1..25_usize) {
+            assert!(if order == 1 {
+                Digraph::complete(order).sources().eq([0])
+            } else {
+                Digraph::complete(order).sources().eq([])
+            });
         }
 
         #[test]
@@ -1242,6 +1265,15 @@ mod tests {
         }
 
         #[test]
+        fn cycle_sources(order in 1..25_usize) {
+            assert!(if order == 1 {
+                Digraph::cycle(order).sources().eq([0])
+            } else {
+                Digraph::cycle(order).sources().eq([])
+            });
+        }
+
+        #[test]
         fn empty_arcs(order in 1..25_usize) {
             assert!(Digraph::empty(order).arcs().eq([]));
         }
@@ -1441,6 +1473,11 @@ mod tests {
         #[test]
         fn empty_size(order in 1..25_usize) {
             assert_eq!(Digraph::empty(order).size(), 0);
+        }
+
+        #[test]
+        fn empty_sources(order in 1..25_usize) {
+            assert!(Digraph::empty(order).sources().eq(0..order));
         }
 
         #[test]
@@ -1665,6 +1702,11 @@ mod tests {
         #[test]
         fn path_size(order in 1..25_usize) {
             assert_eq!(Digraph::path(order).size(), order - 1);
+        }
+
+        #[test]
+        fn path_sources(order in 1..25_usize) {
+            assert!(Digraph::path(order).sources().eq([0]));
         }
 
         #[test]
@@ -2055,6 +2097,15 @@ mod tests {
         #[test]
         fn star_size(order in 1..25_usize) {
             assert_eq!(Digraph::star(order).size(), (order - 1) * 2);
+        }
+
+        #[test]
+        fn star_sources(order in 1..25_usize) {
+            assert!(if order == 1 {
+                Digraph::star(order).sources().eq([0])
+            } else {
+                Digraph::star(order).sources().eq([])
+            });
         }
     }
 
@@ -5600,6 +5651,57 @@ mod tests {
     #[test]
     fn size_kattis_escapewallmaria_3() {
         assert_eq!(kattis_escapewallmaria_3().size(), 14);
+    }
+
+    #[test]
+    fn sources_bang_jensen_196() {
+        assert!(bang_jensen_196().sources().eq([]));
+    }
+
+    #[test]
+    fn sources_bang_jensen_34() {
+        assert!(bang_jensen_34().sources().eq([2]));
+    }
+
+    #[test]
+    fn sources_bang_jensen_94() {
+        assert!(bang_jensen_94().sources().eq([0]));
+    }
+
+    #[test]
+    fn sources_kattis_builddeps() {
+        assert!(kattis_builddeps().sources().eq([0, 2]));
+    }
+
+    #[test]
+    fn sources_kattis_cantinaofbabel_1() {
+        assert!(kattis_cantinaofbabel_1().sources().eq([8]));
+    }
+
+    #[test]
+    fn sources_kattis_cantinaofbabel_2() {
+        assert!(kattis_cantinaofbabel_2().sources().eq([]));
+    }
+
+    #[test]
+    fn sources_kattis_escapewallmaria_1() {
+        assert!(kattis_escapewallmaria_1()
+            .sources()
+            .eq([0, 1, 2, 3, 4, 7, 8, 10, 11]));
+    }
+
+    #[test]
+    fn sources_kattis_escapewallmaria_2() {
+        assert!(kattis_escapewallmaria_2()
+            .sources()
+            .eq([0, 1, 2, 3, 4, 7, 8, 10, 11]));
+    }
+
+    #[test]
+    fn sources_kattis_escapewallmaria_3() {
+        assert!(kattis_escapewallmaria_3()
+            .sources()
+            .eq([0, 3, 4, 7, 8, 10, 11]));
     }
 
     #[test]

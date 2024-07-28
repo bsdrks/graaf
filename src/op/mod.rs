@@ -75,6 +75,7 @@ pub mod remove_arc;
 pub mod semidegree_sequence;
 pub mod sinks;
 pub mod size;
+pub mod sources;
 pub mod vertices;
 
 pub use {
@@ -114,5 +115,6 @@ pub use {
     semidegree_sequence::SemidegreeSequence,
     sinks::Sinks,
     size::Size,
+    sources::Sources,
     vertices::Vertices,
 };

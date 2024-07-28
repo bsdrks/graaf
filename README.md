@@ -31,7 +31,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.75.2"
+graaf = "0.75.3"
 ```
 
 ## Digraph Types
@@ -107,6 +107,7 @@ The extended traits derive their implementation from the basic operations.
 - [`OutdegreeSequence`] returns the outdegree sequence of a digraph.
 - [`SemidegreeSequence`] returns the semidegree sequence of a digraph.
 - [`Sinks`] returns the sinks in a digraph.
+- [`Sources`] returns the sources in a digraph.
 
 ## Algorithms
 
@@ -241,6 +242,7 @@ A distance matrix contains the shortest distances between all pairs of vertices 
 [`SemidegreeSequence`]: https://docs.rs/graaf/latest/graaf/op/semidegree_sequence/trait.SemidegreeSequence.html
 [`Sinks`]: https://docs.rs/graaf/latest/graaf/op/sinks/trait.Sinks.html
 [`Size`]: https://docs.rs/graaf/latest/graaf/op/size/trait.Size.html
+[`Sources`]: https://docs.rs/graaf/latest/graaf/op/sources/trait.Sources.html
 [`Star`]: https://docs.rs/graaf/latest/graaf/gen/star/trait.Star.html
 [`Vertices`]: https://docs.rs/graaf/latest/graaf/op/vertices/trait.Vertices.html
 [`algo`]: https://docs.rs/graaf/latest/graaf/algo/index.html
