@@ -13,6 +13,10 @@
 //!     },
 //! };
 //!
+//! // 0 -> {1, 2}
+//! // 1 -> {0}
+//! // 2 -> {1}
+//!
 //! let mut digraph = Digraph::empty(3);
 //!
 //! digraph.add_arc(0, 1);
@@ -21,12 +25,32 @@
 //! digraph.add_arc(2, 1);
 //!
 //! assert!(digraph.arcs().eq([(0, 1), (0, 2), (1, 0), (2, 1)]));
+//!
+//! // 0 -> {2}
+//! // 1 -> {0}
+//! // 2 -> {1}
+//!
 //! assert!(digraph.remove_arc(0, 1));
 //! assert!(digraph.arcs().eq([(0, 2), (1, 0), (2, 1)]));
+//!
+//! // 0 -> {}
+//! // 1 -> {0}
+//! // 2 -> {1}
+//!
 //! assert!(digraph.remove_arc(0, 2));
 //! assert!(digraph.arcs().eq([(1, 0), (2, 1)]));
+//!
+//! // 0 -> {}
+//! // 1 -> {}
+//! // 2 -> {1}
+//!
 //! assert!(digraph.remove_arc(1, 0));
 //! assert!(digraph.arcs().eq([(2, 1)]));
+//!
+//! // 0 -> {}
+//! // 1 -> {}
+//! // 2 -> {}
+//!
 //! assert!(digraph.remove_arc(2, 1));
 //! assert!(digraph.arcs().eq([]));
 //! ```
@@ -68,6 +92,10 @@
 ///     },
 /// };
 ///
+/// // 0 -> {1, 2}
+/// // 1 -> {0}
+/// // 2 -> {1}
+///
 /// let mut digraph = Digraph::empty(3);
 ///
 /// digraph.add_arc(0, 1);
@@ -76,12 +104,32 @@
 /// digraph.add_arc(2, 1);
 ///
 /// assert!(digraph.arcs().eq([(0, 1), (0, 2), (1, 0), (2, 1)]));
+///
+/// // 0 -> {2}
+/// // 1 -> {0}
+/// // 2 -> {1}
+///
 /// assert!(digraph.remove_arc(0, 1));
 /// assert!(digraph.arcs().eq([(0, 2), (1, 0), (2, 1)]));
+///
+/// // 0 -> {}
+/// // 1 -> {0}
+/// // 2 -> {1}
+///
 /// assert!(digraph.remove_arc(0, 2));
 /// assert!(digraph.arcs().eq([(1, 0), (2, 1)]));
+///
+/// // 0 -> {}
+/// // 1 -> {}
+/// // 2 -> {1}
+///
 /// assert!(digraph.remove_arc(1, 0));
 /// assert!(digraph.arcs().eq([(2, 1)]));
+///
+/// // 0 -> {}
+/// // 1 -> {}
+/// // 2 -> {}
+///
 /// assert!(digraph.remove_arc(2, 1));
 /// assert!(digraph.arcs().eq([]));
 /// ```

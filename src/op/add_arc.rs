@@ -12,6 +12,10 @@
 //!     },
 //! };
 //!
+//! // 0 -> {1, 2}
+//! // 1 -> {}
+//! // 2 -> {0}
+//!
 //! let mut digraph = Digraph::empty(3);
 //!
 //! digraph.add_arc(0, 1);
@@ -28,27 +32,38 @@
 /// Provide an implementation of `add_arc` that adds an arc to the digraph.
 ///
 /// ```
-/// use graaf::op::AddArc;
+/// use {
+///     graaf::op::AddArc,
+///     std::collections::BTreeSet,
+/// };
 ///
 /// struct Digraph {
-///     arcs: Vec<Vec<usize>>,
+///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
 /// impl AddArc for Digraph {
 ///     fn add_arc(&mut self, u: usize, v: usize) {
-///         self.arcs[u].push(v);
+///         self.arcs[u].insert(v);
 ///     }
 /// }
 ///
+/// // 0 -> {1, 2}
+/// // 1 -> {}
+/// // 2 -> {0}
+///
 /// let mut digraph = Digraph {
-///     arcs: vec![Vec::new(); 3],
+///     arcs: vec![BTreeSet::new(), BTreeSet::new(), BTreeSet::new()],
 /// };
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(0, 2);
 /// digraph.add_arc(2, 0);
 ///
-/// assert!(digraph.arcs.iter().eq(&[vec![1, 2], Vec::new(), vec![0]]));
+/// assert!(digraph.arcs.iter().eq(&[
+///     BTreeSet::from([1, 2]),
+///     BTreeSet::new(),
+///     BTreeSet::from([0]),
+/// ]));
 /// ```
 ///
 /// # Examples
@@ -62,6 +77,10 @@
 ///         Arcs,
 ///     },
 /// };
+///
+/// // 0 -> {1, 2}
+/// // 1 -> {}
+/// // 2 -> {0}
 ///
 /// let mut digraph = Digraph::empty(3);
 ///

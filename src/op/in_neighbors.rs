@@ -12,6 +12,11 @@
 //!     },
 //! };
 //!
+//! // 0 -> {1, 2}
+//! // 1 -> {0}
+//! // 2 -> {0, 1, 3}
+//! // 3 -> {0}
+//!
 //! let mut digraph = Digraph::empty(4);
 //!
 //! digraph.add_arc(0, 1);
@@ -36,13 +41,16 @@ use super::Arcs;
 /// # How can I implement `InNeighbors`?
 ///
 /// Provide an implementation of `in_neighbors` that returns an iterator
-/// over the in-neighbors of a vertex in the digraph.
+/// over the in-neighbors of a vertex in the digraph OR implement `Arcs`.
 ///
 /// ```
-/// use graaf::op::InNeighbors;
+/// use {
+///     graaf::op::InNeighbors,
+///     std::collections::BTreeSet,
+/// };
 ///
 /// struct Digraph {
-///     arcs: Vec<Vec<usize>>,
+///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
 /// impl InNeighbors for Digraph {
@@ -53,8 +61,18 @@ use super::Arcs;
 ///     }
 /// }
 ///
+/// // 0 -> {1, 2}
+/// // 1 -> {0}
+/// // 2 -> {0, 1, 3}
+/// // 3 -> {0}
+///
 /// let digraph = Digraph {
-///     arcs: vec![vec![1, 2], vec![0], vec![0, 1, 3], vec![0]],
+///     arcs: vec![
+///         BTreeSet::from([1, 2]),
+///         BTreeSet::from([0]),
+///         BTreeSet::from([0, 1, 3]),
+///         BTreeSet::from([0]),
+///     ],
 /// };
 ///
 /// assert!(digraph.in_neighbors(0).eq([1, 2, 3]));
@@ -74,6 +92,11 @@ use super::Arcs;
 ///         InNeighbors,
 ///     },
 /// };
+///
+/// // 0 -> {1, 2}
+/// // 1 -> {0}
+/// // 2 -> {0, 1, 3}
+/// // 3 -> {0}
 ///
 /// let mut digraph = Digraph::empty(4);
 ///

@@ -111,6 +111,7 @@
 //!   sequence of a digraph.
 //! - [`SemidegreeSequence`](op::SemidegreeSequence) returns the semidegree
 //!   sequence of a digraph.
+//! - [`Sinks`](op::Sinks) returns the sinks in a digraph.
 //!
 //! # Algorithms
 //!

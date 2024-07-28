@@ -2,42 +2,93 @@
 
 ## Provisional roadmap
 
+- Add a trait for path contraction.
+- Add a trait for set contraction.
+- Add leaner implementations of `dfs::*`.
 - Add the `DegreeSequence` trait.
 - Add the `DeleteArc` trait.
 - Add the `DeleteVertex` trait.
 - Add the `IsIsomorphic` trait.
+- Add the `MaxDegree` trait.
 - Add the `MaxIndegree` trait.
 - Add the `MaxOutdegree` trait.
 - Add the `MaxSemidegree` trait.
+- Add the `MinDegree` trait.
 - Add the `MinIndegree` trait.
 - Add the `MinOutdegree` trait.
 - Add the `MinSemidegree` trait.
-- Add the `OutdegreeSequence` trait.
-- Add the `PathContraction` trait.
-- Add the `SetContraction` trait.
+- Add the `Sources` trait.
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
+- Implement `Debug` for `adjacency_list::Digraph` to show arcs.
+- Implement `Debug` for `adjacency_list_weighted::Digraph` to show arcs.
+- Implement `Debug` for `adjacency_matrix::Digraph` to show arcs.
 - Subsume traits with one super trait into the super trait?
+
+## [0.75.1] - 2024-07-28
+
+Added
+
+- Add fixture `kattis_cantinaofbabel_2` for `adjacency_list`.
+- Add property test `biclique_sinks` for `adjacency_list`.
+- Add property test `biclique_sinks` for `adjacency_matrix`.
+- Add property test `circuit_sinks` for `adjacency_list`.
+- Add property test `circuit_sinks` for `adjacency_matrix`.
+- Add property test `circuit_size` for `adjacency_list`.
+- Add property test `circuit_size` for `adjacency_matrix`.
+- Add property test `complete_complement_size` for `adjacency_list`.
+- Add property test `complete_complement_size` for `adjacency_matrix`.
+- Add property test `complete_sinks` for `adjacency_list`.
+- Add property test `complete_sinks` for `adjacency_matrix`.
+- Add property test `cycle_sinks` for `adjacency_list`.
+- Add property test `cycle_sinks` for `adjacency_matrix`.
+- Add property test `cycle_size` for `adjacency_list`.
+- Add property test `cycle_size` for `adjacency_matrix`.
+- Add property test `empty_complement_size` for `adjacency_list`.
+- Add property test `empty_complement_size` for `adjacency_matrix`.
+- Add property test `empty_even_number_odd_degrees` for `adjacency_list`.
+- Add property test `empty_even_number_odd_degrees` for `adjacency_matrix`.
+- Add property test `empty_sinks` for `adjacency_list`.
+- Add property test `empty_sinks` for `adjacency_matrix`.
+- Add property test `empty_size` for `adjacency_list`.
+- Add property test `empty_size` for `adjacency_matrix`.
+- Add property test `path_sinks` for `adjacency_list`.
+- Add property test `path_sinks` for `adjacency_matrix`.
+- Add property test `path_size` for `adjacency_list`.
+- Add property test `path_size` for `adjacency_matrix`.
+- Add property test `random_tournament_complement_size` for `adjacency_list`.
+- Add property test `random_tournament_complement_size` for `adjacency_matrix`.
+- Add property test `star_sinks` for `adjacency_list`.
+- Add property test `star_sinks` for `adjacency_matrix`.
+- Add property test `star_size` for `adjacency_list`.
+- Add property test `star_size` for `adjacency_matrix`.
+- Add trait `op::Sinks`.
+- Add unit test `strongly_connected_components_kattis_cantinaofbabel_2` for `algo::tarjan`.
+
+Changed
+
+- Add a human-readable adjacency list to each doctest digraph.
+- Use `Vec<BTreeSet<usize>>` in `op` implementation examples.
 
 ## [0.75.0] - 2024-07-27
 
 Changed
 
-- Clean up tests; make proptests complete.
+- Clean up tests; make all property tests complete.
 
 ## [0.74.5] - 2024-07-25
 
 Changed
 
 - Format source code with `max_length = 79`.
-- Remove macros from `dijkstra` tests.
+- Remove macros from the `dijkstra` tests.
 
 ## [0.74.4] - 2024-07-25
 
 Added
 
-- Add doctest example for `IndegreeSequence`.
-- Add doctest example for `OutdegreeSequence`.
+- Add a doctest example for `IndegreeSequence`.
+- Add a doctest example for `OutdegreeSequence`.
 
 ## [0.74.3] - 2024-07-24
 

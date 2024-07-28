@@ -35,15 +35,18 @@
 /// the digraph.
 ///
 /// ```
-/// use graaf::op::Outdegree;
+/// use {
+///     graaf::op::Outdegree,
+///     std::collections::BTreeSet,
+/// };
 ///
 /// struct Digraph {
-///     arcs: Vec<Vec<usize>>,
+///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
 /// impl Outdegree for Digraph {
 ///     fn outdegree(&self, u: usize) -> usize {
-///         self.arcs.get(u).map_or(0, Vec::len)
+///         self.arcs.get(u).map_or(0, BTreeSet::len)
 ///     }
 /// }
 /// ```
@@ -83,7 +86,7 @@ pub trait Outdegree {
 
     /// Returns whether a vertex is a sink of the digraph.
     ///
-    /// A sink is a vertex with an outdegree of zero.
+    /// A sink is a vertex with no out-neighbors.
     ///
     /// # Arguments
     ///

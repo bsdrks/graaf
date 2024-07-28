@@ -15,6 +15,10 @@
 //!     },
 //! };
 //!
+//! // 0 -> {1, 2}
+//! // 1 -> {0, 2}
+//! // 2 -> {0}
+//!
 //! let mut digraph = Digraph::empty(3);
 //!
 //! digraph.add_arc(0, 1);
@@ -24,6 +28,10 @@
 //! digraph.add_arc(2, 0);
 //!
 //! assert!(!digraph.is_balanced());
+//!
+//! // 0 -> {1, 2}
+//! // 1 -> {0, 2}
+//! // 2 -> {0, 1}
 //!
 //! digraph.add_arc(2, 1);
 //!
@@ -78,6 +86,10 @@ use super::{
 ///     }
 /// }
 ///
+/// // 0 -> {1, 2}
+/// // 1 -> {0, 2}
+/// // 2 -> {0, 1}
+///
 /// let digraph = Digraph {
 ///     arcs: vec![
 ///         BTreeSet::from([1, 2]),
@@ -87,6 +99,10 @@ use super::{
 /// };
 ///
 /// assert!(digraph.is_balanced());
+///
+/// // 0 -> {1, 2}
+/// // 1 -> {0, 2}
+/// // 2 -> {0}
 ///
 /// let digraph = Digraph {
 ///     arcs: vec![
@@ -111,6 +127,10 @@ use super::{
 ///     },
 /// };
 ///
+/// // 0 -> {1, 2}
+/// // 1 -> {0, 2}
+/// // 2 -> {0}
+///
 /// let mut digraph = Digraph::empty(3);
 ///
 /// digraph.add_arc(0, 1);
@@ -120,6 +140,10 @@ use super::{
 /// digraph.add_arc(2, 0);
 ///
 /// assert!(!digraph.is_balanced());
+///
+/// // 0 -> {1, 2}
+/// // 1 -> {0, 2}
+/// // 2 -> {0, 1}
 ///
 /// digraph.add_arc(2, 1);
 ///

@@ -11,26 +11,32 @@
 //!     gen::Empty,
 //!     op::{
 //!         AddArc,
-//!         Indegree,
-//!         Outdegree,
+//!         IndegreeSequence,
+//!         OutdegreeSequence,
 //!         RemoveArc,
 //!     },
 //! };
+//!
+//! // 0 -> {1, 2}
+//! // 1 -> {}
+//! // 2 -> {}
 //!
 //! let mut digraph = Digraph::empty(3);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(0, 2);
 //!
-//! assert_eq!(digraph.outdegree(0), 2);
-//! assert_eq!(digraph.indegree(1), 1);
-//! assert_eq!(digraph.indegree(2), 1);
+//! assert!(digraph.indegree_sequence().eq([0, 1, 1]));
+//! assert!(digraph.outdegree_sequence().eq([2, 0, 0]));
+//!
+//! // 0 -> {1}
+//! // 1 -> {}
+//! // 2 -> {}
 //!
 //! assert!(digraph.remove_arc(0, 1));
 //!
-//! assert_eq!(digraph.outdegree(0), 1);
-//! assert_eq!(digraph.indegree(1), 0);
-//! assert_eq!(digraph.indegree(2), 1);
+//! assert!(digraph.indegree_sequence().eq([0, 0, 1]));
+//! assert!(digraph.outdegree_sequence().eq([1, 0, 0]));
 //! ```
 
 pub mod add_arc;
@@ -67,6 +73,7 @@ pub mod outdegree;
 pub mod outdegree_sequence;
 pub mod remove_arc;
 pub mod semidegree_sequence;
+pub mod sinks;
 pub mod size;
 pub mod vertices;
 
@@ -105,6 +112,7 @@ pub use {
     outdegree_sequence::OutdegreeSequence,
     remove_arc::RemoveArc,
     semidegree_sequence::SemidegreeSequence,
+    sinks::Sinks,
     size::Size,
     vertices::Vertices,
 };

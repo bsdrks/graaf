@@ -115,7 +115,7 @@ pub fn kattis_builddeps() -> Digraph {
     ])
 }
 
-/// David Sturgill. 2015. Cantina of Babel. (Sample Input 2). Kattis.
+/// David Sturgill. 2015. Cantina of Babel. (Sample Input 1). Kattis.
 /// <https://open.kattis.com/problems/cantinaofbabel>
 ///
 /// ```text
@@ -172,6 +172,65 @@ pub fn kattis_cantinaofbabel_1() -> Digraph {
         BTreeSet::from([7, 11]),
         BTreeSet::from([6]),
         BTreeSet::from([9]),
+    ])
+}
+
+/// David Sturgill. 2015. Cantina of Babel. (Sample Input 2). Kattis.
+/// <https://open.kattis.com/problems/cantinaofbabel>
+///
+/// ```text
+/// 0: Fran
+/// 1: French
+/// 2: Italian
+/// 3: Enid
+/// 4: English
+/// 5: German
+/// 6: George
+/// 7: Ian
+/// 8: Spanish
+/// 9: Spencer
+/// 10: Portugese
+/// 11: Polly
+/// ```
+///
+/// ```text
+/// Fran French Italian
+/// Enid English German
+/// George German Italian
+/// Ian Italian French Spanish
+/// Spencer Spanish Portugese
+/// Polly Portugese Spanish
+/// ```
+///
+/// ```text
+/// 0 -> {1}
+/// 1 -> {0, 7}
+/// 2 -> {0, 5, 7}
+/// 3 -> {4}
+/// 4 -> {3}
+/// 5 -> {3, 6}
+/// 6 -> {5}
+/// 7 -> {2}
+/// 8 -> {7, 9, 11}
+/// 9 -> {8}
+/// 10 -> {9, 11}
+/// 11 -> {10}
+/// ```
+#[must_use]
+pub fn kattis_cantinaofbabel_2() -> Digraph {
+    Digraph::from(vec![
+        BTreeSet::from([1]),
+        BTreeSet::from([0, 7]),
+        BTreeSet::from([0, 5, 7]),
+        BTreeSet::from([4]),
+        BTreeSet::from([3]),
+        BTreeSet::from([3, 6]),
+        BTreeSet::from([5]),
+        BTreeSet::from([2]),
+        BTreeSet::from([7, 9, 11]),
+        BTreeSet::from([8]),
+        BTreeSet::from([9, 11]),
+        BTreeSet::from([10]),
     ])
 }
 

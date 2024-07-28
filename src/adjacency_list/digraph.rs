@@ -12,6 +12,10 @@
 //!     },
 //! };
 //!
+//! // 0 -> {1, 2}
+//! // 1 -> {0}
+//! // 2 -> {}
+//!
 //! let mut digraph = Digraph::empty(3);
 //!
 //! digraph.add_arc(0, 1);
@@ -271,6 +275,7 @@ mod tests {
                 IsWalk,
                 OutdegreeSequence,
                 SemidegreeSequence,
+                Sinks,
             },
             proptest_strategy::arc,
             r#gen::Path,
@@ -605,6 +610,11 @@ mod tests {
         }
 
         #[test]
+        fn biclique_sinks(m in 1..25_usize, n in 1..25_usize) {
+            assert!(Digraph::biclique(m, n).sinks().eq([]));
+        }
+
+        #[test]
         fn biclique_size(m in 1..25_usize, n in 1..25_usize) {
             assert_eq!(Digraph::biclique(m, n).size(), m * n * 2);
         }
@@ -797,11 +807,32 @@ mod tests {
         }
 
         #[test]
+        fn circuit_sinks(order in 1..25_usize) {
+            let digraph = Digraph::circuit(order);
+            let sinks = digraph.sinks();
+
+            assert!(if order == 1 { sinks.eq([0]) } else { sinks.eq([]) });
+        }
+
+        #[test]
+        fn circuit_size(order in 1..25_usize) {
+            assert_eq!(
+                Digraph::circuit(order).size(),
+                if order == 1 { 0 } else { order }
+            );
+        }
+
+        #[test]
         fn complete_complement_equals_empty(order in 1..25_usize) {
             assert_eq!(
                 Digraph::complete(order).complement(),
                 Digraph::empty(order)
             );
+        }
+
+        #[test]
+        fn complete_complement_size(order in 1..25_usize) {
+            assert_eq!(Digraph::complete(order).complement().size(), 0);
         }
 
         #[test]
@@ -971,6 +1002,15 @@ mod tests {
             assert!(Digraph::complete(order)
                 .semidegree_sequence()
                 .all(|d| d == pair));
+        }
+
+        #[test]
+        fn complete_sinks(order in 1..25_usize) {
+            assert!(if order == 1 {
+                Digraph::complete(order).sinks().eq([0])
+            } else {
+                Digraph::complete(order).sinks().eq([])
+            });
         }
 
         #[test]
@@ -1178,8 +1218,37 @@ mod tests {
         }
 
         #[test]
+        fn cycle_sinks(order in 1..25_usize) {
+            assert!(if order == 1 {
+                Digraph::cycle(order).sinks().eq([0])
+            } else {
+                Digraph::cycle(order).sinks().eq([])
+            });
+        }
+
+        #[test]
+        fn cycle_size(order in 1..25_usize) {
+            assert_eq!(
+                Digraph::cycle(order).size(),
+                match order {
+                    1 => 0,
+                    2 => 2,
+                    _ => order * 2
+                }
+            );
+        }
+
+        #[test]
         fn empty_arcs(order in 1..25_usize) {
             assert!(Digraph::empty(order).arcs().eq([]));
+        }
+
+        #[test]
+        fn empty_complement_size(order in 1..25_usize) {
+            assert_eq!(
+                Digraph::empty(order).complement().size(),
+                order * (order - 1)
+            );
         }
 
         #[test]
@@ -1204,6 +1273,20 @@ mod tests {
             assert_eq!(
                 digraph.vertices().fold(0, |acc, u| acc + digraph.degree(u)),
                 2 * digraph.size()
+            );
+        }
+
+        #[test]
+        fn empty_even_number_odd_degrees(order in 1..25_usize) {
+            let digraph = Digraph::empty(order);
+
+            assert_eq!(
+                digraph
+                    .vertices()
+                    .filter(|&u| digraph.degree(u) % 2 == 1)
+                    .count()
+                    % 2,
+                0
             );
         }
 
@@ -1345,6 +1428,16 @@ mod tests {
             assert!(Digraph::empty(order)
                 .semidegree_sequence()
                 .all(|d| d == (0, 0)));
+        }
+
+        #[test]
+        fn empty_sinks(order in 1..25_usize) {
+            assert!(Digraph::empty(order).sinks().eq(0..order));
+        }
+
+        #[test]
+        fn empty_size(order in 1..25_usize) {
+            assert_eq!(Digraph::empty(order).size(), 0);
         }
 
         #[test]
@@ -1562,6 +1655,24 @@ mod tests {
         }
 
         #[test]
+        fn path_sinks(order in 1..25_usize) {
+            assert!(Digraph::path(order).sinks().eq([order - 1]));
+        }
+
+        #[test]
+        fn path_size(order in 1..25_usize) {
+            assert_eq!(Digraph::path(order).size(), order - 1);
+        }
+
+        #[test]
+        fn random_tournament_complement_size(order in 1..25_usize) {
+            assert_eq!(
+                Digraph::random_tournament(order).complement().size(),
+                order * (order - 1) / 2
+            );
+        }
+
+        #[test]
         fn random_tournament_degree(order in 1..25_usize) {
             let digraph = Digraph::random_tournament(order);
 
@@ -1731,9 +1842,10 @@ mod tests {
 
         #[test]
         fn random_tournament_size(order in 1..25_usize) {
-            let digraph = Digraph::random_tournament(order);
-
-            assert_eq!(digraph.size(), order * (order - 1) / 2);
+            assert_eq!(
+                Digraph::random_tournament(order).size(),
+                order * (order - 1) / 2
+            );
         }
 
         #[test]
@@ -1926,6 +2038,20 @@ mod tests {
             );
 
             assert!(semidegree_sequence.all(|d| d == (1, 1)));
+        }
+
+        #[test]
+        fn star_sinks(order in 1..25_usize) {
+            assert!(if order == 1 {
+                Digraph::star(order).sinks().eq([0])
+            } else {
+                Digraph::star(order).sinks().eq([])
+            });
+        }
+
+        #[test]
+        fn star_size(order in 1..25_usize) {
+            assert_eq!(Digraph::star(order).size(), (order - 1) * 2);
         }
     }
 

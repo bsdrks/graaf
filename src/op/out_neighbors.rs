@@ -12,6 +12,11 @@
 //!     },
 //! };
 //!
+//! // 0 -> {1, 2}
+//! // 1 -> {0, 2, 3}
+//! // 2 -> {0, 1, 3}
+//! // 3 -> {1, 2}
+//!
 //! let mut digraph = Digraph::empty(4);
 //!
 //! digraph.add_arc(0, 1);
@@ -40,10 +45,13 @@
 /// over the out-neighbors of a vertex in the digraph.
 ///
 /// ```
-/// use graaf::op::OutNeighbors;
+/// use {
+///     graaf::op::OutNeighbors,
+///     std::collections::BTreeSet,
+/// };
 ///
 /// struct Digraph {
-///     arcs: Vec<Vec<usize>>,
+///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
 /// impl OutNeighbors for Digraph {
@@ -52,8 +60,18 @@
 ///     }
 /// }
 ///
+/// // 0 -> {1, 2}
+/// // 1 -> {0}
+/// // 2 -> {0, 1, 3}
+/// // 3 -> {0}
+///
 /// let digraph = Digraph {
-///     arcs: vec![vec![1, 2], vec![0], vec![0, 1, 3], vec![0]],
+///     arcs: vec![
+///         BTreeSet::from([1, 2]),
+///         BTreeSet::from([0]),
+///         BTreeSet::from([0, 1, 3]),
+///         BTreeSet::from([0]),
+///     ],
 /// };
 ///
 /// assert!(digraph.out_neighbors(0).eq([1, 2]));
@@ -73,6 +91,11 @@
 ///         OutNeighbors,
 ///     },
 /// };
+///
+/// // 0 -> {1, 2}
+/// // 1 -> {0}
+/// // 2 -> {0, 1, 3}
+/// // 3 -> {0}
 ///
 /// let mut digraph = Digraph::empty(4);
 ///

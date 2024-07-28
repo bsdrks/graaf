@@ -192,6 +192,7 @@ mod tests {
                 fixture::{
                     bang_jensen_196,
                     kattis_cantinaofbabel_1,
+                    kattis_cantinaofbabel_2,
                 },
                 Digraph,
             },
@@ -223,6 +224,21 @@ mod tests {
                 BTreeSet::from([0, 1, 2, 3, 4, 7, 9, 11]),
                 BTreeSet::from([5, 6, 10]),
                 BTreeSet::from([8]),
+            ])
+        );
+    }
+
+    #[test]
+    fn strongly_connected_components_kattis_cantinaofbabel_2() {
+        assert_eq!(
+            strongly_connected_components(&kattis_cantinaofbabel_2())
+                .into_iter()
+                .collect::<BTreeSet<BTreeSet<_>>>(),
+            BTreeSet::from([
+                BTreeSet::from([0, 1, 2, 7]),
+                BTreeSet::from([3, 4]),
+                BTreeSet::from([5, 6]),
+                BTreeSet::from([8, 9, 10, 11]),
             ])
         );
     }

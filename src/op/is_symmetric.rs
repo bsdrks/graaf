@@ -16,6 +16,9 @@
 //!     },
 //! };
 //!
+//! // 0 -> {1}
+//! // 1 -> {0}
+//!
 //! let mut digraph = Digraph::empty(2);
 //!
 //! digraph.add_arc(0, 1);
@@ -23,9 +26,16 @@
 //!
 //! assert!(digraph.is_symmetric());
 //!
+//! // 0 -> {1}
+//! // 1 -> {}
+//!
 //! digraph.remove_arc(1, 0);
 //!
 //! assert!(!digraph.is_symmetric());
+//!
+//! // 0 -> {1, 2}
+//! // 1 -> {2}
+//! // 2 -> {0}
 //!
 //! let mut digraph = Digraph::empty(3);
 //!
@@ -78,11 +88,17 @@ use super::{
 ///     }
 /// }
 ///
+/// // 0 -> {1}
+/// // 1 -> {0}
+///
 /// let digraph = Digraph {
 ///     arcs: vec![BTreeSet::from([1]), BTreeSet::from([0])],
 /// };
 ///
 /// assert!(digraph.is_symmetric());
+///
+/// // 0 -> {1}
+/// // 1 -> {}
 ///
 /// let digraph = Digraph {
 ///     arcs: vec![BTreeSet::from([1]), BTreeSet::new()],
@@ -102,6 +118,9 @@ use super::{
 ///         RemoveArc,
 ///     },
 /// };
+///
+/// // 0 -> {1}
+/// // 1 -> {0}
 ///
 /// let mut digraph = Digraph::empty(2);
 ///

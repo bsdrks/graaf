@@ -12,6 +12,11 @@
 //!     },
 //! };
 //!
+//! // 0 -> {1, 2}
+//! // 1 -> {0, 2, 3}
+//! // 2 -> {0, 1, 3}
+//! // 3 -> {1, 2}
+//!
 //! let mut digraph = Digraph::empty(4);
 //!
 //! digraph.add_arc(0, 1);
@@ -36,15 +41,18 @@
 /// digraph.
 ///
 /// ```
-/// use graaf::op::Size;
+/// use {
+///     graaf::op::Size,
+///     std::collections::BTreeSet,
+/// };
 ///
 /// struct Digraph {
-///     arcs: Vec<Vec<usize>>,
+///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
 /// impl Size for Digraph {
 ///     fn size(&self) -> usize {
-///         self.arcs.iter().map(Vec::len).sum()
+///         self.arcs.iter().map(BTreeSet::len).sum()
 ///     }
 /// }
 /// ```
@@ -57,6 +65,10 @@
 ///     gen::Circuit,
 ///     op::Size,
 /// };
+///
+/// // 0 -> {1}
+/// // 1 -> {2}
+/// // 2 -> {0}
 ///
 /// let digraph = Digraph::circuit(3);
 ///

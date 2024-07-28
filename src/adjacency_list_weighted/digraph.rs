@@ -12,6 +12,10 @@
 //!     },
 //! };
 //!
+//! // 0 -> {1 (2)}
+//! // 1 -> {2 (3)}
+//! // 2 -> {0 (4)}
+//!
 //! let mut digraph = Digraph::<isize>::empty(3);
 //!
 //! digraph.add_arc_weighted(0, 1, 2);
@@ -134,10 +138,10 @@ where
 }
 
 impl From<adjacency_list::Digraph> for Digraph<isize> {
-    fn from(d: adjacency_list::Digraph) -> Self {
-        let mut h = Self::empty(d.order());
+    fn from(digraph: adjacency_list::Digraph) -> Self {
+        let mut h = Self::empty(digraph.order());
 
-        for (u, v) in d.arcs() {
+        for (u, v) in digraph.arcs() {
             h.add_arc_weighted(u, v, 1);
         }
 
@@ -146,10 +150,10 @@ impl From<adjacency_list::Digraph> for Digraph<isize> {
 }
 
 impl From<adjacency_list::Digraph> for Digraph<usize> {
-    fn from(d: adjacency_list::Digraph) -> Self {
-        let mut h = Self::empty(d.order());
+    fn from(digraph: adjacency_list::Digraph) -> Self {
+        let mut h = Self::empty(digraph.order());
 
-        for (u, v) in d.arcs() {
+        for (u, v) in digraph.arcs() {
             h.add_arc_weighted(u, v, 1);
         }
 
@@ -158,10 +162,10 @@ impl From<adjacency_list::Digraph> for Digraph<usize> {
 }
 
 impl From<adjacency_matrix::Digraph> for Digraph<isize> {
-    fn from(d: adjacency_matrix::Digraph) -> Self {
-        let mut h = Self::empty(d.order());
+    fn from(digraph: adjacency_matrix::Digraph) -> Self {
+        let mut h = Self::empty(digraph.order());
 
-        for (u, v) in d.arcs() {
+        for (u, v) in digraph.arcs() {
             h.add_arc_weighted(u, v, 1);
         }
 
@@ -170,10 +174,10 @@ impl From<adjacency_matrix::Digraph> for Digraph<isize> {
 }
 
 impl From<adjacency_matrix::Digraph> for Digraph<usize> {
-    fn from(d: adjacency_matrix::Digraph) -> Self {
-        let mut h = Self::empty(d.order());
+    fn from(digraph: adjacency_matrix::Digraph) -> Self {
+        let mut h = Self::empty(digraph.order());
 
-        for (u, v) in d.arcs() {
+        for (u, v) in digraph.arcs() {
             h.add_arc_weighted(u, v, 1);
         }
 

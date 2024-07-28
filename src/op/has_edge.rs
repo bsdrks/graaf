@@ -17,10 +17,16 @@
 //!     },
 //! };
 //!
+//! // 0 -> {1}
+//! // 1 -> {0}
+//!
 //! let digraph = Digraph::circuit(2);
 //!
 //! assert!(digraph.has_edge(0, 1));
 //! assert!(digraph.has_edge(1, 0));
+//!
+//! // 0 -> {1}
+//! // 1 -> {}
 //!
 //! let mut digraph = Digraph::empty(2);
 //!
@@ -28,6 +34,10 @@
 //!
 //! assert!(!digraph.has_edge(0, 1));
 //! assert!(!digraph.has_edge(1, 0));
+//!
+//! // 0 -> {1, 2}
+//! // 1 -> {2}
+//! // 2 -> {0}
 //!
 //! let mut digraph = Digraph::empty(3);
 //!
@@ -74,6 +84,9 @@ use super::HasArc;
 ///     }
 /// }
 ///
+/// // 0 -> {1}
+/// // 1 -> {0}
+///
 /// let digraph = Digraph {
 ///     arcs: vec![BTreeSet::from([1]), BTreeSet::from([0])],
 /// };
@@ -97,10 +110,16 @@ use super::HasArc;
 ///     },
 /// };
 ///
+/// // 0 -> {1}
+/// // 1 -> {0}
+///
 /// let digraph = Digraph::circuit(2);
 ///
 /// assert!(digraph.has_edge(0, 1));
 /// assert!(digraph.has_edge(1, 0));
+///
+/// // 0 -> {1}
+/// // 1 -> {}
 ///
 /// let mut digraph = Digraph::empty(2);
 ///
@@ -108,6 +127,10 @@ use super::HasArc;
 ///
 /// assert!(!digraph.has_edge(0, 1));
 /// assert!(!digraph.has_edge(1, 0));
+///
+/// // 0 -> {1, 2}
+/// // 1 -> {2}
+/// // 2 -> {0}
 ///
 /// let mut digraph = Digraph::empty(3);
 ///

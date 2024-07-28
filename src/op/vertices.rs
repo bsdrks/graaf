@@ -22,10 +22,13 @@
 /// all vertices in the digraph.
 ///
 /// ```
-/// use graaf::op::Vertices;
+/// use {
+///     graaf::op::Vertices,
+///     std::collections::BTreeSet,
+/// };
 ///
 /// struct Digraph {
-///     vertices: Vec<usize>,
+///     vertices: Vec<BTreeSet<usize>>,
 /// }
 ///
 /// impl Vertices for Digraph {
@@ -33,6 +36,16 @@
 ///         0..self.vertices.len()
 ///     }
 /// }
+///
+/// // 0 -> {}
+/// // 1 -> {}
+/// // 2 -> {}
+///
+/// let digraph = Digraph {
+///     vertices: vec![BTreeSet::new(), BTreeSet::new(), BTreeSet::new()],
+/// };
+///
+/// assert!(digraph.vertices().eq(0..3));
 /// ```
 ///
 /// # Example
@@ -43,6 +56,11 @@
 ///     gen::Empty,
 ///     op::Vertices,
 /// };
+///
+/// // 0 -> {}
+/// // 1 -> {}
+/// // 2 -> {}
+/// // 3 -> {}
 ///
 /// let digraph = Digraph::empty(4);
 ///
