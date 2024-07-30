@@ -14,6 +14,10 @@
 //!     },
 //! };
 //!
+//! // 0 -> {1, 2}
+//! // 1 -> {0}
+//! // 2 -> {}
+//!
 //! let mut digraph = Digraph::empty(3);
 //!
 //! digraph.add_arc(0, 1);
@@ -31,8 +35,7 @@
 /// # How can I implement `Outdegree`?
 ///
 /// Provide an implementation of `outdegree` that returns the outdegree of the
-/// target vertex. The implementation should not panic if the vertex is not in
-/// the digraph.
+/// vertex.
 ///
 /// ```
 /// use {
@@ -62,6 +65,10 @@
 ///         Outdegree,
 ///     },
 /// };
+///
+/// // 0 -> {1, 2}
+/// // 1 -> {0}
+/// // 2 -> {1}
 ///
 /// let mut digraph = Digraph::empty(3);
 ///
@@ -103,6 +110,10 @@ pub trait Outdegree {
     ///         Outdegree,
     ///     },
     /// };
+    ///
+    /// // 0 -> {1, 2}
+    /// // 1 -> {0}
+    /// // 2 -> {}
     ///
     /// let mut digraph = Digraph::empty(3);
     ///

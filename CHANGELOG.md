@@ -5,7 +5,6 @@
 - Add a trait for path contraction.
 - Add a trait for set contraction.
 - Add leaner implementations of `dfs::*`.
-- Add the `DegreeSequence` trait.
 - Add the `DeleteArc` trait.
 - Add the `DeleteVertex` trait.
 - Add the `IsIsomorphic` trait.
@@ -23,6 +22,46 @@
 - Implement `Debug` for `adjacency_list_weighted::Digraph` to show arcs.
 - Implement `Debug` for `adjacency_matrix::Digraph` to show arcs.
 - Subsume traits with one super trait into the super trait?
+
+## [0.75.4] - 2024-07-30
+
+Added
+
+- Add property test `biclique_degree_sequence` for `adjacency_list`.
+- Add property test `biclique_degree_sequence` for `adjacency_matrix`.
+- Add property test `circuit_degree_sequence` for `adjacency_list`.
+- Add property test `circuit_degree_sequence` for `adjacency_matrix`.
+- Add property test `complete_degree_sequence` for `adjacency_list`.
+- Add property test `complete_degree_sequence` for `adjacency_matrix`.
+- Add property test `cycle_degree_sequence` for `adjacency_list`.
+- Add property test `cycle_degree_sequence` for `adjacency_matrix`.
+- Add property test `empty_degree_sequence` for `adjacency_list`.
+- Add property test `empty_degree_sequence` for `adjacency_matrix`.
+- Add property test `path_degree_sequence` for `adjacency_list`.
+- Add property test `path_degree_sequence` for `adjacency_matrix`.
+- Add property test `random_tournament_degree_sequence` for `adjacency_list`.
+- Add property test `random_tournament_degree_sequence` for `adjacency_matrix`.
+- Add property test `star_degree_sequence` for `adjacency_list`.
+- Add property test `star_degree_sequence` for `adjacency_matrix`.
+- Add the `DegreeSequence` trait.
+- Add unit test `degree_sequence_bang_jensen_196` for `adjacency_list`.
+- Add unit test `degree_sequence_bang_jensen_196` for `adjacency_matrix`.
+- Add unit test `degree_sequence_bang_jensen_34` for `adjacency_list`.
+- Add unit test `degree_sequence_bang_jensen_34` for `adjacency_matrix`.
+- Add unit test `degree_sequence_bang_jensen_94` for `adjacency_list`.
+- Add unit test `degree_sequence_bang_jensen_94` for `adjacency_matrix`.
+- Add unit test `degree_sequence_kattis_builddeps` for `adjacency_list`.
+- Add unit test `degree_sequence_kattis_builddeps` for `adjacency_matrix`.
+- Add unit test `degree_sequence_kattis_cantinaofbabel_1` for `adjacency_list`.
+- Add unit test `degree_sequence_kattis_cantinaofbabel_1` for `adjacency_matrix`.
+- Add unit test `degree_sequence_kattis_cantinaofbabel_2` for `adjacency_list`.
+- Add unit test `degree_sequence_kattis_cantinaofbabel_2` for `adjacency_matrix`.
+- Add unit test `degree_sequence_kattis_escapewallmaria_1` for `adjacency_list`.
+- Add unit test `degree_sequence_kattis_escapewallmaria_1` for `adjacency_matrix`.
+- Add unit test `degree_sequence_kattis_escapewallmaria_2` for `adjacency_list`.
+- Add unit test `degree_sequence_kattis_escapewallmaria_2` for `adjacency_matrix`.
+- Add unit test `degree_sequence_kattis_escapewallmaria_3` for `adjacency_list`.
+- Add unit test `degree_sequence_kattis_escapewallmaria_3` for `adjacency_matrix`.
 
 ## [0.75.3] - 2024-07-28
 

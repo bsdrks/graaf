@@ -62,15 +62,16 @@ pub struct Digraph<W> {
 impl<W> AddArcWeighted<W> for Digraph<W> {
     /// # Panics
     ///
+    /// * Panics if `u` equals `v`.
     /// * Panics if `u` is out of bounds.
     /// * Panics if `v` is out of bounds.
-    /// * Panics if `u` equals `v`.
     fn add_arc_weighted(&mut self, u: usize, v: usize, w: W) {
+        assert_ne!(u, v, "u = {u} equals v = {v}");
+
         let order = self.order();
 
         assert!(u < order, "u = {u} is out of bounds");
         assert!(v < order, "v = {v} is out of bounds");
-        assert_ne!(u, v, "u = {u} equals v = {v}");
 
         let _ = self.arcs[u].insert(v, w);
     }
@@ -330,7 +331,10 @@ mod tests {
 
     proptest! {
         #[test]
-        fn add_arc_weighted_arc_weight((u, v) in arc(), w in 1..25_usize) {
+        fn add_arc_weighted_arc_weight(
+            (u, v) in arc(25_usize),
+            w in 1..25_usize
+        ) {
             let mut digraph = Digraph::empty(100);
 
             digraph.add_arc_weighted(u, v, w);
@@ -346,7 +350,10 @@ mod tests {
         }
 
         #[test]
-        fn add_arc_weighted_degree((u, v) in arc(), w in 1..25_usize) {
+        fn add_arc_weighted_degree(
+            (u, v) in arc(25_usize),
+            w in 1..25_usize
+        ) {
             let mut digraph = Digraph::empty(100);
 
             digraph.add_arc_weighted(u, v, w);
@@ -360,7 +367,10 @@ mod tests {
         }
 
         #[test]
-        fn add_arc_weighted_has_arc((u, v) in arc(), w in 1..25_usize) {
+        fn add_arc_weighted_has_arc(
+            (u, v) in arc(25_usize),
+            w in 1..25_usize
+        ) {
             let mut digraph = Digraph::empty(100);
 
             digraph.add_arc_weighted(u, v, w);
@@ -369,7 +379,10 @@ mod tests {
         }
 
         #[test]
-        fn add_arc_weighted_indegree((u, v) in arc(), w in 1..25_usize) {
+        fn add_arc_weighted_indegree(
+            (u, v) in arc(25_usize),
+            w in 1..25_usize
+        ) {
             let mut digraph = Digraph::empty(100);
 
             digraph.add_arc_weighted(u, v, w);
@@ -380,7 +393,10 @@ mod tests {
         }
 
         #[test]
-        fn add_arc_weighted_outdegree((u, v) in arc(), w in 1..25_usize) {
+        fn add_arc_weighted_outdegree(
+            (u, v) in arc(25_usize),
+            w in 1..25_usize
+        ) {
             let mut digraph = Digraph::empty(100);
 
             digraph.add_arc_weighted(u, v, w);
@@ -391,7 +407,10 @@ mod tests {
         }
 
         #[test]
-        fn add_arc_weighted_remove_arc((u, v) in arc(), w in 1..25_usize) {
+        fn add_arc_weighted_remove_arc(
+            (u, v) in arc(25_usize),
+            w in 1..25_usize
+        ) {
             let d = Digraph::empty(100);
             let mut h = d.clone();
 

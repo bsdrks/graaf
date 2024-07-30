@@ -31,7 +31,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.75.3"
+graaf = "0.75.4"
 ```
 
 ## Digraph Types
@@ -88,6 +88,7 @@ The extended traits derive their implementation from the basic operations.
 
 - [`Complement`] returns the complement of a digraph.
 - [`Degree`] returns the degree of a vertex.
+- [`DegreeSequence`] returns the degree sequence of a digraph.
 - [`HasEdge`] checks if an edge exists in a digraph.
 - [`IndegreeSequence`] returns the indegree sequence of a digraph.
 - [`InNeighbors`] returns the in-neighbors of a vertex.
@@ -211,6 +212,7 @@ A distance matrix contains the shortest distances between all pairs of vertices 
 [`Converse`]: https://docs.rs/graaf/latest/graaf/op/converse/trait.Converse.html
 [`Cycle`]: https://docs.rs/graaf/latest/graaf/gen/cycle/trait.Cycle.html
 [`Degree`]: https://docs.rs/graaf/latest/graaf/op/degree/trait.Degree.html
+[`DegreeSequence`]: https://docs.rs/graaf/latest/graaf/op/degree_sequence/trait.DegreeSequence.html
 [`Empty`]: https://docs.rs/graaf/latest/graaf/gen/empty/trait.Empty.html
 [`HasArc`]: https://docs.rs/graaf/latest/graaf/op/has_arc/trait.HasArc.html
 [`HasEdge`]: https://docs.rs/graaf/latest/graaf/op/has_edge/trait.HasEdge.html

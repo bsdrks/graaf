@@ -47,6 +47,7 @@ pub mod arcs_weighted;
 pub mod complement;
 pub mod converse;
 pub mod degree;
+pub mod degree_sequence;
 pub mod has_arc;
 pub mod has_edge;
 pub mod in_neighbors;
@@ -87,6 +88,7 @@ pub use {
     complement::Complement,
     converse::Converse,
     degree::Degree,
+    degree_sequence::DegreeSequence,
     has_arc::HasArc,
     has_edge::HasEdge,
     in_neighbors::InNeighbors,

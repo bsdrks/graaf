@@ -294,7 +294,8 @@ where
 {
     /// # Panics
     ///
-    /// Panics if `m` or `n` is zero.
+    /// * Panics if `m` is zero.
+    /// * Panics if `n` is zero.
     fn biclique(m: usize, n: usize) -> Self {
         assert!(m > 0, "m must be greater than zero");
         assert!(n > 0, "n must be greater than zero");

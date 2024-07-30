@@ -123,13 +123,13 @@ impl Digraph {
 impl AddArc for Digraph {
     /// # Panics
     ///
+    /// * Panics if `u` equals `v`.
     /// * Panics if `u` is out of bounds.
     /// * Panics if `v` is out of bounds.
-    /// * Panics if `u` equals `v`.
     fn add_arc(&mut self, u: usize, v: usize) {
+        assert_ne!(u, v, "u = {u} equals v = {v}.");
         assert!(u < self.order, "u = {u} is out of bounds.");
         assert!(v < self.order, "v = {v} is out of bounds.");
-        assert_ne!(u, v, "u = {u} equals v = {v}.");
 
         let i = self.index(u, v);
 
@@ -355,6 +355,7 @@ mod tests {
             op::{
                 Complement,
                 Degree,
+                DegreeSequence,
                 HasEdge,
                 InNeighbors,
                 IndegreeSequence,
@@ -391,7 +392,7 @@ mod tests {
 
     proptest! {
         #[test]
-        fn add_arc_arc_weight((u, v) in arc()) {
+        fn add_arc_arc_weight((u, v) in arc(25_usize)) {
             let mut digraph = Digraph::empty(100);
 
             digraph.add_arc(u, v);
@@ -402,7 +403,7 @@ mod tests {
         }
 
         #[test]
-        fn add_arc_degree((u, v) in arc()) {
+        fn add_arc_degree((u, v) in arc(25_usize)) {
             let mut digraph = Digraph::empty(100);
 
             digraph.add_arc(u, v);
@@ -413,7 +414,7 @@ mod tests {
         }
 
         #[test]
-        fn add_arc_has_arc((u, v) in arc()) {
+        fn add_arc_has_arc((u, v) in arc(25_usize)) {
             let mut digraph = Digraph::empty(100);
 
             digraph.add_arc(u, v);
@@ -422,7 +423,7 @@ mod tests {
         }
 
         #[test]
-        fn add_arc_indegree((u, v) in arc()) {
+        fn add_arc_indegree((u, v) in arc(25_usize)) {
             let mut digraph = Digraph::empty(100);
 
             digraph.add_arc(u, v);
@@ -434,7 +435,7 @@ mod tests {
         }
 
         #[test]
-        fn add_arc_outdegree((u, v) in arc()) {
+        fn add_arc_outdegree((u, v) in arc(25_usize)) {
             let mut digraph = Digraph::empty(100);
 
             digraph.add_arc(u, v);
@@ -445,7 +446,7 @@ mod tests {
         }
 
         #[test]
-        fn add_arc_remove_arc((u, v) in arc()) {
+        fn add_arc_remove_arc((u, v) in arc(25_usize)) {
             let digraph = Digraph::empty(100);
             let mut h = digraph.clone();
 
@@ -474,9 +475,22 @@ mod tests {
         #[test]
         fn biclique_degree(m in 1..25_usize, n in 1..25_usize) {
             let digraph = Digraph::biclique(m, n);
+            let clique_1_degree = n * 2;
+            let clique_2_degree = m * 2;
 
-            assert!((0..m).all(|u| digraph.degree(u) == n * 2));
-            assert!((m..m + n).all(|u| digraph.degree(u) == m * 2));
+            assert!((0..m).all(|u| digraph.degree(u) == clique_1_degree));
+            assert!((m..m + n).all(|u| digraph.degree(u) == clique_2_degree));
+        }
+
+        #[test]
+        fn biclique_degree_sequence(m in 1..25_usize, n in 1..25_usize) {
+            let digraph = Digraph::biclique(m, n);
+            let degree_sequence = &mut digraph.degree_sequence();
+            let clique_1_degree = n * 2;
+            let clique_2_degree = m * 2;
+
+            assert!(degree_sequence.take(m).all(|d| d == clique_1_degree));
+            assert!(degree_sequence.all(|d| d == clique_2_degree));
         }
 
         #[test]
@@ -748,6 +762,13 @@ mod tests {
         }
 
         #[test]
+        fn circuit_degree_sequence(order in 1..25_usize) {
+            assert!(Digraph::circuit(order)
+                .degree_sequence()
+                .all(|d| d == if order == 1 { 0 } else { 2 }));
+        }
+
+        #[test]
         fn circuit_degree_sum_equals_2size(order in 1..25_usize) {
             let digraph = Digraph::circuit(order);
 
@@ -957,10 +978,20 @@ mod tests {
         #[test]
         fn complete_degree(order in 1..25_usize) {
             let digraph = Digraph::complete(order);
+            let degree = order * 2 - 2;
 
             assert!(digraph
                 .vertices()
-                .all(|u| digraph.degree(u) == order * 2 - 2));
+                .all(|u| digraph.degree(u) == degree));
+        }
+
+        #[test]
+        fn complete_degree_sequence(order in 1..25_usize) {
+            let degree = order * 2 - 2;
+
+            assert!(Digraph::complete(order)
+                .degree_sequence()
+                .all(|d| d == degree));
         }
 
         #[test]
@@ -999,17 +1030,20 @@ mod tests {
         #[test]
         fn complete_indegree(order in 1..25_usize) {
             let digraph = Digraph::complete(order);
+            let indegree = order - 1;
 
             assert!(digraph
                 .vertices()
-                .all(|v| digraph.indegree(v) == order - 1));
+                .all(|v| digraph.indegree(v) == indegree));
         }
 
         #[test]
         fn complete_indegree_sequence(order in 1..25_usize) {
+            let indegree = order - 1;
+
             assert!(Digraph::complete(order)
                 .indegree_sequence()
-                .all(|d| d == order - 1));
+                .all(|d| d == indegree));
         }
 
         #[test]
@@ -1166,6 +1200,17 @@ mod tests {
                         _ => 4,
                     }
             }));
+        }
+
+        #[test]
+        fn cycle_degree_sequence(order in 1..25_usize) {
+            assert!(Digraph::cycle(order)
+                .degree_sequence()
+                .all(|d| match order {
+                    1 => d == 0,
+                    2 => d == 2,
+                    _ => d == 4,
+                }));
         }
 
         #[test]
@@ -1404,6 +1449,11 @@ mod tests {
         }
 
         #[test]
+        fn empty_degree_sequence(order in 1..25_usize) {
+            assert!(Digraph::empty(order).degree_sequence().all(|d| d == 0));
+        }
+
+        #[test]
         fn empty_degree_sum_equals_2size(order in 1..25_usize) {
             let digraph = Digraph::empty(order);
 
@@ -1610,6 +1660,20 @@ mod tests {
                         && (1..last).all(|u| digraph.degree(u) == 2
                             && digraph.degree(last) == 1)
             );
+        }
+
+        #[test]
+        fn path_degree_sequence(order in 1..25_usize) {
+            let digraph = Digraph::path(order);
+            let degree_sequence = &mut digraph.degree_sequence();
+
+            if order == 1 {
+                assert_eq!(degree_sequence.next(), Some(0));
+            } else {
+                assert_eq!(degree_sequence.next(), Some(1));
+                assert!(degree_sequence.take(order - 2).all(|d| d == 2));
+                assert_eq!(degree_sequence.next(), Some(1));
+            }
         }
 
         #[test]
@@ -1822,10 +1886,20 @@ mod tests {
         #[test]
         fn random_tournament_degree(order in 1..25_usize) {
             let digraph = Digraph::random_tournament(order);
+            let degree = order - 1;
 
             assert!(digraph
                 .vertices()
-                .all(|u| digraph.degree(u) == order - 1));
+                .all(|u| digraph.degree(u) == degree));
+        }
+
+        #[test]
+        fn random_tournament_degree_sequence(order in 1..25_usize) {
+            let degree = order - 1;
+
+            assert!(Digraph::random_tournament(order)
+                .degree_sequence()
+                .all(|d| d == degree));
         }
 
         #[test]
@@ -2009,6 +2083,15 @@ mod tests {
 
             assert_eq!(digraph.degree(0), (order - 1) * 2);
             assert!((1..order).all(|u| digraph.degree(u) == 2));
+        }
+
+        #[test]
+        fn star_degree_sequence(order in 1..25_usize) {
+            let digraph = Digraph::star(order);
+            let degree_sequence = &mut digraph.degree_sequence();
+
+            assert_eq!(degree_sequence.next(), Some((order - 1) * 2));
+            assert!(degree_sequence.all(|d| d == 2));
         }
 
         #[test]
@@ -3080,6 +3163,63 @@ mod tests {
     }
 
     #[test]
+    fn degree_sequence_bang_jensen_196() {
+        assert!(bang_jensen_196()
+            .degree_sequence()
+            .eq([4, 4, 4, 3, 3, 2, 2, 4]));
+    }
+
+    #[test]
+    fn degree_sequence_bang_jensen_34() {
+        assert!(bang_jensen_34().degree_sequence().eq([2, 2, 3, 1, 2, 2]));
+    }
+
+    #[test]
+    fn degree_sequence_bang_jensen_94() {
+        assert!(bang_jensen_94().degree_sequence().eq([2, 3, 5, 3, 2, 2, 1]));
+    }
+
+    #[test]
+    fn degree_sequence_kattis_builddeps() {
+        assert!(kattis_builddeps().degree_sequence().eq([2, 3, 3, 3, 3, 2]));
+    }
+
+    #[test]
+    fn degree_sequence_kattis_cantinaofbabel_1() {
+        assert!(kattis_cantinaofbabel_1()
+            .degree_sequence()
+            .eq([2, 5, 3, 8, 3, 3, 4, 4, 2, 3, 4, 3]));
+    }
+
+    #[test]
+    fn degree_sequence_kattis_cantinaofbabel_2() {
+        assert!(kattis_cantinaofbabel_2()
+            .degree_sequence()
+            .eq([3, 3, 4, 3, 2, 4, 2, 4, 4, 3, 3, 3]));
+    }
+
+    #[test]
+    fn degree_sequence_kattis_escapewallmaria_1() {
+        assert!(kattis_escapewallmaria_1()
+            .degree_sequence()
+            .eq([0, 0, 0, 0, 0, 4, 2, 0, 0, 4, 0, 0, 1, 3]));
+    }
+
+    #[test]
+    fn degree_sequence_kattis_escapewallmaria_2() {
+        assert!(kattis_escapewallmaria_2()
+            .degree_sequence()
+            .eq([0, 0, 0, 0, 0, 4, 2, 0, 0, 3, 0, 0, 2, 3]));
+    }
+
+    #[test]
+    fn degree_sequence_kattis_escapewallmaria_3() {
+        assert!(kattis_escapewallmaria_3()
+            .degree_sequence()
+            .eq([0, 4, 4, 0, 0, 6, 4, 0, 0, 4, 0, 0, 2, 4]));
+    }
+
+    #[test]
     #[should_panic(expected = "a digraph must have at least one vertex")]
     fn empty_0() {
         let _ = Digraph::empty(0);
@@ -3129,9 +3269,11 @@ mod tests {
 
     #[test]
     fn from_vec() {
-        let arcs =
-            vec![BTreeSet::from([1]), BTreeSet::from([2]), BTreeSet::new()];
-        let digraph = Digraph::from(arcs);
+        let digraph = Digraph::from(vec![
+            BTreeSet::from([1]),
+            BTreeSet::from([2]),
+            BTreeSet::new(),
+        ]);
 
         assert_eq!(digraph.order(), 3);
         assert!(digraph.arcs().eq([(0, 1), (1, 2)]));

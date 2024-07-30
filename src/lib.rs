@@ -86,6 +86,8 @@
 //!
 //! - [`Complement`](op::Complement) returns the complement of a digraph.
 //! - [`Degree`](op::Degree) returns the degree of a vertex.
+//! - [`DegreeSequence`](op::DegreeSequence) returns the degree sequence of a
+//!   digraph.
 //! - [`HasEdge`](op::HasEdge) checks if an edge exists in a digraph.
 //! - [`IndegreeSequence`](op::IndegreeSequence) returns the indegree sequence
 //!   of a digraph.
