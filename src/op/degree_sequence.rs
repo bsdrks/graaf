@@ -57,7 +57,8 @@ use super::{
 ///
 /// impl Degree for Digraph {
 ///     fn degree(&self, v: usize) -> usize {
-///         self.arcs.iter().filter(|set| set.contains(&v)).count()
+///         self.arcs[v].len()
+///             + self.arcs.iter().filter(|a| a.contains(&v)).count()
 ///     }
 /// }
 ///
