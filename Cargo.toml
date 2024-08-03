@@ -1,6 +1,6 @@
 [package]
 name = "graaf"
-version = "0.75.4"
+version = "0.75.5"
 edition = "2021"
 authors = ["Bas Dirks <bas.dirks@protonmail.com>"]
 categories = ["algorithms", "data-structures", "mathematics"]
@@ -11,8 +11,6 @@ license = "MIT OR Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/bsdrks/graaf"
 
-[dependencies]
-
 [lib]
 
 [dev-dependencies]
@@ -21,6 +19,46 @@ proptest = "1.4.0"
 
 [profile.test.package.proptest]
 opt-level = 3
+
+[[bench]]
+name = "biclique"
+path = "benches/gen/biclique.rs"
+harness = false
+
+[[bench]]
+name = "circuit"
+path = "benches/gen/circuit.rs"
+harness = false
+
+[[bench]]
+name = "complete"
+path = "benches/gen/complete.rs"
+harness = false
+
+[[bench]]
+name = "cycle"
+path = "benches/gen/cycle.rs"
+harness = false
+
+[[bench]]
+name = "empty"
+path = "benches/gen/empty.rs"
+harness = false
+
+[[bench]]
+name = "path"
+path = "benches/gen/path.rs"
+harness = false
+
+[[bench]]
+name = "random_tournament"
+path = "benches/gen/random_tournament.rs"
+harness = false
+
+[[bench]]
+name = "star"
+path = "benches/gen/star.rs"
+harness = false
 
 [[bench]]
 name = "single_source_distances"

@@ -51,6 +51,7 @@ use {
             Size,
             Vertices,
         },
+        r#gen::Biclique,
     },
     std::collections::BTreeSet,
 };
@@ -160,6 +161,29 @@ impl ArcsWeighted<usize> for Digraph {
         usize: 'a,
     {
         self.arcs().map(|(u, v)| (u, v, &1))
+    }
+}
+
+impl Biclique for Digraph {
+    /// # Panics
+    ///
+    /// * Panics if `m` is zero.
+    /// * Panics if `n` is zero.
+    fn biclique(m: usize, n: usize) -> Self {
+        assert!(m > 0, "m must be greater than zero");
+        assert!(n > 0, "n must be greater than zero");
+
+        let order = m + n;
+        let mut digraph = Self::empty(order);
+
+        for u in 0..m {
+            for v in m..order {
+                digraph.add_arc(u, v);
+                digraph.add_arc(v, u);
+            }
+        }
+
+        digraph
     }
 }
 
@@ -1924,6 +1948,17 @@ mod tests {
                     % 2,
                 0
             );
+        }
+
+        #[test]
+        fn random_tournament_has_arc(order in 1..25_usize) {
+            let digraph = Digraph::random_tournament(order);
+
+            assert!(digraph.vertices().all(|u| {
+                digraph.vertices().all(|v| {
+                    u == v || digraph.has_arc(u, v) ^ digraph.has_arc(v, u)
+                })
+            }));
         }
 
         #[test]

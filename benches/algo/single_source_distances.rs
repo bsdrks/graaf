@@ -28,7 +28,6 @@ fn main() {
     divan::main();
 }
 
-#[divan::bench_group(sample_size = 1000)]
 mod bang_jensen_94 {
     use super::*;
 
@@ -62,7 +61,6 @@ mod bang_jensen_94 {
     }
 }
 
-#[divan::bench_group(sample_size = 1000)]
 mod bang_jensen_96 {
     use super::*;
 
@@ -89,7 +87,6 @@ mod bang_jensen_96 {
     }
 }
 
-#[divan::bench_group(sample_size = 1000)]
 mod bang_jensen_99 {
     use super::*;
 
@@ -105,7 +102,6 @@ mod bang_jensen_99 {
     }
 }
 
-#[divan::bench_group(sample_size = 1000)]
 mod kattis_bryr_1 {
     use super::*;
 
@@ -132,7 +128,6 @@ mod kattis_bryr_1 {
     }
 }
 
-#[divan::bench_group(sample_size = 1000)]
 mod kattis_bryr_2 {
     use super::*;
 
@@ -159,7 +154,6 @@ mod kattis_bryr_2 {
     }
 }
 
-#[divan::bench_group(sample_size = 1000)]
 mod kattis_bryr_3 {
     use super::*;
 
@@ -186,7 +180,6 @@ mod kattis_bryr_3 {
     }
 }
 
-#[divan::bench_group(sample_size = 1000)]
 mod kattis_crosscountry {
     use super::*;
 
@@ -214,7 +207,6 @@ mod kattis_crosscountry {
     }
 }
 
-#[divan::bench_group(sample_size = 1000)]
 mod kattis_shortestpath1 {
     use super::*;
 
@@ -242,7 +234,6 @@ mod kattis_shortestpath1 {
     }
 }
 
-#[divan::bench_group(sample_size = 1000)]
 mod random_tournament {
     use {
         divan::Bencher,

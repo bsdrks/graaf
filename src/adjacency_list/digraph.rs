@@ -45,6 +45,7 @@ use {
             Size,
             Vertices,
         },
+        r#gen::Biclique,
     },
     std::collections::BTreeSet,
 };
@@ -58,10 +59,11 @@ pub struct Digraph {
 impl AddArc for Digraph {
     /// # Panics
     ///
-    /// * Panics if `u` equals `v`.
+    /// * Panics if `u` equals `v`, i.e. self-loops are not allowed.
     /// * Panics if `u` is out of bounds.
     /// * Panics if `v` is out of bounds.
     fn add_arc(&mut self, u: usize, v: usize) {
+        // Self-loops are not allowed.
         assert_ne!(u, v, "u = {u} equals v = {v}");
 
         let order = self.order();
@@ -99,6 +101,32 @@ impl ArcsWeighted<usize> for Digraph {
     }
 }
 
+impl Biclique for Digraph {
+    /// # Panics
+    ///
+    /// * Panics if `m` is zero.
+    /// * Panics if `n` is zero.
+    fn biclique(m: usize, n: usize) -> Self {
+        assert!(m > 0, "m must be greater than zero");
+        assert!(n > 0, "n must be greater than zero");
+
+        let order = m + n;
+        let clique_1 = (0..m).collect::<BTreeSet<_>>();
+        let clique_2 = (m..order).collect::<BTreeSet<_>>();
+        let mut digraph = Self::empty(order);
+
+        for u in 0..m {
+            digraph.arcs[u].clone_from(&clique_2);
+        }
+
+        for u in m..order {
+            digraph.arcs[u].clone_from(&clique_1);
+        }
+
+        digraph
+    }
+}
+
 impl Converse for Digraph {
     /// # Panics
     ///
@@ -118,7 +146,7 @@ impl Converse for Digraph {
 impl Empty for Digraph {
     /// # Panics
     ///
-    /// Panics if `order` is zero.
+    /// Panics if `order` is zero. A digraph must have at least one vertex.
     fn empty(order: usize) -> Self {
         assert!(order > 0, "a digraph must have at least one vertex");
 
@@ -161,9 +189,9 @@ impl Indegree for Digraph {
 }
 
 impl IsSimple for Digraph {
-    // We only check for self-loops. Parallel arcs can not exist in this
-    // representation.
     fn is_simple(&self) -> bool {
+        // We only check for self-loops. Parallel arcs can not exist in this
+        // representation.
         self.arcs
             .iter()
             .enumerate()
@@ -1823,6 +1851,17 @@ mod tests {
                     % 2,
                 0
             );
+        }
+
+        #[test]
+        fn random_tournament_has_arc(order in 1..25_usize) {
+            let digraph = Digraph::random_tournament(order);
+
+            assert!(digraph.vertices().all(|u| {
+                digraph.vertices().all(|v| {
+                    u == v || digraph.has_arc(u, v) ^ digraph.has_arc(v, u)
+                })
+            }));
         }
 
         #[test]

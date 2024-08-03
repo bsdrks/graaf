@@ -65,11 +65,6 @@
 //! ```
 #![doc(alias = "complete_bipartite")]
 
-use crate::{
-    gen::Empty,
-    op::AddArc,
-};
-
 /// Generate biclique digraphs.
 ///
 /// # How can I implement `Biclique`?
@@ -285,31 +280,5 @@ pub trait Biclique {
         Self: Sized,
     {
         Self::biclique(3, 3)
-    }
-}
-
-impl<D> Biclique for D
-where
-    D: AddArc + Empty,
-{
-    /// # Panics
-    ///
-    /// * Panics if `m` is zero.
-    /// * Panics if `n` is zero.
-    fn biclique(m: usize, n: usize) -> Self {
-        assert!(m > 0, "m must be greater than zero");
-        assert!(n > 0, "n must be greater than zero");
-
-        let order = m + n;
-        let mut digraph = D::empty(order);
-
-        for u in 0..m {
-            for v in m..order {
-                digraph.add_arc(u, v);
-                digraph.add_arc(v, u);
-            }
-        }
-
-        digraph
     }
 }

@@ -21,7 +21,26 @@
 - Implement `Debug` for `adjacency_list::Digraph` to show arcs.
 - Implement `Debug` for `adjacency_list_weighted::Digraph` to show arcs.
 - Implement `Debug` for `adjacency_matrix::Digraph` to show arcs.
-- Subsume traits with one super trait into the super trait?
+
+## [0.75.5] - 2024-08-03
+
+Added
+
+- Add benchmark `biclique`.
+- Add benchmark `circuit`.
+- Add benchmark `complete`.
+- Add benchmark `cycle`.
+- Add benchmark `empty`.
+- Add benchmark `path`.
+- Add benchmark `random_tournament`.
+- Add benchmark `star`.
+- Add property test `random_tournament_has_arc` for `adjacency_list`.
+- Add property test `random_tournament_has_arc` for `adjacency_matrix`.
+
+Changed
+
+- Improve performance of `Biclique::biclique` for `adjacency_list`.
+- Remove `sample_size` attribute from `single_source_distances` benchmarks.
 
 ## [0.75.4] - 2024-07-30
 
