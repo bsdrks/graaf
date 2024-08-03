@@ -10,12 +10,12 @@ fn main() {
     divan::main();
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+#[divan::bench(args = [10, 100, 1000])]
 fn adjacency_list(n: usize) {
     let _ = adjacency_list::Digraph::complete(n);
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+#[divan::bench(args = [10, 100, 1000])]
 fn adjacency_matrix(n: usize) {
     let _ = adjacency_matrix::Digraph::complete(n);
 }

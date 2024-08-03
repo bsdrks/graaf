@@ -43,7 +43,6 @@ fn biclique_adjacency_list_naive(
     (10, 10000),
     (100, 100),
     (100, 1000),
-    (100, 10000),
 ])]
 fn adjacency_list_naive((m, n): (usize, usize)) {
     let _ = biclique_adjacency_list_naive(m, n);
@@ -56,7 +55,6 @@ fn adjacency_list_naive((m, n): (usize, usize)) {
     (10, 10000),
     (100, 100),
     (100, 1000),
-    (100, 10000),
 ])]
 fn adjacency_list((m, n): (usize, usize)) {
     let _ = adjacency_list::Digraph::biclique(m, n);
@@ -69,7 +67,6 @@ fn adjacency_list((m, n): (usize, usize)) {
     (10, 10000),
     (100, 100),
     (100, 1000),
-    (100, 10000),
 ])]
 fn adjacency_matrix((m, n): (usize, usize)) {
     let _ = adjacency_matrix::Digraph::biclique(m, n);
