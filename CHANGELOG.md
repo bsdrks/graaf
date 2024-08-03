@@ -22,7 +22,7 @@
 - Implement `Debug` for `adjacency_list_weighted::Digraph` to show arcs.
 - Implement `Debug` for `adjacency_matrix::Digraph` to show arcs.
 
-## [0.75.5] - 2024-08-03
+## [0.76.0] - 2024-08-03
 
 Added
 
@@ -39,6 +39,7 @@ Added
 
 Changed
 
+- Breaking: remove `Biclique` blanket implementation for `D: AddArc + Empty`.
 - Improve performance of `Biclique::biclique` for `adjacency_list`.
 - Remove `sample_size` attribute from `single_source_distances` benchmarks.
 

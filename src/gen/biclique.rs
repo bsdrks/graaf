@@ -70,18 +70,11 @@
 /// # How can I implement `Biclique`?
 ///
 /// Provide an implementation of `biclique` that generates a complete bipartite
-/// digraph with two partitions of `m` and `n` vertices OR implement `AddArc`
-/// and `Empty`.
+/// digraph with two partitions of `m` and `n` vertices.
 ///
 /// ```
 /// use {
-///     graaf::{
-///         gen::{
-///             Biclique,
-///             Empty,
-///         },
-///         op::AddArc,
-///     },
+///     graaf::gen::Biclique,
 ///     std::collections::BTreeSet,
 /// };
 ///
@@ -89,17 +82,22 @@
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl AddArc for Digraph {
-///     fn add_arc(&mut self, u: usize, v: usize) {
-///         self.arcs[u].insert(v);
-///     }
-/// }
+/// impl Biclique for Digraph {
+///     fn biclique(m: usize, n: usize) -> Self {
+///         let order = m + n;
+///         let clique_1 = (0..m).collect::<BTreeSet<_>>();
+///         let clique_2 = (m..order).collect::<BTreeSet<_>>();
+///         let mut arcs = vec![BTreeSet::new(); order];
 ///
-/// impl Empty for Digraph {
-///     fn empty(order: usize) -> Self {
-///         Self {
-///             arcs: vec![BTreeSet::new(); order],
+///         for u in 0..m {
+///             arcs[u].clone_from(&clique_2);
 ///         }
+///
+///         for v in m..order {
+///             arcs[v].clone_from(&clique_1);
+///         }
+///
+///         Self { arcs }
 ///     }
 /// }
 ///
