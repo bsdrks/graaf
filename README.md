@@ -124,17 +124,9 @@ The Bellman-Ford-Moore algorithm finds the shortest paths in an arc-weighted dig
 
 A breadth-first search explores the vertices of an unweighted digraph in order of their distance from a source.
 
-These functions start from one or more source vertices and allow a custom step function, target predicate, distance array, breadth-first tree, and queue, where applicable.
-
-- [`distances`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.distances.html) finds the shortest distances.
-- [`predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.predecessors.html) finds the predecessors.
-- [`shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.shortest_path.html) finds the shortest path.
-
-These functions start from one source vertex.
-
-- [`single_source_distances`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.single_source_distances.html) finds the shortest distances.
-- [`single_source_predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.single_source_predecessors.html) finds the predecessors.
-- [`single_pair_shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs/fn.single_pair_shortest_path.html) finds the shortest path.
+- [`distances`](https://docs.rs/graaf/latest/graaf/algo/bfs/struct.Bfs.html#method.distances) finds the shortest distances.
+- [`predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs/struct.Bfs.html#method.predecessors) finds the predecessors.
+- [`shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs/struct.Bfs.html#method.shortest_path) finds the shortest path.
 
 ### Depth-First Search (DFS)
 
