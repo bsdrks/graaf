@@ -18,14 +18,20 @@
 - Add the `MinSemidegree` trait.
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
-- Implement `Debug` for `adjacency_list::Digraph` to show arcs.
-- Implement `Debug` for `adjacency_list_weighted::Digraph` to show arcs.
-- Implement `Debug` for `adjacency_matrix::Digraph` to show arcs.
+
+## [0.77.1] - 2024-08-04
+
+Fixed
+
+- Fix `Bfs` links in `README.md`.
 
 ## [0.77.0] - 2024-08-04
 
 Added
 
+- Add `Bfs::distances`.
+- Add `Bfs::predecessors`.
+- Add `Bfs::shortest_path`.
 - Add type `algo::Bfs` to represent the BFS algorithm.
 - Add type `bfs::Step` to represent a step in the BFS algorithm.
 - Implement `Bfs::new`.
@@ -35,26 +41,26 @@ Added
 
 Changed
 
-- Breaking: `Circuit for D: AddArc + Empty` is deprecated in favor of `Circuit for adjacency_list::Digraph` and `Circuit for adjacency_matrix::Digraph`.
-- Breaking: `bfs::distances` is replaced by `bfs::Bfs::distances`.
-- Breaking: `bfs::predecessors` is replaced by `bfs::Bfs::predecessors`.
-- Breaking: `bfs::shortest_path` is replaced by `bfs::Bfs::shortest_path`.
-- Breaking: `bfs::single_pair_shortest_path` is deprecated in favor of `bfs::Bfs::shortest_path`.
-- Breaking: `bfs::single_source_distances` is deprecated in favor of `bfs::Bfs::distances`.
-- Breaking: `bfs::single_source_predecessors` is deprecated in favor of `bfs::Bfs::predecessors`.
-- `adjacency_list::digraph` unit tests are synced with the new `adjacency_list::fixture::kattis_escapewallmaria_*` fixtures.
-- `adjacency_list::fixture::kattis_escapewallmaria_*` digraphs are of order 16.
-- `adjacency_matrix::digraph` unit tests are synced with the new `adjacency_matrix::fixture::kattis_escapewallmaria_*` fixtures.
-- `adjacency_matrix::fixture::kattis_escapewallmaria_*` digraphs are of order 16.
-- `algo::circuit` documentation shows an implementation that does not use `AddArc` and `Empty`.
-- `bench::algo::circuit` benchmarks the new `Circuit` implementation for `adjacency_list` alongside the previous implementation.
-- `bench::algo::single_source_distances` use the new `Bfs` API.
-- `bfs` doctest examples use the new `Bfs` API.
-- `bfs` unit tests are updated to use the new `Bfs` API.
-- `breadth_first_tree` doctest examples use the new `Bfs` API.
+- Benchmark the new `Circuit` implementation for `adjacency_list` alongside the previous implementation in `bench::algo::circuit`.
+- Expand `adjacency_list::fixture::kattis_escapewallmaria_*` digraphs to be of order 16.
+- Expand `adjacency_matrix::fixture::kattis_escapewallmaria_*` digraphs to be of order 16.
+- Shows an implementation that does not use `AddArc` and `Empty` in the `algo::circuit` documentation.
+- Sync `adjacency_list::digraph` unit tests with the new `adjacency_list::fixture::kattis_escapewallmaria_*` fixtures.
+- Sync `adjacency_matrix::digraph` unit tests with the new `adjacency_matrix::fixture::kattis_escapewallmaria_*` fixtures.
+- Use the new `Bfs` API in `bench::algo::single_source_distances`.
+- Use the new `Bfs` API in `bfs` doctest examples.
+- Use the new `Bfs` API in `bfs` unit tests.
+- Use the new `Bfs` API in `breadth_first_tree` doctest examples.
 
 Removed
 
+- Breaking: remove `Circuit for D: AddArc + Empty` in favor of `Circuit for adjacency_list::Digraph` and `Circuit for adjacency_matrix::Digraph`.
+- Breaking: remove `bfs::distances` in favor of `bfs::Bfs::distances`.
+- Breaking: remove `bfs::predecessors` in favor of `bfs::Bfs::predecessors`.
+- Breaking: remove `bfs::shortest_path` in favor of `bfs::Bfs::shortest_path`.
+- Breaking: remove `bfs::single_pair_shortest_path`.
+- Breaking: remove `bfs::single_source_distances`.
+- Breaking: remove `bfs::single_source_predecessors`.
 - Remove references to `algo::bfs` and `algo::floyd_warshall` from the `algo::dijkstra` documentation.
 - Remove references to `algo::dijkstra` from the `algo::bfs` documentation.
 

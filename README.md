@@ -31,7 +31,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.77.0"
+graaf = "0.77.1"
 ```
 
 ## Digraph Types
@@ -124,9 +124,10 @@ The Bellman-Ford-Moore algorithm finds the shortest paths in an arc-weighted dig
 
 A breadth-first search explores the vertices of an unweighted digraph in order of their distance from a source.
 
-- [`distances`](https://docs.rs/graaf/latest/graaf/algo/bfs/struct.Bfs.html#method.distances) finds the shortest distances.
-- [`predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs/struct.Bfs.html#method.predecessors) finds the predecessors.
-- [`shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs/struct.Bfs.html#method.shortest_path) finds the shortest path.
+- [`Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs/struct.Bfs.html) traverses the digraph.
+- [`Bfs::distances`](https://docs.rs/graaf/latest/graaf/algo/bfs/struct.Bfs.html#method.distances) finds the shortest distances.
+- [`Bfs::predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs/struct.Bfs.html#method.predecessors) finds the predecessors.
+- [`Bfs::shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs/struct.Bfs.html#method.shortest_path) finds the shortest path.
 
 ### Depth-First Search (DFS)
 
