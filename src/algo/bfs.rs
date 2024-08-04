@@ -304,9 +304,9 @@ where
     /// # Arguments
     ///
     /// * `digraph`: The digraph.
-    /// * `step`: The function that calculates the accumulated distance.
-    /// * `dist`: The distances from the source vertices.
     /// * `queue`: The source vertices.
+    /// * `update`: The function that calculates the accumulated distance.
+    /// * `visited`: The set of visited vertices.
     pub const fn new(
         digraph: &'a D,
         queue: VecDeque<(usize, W)>,
@@ -321,13 +321,11 @@ where
         }
     }
 
-    /// Finds the shortest distances from one or more source vertices to all
-    /// other vertices.
+    /// Finds the distances from the source vertices to all other vertices.
     ///
     /// # Panics
     ///
-    /// * Panics if `step` panics.
-    /// * Panics if a source or successor vertex is not in `dist`.
+    /// * Panics if `self.next` panics.
     /// * Panics if a source or successor vertex is not in `digraph`.
     ///
     /// # Examples
@@ -377,13 +375,11 @@ where
         dist
     }
 
-    /// Finds the breadth-first tree and distances from the source vertices.
+    /// Finds the breadth-first tree.
     ///
     /// # Panics
     ///
-    /// * Panics if `step` panics.
-    /// * Panics if a source or successor vertex is not in `dist`.
-    /// * Panics if a source or successor vertex is not in `digraph`.
+    /// * Panics if `self.next` panics.
     /// * Panics if a source or successor vertex is not in `pred`.
     ///
     /// # Examples
