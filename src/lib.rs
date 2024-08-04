@@ -132,22 +132,9 @@
 //! A breadth-first search explores the vertices of an unweighted digraph in
 //! order of their distance from a source.
 //!
-//! These functions start from one or more source vertices and allow a custom
-//! step function, target predicate, distance array, breadth-first tree, and
-//! queue, where applicable.
-//!
-//! - [`distances`](algo::bfs::distances) finds the shortest distances.
-//! - [`predecessors`](algo::bfs::predecessors) finds the predecessors.
-//! - [`shortest_path`](algo::bfs::shortest_path) finds the shortest path.
-//!
-//! These functions start from one source vertex.
-//!
-//! - [`single_source_distances`](algo::bfs::single_source_distances) finds the
-//!   shortest distances.
-//! - [`single_source_predecessors`](algo::bfs::single_source_predecessors)
-//!   finds the predecessors.
-//! - [`single_pair_shortest_path`](algo::bfs::single_pair_shortest_path) finds
-//!   the shortest path.
+//! - [`distances`](algo::Bfs::distances) finds the shortest distances.
+//! - [`predecessors`](algo::Bfs::predecessors) finds the predecessors.
+//! - [`shortest_path`](algo::Bfs::shortest_path) finds the shortest path.
 //!
 //! ## Depth-First Search (DFS)
 //!
@@ -211,8 +198,7 @@
 //!
 //! These functions produce a breadth-first tree.
 //!
-//! - [`bfs::single_source_predecessors`](algo::bfs::single_source_predecessors)
-//! - [`bfs::predecessors`](algo::bfs::predecessors)
+//! - [`Bfs::predecessors`](algo::Bfs::predecessors)
 //! - [`dijkstra::single_source_predecessors`](algo::dijkstra::single_source_predecessors)
 //! - [`dijkstra::predecessors`](algo::dijkstra::predecessors)
 //!
