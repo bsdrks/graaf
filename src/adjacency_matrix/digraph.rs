@@ -51,7 +51,10 @@ use {
             Size,
             Vertices,
         },
-        r#gen::Biclique,
+        r#gen::{
+            Biclique,
+            Circuit,
+        },
     },
     std::collections::BTreeSet,
 };
@@ -182,6 +185,27 @@ impl Biclique for Digraph {
                 digraph.add_arc(v, u);
             }
         }
+
+        digraph
+    }
+}
+
+impl Circuit for Digraph {
+    /// # Panics
+    ///
+    /// Panics if `order` is zero.
+    fn circuit(order: usize) -> Self {
+        let mut digraph = Self::empty(order);
+
+        if order == 1 {
+            return digraph;
+        }
+
+        for u in 0..order - 1 {
+            digraph.add_arc(u, u + 1);
+        }
+
+        digraph.add_arc(order - 1, 0);
 
         digraph
     }
@@ -3237,21 +3261,21 @@ mod tests {
     fn degree_sequence_kattis_escapewallmaria_1() {
         assert!(kattis_escapewallmaria_1()
             .degree_sequence()
-            .eq([0, 0, 0, 0, 0, 4, 2, 0, 0, 4, 0, 0, 1, 3]));
+            .eq([0, 0, 0, 0, 0, 4, 2, 0, 0, 4, 0, 0, 1, 3, 0, 0]));
     }
 
     #[test]
     fn degree_sequence_kattis_escapewallmaria_2() {
         assert!(kattis_escapewallmaria_2()
             .degree_sequence()
-            .eq([0, 0, 0, 0, 0, 4, 2, 0, 0, 3, 0, 0, 2, 3]));
+            .eq([0, 0, 0, 0, 0, 4, 2, 0, 0, 3, 0, 0, 2, 3, 0, 0]));
     }
 
     #[test]
     fn degree_sequence_kattis_escapewallmaria_3() {
         assert!(kattis_escapewallmaria_3()
             .degree_sequence()
-            .eq([0, 4, 4, 0, 0, 6, 4, 0, 0, 4, 0, 0, 2, 4]));
+            .eq([0, 4, 4, 0, 0, 6, 4, 0, 0, 4, 0, 0, 2, 4, 0, 0]));
     }
 
     #[test]
@@ -3433,6 +3457,8 @@ mod tests {
         assert!(digraph.in_neighbors(11).eq([]));
         assert!(digraph.in_neighbors(12).eq([13]));
         assert!(digraph.in_neighbors(13).eq([9]));
+        assert!(digraph.in_neighbors(14).eq([]));
+        assert!(digraph.in_neighbors(15).eq([]));
     }
 
     #[test]
@@ -3453,6 +3479,8 @@ mod tests {
         assert!(digraph.in_neighbors(11).eq([]));
         assert!(digraph.in_neighbors(12).eq([13]));
         assert!(digraph.in_neighbors(13).eq([12]));
+        assert!(digraph.in_neighbors(14).eq([]));
+        assert!(digraph.in_neighbors(15).eq([]));
     }
 
     #[test]
@@ -3473,6 +3501,8 @@ mod tests {
         assert!(digraph.in_neighbors(11).eq([]));
         assert!(digraph.in_neighbors(12).eq([13]));
         assert!(digraph.in_neighbors(13).eq([9, 12]));
+        assert!(digraph.in_neighbors(14).eq([]));
+        assert!(digraph.in_neighbors(15).eq([]));
     }
 
     #[test]
@@ -3580,6 +3610,8 @@ mod tests {
         assert!(digraph.indegree(11) == 0);
         assert!(digraph.indegree(12) == 1);
         assert!(digraph.indegree(13) == 1);
+        assert!(digraph.indegree(14) == 0);
+        assert!(digraph.indegree(15) == 0);
     }
 
     #[test]
@@ -3600,6 +3632,8 @@ mod tests {
         assert!(digraph.indegree(11) == 0);
         assert!(digraph.indegree(12) == 1);
         assert!(digraph.indegree(13) == 1);
+        assert!(digraph.indegree(14) == 0);
+        assert!(digraph.indegree(15) == 0);
     }
 
     #[test]
@@ -3620,6 +3654,8 @@ mod tests {
         assert!(digraph.indegree(11) == 0);
         assert!(digraph.indegree(12) == 1);
         assert!(digraph.indegree(13) == 2);
+        assert!(digraph.indegree(14) == 0);
+        assert!(digraph.indegree(15) == 0);
     }
 
     #[test]
@@ -3672,21 +3708,21 @@ mod tests {
     fn indegree_sequence_kattis_escapewallmaria_1() {
         assert!(kattis_escapewallmaria_1()
             .indegree_sequence()
-            .eq([0, 0, 0, 0, 0, 2, 1, 0, 0, 2, 0, 0, 1, 1]));
+            .eq([0, 0, 0, 0, 0, 2, 1, 0, 0, 2, 0, 0, 1, 1, 0, 0]));
     }
 
     #[test]
     fn indegree_sequence_kattis_escapewallmaria_2() {
         assert!(kattis_escapewallmaria_2()
             .indegree_sequence()
-            .eq([0, 0, 0, 0, 0, 2, 1, 0, 0, 2, 0, 0, 1, 1]));
+            .eq([0, 0, 0, 0, 0, 2, 1, 0, 0, 2, 0, 0, 1, 1, 0, 0]));
     }
 
     #[test]
     fn indegree_sequence_kattis_escapewallmaria_3() {
         assert!(kattis_escapewallmaria_3()
             .indegree_sequence()
-            .eq([0, 2, 2, 0, 0, 3, 2, 0, 0, 2, 0, 0, 1, 2]));
+            .eq([0, 2, 2, 0, 0, 3, 2, 0, 0, 2, 0, 0, 1, 2, 0, 0]));
     }
 
     #[test]
@@ -3884,6 +3920,8 @@ mod tests {
         assert!(digraph.is_isolated(11));
         assert!(!digraph.is_isolated(12));
         assert!(!digraph.is_isolated(13));
+        assert!(digraph.is_isolated(14));
+        assert!(digraph.is_isolated(15));
     }
 
     #[test]
@@ -3904,6 +3942,8 @@ mod tests {
         assert!(digraph.is_isolated(11));
         assert!(!digraph.is_isolated(12));
         assert!(!digraph.is_isolated(13));
+        assert!(digraph.is_isolated(14));
+        assert!(digraph.is_isolated(15));
     }
 
     #[test]
@@ -3924,6 +3964,8 @@ mod tests {
         assert!(digraph.is_isolated(11));
         assert!(!digraph.is_isolated(12));
         assert!(!digraph.is_isolated(13));
+        assert!(digraph.is_isolated(14));
+        assert!(digraph.is_isolated(15));
     }
 
     #[test]
@@ -4076,6 +4118,8 @@ mod tests {
         assert!(!digraph.is_pendant(11));
         assert!(digraph.is_pendant(12));
         assert!(!digraph.is_pendant(13));
+        assert!(!digraph.is_pendant(14));
+        assert!(!digraph.is_pendant(15));
     }
 
     #[test]
@@ -4096,6 +4140,8 @@ mod tests {
         assert!(!digraph.is_pendant(11));
         assert!(!digraph.is_pendant(12));
         assert!(!digraph.is_pendant(13));
+        assert!(!digraph.is_pendant(14));
+        assert!(!digraph.is_pendant(15));
     }
 
     #[test]
@@ -4116,6 +4162,8 @@ mod tests {
         assert!(!digraph.is_pendant(11));
         assert!(!digraph.is_pendant(12));
         assert!(!digraph.is_pendant(13));
+        assert!(!digraph.is_pendant(14));
+        assert!(!digraph.is_pendant(15));
     }
 
     #[test]
@@ -4606,17 +4654,17 @@ mod tests {
 
     #[test]
     fn order_kattis_escapewallmaria_1() {
-        assert_eq!(kattis_escapewallmaria_1().order(), 14);
+        assert_eq!(kattis_escapewallmaria_1().order(), 16);
     }
 
     #[test]
     fn order_kattis_escapewallmaria_2() {
-        assert_eq!(kattis_escapewallmaria_2().order(), 14);
+        assert_eq!(kattis_escapewallmaria_2().order(), 16);
     }
 
     #[test]
     fn order_kattis_escapewallmaria_3() {
-        assert_eq!(kattis_escapewallmaria_3().order(), 14);
+        assert_eq!(kattis_escapewallmaria_3().order(), 16);
     }
 
     #[test]
@@ -5093,6 +5141,8 @@ mod tests {
         assert_eq!(digraph.outdegree(11), 0);
         assert_eq!(digraph.outdegree(12), 0);
         assert_eq!(digraph.outdegree(13), 2);
+        assert_eq!(digraph.outdegree(14), 0);
+        assert_eq!(digraph.outdegree(15), 0);
     }
 
     #[test]
@@ -5113,6 +5163,8 @@ mod tests {
         assert_eq!(digraph.outdegree(11), 0);
         assert_eq!(digraph.outdegree(12), 1);
         assert_eq!(digraph.outdegree(13), 2);
+        assert_eq!(digraph.outdegree(14), 0);
+        assert_eq!(digraph.outdegree(15), 0);
     }
 
     #[test]
@@ -5133,6 +5185,8 @@ mod tests {
         assert_eq!(digraph.outdegree(11), 0);
         assert_eq!(digraph.outdegree(12), 1);
         assert_eq!(digraph.outdegree(13), 2);
+        assert_eq!(digraph.outdegree(14), 0);
+        assert_eq!(digraph.outdegree(15), 0);
     }
 
     #[test]
@@ -5179,21 +5233,21 @@ mod tests {
     fn outdegree_sequence_kattis_escapewallmaria_1() {
         assert!(kattis_escapewallmaria_1()
             .outdegree_sequence()
-            .eq([0, 0, 0, 0, 0, 2, 1, 0, 0, 2, 0, 0, 0, 2]));
+            .eq([0, 0, 0, 0, 0, 2, 1, 0, 0, 2, 0, 0, 0, 2, 0, 0]));
     }
 
     #[test]
     fn outdegree_sequence_kattis_escapewallmaria_2() {
         assert!(kattis_escapewallmaria_2()
             .outdegree_sequence()
-            .eq([0, 0, 0, 0, 0, 2, 1, 0, 0, 1, 0, 0, 1, 2]));
+            .eq([0, 0, 0, 0, 0, 2, 1, 0, 0, 1, 0, 0, 1, 2, 0, 0]));
     }
 
     #[test]
     fn outdegree_sequence_kattis_escapewallmaria_3() {
         assert!(kattis_escapewallmaria_3()
             .outdegree_sequence()
-            .eq([0, 2, 2, 0, 0, 3, 2, 0, 0, 2, 0, 0, 1, 2]));
+            .eq([0, 2, 2, 0, 0, 3, 2, 0, 0, 2, 0, 0, 1, 2, 0, 0]));
     }
 
     #[test]
@@ -5242,7 +5296,6 @@ mod tests {
     fn remove_arc_bang_jensen_196() {
         let mut digraph = bang_jensen_196();
 
-        println!("{:?}", digraph.arcs().collect::<Vec<_>>());
         assert!(digraph.arcs().eq([
             (0, 1),
             (0, 4),
@@ -5792,7 +5845,9 @@ mod tests {
             (0, 0),
             (0, 0),
             (1, 0),
-            (1, 2)
+            (1, 2),
+            (0, 0),
+            (0, 0)
         ]));
     }
 
@@ -5812,7 +5867,9 @@ mod tests {
             (0, 0),
             (0, 0),
             (1, 1),
-            (1, 2)
+            (1, 2),
+            (0, 0),
+            (0, 0)
         ]));
     }
 
@@ -5832,7 +5889,9 @@ mod tests {
             (0, 0),
             (0, 0),
             (1, 1),
-            (2, 2)
+            (2, 2),
+            (0, 0),
+            (0, 0)
         ]));
     }
 
@@ -5870,21 +5929,21 @@ mod tests {
     fn sinks_kattis_escapewallmaria_1() {
         assert!(kattis_escapewallmaria_1()
             .sinks()
-            .eq([0, 1, 2, 3, 4, 7, 8, 10, 11, 12]));
+            .eq([0, 1, 2, 3, 4, 7, 8, 10, 11, 12, 14, 15]));
     }
 
     #[test]
     fn sinks_kattis_escapewallmaria_2() {
         assert!(kattis_escapewallmaria_2()
             .sinks()
-            .eq([0, 1, 2, 3, 4, 7, 8, 10, 11]));
+            .eq([0, 1, 2, 3, 4, 7, 8, 10, 11, 14, 15]));
     }
 
     #[test]
     fn sinks_kattis_escapewallmaria_3() {
         assert!(kattis_escapewallmaria_3()
             .sinks()
-            .eq([0, 3, 4, 7, 8, 10, 11]));
+            .eq([0, 3, 4, 7, 8, 10, 11, 14, 15]));
     }
 
     #[test]
@@ -5966,21 +6025,21 @@ mod tests {
     fn sources_kattis_escapewallmaria_1() {
         assert!(kattis_escapewallmaria_1()
             .sources()
-            .eq([0, 1, 2, 3, 4, 7, 8, 10, 11]));
+            .eq([0, 1, 2, 3, 4, 7, 8, 10, 11, 14, 15]));
     }
 
     #[test]
     fn sources_kattis_escapewallmaria_2() {
         assert!(kattis_escapewallmaria_2()
             .sources()
-            .eq([0, 1, 2, 3, 4, 7, 8, 10, 11]));
+            .eq([0, 1, 2, 3, 4, 7, 8, 10, 11, 14, 15]));
     }
 
     #[test]
     fn sources_kattis_escapewallmaria_3() {
         assert!(kattis_escapewallmaria_3()
             .sources()
-            .eq([0, 3, 4, 7, 8, 10, 11]));
+            .eq([0, 3, 4, 7, 8, 10, 11, 14, 15]));
     }
 
     #[test]

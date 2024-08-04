@@ -10,7 +10,10 @@ pub mod floyd_warshall;
 pub mod tarjan;
 pub mod types;
 
-pub use types::{
-    breadth_first_tree::BreadthFirstTree,
-    distance_matrix::DistanceMatrix,
+pub use {
+    bfs::Bfs,
+    types::{
+        breadth_first_tree::BreadthFirstTree,
+        distance_matrix::DistanceMatrix,
+    },
 };

@@ -252,6 +252,8 @@ pub fn kattis_cantinaofbabel_2() -> Digraph {
 /// 11 -> {}
 /// 12 -> {}
 /// 13 -> {9, 12}
+/// 14 -> {}
+/// 15 -> {}
 /// ```
 #[must_use]
 pub fn kattis_escapewallmaria_1() -> Digraph {
@@ -270,6 +272,8 @@ pub fn kattis_escapewallmaria_1() -> Digraph {
         BTreeSet::new(),
         BTreeSet::new(),
         BTreeSet::from([9, 12]),
+        BTreeSet::new(),
+        BTreeSet::new(),
     ])
 }
 
@@ -291,6 +295,8 @@ pub fn kattis_escapewallmaria_1() -> Digraph {
 /// 11 -> {}
 /// 12 -> {13}
 /// 13 -> {9, 12}
+/// 14 -> {}
+/// 15 -> {}
 /// ```
 #[must_use]
 pub fn kattis_escapewallmaria_2() -> Digraph {
@@ -309,6 +315,8 @@ pub fn kattis_escapewallmaria_2() -> Digraph {
         BTreeSet::new(),
         BTreeSet::from([13]),
         BTreeSet::from([9, 12]),
+        BTreeSet::new(),
+        BTreeSet::new(),
     ])
 }
 
@@ -330,6 +338,8 @@ pub fn kattis_escapewallmaria_2() -> Digraph {
 /// 11 -> {}
 /// 12 -> {13}
 /// 13 -> {9, 12}
+/// 14 -> {}
+/// 15 -> {}
 /// ```
 #[must_use]
 pub fn kattis_escapewallmaria_3() -> Digraph {
@@ -348,5 +358,7 @@ pub fn kattis_escapewallmaria_3() -> Digraph {
         BTreeSet::new(),
         BTreeSet::from([13]),
         BTreeSet::from([9, 12]),
+        BTreeSet::new(),
+        BTreeSet::new(),
     ])
 }

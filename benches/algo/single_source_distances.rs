@@ -29,7 +29,15 @@ fn main() {
 }
 
 mod bang_jensen_94 {
-    use super::*;
+    use {
+        super::*,
+        divan::Bencher,
+        graaf::algo::Bfs,
+        std::collections::{
+            BTreeSet,
+            VecDeque,
+        },
+    };
 
     #[divan::bench]
     fn bellman_ford_moore() {
@@ -40,9 +48,19 @@ mod bang_jensen_94 {
     }
 
     #[divan::bench]
-    fn bfs() {
-        let _ =
-            graaf::algo::bfs::single_source_distances(&bang_jensen_94(), 0);
+    fn bfs(bencher: Bencher<'_, '_>) {
+        let digraph = bang_jensen_94();
+
+        let mut bfs = Bfs::new(
+            &digraph,
+            VecDeque::from([(0, 0)]),
+            |w| w + 1,
+            BTreeSet::from([0]),
+        );
+
+        bencher.bench_local(|| {
+            let _ = bfs.distances();
+        });
     }
 
     #[divan::bench]
@@ -239,8 +257,12 @@ mod random_tournament {
         divan::Bencher,
         graaf::{
             adjacency_list,
-            algo::bfs,
+            algo::Bfs,
             gen::RandomTournament,
+        },
+        std::collections::{
+            BTreeSet,
+            VecDeque,
         },
     };
 
@@ -248,8 +270,15 @@ mod random_tournament {
     fn bfs(bencher: Bencher<'_, '_>) {
         let digraph = adjacency_list::Digraph::random_tournament(100);
 
+        let mut bfs = Bfs::new(
+            &digraph,
+            VecDeque::from([(0, 0)]),
+            |w| w + 1,
+            BTreeSet::from([0]),
+        );
+
         bencher.bench_local(|| {
-            let _ = bfs::single_source_distances(&digraph, 0);
+            let _ = bfs.distances();
         });
     }
 }

@@ -59,14 +59,6 @@
 //! assert_eq!(dist, [2, 4, 6, 0]);
 //! ```
 //!
-//! # Related
-//!
-//! * Use [`bfs`] to find the shortest path in an unweighted digraph.
-//! * Use [`floyd_warshall`] to find the shortest path between all pairs of
-//!   vertices in small, dense, arc-weighted digraphs.
-//!
-//! [`bfs`]: crate::algo::bfs
-//! [`floyd_warshall`]: crate::algo::floyd_warshall
 //! [^1]: Edsger Wybe Dijkstra. 1959. A note on two problems in connexion
 //!   with graphs. Numer. Math. 1, 1 (December 1959), 269–271.
 //!   <https://doi.org/10.1007/BF01386390>

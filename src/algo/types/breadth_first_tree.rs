@@ -7,17 +7,20 @@
 //!
 //! ```
 //! use {
-//!     core::cmp::Reverse,
 //!     graaf::{
 //!         adjacency_list::Digraph,
 //!         algo::{
-//!             bfs::predecessors,
+//!             bfs::Step,
+//!             Bfs,
 //!             BreadthFirstTree,
 //!         },
 //!         gen::Empty,
 //!         op::AddArc,
 //!     },
-//!     std::collections::VecDeque,
+//!     std::collections::{
+//!         BTreeSet,
+//!         VecDeque,
+//!     },
 //! };
 //!
 //! // 0 -> {1}
@@ -31,16 +34,18 @@
 //! digraph.add_arc(1, 2);
 //! digraph.add_arc(3, 0);
 //!
-//! let mut pred = BreadthFirstTree::new(4);
-//! let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
-//! let mut queue = VecDeque::from([(0, 0)]);
+//! let mut bfs = Bfs::new(
+//!     &digraph,
+//!     VecDeque::from([(0, 0)]),
+//!     |w| w + 1,
+//!     BTreeSet::from([0]),
+//! );
 //!
-//! predecessors(&digraph, |w| w + 1, &mut pred, &mut dist, &mut queue);
-//!
-//! assert!(pred.into_iter().eq([None, Some(0), Some(1), None]));
+//! assert!(bfs
+//!     .predecessors()
+//!     .into_iter()
+//!     .eq([None, Some(0), Some(1), None]));
 //! ```
-//!
-//! [breadth-first search]: `crate::algo::bfs`
 
 use std::{
     collections::HashSet,

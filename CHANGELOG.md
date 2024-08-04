@@ -22,6 +22,42 @@
 - Implement `Debug` for `adjacency_list_weighted::Digraph` to show arcs.
 - Implement `Debug` for `adjacency_matrix::Digraph` to show arcs.
 
+## [0.77.0] - 2024-08-04
+
+Added
+
+- Add type `algo::Bfs` to represent the BFS algorithm.
+- Add type `bfs::Step` to represent a step in the BFS algorithm.
+- Implement `Bfs::new`.
+- Implement `Circuit` for `adjacency_list::Digraph`.
+- Implement `Circuit` for `adjacency_matrix::Digraph`.
+- Implement `Iterator for Bfs` to iterate over the vertices in the BFS order.
+
+Changed
+
+- Breaking: `Circuit for D: AddArc + Empty` is deprecated in favor of `Circuit for adjacency_list::Digraph` and `Circuit for adjacency_matrix::Digraph`.
+- Breaking: `bfs::distances` is replaced by `bfs::Bfs::distances`.
+- Breaking: `bfs::predecessors` is replaced by `bfs::Bfs::predecessors`.
+- Breaking: `bfs::shortest_path` is replaced by `bfs::Bfs::shortest_path`.
+- Breaking: `bfs::single_pair_shortest_path` is deprecated in favor of `bfs::Bfs::shortest_path`.
+- Breaking: `bfs::single_source_distances` is deprecated in favor of `bfs::Bfs::distances`.
+- Breaking: `bfs::single_source_predecessors` is deprecated in favor of `bfs::Bfs::predecessors`.
+- `adjacency_list::digraph` unit tests are synced with the new `adjacency_list::fixture::kattis_escapewallmaria_*` fixtures.
+- `adjacency_list::fixture::kattis_escapewallmaria_*` digraphs are of order 16.
+- `adjacency_matrix::digraph` unit tests are synced with the new `adjacency_matrix::fixture::kattis_escapewallmaria_*` fixtures.
+- `adjacency_matrix::fixture::kattis_escapewallmaria_*` digraphs are of order 16.
+- `algo::circuit` documentation shows an implementation that does not use `AddArc` and `Empty`.
+- `bench::algo::circuit` benchmarks the new `Circuit` implementation for `adjacency_list` alongside the previous implementation.
+- `bench::algo::single_source_distances` use the new `Bfs` API.
+- `bfs` doctest examples use the new `Bfs` API.
+- `bfs` unit tests are updated to use the new `Bfs` API.
+- `breadth_first_tree` doctest examples use the new `Bfs` API.
+
+Removed
+
+- Remove references to `algo::bfs` and `algo::floyd_warshall` from the `algo::dijkstra` documentation.
+- Remove references to `algo::dijkstra` from the `algo::bfs` documentation.
+
 ## [0.76.0] - 2024-08-03
 
 Added
