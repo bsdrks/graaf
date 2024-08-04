@@ -132,9 +132,10 @@
 //! A breadth-first search explores the vertices of an unweighted digraph in
 //! order of their distance from a source.
 //!
-//! - [`distances`](algo::Bfs::distances) finds the shortest distances.
-//! - [`predecessors`](algo::Bfs::predecessors) finds the predecessors.
-//! - [`shortest_path`](algo::Bfs::shortest_path) finds the shortest path.
+//! - [`Bfs`](algo::Bfs) traverses the digraph.
+//! - [`Bfs::distances`](algo::Bfs::distances) finds the shortest distances.
+//! - [`Bfs::predecessors`](algo::Bfs::predecessors) finds the predecessors.
+//! - [`Bfs::shortest_path`](algo::Bfs::shortest_path) finds the shortest path.
 //!
 //! ## Depth-First Search (DFS)
 //!
