@@ -32,7 +32,7 @@ mod bang_jensen_94 {
     use {
         super::*,
         divan::Bencher,
-        graaf::algo::bfs_depth::Iter,
+        graaf::algo::bfs_depth::Bfs,
     };
 
     #[divan::bench]
@@ -46,7 +46,7 @@ mod bang_jensen_94 {
     #[divan::bench]
     fn bfs(bencher: Bencher<'_, '_>) {
         let digraph = bang_jensen_94();
-        let mut bfs = Iter::new(&digraph, &[0]);
+        let mut bfs = Bfs::new(&digraph, &[0]);
 
         bencher.bench_local(|| {
             let _ = bfs.distances();
@@ -247,7 +247,7 @@ mod random_tournament {
         divan::Bencher,
         graaf::{
             adjacency_list,
-            algo::bfs_depth::Iter,
+            algo::bfs_depth::Bfs,
             gen::RandomTournament,
         },
     };
@@ -255,7 +255,7 @@ mod random_tournament {
     #[divan::bench]
     fn bfs(bencher: Bencher<'_, '_>) {
         let digraph = adjacency_list::Digraph::random_tournament(100);
-        let mut bfs = Iter::new(&digraph, &[0]);
+        let mut bfs = Bfs::new(&digraph, &[0]);
 
         bencher.bench_local(|| {
             let _ = bfs.distances();
