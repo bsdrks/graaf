@@ -127,7 +127,6 @@ A breadth-first search explores the vertices of an unweighted digraph in order o
 - [`bfs::Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs/struct.Bfs.html) iterates over the vertices.
 - [`bfs_depth::Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs_depth/struct.Bfs.html) iterates over the vertices and their depths.
 - [`bfs_successors::Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html) iterates over the vertices and their successors.
-
 - [`bfs_depth::Bfs::distances`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html#method.distances) finds the distances.
 - [`bfs_successors::Bfs::predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html#method.predecessors) finds the predecessors.
 - [`bfs_successors::Bfs::shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html#method.shortest_path) finds the shortest path.
