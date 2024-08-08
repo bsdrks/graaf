@@ -135,8 +135,8 @@ A breadth-first search explores the vertices of an unweighted digraph in order o
 
 A depth-first search explores the vertices of an unweighted digraph in order of their depth from a source.
 
-- [`bfs::Bfs`](https://docs.rs/graaf/latest/graaf/algo/dfs/struct.Dfs.html) iterates over the vertices.
-- [`bfs_depth::Bfs`](https://docs.rs/graaf/latest/graaf/algo/dfs_depth/struct.Dfs.html) iterates over the vertices and their depths.
+- [`dfs::Dfs`](https://docs.rs/graaf/latest/graaf/algo/dfs/struct.Dfs.html) iterates over the vertices.
+- [`dfs_depth::Dfs`](https://docs.rs/graaf/latest/graaf/algo/dfs_depth/struct.Dfs.html) iterates over the vertices and their depths.
 
 ### Dijkstra
 
