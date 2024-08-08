@@ -32,11 +32,7 @@ mod bang_jensen_94 {
     use {
         super::*,
         divan::Bencher,
-        graaf::algo::Bfs,
-        std::collections::{
-            BTreeSet,
-            VecDeque,
-        },
+        graaf::algo::bfs_depth::Iter,
     };
 
     #[divan::bench]
@@ -50,13 +46,7 @@ mod bang_jensen_94 {
     #[divan::bench]
     fn bfs(bencher: Bencher<'_, '_>) {
         let digraph = bang_jensen_94();
-
-        let mut bfs = Bfs::new(
-            &digraph,
-            VecDeque::from([(0, 0)]),
-            |w| w + 1,
-            BTreeSet::from([0]),
-        );
+        let mut bfs = Iter::new(&digraph, &[0]);
 
         bencher.bench_local(|| {
             let _ = bfs.distances();
@@ -257,25 +247,15 @@ mod random_tournament {
         divan::Bencher,
         graaf::{
             adjacency_list,
-            algo::Bfs,
+            algo::bfs_depth::Iter,
             gen::RandomTournament,
-        },
-        std::collections::{
-            BTreeSet,
-            VecDeque,
         },
     };
 
     #[divan::bench]
     fn bfs(bencher: Bencher<'_, '_>) {
         let digraph = adjacency_list::Digraph::random_tournament(100);
-
-        let mut bfs = Bfs::new(
-            &digraph,
-            VecDeque::from([(0, 0)]),
-            |w| w + 1,
-            BTreeSet::from([0]),
-        );
+        let mut bfs = Iter::new(&digraph, &[0]);
 
         bencher.bench_local(|| {
             let _ = bfs.distances();

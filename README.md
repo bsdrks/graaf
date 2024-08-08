@@ -31,7 +31,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.77.1"
+graaf = "0.78.0"
 ```
 
 ## Digraph Types
@@ -124,18 +124,20 @@ The Bellman-Ford-Moore algorithm finds the shortest paths in an arc-weighted dig
 
 A breadth-first search explores the vertices of an unweighted digraph in order of their distance from a source.
 
-- [`Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs/struct.Bfs.html) traverses the digraph.
-- [`Bfs::distances`](https://docs.rs/graaf/latest/graaf/algo/bfs/struct.Bfs.html#method.distances) finds the shortest distances.
-- [`Bfs::predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs/struct.Bfs.html#method.predecessors) finds the predecessors.
-- [`Bfs::shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs/struct.Bfs.html#method.shortest_path) finds the shortest path.
+- [`bfs::Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs/struct.Bfs.html) iterates over the vertices.
+- [`bfs_depth::Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs_depth/struct.Bfs.html) iterates over the vertices and their depths.
+- [`bfs_successors::Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html) iterates over the vertices and their successors.
+
+- [`bfs_depth::Bfs::distances`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html#method.distances) finds the distances.
+- [`bfs_successors::Bfs::predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html#method.predecessors) finds the predecessors.
+- [`bfs_successors::Bfs::shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html#method.shortest_path) finds the shortest path.
 
 ### Depth-First Search (DFS)
 
 A depth-first search explores the vertices of an unweighted digraph in order of their depth from a source.
 
-- [`dfsa`](https://docs.rs/graaf/latest/graaf/algo/dfs/fn.dfsa.html) traverses the digraph.
-- [`dfsa_predecessors`](https://docs.rs/graaf/latest/graaf/algo/dfs/fn.dfsa_predecessors.html) finds the predecessors.
-- [`acyclic_ordering`](https://docs.rs/graaf/latest/graaf/algo/dfs/fn.acyclic_ordering.html) generates an acyclic ordering.
+- [`bfs::Bfs`](https://docs.rs/graaf/latest/graaf/algo/dfs/struct.Dfs.html) iterates over the vertices.
+- [`bfs_depth::Bfs`](https://docs.rs/graaf/latest/graaf/algo/dfs_depth/struct.Dfs.html) iterates over the vertices and their depths.
 
 ### Dijkstra
 
@@ -169,14 +171,14 @@ Tarjan's algorithm finds the strongly connected components in a digraph.
 
 These types are produced by the algorithms.
 
-#### Breadth-First Tree
+#### Predecessor Tree
 
-A breadth-first tree is the result of a breadth-first search.
+A predecessor tree is the result of a breadth-first search.
 
-- [`search`](https://docs.rs/graaf/latest/graaf/algo/types/breadth_first_tree/struct.BreadthFirstTree.html#method.search) finds a vertex by value.
-- [`search_by`](https://docs.rs/graaf/latest/graaf/algo/types/breadth_first_tree/struct.BreadthFirstTree.html#method.search_by) finds a vertex by predicate.
+- [`search`](https://docs.rs/graaf/latest/graaf/algo/types/predecessor_tree/struct.PredecessorTree.html#method.search) finds a vertex by value.
+- [`search_by`](https://docs.rs/graaf/latest/graaf/algo/types/predecessor_tree/struct.PredecessorTree.html#method.search_by) finds a vertex by predicate.
 
-These functions produce a breadth-first tree.
+These functions produce a predecessor tree.
 
 - [`bfs::single_source_predecessors`](https://docs.rs/graaf/latest/graaf/algo/types/bfs/fn.single_source_predecessors.html)
 - [`bfs::predecessors`](https://docs.rs/graaf/latest/graaf/algo/types/bfs/fn.predecessors.html)

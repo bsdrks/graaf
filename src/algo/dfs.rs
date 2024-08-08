@@ -5,408 +5,171 @@
 //!
 //! The time complexity is *O*(*v* + *a*).
 
-use crate::op::{
-    Order,
-    OutNeighbors,
+use {
+    crate::op::{
+        Order,
+        OutNeighbors,
+    },
+    std::collections::BTreeSet,
 };
 
-/// Generates an acyclic ordering of the vertices of an unweighted digraph.
-///
-/// # Arguments
-///
-/// * `digraph`: The digraph.
-/// * `ordering`: The ordering.
-/// * `t_visit`: The time of the first visit of each vertex.
-/// * `t_expl`: The time of the last exploration of each vertex.
+/// Depth-first search.
 ///
 /// # Examples
 ///
 /// ```
 /// use graaf::{
 ///     adjacency_list::Digraph,
-///     algo::dfs::dfsa,
+///     algo::dfs::Dfs,
 ///     gen::Empty,
 ///     op::AddArc,
 /// };
 ///
-/// // 0 -> {4}
-/// // 1 -> {0}
-/// // 2 -> {1, 3, 5}
-/// // 3 -> {}
+/// // 0 -> {1, 2}
+/// // 1 -> {4}
+/// // 2 -> {3, 4}
+/// // 3 -> {4}
 /// // 4 -> {}
-/// // 5 -> {4}
 ///
-/// let mut digraph = Digraph::empty(6);
+/// let mut digraph = Digraph::empty(5);
 ///
-/// digraph.add_arc(0, 4);
-/// digraph.add_arc(1, 0);
-/// digraph.add_arc(2, 1);
+/// digraph.add_arc(0, 1);
+/// digraph.add_arc(0, 2);
+/// digraph.add_arc(1, 4);
 /// digraph.add_arc(2, 3);
-/// digraph.add_arc(2, 5);
-/// digraph.add_arc(5, 4);
+/// digraph.add_arc(2, 4);
+/// digraph.add_arc(3, 4);
 ///
-/// let mut ordering = [0; 6];
-/// let mut t_visit = [0; 6];
-/// let mut t_expl = [0; 6];
-///
-/// dfsa(&digraph, &mut ordering, &mut t_visit, &mut t_expl);
-///
-/// assert!(ordering.iter().eq(&[2, 5, 3, 1, 0, 4]));
+/// assert!(Dfs::new(&digraph, 0).eq([0, 2, 4, 3, 1]));
 /// ```
-pub fn dfsa<D>(
-    digraph: &D,
-    ordering: &mut [usize],
-    t_visit: &mut [usize],
-    t_expl: &mut [usize],
-) where
-    D: OutNeighbors + Order,
-{
-    let order = digraph.order();
-    let mut t = 0;
-    let mut i = order;
-
-    for u in 0..order {
-        if t_visit[u] == 0 {
-            dfsa_visit(digraph, u, ordering, t_visit, t_expl, &mut i, &mut t);
-        }
-    }
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+pub struct Dfs<'a, D> {
+    digraph: &'a D,
+    stack: Vec<usize>,
+    visited: BTreeSet<usize>,
 }
 
-#[allow(clippy::too_many_arguments)]
-fn dfsa_visit<D>(
-    digraph: &D,
-    u: usize,
-    ordering: &mut [usize],
-    t_visit: &mut [usize],
-    t_expl: &mut [usize],
-    i: &mut usize,
-    t: &mut usize,
-) where
-    D: OutNeighbors,
-{
-    *t += 1;
-    t_visit[u] = *t;
-
-    for v in digraph.out_neighbors(u) {
-        if t_visit[v] == 0 {
-            dfsa_visit(digraph, v, ordering, t_visit, t_expl, i, t);
-        }
-    }
-
-    *t += 1;
-    *i -= 1;
-    t_expl[u] = *t;
-    ordering[*i] = u;
-}
-
-/// Generates the breadth-first tree and an acyclic ordering of the vertices of
-/// an unweighted digraph.
-///
-/// # Arguments
-///
-/// * `digraph`: The digraph.
-/// * `ordering`: The ordering.
-/// * `pred`: The breadth-first tree.
-/// * `t_visit`: The time of the first visit of each vertex.
-/// * `t_expl`: The time of the last exploration of each vertex.
-///
-/// # Examples
-///
-/// ```
-/// use graaf::{
-///     adjacency_list::Digraph,
-///     algo::dfs::dfsa_predecessors,
-///     gen::Empty,
-///     op::AddArc,
-/// };
-///
-/// // 0 -> {4}
-/// // 1 -> {0}
-/// // 2 -> {1, 3, 5}
-/// // 3 -> {}
-/// // 4 -> {}
-/// // 5 -> {4}
-///
-/// let mut digraph = Digraph::empty(6);
-///
-/// digraph.add_arc(0, 4);
-/// digraph.add_arc(1, 0);
-/// digraph.add_arc(2, 1);
-/// digraph.add_arc(2, 3);
-/// digraph.add_arc(2, 5);
-/// digraph.add_arc(5, 4);
-///
-/// let mut ordering = [0; 6];
-/// let mut pred = [None; 6];
-/// let mut t_visit = [0; 6];
-/// let mut t_expl = [0; 6];
-///
-/// dfsa_predecessors(
-///     &digraph,
-///     &mut ordering,
-///     &mut pred,
-///     &mut t_visit,
-///     &mut t_expl,
-/// );
-///
-/// assert!(ordering.iter().eq(&[2, 5, 3, 1, 0, 4]));
-/// ```
-pub fn dfsa_predecessors<D>(
-    digraph: &D,
-    ordering: &mut [usize],
-    pred: &mut [Option<usize>],
-    t_visit: &mut [usize],
-    t_expl: &mut [usize],
-) where
-    D: Order + OutNeighbors,
-{
-    let order = digraph.order();
-    let mut t = 0;
-    let mut i = order;
-
-    for u in 0..order {
-        if t_visit[u] == 0 {
-            dfsa_predecessors_visit(
-                digraph, u, ordering, pred, t_visit, t_expl, &mut i, &mut t,
-            );
-        }
-    }
-}
-
-#[allow(clippy::too_many_arguments)]
-fn dfsa_predecessors_visit<D>(
-    digraph: &D,
-    u: usize,
-    ordering: &mut [usize],
-    pred: &mut [Option<usize>],
-    t_visit: &mut [usize],
-    t_expl: &mut [usize],
-    i: &mut usize,
-    t: &mut usize,
-) where
-    D: OutNeighbors,
-{
-    *t += 1;
-    t_visit[u] = *t;
-
-    for v in digraph.out_neighbors(u) {
-        if t_visit[v] == 0 {
-            pred[v] = Some(u);
-
-            dfsa_predecessors_visit(
-                digraph, v, ordering, pred, t_visit, t_expl, i, t,
-            );
-        }
-    }
-
-    *t += 1;
-    *i -= 1;
-    t_expl[u] = *t;
-    ordering[*i] = u;
-}
-
-/// Generates an acyclic ordering of the vertices of a digraph.
-///
-/// # Arguments
-///
-/// * `digraph`: The digraph.
-///
-/// # Returns
-///
-/// An acyclic ordering of the vertices of the digraph.
-///
-/// # Examples
-///
-/// ```
-/// use graaf::{
-///     adjacency_list::Digraph,
-///     algo::dfs::acyclic_ordering,
-///     gen::Empty,
-///     op::AddArc,
-/// };
-///
-/// // 0 -> {4}
-/// // 1 -> {0}
-/// // 2 -> {1, 3, 5}
-/// // 3 -> {}
-/// // 4 -> {}
-/// // 5 -> {4}
-///
-/// let mut digraph = Digraph::empty(6);
-///
-/// digraph.add_arc(0, 4);
-/// digraph.add_arc(1, 0);
-/// digraph.add_arc(2, 1);
-/// digraph.add_arc(2, 3);
-/// digraph.add_arc(2, 5);
-/// digraph.add_arc(5, 4);
-///
-/// assert!(acyclic_ordering(&digraph).iter().eq(&[2, 5, 3, 1, 0, 4]));
-/// ```
-#[must_use]
-pub fn acyclic_ordering<D>(digraph: &D) -> Vec<usize>
+impl<'a, D> Iterator for Dfs<'a, D>
 where
-    D: Order + OutNeighbors,
+    D: OutNeighbors,
 {
-    let order = digraph.order();
-    let mut ordering = vec![0; order];
-    let mut t_visit = vec![0; order];
-    let mut t_expl = vec![0; order];
+    type Item = usize;
 
-    dfsa(digraph, &mut ordering, &mut t_visit, &mut t_expl);
+    fn next(&mut self) -> Option<Self::Item> {
+        if let Some(u) = self.stack.pop() {
+            if self.visited.insert(u) {
+                for v in self
+                    .digraph
+                    .out_neighbors(u)
+                    .filter(|v| !self.visited.contains(v))
+                {
+                    self.stack.push(v);
+                }
 
-    ordering
+                return Some(u);
+            }
+        }
+
+        None
+    }
+}
+
+impl<'a, D> Dfs<'a, D> {
+    /// Constructs a new depth-first search.
+    ///
+    /// # Arguments
+    ///
+    /// * `digraph`: The digraph.
+    /// * `source`: The source vertex.
+    pub fn new(digraph: &'a D, source: usize) -> Self
+    where
+        D: Order + OutNeighbors,
+    {
+        Self {
+            digraph,
+            stack: vec![source],
+            visited: BTreeSet::new(),
+        }
+    }
 }
 
 #[cfg(test)]
 mod tests {
     use {
         super::*,
-        crate::{
-            adjacency_list::{
-                fixture::{
-                    bang_jensen_34,
-                    kattis_builddeps,
-                },
-                Digraph,
-            },
-            gen::Empty,
+        crate::adjacency_list::fixture::{
+            bang_jensen_196,
+            bang_jensen_34,
+            bang_jensen_94,
+            kattis_builddeps,
+            kattis_cantinaofbabel_1,
+            kattis_cantinaofbabel_2,
+            kattis_escapewallmaria_1,
+            kattis_escapewallmaria_2,
+            kattis_escapewallmaria_3,
         },
     };
 
     #[test]
-    fn dfsa_trivial() {
-        let digraph = Digraph::trivial();
-        let order = digraph.order();
-        let mut ordering = vec![0; order];
-        let mut t_visit = vec![0; order];
-        let mut t_expl = vec![0; order];
+    fn iter_bang_jensen_196() {
+        let digraph = bang_jensen_196();
 
-        dfsa(&digraph, &mut ordering, &mut t_visit, &mut t_expl);
-
-        assert!(ordering.iter().eq(&[0]));
+        assert!(Dfs::new(&digraph, 0).eq([0, 7, 5, 6, 4, 2, 3, 1]));
     }
 
     #[test]
-    fn dfsa_bang_jensen_34() {
+    fn iter_bang_jensen_34() {
         let digraph = bang_jensen_34();
-        let order = digraph.order();
-        let mut ordering = vec![0; order];
-        let mut t_visit = vec![0; order];
-        let mut t_expl = vec![0; order];
 
-        dfsa(&digraph, &mut ordering, &mut t_visit, &mut t_expl);
-
-        assert!(ordering.iter().eq(&[2, 5, 3, 1, 0, 4]));
+        assert!(Dfs::new(&digraph, 0).eq([0, 4]));
     }
 
     #[test]
-    fn dfsa_kattis_builddeps() {
+    fn iter_bang_jensen_94() {
+        let digraph = bang_jensen_94();
+
+        assert!(Dfs::new(&digraph, 0).eq([0, 2, 5, 4, 6, 3, 1]));
+    }
+
+    #[test]
+    fn iter_kattis_builddeps() {
         let digraph = kattis_builddeps();
-        let order = digraph.order();
-        let mut ordering = vec![0; order];
-        let mut t_visit = vec![0; order];
-        let mut t_expl = vec![0; order];
 
-        dfsa(&digraph, &mut ordering, &mut t_visit, &mut t_expl);
-
-        let dependencies = ordering
-            .into_iter()
-            .skip_while(|&u| u != 0)
-            .collect::<Vec<usize>>();
-
-        assert!(dependencies.iter().eq(&[0, 4, 3, 1]));
+        assert!(Dfs::new(&digraph, 0).eq([0, 4, 1, 3]));
     }
 
     #[test]
-    fn dfsa_predecessors_bang_jensen_34() {
-        let digraph = bang_jensen_34();
-        let order = digraph.order();
-        let mut ordering = vec![0; order];
-        let mut pred = vec![None; order];
-        let mut t_visit = vec![0; order];
-        let mut t_expl = vec![0; order];
+    fn iter_kattis_cantinaofbabel_1() {
+        let digraph = kattis_cantinaofbabel_1();
 
-        dfsa_predecessors(
-            &digraph,
-            &mut ordering,
-            &mut pred,
-            &mut t_visit,
-            &mut t_expl,
-        );
-
-        assert!(ordering.iter().eq(&[2, 5, 3, 1, 0, 4]));
-
-        assert!(pred.iter().eq(&[
-            None,
-            None,
-            None,
-            Some(2),
-            Some(0),
-            Some(2)
-        ]));
+        assert!(Dfs::new(&digraph, 0).eq([0, 1, 4, 3, 11, 9, 7, 10, 6, 5]));
     }
 
     #[test]
-    fn dfsa_predecessors_kattis_builddeps() {
-        let digraph = kattis_builddeps();
-        let order = digraph.order();
-        let mut ordering = vec![0; order];
-        let mut pred = vec![None; order];
-        let mut t_visit = vec![0; order];
-        let mut t_expl = vec![0; order];
+    fn iter_kattis_cantinaofbabel_2() {
+        let digraph = kattis_cantinaofbabel_2();
 
-        dfsa_predecessors(
-            &digraph,
-            &mut ordering,
-            &mut pred,
-            &mut t_visit,
-            &mut t_expl,
-        );
-
-        let dependencies = ordering
-            .into_iter()
-            .skip_while(|&u| u != 0)
-            .collect::<Vec<usize>>();
-
-        // 0 = gmp
-        // 4 = map
-        // 3 = set
-        // 1 = solution
-
-        assert!(dependencies.iter().eq(&[0, 4, 3, 1]));
-
-        assert!(pred.iter().eq(&[
-            None,
-            Some(3),
-            None,
-            Some(0),
-            Some(0),
-            Some(2)
-        ]));
+        assert!(Dfs::new(&digraph, 0).eq([0, 1, 7, 2, 5, 6, 3, 4]));
     }
 
     #[test]
-    fn acyclic_ordering_trivial() {
-        assert!(acyclic_ordering(&Digraph::trivial()).iter().eq(&[0]));
+    fn iter_kattis_escapewallmaria_1() {
+        let digraph = kattis_escapewallmaria_1();
+
+        assert!(Dfs::new(&digraph, 5).eq([5, 9, 13, 12, 6]));
     }
 
     #[test]
-    fn acyclic_ordering_bang_jensen_34() {
-        assert!(acyclic_ordering(&bang_jensen_34())
-            .iter()
-            .eq(&[2, 5, 3, 1, 0, 4]));
+    fn iter_kattis_escapewallmaria_2() {
+        let digraph = kattis_escapewallmaria_2();
+
+        assert!(Dfs::new(&digraph, 5).eq([5, 9, 6]));
     }
 
     #[test]
-    fn acycling_ordering_kattis_builddeps() {
-        let ordering = acyclic_ordering(&kattis_builddeps());
+    fn iter_kattis_escapewallmaria_3() {
+        let digraph = kattis_escapewallmaria_3();
 
-        let dependencies = ordering
-            .into_iter()
-            .skip_while(|&u| u != 0)
-            .collect::<Vec<usize>>();
-
-        assert!(dependencies.iter().eq(&[0, 4, 3, 1]));
+        assert!(Dfs::new(&digraph, 1).eq([1, 5, 9, 13, 12, 6, 2]));
     }
 }

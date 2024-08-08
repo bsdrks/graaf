@@ -132,21 +132,24 @@
 //! A breadth-first search explores the vertices of an unweighted digraph in
 //! order of their distance from a source.
 //!
-//! - [`Bfs`](algo::Bfs) traverses the digraph.
-//! - [`Bfs::distances`](algo::Bfs::distances) finds the shortest distances.
-//! - [`Bfs::predecessors`](algo::Bfs::predecessors) finds the predecessors.
-//! - [`Bfs::shortest_path`](algo::Bfs::shortest_path) finds the shortest path.
-//!
+//! - [`bfs::Bfs`](algo::bfs::Bfs) iterates over the vertices.
+//! - [`bfs_depth::Bfs`](algo::bfs_depth::Bfs) iterates over the vertices and
+//!   their depths.
+//! - [`bfs_successors::Bfs`](algo::bfs_successors::Bfs) iterates over the
+//!   vertices and their successors.
+//! - [`bfs_depth::Bfs::distances`](algo::bfs_depth::Bfs::distances) finds the
+//!   distances.
+//! - [`bfs_successors::Bfs::predecessors`](algo::bfs_successors::Bfs::predecessors) finds the predecessors.
+//! - [`bfs_successors::Bfs::shortest_path`](algo::bfs_successors::Bfs::predecessors) finds the shortest path.
+
 //! ## Depth-First Search (DFS)
 //!
 //! A depth-first search explores the vertices of an unweighted digraph in
 //! order of their depth from a source.
 //!
-//! - [`dfsa`](algo::dfs::dfsa) traverses the digraph.
-//! - [`dfsa_predecessors`](algo::dfs::dfsa_predecessors) finds the
-//!   predecessors.
-//! - [`acyclic_ordering`](algo::dfs::acyclic_ordering) generates an acyclic
-//!   ordering.
+//! - [`dfs::Dfs`](algo::dfs::Dfs) iterates over the vertices.
+//! - [`dfs_depth::Dfs`](algo::dfs_depth::Dfs) iterates over the vertices and
+//!   their depths.
 //!
 //! ## Dijkstra
 //!
@@ -188,18 +191,18 @@
 //!
 //! These types are produced by the algorithms.
 //!
-//! ### Breadth-First Tree
+//! ### Predecessor Tree
 //!
-//! A breadth-first tree is the result of a breadth-first search and contains
+//! A predecessor tree is the result of a breadth-first search and contains
 //! the predecessors of the vertices on the shortest paths.
 //!
-//! - [`search`](algo::BreadthFirstTree::search) finds a vertex by value.
-//! - [`search_by`](algo::BreadthFirstTree::search_by) finds a vertex by
+//! - [`search`](algo::PredecessorTree::search) finds a vertex by value.
+//! - [`search_by`](algo::PredecessorTree::search_by) finds a vertex by
 //!   predicate.
 //!
-//! These functions produce a breadth-first tree.
+//! These functions produce a predecessor tree.
 //!
-//! - [`Bfs::predecessors`](algo::Bfs::predecessors)
+//! - [`bfs_successors::Bfs::predecessors`](algo::bfs_successors::Bfs::predecessors)
 //! - [`dijkstra::single_source_predecessors`](algo::dijkstra::single_source_predecessors)
 //! - [`dijkstra::predecessors`](algo::dijkstra::predecessors)
 //!

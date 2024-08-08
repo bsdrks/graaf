@@ -1,4 +1,4 @@
 //! # Digraph algorithm results
 
-pub mod breadth_first_tree;
 pub mod distance_matrix;
+pub mod predecessor_tree;

@@ -4,7 +4,6 @@
 
 - Add a trait for path contraction.
 - Add a trait for set contraction.
-- Add leaner implementations of `dfs::*`.
 - Add the `DeleteArc` trait.
 - Add the `DeleteVertex` trait.
 - Add the `IsIsomorphic` trait.
@@ -18,6 +17,30 @@
 - Add the `MinSemidegree` trait.
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
+
+## [0.78.0] - 2024-08-08
+
+BFS and DFS are now implemented as iterators.
+
+Added
+
+- Add the `dfs::Dfs` iterator.
+- Add the `dfs_depth::Dfs` iterator.
+- Add the `bfs::Bfs` iterator.
+- Add the `bfs_depth::Bfs` iterator.
+- Add the `bfs_successors::Bfs` iterator.
+
+Changed
+
+- Breaking: move `Bfs::distances` to `bfs_depth::Bfs::distances`.
+- Breaking: move `Bfs::predecessors` to `bfs_successors::Bfs::predecessors`.
+- Breaking: move `Bfs::shortest_path` to `bfs_successors::Bfs::shortest_path`.
+
+Removed
+
+- Breaking: remove `dfs::dfsa`.
+- Breaking: remove `dfs::dfsa_predecessors`.
+- Breaking: remove `dfs::acyclic_ordering`.
 
 ## [0.77.1] - 2024-08-04
 
@@ -44,13 +67,13 @@ Changed
 - Benchmark the new `Circuit` implementation for `adjacency_list` alongside the previous implementation in `bench::algo::circuit`.
 - Expand `adjacency_list::fixture::kattis_escapewallmaria_*` digraphs to be of order 16.
 - Expand `adjacency_matrix::fixture::kattis_escapewallmaria_*` digraphs to be of order 16.
-- Shows an implementation that does not use `AddArc` and `Empty` in the `algo::circuit` documentation.
+- Show an implementation that does not use `AddArc` and `Empty` in the `algo::circuit` documentation.
 - Sync `adjacency_list::digraph` unit tests with the new `adjacency_list::fixture::kattis_escapewallmaria_*` fixtures.
 - Sync `adjacency_matrix::digraph` unit tests with the new `adjacency_matrix::fixture::kattis_escapewallmaria_*` fixtures.
 - Use the new `Bfs` API in `bench::algo::single_source_distances`.
 - Use the new `Bfs` API in `bfs` doctest examples.
 - Use the new `Bfs` API in `bfs` unit tests.
-- Use the new `Bfs` API in `breadth_first_tree` doctest examples.
+- Use the new `Bfs` API in `predecessor_tree` doctest examples.
 
 Removed
 
@@ -588,12 +611,12 @@ Added
 - Add unit test `star_1_complement` for `adjacency_list`.
 - Add unit test `star_2_complement` for `adjacency_list`.
 - Add unit test `star_3_complement` for `adjacency_list`.
-- Export `algo::BreadthFirstTree`.
+- Export `algo::PredecessorTree`.
 - Export `algo::DistanceMatrix`.
 
 Changed
 
-- Breaking: Move `algo::breadth_first_tree` to `algo::types::breadth_first_tree`.
+- Breaking: Move `algo::predecessor_tree` to `algo::types::predecessor_tree`.
 - Breaking: Move `algo::distance_matrix` to `algo::types::distance_matrix`.
 - Expand property test `star_has_edge` for `adjacency_list`.
 - Expand property test `star_has_edge` for `adjacency_matrix`.
@@ -1347,8 +1370,8 @@ Fixed
 
 Added
 
-- Add unit test `new` for `breadth_first_tree::BreadthFirstTree`.
-- Add unit test `new_zero` for `breadth_first_tree::BreadthFirstTree`.
+- Add unit test `new` for `predecessor_tree::PredecessorTree`.
+- Add unit test `new_zero` for `predecessor_tree::PredecessorTree`.
 
 Changed
 
@@ -1545,8 +1568,8 @@ Added
 
 Changed
 
-- Breaking: Rename `BfTree` to `BreadthFirstTree`.
-- Breaking: Rename `bf_tree` to `breadth_first_tree`.
+- Breaking: Rename `BfTree` to `PredecessorTree`.
+- Breaking: Rename `bf_tree` to `predecessor_tree`.
 - Breaking: `FloydWarshall::distances` returns a `DistanceMatrix`.
 
 ## [0.60.0] - 2024-06-19
@@ -2074,19 +2097,19 @@ Changed
 - Breaking: `RemoveArc for [HashMap<usize, W>]` no longer panics.
 - Breaking: `RemoveArc for [HashSet<usize>; V]` no longer panics.
 - Breaking: `RemoveArc for [HashSet<usize>]` no longer panics.
-- Change  `Converse` to blanket implementation.
-- Change  `Degree` to blanket implementation.
-- Change  `HasEdge` to blanket implementation.
-- Change  `IsBalanced` to blanket implementation.
-- Change  `IsIsolated` to blanket implementation.
-- Change  `IsOriented` to blanket implementation.
-- Change  `IsPendant` to blanket implementation.
-- Change  `IsRegular` to blanket implementation.
-- Change  `IsSubdigraph` to blanket implementation.
-- Change  `IsSuperdigraph` to blanket implementation.
-- Change  `IsSymmetric` to blanket implementation.
-- Change  `IsWalk` to blanket implementation.
-- Change  `ReverseArc` to blanket implementation.
+- Change `Converse` to blanket implementation.
+- Change `Degree` to blanket implementation.
+- Change `HasEdge` to blanket implementation.
+- Change `IsBalanced` to blanket implementation.
+- Change `IsIsolated` to blanket implementation.
+- Change `IsOriented` to blanket implementation.
+- Change `IsPendant` to blanket implementation.
+- Change `IsRegular` to blanket implementation.
+- Change `IsSubdigraph` to blanket implementation.
+- Change `IsSuperdigraph` to blanket implementation.
+- Change `IsSymmetric` to blanket implementation.
+- Change `IsWalk` to blanket implementation.
+- Change `ReverseArc` to blanket implementation.
 - Use const size in `IterVertices` implementations.
 
 ## [0.52.7] - 2024-05-31
@@ -3682,8 +3705,8 @@ Changed
 
 Changed
 
-- Breaking: `bfs::predecessors_single_source` only returns the breadth-first tree.
-- Breaking: `dijkstra::predecessors_single_source` only returns the breadth-first tree.
+- Breaking: `bfs::predecessors_single_source` only returns the predecessor tree.
+- Breaking: `dijkstra::predecessors_single_source` only returns the predecessor tree.
 
 ## [0.18.0] - 2024-04-20
 

@@ -9,7 +9,7 @@
 //!
 //! The separate calls to `single_source_distances` and
 //! `single_source_predecessors` in the example are for illustrative purposes
-//! only; use [`predecessors`] if you need the breadth-first tree *and*
+//! only; use [`predecessors`] if you need the predecessor tree *and*
 //! distances.
 //!
 //! ```
@@ -64,7 +64,7 @@
 //!   <https://doi.org/10.1007/BF01386390>
 
 use {
-    super::BreadthFirstTree,
+    super::PredecessorTree,
     crate::op::{
         Order,
         OutNeighborsWeighted,
@@ -210,7 +210,7 @@ where
     dist
 }
 
-/// Finds the breadth-first tree and distances of the shortest paths from
+/// Finds the predecessor tree and distances of the shortest paths from
 /// the source vertices to all vertices in an arc-weighted digraph.
 ///
 /// # Arguments
@@ -237,7 +237,7 @@ where
 ///         adjacency_list_weighted::Digraph,
 ///         algo::{
 ///             dijkstra::predecessors,
-///             BreadthFirstTree,
+///             PredecessorTree,
 ///         },
 ///         gen::Empty,
 ///         op::AddArcWeighted,
@@ -256,7 +256,7 @@ where
 /// digraph.add_arc_weighted(1, 2, 2);
 /// digraph.add_arc_weighted(3, 0, 2);
 ///
-/// let mut pred = BreadthFirstTree::new(4);
+/// let mut pred = PredecessorTree::new(4);
 /// let mut dist = [0, usize::MAX, usize::MAX, usize::MAX];
 /// let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 ///
@@ -268,7 +268,7 @@ where
 pub fn predecessors<D, S, W>(
     digraph: &D,
     step: S,
-    pred: &mut BreadthFirstTree,
+    pred: &mut PredecessorTree,
     dist: &mut [W],
     heap: &mut BinaryHeap<(Reverse<W>, usize)>,
 ) where
@@ -291,7 +291,7 @@ pub fn predecessors<D, S, W>(
     }
 }
 
-/// Finds the breadth-first tree for the shortest paths from a source vertex in
+/// Finds the predecessor tree for the shortest paths from a source vertex in
 /// an arc-weighted digraph.
 ///
 /// # Arguments
@@ -301,7 +301,7 @@ pub fn predecessors<D, S, W>(
 ///
 /// # Returns
 ///
-/// Returns the breadth-first tree.
+/// Returns the predecessor tree.
 ///
 /// # Panics
 ///
@@ -333,7 +333,7 @@ pub fn predecessors<D, S, W>(
 /// assert!(pred.into_iter().eq([None, Some(0), Some(1), None]));
 /// ```
 #[must_use]
-pub fn single_source_predecessors<D>(digraph: &D, s: usize) -> BreadthFirstTree
+pub fn single_source_predecessors<D>(digraph: &D, s: usize) -> PredecessorTree
 where
     D: Order + OutNeighborsWeighted<usize>,
 {
@@ -341,7 +341,7 @@ where
 
     assert!(s < v, "s = {s} is out of bounds.");
 
-    let mut pred = BreadthFirstTree::new(v);
+    let mut pred = PredecessorTree::new(v);
     let mut dist = vec![usize::MAX; v];
     let mut heap = BinaryHeap::from([(Reverse(0), s)]);
 
@@ -384,7 +384,7 @@ where
 ///         adjacency_list_weighted::Digraph,
 ///         algo::{
 ///             dijkstra::shortest_path,
-///             BreadthFirstTree,
+///             PredecessorTree,
 ///         },
 ///         gen::Empty,
 ///         op::AddArcWeighted,
@@ -403,7 +403,7 @@ where
 /// digraph.add_arc_weighted(1, 2, 2);
 /// digraph.add_arc_weighted(3, 0, 2);
 ///
-/// let mut pred = BreadthFirstTree::new(4);
+/// let mut pred = PredecessorTree::new(4);
 /// let mut dist = [usize::MAX, usize::MAX, usize::MAX, 0];
 /// let mut heap = BinaryHeap::from([(Reverse(0), 3)]);
 ///
@@ -425,7 +425,7 @@ pub fn shortest_path<D, S, T, W>(
     digraph: &D,
     step: S,
     is_target: T,
-    pred: &mut BreadthFirstTree,
+    pred: &mut PredecessorTree,
     dist: &mut [W],
     heap: &mut BinaryHeap<(Reverse<W>, usize)>,
 ) -> Option<Vec<usize>>
@@ -536,7 +536,7 @@ where
     assert!(s < v, "s = {s} is out of bounds.");
     assert!(t < v, "t = {t} is out of bounds.");
 
-    let pred = &mut BreadthFirstTree::new(v);
+    let pred = &mut PredecessorTree::new(v);
     let dist = &mut vec![usize::MAX; v];
     let heap = &mut BinaryHeap::from([(Reverse(0), s)]);
 
@@ -755,7 +755,7 @@ mod tests {
 
     #[test]
     fn predecessors_trivial() {
-        let mut pred = BreadthFirstTree::new(1);
+        let mut pred = PredecessorTree::new(1);
         let mut dist = vec![usize::MAX; 1];
         let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
@@ -775,7 +775,7 @@ mod tests {
 
     #[test]
     fn predecessors_bang_jensen_94_weighted() {
-        let mut pred = BreadthFirstTree::new(7);
+        let mut pred = PredecessorTree::new(7);
         let mut dist = vec![usize::MAX; 7];
         let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
@@ -804,7 +804,7 @@ mod tests {
 
     #[test]
     fn predecessors_bang_jensen_96() {
-        let mut pred = BreadthFirstTree::new(6);
+        let mut pred = PredecessorTree::new(6);
         let mut dist = vec![usize::MAX; 6];
         let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
@@ -832,7 +832,7 @@ mod tests {
 
     #[test]
     fn predecessors_kattis_bryr_1() {
-        let mut pred = BreadthFirstTree::new(3);
+        let mut pred = PredecessorTree::new(3);
         let mut dist = vec![usize::MAX; 3];
         let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
@@ -852,7 +852,7 @@ mod tests {
 
     #[test]
     fn predecessors_kattis_bryr_2() {
-        let mut pred = BreadthFirstTree::new(6);
+        let mut pred = PredecessorTree::new(6);
         let mut dist = vec![usize::MAX; 6];
         let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
@@ -880,7 +880,7 @@ mod tests {
 
     #[test]
     fn predecessors_kattis_bryr_3() {
-        let mut pred = BreadthFirstTree::new(10);
+        let mut pred = PredecessorTree::new(10);
         let mut dist = vec![usize::MAX; 10];
         let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
@@ -912,7 +912,7 @@ mod tests {
 
     #[test]
     fn predecessors_kattis_crosscountry() {
-        let mut pred = BreadthFirstTree::new(4);
+        let mut pred = PredecessorTree::new(4);
         let mut dist = vec![usize::MAX; 4];
         let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
@@ -932,7 +932,7 @@ mod tests {
 
     #[test]
     fn predecessors_kattis_shortestpath1() {
-        let mut pred = BreadthFirstTree::new(4);
+        let mut pred = PredecessorTree::new(4);
         let mut dist = vec![usize::MAX; 4];
         let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
@@ -1030,7 +1030,7 @@ mod tests {
 
     #[test]
     fn shortest_path_trivial() {
-        let mut pred = BreadthFirstTree::new(1);
+        let mut pred = PredecessorTree::new(1);
         let mut dist = vec![usize::MAX; 1];
         let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
@@ -1052,7 +1052,7 @@ mod tests {
 
     #[test]
     fn shortest_path_bang_jensen_94_weighted() {
-        let mut pred = BreadthFirstTree::new(7);
+        let mut pred = PredecessorTree::new(7);
         let mut dist = vec![usize::MAX; 7];
         let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
@@ -1084,7 +1084,7 @@ mod tests {
 
     #[test]
     fn shortest_path_bang_jensen_96() {
-        let mut pred = BreadthFirstTree::new(6);
+        let mut pred = PredecessorTree::new(6);
         let mut dist = vec![usize::MAX; 6];
         let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
@@ -1115,7 +1115,7 @@ mod tests {
 
     #[test]
     fn shortest_path_kattis_bryr_1() {
-        let mut pred = BreadthFirstTree::new(3);
+        let mut pred = PredecessorTree::new(3);
         let mut dist = vec![usize::MAX; 3];
         let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
@@ -1137,7 +1137,7 @@ mod tests {
 
     #[test]
     fn shortest_path_kattis_bryr_2() {
-        let mut pred = BreadthFirstTree::new(6);
+        let mut pred = PredecessorTree::new(6);
         let mut dist = vec![usize::MAX; 6];
         let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
@@ -1168,7 +1168,7 @@ mod tests {
 
     #[test]
     fn shortest_path_kattis_bryr_3() {
-        let mut pred = BreadthFirstTree::new(10);
+        let mut pred = PredecessorTree::new(10);
         let mut dist = vec![usize::MAX; 10];
         let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
@@ -1203,7 +1203,7 @@ mod tests {
 
     #[test]
     fn shortest_path_kattis_crosscountry() {
-        let mut pred = BreadthFirstTree::new(4);
+        let mut pred = PredecessorTree::new(4);
         let mut dist = vec![usize::MAX; 4];
         let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
@@ -1225,7 +1225,7 @@ mod tests {
 
     #[test]
     fn shortest_path_kattis_shortestpath1() {
-        let mut pred = BreadthFirstTree::new(4);
+        let mut pred = PredecessorTree::new(4);
         let mut dist = vec![usize::MAX; 4];
         let mut heap = BinaryHeap::from([(Reverse(0), 0)]);
 
