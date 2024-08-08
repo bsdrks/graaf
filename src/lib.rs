@@ -133,14 +133,14 @@
 //! order of their distance from a source.
 //!
 //! - [`bfs::Bfs`](algo::bfs::Bfs) iterates over the vertices.
-//! - [`bfs_depth::Bfs`](algo::bfs_depth::Bfs) iterates over the vertices and
-//!   their depths.
-//! - [`bfs_successors::Bfs`](algo::bfs_successors::Bfs) iterates over the
-//!   vertices and their successors.
 //! - [`bfs_depth::Bfs::distances`](algo::bfs_depth::Bfs::distances) finds the
 //!   distances.
+//! - [`bfs_depth::Bfs`](algo::bfs_depth::Bfs) iterates over the vertices and
+//!   their depths.
 //! - [`bfs_successors::Bfs::predecessors`](algo::bfs_successors::Bfs::predecessors) finds the predecessors.
 //! - [`bfs_successors::Bfs::shortest_path`](algo::bfs_successors::Bfs::predecessors) finds the shortest path.
+//! - [`bfs_successors::Bfs`](algo::bfs_successors::Bfs) iterates over the
+//!   vertices and their successors.
 
 //! ## Depth-First Search (DFS)
 //!
@@ -166,12 +166,11 @@
 //!
 //! These functions start from one source vertex.
 //!
-//! - [`single_source_distances`](algo::dijkstra::single_source_distances)
-//!   finds the shortest distances.
-//! - [`single_source_predecessors`](algo::dijkstra::single_source_predecessors)
-//!   finds the predecessors.
 //! - [`single_pair_shortest_path`](algo::dijkstra::single_pair_shortest_path)
 //!   finds the shortest path.
+//! - [`single_source_distances`](algo::dijkstra::single_source_distances)
+//!   finds the shortest distances.
+//! - [`single_source_predecessors`](algo::dijkstra::single_source_predecessors) finds the predecessors.
 //!
 //! ## Floyd-Warshall
 //!
