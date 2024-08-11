@@ -1581,8 +1581,12 @@ mod tests {
         }
 
         #[test]
-        fn erdos_renyi_degree(order in 1..25_usize, p in 0.0..1.0) {
-            let digraph = Digraph::erdos_renyi(order, p);
+        fn erdos_renyi_degree(
+            order in 1..25_usize,
+            p in 0.0..1.0,
+            seed in 0..1000_u64
+        ) {
+            let digraph = Digraph::erdos_renyi(order, p, seed);
             let max_degree = (order - 1) * 2;
 
             assert!(digraph.vertices().all(|u| {
@@ -1593,9 +1597,10 @@ mod tests {
         #[test]
         fn erdos_renyi_degree_sum_equals_2size(
             order in 1..25_usize,
-            p in 0.0..1.0
+            p in 0.0..1.0,
+            seed in 0..1000_u64
         ) {
-            let digraph = Digraph::erdos_renyi(order, p);
+            let digraph = Digraph::erdos_renyi(order, p, seed);
 
             assert_eq!(
                 digraph.vertices().fold(0, |acc, u| acc + digraph.degree(u)),
@@ -1606,9 +1611,10 @@ mod tests {
         #[test]
         fn erdos_renyi_even_number_odd_degrees(
             order in 1..25_usize,
-            p in 0.0..1.0
+            p in 0.0..1.0,
+            seed in 0..1000_u64
         ) {
-            let digraph = Digraph::erdos_renyi(order, p);
+            let digraph = Digraph::erdos_renyi(order, p, seed);
 
             assert_eq!(
                 digraph
@@ -1621,15 +1627,23 @@ mod tests {
         }
 
         #[test]
-        fn erdos_renyi_has_arc(order in 1..25_usize, p in 0.0..1.0) {
-            let digraph = Digraph::erdos_renyi(order, p);
+        fn erdos_renyi_has_arc(
+            order in 1..25_usize,
+            p in 0.0..1.0,
+            seed in 0..1000_u64
+        ) {
+            let digraph = Digraph::erdos_renyi(order, p, seed);
 
             assert!(digraph.vertices().all(|u| !digraph.has_arc(u, u) ));
         }
 
         #[test]
-        fn erdos_renyi_indegree(order in 1..25_usize, p in 0.0..1.0) {
-            let digraph = Digraph::erdos_renyi(order, p);
+        fn erdos_renyi_indegree(
+            order in 1..25_usize,
+            p in 0.0..1.0,
+            seed in 0..1000_u64
+        ) {
+            let digraph = Digraph::erdos_renyi(order, p, seed);
 
             assert!(digraph.vertices().all(|v| {
                 (0..order).contains(&digraph.indegree(v))
@@ -1638,41 +1652,65 @@ mod tests {
 
         #[allow(clippy::float_cmp)]
         #[test]
-        fn erdos_renyi_is_complete(order in 1..25_usize, p in 0.0..1.0) {
+        fn erdos_renyi_is_complete(
+            order in 1..25_usize,
+            p in 0.0..1.0,
+            seed in 0..1000_u64
+        ) {
             if p == 0.0 {
-                assert!(!Digraph::erdos_renyi(order, p).is_complete());
+                assert!(!Digraph::erdos_renyi(order, p, seed).is_complete());
             } else if order == 1 {
-                assert!(Digraph::erdos_renyi(order, p).is_complete());
+                assert!(Digraph::erdos_renyi(order, p, seed).is_complete());
             }
         }
 
         #[test]
-        fn erdos_renyi_is_simple(order in 1..25_usize, p in 0.0..1.0) {
-            assert!(Digraph::erdos_renyi(order, p).is_simple());
+        fn erdos_renyi_is_simple(
+            order in 1..25_usize,
+            p in 0.0..1.0,
+            seed in 0..1000_u64
+        ) {
+            assert!(Digraph::erdos_renyi(order, p, seed).is_simple());
         }
 
         #[test]
-        fn erdos_renyi_is_subdigraph(order in 1..25_usize, p in 0.0..1.0) {
-            let digraph = Digraph::erdos_renyi(order, p);
+        fn erdos_renyi_is_subdigraph(
+            order in 1..25_usize,
+            p in 0.0..1.0,
+            seed in 0..1000_u64
+        ) {
+            let digraph = Digraph::erdos_renyi(order, p, seed);
 
             assert!(digraph.is_subdigraph(&digraph));
         }
 
         #[test]
-        fn erdos_renyi_is_superdigraph(order in 1..25_usize, p in 0.0..1.0) {
-            let digraph = Digraph::erdos_renyi(order, p);
+        fn erdos_renyi_is_superdigraph(
+            order in 1..25_usize,
+            p in 0.0..1.0,
+            seed in 0..1000_u64
+        ) {
+            let digraph = Digraph::erdos_renyi(order, p, seed);
 
             assert!(digraph.is_superdigraph(&digraph));
         }
 
         #[test]
-        fn erdos_renyi_order(order in 1..25_usize, p in 0.0..1.0) {
-            assert_eq!(Digraph::erdos_renyi(order, p).order(), order);
+        fn erdos_renyi_order(
+            order in 1..25_usize,
+            p in 0.0..1.0,
+            seed in 0..1000_u64
+        ) {
+            assert_eq!(Digraph::erdos_renyi(order, p, seed).order(), order);
         }
 
         #[test]
-        fn erdos_renyi_outdegree(order in 1..25_usize, p in 0.0..1.0) {
-            let digraph = Digraph::erdos_renyi(order, p);
+        fn erdos_renyi_outdegree(
+            order in 1..25_usize,
+            p in 0.0..1.0,
+            seed in 0..1000_u64
+        ) {
+            let digraph = Digraph::erdos_renyi(order, p, seed);
 
             assert!(digraph.vertices().all(|u| {
                 (0..order).contains(&digraph.outdegree(u))
@@ -1680,14 +1718,15 @@ mod tests {
         }
 
         #[test]
-        fn erdos_renyi_size_p_0(order in 1..25_usize) {
-            assert_eq!(Digraph::erdos_renyi(order, 0.0).size(), 0);
+        fn erdos_renyi_size_p_0(order in 1..25_usize, seed: u64) {
+            assert_eq!(Digraph::erdos_renyi(order, 0.0, seed).size(), 0);
         }
 
         #[test]
-        fn erdos_renyi_size_p_1(order in 1..25_usize) {
+        fn erdos_renyi_size_p_1(order in 1..25_usize, seed: u64) {
             assert_eq!(
-                Digraph::erdos_renyi(order, 1.0).size(), order * (order - 1)
+                Digraph::erdos_renyi(order, 1.0, seed).size(),
+                order * (order - 1)
             );
         }
 
@@ -1935,16 +1974,22 @@ mod tests {
         }
 
         #[test]
-        fn random_tournament_complement_size(order in 1..25_usize) {
+        fn random_tournament_complement_size(
+            order in 1..25_usize,
+            seed in 0..1000_u64
+        ) {
             assert_eq!(
-                Digraph::random_tournament(order).complement().size(),
+                Digraph::random_tournament(order, seed).complement().size(),
                 order * (order - 1) / 2
             );
         }
 
         #[test]
-        fn random_tournament_degree(order in 1..25_usize) {
-            let digraph = Digraph::random_tournament(order);
+        fn random_tournament_degree(
+            order in 1..25_usize,
+            seed in 0..1000_u64
+        ) {
+            let digraph = Digraph::random_tournament(order, seed);
             let degree = order - 1;
 
             assert!(digraph
@@ -1953,17 +1998,23 @@ mod tests {
         }
 
         #[test]
-        fn random_tournament_degree_sequence(order in 1..25_usize) {
+        fn random_tournament_degree_sequence(
+            order in 1..25_usize,
+            seed in 0..1000_u64
+        ) {
             let degree = order - 1;
 
-            assert!(Digraph::random_tournament(order)
+            assert!(Digraph::random_tournament(order, seed)
                 .degree_sequence()
                 .all(|d| d == degree));
         }
 
         #[test]
-        fn random_tournament_degree_sum_equals_2size(order in 1..25_usize) {
-            let digraph = Digraph::random_tournament(order);
+        fn random_tournament_degree_sum_equals_2size(
+            order in 1..25_usize,
+            seed in 0..1000_u64
+        ) {
+            let digraph = Digraph::random_tournament(order, seed);
 
             assert_eq!(
                 digraph.vertices().fold(0, |acc, u| acc + digraph.degree(u)),
@@ -1972,8 +2023,11 @@ mod tests {
         }
 
         #[test]
-        fn random_tournament_even_number_odd_degrees(order in 1..25_usize) {
-            let digraph = Digraph::random_tournament(order);
+        fn random_tournament_even_number_odd_degrees(
+            order in 1..25_usize,
+            seed in 0..1000_u64
+        ) {
+            let digraph = Digraph::random_tournament(order, seed);
 
             assert_eq!(
                 digraph
@@ -1986,8 +2040,11 @@ mod tests {
         }
 
         #[test]
-        fn random_tournament_has_arc(order in 1..25_usize) {
-            let digraph = Digraph::random_tournament(order);
+        fn random_tournament_has_arc(
+            order in 1..25_usize,
+            seed in 0..1000_u64
+        ) {
+            let digraph = Digraph::random_tournament(order, seed);
 
             assert!(digraph.vertices().all(|u| {
                 digraph.vertices().all(|v| {
@@ -1997,8 +2054,11 @@ mod tests {
         }
 
         #[test]
-        fn random_tournament_has_edge(order in 1..25_usize) {
-            let digraph = Digraph::random_tournament(order);
+        fn random_tournament_has_edge(
+            order in 1..25_usize,
+            seed in 0..1000_u64
+        ) {
+            let digraph = Digraph::random_tournament(order, seed);
 
             assert!(digraph.vertices().all(|u| {
                 digraph.vertices().all(|v| !digraph.has_edge(u, v))
@@ -2006,8 +2066,11 @@ mod tests {
         }
 
         #[test]
-        fn random_tournament_indegree(order in 1..25_usize) {
-            let digraph = Digraph::random_tournament(order);
+        fn random_tournament_indegree(
+            order in 1..25_usize,
+            seed in 0..1000_u64
+        ) {
+            let digraph = Digraph::random_tournament(order, seed);
 
             assert!(digraph
                 .vertices()
@@ -2015,24 +2078,33 @@ mod tests {
         }
 
         #[test]
-        fn random_tournament_indegree_sequence(order in 1..25_usize) {
-            let digraph = Digraph::random_tournament(order);
+        fn random_tournament_indegree_sequence(
+            order in 1..25_usize,
+            seed in 0..1000_u64
+        ) {
+            let digraph = Digraph::random_tournament(order, seed);
             let indegree_sequence = &mut digraph.indegree_sequence();
 
             assert!(indegree_sequence.all(|d| (0..order).contains(&d)));
         }
 
         #[test]
-        fn random_tournament_is_complete(order in 1..25_usize) {
+        fn random_tournament_is_complete(
+            order in 1..25_usize,
+            seed in 0..1000_u64
+        ) {
             assert!(
                 (order == 1)
-                    == Digraph::random_tournament(order).is_complete()
+                    == Digraph::random_tournament(order, seed).is_complete()
             );
         }
 
         #[test]
-        fn random_tournament_is_isolated(order in 1..25_usize) {
-            let digraph = Digraph::random_tournament(order);
+        fn random_tournament_is_isolated(
+            order in 1..25_usize,
+            seed in 0..1000_u64
+        ) {
+            let digraph = Digraph::random_tournament(order, seed);
 
             assert!(digraph
                 .vertices()
@@ -2040,13 +2112,19 @@ mod tests {
         }
 
         #[test]
-        fn random_tournament_is_oriented(order in 1..25_usize) {
-            assert!(Digraph::random_tournament(order).is_oriented());
+        fn random_tournament_is_oriented(
+            order in 1..25_usize,
+            seed in 0..1000_u64
+        ) {
+            assert!(Digraph::random_tournament(order, seed).is_oriented());
         }
 
         #[test]
-        fn random_tournament_is_pendant(order in 1..25_usize) {
-            let digraph = Digraph::random_tournament(order);
+        fn random_tournament_is_pendant(
+            order in 1..25_usize,
+            seed in 0..1000_u64
+        ) {
+            let digraph = Digraph::random_tournament(order, seed);
 
             assert!(digraph
                 .vertices()
@@ -2054,57 +2132,84 @@ mod tests {
         }
 
         #[test]
-        fn random_tournament_is_semicomplete(order in 1..25_usize) {
-            assert!(Digraph::random_tournament(order).is_semicomplete());
+        fn random_tournament_is_semicomplete(
+            order in 1..25_usize,
+            seed in 0..1000_u64
+        ) {
+            assert!(Digraph::random_tournament(order, seed).is_semicomplete());
         }
 
         #[test]
-        fn random_tournament_is_simple(order in 1..25_usize) {
-            assert!(Digraph::random_tournament(order).is_simple());
+        fn random_tournament_is_simple(
+            order in 1..25_usize,
+            seed in 0..1000_u64
+        ) {
+            assert!(Digraph::random_tournament(order, seed).is_simple());
         }
 
         #[test]
-        fn random_tournament_is_spanning_subdigraph(order in 1..25_usize) {
-            let digraph = Digraph::random_tournament(order);
+        fn random_tournament_is_spanning_subdigraph(
+            order in 1..25_usize,
+            seed in 0..1000_u64
+        ) {
+            let digraph = Digraph::random_tournament(order, seed);
 
             assert!(digraph.is_spanning_subdigraph(&digraph));
         }
 
         #[test]
-        fn random_tournament_is_subdigraph(order in 1..25_usize) {
-            let digraph = Digraph::random_tournament(order);
+        fn random_tournament_is_subdigraph(
+            order in 1..25_usize,
+            seed in 0..1000_u64
+        ) {
+            let digraph = Digraph::random_tournament(order, seed);
 
             assert!(digraph.is_subdigraph(&digraph));
         }
 
         #[test]
-        fn random_tournament_is_superdigraph(order in 1..25_usize) {
-            let digraph = Digraph::random_tournament(order);
+        fn random_tournament_is_superdigraph(
+            order in 1..25_usize,
+            seed in 0..1000_u64
+        ) {
+            let digraph = Digraph::random_tournament(order, seed);
 
             assert!(digraph.is_superdigraph(&digraph));
         }
 
         #[test]
-        fn random_tournament_is_symmetric(order in 1..25_usize) {
+        fn random_tournament_is_symmetric(
+            order in 1..25_usize,
+            seed in 0..1000_u64
+        ) {
             assert!(
                 (order == 1)
-                    == Digraph::random_tournament(order).is_symmetric()
+                    == Digraph::random_tournament(order, seed).is_symmetric()
             );
         }
 
         #[test]
-        fn random_tournament_is_tournament(order in 1..25_usize) {
-            assert!(Digraph::random_tournament(order).is_tournament());
+        fn random_tournament_is_tournament(
+            order in 1..25_usize,
+            seed in 0..1000_u64
+        ) {
+            assert!(Digraph::random_tournament(order, seed).is_tournament());
         }
 
         #[test]
-        fn random_tournament_order(order in 1..25_usize) {
-            assert_eq!(Digraph::random_tournament(order).order(), order);
+        fn random_tournament_order(
+            order in 1..25_usize,
+            seed in 0..1000_u64
+        ) {
+            assert_eq!(Digraph::random_tournament(order, seed).order(), order);
         }
 
         #[test]
-        fn random_tournament_outdegree(order in 1..25_usize) {
-            let digraph = Digraph::random_tournament(order);
+        fn random_tournament_outdegree(
+            order in 1..25_usize,
+            seed in 0..1000_u64
+        ) {
+            let digraph = Digraph::random_tournament(order, seed);
 
             assert!(digraph
                 .vertices()
@@ -2112,17 +2217,23 @@ mod tests {
         }
 
         #[test]
-        fn random_tournament_outdegree_sequence(order in 1..25_usize) {
-            let digraph = Digraph::random_tournament(order);
+        fn random_tournament_outdegree_sequence(
+            order in 1..25_usize,
+            seed in 0..1000_u64
+        ) {
+            let digraph = Digraph::random_tournament(order, seed);
             let outdegree_sequence = &mut digraph.outdegree_sequence();
 
             assert!(outdegree_sequence.all(|d| (0..order).contains(&d)));
         }
 
         #[test]
-        fn random_tournament_semidegree_sequence(order in 1..25_usize) {
+        fn random_tournament_semidegree_sequence(
+            order in 1..25_usize,
+            seed in 0..1000_u64
+        ) {
             assert_eq!(
-                Digraph::random_tournament(order)
+                Digraph::random_tournament(order, seed)
                     .semidegree_sequence()
                     .fold(0, |acc, (indegree, outdegree)| acc
                         + indegree
@@ -2132,9 +2243,12 @@ mod tests {
         }
 
         #[test]
-        fn random_tournament_size(order in 1..25_usize) {
+        fn random_tournament_size(
+            order in 1..25_usize,
+            seed in 0..1000_u64
+        ) {
             assert_eq!(
-                Digraph::random_tournament(order).size(),
+                Digraph::random_tournament(order, seed).size(),
                 order * (order - 1) / 2
             );
         }

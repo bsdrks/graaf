@@ -15,7 +15,7 @@
 //!     },
 //! };
 //!
-//! let digraph = Digraph::erdos_renyi(4, 0.5);
+//! let digraph = Digraph::erdos_renyi(4, 0.5, 0);
 //!
 //! assert_eq!(digraph.order(), 4);
 //! ```
@@ -54,7 +54,7 @@ use {
 ///     ///
 ///     /// * Panics if `p` is negative.
 ///     /// * Panics if `p` is greater than 1.0.
-///     fn erdos_renyi(order: usize, p: f64) -> Self {
+///     fn erdos_renyi(order: usize, p: f64, seed: u64) -> Self {
 ///         assert!(p >= 0.0, "p = {p} must be non-negative");
 ///         assert!(p <= 1.0, "p = {p} must be at most 1.0");
 ///
@@ -62,7 +62,7 @@ use {
 ///             arcs: vec![BTreeSet::new(); order],
 ///         };
 ///
-///         let mut rng = Xoshiro256StarStar::new(order as u64);
+///         let mut rng = Xoshiro256StarStar::new(seed);
 ///
 ///         for u in 0..order {
 ///             for v in (0..order).filter(|&v| v != u) {
@@ -76,7 +76,7 @@ use {
 ///     }
 /// }
 ///
-/// let digraph = Digraph::erdos_renyi(4, 0.5);
+/// let digraph = Digraph::erdos_renyi(4, 0.5, 0);
 ///
 /// assert!((0..=12).contains(&digraph.arcs.len()));
 /// ```
@@ -97,7 +97,7 @@ use {
 ///     },
 /// };
 ///
-/// let digraph = Digraph::erdos_renyi(4, 0.5);
+/// let digraph = Digraph::erdos_renyi(4, 0.5, 0);
 ///
 /// assert!(digraph.size() <= 12);
 /// assert_eq!(digraph.order(), 4);
@@ -116,7 +116,7 @@ pub trait ErdosRenyi {
     /// * `order` - The number of vertices in the digraph.
     /// * `p` - The probability of an arc between two vertices.
     #[must_use]
-    fn erdos_renyi(order: usize, p: f64) -> Self;
+    fn erdos_renyi(order: usize, p: f64, seed: u64) -> Self;
 }
 
 impl<D> ErdosRenyi for D
@@ -127,9 +127,9 @@ where
     ///
     /// * Panics if `p` is negative.
     /// * Panics if `p` is greater than 1.0.
-    fn erdos_renyi(order: usize, p: f64) -> Self {
+    fn erdos_renyi(order: usize, p: f64, seed: u64) -> Self {
         let mut digraph = Self::empty(order);
-        let mut rng = Xoshiro256StarStar::new(order as u64);
+        let mut rng = Xoshiro256StarStar::new(seed);
 
         for u in 0..order {
             for v in (0..order).filter(|&v| v != u) {

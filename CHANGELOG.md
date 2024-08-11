@@ -23,6 +23,13 @@
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
 
+## [0.79.0] - 2024-08-11
+
+Changed
+
+- Breaking: `random_tournament` now takes a `seed` parameter.
+- Breaking: `erdos_renyi` now takes a `seed` parameter.
+
 ## [0.78.2] - 2024-08-11
 
 Fixed

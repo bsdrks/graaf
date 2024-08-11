@@ -20,7 +20,7 @@
 //! assert!(!Digraph::empty(3).is_tournament());
 //! assert!(!Digraph::complete(3).is_tournament());
 //! assert!(Digraph::circuit(3).is_tournament());
-//! assert!(Digraph::random_tournament(3).is_tournament());
+//! assert!(Digraph::random_tournament(3, 0).is_tournament());
 //! ```
 
 use super::{
@@ -109,7 +109,7 @@ use super::{
 /// assert!(!Digraph::empty(3).is_tournament());
 /// assert!(!Digraph::complete(3).is_tournament());
 /// assert!(Digraph::circuit(3).is_tournament());
-/// assert!(Digraph::random_tournament(3).is_tournament());
+/// assert!(Digraph::random_tournament(3, 0).is_tournament());
 /// ```
 pub trait IsTournament {
     /// Returns whether the digraph is a tournament.

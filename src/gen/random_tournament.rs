@@ -19,15 +19,15 @@
 //!     },
 //! };
 //!
-//! let tournament = Digraph::random_tournament(4);
+//! let tournament = Digraph::random_tournament(4, 0);
 //!
 //! assert_eq!(tournament.size(), 6);
 //! assert_eq!(tournament.order(), 4);
 //!
 //! for s in tournament.vertices() {
 //!     assert_eq!(tournament.degree(s), 3);
-//!     assert!((0..3).contains(&tournament.outdegree(s)));
-//!     assert!((0..3).contains(&tournament.indegree(s)));
+//!     assert!((0..=3).contains(&tournament.outdegree(s)));
+//!     assert!((0..=3).contains(&tournament.indegree(s)));
 //! }
 //! ```
 
@@ -72,8 +72,8 @@ use {
 /// }
 ///
 /// impl RandomTournament for Tournament {
-///     fn random_tournament(order: usize) -> Self {
-///         let mut rng = Xoshiro256StarStar::new(order as u64);
+///     fn random_tournament(order: usize, seed: u64) -> Self {
+///         let mut rng = Xoshiro256StarStar::new(seed);
 ///
 ///         let mut tournament = Self {
 ///             arcs: vec![BTreeSet::new(); order],
@@ -93,7 +93,7 @@ use {
 ///     }
 /// }
 ///
-/// let tournament = Tournament::random_tournament(4);
+/// let tournament = Tournament::random_tournament(4, 0);
 ///
 /// assert_eq!(tournament.arcs.len(), 4);
 ///
@@ -123,30 +123,35 @@ use {
 ///     },
 /// };
 ///
-/// let tournament = Digraph::random_tournament(4);
+/// let tournament = Digraph::random_tournament(4, 0);
 ///
 /// assert_eq!(tournament.size(), 6);
 /// assert_eq!(tournament.order(), 4);
 ///
 /// for s in tournament.vertices() {
 ///     assert_eq!(tournament.degree(s), 3);
-///     assert!((0..3).contains(&tournament.outdegree(s)));
-///     assert!((0..3).contains(&tournament.indegree(s)));
+///     assert!((0..=3).contains(&tournament.outdegree(s)));
+///     assert!((0..=3).contains(&tournament.indegree(s)));
 /// }
 /// ```
 pub trait RandomTournament {
     /// Generates a random tournament.
+    ///
+    /// # Arguments
+    ///
+    /// * `order` - The number of vertices in the tournament.
+    /// * `seed` - The seed for the random number generator.
     #[must_use]
-    fn random_tournament(order: usize) -> Self;
+    fn random_tournament(order: usize, seed: u64) -> Self;
 }
 
 impl<D> RandomTournament for D
 where
     D: AddArc + Empty,
 {
-    fn random_tournament(order: usize) -> Self {
+    fn random_tournament(order: usize, seed: u64) -> Self {
         let mut digraph = Self::empty(order);
-        let mut rng = Xoshiro256StarStar::new(order as u64);
+        let mut rng = Xoshiro256StarStar::new(seed);
 
         for u in 0..order {
             for v in (u + 1)..order {

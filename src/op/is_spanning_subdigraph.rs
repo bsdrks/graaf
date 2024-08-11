@@ -37,7 +37,7 @@
 //!     op::IsSpanningSubdigraph,
 //! };
 //!
-//! let tournament = Digraph::random_tournament(4);
+//! let tournament = Digraph::random_tournament(4, 0);
 //!
 //! assert!(tournament.is_spanning_subdigraph(&tournament));
 //! ```

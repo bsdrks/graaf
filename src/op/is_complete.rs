@@ -20,7 +20,7 @@
 //! assert!(Digraph::complete(3).is_complete());
 //! assert!(!Digraph::circuit(3).is_complete());
 //! assert!(!Digraph::empty(3).is_complete());
-//! assert!(!Digraph::random_tournament(3).is_complete());
+//! assert!(!Digraph::random_tournament(3, 0).is_complete());
 //! ```
 
 use super::{

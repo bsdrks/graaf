@@ -42,7 +42,7 @@
 //!     op::IsSuperdigraph,
 //! };
 //!
-//! let tournament = Digraph::random_tournament(4);
+//! let tournament = Digraph::random_tournament(4, 0);
 //!
 //! assert!(tournament.is_superdigraph(&tournament));
 //! ```
@@ -157,7 +157,7 @@ use super::IsSubdigraph;
 ///     op::IsSuperdigraph,
 /// };
 ///
-/// let tournament = Digraph::random_tournament(4);
+/// let tournament = Digraph::random_tournament(4, 0);
 ///
 /// assert!(tournament.is_superdigraph(&tournament));
 /// ```
