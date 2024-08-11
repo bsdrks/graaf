@@ -23,6 +23,12 @@
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
 
+## [0.78.2] - 2024-08-11
+
+Fixed
+
+- Fix documentation in `erdos_renyi`.
+
 ## [0.78.1] - 2024-08-11
 
 Added

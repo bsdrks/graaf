@@ -15,9 +15,9 @@
 //!     },
 //! };
 //!
-//! let tournament = Digraph::erdos_renyi(4, 0.5);
+//! let digraph = Digraph::erdos_renyi(4, 0.5);
 //!
-//! assert_eq!(tournament.order(), 4);
+//! assert_eq!(digraph.order(), 4);
 //! ```
 
 use {
@@ -32,7 +32,8 @@ use {
 ///
 /// # How can I implement `ErdosRenyi`?
 ///
-/// Provide an implementation of `random_tournament` that generates a random
+/// Provide an implementation of `erdos_renyi` that generates an Erdős-Rényi
+/// digraph of a given `order` and `p` OR implement `AddArc` and `Empty`.
 ///
 /// ```
 /// use {
@@ -75,9 +76,9 @@ use {
 ///     }
 /// }
 ///
-/// let tournament = Digraph::erdos_renyi(4, 0.5);
+/// let digraph = Digraph::erdos_renyi(4, 0.5);
 ///
-/// assert!((0..=12).contains(&tournament.arcs.len()));
+/// assert!((0..=12).contains(&digraph.arcs.len()));
 /// ```
 ///
 /// # Examples
