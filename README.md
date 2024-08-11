@@ -18,7 +18,7 @@ Work with directed graphs in Rust.
   - [Floyd-Warshall](#floyd-warshall)
   - [Tarjan](#tarjan)
   - [Types](#types)
-    - [Breath-First Tree](#breadth-first-tree)
+    - [Predecessor Tree](#predecessor-tree)
     - [Distance Matrix](#distance-matrix)
 - [Naming Conventions](#naming-conventions)
 - [Project Goals](#project-goals)
@@ -31,7 +31,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.78.0"
+graaf = "0.78.1"
 ```
 
 ## Digraph Types
@@ -53,6 +53,7 @@ The [`gen`] module provides eight digraph generators.
 - [`Complete`] generates a complete digraph.
 - [`Cycle`] generates a bidirectional circuit.
 - [`Empty`] generates a digraph with no arcs.
+- [`ErdosRenyi`] generates a random digraph.
 - [`Path`] generates a path digraph.
 - [`RandomTournament`] generates a random tournament.
 - [`Star`] generates a star digraph.
@@ -125,11 +126,11 @@ The Bellman-Ford-Moore algorithm finds the shortest paths in an arc-weighted dig
 A breadth-first search explores the vertices of an unweighted digraph in order of their distance from a source.
 
 - [`bfs::Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs/struct.Bfs.html) iterates over the vertices.
-- [`bfs_depth::Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs_depth/struct.Bfs.html) iterates over the vertices and their depths.
-- [`bfs_successors::Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html) iterates over the vertices and their successors.
 - [`bfs_depth::Bfs::distances`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html#method.distances) finds the distances.
+- [`bfs_depth::Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs_depth/struct.Bfs.html) iterates over the vertices and their depths.
 - [`bfs_successors::Bfs::predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html#method.predecessors) finds the predecessors.
 - [`bfs_successors::Bfs::shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html#method.shortest_path) finds the shortest path.
+- [`bfs_successors::Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html) iterates over the vertices and their successors.
 
 ### Depth-First Search (DFS)
 
@@ -150,9 +151,9 @@ These functions start from one or more source vertices and allow a custom step f
 
 These functions start from one source vertex.
 
+- [`single_pair_shortest_path`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.single_pair_shortest_path.html) finds the shortest path.
 - [`single_source_distances`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.single_source_distances.html) finds the shortest distances.
 - [`single_source_predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.single_source_predecessors.html) finds the predecessors.
-- [`single_pair_shortest_path`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.single_pair_shortest_path.html) finds the shortest path.
 
 ### Floyd-Warshall
 
@@ -179,9 +180,7 @@ A predecessor tree is the result of a breadth-first search.
 
 These functions produce a predecessor tree.
 
-- [`bfs::single_source_predecessors`](https://docs.rs/graaf/latest/graaf/algo/types/bfs/fn.single_source_predecessors.html)
-- [`bfs::predecessors`](https://docs.rs/graaf/latest/graaf/algo/types/bfs/fn.predecessors.html)
-- [`dijkstra::single_source_predecessors`](https://docs.rs/graaf/latest/graaf/algo/types/dijkstra/fn.single_source_predecessors.html)
+- [`bfs_successors::Bfs::predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html#method.predecessors)
 - [`dijkstra::predecessors`](https://docs.rs/graaf/latest/graaf/algo/types/dijkstra/fn.predecessors.html)
 
 #### Distance Matrix
@@ -208,6 +207,7 @@ A distance matrix contains the shortest distances between all pairs of vertices 
 [`Degree`]: https://docs.rs/graaf/latest/graaf/op/degree/trait.Degree.html
 [`DegreeSequence`]: https://docs.rs/graaf/latest/graaf/op/degree_sequence/trait.DegreeSequence.html
 [`Empty`]: https://docs.rs/graaf/latest/graaf/gen/empty/trait.Empty.html
+[`ErdosRenyi`]: https://docs.rs/graaf/latest/graaf/gen/erdos_renyi/trait.ErdosRenyi.html
 [`HasArc`]: https://docs.rs/graaf/latest/graaf/op/has_arc/trait.HasArc.html
 [`HasEdge`]: https://docs.rs/graaf/latest/graaf/op/has_edge/trait.HasEdge.html
 [`InNeighbors`]: https://docs.rs/graaf/latest/graaf/op/in_neighbors/trait.InNeighbors.html

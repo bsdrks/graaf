@@ -20,8 +20,8 @@ fn biclique_adjacency_list_naive(
     m: usize,
     n: usize,
 ) -> adjacency_list::Digraph {
-    assert!(m > 0, "m must be greater than zero");
-    assert!(n > 0, "n must be greater than zero");
+    assert!(m > 0, "m = {m} must be greater than zero");
+    assert!(n > 0, "n = {n} must be greater than zero");
 
     let order = m + n;
     let mut digraph = adjacency_list::Digraph::empty(order);

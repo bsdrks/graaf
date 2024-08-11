@@ -173,8 +173,8 @@ impl Biclique for Digraph {
     /// * Panics if `m` is zero.
     /// * Panics if `n` is zero.
     fn biclique(m: usize, n: usize) -> Self {
-        assert!(m > 0, "m must be greater than zero");
-        assert!(n > 0, "n must be greater than zero");
+        assert!(m > 0, "m = {m} must be greater than zero");
+        assert!(n > 0, "n = {n} must be greater than zero");
 
         let order = m + n;
         let mut digraph = Self::empty(order);
@@ -397,6 +397,7 @@ mod tests {
                 Complete,
                 Cycle,
                 Empty,
+                ErdosRenyi,
                 RandomTournament,
                 Star,
             },
@@ -1681,6 +1682,117 @@ mod tests {
         }
 
         #[test]
+        fn erdos_renyi_degree(order in 1..25_usize, p in 0.0..1.0) {
+            let digraph = Digraph::erdos_renyi(order, p);
+            let max_degree = (order - 1) * 2;
+
+            assert!(digraph.vertices().all(|u| {
+                (0..=max_degree).contains(&digraph.degree(u))
+            }));
+        }
+
+        #[test]
+        fn erdos_renyi_degree_sum_equals_2size(
+            order in 1..25_usize,
+            p in 0.0..1.0
+        ) {
+            let digraph = Digraph::erdos_renyi(order, p);
+
+            assert_eq!(
+                digraph.vertices().fold(0, |acc, u| acc + digraph.degree(u)),
+                2 * digraph.size()
+            );
+        }
+
+        #[test]
+        fn erdos_renyi_even_number_odd_degrees(
+            order in 1..25_usize,
+            p in 0.0..1.0
+        ) {
+            let digraph = Digraph::erdos_renyi(order, p);
+
+            assert_eq!(
+                digraph
+                    .vertices()
+                    .filter(|&u| digraph.degree(u) % 2 == 1)
+                    .count()
+                    % 2,
+                0
+            );
+        }
+
+        #[test]
+        fn erdos_renyi_has_arc(order in 1..25_usize, p in 0.0..1.0) {
+            let digraph = Digraph::erdos_renyi(order, p);
+
+            assert!(digraph.vertices().all(|u| !digraph.has_arc(u, u) ));
+        }
+
+        #[test]
+        fn erdos_renyi_indegree(order in 1..25_usize, p in 0.0..1.0) {
+            let digraph = Digraph::erdos_renyi(order, p);
+
+            assert!(digraph.vertices().all(|v| {
+                (0..order).contains(&digraph.indegree(v))
+            }));
+        }
+
+        #[allow(clippy::float_cmp)]
+        #[test]
+        fn erdos_renyi_is_complete(order in 1..25_usize, p in 0.0..1.0) {
+            if p == 0.0 {
+                assert!(!Digraph::erdos_renyi(order, p).is_complete());
+            } else if order == 1 {
+                assert!(Digraph::erdos_renyi(order, p).is_complete());
+            }
+        }
+
+        #[test]
+        fn erdos_renyi_is_simple(order in 1..25_usize, p in 0.0..1.0) {
+            assert!(Digraph::erdos_renyi(order, p).is_simple());
+        }
+
+        #[test]
+        fn erdos_renyi_is_subdigraph(order in 1..25_usize, p in 0.0..1.0) {
+            let digraph = Digraph::erdos_renyi(order, p);
+
+            assert!(digraph.is_subdigraph(&digraph));
+        }
+
+        #[test]
+        fn erdos_renyi_is_superdigraph(order in 1..25_usize, p in 0.0..1.0) {
+            let digraph = Digraph::erdos_renyi(order, p);
+
+            assert!(digraph.is_superdigraph(&digraph));
+        }
+
+        #[test]
+        fn erdos_renyi_order(order in 1..25_usize, p in 0.0..1.0) {
+            assert_eq!(Digraph::erdos_renyi(order, p).order(), order);
+        }
+
+        #[test]
+        fn erdos_renyi_outdegree(order in 1..25_usize, p in 0.0..1.0) {
+            let digraph = Digraph::erdos_renyi(order, p);
+
+            assert!(digraph.vertices().all(|u| {
+                (0..order).contains(&digraph.outdegree(u))
+            }));
+        }
+
+        #[test]
+        fn erdos_renyi_size_p_0(order in 1..25_usize) {
+            assert_eq!(Digraph::erdos_renyi(order, 0.0).size(), 0);
+        }
+
+        #[test]
+        fn erdos_renyi_size_p_1(order in 1..25_usize) {
+            assert_eq!(
+                Digraph::erdos_renyi(order, 1.0).size(), order * (order - 1)
+            );
+        }
+
+        #[test]
         fn has_arc_out_of_bounds(order in 1..25_usize) {
             let digraph = Digraph::empty(order);
 
@@ -2690,13 +2802,13 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "m must be greater than zero")]
+    #[should_panic(expected = "m = 0 must be greater than zero")]
     fn biclique_0_1() {
         let _ = Digraph::biclique(0, 1);
     }
 
     #[test]
-    #[should_panic(expected = "n must be greater than zero")]
+    #[should_panic(expected = "n = 0 must be greater than zero")]
     fn biclique_1_0() {
         let _ = Digraph::biclique(1, 0);
     }

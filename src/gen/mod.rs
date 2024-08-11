@@ -91,6 +91,7 @@ pub mod circuit;
 pub mod complete;
 pub mod cycle;
 pub mod empty;
+pub mod erdos_renyi;
 pub mod path;
 pub mod prng;
 pub mod random_tournament;
@@ -102,6 +103,7 @@ pub use {
     complete::Complete,
     cycle::Cycle,
     empty::Empty,
+    erdos_renyi::ErdosRenyi,
     path::Path,
     random_tournament::RandomTournament,
     star::Star,

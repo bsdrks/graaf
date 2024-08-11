@@ -478,7 +478,9 @@ where
 ///
 /// # Panics
 ///
-/// Panics if `s`, `t`, or an intermediate vertex is out of bounds.
+/// * Panics if `s` is out of bounds.
+/// * Panics if `t` is out of bounds.
+/// * Panics if an intermediate vertex is out of bounds.
 ///
 /// # Examples
 ///

@@ -84,6 +84,32 @@ impl Xoshiro256StarStar {
     pub fn next_bool(&mut self) -> bool {
         self.next().unwrap() & 1 == 1
     }
+
+    /// Generates a pseudo-random `f64` in the range `[0, 1)`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use graaf::gen::prng::Xoshiro256StarStar;
+    ///
+    /// let mut rng = Xoshiro256StarStar::new(123);
+    /// let x = rng.next_f64();
+    ///
+    /// assert!(x >= 0.0 && x < 1.0);
+    ///
+    /// let y = rng.next_f64();
+    ///
+    /// assert!(y >= 0.0 && y < 1.0);
+    /// ```
+    ///
+    /// # Panics
+    ///
+    /// This function never panics.
+    #[allow(clippy::cast_precision_loss)]
+    #[must_use]
+    pub fn next_f64(&mut self) -> f64 {
+        self.next().unwrap() as f64 / u64::MAX as f64
+    }
 }
 
 impl Iterator for Xoshiro256StarStar {
@@ -101,5 +127,22 @@ impl Iterator for Xoshiro256StarStar {
         self.state[3] = self.state[3].rotate_left(45);
 
         Some(s)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use {
+        super::*,
+        proptest::*,
+    };
+
+    proptest! {
+        #[test]
+        fn next_f64(seed in 0..u64::MAX) {
+            let mut rng = Xoshiro256StarStar::new(seed);
+
+            prop_assert!((0.0..1.0).contains(&rng.next_f64()));
+        }
     }
 }

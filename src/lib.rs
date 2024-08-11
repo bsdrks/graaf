@@ -42,6 +42,7 @@
 //! - [`Complete`](gen::Complete) generates a complete digraph.
 //! - [`Cycle`](gen::Cycle) generates a bidirectional circuit.
 //! - [`Empty`](gen::Empty) generates a digraph with no arcs.
+//! - [`ErdosRenyi`](gen::ErdosRenyi) generates a random digraph.
 //! - [`RandomTournament`](gen::RandomTournament) generates a random
 //!   tournament.
 //! - [`Star`](gen::Star) generates a star digraph.

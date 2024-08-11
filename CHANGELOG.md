@@ -4,8 +4,10 @@
 
 - Add a trait for path contraction.
 - Add a trait for set contraction.
+- Add the `Barabási–Albert` generator.
 - Add the `DeleteArc` trait.
 - Add the `DeleteVertex` trait.
+- Add the `Grid` generator.
 - Add the `IsIsomorphic` trait.
 - Add the `MaxDegree` trait.
 - Add the `MaxIndegree` trait.
@@ -15,8 +17,49 @@
 - Add the `MinIndegree` trait.
 - Add the `MinOutdegree` trait.
 - Add the `MinSemidegree` trait.
+- Add the `Wheel` generator.
+- Review doctest examples.
+- Review documentation.
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
+
+## [0.78.1] - 2024-08-11
+
+Added
+
+- Add the `ErdosRenyi` generator.
+- Add property test `erdos_renyi_degree` for `adjacency_matrix`.
+- Add property test `erdos_renyi_degree_sum_equals_2size` for `adjacency_matrix`.
+- Add property test `erdos_renyi_even_number_odd_degrees` for `adjacency_matrix`.
+- Add property test `erdos_renyi_has_arc` for `adjacency_matrix`.
+- Add property test `erdos_renyi_indegree` for `adjacency_matrix`.
+- Add property test `erdos_renyi_is_complete` for `adjacency_matrix`.
+- Add property test `erdos_renyi_is_simple` for `adjacency_matrix`.
+- Add property test `erdos_renyi_is_subdigraph` for `adjacency_matrix`.
+- Add property test `erdos_renyi_is_superdigraph` for `adjacency_matrix`.
+- Add property test `erdos_renyi_order` for `adjacency_matrix`.
+- Add property test `erdos_renyi_outdegree` for `adjacency_matrix`.
+- Add property test `erdos_renyi_size_p_0` for `adjacency_matrix`.
+- Add property test `erdos_renyi_size_p_1` for `adjacency_matrix`.
+- Add property test `erdos_renyi_degree` for `adjacency_list`.
+- Add property test `erdos_renyi_degree_sum_equals_2size` for `adjacency_list`.
+- Add property test `erdos_renyi_even_number_odd_degrees` for `adjacency_list`.
+- Add property test `erdos_renyi_has_arc` for `adjacency_list`.
+- Add property test `erdos_renyi_indegree` for `adjacency_list`.
+- Add property test `erdos_renyi_is_complete` for `adjacency_list`.
+- Add property test `erdos_renyi_is_simple` for `adjacency_list`.
+- Add property test `erdos_renyi_is_subdigraph` for `adjacency_list`.
+- Add property test `erdos_renyi_is_superdigraph` for `adjacency_list`.
+- Add property test `erdos_renyi_order` for `adjacency_list`.
+- Add property test `erdos_renyi_outdegree` for `adjacency_list`.
+- Add property test `erdos_renyi_size_p_0` for `adjacency_list`.
+- Add property test `erdos_renyi_size_p_1` for `adjacency_list`.
+- Internal: add `next_f64` for `Xoshiro256StarStar`.
+- Internal: add property test `next_f64` for `Xoshiro256StarStar`.
+
+Changed
+
+- Misc. documentation improvements.
 
 ## [0.78.0] - 2024-08-08
 
