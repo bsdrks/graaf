@@ -289,7 +289,7 @@ impl<W> DistanceMatrix<W> {
             .collect()
     }
 
-    /// Returns whether the distance matrix is connected.
+    /// Checks whether the distance matrix is connected.
     ///
     /// A distance matrix is connected if the eccentricity of every vertex is
     /// finite.

@@ -1,4 +1,4 @@
-//! Return whether a digraph is semicomplete.
+//! Check whether a digraph is semicomplete.
 //!
 //! A digraph is semicomplete if there is an arc between every unordered pair
 //! `u`, `v` of distinct vertices.
@@ -28,7 +28,7 @@ use super::{
     Order,
 };
 
-/// Return whether a digraph is semicomplete.
+/// Check whether a digraph is semicomplete.
 ///
 /// # How can I implement `IsSemicomplete`?
 ///
@@ -112,7 +112,7 @@ use super::{
 /// assert!(Digraph::random_tournament(3, 0).is_semicomplete());
 /// ```
 pub trait IsSemicomplete {
-    /// Returns whether the digraph is semicomplete.
+    /// Checks whether the digraph is semicomplete.
     #[must_use]
     fn is_semicomplete(&self) -> bool;
 }

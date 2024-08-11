@@ -1,4 +1,4 @@
-//! Return whether a vertex is isolated.
+//! Check whether a vertex is isolated.
 //!
 //! A vertex is isolated if it has no incoming or outgoing arcs.
 //!
@@ -115,7 +115,7 @@ use super::{
 /// assert!(digraph.is_isolated(2));
 /// ```
 pub trait IsIsolated {
-    /// Returns whether the vertex is isolated in the digraph.
+    /// Checks whether the vertex is isolated in the digraph.
     ///
     /// # Arguments
     ///

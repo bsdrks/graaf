@@ -1,4 +1,4 @@
-//! Check if a digraph contains an edge.
+//! Check whether a digraph contains an edge.
 //!
 //! To determine whether an arc exists from `u` to `v`, see [`HasArc`].
 //!
@@ -58,7 +58,7 @@
 
 use super::HasArc;
 
-/// Returns whether a digraph contains an edge.
+/// Checks whether a digraph contains an edge.
 ///
 /// # How can I implement `HasEdge`?
 ///

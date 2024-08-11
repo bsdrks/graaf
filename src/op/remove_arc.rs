@@ -60,7 +60,7 @@
 /// # How can I implement `RemoveArc`?
 ///
 /// Provide an implementation of `remove_arc` that removes the arc from a
-/// digraph. Return whether the arc was removed.
+/// digraph. Check whether the arc was removed.
 ///
 /// ```
 /// use {
@@ -137,7 +137,7 @@
 /// [`AddArc`]: crate::op::AddArc
 /// [`AddArcWeighted`]: crate::op::AddArcWeighted
 pub trait RemoveArc {
-    /// Removes the arc from `u` to `v` from the digraph. Returns whether the
+    /// Removes the arc from `u` to `v` from the digraph. Checks whether the
     /// arc was removed.
     ///
     /// # Arguments

@@ -91,7 +91,7 @@ pub trait Outdegree {
     #[must_use]
     fn outdegree(&self, u: usize) -> usize;
 
-    /// Returns whether a vertex is a sink of the digraph.
+    /// Checks whether a vertex is a sink of the digraph.
     ///
     /// A sink is a vertex with no out-neighbors.
     ///

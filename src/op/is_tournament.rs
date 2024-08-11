@@ -1,4 +1,4 @@
-//! Return whether a digraph is a tournament.
+//! Check whether a digraph is a tournament.
 //!
 //! A tournament is a digraph in which there is an arc between every unordered
 //! pair of distinct vertices.
@@ -28,7 +28,7 @@ use super::{
     Order,
 };
 
-/// Return whether a digraph is a tournament.
+/// Check whether a digraph is a tournament.
 ///
 /// # How can I implement `IsTournament`?
 ///
@@ -112,7 +112,7 @@ use super::{
 /// assert!(Digraph::random_tournament(3, 0).is_tournament());
 /// ```
 pub trait IsTournament {
-    /// Returns whether the digraph is a tournament.
+    /// Checks whether the digraph is a tournament.
     #[must_use]
     fn is_tournament(&self) -> bool;
 }

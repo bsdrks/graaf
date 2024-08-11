@@ -152,7 +152,7 @@ use super::{
 #[doc(alias = "Isograph")]
 #[doc(alias = "Pseudosymmetric")]
 pub trait IsBalanced {
-    /// Returns whether the digraph is balanced.
+    /// Checks whether the digraph is balanced.
     #[doc(alias = "isograph")]
     #[doc(alias = "pseudosymmetric")]
     #[must_use]

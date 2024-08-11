@@ -1,4 +1,4 @@
-//! Return whether a digraph is simple.
+//! Check whether a digraph is simple.
 //!
 //! A digraph is simple if it has no self-loops or parallel arcs.
 //!
@@ -27,7 +27,7 @@
 //! assert!(digraph.is_simple());
 //! ```
 
-/// Return whether a digraph is simple.
+/// Check whether a digraph is simple.
 ///
 /// # How can I implement `IsSimple`?
 ///
@@ -79,7 +79,7 @@
 /// assert!(digraph.is_simple());
 /// ```
 pub trait IsSimple {
-    /// Returns whether the digraph is simple.
+    /// Checks whether the digraph is simple.
     #[must_use]
     fn is_simple(&self) -> bool;
 }

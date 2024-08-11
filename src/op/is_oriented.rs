@@ -1,4 +1,4 @@
-//! Return whether a digraph is oriented.
+//! Check whether a digraph is oriented.
 //!
 //! An oriented graph is a digraph with no cycle of length 2.
 //!
@@ -20,7 +20,7 @@ use super::{
     HasArc,
 };
 
-/// Return whether a digraph is oriented.
+/// Check whether a digraph is oriented.
 ///
 /// # How can I implement `IsOriented`?
 ///
@@ -94,7 +94,7 @@ use super::{
 /// assert!(Digraph::circuit(3).is_oriented());
 /// ```
 pub trait IsOriented {
-    /// Returns whether the digraph is oriented.
+    /// Checks whether the digraph is oriented.
     #[must_use]
     fn is_oriented(&self) -> bool;
 }

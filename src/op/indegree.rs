@@ -107,7 +107,7 @@ pub trait Indegree {
     #[must_use]
     fn indegree(&self, v: usize) -> usize;
 
-    /// Returns whether a vertex is a source of the digraph.
+    /// Checks whether a vertex is a source of the digraph.
     ///
     /// A source is a vertex with an indegree of 0.
     ///

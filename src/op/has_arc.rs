@@ -1,4 +1,4 @@
-//! Check if a digraph contains an edge.
+//! Check whether a digraph contains an edge.
 //!
 //! To check whether an arc exists from `u` to `v` and from `v` to `u`, see
 //! [`HasEdge`].
@@ -111,7 +111,7 @@
 /// [`AddArc`]: crate::op::AddArc
 /// [`AddArcWeighted`]: crate::op::AddArcWeighted
 pub trait HasArc {
-    /// Returns whether an arc exists from `u` to `v` in the digraph.
+    /// Checks whether an arc exists from `u` to `v` in the digraph.
     ///
     /// # Arguments
     ///

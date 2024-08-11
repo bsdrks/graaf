@@ -28,7 +28,7 @@ use super::{
     Order,
 };
 
-/// Return whether a digraph is complete.
+/// Check whether a digraph is complete.
 ///
 /// # How can I implement `IsComplete`?
 ///

@@ -1,4 +1,4 @@
-//! Return whether a vertex is pendant.
+//! Check whether a vertex is pendant.
 //!
 //! A pendant vertex has a degree of one.
 //!
@@ -34,7 +34,7 @@
 
 use super::Degree;
 
-/// Return whether a vertex is Pendant.
+/// Check whether a vertex is Pendant.
 ///
 /// # How can I implement `IsPendant`?
 ///
@@ -87,7 +87,7 @@ use super::Degree;
 /// assert!(digraph.is_pendant(3));
 /// ```
 pub trait IsPendant {
-    /// Returns whether a vertex is a pendant vertex.
+    /// Checks whether a vertex is a pendant vertex.
     ///
     /// # Arguments
     ///

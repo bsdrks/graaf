@@ -1,4 +1,4 @@
-//! Return whether a digraph is a superdigraph of another digraph.
+//! Check whether a digraph is a superdigraph of another digraph.
 //!
 //! If digraph `H` is a subdigraph of digraph `D`, then `D` is a superdigraph
 //! of `H`; the vertex set of `H` is a subset of the vertex set of `D` and the
@@ -49,7 +49,7 @@
 
 use super::IsSubdigraph;
 
-/// Return whether a digraph is a superdigraph of another digraph.
+/// Check whether a digraph is a superdigraph of another digraph.
 ///
 /// If digraph `H` is a subdigraph of digraph `D`, then `D` is a superdigraph
 /// of `H`; the vertex set of `H` is a subset of the vertex set of `D` and the
@@ -162,7 +162,7 @@ use super::IsSubdigraph;
 /// assert!(tournament.is_superdigraph(&tournament));
 /// ```
 pub trait IsSuperdigraph {
-    /// Returns whether the digraph is a superdigraph of another digraph.
+    /// Checks whether the digraph is a superdigraph of another digraph.
     ///
     /// # Arguments
     ///

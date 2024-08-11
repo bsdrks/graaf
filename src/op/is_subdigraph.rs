@@ -1,4 +1,4 @@
-//! Return whether a digraph is a subdigraph of another digraph.
+//! Check whether a digraph is a subdigraph of another digraph.
 //!
 //! A digraph `H` is a subdigraph of a digraph `D` if the vertex set of `H` is
 //! a subset of the vertex set of `D` and the arc set of `H` is a subset of the
@@ -127,7 +127,7 @@ use {
     std::collections::BTreeSet,
 };
 
-/// Return whether a digraph is a subdigraph of another digraph.
+/// Check whether a digraph is a subdigraph of another digraph.
 ///
 /// # How can I implement `IsSubdigraph`?
 ///
@@ -186,7 +186,7 @@ use {
 /// assert!(h.is_subdigraph(&d));
 /// ```
 pub trait IsSubdigraph {
-    /// Returns whether the digraph is a subdigraph of another digraph.
+    /// Checks whether the digraph is a subdigraph of another digraph.
     ///
     /// # Arguments
     ///
