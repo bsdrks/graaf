@@ -31,7 +31,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.80.0"
+graaf = "0.80.1"
 ```
 
 ## Digraph Types
@@ -65,7 +65,7 @@ The [`op`] module provides digraph operation traits. The [digraph types](#digrap
 - [`AddArcWeighted`] adds an arc to an arc-weighted digraph.
 - [`AddArc`] adds an arc to an unweighted digraph.
 - [`ArcWeight`] returns an arc's weight.
-- [`ArcsWeighted`] returns a digraph's arcs and their weights.
+- [`ArcsWeighted`] returns a digraph's weighted arcs.
 - [`Arcs`] returns a digraph's arcs.
 - [`Complement`] returns a digraph's complement.
 - [`Converse`] returns a digraph's converse.
@@ -84,14 +84,14 @@ The [`op`] module provides digraph operation traits. The [digraph types](#digrap
 - [`IsPendant`] checks whether a vertex is a pendant.
 - [`IsRegular`] checks whether a digraph is regular.
 - [`IsSemicomplete`] checks whether a digraph is semicomplete.
-- [`IsSimple`] checks whether a digraph does not contain loops or parallel arcs.
-- [`IsSpanningSubdigraph`] checks whether a digraph is a spanning subdigraph.
+- [`IsSimple`] checks whether a digraph is simple.
+- [`IsSpanningSubdigraph`] checks whether a digraph spans a superdigraph.
 - [`IsSubdigraph`] checks whether a digraph is a subdigraph.
 - [`IsSuperdigraph`] checks whether a digraph is a superdigraph.
 - [`IsSymmetric`] checks whether a digraph is symmetric.
 - [`IsTournament`] checks whether a digraph is a tournament.
 - [`Order`] returns the number of vertices in a digraph.
-- [`OutNeighborsWeighted`] returns a vertex's out-neighbors and their weights.
+- [`OutNeighborsWeighted`] returns a vertex's weighted out-neighbors.
 - [`OutNeighbors`] returns a vertex's out-neighbors.
 - [`OutdegreeSequence`] returns a digraph's outdegree sequence.
 - [`Outdegree`] returns a vertex's outdegree.
@@ -201,6 +201,7 @@ A distance matrix contains the shortest distances between all pairs of vertices 
 [`ErdosRenyi`]: https://docs.rs/graaf/latest/graaf/gen/erdos_renyi/trait.ErdosRenyi.html
 [`HasArc`]: https://docs.rs/graaf/latest/graaf/op/has_arc/trait.HasArc.html
 [`HasEdge`]: https://docs.rs/graaf/latest/graaf/op/has_edge/trait.HasEdge.html
+[`HasWalk`]: https://docs.rs/graaf/latest/graaf/op/has_walk/trait.HasWalk.html
 [`InNeighbors`]: https://docs.rs/graaf/latest/graaf/op/in_neighbors/trait.InNeighbors.html
 [`IndegreeSequence`]: https://docs.rs/graaf/latest/graaf/op/indegree_sequence/trait.IndegreeSequence.html
 [`Indegree`]: https://docs.rs/graaf/latest/graaf/op/indegree/trait.Indegree.html
@@ -217,7 +218,6 @@ A distance matrix contains the shortest distances between all pairs of vertices 
 [`IsSuperdigraph`]: https://docs.rs/graaf/latest/graaf/op/is_superdigraph/trait.IsSuperdigraph.html
 [`IsSymmetric`]: https://docs.rs/graaf/latest/graaf/op/is_symmetric/trait.IsSymmetric.html
 [`IsTournament`]: https://docs.rs/graaf/latest/graaf/op/is_tournament/trait.IsTournament.html
-[`IsWalk`]: https://docs.rs/graaf/latest/graaf/op/is_walk/trait.IsWalk.html
 [`Order`]: https://docs.rs/graaf/latest/graaf/op/order/trait.Order.html
 [`OutNeighborsWeighted`]: https://docs.rs/graaf/latest/graaf/op/out_neighbors_weighted/trait.OutNeighborsWeighted.html
 [`OutNeighbors`]: https://docs.rs/graaf/latest/graaf/op/out_neighbors/trait.OutNeighbors.html

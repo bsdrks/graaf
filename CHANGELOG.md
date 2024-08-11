@@ -23,6 +23,12 @@
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
 
+## [0.80.1] - 2024-08-11
+
+Changed
+
+- Minor documentation improvements.
+
 ## [0.80.0] - 2024-08-11
 
 Changed

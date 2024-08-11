@@ -1,4 +1,4 @@
-//! Return a digraph's arcs and their weights.
+//! Return a digraph's weighted arcs.
 //!
 //! # Examples
 //!
@@ -27,7 +27,7 @@
 //!     .eq([(0, 1, &2), (1, 2, &3), (2, 0, &4)]));
 //! ```
 
-/// Return a digraph's arcs and their weights.
+/// Return a digraph's weighted arcs.
 ///
 /// # How can I implement `ArcsWeighted`?
 ///

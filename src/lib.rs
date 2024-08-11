@@ -57,8 +57,7 @@
 //!   digraph.
 //! - [`AddArc`](op::AddArc) adds an arc to an unweighted digraph.
 //! - [`ArcWeight`](op::ArcWeight) returns an arc's weight.
-//! - [`ArcsWeighted`](op::ArcsWeighted) returns a digraph's arcs and their
-//!   weights.
+//! - [`ArcsWeighted`](op::ArcsWeighted) returns a digraph's weighted arcs.
 //! - [`Arcs`](op::Arcs) returns a digraph's arcs.
 //! - [`Complement`](op::Complement) returns a digraph's complement.
 //! - [`Converse`](op::Converse) returns a digraph's converse.
@@ -80,10 +79,9 @@
 //! - [`IsRegular`](op::IsRegular) checks whether a digraph is regular.
 //! - [`IsSemicomplete`](op::IsSemicomplete) checks whether a digraph is
 //!   semicomplete.
-//! - [`IsSimple`](op::IsSimple) checks whether a digraph does not contain
-//!   loops or parallel arcs.
+//! - [`IsSimple`](op::IsSimple) checks whether a digraph is simple.
 //! - [`IsSpanningSubdigraph`](op::IsSpanningSubdigraph) checks whether a
-//!   digraph is a spanning subdigraph.
+//!   digraph spans a superdigraph.
 //! - [`IsSubdigraph`](op::IsSubdigraph) checks whether a digraph is a
 //!   subdigraph.
 //! - [`IsSuperdigraph`](op::IsSuperdigraph) checks whether a digraph is a
@@ -93,7 +91,7 @@
 //!   tournament.
 //! - [`Order`](op::Order) returns the number of vertices in a digraph.
 //! - [`OutNeighborsWeighted`](op::OutNeighborsWeighted) returns a vertex's
-//!   out-neighbors and their weights.
+//!   weighted out-neighbors.
 //! - [`OutNeighbors`](op::OutNeighbors) returns a vertex's out-neighbors.
 //! - [`OutdegreeSequence`](op::OutdegreeSequence) returns a digraph's
 //!   outdegree sequence.
