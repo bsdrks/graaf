@@ -1,4 +1,4 @@
-//! Determine whether an edge exists between two vertices.
+//! Check if a digraph contains an edge.
 //!
 //! To determine whether an arc exists from `u` to `v`, see [`HasArc`].
 //!
@@ -58,7 +58,7 @@
 
 use super::HasArc;
 
-/// Determine whether an edge exists between two vertices.
+/// Returns whether a digraph contains an edge.
 ///
 /// # How can I implement `HasEdge`?
 ///

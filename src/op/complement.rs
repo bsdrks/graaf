@@ -1,4 +1,4 @@
-//! Generate the complement of a digraph.
+//! Return a digraph's complement.
 //!
 //! The complement of a digraph contains all arcs not present in the original
 //! digraph.
@@ -51,7 +51,7 @@ use {
     crate::gen::Empty,
 };
 
-/// Generate the complement of a digraph.
+/// Return a digraph's complement.
 ///
 /// # How do I implement `Complement`?
 ///

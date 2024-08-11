@@ -1,4 +1,4 @@
-//! Determine whether a digraph is regular.
+//! Return whether a digraph is regular.
 //!
 //! A digraph is regular if all vertices have the same indegree and
 //! outdegree.
@@ -46,7 +46,7 @@ use super::{
     Vertices,
 };
 
-/// Determine whether a digraph is regular.
+/// Return whether a digraph is regular.
 ///
 /// # How can I implement `IsRegular`?
 ///

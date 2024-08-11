@@ -1,4 +1,4 @@
-//! Get the outdegree of a vertex in a digraph.
+//! Return a vertex's outdegree.
 //!
 //! The outdegree is the number of arcs incident out of a vertex.
 //!
@@ -30,7 +30,7 @@
 //! ```
 #![doc(alias = "out_degree")]
 
-/// Get the outdegree of a vertex in a digraph.
+/// Return a vertex's outdegree.
 ///
 /// # How can I implement `Outdegree`?
 ///

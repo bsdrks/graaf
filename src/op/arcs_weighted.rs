@@ -1,4 +1,4 @@
-//! Iterate over the weighted arcs in a digraph.
+//! Return a digraph's arcs and their weights.
 //!
 //! # Examples
 //!
@@ -27,12 +27,12 @@
 //!     .eq([(0, 1, &2), (1, 2, &3), (2, 0, &4)]));
 //! ```
 
-/// Iterate over the weighted arcs in a digraph.
+/// Return a digraph's arcs and their weights.
 ///
 /// # How can I implement `ArcsWeighted`?
 ///
 /// Provide an implementation of `arcs_weighted` that returns an iterator over
-/// the weighted arcs in a digraph.
+/// the arcs in a digraph with their weights.
 ///
 /// ```
 /// use graaf::op::ArcsWeighted;

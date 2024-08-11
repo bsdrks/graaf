@@ -1,4 +1,4 @@
-//! Return the degree sequence of a digraph.
+//! Return a digraph's degree sequence.
 //!
 //! The degree sequence is an iterator over the degrees of the vertices of
 //! a digraph.
@@ -34,7 +34,7 @@ use super::{
     Vertices,
 };
 
-/// Return the degree sequence of the digraph.
+/// Return a digraph's degree sequence.
 ///
 /// # How can I implement `DegreeSequence`?
 ///

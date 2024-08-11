@@ -1,4 +1,4 @@
-//! Return the outdegree sequence of a digraph.
+//! Return a digraph's outdegree sequence.
 //!
 //! The outdegree sequence is an iterator over the outdegrees of the vertices
 //! of a digraph.
@@ -34,7 +34,7 @@ use super::{
     Vertices,
 };
 
-/// Return the outdegree sequence of the digraph.
+/// Return a digraph's outdegree sequence.
 ///
 /// # How can I implement `OutdegreeSequence`?
 ///

@@ -1,4 +1,4 @@
-//! Iterate over the out-neighbors of a vertex in a digraph.
+//! Return a vertex's out-neighbors.
 //!
 //! # Examples
 //!
@@ -37,7 +37,7 @@
 //! ```
 #![doc(alias = "out_neighbours")]
 
-/// Iterate over the out-neighbors of a vertex in a digraph.
+/// Return a vertex's out-neighbors.
 ///
 /// # How can I implement `OutNeighbors`?
 ///

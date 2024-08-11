@@ -1,4 +1,4 @@
-//! Iterate over the sinks in a digraph.
+//! Return a digraph's sinks.
 //!
 //! A sink is a vertex with no out-neighbors.
 //!
@@ -33,7 +33,7 @@ use super::{
     Vertices,
 };
 
-/// Iterate over the sinks in a digraph.
+/// Return a digraph's sinks.
 ///
 /// # How can I implement `Sinks`?
 ///

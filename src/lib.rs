@@ -1,6 +1,6 @@
 //! # Graaf
 //!
-//! Work with directed graphs in Rust.
+//! Rust-powered directed graphs.
 //!
 //! # Table of Contents
 //!
@@ -22,7 +22,7 @@
 //!
 //! # Digraph Types
 //!
-//! Graaf provides three representations of directed graphs.
+//! Graaf provides directed graphs representations.
 //!
 //! - [`adjacency_list`] represents unweighted sparse digraphs.
 //! - [`adjacency_matrix`] represents unweighted dense digraphs.
@@ -33,7 +33,7 @@
 //!
 //! # Creating Digraphs
 //!
-//! Graaf provides eight digraph generators.
+//! The [`gen`] module provides digraph generators.
 //!
 //! - [`Biclique`](gen::Biclique) generates a complete bipartite digraph.
 //! - [`Circuit`](gen::Circuit) generates a circuit digraph.
@@ -56,54 +56,55 @@
 //! - [`AddArcWeighted`](op::AddArcWeighted) adds an arc to an arc-weighted
 //!   digraph.
 //! - [`AddArc`](op::AddArc) adds an arc to an unweighted digraph.
-//! - [`ArcWeight`](op::ArcWeight) returns the weight of an arc.
-//! - [`ArcsWeighted`](op::ArcsWeighted) returns the arcs and their weights in
-//!   a digraph.
-//! - [`Arcs`](op::Arcs) returns the arcs in a digraph.
-//! - [`Complement`](op::Complement) returns the complement of a digraph.
-//! - [`Converse`](op::Converse) returns the converse of a digraph.
-//! - [`DegreeSequence`](op::DegreeSequence) returns the degree sequence of a
-//!   digraph.
-//! - [`Degree`](op::Degree) returns the degree of a vertex.
-//! - [`HasArc`](op::HasArc) checks if an arc exists in a digraph.
-//! - [`HasEdge`](op::HasEdge) checks if an edge exists in a digraph.
-//! - [`InNeighbors`](op::InNeighbors) returns the in-neighbors of a vertex.
-//! - [`IndegreeSequence`](op::IndegreeSequence) returns the indegree sequence
-//!   of a digraph.
-//! - [`Indegree`](op::Indegree) returns the indegree of a vertex.
-//! - [`IsBalanced`](op::IsBalanced) checks if a digraph is balanced.
-//! - [`IsComplete`](op::IsComplete) checks if a digraph is complete.
-//! - [`IsIsolated`](op::IsIsolated) checks if a vertex is isolated.
-//! - [`IsOriented`](op::IsOriented) checks if a digraph is oriented.
-//! - [`IsPendant`](op::IsPendant) checks if a vertex is a pendant.
-//! - [`IsRegular`](op::IsRegular) checks if a digraph is regular.
-//! - [`IsSemicomplete`](op::IsSemicomplete) checks if a digraph is
+//! - [`ArcWeight`](op::ArcWeight) returns an arc's weight.
+//! - [`ArcsWeighted`](op::ArcsWeighted) returns a digraph's arcs and their
+//!   weights.
+//! - [`Arcs`](op::Arcs) returns a digraph's arcs.
+//! - [`Complement`](op::Complement) returns a digraph's complement.
+//! - [`Converse`](op::Converse) returns a digraph's converse.
+//! - [`DegreeSequence`](op::DegreeSequence) returns a digraph's degree
+//!   sequence.
+//! - [`Degree`](op::Degree) returns a vertex's degree.
+//! - [`HasArc`](op::HasArc) checks whether a digraph contains an arc.
+//! - [`HasEdge`](op::HasEdge) checks whether a digraph contains an edge.
+//! - [`HasWalk`](op::HasWalk) checks whether a digraph contains a walk.
+//! - [`InNeighbors`](op::InNeighbors) returns a vertex's in-neighbors.
+//! - [`IndegreeSequence`](op::IndegreeSequence) returns a digraph's indegree
+//!   sequence.
+//! - [`Indegree`](op::Indegree) a vertex's indegree.
+//! - [`IsBalanced`](op::IsBalanced) checks whether a digraph is balanced.
+//! - [`IsComplete`](op::IsComplete) checks whether a digraph is complete.
+//! - [`IsIsolated`](op::IsIsolated) checks whether a vertex is isolated.
+//! - [`IsOriented`](op::IsOriented) checks whether a digraph is oriented.
+//! - [`IsPendant`](op::IsPendant) checks whether a vertex is a pendant.
+//! - [`IsRegular`](op::IsRegular) checks whether a digraph is regular.
+//! - [`IsSemicomplete`](op::IsSemicomplete) checks whether a digraph is
 //!   semicomplete.
-//! - [`IsSimple`](op::IsSimple) checks if a digraph contains no loops or
-//!   parallel arcs.
-//! - [`IsSpanningSubdigraph`](op::IsSpanningSubdigraph) checks if a digraph is
-//!   a spanning subdigraph.
-//! - [`IsSubdigraph`](op::IsSubdigraph) checks if a digraph is a subdigraph.
-//! - [`IsSuperdigraph`](op::IsSuperdigraph) checks if a digraph is a
+//! - [`IsSimple`](op::IsSimple) checks whether a digraph does not contain
+//!   loops or parallel arcs.
+//! - [`IsSpanningSubdigraph`](op::IsSpanningSubdigraph) checks whether a
+//!   digraph is a spanning subdigraph.
+//! - [`IsSubdigraph`](op::IsSubdigraph) checks whether a digraph is a
+//!   subdigraph.
+//! - [`IsSuperdigraph`](op::IsSuperdigraph) checks whether a digraph is a
 //!   superdigraph.
-//! - [`IsSymmetric`](op::IsSymmetric) checks if a digraph is symmetric.
-//! - [`IsTournament`](op::IsTournament) checks if a digraph is a tournament.
-//! - [`IsWalk`](op::IsWalk) checks if a sequence of vertices is a walk in a
-//!   digraph.
-//! - [`Order`](op::Order) returns the number of vertices.
-//! - [`OutNeighborsWeighted`](op::OutNeighborsWeighted) returns the weighted
-//!   out-neighbors of a vertex.
-//! - [`OutNeighbors`](op::OutNeighbors) returns the out-neighbors of a vertex.
-//! - [`OutdegreeSequence`](op::OutdegreeSequence) returns the outdegree
-//!   sequence of a digraph.
-//! - [`Outdegree`](op::Outdegree) returns the outdegree of a vertex.
+//! - [`IsSymmetric`](op::IsSymmetric) checks whether a digraph is symmetric.
+//! - [`IsTournament`](op::IsTournament) checks whether a digraph is a
+//!   tournament.
+//! - [`Order`](op::Order) returns the number of vertices in a digraph.
+//! - [`OutNeighborsWeighted`](op::OutNeighborsWeighted) returns a vertex's
+//!   out-neighbors and their weights.
+//! - [`OutNeighbors`](op::OutNeighbors) returns a vertex's out-neighbors.
+//! - [`OutdegreeSequence`](op::OutdegreeSequence) returns a digraph's
+//!   outdegree sequence.
+//! - [`Outdegree`](op::Outdegree) returns a vertex's outdegree.
 //! - [`RemoveArc`](op::RemoveArc) removes an arc from a digraph.
-//! - [`SemidegreeSequence`](op::SemidegreeSequence) returns the semidegree
-//!   sequence of a digraph.
-//! - [`Sinks`](op::Sinks) returns the sinks in a digraph.
+//! - [`SemidegreeSequence`](op::SemidegreeSequence) returns a digraph's
+//!   semidegree sequence.
+//! - [`Sinks`](op::Sinks) returns a digraph's sinks.
 //! - [`Size`](op::Size) returns the number of arcs in a digraph.
-//! - [`Sources`](op::Sources) returns the sources in a digraph.
-//! - [`Vertices`](op::Vertices) returns the vertices in a digraph.
+//! - [`Sources`](op::Sources) returns a digraph's sources.
+//! - [`Vertices`](op::Vertices) returns a digraph's vertices.
 //!
 //! # Algorithms
 //!

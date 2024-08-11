@@ -1,4 +1,4 @@
-//! Return the indegree sequence of a digraph.
+//! Return a digraph's indegree sequence.
 //!
 //! The indegree sequence is an iterator over the indegrees of the vertices of
 //! a digraph.
@@ -34,7 +34,7 @@ use super::{
     Vertices,
 };
 
-/// Return the indegree sequence of the digraph.
+/// Return a digraph's indegree sequence.
 ///
 /// # How can I implement `IndegreeSequence`?
 ///

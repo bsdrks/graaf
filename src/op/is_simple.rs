@@ -1,4 +1,4 @@
-//! Determine whether a digraph is simple.
+//! Return whether a digraph is simple.
 //!
 //! A digraph is simple if it has no self-loops or parallel arcs.
 //!
@@ -27,7 +27,7 @@
 //! assert!(digraph.is_simple());
 //! ```
 
-/// Determine whether a digraph is simple.
+/// Return whether a digraph is simple.
 ///
 /// # How can I implement `IsSimple`?
 ///

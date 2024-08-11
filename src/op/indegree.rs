@@ -1,4 +1,4 @@
-//! Get the indegree of a vertex.
+//! Return a vertex's indegree.
 //!
 //! The indegree is the number of arcs incident into a vertex.
 //!
@@ -30,7 +30,7 @@
 //! ```
 #![doc(alias = "in_degree")]
 
-/// Get the indegree of a vertex.
+/// Return a vertex's indegree.
 ///
 /// # How can I implement `Indegree`?
 ///

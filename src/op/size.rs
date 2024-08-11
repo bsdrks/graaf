@@ -1,4 +1,4 @@
-//! Count the arcs in a digraph.
+//! Return the number of arcs in a digraph.
 //!
 //! # Examples
 //!
@@ -33,7 +33,7 @@
 //! assert_eq!(digraph.size(), 10);
 //! ```
 
-/// Count the arcs in a digraph.
+/// Return the number of arcs in a digraph.
 ///
 /// # How can I implement `Size`?
 ///

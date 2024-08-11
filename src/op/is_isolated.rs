@@ -1,4 +1,4 @@
-//! Determine whether a vertex in a digraph is isolated.
+//! Return whether a vertex is isolated.
 //!
 //! A vertex is isolated if it has no incoming or outgoing arcs.
 //!

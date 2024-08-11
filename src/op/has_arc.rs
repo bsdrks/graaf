@@ -1,4 +1,4 @@
-//! Check whether an arc exists from one vertex to another.
+//! Check if a digraph contains an edge.
 //!
 //! To check whether an arc exists from `u` to `v` and from `v` to `u`, see
 //! [`HasEdge`].
@@ -35,7 +35,7 @@
 //!
 //! [`HasEdge`]: crate::op::HasEdge
 
-/// Check whether an arc exists from one vertex to another.
+/// Check whether a digraph contains an arc.
 ///
 /// # How can I implement `HasArc`?
 ///

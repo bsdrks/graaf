@@ -1,4 +1,4 @@
-//! Iterate over the vertices in a digraph.
+//! Return a digraph's vertices.
 //!
 //! # Example
 //!
@@ -14,7 +14,7 @@
 //! assert!(digraph.vertices().eq(0..4));
 //! ```
 
-/// Iterate over the vertices in a digraph.
+/// Return a digraph's vertices.
 ///
 /// # How can I implement `Vertices`?
 ///

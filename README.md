@@ -1,6 +1,6 @@
 # Graaf &emsp; [![Crates.io](https://img.shields.io/crates/v/graaf.svg)](https://crates.io/crates/graaf) [![Build status](https://github.com/bsdrks/graaf/actions/workflows/rust.yml/badge.svg)](https://github.com/bsdrks/graaf/actions) [![API reference](https://docs.rs/graaf/badge.svg)](https://docs.rs/graaf) [![Coverage Status](https://coveralls.io/repos/github/bsdrks/graaf/badge.svg?branch=main)](https://coveralls.io/github/bsdrks/graaf?branch=main)
 
-Work with directed graphs in Rust.
+Rust-powered directed graphs.
 
 ## Table of Contents
 
@@ -31,12 +31,12 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.79.1"
+graaf = "0.80.0"
 ```
 
 ## Digraph Types
 
-Graaf provides three representations of directed graphs.
+Graaf provides representations of directed graphs.
 
 - [`adjacency_list`](https://docs.rs/graaf/latest/graaf/adjacency_list/digraph/struct.Digraph.html) represents unweighted sparse digraphs.
 - [`adjacency_matrix`](https://docs.rs/graaf/latest/graaf/adjacency_matrix/digraph/struct.Digraph.html) represents unweighted dense digraphs.
@@ -46,7 +46,7 @@ These types eagerly implement [digraph operations](#operations) and [digraph alg
 
 ## Creating Digraphs
 
-The [`gen`] module provides eight digraph generators.
+The [`gen`] module provides digraph generators.
 
 - [`Biclique`] generates a complete bipartite digraph.
 - [`Circuit`] generates a circuit digraph.
@@ -64,43 +64,43 @@ The [`op`] module provides digraph operation traits. The [digraph types](#digrap
 
 - [`AddArcWeighted`] adds an arc to an arc-weighted digraph.
 - [`AddArc`] adds an arc to an unweighted digraph.
-- [`ArcWeight`] returns the weight of an arc.
-- [`ArcsWeighted`] returns the arcs and their weights in a digraph.
-- [`Arcs`] returns the arcs in a digraph.
-- [`Complement`] returns the complement of a digraph.
-- [`Converse`] returns the converse of a digraph.
-- [`DegreeSequence`] returns the degree sequence of a digraph.
-- [`Degree`] returns the degree of a vertex.
-- [`HasArc`] checks if an arc exists in a digraph.
-- [`HasEdge`] checks if an edge exists in a digraph.
-- [`InNeighbors`] returns the in-neighbors of a vertex.
-- [`IndegreeSequence`] returns the indegree sequence of a digraph.
-- [`Indegree`] returns the indegree of a vertex.
-- [`IsBalanced`] checks if a digraph is balanced.
-- [`IsComplete`] checks if a digraph is complete.
-- [`IsIsolated`] checks if a vertex is isolated.
-- [`IsOriented`] checks if a digraph is oriented.
-- [`IsPendant`] checks if a vertex is a pendant.
-- [`IsRegular`] checks if a digraph is regular.
-- [`IsSemicomplete`] checks if a digraph is semicomplete.
-- [`IsSimple`] checks if a digraph contains no loops or parallel arcs.
-- [`IsSpanningSubdigraph`] checks if a digraph is a spanning subdigraph.
-- [`IsSubdigraph`] checks if a digraph is a subdigraph.
-- [`IsSuperdigraph`] checks if a digraph is a superdigraph.
-- [`IsSymmetric`] checks if a digraph is symmetric.
-- [`IsTournament`] checks if a digraph is a tournament.
-- [`IsWalk`] checks if a sequence of vertices is a walk in a digraph.
-- [`Order`] returns the number of vertices.
-- [`OutNeighborsWeighted`] returns the weighted out-neighbors of a vertex.
-- [`OutNeighbors`] returns the out-neighbors of a vertex.
-- [`OutdegreeSequence`] returns the outdegree sequence of a digraph.
-- [`Outdegree`] returns the outdegree of a vertex.
+- [`ArcWeight`] returns an arc's weight.
+- [`ArcsWeighted`] returns a digraph's arcs and their weights.
+- [`Arcs`] returns a digraph's arcs.
+- [`Complement`] returns a digraph's complement.
+- [`Converse`] returns a digraph's converse.
+- [`DegreeSequence`] returns a digraph's degree sequence.
+- [`Degree`] returns a vertex's degree.
+- [`HasArc`] checks whether a digraph contains an arc.
+- [`HasEdge`] checks whether a digraph contains an edge.
+- [`HasWalk`] checks whether a digraph contains a walk.
+- [`InNeighbors`] returns a vertex's in-neighbors.
+- [`IndegreeSequence`] returns a digraph's indegree sequence.
+- [`Indegree`] returns a vertex's indegree.
+- [`IsBalanced`] checks whether a digraph is balanced.
+- [`IsComplete`] checks whether a digraph is complete.
+- [`IsIsolated`] checks whether a vertex is isolated.
+- [`IsOriented`] checks whether a digraph is oriented.
+- [`IsPendant`] checks whether a vertex is a pendant.
+- [`IsRegular`] checks whether a digraph is regular.
+- [`IsSemicomplete`] checks whether a digraph is semicomplete.
+- [`IsSimple`] checks whether a digraph does not contain loops or parallel arcs.
+- [`IsSpanningSubdigraph`] checks whether a digraph is a spanning subdigraph.
+- [`IsSubdigraph`] checks whether a digraph is a subdigraph.
+- [`IsSuperdigraph`] checks whether a digraph is a superdigraph.
+- [`IsSymmetric`] checks whether a digraph is symmetric.
+- [`IsTournament`] checks whether a digraph is a tournament.
+- [`Order`] returns the number of vertices in a digraph.
+- [`OutNeighborsWeighted`] returns a vertex's out-neighbors and their weights.
+- [`OutNeighbors`] returns a vertex's out-neighbors.
+- [`OutdegreeSequence`] returns a digraph's outdegree sequence.
+- [`Outdegree`] returns a vertex's outdegree.
 - [`RemoveArc`] removes an arc from a digraph.
-- [`SemidegreeSequence`] returns the semidegree sequence of a digraph.
-- [`Sinks`] returns the sinks in a digraph.
+- [`SemidegreeSequence`] returns a digraph's semidegree sequence.
+- [`Sinks`] returns a digraph's sinks.
 - [`Size`] returns the number of arcs in a digraph.
-- [`Sources`] returns the sources in a digraph.
-- [`Vertices`] returns the vertices in a digraph.
+- [`Sources`] returns a digraph's sources.
+- [`Vertices`] returns a digraph's vertices.
 
 ## Algorithms
 

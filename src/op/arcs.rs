@@ -1,4 +1,4 @@
-//! Iterate over the arcs in a digraph.
+//! Return a digraph's arcs.
 //!
 //! # Examples
 //!
@@ -21,7 +21,7 @@
 //! assert!(digraph.arcs().eq([(0, 1), (1, 2), (2, 0)]));
 //! ```
 
-/// Iterate over the arcs in a digraph.
+/// Return a digraph's arcs.
 ///
 /// # How can I implement `Arcs`?
 ///

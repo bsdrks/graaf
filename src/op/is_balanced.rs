@@ -1,4 +1,4 @@
-//! Determine whether a digraph is balanced.
+//! Check whether a digraph is balanced.
 //!
 //! A digraph is balanced if the indegree of each vertex equals its
 //! outdegree.
@@ -46,7 +46,7 @@ use super::{
     Vertices,
 };
 
-/// Determine whether a digraph is balanced.
+/// Check whether a digraph is balanced.
 ///
 /// # How can I implement `IsBalanced`?
 ///

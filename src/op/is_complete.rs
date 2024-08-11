@@ -1,4 +1,4 @@
-//! Determine whether a digraph is complete.
+//! Check whether a digraph is complete.
 //!
 //! A digraph is complete if, for every pair `u`, `v` of distinct vertices,
 //! there is an arc from `u` to `v` and an arc from `v` to `u`.
@@ -28,12 +28,12 @@ use super::{
     Order,
 };
 
-/// Determine whether a digraph is complete.
+/// Return whether a digraph is complete.
 ///
 /// # How can I implement `IsComplete`?
 ///
-/// Provide an implementation of `is_complete` that whether the digraph is
-/// complete OR implement `HasEdge` and `Order`.
+/// Provide an implementation of `is_complete` that returns whether the digraph
+/// is complete OR implement `HasEdge` and `Order`.
 ///
 /// ```
 /// use {

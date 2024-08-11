@@ -1,4 +1,4 @@
-//! Determine whether a digraph is a spanning subdigraph of another digraph.
+//! Return whether a digraph is a spanning subdigraph of another digraph.
 //!
 //! A digraph `H` is a spanning subdigraph of a digraph `D` if the vertex set
 //! of `H` equals the vertex set of `D` and the arc set of `H` is a subset of
@@ -143,7 +143,7 @@ use super::{
     Vertices,
 };
 
-/// Determine whether a digraph is a spanning subdigraph of another digraph.
+/// Return whether a digraph is a spanning subdigraph of another digraph.
 ///
 /// # How can I implement `IsSpanningSubdigraph`?
 ///

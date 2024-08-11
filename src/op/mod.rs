@@ -50,6 +50,7 @@ pub mod degree;
 pub mod degree_sequence;
 pub mod has_arc;
 pub mod has_edge;
+pub mod has_walk;
 pub mod in_neighbors;
 pub mod indegree;
 pub mod indegree_sequence;
@@ -66,7 +67,6 @@ pub mod is_subdigraph;
 pub mod is_superdigraph;
 pub mod is_symmetric;
 pub mod is_tournament;
-pub mod is_walk;
 pub mod order;
 pub mod out_neighbors;
 pub mod out_neighbors_weighted;
@@ -91,6 +91,7 @@ pub use {
     degree_sequence::DegreeSequence,
     has_arc::HasArc,
     has_edge::HasEdge,
+    has_walk::HasWalk,
     in_neighbors::InNeighbors,
     indegree::Indegree,
     indegree_sequence::IndegreeSequence,
@@ -107,7 +108,6 @@ pub use {
     is_superdigraph::IsSuperdigraph,
     is_symmetric::IsSymmetric,
     is_tournament::IsTournament,
-    is_walk::IsWalk,
     order::Order,
     out_neighbors::OutNeighbors,
     out_neighbors_weighted::OutNeighborsWeighted,

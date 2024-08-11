@@ -1,4 +1,4 @@
-//! Iterate over the in-neighbors of a vertex in a digraph.
+//! Return a digraph's in-neighbors.
 //!
 //! # Examples
 //!
@@ -36,7 +36,7 @@
 
 use super::Arcs;
 
-/// Iterate over the in-neighbors of a vertex in a digraph.
+/// Returns a digraph's in-neighbors.
 ///
 /// # How can I implement `InNeighbors`?
 ///

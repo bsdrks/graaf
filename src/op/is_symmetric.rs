@@ -1,4 +1,4 @@
-//! Determine whether a digraph is symmetric.
+//! Return whether a digraph is symmetric.
 //!
 //! A digraph is symmetric if for every arc `(u, v)` there is an arc
 //! `(v, u)`.
@@ -52,7 +52,7 @@ use super::{
     HasArc,
 };
 
-/// Determine whether a digraph is symmetric.
+/// Return whether a digraph is symmetric.
 ///
 /// # How can I implement `IsSymmetric`?
 ///

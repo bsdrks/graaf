@@ -1,4 +1,4 @@
-//! Return the degree of a vertex.
+//! Return a vertex's degree.
 //!
 //! The degree of a vertex is the sum of its indegree and outdegree.
 //!
@@ -37,7 +37,7 @@ use super::{
     Outdegree,
 };
 
-/// Return the degree of a vertex.
+/// Return a vertex's degree.
 ///
 /// # How can I implement `Degree`?
 ///
@@ -120,7 +120,7 @@ use super::{
 #[doc(alias = "Valence")]
 #[doc(alias = "Valency")]
 pub trait Degree {
-    /// Returns the degree of a vertex in the digraph.
+    /// Returns a vertex's degree.
     ///
     /// # Arguments
     ///

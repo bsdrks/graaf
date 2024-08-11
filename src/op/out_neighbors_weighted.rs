@@ -1,4 +1,4 @@
-//! Iterate over the weighted out-neighbours of a vertex in a digraph.
+//! Return a vertex's out-neighbours and their weights.
 //!
 //! # Examples
 //!
@@ -45,7 +45,7 @@
 //! ```
 #![doc(alias = "weighted_out_neighbours")]
 
-/// Iterate over the weighted out-neighbours of a vertex in a digraph.
+/// Return a vertex's out-neighbours and their weights.
 ///
 /// # How can I implement `OutNeighborsWeighted`?
 ///

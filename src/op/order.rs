@@ -1,4 +1,4 @@
-//! Count the vertices in a digraph.
+//! Return the number of vertices in a digraph.
 //!
 //! # Examples
 //!
@@ -14,7 +14,7 @@
 //! assert_eq!(digraph.order(), 4);
 //! ```
 
-/// Count the vertices in a digraph.
+/// Return the number of vertices in a digraph.
 ///
 /// # How can I implement `Order`?
 ///

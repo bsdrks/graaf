@@ -1,4 +1,4 @@
-//! Generate the converse of a digraph.
+//! Return a digraph's converse.
 //!
 //! The converse of a digraph is a digraph with all arcs reversed.
 //!
@@ -32,7 +32,7 @@
 //! assert!(converse.arcs().eq([(0, 3), (1, 0), (2, 1), (3, 2)]));
 //! ```
 
-/// Generate the converse of a digraph.
+/// Return a digraph's converse.
 ///
 /// # How do I implement `Converse`?
 ///

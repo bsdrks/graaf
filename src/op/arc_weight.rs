@@ -1,4 +1,4 @@
-//! Return the weight of an arc.
+//! Return an arc's weight.
 //!
 //! # Examples
 //!
@@ -34,7 +34,7 @@
 //! assert_eq!(digraph.arc_weight(2, 2), None);
 //! ```
 
-/// Return the weight of an arc.
+/// Return an arc's weight.
 ///
 /// # How can I implement `ArcWeight`?
 ///

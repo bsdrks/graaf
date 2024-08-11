@@ -1,4 +1,4 @@
-//! Determine whether a digraph is semicomplete.
+//! Return whether a digraph is semicomplete.
 //!
 //! A digraph is semicomplete if there is an arc between every unordered pair
 //! `u`, `v` of distinct vertices.
@@ -28,7 +28,7 @@ use super::{
     Order,
 };
 
-/// Determine whether a digraph is semicomplete.
+/// Return whether a digraph is semicomplete.
 ///
 /// # How can I implement `IsSemicomplete`?
 ///

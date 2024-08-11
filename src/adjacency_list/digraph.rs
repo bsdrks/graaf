@@ -312,6 +312,7 @@ mod tests {
                 Degree,
                 DegreeSequence,
                 HasEdge,
+                HasWalk,
                 InNeighbors,
                 IndegreeSequence,
                 IsBalanced,
@@ -327,7 +328,6 @@ mod tests {
                 IsSuperdigraph,
                 IsSymmetric,
                 IsTournament,
-                IsWalk,
                 OutdegreeSequence,
                 SemidegreeSequence,
                 Sinks,
@@ -4517,234 +4517,234 @@ mod tests {
     }
 
     #[test]
-    fn is_walk_bang_jensen_34() {
+    fn has_walk_bang_jensen_34() {
         let digraph = bang_jensen_34();
 
-        assert!(digraph.is_walk(&[0, 4]));
-        assert!(digraph.is_walk(&[1, 0, 4]));
-        assert!(digraph.is_walk(&[2, 1, 0, 4]));
-        assert!(digraph.is_walk(&[2, 3]));
-        assert!(digraph.is_walk(&[2, 5, 4]));
-        assert!(digraph.is_walk(&[5, 4]));
+        assert!(digraph.has_walk(&[0, 4]));
+        assert!(digraph.has_walk(&[1, 0, 4]));
+        assert!(digraph.has_walk(&[2, 1, 0, 4]));
+        assert!(digraph.has_walk(&[2, 3]));
+        assert!(digraph.has_walk(&[2, 5, 4]));
+        assert!(digraph.has_walk(&[5, 4]));
 
-        assert!(!digraph.is_walk(&[0, 1]));
-        assert!(!digraph.is_walk(&[1, 2]));
-        assert!(!digraph.is_walk(&[2, 0]));
-        assert!(!digraph.is_walk(&[3]));
-        assert!(!digraph.is_walk(&[4]));
-        assert!(!digraph.is_walk(&[5, 0]));
+        assert!(!digraph.has_walk(&[0, 1]));
+        assert!(!digraph.has_walk(&[1, 2]));
+        assert!(!digraph.has_walk(&[2, 0]));
+        assert!(!digraph.has_walk(&[3]));
+        assert!(!digraph.has_walk(&[4]));
+        assert!(!digraph.has_walk(&[5, 0]));
     }
 
     #[test]
-    fn is_walk_bang_jensen_94() {
+    fn has_walk_bang_jensen_94() {
         let digraph = bang_jensen_94();
 
-        assert!(digraph.is_walk(&[0, 1, 3, 5]));
-        assert!(digraph.is_walk(&[0, 2, 1, 3, 5]));
-        assert!(digraph.is_walk(&[0, 2, 3, 5]));
-        assert!(digraph.is_walk(&[0, 2, 4, 6]));
-        assert!(digraph.is_walk(&[0, 2, 5]));
-        assert!(digraph.is_walk(&[1, 3, 5]));
-        assert!(digraph.is_walk(&[2, 1, 3, 5]));
-        assert!(digraph.is_walk(&[2, 3, 5]));
-        assert!(digraph.is_walk(&[2, 4, 6]));
-        assert!(digraph.is_walk(&[2, 5]));
-        assert!(digraph.is_walk(&[3, 5]));
-        assert!(digraph.is_walk(&[4, 6]));
+        assert!(digraph.has_walk(&[0, 1, 3, 5]));
+        assert!(digraph.has_walk(&[0, 2, 1, 3, 5]));
+        assert!(digraph.has_walk(&[0, 2, 3, 5]));
+        assert!(digraph.has_walk(&[0, 2, 4, 6]));
+        assert!(digraph.has_walk(&[0, 2, 5]));
+        assert!(digraph.has_walk(&[1, 3, 5]));
+        assert!(digraph.has_walk(&[2, 1, 3, 5]));
+        assert!(digraph.has_walk(&[2, 3, 5]));
+        assert!(digraph.has_walk(&[2, 4, 6]));
+        assert!(digraph.has_walk(&[2, 5]));
+        assert!(digraph.has_walk(&[3, 5]));
+        assert!(digraph.has_walk(&[4, 6]));
 
-        assert!(!digraph.is_walk(&[0, 3]));
-        assert!(!digraph.is_walk(&[1, 0]));
-        assert!(!digraph.is_walk(&[2, 0]));
-        assert!(!digraph.is_walk(&[3, 0]));
-        assert!(!digraph.is_walk(&[4, 0]));
-        assert!(!digraph.is_walk(&[5]));
-        assert!(!digraph.is_walk(&[6]));
+        assert!(!digraph.has_walk(&[0, 3]));
+        assert!(!digraph.has_walk(&[1, 0]));
+        assert!(!digraph.has_walk(&[2, 0]));
+        assert!(!digraph.has_walk(&[3, 0]));
+        assert!(!digraph.has_walk(&[4, 0]));
+        assert!(!digraph.has_walk(&[5]));
+        assert!(!digraph.has_walk(&[6]));
     }
 
     #[test]
-    fn is_walk_kattis_builddeps() {
+    fn has_walk_kattis_builddeps() {
         let digraph = kattis_builddeps();
 
-        assert!(digraph.is_walk(&[0, 3, 1]));
-        assert!(digraph.is_walk(&[0, 4, 1]));
-        assert!(digraph.is_walk(&[2, 3, 1]));
-        assert!(digraph.is_walk(&[2, 4, 1]));
-        assert!(digraph.is_walk(&[2, 5, 1]));
-        assert!(digraph.is_walk(&[3, 1]));
-        assert!(digraph.is_walk(&[4, 1]));
-        assert!(digraph.is_walk(&[5, 1]));
+        assert!(digraph.has_walk(&[0, 3, 1]));
+        assert!(digraph.has_walk(&[0, 4, 1]));
+        assert!(digraph.has_walk(&[2, 3, 1]));
+        assert!(digraph.has_walk(&[2, 4, 1]));
+        assert!(digraph.has_walk(&[2, 5, 1]));
+        assert!(digraph.has_walk(&[3, 1]));
+        assert!(digraph.has_walk(&[4, 1]));
+        assert!(digraph.has_walk(&[5, 1]));
 
-        assert!(!digraph.is_walk(&[0, 1]));
-        assert!(!digraph.is_walk(&[1]));
-        assert!(!digraph.is_walk(&[2, 0]));
-        assert!(!digraph.is_walk(&[3, 0]));
-        assert!(!digraph.is_walk(&[4, 0]));
-        assert!(!digraph.is_walk(&[5, 0]));
+        assert!(!digraph.has_walk(&[0, 1]));
+        assert!(!digraph.has_walk(&[1]));
+        assert!(!digraph.has_walk(&[2, 0]));
+        assert!(!digraph.has_walk(&[3, 0]));
+        assert!(!digraph.has_walk(&[4, 0]));
+        assert!(!digraph.has_walk(&[5, 0]));
     }
 
     #[test]
     #[allow(clippy::cognitive_complexity)]
-    fn is_walk_kattis_escapewallmaria_1() {
+    fn has_walk_kattis_escapewallmaria_1() {
         let digraph = kattis_escapewallmaria_1();
 
-        assert!(digraph.is_walk(&[5, 6, 5]));
-        assert!(digraph.is_walk(&[5, 9, 5]));
-        assert!(digraph.is_walk(&[5, 9, 13, 9]));
-        assert!(digraph.is_walk(&[5, 9, 13, 12]));
-        assert!(digraph.is_walk(&[6, 5, 6]));
-        assert!(digraph.is_walk(&[6, 5, 9, 13, 9]));
-        assert!(digraph.is_walk(&[6, 5, 9, 13, 12]));
-        assert!(digraph.is_walk(&[9, 5, 6, 5]));
-        assert!(digraph.is_walk(&[9, 5, 9]));
-        assert!(digraph.is_walk(&[9, 13, 9]));
-        assert!(digraph.is_walk(&[9, 13, 12]));
-        assert!(digraph.is_walk(&[13, 9, 5, 6, 5]));
-        assert!(digraph.is_walk(&[13, 9, 5, 9]));
-        assert!(digraph.is_walk(&[13, 9, 13]));
-        assert!(digraph.is_walk(&[13, 12]));
+        assert!(digraph.has_walk(&[5, 6, 5]));
+        assert!(digraph.has_walk(&[5, 9, 5]));
+        assert!(digraph.has_walk(&[5, 9, 13, 9]));
+        assert!(digraph.has_walk(&[5, 9, 13, 12]));
+        assert!(digraph.has_walk(&[6, 5, 6]));
+        assert!(digraph.has_walk(&[6, 5, 9, 13, 9]));
+        assert!(digraph.has_walk(&[6, 5, 9, 13, 12]));
+        assert!(digraph.has_walk(&[9, 5, 6, 5]));
+        assert!(digraph.has_walk(&[9, 5, 9]));
+        assert!(digraph.has_walk(&[9, 13, 9]));
+        assert!(digraph.has_walk(&[9, 13, 12]));
+        assert!(digraph.has_walk(&[13, 9, 5, 6, 5]));
+        assert!(digraph.has_walk(&[13, 9, 5, 9]));
+        assert!(digraph.has_walk(&[13, 9, 13]));
+        assert!(digraph.has_walk(&[13, 12]));
 
-        assert!(!digraph.is_walk(&[0]));
-        assert!(!digraph.is_walk(&[1]));
-        assert!(!digraph.is_walk(&[2]));
-        assert!(!digraph.is_walk(&[3]));
-        assert!(!digraph.is_walk(&[4]));
-        assert!(!digraph.is_walk(&[5, 0]));
-        assert!(!digraph.is_walk(&[6, 0]));
-        assert!(!digraph.is_walk(&[7]));
-        assert!(!digraph.is_walk(&[8]));
-        assert!(!digraph.is_walk(&[9, 0]));
-        assert!(!digraph.is_walk(&[10]));
-        assert!(!digraph.is_walk(&[11]));
-        assert!(!digraph.is_walk(&[12]));
-        assert!(!digraph.is_walk(&[13, 0]));
+        assert!(!digraph.has_walk(&[0]));
+        assert!(!digraph.has_walk(&[1]));
+        assert!(!digraph.has_walk(&[2]));
+        assert!(!digraph.has_walk(&[3]));
+        assert!(!digraph.has_walk(&[4]));
+        assert!(!digraph.has_walk(&[5, 0]));
+        assert!(!digraph.has_walk(&[6, 0]));
+        assert!(!digraph.has_walk(&[7]));
+        assert!(!digraph.has_walk(&[8]));
+        assert!(!digraph.has_walk(&[9, 0]));
+        assert!(!digraph.has_walk(&[10]));
+        assert!(!digraph.has_walk(&[11]));
+        assert!(!digraph.has_walk(&[12]));
+        assert!(!digraph.has_walk(&[13, 0]));
     }
 
     #[test]
     #[allow(clippy::cognitive_complexity)]
-    fn is_walk_kattis_escapewallmaria_2() {
+    fn has_walk_kattis_escapewallmaria_2() {
         let digraph = kattis_escapewallmaria_2();
 
-        assert!(digraph.is_walk(&[5, 6, 5]));
-        assert!(digraph.is_walk(&[5, 9, 5]));
-        assert!(digraph.is_walk(&[6, 5, 6]));
-        assert!(digraph.is_walk(&[6, 5, 9, 5]));
-        assert!(digraph.is_walk(&[9, 5, 6, 5]));
-        assert!(digraph.is_walk(&[9, 5, 9]));
-        assert!(digraph.is_walk(&[12, 13, 9, 5, 6, 5]));
-        assert!(digraph.is_walk(&[12, 13, 9, 5, 9]));
-        assert!(digraph.is_walk(&[12, 13, 12]));
-        assert!(digraph.is_walk(&[13, 9, 5, 6, 5]));
-        assert!(digraph.is_walk(&[13, 9, 5, 9]));
-        assert!(digraph.is_walk(&[13, 12, 13]));
+        assert!(digraph.has_walk(&[5, 6, 5]));
+        assert!(digraph.has_walk(&[5, 9, 5]));
+        assert!(digraph.has_walk(&[6, 5, 6]));
+        assert!(digraph.has_walk(&[6, 5, 9, 5]));
+        assert!(digraph.has_walk(&[9, 5, 6, 5]));
+        assert!(digraph.has_walk(&[9, 5, 9]));
+        assert!(digraph.has_walk(&[12, 13, 9, 5, 6, 5]));
+        assert!(digraph.has_walk(&[12, 13, 9, 5, 9]));
+        assert!(digraph.has_walk(&[12, 13, 12]));
+        assert!(digraph.has_walk(&[13, 9, 5, 6, 5]));
+        assert!(digraph.has_walk(&[13, 9, 5, 9]));
+        assert!(digraph.has_walk(&[13, 12, 13]));
 
-        assert!(!digraph.is_walk(&[0]));
-        assert!(!digraph.is_walk(&[1]));
-        assert!(!digraph.is_walk(&[2]));
-        assert!(!digraph.is_walk(&[3]));
-        assert!(!digraph.is_walk(&[4]));
-        assert!(!digraph.is_walk(&[5, 0]));
-        assert!(!digraph.is_walk(&[6, 0]));
-        assert!(!digraph.is_walk(&[7]));
-        assert!(!digraph.is_walk(&[8]));
-        assert!(!digraph.is_walk(&[9, 0]));
-        assert!(!digraph.is_walk(&[10]));
-        assert!(!digraph.is_walk(&[11]));
-        assert!(!digraph.is_walk(&[12, 0]));
-        assert!(!digraph.is_walk(&[13, 0]));
+        assert!(!digraph.has_walk(&[0]));
+        assert!(!digraph.has_walk(&[1]));
+        assert!(!digraph.has_walk(&[2]));
+        assert!(!digraph.has_walk(&[3]));
+        assert!(!digraph.has_walk(&[4]));
+        assert!(!digraph.has_walk(&[5, 0]));
+        assert!(!digraph.has_walk(&[6, 0]));
+        assert!(!digraph.has_walk(&[7]));
+        assert!(!digraph.has_walk(&[8]));
+        assert!(!digraph.has_walk(&[9, 0]));
+        assert!(!digraph.has_walk(&[10]));
+        assert!(!digraph.has_walk(&[11]));
+        assert!(!digraph.has_walk(&[12, 0]));
+        assert!(!digraph.has_walk(&[13, 0]));
     }
 
     #[test]
     #[allow(clippy::cognitive_complexity)]
-    fn is_walk_kattis_escapewallmaria_3() {
+    fn has_walk_kattis_escapewallmaria_3() {
         let digraph = kattis_escapewallmaria_3();
 
-        assert!(digraph.is_walk(&[1, 2, 1]));
-        assert!(digraph.is_walk(&[1, 2, 6, 2]));
-        assert!(digraph.is_walk(&[1, 2, 6, 5, 1]));
-        assert!(digraph.is_walk(&[1, 2, 6, 5, 6]));
-        assert!(digraph.is_walk(&[1, 2, 6, 5, 9, 5]));
-        assert!(digraph.is_walk(&[1, 2, 6, 5, 9, 13]));
-        assert!(digraph.is_walk(&[1, 2, 6, 5, 9, 13, 9]));
-        assert!(digraph.is_walk(&[1, 2, 6, 5, 9, 13, 12, 13]));
-        assert!(digraph.is_walk(&[1, 5, 1]));
-        assert!(digraph.is_walk(&[1, 5, 6, 2, 1]));
-        assert!(digraph.is_walk(&[1, 5, 6, 2, 6]));
-        assert!(digraph.is_walk(&[1, 5, 9, 5]));
-        assert!(digraph.is_walk(&[1, 5, 9, 13, 9]));
-        assert!(digraph.is_walk(&[1, 5, 9, 13, 12, 13]));
-        assert!(digraph.is_walk(&[2, 1, 2]));
-        assert!(digraph.is_walk(&[2, 1, 5, 1]));
-        assert!(digraph.is_walk(&[2, 1, 5, 6, 2]));
-        assert!(digraph.is_walk(&[2, 1, 5, 6, 5]));
-        assert!(digraph.is_walk(&[2, 1, 5, 9, 5]));
-        assert!(digraph.is_walk(&[2, 1, 5, 9, 13, 9]));
-        assert!(digraph.is_walk(&[2, 1, 5, 9, 13, 12, 13]));
-        assert!(digraph.is_walk(&[2, 6, 2]));
-        assert!(digraph.is_walk(&[2, 6, 5, 1, 2]));
-        assert!(digraph.is_walk(&[2, 6, 5, 1, 5]));
-        assert!(digraph.is_walk(&[2, 6, 5, 6]));
-        assert!(digraph.is_walk(&[2, 6, 5, 9, 5]));
-        assert!(digraph.is_walk(&[2, 6, 5, 9, 13, 9]));
-        assert!(digraph.is_walk(&[2, 6, 5, 9, 13, 12, 13]));
-        assert!(digraph.is_walk(&[5, 1, 2, 1]));
-        assert!(digraph.is_walk(&[5, 1, 2, 6, 2]));
-        assert!(digraph.is_walk(&[5, 1, 2, 6, 5]));
-        assert!(digraph.is_walk(&[5, 1, 5]));
-        assert!(digraph.is_walk(&[5, 6, 2, 1, 2]));
-        assert!(digraph.is_walk(&[5, 6, 2, 1, 5]));
-        assert!(digraph.is_walk(&[5, 6, 2, 6]));
-        assert!(digraph.is_walk(&[5, 6, 5]));
-        assert!(digraph.is_walk(&[5, 9, 5]));
-        assert!(digraph.is_walk(&[5, 9, 13, 9]));
-        assert!(digraph.is_walk(&[5, 9, 13, 12, 13]));
-        assert!(digraph.is_walk(&[6, 2, 1, 2]));
-        assert!(digraph.is_walk(&[6, 2, 1, 5, 1]));
-        assert!(digraph.is_walk(&[6, 2, 1, 5, 6]));
-        assert!(digraph.is_walk(&[6, 2, 1, 5, 9, 5]));
-        assert!(digraph.is_walk(&[6, 2, 1, 5, 9, 13, 9]));
-        assert!(digraph.is_walk(&[6, 2, 1, 5, 9, 13, 12, 13]));
-        assert!(digraph.is_walk(&[6, 2, 6]));
-        assert!(digraph.is_walk(&[6, 5, 1, 2, 1]));
-        assert!(digraph.is_walk(&[6, 5, 1, 5]));
-        assert!(digraph.is_walk(&[6, 5, 6]));
-        assert!(digraph.is_walk(&[6, 5, 9, 5]));
-        assert!(digraph.is_walk(&[6, 5, 9, 13, 9]));
-        assert!(digraph.is_walk(&[6, 5, 9, 13, 12, 13]));
-        assert!(digraph.is_walk(&[9, 5, 1, 2, 1]));
-        assert!(digraph.is_walk(&[9, 5, 1, 2, 6, 2]));
-        assert!(digraph.is_walk(&[9, 5, 1, 2, 6, 5]));
-        assert!(digraph.is_walk(&[9, 5, 1, 5]));
-        assert!(digraph.is_walk(&[9, 5, 6, 2, 1, 2]));
-        assert!(digraph.is_walk(&[9, 5, 6, 2, 1, 5]));
-        assert!(digraph.is_walk(&[9, 5, 6, 2, 6]));
-        assert!(digraph.is_walk(&[9, 5, 6, 5]));
-        assert!(digraph.is_walk(&[9, 5, 9]));
-        assert!(digraph.is_walk(&[9, 13, 9]));
-        assert!(digraph.is_walk(&[9, 13, 12, 13]));
-        assert!(digraph.is_walk(&[12, 13, 9, 5, 1, 2, 1]));
-        assert!(digraph.is_walk(&[12, 13, 9, 5, 1, 5]));
-        assert!(digraph.is_walk(&[12, 13, 9, 5, 6, 2, 1, 2]));
-        assert!(digraph.is_walk(&[12, 13, 9, 5, 6, 2, 1, 5]));
-        assert!(digraph.is_walk(&[12, 13, 9, 5, 6, 2, 6]));
-        assert!(digraph.is_walk(&[12, 13, 9, 5, 6, 5]));
-        assert!(digraph.is_walk(&[12, 13, 9, 5, 9]));
-        assert!(digraph.is_walk(&[12, 13, 9, 13]));
-        assert!(digraph.is_walk(&[12, 13, 12]));
+        assert!(digraph.has_walk(&[1, 2, 1]));
+        assert!(digraph.has_walk(&[1, 2, 6, 2]));
+        assert!(digraph.has_walk(&[1, 2, 6, 5, 1]));
+        assert!(digraph.has_walk(&[1, 2, 6, 5, 6]));
+        assert!(digraph.has_walk(&[1, 2, 6, 5, 9, 5]));
+        assert!(digraph.has_walk(&[1, 2, 6, 5, 9, 13]));
+        assert!(digraph.has_walk(&[1, 2, 6, 5, 9, 13, 9]));
+        assert!(digraph.has_walk(&[1, 2, 6, 5, 9, 13, 12, 13]));
+        assert!(digraph.has_walk(&[1, 5, 1]));
+        assert!(digraph.has_walk(&[1, 5, 6, 2, 1]));
+        assert!(digraph.has_walk(&[1, 5, 6, 2, 6]));
+        assert!(digraph.has_walk(&[1, 5, 9, 5]));
+        assert!(digraph.has_walk(&[1, 5, 9, 13, 9]));
+        assert!(digraph.has_walk(&[1, 5, 9, 13, 12, 13]));
+        assert!(digraph.has_walk(&[2, 1, 2]));
+        assert!(digraph.has_walk(&[2, 1, 5, 1]));
+        assert!(digraph.has_walk(&[2, 1, 5, 6, 2]));
+        assert!(digraph.has_walk(&[2, 1, 5, 6, 5]));
+        assert!(digraph.has_walk(&[2, 1, 5, 9, 5]));
+        assert!(digraph.has_walk(&[2, 1, 5, 9, 13, 9]));
+        assert!(digraph.has_walk(&[2, 1, 5, 9, 13, 12, 13]));
+        assert!(digraph.has_walk(&[2, 6, 2]));
+        assert!(digraph.has_walk(&[2, 6, 5, 1, 2]));
+        assert!(digraph.has_walk(&[2, 6, 5, 1, 5]));
+        assert!(digraph.has_walk(&[2, 6, 5, 6]));
+        assert!(digraph.has_walk(&[2, 6, 5, 9, 5]));
+        assert!(digraph.has_walk(&[2, 6, 5, 9, 13, 9]));
+        assert!(digraph.has_walk(&[2, 6, 5, 9, 13, 12, 13]));
+        assert!(digraph.has_walk(&[5, 1, 2, 1]));
+        assert!(digraph.has_walk(&[5, 1, 2, 6, 2]));
+        assert!(digraph.has_walk(&[5, 1, 2, 6, 5]));
+        assert!(digraph.has_walk(&[5, 1, 5]));
+        assert!(digraph.has_walk(&[5, 6, 2, 1, 2]));
+        assert!(digraph.has_walk(&[5, 6, 2, 1, 5]));
+        assert!(digraph.has_walk(&[5, 6, 2, 6]));
+        assert!(digraph.has_walk(&[5, 6, 5]));
+        assert!(digraph.has_walk(&[5, 9, 5]));
+        assert!(digraph.has_walk(&[5, 9, 13, 9]));
+        assert!(digraph.has_walk(&[5, 9, 13, 12, 13]));
+        assert!(digraph.has_walk(&[6, 2, 1, 2]));
+        assert!(digraph.has_walk(&[6, 2, 1, 5, 1]));
+        assert!(digraph.has_walk(&[6, 2, 1, 5, 6]));
+        assert!(digraph.has_walk(&[6, 2, 1, 5, 9, 5]));
+        assert!(digraph.has_walk(&[6, 2, 1, 5, 9, 13, 9]));
+        assert!(digraph.has_walk(&[6, 2, 1, 5, 9, 13, 12, 13]));
+        assert!(digraph.has_walk(&[6, 2, 6]));
+        assert!(digraph.has_walk(&[6, 5, 1, 2, 1]));
+        assert!(digraph.has_walk(&[6, 5, 1, 5]));
+        assert!(digraph.has_walk(&[6, 5, 6]));
+        assert!(digraph.has_walk(&[6, 5, 9, 5]));
+        assert!(digraph.has_walk(&[6, 5, 9, 13, 9]));
+        assert!(digraph.has_walk(&[6, 5, 9, 13, 12, 13]));
+        assert!(digraph.has_walk(&[9, 5, 1, 2, 1]));
+        assert!(digraph.has_walk(&[9, 5, 1, 2, 6, 2]));
+        assert!(digraph.has_walk(&[9, 5, 1, 2, 6, 5]));
+        assert!(digraph.has_walk(&[9, 5, 1, 5]));
+        assert!(digraph.has_walk(&[9, 5, 6, 2, 1, 2]));
+        assert!(digraph.has_walk(&[9, 5, 6, 2, 1, 5]));
+        assert!(digraph.has_walk(&[9, 5, 6, 2, 6]));
+        assert!(digraph.has_walk(&[9, 5, 6, 5]));
+        assert!(digraph.has_walk(&[9, 5, 9]));
+        assert!(digraph.has_walk(&[9, 13, 9]));
+        assert!(digraph.has_walk(&[9, 13, 12, 13]));
+        assert!(digraph.has_walk(&[12, 13, 9, 5, 1, 2, 1]));
+        assert!(digraph.has_walk(&[12, 13, 9, 5, 1, 5]));
+        assert!(digraph.has_walk(&[12, 13, 9, 5, 6, 2, 1, 2]));
+        assert!(digraph.has_walk(&[12, 13, 9, 5, 6, 2, 1, 5]));
+        assert!(digraph.has_walk(&[12, 13, 9, 5, 6, 2, 6]));
+        assert!(digraph.has_walk(&[12, 13, 9, 5, 6, 5]));
+        assert!(digraph.has_walk(&[12, 13, 9, 5, 9]));
+        assert!(digraph.has_walk(&[12, 13, 9, 13]));
+        assert!(digraph.has_walk(&[12, 13, 12]));
 
-        assert!(!digraph.is_walk(&[0]));
-        assert!(!digraph.is_walk(&[1, 0]));
-        assert!(!digraph.is_walk(&[2, 0]));
-        assert!(!digraph.is_walk(&[3]));
-        assert!(!digraph.is_walk(&[4]));
-        assert!(!digraph.is_walk(&[5, 0]));
-        assert!(!digraph.is_walk(&[6, 0]));
-        assert!(!digraph.is_walk(&[7]));
-        assert!(!digraph.is_walk(&[8]));
-        assert!(!digraph.is_walk(&[9, 0]));
-        assert!(!digraph.is_walk(&[10]));
-        assert!(!digraph.is_walk(&[11]));
-        assert!(!digraph.is_walk(&[12, 0]));
-        assert!(!digraph.is_walk(&[13, 0]));
+        assert!(!digraph.has_walk(&[0]));
+        assert!(!digraph.has_walk(&[1, 0]));
+        assert!(!digraph.has_walk(&[2, 0]));
+        assert!(!digraph.has_walk(&[3]));
+        assert!(!digraph.has_walk(&[4]));
+        assert!(!digraph.has_walk(&[5, 0]));
+        assert!(!digraph.has_walk(&[6, 0]));
+        assert!(!digraph.has_walk(&[7]));
+        assert!(!digraph.has_walk(&[8]));
+        assert!(!digraph.has_walk(&[9, 0]));
+        assert!(!digraph.has_walk(&[10]));
+        assert!(!digraph.has_walk(&[11]));
+        assert!(!digraph.has_walk(&[12, 0]));
+        assert!(!digraph.has_walk(&[13, 0]));
     }
 
     #[test]

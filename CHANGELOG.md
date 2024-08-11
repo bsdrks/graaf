@@ -23,10 +23,11 @@
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
 
-## [0.79.1] - 2024-08-11
+## [0.80.0] - 2024-08-11
 
 Changed
 
+- Breaking: rename `op::IsWalk` to `op::HasWalk`.
 - Simplify the `lib.rs` operations documentation.
 - Simplify the `README` operations section.
 
@@ -83,7 +84,7 @@ Changed
 
 ## [0.78.0] - 2024-08-08
 
-BFS and DFS are now implemented as iterators.
+Iterators now underpin the BFS and DFS implementations.
 
 Added
 

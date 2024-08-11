@@ -1,4 +1,4 @@
-//! Iterate over the sources in a digraph.
+//! Return a digraph's sources.
 //!
 //! A source is a vertex with no in-neighbors.
 //!
@@ -33,7 +33,7 @@ use super::{
     Vertices,
 };
 
-/// Iterate over the sources in a digraph.
+/// Return a digraph's sources.
 ///
 /// # How can I implement `Sources`?
 ///
