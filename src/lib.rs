@@ -237,9 +237,9 @@
 //! - A comprehensive set of algorithms
 //! - Generators for common digraphs
 //! - Competitive performance
-//! - Full documentation
+//! - Complete documentation
 //! - Extensive property tests
-//! - Complete unit test and benchmark coverage
+//! - Complete unit test coverage
 //!
 //! [Adjacency List]: `adjacency_list::Digraph`
 //! [Adjacency Matrix]: `adjacency_matrix::Digraph`

@@ -24,6 +24,8 @@ Work with directed graphs in Rust.
 - [Project Goals](#project-goals)
 - [Changelog](#changelog)
 - [License](#license)
+- [Contact](#contact)
+- [Links](#links)
 
 ## Installation
 
@@ -261,9 +263,9 @@ A distance matrix contains the shortest distances between all pairs of vertices 
 - A comprehensive set of algorithms
 - Generators for common digraphs
 - Competitive performance
-- Full documentation
+- Complete documentation
 - Extensive property tests
-- Complete unit test and benchmark coverage
+- Complete unit test coverage
 
 ## Changelog
 
@@ -276,3 +278,16 @@ Licensed under [Apache License, Version 2.0] or [MIT license] at your option.
 [CHANGELOG.md]: https://github.com/bsdrks/graaf/blob/main/CHANGELOG.md
 [Apache License, Version 2.0]: LICENSE-APACHE
 [MIT license]: LICENSE-MIT
+
+## Contact
+
+Feel free to reach out with questions or suggestions.
+
+- [Email](mailto:bas.dirks@protonmail.com)
+- [GitHub](https://github.com/bsdrks/graaf)
+
+## Links
+
+- [Crates.io](https://crates.io/crates/graaf)
+- [Docs.rs](https://docs.rs/graaf)
+- [Coveralls](https://coveralls.io/github/bsdrks/graaf)
