@@ -254,7 +254,7 @@ mod random_tournament {
 
     #[divan::bench]
     fn bfs(bencher: Bencher<'_, '_>) {
-        let digraph = adjacency_list::Digraph::random_tournament(100);
+        let digraph = adjacency_list::Digraph::random_tournament(100, 0);
         let mut bfs = Bfs::new(&digraph, &[0]);
 
         bencher.bench_local(|| {

@@ -18,7 +18,7 @@
 - Add the `MinOutdegree` trait.
 - Add the `MinSemidegree` trait.
 - Add the `Wheel` generator.
-- Review doctest examples.
+- Review the doctest examples.
 - Review documentation.
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
