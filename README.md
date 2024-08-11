@@ -8,8 +8,6 @@ Work with directed graphs in Rust.
 - [Digraph Types](#digraph-types)
 - [Creating Digraphs](#creating-digraphs)
 - [Operations](#operations)
-  - [Basic Operations](#basic-operations)
-  - [Extended Operations](#extended-operations)
 - [Algorithms](#algorithms)
   - [Bellman-Ford-Moore](#bellman-ford-moore)
   - [Breadth-First Search (BFS)](#breadth-first-search-bfs)
@@ -33,7 +31,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.79.0"
+graaf = "0.79.1"
 ```
 
 ## Digraph Types
@@ -64,37 +62,20 @@ The [`gen`] module provides eight digraph generators.
 
 The [`op`] module provides digraph operation traits. The [digraph types](#digraph-types) implement these traits. One can implement these traits for custom digraph types. Operations form the foundation for [algorithms](#algorithms).
 
-### Basic Operations
-
-[Individual digraph types](#digraph-types) implement the basic operations.
-
 - [`AddArcWeighted`] adds an arc to an arc-weighted digraph.
 - [`AddArc`] adds an arc to an unweighted digraph.
 - [`ArcWeight`] returns the weight of an arc.
 - [`ArcsWeighted`] returns the arcs and their weights in a digraph.
 - [`Arcs`] returns the arcs in a digraph.
-- [`Converse`] returns the converse of a digraph.
-- [`HasArc`] checks if an arc exists in a digraph.
-- [`Indegree`] returns the indegree of a vertex.
-- [`IsSimple`] checks if a digraph contains no loops or parallel arcs.
-- [`Order`] returns the number of vertices.
-- [`OutNeighborsWeighted`] returns the weighted out-neighbors of a vertex.
-- [`OutNeighbors`] returns the out-neighbors of a vertex.
-- [`Outdegree`] returns the outdegree of a vertex.
-- [`RemoveArc`] removes an arc from a digraph.
-- [`Size`] returns the number of arcs in a digraph.
-- [`Vertices`] returns the vertices in a digraph.
-
-### Extended Operations
-
-The extended traits derive their implementation from the basic operations.
-
 - [`Complement`] returns the complement of a digraph.
-- [`Degree`] returns the degree of a vertex.
+- [`Converse`] returns the converse of a digraph.
 - [`DegreeSequence`] returns the degree sequence of a digraph.
+- [`Degree`] returns the degree of a vertex.
+- [`HasArc`] checks if an arc exists in a digraph.
 - [`HasEdge`] checks if an edge exists in a digraph.
-- [`IndegreeSequence`] returns the indegree sequence of a digraph.
 - [`InNeighbors`] returns the in-neighbors of a vertex.
+- [`IndegreeSequence`] returns the indegree sequence of a digraph.
+- [`Indegree`] returns the indegree of a vertex.
 - [`IsBalanced`] checks if a digraph is balanced.
 - [`IsComplete`] checks if a digraph is complete.
 - [`IsIsolated`] checks if a vertex is isolated.
@@ -102,16 +83,24 @@ The extended traits derive their implementation from the basic operations.
 - [`IsPendant`] checks if a vertex is a pendant.
 - [`IsRegular`] checks if a digraph is regular.
 - [`IsSemicomplete`] checks if a digraph is semicomplete.
+- [`IsSimple`] checks if a digraph contains no loops or parallel arcs.
 - [`IsSpanningSubdigraph`] checks if a digraph is a spanning subdigraph.
 - [`IsSubdigraph`] checks if a digraph is a subdigraph.
 - [`IsSuperdigraph`] checks if a digraph is a superdigraph.
 - [`IsSymmetric`] checks if a digraph is symmetric.
 - [`IsTournament`] checks if a digraph is a tournament.
 - [`IsWalk`] checks if a sequence of vertices is a walk in a digraph.
+- [`Order`] returns the number of vertices.
+- [`OutNeighborsWeighted`] returns the weighted out-neighbors of a vertex.
+- [`OutNeighbors`] returns the out-neighbors of a vertex.
 - [`OutdegreeSequence`] returns the outdegree sequence of a digraph.
+- [`Outdegree`] returns the outdegree of a vertex.
+- [`RemoveArc`] removes an arc from a digraph.
 - [`SemidegreeSequence`] returns the semidegree sequence of a digraph.
 - [`Sinks`] returns the sinks in a digraph.
+- [`Size`] returns the number of arcs in a digraph.
 - [`Sources`] returns the sources in a digraph.
+- [`Vertices`] returns the vertices in a digraph.
 
 ## Algorithms
 

@@ -23,6 +23,13 @@
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
 
+## [0.79.1] - 2024-08-11
+
+Changed
+
+- Simplify the `lib.rs` operations documentation.
+- Simplify the `README` operations section.
+
 ## [0.79.0] - 2024-08-11
 
 Changed
