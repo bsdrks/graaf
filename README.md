@@ -41,7 +41,7 @@ Graaf provides representations of directed graphs.
 - [`adjacency_matrix`](https://docs.rs/graaf/latest/graaf/adjacency_matrix/digraph/struct.Digraph.html) represents unweighted dense digraphs.
 - [`adjacency_list_weighted`](https://docs.rs/graaf/latest/graaf/adjacency_list_weighted/digraph/struct.Digraph.html) represents arc-weighted sparse digraphs.
 
-These types eagerly implement [digraph operations](#operations) and [digraph algorithms](#algorithms).
+These types eagerly implement digraph [operations](#operations) and [algorithms](#algorithms).
 
 ## Creating Digraphs
 
@@ -56,6 +56,8 @@ The [`gen`] module provides digraph generators.
 - [`Path`] generates a path digraph.
 - [`RandomTournament`] generates a random tournament.
 - [`Star`] generates a star digraph.
+
+Each digraph representation can be constructed with the operations in the [`op`] module.
 
 ## Operations
 

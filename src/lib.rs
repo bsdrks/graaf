@@ -27,8 +27,8 @@
 //! - [`adjacency_matrix`] represents unweighted dense digraphs.
 //! - [`adjacency_list_weighted`] represents arc-weighted sparse digraphs.
 //!
-//! These types eagerly implement [digraph operations](#operations) and
-//! [digraph algorithms](#algorithms).
+//! These types eagerly implement digraph [operations](#operations) and
+//! [algorithms](#algorithms).
 //!
 //! # Creating Digraphs
 //!
@@ -44,6 +44,9 @@
 //!   tournament.
 //! - [`Star`](gen::Star) generates a star digraph.
 //! - [`Path`](gen::Path) generates a path digraph.
+//!
+//! Each digraph representation can be constructed with the operations in the
+//! [`op`] module.
 //!
 //! # Operations
 //!
