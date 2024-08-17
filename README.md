@@ -116,8 +116,8 @@ The Bellman-Ford-Moore algorithm finds the shortest paths in an arc-weighted dig
 A breadth-first search explores the vertices of an unweighted digraph in order of their distance from a source.
 
 - [`bfs::Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs/struct.Bfs.html) iterates over the vertices.
-- [`bfs_depth::Bfs::distances`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html#method.distances) finds the shortest distances.
-- [`bfs_depth::Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs_depth/struct.Bfs.html) iterates over the vertices and their depths.
+- [`bfs_dist::Bfs::distances`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html#method.distances) finds the shortest distances.
+- [`bfs_dist::Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs_dist/struct.Bfs.html) iterates over the vertices and their distance from the source.
 - [`bfs_successors::Bfs::predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html#method.predecessors) finds the predecessors.
 - [`bfs_successors::Bfs::shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html#method.shortest_path) finds the shortest path.
 - [`bfs_successors::Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html) iterates over the vertices and their successors.
@@ -127,7 +127,7 @@ A breadth-first search explores the vertices of an unweighted digraph in order o
 A depth-first search explores the vertices of an unweighted digraph in order of their depth from a source.
 
 - [`dfs::Dfs`](https://docs.rs/graaf/latest/graaf/algo/dfs/struct.Dfs.html) iterates over the vertices.
-- [`dfs_depth::Dfs`](https://docs.rs/graaf/latest/graaf/algo/dfs_depth/struct.Dfs.html) iterates over the vertices and their depths.
+- [`dfs_dist::Dfs`](https://docs.rs/graaf/latest/graaf/algo/dfs_dist/struct.Dfs.html) iterates over the vertices and their distance from the source.
 
 ### Dijkstra
 

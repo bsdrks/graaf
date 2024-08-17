@@ -120,10 +120,10 @@
 //! order of their distance from a source.
 //!
 //! - [`bfs::Bfs`](algo::bfs::Bfs) iterates over the vertices.
-//! - [`bfs_depth::Bfs::distances`](algo::bfs_depth::Bfs::distances) finds the
+//! - [`bfs_dist::Bfs::distances`](algo::bfs_dist::Bfs::distances) finds the
 //!   shortest distances.
-//! - [`bfs_depth::Bfs`](algo::bfs_depth::Bfs) iterates over the vertices and
-//!   their depths.
+//! - [`bfs_dist::Bfs`](algo::bfs_dist::Bfs) iterates over the vertices and
+//!   their distance from the source.
 //! - [`bfs_pred::Bfs::predecessors`](algo::bfs_pred::Bfs::predecessors) finds
 //!   the predecessors.
 //! - [`bfs_pred::Bfs::shortest_path`](algo::bfs_pred::Bfs::shortest_path)
@@ -134,11 +134,11 @@
 //! ## Depth-First Search (DFS)
 //!
 //! A depth-first search explores the vertices of an unweighted digraph in
-//! order of their depth from a source.
+//! order of their distance from a source.
 //!
 //! - [`dfs::Dfs`](algo::dfs::Dfs) iterates over the vertices.
-//! - [`dfs_depth::Dfs`](algo::dfs_depth::Dfs) iterates over the vertices and
-//!   their depths.
+//! - [`dfs_dist::Dfs`](algo::dfs_dist::Dfs) iterates over the vertices and
+//!   their distance from the source.
 //!
 //! ## Dijkstra
 //!
