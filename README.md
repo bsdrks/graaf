@@ -15,9 +15,8 @@ Rust-powered directed graphs.
   - [Dijkstra](#dijkstra)
   - [Floyd-Warshall](#floyd-warshall)
   - [Tarjan](#tarjan)
-  - [Types](#types)
-    - [Predecessor Tree](#predecessor-tree)
-    - [Distance Matrix](#distance-matrix)
+  - [Predecessor Tree](#predecessor-tree)
+  - [Distance Matrix](#distance-matrix)
 - [Naming Conventions](#naming-conventions)
 - [Project Goals](#project-goals)
 - [Changelog](#changelog)
@@ -117,7 +116,7 @@ The Bellman-Ford-Moore algorithm finds the shortest paths in an arc-weighted dig
 A breadth-first search explores the vertices of an unweighted digraph in order of their distance from a source.
 
 - [`bfs::Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs/struct.Bfs.html) iterates over the vertices.
-- [`bfs_depth::Bfs::distances`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html#method.distances) finds the distances.
+- [`bfs_depth::Bfs::distances`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html#method.distances) finds the shortest distances.
 - [`bfs_depth::Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs_depth/struct.Bfs.html) iterates over the vertices and their depths.
 - [`bfs_successors::Bfs::predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html#method.predecessors) finds the predecessors.
 - [`bfs_successors::Bfs::shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html#method.shortest_path) finds the shortest path.
@@ -134,17 +133,12 @@ A depth-first search explores the vertices of an unweighted digraph in order of 
 
 Dijkstra's algorithm finds the shortest paths in an arc-weighted digraph.
 
-These functions start from one or more source vertices and allow a custom step function, target predicate, distance array, and heap, where applicable.
-
-- [`distances`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.distances.html) finds the shortest distances.
-- [`predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.predecessors.html) finds the predecessors.
-- [`shortest_path`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.shortest_path.html) finds the shortest path.
-
-These functions start from one source vertex.
-
-- [`single_pair_shortest_path`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.single_pair_shortest_path.html) finds the shortest path.
-- [`single_source_distances`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.single_source_distances.html) finds the shortest distances.
-- [`single_source_predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/fn.single_source_predecessors.html) finds the predecessors.
+- [`dijkstra::Dijkstra`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/struct.Dijkstra.html) iterates over the vertices.
+- [`dijkstra_dist::Dijkstra::distances`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_dist/struct.Dijkstra.html#method.distances) finds the shortest distances.
+- [`dijkstra_dist::Dijkstra`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_dist/struct.Dijkstra.html) iterates over the vertices.
+- [`dijkstra_pred::Dijkstra::predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_pred/struct.Dijkstra.html#method.predecessors) finds the predecessors.
+- [`dijkstra_pred::Dijkstra::shortest_path`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_pred/struct.Dijkstra.html#method.shortest_path) finds the shortest path.
+- [`dijkstra_pred::Dijkstra`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_pred/struct.Dijkstra.html) iterates over the vertices and their predecessors.
 
 ### Floyd-Warshall
 
@@ -158,23 +152,19 @@ Tarjan's algorithm finds the strongly connected components in a digraph.
 
 - [`strongly_connected_components`](https://docs.rs/graaf/latest/graaf/algo/tarjan/fn.strongly_connected_components.html) finds the strongly connected components.
 
-### Types
+### Predecessor Tree
 
-These types are produced by the algorithms.
-
-#### Predecessor Tree
-
-A predecessor tree is the result of a breadth-first search.
+A [`PredecessorTree`](https://docs.rs/graaf/latest/graaf/algo/types/predecessor_tree/struct.PredecessorTree.html) is the result of a breadth-first search.
 
 - [`search`](https://docs.rs/graaf/latest/graaf/algo/types/predecessor_tree/struct.PredecessorTree.html#method.search) finds a vertex by value.
 - [`search_by`](https://docs.rs/graaf/latest/graaf/algo/types/predecessor_tree/struct.PredecessorTree.html#method.search_by) finds a vertex by predicate.
 
 These functions produce a predecessor tree.
 
-- [`bfs_successors::Bfs::predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html#method.predecessors)
-- [`dijkstra::predecessors`](https://docs.rs/graaf/latest/graaf/algo/types/dijkstra/fn.predecessors.html)
+- [`bfs_pred::Bfs::predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.Bfs.html#method.predecessors)
+- [`dijkstra_pred::Dijkstra::predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_pred/struct.Dijkstra.html#method.predecessors)
 
-#### Distance Matrix
+### Distance Matrix
 
 A distance matrix contains the shortest distances between all pairs of vertices in a digraph.
 
@@ -277,6 +267,6 @@ Feel free to reach out with questions or suggestions.
 
 ## Links
 
+- [Coveralls](https://coveralls.io/github/bsdrks/graaf)
 - [Crates.io](https://crates.io/crates/graaf)
 - [Docs.rs](https://docs.rs/graaf)
-- [Coveralls](https://coveralls.io/github/bsdrks/graaf)

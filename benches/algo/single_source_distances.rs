@@ -2,26 +2,33 @@
 //! Benchmark different algorithms and types to calculate the distance from a
 //! source vertex to all other vertices in an arc-weighted digraph.
 
-use graaf::{
-    adjacency_list::fixture::bang_jensen_94,
-    adjacency_list_weighted::fixture::{
-        bang_jensen_94_weighted_isize,
-        bang_jensen_94_weighted_usize,
-        bang_jensen_96_isize,
-        bang_jensen_96_usize,
-        bang_jensen_99,
-        kattis_bryr_1_isize,
-        kattis_bryr_1_usize,
-        kattis_bryr_2_isize,
-        kattis_bryr_2_usize,
-        kattis_bryr_3_isize,
-        kattis_bryr_3_usize,
-        kattis_crosscountry_isize,
-        kattis_crosscountry_usize,
-        kattis_shortestpath1_isize,
-        kattis_shortestpath1_usize,
+use {
+    divan::Bencher,
+    graaf::{
+        adjacency_list::fixture::bang_jensen_94,
+        adjacency_list_weighted::fixture::{
+            bang_jensen_94_isize,
+            bang_jensen_94_usize,
+            bang_jensen_96_isize,
+            bang_jensen_96_usize,
+            bang_jensen_99,
+            kattis_bryr_1_isize,
+            kattis_bryr_1_usize,
+            kattis_bryr_2_isize,
+            kattis_bryr_2_usize,
+            kattis_bryr_3_isize,
+            kattis_bryr_3_usize,
+            kattis_crosscountry_isize,
+            kattis_crosscountry_usize,
+            kattis_shortestpath1_isize,
+            kattis_shortestpath1_usize,
+        },
+        algo::{
+            bellman_ford_moore,
+            dijkstra_dist::Dijkstra,
+            floyd_warshall,
+        },
     },
-    algo::bellman_ford_moore,
 };
 
 fn main() {
@@ -32,13 +39,13 @@ mod bang_jensen_94 {
     use {
         super::*,
         divan::Bencher,
-        graaf::algo::bfs_depth::Bfs,
+        graaf::algo::bfs_dist::Bfs,
     };
 
     #[divan::bench]
     fn bellman_ford_moore() {
         let _ = bellman_ford_moore::single_source_distances(
-            &bang_jensen_94_weighted_isize(),
+            &bang_jensen_94_isize(),
             0,
         );
     }
@@ -54,18 +61,18 @@ mod bang_jensen_94 {
     }
 
     #[divan::bench]
-    fn dijkstra() {
-        let _ = graaf::algo::dijkstra::single_source_distances(
-            &bang_jensen_94_weighted_usize(),
-            0,
-        );
+    fn dijkstra(bencher: Bencher<'_, '_>) {
+        let digraph = bang_jensen_94_usize();
+        let mut dijkstra = Dijkstra::new(&digraph, &[0]);
+
+        bencher.bench_local(|| {
+            let _ = dijkstra.distances();
+        });
     }
 
     #[divan::bench]
     fn floyd_warshall() {
-        let _ = graaf::algo::floyd_warshall::distances(
-            &bang_jensen_94_weighted_isize(),
-        )[0];
+        let _ = floyd_warshall::distances(&bang_jensen_94_isize())[0];
     }
 }
 
@@ -81,17 +88,18 @@ mod bang_jensen_96 {
     }
 
     #[divan::bench]
-    fn dijkstra() {
-        let _ = graaf::algo::dijkstra::single_source_distances(
-            &bang_jensen_96_usize(),
-            0,
-        );
+    fn dijkstra(bencher: Bencher<'_, '_>) {
+        let digraph = bang_jensen_96_usize();
+        let mut dijkstra = Dijkstra::new(&digraph, &[0]);
+
+        bencher.bench_local(|| {
+            let _ = dijkstra.distances();
+        });
     }
 
     #[divan::bench]
     fn floyd_warshall() {
-        let _ =
-            graaf::algo::floyd_warshall::distances(&bang_jensen_96_isize())[0];
+        let _ = floyd_warshall::distances(&bang_jensen_96_isize())[0];
     }
 }
 
@@ -106,7 +114,7 @@ mod bang_jensen_99 {
 
     #[divan::bench]
     fn floyd_warshall() {
-        let _ = graaf::algo::floyd_warshall::distances(&bang_jensen_99())[0];
+        let _ = floyd_warshall::distances(&bang_jensen_99())[0];
     }
 }
 
@@ -122,17 +130,18 @@ mod kattis_bryr_1 {
     }
 
     #[divan::bench]
-    fn dijkstra() {
-        let _ = graaf::algo::dijkstra::single_source_distances(
-            &kattis_bryr_1_usize(),
-            0,
-        );
+    fn dijkstra(bencher: Bencher<'_, '_>) {
+        let digraph = kattis_bryr_1_usize();
+        let mut dijkstra = Dijkstra::new(&digraph, &[0]);
+
+        bencher.bench_local(|| {
+            let _ = dijkstra.distances();
+        });
     }
 
     #[divan::bench]
     fn floyd_warshall() {
-        let _ =
-            graaf::algo::floyd_warshall::distances(&kattis_bryr_1_isize())[0];
+        let _ = floyd_warshall::distances(&kattis_bryr_1_isize())[0];
     }
 }
 
@@ -148,17 +157,18 @@ mod kattis_bryr_2 {
     }
 
     #[divan::bench]
-    fn dijkstra() {
-        let _ = graaf::algo::dijkstra::single_source_distances(
-            &kattis_bryr_2_usize(),
-            0,
-        );
+    fn dijkstra(bencher: Bencher<'_, '_>) {
+        let digraph = kattis_bryr_2_usize();
+        let mut dijkstra = Dijkstra::new(&digraph, &[0]);
+
+        bencher.bench_local(|| {
+            let _ = dijkstra.distances();
+        });
     }
 
     #[divan::bench]
     fn floyd_warshall() {
-        let _ =
-            graaf::algo::floyd_warshall::distances(&kattis_bryr_2_isize())[0];
+        let _ = floyd_warshall::distances(&kattis_bryr_2_isize())[0];
     }
 }
 
@@ -174,17 +184,18 @@ mod kattis_bryr_3 {
     }
 
     #[divan::bench]
-    fn dijkstra() {
-        let _ = graaf::algo::dijkstra::single_source_distances(
-            &kattis_bryr_3_usize(),
-            0,
-        );
+    fn dijkstra(bencher: Bencher<'_, '_>) {
+        let digraph = kattis_bryr_3_usize();
+        let mut dijkstra = Dijkstra::new(&digraph, &[0]);
+
+        bencher.bench_local(|| {
+            let _ = dijkstra.distances();
+        });
     }
 
     #[divan::bench]
     fn floyd_warshall() {
-        let _ =
-            graaf::algo::floyd_warshall::distances(&kattis_bryr_3_isize())[0];
+        let _ = floyd_warshall::distances(&kattis_bryr_3_isize())[0];
     }
 }
 
@@ -200,18 +211,18 @@ mod kattis_crosscountry {
     }
 
     #[divan::bench]
-    fn dijkstra() {
-        let _ = graaf::algo::dijkstra::single_source_distances(
-            &kattis_crosscountry_usize(),
-            0,
-        );
+    fn dijkstra(bencher: Bencher<'_, '_>) {
+        let digraph = kattis_crosscountry_usize();
+        let mut dijkstra = Dijkstra::new(&digraph, &[0]);
+
+        bencher.bench_local(|| {
+            let _ = dijkstra.distances();
+        });
     }
 
     #[divan::bench]
     fn floyd_warshall() {
-        let _ = graaf::algo::floyd_warshall::distances(
-            &kattis_crosscountry_isize(),
-        )[0];
+        let _ = floyd_warshall::distances(&kattis_crosscountry_isize())[0];
     }
 }
 
@@ -227,27 +238,27 @@ mod kattis_shortestpath1 {
     }
 
     #[divan::bench]
-    fn dijkstra() {
-        let _ = graaf::algo::dijkstra::single_source_distances(
-            &kattis_shortestpath1_usize(),
-            0,
-        );
+    fn dijkstra(bencher: Bencher<'_, '_>) {
+        let digraph = kattis_shortestpath1_usize();
+        let mut dijkstra = Dijkstra::new(&digraph, &[0]);
+
+        bencher.bench_local(|| {
+            let _ = dijkstra.distances();
+        });
     }
 
     #[divan::bench]
     fn floyd_warshall() {
-        let _ = graaf::algo::floyd_warshall::distances(
-            &kattis_shortestpath1_isize(),
-        )[0];
+        let _ = floyd_warshall::distances(&kattis_shortestpath1_isize())[0];
     }
 }
 
 mod random_tournament {
     use {
-        divan::Bencher,
+        super::*,
         graaf::{
             adjacency_list,
-            algo::bfs_depth::Bfs,
+            algo::bfs_dist::Bfs,
             gen::RandomTournament,
         },
     };

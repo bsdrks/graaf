@@ -4,11 +4,13 @@
 
 pub mod bellman_ford_moore;
 pub mod bfs;
-pub mod bfs_depth;
-pub mod bfs_successors;
+pub mod bfs_dist;
+pub mod bfs_pred;
 pub mod dfs;
-pub mod dfs_depth;
+pub mod dfs_dist;
 pub mod dijkstra;
+pub mod dijkstra_dist;
+pub mod dijkstra_pred;
 pub mod floyd_warshall;
 pub mod tarjan;
 pub mod types;

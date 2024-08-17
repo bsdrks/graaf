@@ -297,7 +297,7 @@ mod tests {
         super::*,
         crate::{
             adjacency_list_weighted::fixture::{
-                bang_jensen_94_weighted_usize,
+                bang_jensen_94_usize,
                 bang_jensen_96_usize,
                 bang_jensen_99,
                 kattis_bryr_1_usize,
@@ -604,7 +604,7 @@ mod tests {
 
     #[test]
     fn arcs_bang_jensen_94_weighted() {
-        assert!(bang_jensen_94_weighted_usize().arcs().eq([
+        assert!(bang_jensen_94_usize().arcs().eq([
             (0, 1),
             (0, 2),
             (1, 3),
@@ -740,7 +740,7 @@ mod tests {
 
     #[test]
     fn arcs_weighted_bang_jensen_94_weighted() {
-        assert!(bang_jensen_94_weighted_usize().arcs_weighted().eq([
+        assert!(bang_jensen_94_usize().arcs_weighted().eq([
             (0, 1, &1),
             (0, 2, &1),
             (1, 3, &1),
@@ -876,20 +876,17 @@ mod tests {
 
     #[test]
     fn converse_bang_jensen_94_weighted() {
-        assert!(bang_jensen_94_weighted_usize()
-            .converse()
-            .arcs_weighted()
-            .eq([
-                (1, 0, &1),
-                (1, 2, &1),
-                (2, 0, &1),
-                (3, 1, &1),
-                (3, 2, &1),
-                (4, 2, &1),
-                (5, 2, &1),
-                (5, 3, &1),
-                (6, 4, &1)
-            ]));
+        assert!(bang_jensen_94_usize().converse().arcs_weighted().eq([
+            (1, 0, &1),
+            (1, 2, &1),
+            (2, 0, &1),
+            (3, 1, &1),
+            (3, 2, &1),
+            (4, 2, &1),
+            (5, 2, &1),
+            (5, 3, &1),
+            (6, 4, &1)
+        ]));
     }
 
     #[test]
@@ -1022,7 +1019,7 @@ mod tests {
 
     #[test]
     fn degree_bang_jensen_94_weighted() {
-        let digraph = bang_jensen_94_weighted_usize();
+        let digraph = bang_jensen_94_usize();
 
         assert!(digraph.degree(0) == 2);
         assert!(digraph.degree(1) == 3);
@@ -1116,7 +1113,7 @@ mod tests {
 
     #[test]
     fn semidegree_sequence_bang_jensen_94_weighted() {
-        assert!(bang_jensen_94_weighted_usize().semidegree_sequence().eq([
+        assert!(bang_jensen_94_usize().semidegree_sequence().eq([
             (0, 2),
             (2, 1),
             (1, 4),
@@ -1352,7 +1349,7 @@ mod tests {
 
     #[test]
     fn in_neighbors_bang_jensen_94_weighted() {
-        let digraph = bang_jensen_94_weighted_usize();
+        let digraph = bang_jensen_94_usize();
 
         assert!(digraph.in_neighbors(0).eq([]));
         assert!(digraph.in_neighbors(1).eq([0, 2]));
@@ -1446,7 +1443,7 @@ mod tests {
 
     #[test]
     fn indegree_bang_jensen_94_weighted() {
-        let digraph = bang_jensen_94_weighted_usize();
+        let digraph = bang_jensen_94_usize();
 
         assert!(digraph.indegree(0) == 0);
         assert!(digraph.indegree(1) == 2);
@@ -1546,7 +1543,7 @@ mod tests {
 
     #[test]
     fn is_balanced_bang_jensen_94_weighted() {
-        assert!(!bang_jensen_94_weighted_usize().is_balanced());
+        assert!(!bang_jensen_94_usize().is_balanced());
     }
 
     #[test]
@@ -1586,7 +1583,7 @@ mod tests {
 
     #[test]
     fn is_complete_bang_jensen_94_weighted() {
-        assert!(!bang_jensen_94_weighted_usize().is_complete());
+        assert!(!bang_jensen_94_usize().is_complete());
     }
 
     #[test]
@@ -1626,7 +1623,7 @@ mod tests {
 
     #[test]
     fn is_isolated_bang_jensen_94_weighted() {
-        let digraph = bang_jensen_94_weighted_usize();
+        let digraph = bang_jensen_94_usize();
 
         assert!(!digraph.is_isolated(0));
         assert!(!digraph.is_isolated(1));
@@ -1720,7 +1717,7 @@ mod tests {
 
     #[test]
     fn is_oriented_bang_jensen_94_weighted() {
-        assert!(bang_jensen_94_weighted_usize().is_oriented());
+        assert!(bang_jensen_94_usize().is_oriented());
     }
 
     #[test]
@@ -1760,7 +1757,7 @@ mod tests {
 
     #[test]
     fn is_pendant_bang_jensen_94_weighted() {
-        let digraph = bang_jensen_94_weighted_usize();
+        let digraph = bang_jensen_94_usize();
 
         assert!(!digraph.is_pendant(0));
         assert!(!digraph.is_pendant(1));
@@ -1854,7 +1851,7 @@ mod tests {
 
     #[test]
     fn is_regular_bang_jensen_94_weighted() {
-        assert!(!bang_jensen_94_weighted_usize().is_regular());
+        assert!(!bang_jensen_94_usize().is_regular());
     }
 
     #[test]
@@ -1894,7 +1891,7 @@ mod tests {
 
     #[test]
     fn is_semicomplete_bang_jensen_94_weighted() {
-        assert!(!bang_jensen_94_weighted_usize().is_semicomplete());
+        assert!(!bang_jensen_94_usize().is_semicomplete());
     }
 
     #[test]
@@ -1934,7 +1931,7 @@ mod tests {
 
     #[test]
     fn is_simple_bang_jensen_94_weighted() {
-        assert!(bang_jensen_94_weighted_usize().is_simple());
+        assert!(bang_jensen_94_usize().is_simple());
     }
 
     #[test]
@@ -1974,7 +1971,7 @@ mod tests {
 
     #[test]
     fn is_symmetric_bang_jensen_94_weighted() {
-        assert!(!bang_jensen_94_weighted_usize().is_symmetric());
+        assert!(!bang_jensen_94_usize().is_symmetric());
     }
 
     #[test]
@@ -2014,7 +2011,7 @@ mod tests {
 
     #[test]
     fn is_tournament_bang_jensen_94_weighted() {
-        assert!(!bang_jensen_94_weighted_usize().is_tournament());
+        assert!(!bang_jensen_94_usize().is_tournament());
     }
 
     #[test]
@@ -2054,7 +2051,7 @@ mod tests {
 
     #[test]
     fn order_bang_jensen_94_weighted() {
-        assert!(bang_jensen_94_weighted_usize().order() == 7);
+        assert!(bang_jensen_94_usize().order() == 7);
     }
 
     #[test]
@@ -2094,7 +2091,7 @@ mod tests {
 
     #[test]
     fn out_neighbors_bang_jensen_94_weighted() {
-        let digraph = bang_jensen_94_weighted_usize();
+        let digraph = bang_jensen_94_usize();
 
         assert!(digraph.out_neighbors(0).eq([1, 2]));
         assert!(digraph.out_neighbors(1).eq([3]));
@@ -2135,7 +2132,7 @@ mod tests {
 
     #[test]
     fn outdegree_bang_jensen_94_weighted() {
-        let digraph = bang_jensen_94_weighted_usize();
+        let digraph = bang_jensen_94_usize();
 
         assert!(digraph.outdegree(0) == 2);
         assert!(digraph.outdegree(1) == 1);
@@ -2237,7 +2234,7 @@ mod tests {
 
     #[test]
     fn remove_arc_bang_jensen_94_weighted() {
-        let mut digraph = bang_jensen_94_weighted_usize();
+        let mut digraph = bang_jensen_94_usize();
 
         assert!(digraph.remove_arc(0, 1));
         assert!(digraph.remove_arc(0, 2));
@@ -2494,7 +2491,7 @@ mod tests {
 
     #[test]
     fn size_bang_jensen_94_weighted() {
-        assert_eq!(bang_jensen_94_weighted_usize().size(), 9);
+        assert_eq!(bang_jensen_94_usize().size(), 9);
     }
 
     #[test]

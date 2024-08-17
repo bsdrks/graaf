@@ -18,10 +18,36 @@
 - Add the `MinOutdegree` trait.
 - Add the `MinSemidegree` trait.
 - Add the `Wheel` generator.
-- Review the doctest examples.
-- Review documentation.
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
+- Review documentation.
+- Review the documentation test examples.
+- Add examples to `algo/mod`.
+
+## [0.81.0] - 2024-08-17
+
+Added
+
+- Add `bfs_dist::Bfs::distances`.
+- Add `bfs_pred::Bfs::predecessors`.
+- Add `bfs_pred::Bfs::shortest_path`.
+- Add `dijkstra_dist::Dijkstra::distances`.
+- Add `dijkstra_pred::Dijkstra::predecessors`.
+- Add `dijkstra_pred::Dijkstra::shortest_path`.
+- Add the `algo::bfs::Bfs` iterator.
+- Add the `algo::bfs_dist::Bfs` iterator.
+- Add the `algo::bfs_pred::Bfs` iterator.
+- Add the `algo::dfs::Dfs` iterator.
+- Add the `algo::dfs_dist::Dfs` iterator.
+- Add the `algo::dijkstra::Dijkstra` iterator.
+- Add the `algo::dijkstra_dist::Dijkstra` iterator.
+- Add the `algo::dijkstra_pred::Dijkstra` iterator.
+
+Removed
+
+- Breaking: Remove `algo::bfs` functions, replaced by `bfs*::Bfs` iterators.
+- Breaking: Remove `algo::dfs` functions, replaced by `dfs*::Dfs` iterators.
+- Breaking: Remove `algo::dijkstra` functions, replaced by `dijkstra*::Dijkstra` iterators.
 
 ## [0.80.1] - 2024-08-11
 
@@ -141,9 +167,9 @@ Changed
 - Sync `adjacency_list::digraph` unit tests with the new `adjacency_list::fixture::kattis_escapewallmaria_*` fixtures.
 - Sync `adjacency_matrix::digraph` unit tests with the new `adjacency_matrix::fixture::kattis_escapewallmaria_*` fixtures.
 - Use the new `Bfs` API in `bench::algo::single_source_distances`.
-- Use the new `Bfs` API in `bfs` doctest examples.
+- Use the new `Bfs` API in `bfs` documentation test examples.
 - Use the new `Bfs` API in `bfs` unit tests.
-- Use the new `Bfs` API in `predecessor_tree` doctest examples.
+- Use the new `Bfs` API in `predecessor_tree` documentation test examples.
 
 Removed
 
@@ -473,7 +499,7 @@ Added
 
 Changed
 
-- Add a human-readable adjacency list to each doctest digraph.
+- Add a human-readable adjacency list to each documentation test digraph.
 - Use `Vec<BTreeSet<usize>>` in `op` implementation examples.
 
 ## [0.75.0] - 2024-07-27
@@ -493,8 +519,8 @@ Changed
 
 Added
 
-- Add a doctest example for `IndegreeSequence`.
-- Add a doctest example for `OutdegreeSequence`.
+- Add a documentation test example for `IndegreeSequence`.
+- Add a documentation test example for `OutdegreeSequence`.
 
 ## [0.74.3] - 2024-07-24
 
@@ -738,8 +764,8 @@ Changed
 
 Fixed
 
-- Fix doctests for `op::is_superdigraph`.
-- Fix doctests for `op::out_neighbors_weighted`.
+- Fix documentation tests for `op::is_superdigraph`.
+- Fix documentation tests for `op::out_neighbors_weighted`.
 
 ## [0.71.7] - 2024-07-20
 
@@ -2429,7 +2455,7 @@ Added
 - Add module-level example for `predecessor`.
 - Add unit test `bang_jensen_96` for `bellman_ford_moore::distances`.
 - Add unit test `bang_jensen_99` for `bellman_ford_moore::distances`.
-- Add unit test `doctest` for `bellman_ford_moore::distances`.
+- Add unit test `documentation test` for `bellman_ford_moore::distances`.
 
 ## [0.49.1] - 2024-05-22
 

@@ -1,4 +1,4 @@
-//! Breadth-first search iterator with depth
+//! Breadth-first search iterator with distances
 //!
 //! Breadth-first search explores the vertices of an unweighted digraph in
 //! order of their distance from a source. The time complexity is
@@ -9,7 +9,7 @@
 //! ```
 //! use graaf::{
 //!     adjacency_list::Digraph,
-//!     algo::bfs_depth::{
+//!     algo::bfs_dist::{
 //!         Bfs,
 //!         Step,
 //!     },
@@ -29,9 +29,15 @@
 //! digraph.add_arc(3, 0);
 //!
 //! assert!(Bfs::new(&digraph, &[0]).eq([
-//!     Step { u: 0, depth: 0 },
-//!     Step { u: 1, depth: 1 },
-//!     Step { u: 2, depth: 2 },
+//!     Step { u: 0, dist: 0 },
+//!     Step { u: 1, dist: 1 },
+//!     Step { u: 2, dist: 2 },
+//! ]));
+//!
+//! assert!(Bfs::new(&digraph, &[0]).distances().into_iter().eq([
+//!     (0, 0),
+//!     (1, 1),
+//!     (2, 2),
 //! ]));
 //! ```
 
@@ -44,14 +50,14 @@ use {
     },
 };
 
-/// Breadth-first search iterator with depth.
+/// Breadth-first search iterator with distances.
 ///
 /// # Examples
 ///
 /// ```
 /// use graaf::{
 ///     adjacency_list::Digraph,
-///     algo::bfs_depth::{
+///     algo::bfs_dist::{
 ///         Bfs,
 ///         Step,
 ///     },
@@ -71,16 +77,16 @@ use {
 /// digraph.add_arc(3, 0);
 ///
 /// assert!(Bfs::new(&digraph, &[0]).eq([
-///     Step { u: 0, depth: 0 },
-///     Step { u: 1, depth: 1 },
-///     Step { u: 2, depth: 2 },
+///     Step { u: 0, dist: 0 },
+///     Step { u: 1, dist: 1 },
+///     Step { u: 2, dist: 2 },
 /// ]));
 /// ```
 ///
 /// ```
 /// use graaf::{
 ///     adjacency_list::Digraph,
-///     algo::bfs_depth::{
+///     algo::bfs_dist::{
 ///         Bfs,
 ///         Step,
 ///     },
@@ -95,10 +101,10 @@ use {
 /// let digraph = Digraph::complete(4);
 ///
 /// assert!(Bfs::new(&digraph, &[0]).eq([
-///     Step { u: 0, depth: 0 },
-///     Step { u: 1, depth: 1 },
-///     Step { u: 2, depth: 1 },
-///     Step { u: 3, depth: 1 },
+///     Step { u: 0, dist: 0 },
+///     Step { u: 1, dist: 1 },
+///     Step { u: 2, dist: 1 },
+///     Step { u: 3, dist: 1 },
 /// ]));
 /// ```
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
@@ -113,8 +119,8 @@ pub struct Bfs<'a, D> {
 pub struct Step {
     /// The current vertex.
     pub u: usize,
-    /// The depth of `u` in the breadth-first search tree.
-    pub depth: usize,
+    /// The distance of `u` from the source vertex.
+    pub dist: usize,
 }
 
 impl<'a, D> Bfs<'a, D> {
@@ -137,14 +143,15 @@ impl<'a, D> Bfs<'a, D> {
     /// # Panics
     ///
     /// * Panics if `self.next` panics.
-    /// * Panics if a source or successor vertex is not in `digraph`.
+    /// * Panics if a source vertex is not in the digraph.
+    /// * Panics if a successor vertex is not in the digraph.
     ///
     /// # Examples
     ///
     /// ```
     /// use graaf::{
     ///     adjacency_list::Digraph,
-    ///     algo::bfs_depth::Bfs,
+    ///     algo::bfs_dist::Bfs,
     ///     gen::Empty,
     ///     op::AddArc,
     /// };
@@ -171,7 +178,7 @@ impl<'a, D> Bfs<'a, D> {
     where
         D: OutNeighbors,
     {
-        self.map(|Step { u, depth }| (u, depth)).collect()
+        self.map(|Step { u, dist }| (u, dist)).collect()
     }
 }
 
@@ -182,20 +189,20 @@ where
     type Item = Step;
 
     fn next(&mut self) -> Option<Self::Item> {
-        if let Some((u, depth)) = self.queue.pop_front() {
+        if let Some((u, dist)) = self.queue.pop_front() {
             {
-                let depth = depth + 1;
+                let dist = dist + 1;
 
                 for v in self
                     .digraph
                     .out_neighbors(u)
                     .filter(|v| self.visited.insert(*v))
                 {
-                    self.queue.push_back((v, depth));
+                    self.queue.push_back((v, dist));
                 }
             }
 
-            return Some(Step { u, depth });
+            return Some(Step { u, dist });
         }
 
         None
@@ -294,14 +301,14 @@ mod tests {
         let digraph = bang_jensen_196();
 
         assert!(Bfs::new(&digraph, &[0]).eq([
-            Step { u: 0, depth: 0 },
-            Step { u: 1, depth: 1 },
-            Step { u: 4, depth: 1 },
-            Step { u: 7, depth: 1 },
-            Step { u: 2, depth: 2 },
-            Step { u: 5, depth: 2 },
-            Step { u: 3, depth: 3 },
-            Step { u: 6, depth: 3 }
+            Step { u: 0, dist: 0 },
+            Step { u: 1, dist: 1 },
+            Step { u: 4, dist: 1 },
+            Step { u: 7, dist: 1 },
+            Step { u: 2, dist: 2 },
+            Step { u: 5, dist: 2 },
+            Step { u: 3, dist: 3 },
+            Step { u: 6, dist: 3 }
         ]));
     }
 
@@ -310,7 +317,7 @@ mod tests {
         let digraph = bang_jensen_34();
 
         assert!(Bfs::new(&digraph, &[0])
-            .eq([Step { u: 0, depth: 0 }, Step { u: 4, depth: 1 }]));
+            .eq([Step { u: 0, dist: 0 }, Step { u: 4, dist: 1 }]));
     }
 
     #[test]
@@ -318,13 +325,13 @@ mod tests {
         let digraph = bang_jensen_94();
 
         assert!(Bfs::new(&digraph, &[0]).eq([
-            Step { u: 0, depth: 0 },
-            Step { u: 1, depth: 1 },
-            Step { u: 2, depth: 1 },
-            Step { u: 3, depth: 2 },
-            Step { u: 4, depth: 2 },
-            Step { u: 5, depth: 2 },
-            Step { u: 6, depth: 3 }
+            Step { u: 0, dist: 0 },
+            Step { u: 1, dist: 1 },
+            Step { u: 2, dist: 1 },
+            Step { u: 3, dist: 2 },
+            Step { u: 4, dist: 2 },
+            Step { u: 5, dist: 2 },
+            Step { u: 6, dist: 3 }
         ]));
     }
 
@@ -333,10 +340,10 @@ mod tests {
         let digraph = kattis_builddeps();
 
         assert!(Bfs::new(&digraph, &[0]).eq([
-            Step { u: 0, depth: 0 },
-            Step { u: 3, depth: 1 },
-            Step { u: 4, depth: 1 },
-            Step { u: 1, depth: 2 }
+            Step { u: 0, dist: 0 },
+            Step { u: 3, dist: 1 },
+            Step { u: 4, dist: 1 },
+            Step { u: 1, dist: 2 }
         ]));
     }
 
@@ -345,17 +352,17 @@ mod tests {
         let digraph = kattis_cantinaofbabel_1();
 
         assert!(Bfs::new(&digraph, &[0]).eq([
-            Step { u: 0, depth: 0 },
-            Step { u: 1, depth: 1 },
-            Step { u: 2, depth: 2 },
-            Step { u: 4, depth: 2 },
-            Step { u: 3, depth: 3 },
-            Step { u: 5, depth: 4 },
-            Step { u: 7, depth: 4 },
-            Step { u: 10, depth: 4 },
-            Step { u: 11, depth: 4 },
-            Step { u: 6, depth: 5 },
-            Step { u: 9, depth: 5 }
+            Step { u: 0, dist: 0 },
+            Step { u: 1, dist: 1 },
+            Step { u: 2, dist: 2 },
+            Step { u: 4, dist: 2 },
+            Step { u: 3, dist: 3 },
+            Step { u: 5, dist: 4 },
+            Step { u: 7, dist: 4 },
+            Step { u: 10, dist: 4 },
+            Step { u: 11, dist: 4 },
+            Step { u: 6, dist: 5 },
+            Step { u: 9, dist: 5 }
         ]));
     }
 
@@ -364,14 +371,14 @@ mod tests {
         let digraph = kattis_cantinaofbabel_2();
 
         assert!(Bfs::new(&digraph, &[0]).eq([
-            Step { u: 0, depth: 0 },
-            Step { u: 1, depth: 1 },
-            Step { u: 7, depth: 2 },
-            Step { u: 2, depth: 3 },
-            Step { u: 5, depth: 4 },
-            Step { u: 3, depth: 5 },
-            Step { u: 6, depth: 5 },
-            Step { u: 4, depth: 6 }
+            Step { u: 0, dist: 0 },
+            Step { u: 1, dist: 1 },
+            Step { u: 7, dist: 2 },
+            Step { u: 2, dist: 3 },
+            Step { u: 5, dist: 4 },
+            Step { u: 3, dist: 5 },
+            Step { u: 6, dist: 5 },
+            Step { u: 4, dist: 6 }
         ]));
     }
 
@@ -380,11 +387,11 @@ mod tests {
         let digraph = kattis_escapewallmaria_1();
 
         assert!(Bfs::new(&digraph, &[5]).eq([
-            Step { u: 5, depth: 0 },
-            Step { u: 6, depth: 1 },
-            Step { u: 9, depth: 1 },
-            Step { u: 13, depth: 2 },
-            Step { u: 12, depth: 3 }
+            Step { u: 5, dist: 0 },
+            Step { u: 6, dist: 1 },
+            Step { u: 9, dist: 1 },
+            Step { u: 13, dist: 2 },
+            Step { u: 12, dist: 3 }
         ]));
     }
 
@@ -393,9 +400,9 @@ mod tests {
         let digraph = kattis_escapewallmaria_2();
 
         assert!(Bfs::new(&digraph, &[5]).eq([
-            Step { u: 5, depth: 0 },
-            Step { u: 6, depth: 1 },
-            Step { u: 9, depth: 1 }
+            Step { u: 5, dist: 0 },
+            Step { u: 6, dist: 1 },
+            Step { u: 9, dist: 1 }
         ]));
     }
 
@@ -404,13 +411,13 @@ mod tests {
         let digraph = kattis_escapewallmaria_3();
 
         assert!(Bfs::new(&digraph, &[1]).eq([
-            Step { u: 1, depth: 0 },
-            Step { u: 2, depth: 1 },
-            Step { u: 5, depth: 1 },
-            Step { u: 6, depth: 2 },
-            Step { u: 9, depth: 2 },
-            Step { u: 13, depth: 3 },
-            Step { u: 12, depth: 4 }
+            Step { u: 1, dist: 0 },
+            Step { u: 2, dist: 1 },
+            Step { u: 5, dist: 1 },
+            Step { u: 6, dist: 2 },
+            Step { u: 9, dist: 2 },
+            Step { u: 13, dist: 3 },
+            Step { u: 12, dist: 4 }
         ]));
     }
 }

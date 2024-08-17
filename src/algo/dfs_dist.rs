@@ -1,9 +1,46 @@
-//! Depth-first search with depth
+//! Depth-first search with distances
 //!
 //! Depth-first search is a digraph traversal algorithm that explores a digraph
 //! by following a path as far as possible before backtracking.
 //!
 //! The time complexity is *O*(*v* + *a*).
+//!
+//! # Examples
+//!
+//! ```
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     algo::dfs_dist::{
+//!         Dfs,
+//!         Step,
+//!     },
+//!     gen::Empty,
+//!     op::AddArc,
+//! };
+//!
+//! // 0 -> {1, 2}
+//! // 1 -> {4}
+//! // 2 -> {3, 4}
+//! // 3 -> {4}
+//! // 4 -> {}
+//!
+//! let mut digraph = Digraph::empty(5);
+//!
+//! digraph.add_arc(0, 1);
+//! digraph.add_arc(0, 2);
+//! digraph.add_arc(1, 4);
+//! digraph.add_arc(2, 3);
+//! digraph.add_arc(2, 4);
+//! digraph.add_arc(3, 4);
+//!
+//! assert!(Dfs::new(&digraph, 0).eq([
+//!     Step { u: 0, dist: 0 },
+//!     Step { u: 2, dist: 1 },
+//!     Step { u: 4, dist: 2 },
+//!     Step { u: 3, dist: 2 },
+//!     Step { u: 1, dist: 1 },
+//! ]));
+//! ```
 
 use {
     crate::op::{
@@ -16,14 +53,14 @@ use {
     },
 };
 
-/// Depth-first search with depth.
+/// Depth-first search with distances.
 ///
 /// # Examples
 ///
 /// ```
 /// use graaf::{
 ///     adjacency_list::Digraph,
-///     algo::dfs_depth::{
+///     algo::dfs_dist::{
 ///         Dfs,
 ///         Step,
 ///     },
@@ -47,11 +84,11 @@ use {
 /// digraph.add_arc(3, 4);
 ///
 /// assert!(Dfs::new(&digraph, 0).eq([
-///     Step { u: 0, depth: 0 },
-///     Step { u: 2, depth: 1 },
-///     Step { u: 4, depth: 2 },
-///     Step { u: 3, depth: 2 },
-///     Step { u: 1, depth: 1 },
+///     Step { u: 0, dist: 0 },
+///     Step { u: 2, dist: 1 },
+///     Step { u: 4, dist: 2 },
+///     Step { u: 3, dist: 2 },
+///     Step { u: 1, dist: 1 },
 /// ]));
 /// ```
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
@@ -66,8 +103,8 @@ pub struct Dfs<'a, D> {
 pub struct Step {
     /// The current vertex.
     pub u: usize,
-    /// The depth of `u` in the depth-first search tree.
-    pub depth: usize,
+    /// The dist of `u` from the source vertex.
+    pub dist: usize,
 }
 
 impl<'a, D> Dfs<'a, D> {
@@ -96,21 +133,21 @@ where
     type Item = Step;
 
     fn next(&mut self) -> Option<Self::Item> {
-        if let Some((u, depth)) = self.stack.pop() {
+        if let Some((u, dist)) = self.stack.pop() {
             if self.visited.insert(u) {
                 {
-                    let depth = depth + 1;
+                    let dist = dist + 1;
 
                     for v in self
                         .digraph
                         .out_neighbors(u)
                         .filter(|v| !self.visited.contains(v))
                     {
-                        self.stack.push((v, depth));
+                        self.stack.push((v, dist));
                     }
                 }
 
-                return Some(Step { u, depth });
+                return Some(Step { u, dist });
             }
         }
 
@@ -140,14 +177,14 @@ mod tests {
         let digraph = bang_jensen_196();
 
         assert!(Dfs::new(&digraph, 0).eq([
-            Step { u: 0, depth: 0 },
-            Step { u: 7, depth: 1 },
-            Step { u: 5, depth: 2 },
-            Step { u: 6, depth: 3 },
-            Step { u: 4, depth: 1 },
-            Step { u: 2, depth: 2 },
-            Step { u: 3, depth: 3 },
-            Step { u: 1, depth: 1 }
+            Step { u: 0, dist: 0 },
+            Step { u: 7, dist: 1 },
+            Step { u: 5, dist: 2 },
+            Step { u: 6, dist: 3 },
+            Step { u: 4, dist: 1 },
+            Step { u: 2, dist: 2 },
+            Step { u: 3, dist: 3 },
+            Step { u: 1, dist: 1 }
         ]));
     }
 
@@ -156,7 +193,7 @@ mod tests {
         let digraph = bang_jensen_34();
 
         assert!(Dfs::new(&digraph, 0)
-            .eq([Step { u: 0, depth: 0 }, Step { u: 4, depth: 1 }]));
+            .eq([Step { u: 0, dist: 0 }, Step { u: 4, dist: 1 }]));
     }
 
     #[test]
@@ -164,13 +201,13 @@ mod tests {
         let digraph = bang_jensen_94();
 
         assert!(Dfs::new(&digraph, 0).eq([
-            Step { u: 0, depth: 0 },
-            Step { u: 2, depth: 1 },
-            Step { u: 5, depth: 2 },
-            Step { u: 4, depth: 2 },
-            Step { u: 6, depth: 3 },
-            Step { u: 3, depth: 2 },
-            Step { u: 1, depth: 2 }
+            Step { u: 0, dist: 0 },
+            Step { u: 2, dist: 1 },
+            Step { u: 5, dist: 2 },
+            Step { u: 4, dist: 2 },
+            Step { u: 6, dist: 3 },
+            Step { u: 3, dist: 2 },
+            Step { u: 1, dist: 2 }
         ]));
     }
 
@@ -179,10 +216,10 @@ mod tests {
         let digraph = kattis_builddeps();
 
         assert!(Dfs::new(&digraph, 0).eq([
-            Step { u: 0, depth: 0 },
-            Step { u: 4, depth: 1 },
-            Step { u: 1, depth: 2 },
-            Step { u: 3, depth: 1 }
+            Step { u: 0, dist: 0 },
+            Step { u: 4, dist: 1 },
+            Step { u: 1, dist: 2 },
+            Step { u: 3, dist: 1 }
         ]));
     }
 
@@ -191,16 +228,16 @@ mod tests {
         let digraph = kattis_cantinaofbabel_1();
 
         assert!(Dfs::new(&digraph, 0).eq([
-            Step { u: 0, depth: 0 },
-            Step { u: 1, depth: 1 },
-            Step { u: 4, depth: 2 },
-            Step { u: 3, depth: 3 },
-            Step { u: 11, depth: 4 },
-            Step { u: 9, depth: 5 },
-            Step { u: 7, depth: 6 },
-            Step { u: 10, depth: 4 },
-            Step { u: 6, depth: 5 },
-            Step { u: 5, depth: 6 }
+            Step { u: 0, dist: 0 },
+            Step { u: 1, dist: 1 },
+            Step { u: 4, dist: 2 },
+            Step { u: 3, dist: 3 },
+            Step { u: 11, dist: 4 },
+            Step { u: 9, dist: 5 },
+            Step { u: 7, dist: 6 },
+            Step { u: 10, dist: 4 },
+            Step { u: 6, dist: 5 },
+            Step { u: 5, dist: 6 }
         ]));
     }
 
@@ -209,14 +246,14 @@ mod tests {
         let digraph = kattis_cantinaofbabel_2();
 
         assert!(Dfs::new(&digraph, 0).eq([
-            Step { u: 0, depth: 0 },
-            Step { u: 1, depth: 1 },
-            Step { u: 7, depth: 2 },
-            Step { u: 2, depth: 3 },
-            Step { u: 5, depth: 4 },
-            Step { u: 6, depth: 5 },
-            Step { u: 3, depth: 5 },
-            Step { u: 4, depth: 6 }
+            Step { u: 0, dist: 0 },
+            Step { u: 1, dist: 1 },
+            Step { u: 7, dist: 2 },
+            Step { u: 2, dist: 3 },
+            Step { u: 5, dist: 4 },
+            Step { u: 6, dist: 5 },
+            Step { u: 3, dist: 5 },
+            Step { u: 4, dist: 6 }
         ]));
     }
 
@@ -225,11 +262,11 @@ mod tests {
         let digraph = kattis_escapewallmaria_1();
 
         assert!(Dfs::new(&digraph, 5).eq([
-            Step { u: 5, depth: 0 },
-            Step { u: 9, depth: 1 },
-            Step { u: 13, depth: 2 },
-            Step { u: 12, depth: 3 },
-            Step { u: 6, depth: 1 }
+            Step { u: 5, dist: 0 },
+            Step { u: 9, dist: 1 },
+            Step { u: 13, dist: 2 },
+            Step { u: 12, dist: 3 },
+            Step { u: 6, dist: 1 }
         ]));
     }
 
@@ -238,9 +275,9 @@ mod tests {
         let digraph = kattis_escapewallmaria_2();
 
         assert!(Dfs::new(&digraph, 5).eq([
-            Step { u: 5, depth: 0 },
-            Step { u: 9, depth: 1 },
-            Step { u: 6, depth: 1 }
+            Step { u: 5, dist: 0 },
+            Step { u: 9, dist: 1 },
+            Step { u: 6, dist: 1 }
         ]));
     }
 
@@ -249,13 +286,13 @@ mod tests {
         let digraph = kattis_escapewallmaria_3();
 
         assert!(Dfs::new(&digraph, 5).eq([
-            Step { u: 5, depth: 0 },
-            Step { u: 9, depth: 1 },
-            Step { u: 13, depth: 2 },
-            Step { u: 12, depth: 3 },
-            Step { u: 6, depth: 1 },
-            Step { u: 2, depth: 2 },
-            Step { u: 1, depth: 3 }
+            Step { u: 5, dist: 0 },
+            Step { u: 9, dist: 1 },
+            Step { u: 13, dist: 2 },
+            Step { u: 12, dist: 3 },
+            Step { u: 6, dist: 1 },
+            Step { u: 2, dist: 2 },
+            Step { u: 1, dist: 3 }
         ]));
     }
 }

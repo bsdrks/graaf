@@ -1,4 +1,4 @@
-//! Return a vertex's out-neighbours and their weights.
+//! Return a vertex's weighted out-neighbours.
 //!
 //! # Examples
 //!
@@ -45,7 +45,7 @@
 //! ```
 #![doc(alias = "weighted_out_neighbours")]
 
-/// Return a vertex's out-neighbours and their weights.
+/// Return a vertex's weighted out-neighbours.
 ///
 /// # How can I implement `OutNeighborsWeighted`?
 ///

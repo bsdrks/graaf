@@ -20,7 +20,7 @@ use {
 /// 6 -> {}
 /// ```
 #[must_use]
-pub fn bang_jensen_94_weighted_usize() -> Digraph<usize> {
+pub fn bang_jensen_94_usize() -> Digraph<usize> {
     Digraph::from(bang_jensen_94())
 }
 
@@ -38,7 +38,7 @@ pub fn bang_jensen_94_weighted_usize() -> Digraph<usize> {
 /// 6 -> {}
 /// ```
 #[must_use]
-pub fn bang_jensen_94_weighted_isize() -> Digraph<isize> {
+pub fn bang_jensen_94_isize() -> Digraph<isize> {
     Digraph::from(bang_jensen_94())
 }
 
@@ -152,7 +152,7 @@ pub fn kattis_bryr_1_isize() -> Digraph<isize> {
 /// Input 2). Kattis. <https://open.kattis.com/problems/bryr>
 ///
 /// ```text
-/// 0 -> {3 (1), 1 (1)}
+/// 0 -> {1 (1), 3 (1)}
 /// 1 -> {0 (1), 2 (1)}
 /// 2 -> {1 (1), 3 (1)}
 /// 3 -> {0 (1), 2 (1), 4 (1)}

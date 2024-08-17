@@ -14,9 +14,8 @@
 //!    - [Dijkstra](#dijkstra)
 //!    - [Floyd-Warshall](#floyd-warshall)
 //!    - [Tarjan](#tarjan)
-//!    - [Types](#types)
-//!       - [Breath-First Tree](#breadth-first-tree)
-//!       - [Distance Matrix](#distance-matrix)
+//!    - [Breath-First Tree](#breadth-first-tree)
+//!    - [Distance Matrix](#distance-matrix)
 //! - [Naming Conventions](#naming-conventions)
 //! - [Project Goals](#project-goals)
 //!
@@ -122,13 +121,15 @@
 //!
 //! - [`bfs::Bfs`](algo::bfs::Bfs) iterates over the vertices.
 //! - [`bfs_depth::Bfs::distances`](algo::bfs_depth::Bfs::distances) finds the
-//!   distances.
+//!   shortest distances.
 //! - [`bfs_depth::Bfs`](algo::bfs_depth::Bfs) iterates over the vertices and
 //!   their depths.
-//! - [`bfs_successors::Bfs::predecessors`](algo::bfs_successors::Bfs::predecessors) finds the predecessors.
-//! - [`bfs_successors::Bfs::shortest_path`](algo::bfs_successors::Bfs::predecessors) finds the shortest path.
-//! - [`bfs_successors::Bfs`](algo::bfs_successors::Bfs) iterates over the
-//!   vertices and their successors.
+//! - [`bfs_pred::Bfs::predecessors`](algo::bfs_pred::Bfs::predecessors) finds
+//!   the predecessors.
+//! - [`bfs_pred::Bfs::shortest_path`](algo::bfs_pred::Bfs::shortest_path)
+//!   finds the shortest path.
+//! - [`bfs_pred::Bfs`](algo::bfs_pred::Bfs) iterates over the vertices and
+//!   their predecessors.
 
 //! ## Depth-First Search (DFS)
 //!
@@ -144,21 +145,15 @@
 //! Dijkstra's algorithm finds the shortest paths from one or more source
 //! vertices in an arc-weighted digraph.
 //!
-//! These functions start from one or more source vertices and allow a custom
-//! step function, target predicate, distance array, and heap, where
-//! applicable.
-//!
-//! - [`distances`](algo::dijkstra::distances) finds the shortest distances.
-//! - [`predecessors`](algo::dijkstra::predecessors) finds the predecessors.
-//! - [`shortest_path`](algo::dijkstra::shortest_path) finds the shortest path.
-//!
-//! These functions start from one source vertex.
-//!
-//! - [`single_pair_shortest_path`](algo::dijkstra::single_pair_shortest_path)
-//!   finds the shortest path.
-//! - [`single_source_distances`](algo::dijkstra::single_source_distances)
-//!   finds the shortest distances.
-//! - [`single_source_predecessors`](algo::dijkstra::single_source_predecessors) finds the predecessors.
+//! - [`dijkstra::Dijkstra`](algo::dijkstra::Dijkstra) iterates over the
+//!   vertices.
+//! - [`dijkstra_dist::Dijkstra::distances`](algo::dijkstra_dist::Dijkstra::distances) finds the shortest distances.
+//! - [`dijkstra_dist::Dijkstra`](algo::dijkstra_dist::Dijkstra) iterates over
+//!   the vertices and their distances.
+//! - [`dijkstra_pred::Dijkstra::predecessors`](algo::dijkstra_pred::Dijkstra::predecessors) finds the predecessors.
+//! - [`dijkstra_pred::Dijkstra::shortest_path`](algo::dijkstra_pred::Dijkstra::shortest_path) finds the shortest path.
+//! - [`dijkstra_pred::Dijkstra`](algo::dijkstra_pred::Dijkstra) iterates over
+//!   the vertices and their predecessors.
 //!
 //! ## Floyd-Warshall
 //!
@@ -174,39 +169,37 @@
 //!
 //! - [`strongly_connected_components`](algo::tarjan::strongly_connected_components) finds the strongly connected components.
 //!
-//! ## Types
+//! ## Predecessor Tree
 //!
-//! These types are produced by the algorithms.
+//! A [`PredecessorTree`](algo::PredecessorTree) is the result of a
+//! breadth-first search and contains the predecessors of the vertices on the
+//! shortest paths.
 //!
-//! ### Predecessor Tree
-//!
-//! A predecessor tree is the result of a breadth-first search and contains
-//! the predecessors of the vertices on the shortest paths.
-//!
-//! - [`search`](algo::PredecessorTree::search) finds a vertex by value.
-//! - [`search_by`](algo::PredecessorTree::search_by) finds a vertex by
-//!   predicate.
+//! - [`PredecessorTree::search`](algo::PredecessorTree::search) finds a vertex
+//!   by value.
+//! - [`PredecessorTree::search_by`](algo::PredecessorTree::search_by) finds a
+//!   vertex by predicate.
 //!
 //! These functions produce a predecessor tree.
 //!
-//! - [`bfs_successors::Bfs::predecessors`](algo::bfs_successors::Bfs::predecessors)
-//! - [`dijkstra::single_source_predecessors`](algo::dijkstra::single_source_predecessors)
-//! - [`dijkstra::predecessors`](algo::dijkstra::predecessors)
+//! - [`bfs_pred::Bfs::predecessors`](algo::bfs_pred::Bfs::predecessors)
+//! - [`dijkstra_pred::Dijkstra::predecessors`](algo::dijkstra_pred::Dijkstra::predecessors)
 //!
-//! ### Distance Matrix
+//! ## Distance Matrix
 //!
-//! A distance matrix contains the shortest distances between all pairs of
-//! vertices in a digraph.
+//! A [`DistanceMatrix`](algo::DistanceMatrix) contains the shortest distances
+//! between all pairs of vertices in a digraph.
 //!
-//! - [`center`](algo::DistanceMatrix::center) finds the center of the digraph.
-//! - [`diameter`](algo::DistanceMatrix::diameter) finds the diameter of the
-//!   digraph.
-//! - [`eccentricities`](algo::DistanceMatrix::eccentricities) returns the
-//!   eccentricities of the vertices.
-//! - [`is_connected`](algo::DistanceMatrix::is_connected) checks if the
-//!   digraph is connected.
-//! - [`periphery`](algo::DistanceMatrix::periphery) finds the periphery of the
-//!   digraph.
+//! - [`DistanceMatrix::center`](algo::DistanceMatrix::center) finds the center
+//!   of the digraph.
+//! - [`DistanceMatrix::diameter`](algo::DistanceMatrix::diameter) finds the
+//!   diameter of the digraph.
+//! - [`DistanceMatrix::eccentricities`](algo::DistanceMatrix::eccentricities)
+//!   returns the eccentricities of the vertices.
+//! - [`DistanceMatrix::is_connected`](algo::DistanceMatrix::is_connected)
+//!   checks if the digraph is connected.
+//! - [`DistanceMatrix::periphery`](algo::DistanceMatrix::periphery) finds the
+//!   periphery of the digraph.
 //!
 //! ## Naming Conventions
 //!
@@ -217,16 +210,6 @@
 //! - `w` denotes the weight of an arc.
 //! - `x` denotes a tail vertex or the third vertex in scope.
 //! - `y` denotes a head vertex or the fourth vertex in scope.
-//!
-//! ## Project Goals
-//!
-//! - A flexible API for digraph operations
-//! - A comprehensive set of algorithms
-//! - Generators for common digraphs
-//! - Competitive performance
-//! - Complete documentation
-//! - Extensive property tests
-//! - Complete unit test coverage
 //!
 //! [Adjacency List]: `adjacency_list::Digraph`
 //! [Adjacency Matrix]: `adjacency_matrix::Digraph`

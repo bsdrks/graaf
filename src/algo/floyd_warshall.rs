@@ -173,7 +173,7 @@ mod tests {
         crate::{
             adjacency_list_weighted::{
                 fixture::{
-                    bang_jensen_94_weighted_isize,
+                    bang_jensen_94_isize,
                     bang_jensen_96_isize,
                     bang_jensen_99,
                     kattis_bryr_1_isize,
@@ -228,7 +228,7 @@ mod tests {
 
     #[test]
     fn distances_bang_jensen_94_weighted() {
-        let dist = distances(&bang_jensen_94_weighted_isize());
+        let dist = distances(&bang_jensen_94_isize());
 
         assert_eq!(dist[0][0], 0);
         assert_eq!(dist[0][1], 1);

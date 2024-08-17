@@ -9,7 +9,7 @@
 //! use graaf::{
 //!     adjacency_list::Digraph,
 //!     algo::{
-//!         bfs_successors::Bfs,
+//!         bfs_pred::Bfs,
 //!         PredecessorTree,
 //!     },
 //!     gen::Empty,
