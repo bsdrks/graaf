@@ -11,11 +11,12 @@ pub mod dfs_dist;
 pub mod dijkstra;
 pub mod dijkstra_dist;
 pub mod dijkstra_pred;
+pub mod distance_matrix;
 pub mod floyd_warshall;
+pub mod predecessor_tree;
 pub mod tarjan;
-pub mod types;
 
-pub use types::{
+pub use {
     distance_matrix::DistanceMatrix,
     predecessor_tree::PredecessorTree,
 };

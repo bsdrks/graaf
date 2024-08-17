@@ -24,6 +24,14 @@
 - Review the documentation test examples.
 - Add examples to `algo/mod`.
 
+## [0.82.0] - 2024-08-17
+
+Changed
+
+- Breaking: move `algo::types::distance_matrix` to `algo::distance_matrix`.
+- Breaking: move `algo::types::predecessor_tree` to `algo::predecessor_tree`.
+- Misc. documentation improvements.
+
 ## [0.81.0] - 2024-08-17
 
 Added

@@ -120,16 +120,16 @@
 //! order of their distance from a source.
 //!
 //! - [`bfs::Bfs`](algo::bfs::Bfs) iterates over the vertices.
-//! - [`bfs_dist::Bfs::distances`](algo::bfs_dist::Bfs::distances) finds the
-//!   shortest distances.
 //! - [`bfs_dist::Bfs`](algo::bfs_dist::Bfs) iterates over the vertices and
 //!   their distance from the source.
+//! - [`bfs_pred::Bfs`](algo::bfs_pred::Bfs) iterates over the vertices and
+//!   their predecessors.
+//! - [`bfs_dist::Bfs::distances`](algo::bfs_dist::Bfs::distances) finds the
+//!   shortest distances.
 //! - [`bfs_pred::Bfs::predecessors`](algo::bfs_pred::Bfs::predecessors) finds
 //!   the predecessors.
 //! - [`bfs_pred::Bfs::shortest_path`](algo::bfs_pred::Bfs::shortest_path)
 //!   finds the shortest path.
-//! - [`bfs_pred::Bfs`](algo::bfs_pred::Bfs) iterates over the vertices and
-//!   their predecessors.
 
 //! ## Depth-First Search (DFS)
 //!
@@ -147,13 +147,13 @@
 //!
 //! - [`dijkstra::Dijkstra`](algo::dijkstra::Dijkstra) iterates over the
 //!   vertices.
-//! - [`dijkstra_dist::Dijkstra::distances`](algo::dijkstra_dist::Dijkstra::distances) finds the shortest distances.
 //! - [`dijkstra_dist::Dijkstra`](algo::dijkstra_dist::Dijkstra) iterates over
-//!   the vertices and their distances.
-//! - [`dijkstra_pred::Dijkstra::predecessors`](algo::dijkstra_pred::Dijkstra::predecessors) finds the predecessors.
-//! - [`dijkstra_pred::Dijkstra::shortest_path`](algo::dijkstra_pred::Dijkstra::shortest_path) finds the shortest path.
+//!   the vertices and their distance from the source.
 //! - [`dijkstra_pred::Dijkstra`](algo::dijkstra_pred::Dijkstra) iterates over
 //!   the vertices and their predecessors.
+//! - [`dijkstra_dist::Dijkstra::distances`](algo::dijkstra_dist::Dijkstra::distances) finds the shortest distances.
+//! - [`dijkstra_pred::Dijkstra::predecessors`](algo::dijkstra_pred::Dijkstra::predecessors) finds the predecessors.
+//! - [`dijkstra_pred::Dijkstra::shortest_path`](algo::dijkstra_pred::Dijkstra::shortest_path) finds the shortest path.
 //!
 //! ## Floyd-Warshall
 //!
