@@ -24,6 +24,12 @@
 - Review the documentation test examples.
 - Add examples to `algo/mod`.
 
+## [0.82.1] - 2024-08-18
+
+Added
+
+- Add images to the examples in `gen/complete`.
+
 ## [0.82.0] - 2024-08-17
 
 Changed

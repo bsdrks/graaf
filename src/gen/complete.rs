@@ -4,6 +4,12 @@
 //!
 //! # Examples
 //!
+//! ## Order 2
+//!
+//! Generate a complete digraph of order 2.
+//!
+//! ![Complete digraph of order 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_2.svg)
+//!
 //! ```
 //! use graaf::{
 //!     adjacency_list::Digraph,
@@ -11,18 +17,21 @@
 //!     op::Arcs,
 //! };
 //!
-//! // 0 -> {}
-//!
-//! assert!(Digraph::complete(1).arcs().eq([]));
-//!
-//! // 0 -> {1}
-//! // 1 -> {0}
-//!
 //! assert!(Digraph::complete(2).arcs().eq([(0, 1), (1, 0)]));
+//! ```
 //!
-//! // 0 -> {1, 2}
-//! // 1 -> {0, 2}
-//! // 2 -> {0, 1}
+//! ## Order 3
+//!
+//! Generate a complete digraph of order 3.
+//!
+//! ![Complete digraph of order 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_3.svg)
+//!
+//! ```
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     gen::Complete,
+//!     op::Arcs,
+//! };
 //!
 //! assert!(Digraph::complete(3).arcs().eq([
 //!     (0, 1),
@@ -33,6 +42,35 @@
 //!     (2, 1)
 //! ]));
 //! ```
+//!
+//! ## Order 4
+//!
+//! Generate a complete digraph of order 4.
+//!
+//! ![Complete digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_4.svg)
+//!
+//! ```
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     gen::Complete,
+//!     op::Arcs,
+//! };
+//!
+//! assert!(Digraph::complete(4).arcs().eq([
+//!     (0, 1),
+//!     (0, 2),
+//!     (0, 3),
+//!     (1, 0),
+//!     (1, 2),
+//!     (1, 3),
+//!     (2, 0),
+//!     (2, 1),
+//!     (2, 3),
+//!     (3, 0),
+//!     (3, 1),
+//!     (3, 2)
+//! ]));
+//! ```
 
 use crate::{
     gen::Empty,
@@ -40,6 +78,8 @@ use crate::{
 };
 
 /// Generate complete digraphs.
+///
+/// In a complete digraph, an arc connects every ordered pair of vertices.
 ///
 /// # How can I implement `Complete`?
 ///
@@ -94,6 +134,76 @@ pub trait Complete {
     /// # Arguments
     ///
     /// * `order` - The number of vertices in the digraph.
+    ///
+    /// # Examples
+    ///
+    /// ## Order 2
+    ///
+    /// Generate a complete digraph of order 2.
+    ///
+    /// ![Complete digraph of order 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_2.svg)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     gen::Complete,
+    ///     op::Arcs,
+    /// };
+    ///
+    /// assert!(Digraph::complete(2).arcs().eq([(0, 1), (1, 0)]));
+    /// ```
+    ///
+    /// ## Order 3
+    ///
+    /// Generate a complete digraph of order 3.
+    ///
+    /// ![Complete digraph of order 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_3.svg)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     gen::Complete,
+    ///     op::Arcs,
+    /// };
+    ///
+    /// assert!(Digraph::complete(3).arcs().eq([
+    ///     (0, 1),
+    ///     (0, 2),
+    ///     (1, 0),
+    ///     (1, 2),
+    ///     (2, 0),
+    ///     (2, 1)
+    /// ]));
+    /// ```
+    ///
+    /// ## Order 4
+    ///
+    /// Generate a complete digraph of order 4.
+    ///
+    /// ![Complete digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_4.svg)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     gen::Complete,
+    ///     op::Arcs,
+    /// };
+    ///
+    /// assert!(Digraph::complete(4).arcs().eq([
+    ///     (0, 1),
+    ///     (0, 2),
+    ///     (0, 3),
+    ///     (1, 0),
+    ///     (1, 2),
+    ///     (1, 3),
+    ///     (2, 0),
+    ///     (2, 1),
+    ///     (2, 3),
+    ///     (3, 0),
+    ///     (3, 1),
+    ///     (3, 2)
+    /// ]));
+    /// ```
     #[must_use]
     fn complete(order: usize) -> Self;
 }
