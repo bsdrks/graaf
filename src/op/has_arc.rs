@@ -37,7 +37,7 @@
 
 /// Check whether a digraph contains an arc.
 ///
-/// # How can I implement `HasArc`?
+/// # Implementing `HasArc`
 ///
 /// Provide an implementation of `has_arc` that returns `true` if there is an
 /// arc from `u` to `v`.

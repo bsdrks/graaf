@@ -34,7 +34,7 @@
 
 /// Return a digraph's converse.
 ///
-/// # How do I implement `Converse`?
+/// # How do I implement `Converse`
 ///
 /// Provide an implementation of `converse` that returns a digraph with all
 /// arcs reversed.

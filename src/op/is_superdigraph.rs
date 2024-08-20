@@ -56,7 +56,7 @@ use super::IsSubdigraph;
 /// arc set of `H` is a subset of the arc set of `D`. Additionally, the
 /// end-vertices of each arc in `H` must be vertices in `H`.
 ///
-/// # How can I implement `IsSuperdigraph`?
+/// # Implementing `IsSuperdigraph`
 ///
 /// Provide an implementation of `is_superdigraph` that returns whether the
 /// digraph is a superdigraph of the given digraph OR implement `HasArc`,

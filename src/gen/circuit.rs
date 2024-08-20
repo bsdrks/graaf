@@ -4,6 +4,12 @@
 //!
 //! # Examples
 //!
+//! ## Order 2
+//!
+//! Generate a circuit digraph of order 2.
+//!
+//! ![Circuit digraph of order 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_2.svg)
+//!
 //! ```
 //! use graaf::{
 //!     adjacency_list::Digraph,
@@ -11,25 +17,46 @@
 //!     op::Arcs,
 //! };
 //!
-//! // 0 -> {}
-//!
-//! assert!(Digraph::circuit(1).arcs().eq([]));
-//!
-//! // 0 -> {1}
-//! // 1 -> {0}
-//!
 //! assert!(Digraph::circuit(2).arcs().eq([(0, 1), (1, 0)]));
+//! ```
 //!
-//! // 0 -> {1}
-//! // 1 -> {2}
-//! // 2 -> {0}
+//! ## Order 3
+//!
+//! Generate a circuit digraph of order 3.
+//!
+//! ![Circuit digraph of order 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_3.svg)
+//!
+//! ```
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     gen::Circuit,
+//!     op::Arcs,
+//! };
 //!
 //! assert!(Digraph::circuit(3).arcs().eq([(0, 1), (1, 2), (2, 0)]));
+//! ```
+//!
+//! ## Order 4
+//!
+//! Generate a circuit digraph of order 4.
+//!
+//! ![Circuit digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_4.svg)
+//!
+//! ```
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     gen::Circuit,
+//!     op::Arcs,
+//! };
+//!
+//! assert!(Digraph::circuit(4)
+//!     .arcs()
+//!     .eq([(0, 1), (1, 2), (2, 3), (3, 0)]));
 //! ```
 
 /// Generate circuit digraphs.
 ///
-/// # How can I implement `Circuit`?
+/// # Implementing `Circuit`
 ///
 /// Provide an implementation of `circuit` that generates a circuit digraph of
 /// a given `order` OR implement `AddArc` and `Empty`.
@@ -106,6 +133,58 @@ pub trait Circuit {
     /// # Arguments
     ///
     /// * `order` - The number of vertices in the digraph.
+    ///
+    /// # Examples
+    ///
+    /// ## Order 2
+    ///
+    /// Generate a circuit digraph of order 2.
+    ///
+    /// ![Circuit digraph of order 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_2.svg)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     gen::Circuit,
+    ///     op::Arcs,
+    /// };
+    ///
+    /// assert!(Digraph::circuit(2).arcs().eq([(0, 1), (1, 0)]));
+    /// ```
+    ///
+    /// ## Order 3
+    ///
+    /// Generate a circuit digraph of order 3.
+    ///
+    /// ![Circuit digraph of order 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_3.svg)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     gen::Circuit,
+    ///     op::Arcs,
+    /// };
+    ///
+    /// assert!(Digraph::circuit(3).arcs().eq([(0, 1), (1, 2), (2, 0)]));
+    /// ```
+    ///
+    /// ## Order 4
+    ///
+    /// Generate a circuit digraph of order 4.
+    ///
+    /// ![Circuit digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_4.svg)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     gen::Circuit,
+    ///     op::Arcs,
+    /// };
+    ///
+    /// assert!(Digraph::circuit(4)
+    ///     .arcs()
+    ///     .eq([(0, 1), (1, 2), (2, 3), (3, 0)]));
+    /// ```
     #[must_use]
     fn circuit(order: usize) -> Self;
 }

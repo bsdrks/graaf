@@ -35,7 +35,7 @@ use super::{
 
 /// Return a digraph's sources.
 ///
-/// # How can I implement `Sources`?
+/// # Implementing `Sources`
 ///
 /// Provide an implementation of `sources` that returns an iterator over the
 /// sources in the digraph OR implement `Indegree` and `Vertices`.

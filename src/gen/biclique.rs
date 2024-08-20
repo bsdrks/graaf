@@ -4,23 +4,18 @@
 //!
 //! # Examples
 //!
+//! ## m = 2, n = 3
+//!
+//! Generate a biclique digraph with `m = 2` and `n = 3`.
+//!
+//! ![Biclique digraph with m = 2 and n = 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/biclique_2_3.svg?)
+//!
 //! ```
 //! use graaf::{
 //!     adjacency_list::Digraph,
 //!     gen::Biclique,
 //!     op::Arcs,
 //! };
-//!
-//! // 0 -> {1}
-//! // 1 -> {0}
-//!
-//! assert!(Digraph::biclique(1, 1).arcs().eq([(0, 1), (1, 0)]));
-//!
-//! // 0 -> {2, 3, 4}
-//! // 1 -> {2, 3, 4}
-//! // 2 -> {0, 1}
-//! // 3 -> {0, 1}
-//! // 4 -> {0, 1}
 //!
 //! assert!(Digraph::biclique(2, 3).arcs().eq([
 //!     (0, 2),
@@ -36,13 +31,20 @@
 //!     (4, 0),
 //!     (4, 1),
 //! ]));
+//! ```
 //!
-//! // 0 -> {4, 5}
-//! // 1 -> {4, 5}
-//! // 2 -> {4, 5}
-//! // 3 -> {4, 5}
-//! // 4 -> {0, 1, 2, 3}
-//! // 5 -> {0, 1, 2, 3}
+//! ## m = 4, n = 2
+//!
+//! Generate a biclique digraph with `m = 4` and `n = 2`.
+//!
+//! ![Biclique digraph with m = 4 and n = 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/biclique_4_2.svg?)
+//!
+//! ```
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     gen::Biclique,
+//!     op::Arcs,
+//! };
 //!
 //! assert!(Digraph::biclique(4, 2).arcs().eq([
 //!     (0, 4),
@@ -67,7 +69,7 @@
 
 /// Generate biclique digraphs.
 ///
-/// # How can I implement `Biclique`?
+/// # Implementing `Biclique`
 ///
 /// Provide an implementation of `biclique` that generates a complete bipartite
 /// digraph with two partitions of `m` and `n` vertices.
@@ -122,68 +124,6 @@
 ///     ]
 /// );
 /// ```
-///
-/// # Examples
-///
-/// ```
-/// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::Biclique,
-///     op::Arcs,
-/// };
-///
-/// // 0 -> {1}
-/// // 1 -> {0}
-///
-/// assert!(Digraph::biclique(1, 1).arcs().eq([(0, 1), (1, 0)]));
-///
-/// // 0 -> {2, 3, 4}
-/// // 1 -> {2, 3, 4}
-/// // 2 -> {0, 1}
-/// // 3 -> {0, 1}
-/// // 4 -> {0, 1}
-///
-/// assert!(Digraph::biclique(2, 3).arcs().eq([
-///     (0, 2),
-///     (0, 3),
-///     (0, 4),
-///     (1, 2),
-///     (1, 3),
-///     (1, 4),
-///     (2, 0),
-///     (2, 1),
-///     (3, 0),
-///     (3, 1),
-///     (4, 0),
-///     (4, 1)
-/// ]));
-///
-/// // 0 -> {4, 5}
-/// // 1 -> {4, 5}
-/// // 2 -> {4, 5}
-/// // 3 -> {4, 5}
-/// // 4 -> {0, 1, 2, 3}
-/// // 5 -> {0, 1, 2, 3}
-///
-/// assert!(Digraph::biclique(4, 2).arcs().eq([
-///     (0, 4),
-///     (0, 5),
-///     (1, 4),
-///     (1, 5),
-///     (2, 4),
-///     (2, 5),
-///     (3, 4),
-///     (3, 5),
-///     (4, 0),
-///     (4, 1),
-///     (4, 2),
-///     (4, 3),
-///     (5, 0),
-///     (5, 1),
-///     (5, 2),
-///     (5, 3)
-/// ]));
-/// ```
 #[doc(alias = "CompleteBipartite")]
 pub trait Biclique {
     /// Generates a biclique digraph.
@@ -192,6 +132,70 @@ pub trait Biclique {
     ///
     /// * `m` - The number of vertices in the first partition.
     /// * `n` - The number of vertices in the second partition.
+    ///
+    /// # Examples
+    ///
+    /// ## m = 2, n = 3
+    ///
+    /// Generate a biclique digraph with `m = 2` and `n = 3`.
+    ///
+    /// ![Biclique digraph with m = 2 and n = 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/biclique_2_3.svg?)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     gen::Biclique,
+    ///     op::Arcs,
+    /// };
+    ///
+    /// assert!(Digraph::biclique(2, 3).arcs().eq([
+    ///     (0, 2),
+    ///     (0, 3),
+    ///     (0, 4),
+    ///     (1, 2),
+    ///     (1, 3),
+    ///     (1, 4),
+    ///     (2, 0),
+    ///     (2, 1),
+    ///     (3, 0),
+    ///     (3, 1),
+    ///     (4, 0),
+    ///     (4, 1),
+    /// ]));
+    /// ```
+    ///
+    /// ## m = 4, n = 2
+    ///
+    /// Generate a biclique digraph with `m = 4` and `n = 2`.
+    ///
+    /// ![Biclique digraph with m = 4 and n = 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/biclique_4_2.svg?)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     gen::Biclique,
+    ///     op::Arcs,
+    /// };
+    ///
+    /// assert!(Digraph::biclique(4, 2).arcs().eq([
+    ///     (0, 4),
+    ///     (0, 5),
+    ///     (1, 4),
+    ///     (1, 5),
+    ///     (2, 4),
+    ///     (2, 5),
+    ///     (3, 4),
+    ///     (3, 5),
+    ///     (4, 0),
+    ///     (4, 1),
+    ///     (4, 2),
+    ///     (4, 3),
+    ///     (5, 0),
+    ///     (5, 1),
+    ///     (5, 2),
+    ///     (5, 3),
+    /// ]));
+    /// ```
     #[doc(alias = "complete_bipartite")]
     #[must_use]
     fn biclique(m: usize, n: usize) -> Self;
@@ -199,6 +203,8 @@ pub trait Biclique {
     /// Generates a claw digraph.
     ///
     /// The claw digraph is also known as K{1, 3}.
+    ///
+    /// ![Claw digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/biclique_claw.svg)
     ///
     /// # Examples
     ///
@@ -208,11 +214,6 @@ pub trait Biclique {
     ///     gen::Biclique,
     ///     op::Arcs,
     /// };
-    ///
-    /// // 0 -> {1, 2, 3}
-    /// // 1 -> {0}
-    /// // 2 -> {0}
-    /// // 3 -> {0}
     ///
     /// assert!(Digraph::claw().arcs().eq([
     ///     (0, 1),
@@ -235,6 +236,8 @@ pub trait Biclique {
     ///
     /// The utility digraph is also known as K{3, 3}.
     ///
+    /// ![Utility digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/biclique_utility.svg)
+    ///
     /// # Examples
     ///
     /// ```
@@ -243,13 +246,6 @@ pub trait Biclique {
     ///     gen::Biclique,
     ///     op::Arcs,
     /// };
-    ///
-    /// // 0 -> {3, 4, 5}
-    /// // 1 -> {3, 4, 5}
-    /// // 2 -> {3, 4, 5}
-    /// // 3 -> {0, 1, 2}
-    /// // 4 -> {0, 1, 2}
-    /// // 5 -> {0, 1, 2}
     ///
     /// assert!(Digraph::utility().arcs().eq([
     ///     (0, 3),

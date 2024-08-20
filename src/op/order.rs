@@ -16,7 +16,7 @@
 
 /// Return the number of vertices in a digraph.
 ///
-/// # How can I implement `Order`?
+/// # Implementing `Order`
 ///
 /// Provides an implementation of `order` that returns the number of vertices
 /// in the digraph.

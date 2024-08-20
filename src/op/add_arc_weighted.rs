@@ -29,7 +29,7 @@
 
 /// Add an arc to an arc-weighted digraph.
 ///
-/// # How can I implement `AddArcWeighted`?
+/// # Implementing `AddArcWeighted`
 ///
 /// Provide an implementation of `add_arc_weighted` that adds a weighted arc to
 /// the digraph.

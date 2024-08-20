@@ -41,7 +41,7 @@ use {
 
 /// Generate random tournaments.
 ///
-/// # How can I implement `RandomTournament`?
+/// # Implementing `RandomTournament`
 ///
 /// Provide an implementation of `random_tournament` that generates a random
 /// tournament of a given `order` OR implement `AddArc` and `Empty`.
@@ -141,6 +141,34 @@ pub trait RandomTournament {
     ///
     /// * `order` - The number of vertices in the tournament.
     /// * `seed` - The seed for the random number generator.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     gen::RandomTournament,
+    ///     op::{
+    ///         Degree,
+    ///         Indegree,
+    ///         Order,
+    ///         Outdegree,
+    ///         Size,
+    ///         Vertices,
+    ///     },
+    /// };
+    ///
+    /// let tournament = Digraph::random_tournament(4, 0);
+    ///
+    /// assert_eq!(tournament.size(), 6);
+    /// assert_eq!(tournament.order(), 4);
+    ///
+    /// for s in tournament.vertices() {
+    ///     assert_eq!(tournament.degree(s), 3);
+    ///     assert!((0..=3).contains(&tournament.outdegree(s)));
+    ///     assert!((0..=3).contains(&tournament.indegree(s)));
+    /// }
+    /// ```
     #[must_use]
     fn random_tournament(order: usize, seed: u64) -> Self;
 }

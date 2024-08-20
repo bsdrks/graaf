@@ -1,40 +1,61 @@
 //! Generate empty digraphs.
 //!
+//! An empty digraph has no arcs.
+//!
 //! # Examples
+//!
+//! ## Order 2
+//!
+//! Generate an empty digraph of order 2.
+//!
+//! ![Empty digraph of order 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_2.svg)
 //!
 //! ```
 //! use graaf::{
 //!     adjacency_list::Digraph,
 //!     gen::Empty,
-//!     op::{
-//!         Arcs,
-//!         Order,
-//!     },
+//!     op::Arcs,
 //! };
 //!
-//! // 0 -> {}
-//!
-//! assert!(Digraph::empty(1).arcs().eq([]));
-//! assert_eq!(Digraph::empty(1).order(), 1);
-//!
-//! // 0 -> {}
-//! // 1 -> {}
-//!
 //! assert!(Digraph::empty(2).arcs().eq([]));
-//! assert_eq!(Digraph::empty(2).order(), 2);
+//! ```
 //!
-//! // 0 -> {}
-//! // 1 -> {}
-//! // 2 -> {}
+//! ## Order 3
+//!
+//! Generate an empty digraph of order 3.
+//!
+//! ![Empty digraph of order 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_3.svg)
+//!
+//! ```
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     gen::Empty,
+//!     op::Arcs,
+//! };
 //!
 //! assert!(Digraph::empty(3).arcs().eq([]));
-//! assert_eq!(Digraph::empty(3).order(), 3);
+//! ```
+//!
+//! ## Order 4
+//!
+//! Generate an empty digraph of order 4.
+//!
+//! ![Empty digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_4.svg)
+//!
+//! ```
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     gen::Empty,
+//!     op::Arcs,
+//! };
+//!
+//! assert!(Digraph::empty(4).arcs().eq([]));
 //! ```
 #![doc(alias = "edgeless")]
 
 /// Generate empty digraphs.
 ///
-/// # How can I implement `Empty`?
+/// # Implementing `Empty`
 ///
 /// Provide an implementation of `empty` that generates an empty digraph with
 /// `v` vertices.
@@ -72,40 +93,6 @@
 ///     BTreeSet::new()
 /// ]));
 /// ```
-///
-/// # Examples
-///
-/// ```
-/// use {
-///     graaf::{
-///         adjacency_list::Digraph,
-///         gen::Empty,
-///         op::{
-///             Arcs,
-///             Order,
-///         },
-///     },
-///     std::collections::BTreeSet,
-/// };
-///
-/// // 0 -> {}
-///
-/// assert!(Digraph::empty(1).arcs().eq([]));
-/// assert_eq!(Digraph::empty(1).order(), 1);
-///
-/// // 0 -> {}
-/// // 1 -> {}
-///
-/// assert!(Digraph::empty(2).arcs().eq([]));
-/// assert_eq!(Digraph::empty(2).order(), 2);
-///
-/// // 0 -> {}
-/// // 1 -> {}
-/// // 2 -> {}
-///
-/// assert!(Digraph::empty(3).arcs().eq([]));
-/// assert_eq!(Digraph::empty(3).order(), 3);
-/// ```
 #[doc(alias = "Edgeless")]
 pub trait Empty {
     /// Generates an empty digraph.
@@ -113,6 +100,56 @@ pub trait Empty {
     /// # Arguments
     ///
     /// * `order` - The number of vertices in the digraph.
+    ///
+    /// # Examples
+    ///
+    /// ## Order 2
+    ///
+    /// Generate an empty digraph of order 2.
+    ///
+    /// ![Empty digraph of order 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_2.svg)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     gen::Empty,
+    ///     op::Arcs,
+    /// };
+    ///
+    /// assert!(Digraph::empty(2).arcs().eq([]));
+    /// ```
+    ///
+    /// ## Order 3
+    ///
+    /// Generate an empty digraph of order 3.
+    ///
+    /// ![Empty digraph of order 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_3.svg)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     gen::Empty,
+    ///     op::Arcs,
+    /// };
+    ///
+    /// assert!(Digraph::empty(3).arcs().eq([]));
+    /// ```
+    ///
+    /// ## Order 4
+    ///
+    /// Generate an empty digraph of order 4.
+    ///
+    /// ![Empty digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_4.svg)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     gen::Empty,
+    ///     op::Arcs,
+    /// };
+    ///
+    /// assert!(Digraph::empty(4).arcs().eq([]));
+    /// ```
     #[doc(alias = "edgeless")]
     #[must_use]
     fn empty(order: usize) -> Self;

@@ -22,7 +22,7 @@ use super::{
 
 /// Check whether a digraph is oriented.
 ///
-/// # How can I implement `IsOriented`?
+/// # Implementing `IsOriented`
 ///
 /// Provide an implementation of `is_oriented` that returns whether the digraph
 /// is oriented OR implement `Arcs` and `HasArc`.

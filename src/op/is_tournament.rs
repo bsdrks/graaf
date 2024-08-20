@@ -30,7 +30,7 @@ use super::{
 
 /// Check whether a digraph is a tournament.
 ///
-/// # How can I implement `IsTournament`?
+/// # Implementing `IsTournament`
 ///
 /// Provide an implementation of `is_tournament` that returns whether the
 /// digraph is a tournament OR implement `HasArc` and `Order`.

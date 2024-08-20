@@ -81,7 +81,7 @@ use crate::{
 ///
 /// In a complete digraph, an arc connects every ordered pair of vertices.
 ///
-/// # How can I implement `Complete`?
+/// # Implementing `Complete`
 ///
 /// Provide an implementation of `complete` that generates a complete digraph
 /// of a given `order` OR implement `AddArc` and `Empty`.

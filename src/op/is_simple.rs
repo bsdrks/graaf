@@ -29,7 +29,7 @@
 
 /// Check whether a digraph is simple.
 ///
-/// # How can I implement `IsSimple`?
+/// # Implementing `IsSimple`
 ///
 /// Provide an implementation of `is_simple` that returns whether the digraph
 /// is simple.

@@ -48,7 +48,7 @@ use super::{
 
 /// Check whether a digraph is balanced.
 ///
-/// # How can I implement `IsBalanced`?
+/// # Implementing `IsBalanced`
 ///
 /// Provide an implementation of `is_balanced` that returns whether the digraph
 /// is balanced OR implement `Indegree`, `Outdegree`, and `Vertices`.

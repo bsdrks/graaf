@@ -32,7 +32,7 @@
 
 /// Return a vertex's indegree.
 ///
-/// # How can I implement `Indegree`?
+/// # Implementing `Indegree`
 ///
 /// Provide an implementation of `indegree` that returns the indegree of the
 /// vertex.

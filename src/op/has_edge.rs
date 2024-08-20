@@ -60,7 +60,7 @@ use super::HasArc;
 
 /// Checks whether a digraph contains an edge.
 ///
-/// # How can I implement `HasEdge`?
+/// # Implementing `HasEdge`
 ///
 /// Provide an implementation of `has_edge` that returns `true` if the
 /// digraph contains the arc OR implement `HasArc`.

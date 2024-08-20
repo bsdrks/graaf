@@ -145,7 +145,7 @@ use super::{
 
 /// Check whether a digraph is a spanning subdigraph of another digraph.
 ///
-/// # How can I implement `IsSpanningSubdigraph`?
+/// # Implementing `IsSpanningSubdigraph`
 ///
 /// Provide an implementation of `is_spanning_subdigraph` that returns whether
 /// the digraph is a spanning subdigraph of the given digraph OR implement

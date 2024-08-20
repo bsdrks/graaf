@@ -16,7 +16,7 @@
 
 /// Return a digraph's vertices.
 ///
-/// # How can I implement `Vertices`?
+/// # Implementing `Vertices`
 ///
 /// Provide an implementation of `vertices` that returns an iterator over
 /// all vertices in the digraph.

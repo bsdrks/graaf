@@ -37,7 +37,7 @@ use super::{
 
 /// Return a digraph's semidegree sequence.
 ///
-/// # How can I implement `SemidegreeSequence`?
+/// # Implementing `SemidegreeSequence`
 ///
 /// Provide an implementation of `SemidegreeSequence` that returns the
 /// semidegree sequence of the digraph OR implement `Indegree`, `Outdegree`,

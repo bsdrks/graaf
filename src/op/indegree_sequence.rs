@@ -36,7 +36,7 @@ use super::{
 
 /// Return a digraph's indegree sequence.
 ///
-/// # How can I implement `IndegreeSequence`?
+/// # Implementing `IndegreeSequence`
 ///
 /// Provide an implementation of `IndegreeSequence` that returns the indegree
 /// sequence of the digraph OR implement `Indegree` and `Vertices`.

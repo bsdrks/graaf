@@ -29,7 +29,7 @@
 
 /// Return a digraph's weighted arcs.
 ///
-/// # How can I implement `ArcsWeighted`?
+/// # Implementing `ArcsWeighted`
 ///
 /// Provide an implementation of `arcs_weighted` that returns an iterator over
 /// the arcs in a digraph with their weights.

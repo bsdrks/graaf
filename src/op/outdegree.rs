@@ -32,7 +32,7 @@
 
 /// Return a vertex's outdegree.
 ///
-/// # How can I implement `Outdegree`?
+/// # Implementing `Outdegree`
 ///
 /// Provide an implementation of `outdegree` that returns the outdegree of the
 /// vertex.

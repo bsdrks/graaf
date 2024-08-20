@@ -47,7 +47,7 @@
 
 /// Return a vertex's weighted out-neighbours.
 ///
-/// # How can I implement `OutNeighborsWeighted`?
+/// # Implementing `OutNeighborsWeighted`
 ///
 /// Provide an implementation of `out_neighbors_weighted` that returns an
 /// iterator over the weighted out-neighbours of a vertex in the digraph.

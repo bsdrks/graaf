@@ -39,7 +39,7 @@
 
 /// Return a vertex's out-neighbors.
 ///
-/// # How can I implement `OutNeighbors`?
+/// # Implementing `OutNeighbors`
 ///
 /// Provide an implementation of `out_neighbors` that returns an iterator
 /// over the out-neighbors of a vertex in the digraph.

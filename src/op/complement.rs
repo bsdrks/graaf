@@ -53,7 +53,7 @@ use {
 
 /// Return a digraph's complement.
 ///
-/// # How do I implement `Complement`?
+/// # How do I implement `Complement`
 ///
 /// Provide an implementation of `complement` that returns a digraph with all
 /// arcs not present in the original digraph.

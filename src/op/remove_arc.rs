@@ -57,7 +57,7 @@
 
 /// Remove an arc from a digraph.
 ///
-/// # How can I implement `RemoveArc`?
+/// # Implementing `RemoveArc`
 ///
 /// Provide an implementation of `remove_arc` that removes the arc from a
 /// digraph. Check whether the arc was removed.

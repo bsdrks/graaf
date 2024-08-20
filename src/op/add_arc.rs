@@ -27,7 +27,7 @@
 
 /// Add an arc to a digraph.
 ///
-/// # How can I implement `AddArc`?
+/// # Implementing `AddArc`
 ///
 /// Provide an implementation of `add_arc` that adds an arc to the digraph.
 ///

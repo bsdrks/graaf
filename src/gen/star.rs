@@ -2,6 +2,12 @@
 //!
 //! # Examples
 //!
+//! ## Order 2
+//!
+//! Generate a star digraph of order 2.
+//!
+//! ![Star digraph of order 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_2.svg)
+//!
 //! ```
 //! use graaf::{
 //!     adjacency_list::Digraph,
@@ -9,20 +15,46 @@
 //!     op::Arcs,
 //! };
 //!
-//! // 0 -> {}
-//!
-//! assert!(Digraph::star(1).arcs().eq([]));
-//!
-//! // 0 -> {1}
-//! // 1 -> {0}
-//!
 //! assert!(Digraph::star(2).arcs().eq([(0, 1), (1, 0)]));
+//! ```
 //!
-//! // 0 -> {1, 2}
-//! // 1 -> {0}
-//! // 2 -> {0}
+//! ## Order 3
+//!
+//! Generate a star digraph of order 3.
+//!
+//! ![Star digraph of order 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_3.svg)
+//!
+//! ```
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     gen::Star,
+//!     op::Arcs,
+//! };
 //!
 //! assert!(Digraph::star(3).arcs().eq([(0, 1), (0, 2), (1, 0), (2, 0)]));
+//! ```
+//!
+//! ## Order 4
+//!
+//! Generate a star digraph of order 4.
+//!
+//! ![Star digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_4.svg)
+//!
+//! ```
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     gen::Star,
+//!     op::Arcs,
+//! };
+//!
+//! assert!(Digraph::star(4).arcs().eq([
+//!     (0, 1),
+//!     (0, 2),
+//!     (0, 3),
+//!     (1, 0),
+//!     (2, 0),
+//!     (3, 0)
+//! ]));
 //! ```
 
 use crate::{
@@ -32,7 +64,7 @@ use crate::{
 
 /// Generate star digraphs.
 ///
-/// # How can I implement `Star`?
+/// # Implementing `Star`
 ///
 /// Provide an implementation of `star` that generates a star digraph of a
 /// given `order` OR implement `AddArc` and `Empty`.
@@ -79,37 +111,69 @@ use crate::{
 ///     BTreeSet::from([0])
 /// ]));
 /// ```
-///
-/// # Examples
-///
-/// ```
-/// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::Star,
-///     op::Arcs,
-/// };
-///
-/// // 0 -> {0}
-///
-/// assert!(Digraph::star(1).arcs().eq([]));
-///
-/// // 0 -> {1}
-/// // 1 -> {0}
-///
-/// assert!(Digraph::star(2).arcs().eq([(0, 1), (1, 0)]));
-///
-/// // 0 -> {1, 2}
-/// // 1 -> {0}
-/// // 2 -> {0}
-///
-/// assert!(Digraph::star(3).arcs().eq([(0, 1), (0, 2), (1, 0), (2, 0)]));
-/// ```
 pub trait Star {
     /// Generates a star digraph.
     ///
     /// # Arguments
     ///
     /// * `order` - The number of vertices in the digraph.
+    ///
+    /// # Examples
+    ///
+    /// ## Order 2
+    ///
+    /// Generate a star digraph of order 2.
+    ///
+    /// ![Star digraph of order 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_2.svg)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     gen::Star,
+    ///     op::Arcs,
+    /// };
+    ///
+    /// assert!(Digraph::star(2).arcs().eq([(0, 1), (1, 0)]));
+    /// ```
+    ///
+    /// ## Order 3
+    ///
+    /// Generate a star digraph of order 3.
+    ///
+    /// ![Star digraph of order 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_3.svg)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     gen::Star,
+    ///     op::Arcs,
+    /// };
+    ///
+    /// assert!(Digraph::star(3).arcs().eq([(0, 1), (0, 2), (1, 0), (2, 0)]));
+    /// ```
+    ///
+    /// ## Order 4
+    ///
+    /// Generate a star digraph of order 4.
+    ///
+    /// ![Star digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_4.svg)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     gen::Star,
+    ///     op::Arcs,
+    /// };
+    ///
+    /// assert!(Digraph::star(4).arcs().eq([
+    ///     (0, 1),
+    ///     (0, 2),
+    ///     (0, 3),
+    ///     (1, 0),
+    ///     (2, 0),
+    ///     (3, 0)
+    /// ]));
+    /// ```
     #[must_use]
     fn star(order: usize) -> Self;
 }

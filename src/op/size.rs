@@ -35,7 +35,7 @@
 
 /// Return the number of arcs in a digraph.
 ///
-/// # How can I implement `Size`?
+/// # Implementing `Size`
 ///
 /// Provide an implementation of `size` that returns the number of arcs in the
 /// digraph.

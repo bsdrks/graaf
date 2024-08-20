@@ -36,7 +36,7 @@ use super::{
 
 /// Return a digraph's outdegree sequence.
 ///
-/// # How can I implement `OutdegreeSequence`?
+/// # Implementing `OutdegreeSequence`
 ///
 /// Provide an implementation of `OutdegreeSequence` that returns the outdegree
 /// sequence of the digraph OR implement `Outdegree` and `Vertices`.

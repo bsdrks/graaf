@@ -39,7 +39,7 @@ use super::{
 
 /// Return a vertex's degree.
 ///
-/// # How can I implement `Degree`?
+/// # Implementing `Degree`
 ///
 /// Provide an implementation of `Degree` that returns the degree of the vertex
 /// OR implement `Indegree` and `Outdegree`.

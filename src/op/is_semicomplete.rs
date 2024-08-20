@@ -30,7 +30,7 @@ use super::{
 
 /// Check whether a digraph is semicomplete.
 ///
-/// # How can I implement `IsSemicomplete`?
+/// # Implementing `IsSemicomplete`
 ///
 /// Provide an implementation of `is_semicomplete` that returns whether the
 /// digraph is semicomplete OR implement `HasArc` and `Order`.

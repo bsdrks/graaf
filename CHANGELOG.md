@@ -24,6 +24,19 @@
 - Review the documentation test examples.
 - Add examples to `algo/mod`.
 
+## [0.82.2] - 2024-08-20
+
+Added
+
+- Add images to `gen` documentation.
+- Add images to `biclique` documentation.
+- Add images to `circuit` documentation.
+- Add images to `complete` documentation.
+- Add images to `cycle` documentation.
+- Add images to `empty` documentation.
+- Add images to `path` documentation.
+- Add images to `star` documentation.
+
 ## [0.82.1] - 2024-08-18
 
 Added

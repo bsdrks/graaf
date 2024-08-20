@@ -35,7 +35,7 @@ use super::{
 
 /// Return a digraph's sinks.
 ///
-/// # How can I implement `Sinks`?
+/// # Implementing `Sinks`
 ///
 /// Provide an implementation of `sinks` that returns an iterator over the
 /// sinks in the digraph OR implement `Outdegree` and `Vertices`.

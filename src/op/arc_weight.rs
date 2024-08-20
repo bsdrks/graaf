@@ -36,7 +36,7 @@
 
 /// Return an arc's weight.
 ///
-/// # How can I implement `ArcWeight`?
+/// # Implementing `ArcWeight`
 ///
 /// Provide an implementation of `arc_weight` that returns the weight of the
 /// arc.

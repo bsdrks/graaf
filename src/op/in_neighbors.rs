@@ -38,7 +38,7 @@ use super::Arcs;
 
 /// Returns a digraph's in-neighbors.
 ///
-/// # How can I implement `InNeighbors`?
+/// # Implementing `InNeighbors`
 ///
 /// Provide an implementation of `in_neighbors` that returns an iterator
 /// over the in-neighbors of a vertex in the digraph OR implement `Arcs`.

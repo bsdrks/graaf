@@ -4,6 +4,12 @@
 //!
 //! # Examples
 //!
+//! ## Order 2
+//!
+//! Generate a cycle digraph of order 2.
+//!
+//! ![Cycle digraph of order 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_2.svg)
+//!
 //! ```
 //! use graaf::{
 //!     adjacency_list::Digraph,
@@ -11,18 +17,21 @@
 //!     op::Arcs,
 //! };
 //!
-//! // 0 -> {}
-//!
-//! assert!(Digraph::cycle(1).arcs().eq([]));
-//!
-//! // 0 -> {1}
-//! // 1 -> {0}
-//!
 //! assert!(Digraph::cycle(2).arcs().eq([(0, 1), (1, 0)]));
+//! ```
 //!
-//! // 0 -> {1, 2}
-//! // 1 -> {2, 0}
-//! // 2 -> {0, 1}
+//! ## Order 3
+//!
+//! Generate a cycle digraph of order 3.
+//!
+//! ![Cycle digraph of order 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_3.svg)
+//!
+//! ```
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     gen::Cycle,
+//!     op::Arcs,
+//! };
 //!
 //! assert!(Digraph::cycle(3).arcs().eq([
 //!     (0, 1),
@@ -33,6 +42,31 @@
 //!     (2, 1)
 //! ]));
 //! ```
+//!
+//! ## Order 4
+//!
+//! Generate a cycle digraph of order 4.
+//!
+//! ![Cycle digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_4.svg)
+//!
+//! ```
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     gen::Cycle,
+//!     op::Arcs,
+//! };
+//!
+//! assert!(Digraph::cycle(4).arcs().eq([
+//!     (0, 1),
+//!     (0, 3),
+//!     (1, 0),
+//!     (1, 2),
+//!     (2, 1),
+//!     (2, 3),
+//!     (3, 0),
+//!     (3, 2)
+//! ]));
+//! ```
 
 use crate::{
     gen::Empty,
@@ -41,7 +75,7 @@ use crate::{
 
 /// Generate cycle digraphs.
 ///
-/// # How can I implement `Cycle`?
+/// # Implementing `Cycle`
 ///
 /// Provide an implementation of `cycle` that generates a cycle digraph of a
 /// given `order` OR implement `AddArc` and `Empty`.
@@ -126,6 +160,72 @@ pub trait Cycle {
     /// # Arguments
     ///
     /// * `order` - The number of vertices in the digraph.
+    ///
+    /// # Examples
+    ///
+    /// ## Order 2
+    ///
+    /// Generate a cycle digraph of order 2.
+    ///
+    /// ![Cycle digraph of order 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_2.svg)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     gen::Cycle,
+    ///     op::Arcs,
+    /// };
+    ///
+    /// assert!(Digraph::cycle(2).arcs().eq([(0, 1), (1, 0)]));
+    /// ```
+    ///
+    /// ## Order 3
+    ///
+    /// Generate a cycle digraph of order 3.
+    ///
+    /// ![Cycle digraph of order 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_3.svg)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     gen::Cycle,
+    ///     op::Arcs,
+    /// };
+    ///
+    /// assert!(Digraph::cycle(3).arcs().eq([
+    ///     (0, 1),
+    ///     (0, 2),
+    ///     (1, 0),
+    ///     (1, 2),
+    ///     (2, 0),
+    ///     (2, 1)
+    /// ]));
+    /// ```
+    ///
+    /// ## Order 4
+    ///
+    /// Generate a cycle digraph of order 4.
+    ///
+    /// ![Cycle digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_4.svg)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     gen::Cycle,
+    ///     op::Arcs,
+    /// };
+    ///
+    /// assert!(Digraph::cycle(4).arcs().eq([
+    ///     (0, 1),
+    ///     (0, 3),
+    ///     (1, 0),
+    ///     (1, 2),
+    ///     (2, 1),
+    ///     (2, 3),
+    ///     (3, 0),
+    ///     (3, 2)
+    /// ]));
+    /// ```
     #[must_use]
     fn cycle(order: usize) -> Self;
 }

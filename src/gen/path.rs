@@ -5,6 +5,12 @@
 //!
 //! # Examples
 //!
+//! ## Order 2
+//!
+//! Generate a path digraph of order 2.
+//!
+//! ![Path digraph of order 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/path_2.svg)
+//!
 //! ```
 //! use graaf::{
 //!     adjacency_list::Digraph,
@@ -12,19 +18,39 @@
 //!     op::Arcs,
 //! };
 //!
-//! // 0 -> {}
-//!
-//! assert!(Digraph::path(1).arcs().eq([]));
-//!
-//! // 0 -> {1}
-//!
 //! assert!(Digraph::path(2).arcs().eq([(0, 1)]));
+//! ```
 //!
-//! // 0 -> {1}
-//! // 1 -> {2}
-//! // 2 -> {}
+//! ## Order 3
+//!
+//! Generate a path digraph of order 3.
+//!
+//! ![Path digraph of order 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/path_3.svg)
+//!
+//! ```
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     gen::Path,
+//!     op::Arcs,
+//! };
 //!
 //! assert!(Digraph::path(3).arcs().eq([(0, 1), (1, 2)]));
+//! ```
+//!
+//! ## Order 4
+//!
+//! Generate a path digraph of order 4.
+//!
+//! ![Path digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/path_4.svg)
+//!
+//! ```
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     gen::Path,
+//!     op::Arcs,
+//! };
+//!
+//! assert!(Digraph::path(4).arcs().eq([(0, 1), (1, 2), (2, 3)]));
 //! ```
 
 use crate::{
@@ -34,7 +60,7 @@ use crate::{
 
 /// Generate path digraphs.
 ///
-/// # How can I implement `Path`?
+/// # Implementing `Path`
 ///
 /// Provide an implementation of `path` that generates a path digraph of a
 /// given `order` OR implement `AddArc` and `Empty`.
@@ -81,35 +107,62 @@ use crate::{
 ///     BTreeSet::new()
 /// ]));
 /// ```
-///
-/// # Examples
-///
-/// ```
-/// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::Path,
-///     op::Arcs,
-/// };
-///
-/// // 0 -> {}
-///
-/// assert!(Digraph::path(1).arcs().eq([]));
-///
-/// // 0 -> {1}
-///
-/// assert!(Digraph::path(2).arcs().eq([(0, 1)]));
-///
-/// // 0 -> {1}
-/// // 1 -> {2}
-///
-/// assert!(Digraph::path(3).arcs().eq([(0, 1), (1, 2)]));
-/// ```
 pub trait Path {
     /// Generates a path digraph.
     ///
     /// # Arguments
     ///
     /// * `order` - The number of vertices in the digraph.
+    ///
+    /// # Examples
+    ///
+    /// ## Order 2
+    ///
+    /// Generate a path digraph of order 2.
+    ///
+    /// ![Path digraph of order 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/path_2.svg)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     gen::Path,
+    ///     op::Arcs,
+    /// };
+    ///
+    /// assert!(Digraph::path(2).arcs().eq([(0, 1)]));
+    /// ```
+    ///
+    /// ## Order 3
+    ///
+    /// Generate a path digraph of order 3.
+    ///
+    /// ![Path digraph of order 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/path_3.svg)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     gen::Path,
+    ///     op::Arcs,
+    /// };
+    ///
+    /// assert!(Digraph::path(3).arcs().eq([(0, 1), (1, 2)]));
+    /// ```
+    ///
+    /// ## Order 4
+    ///
+    /// Generate a path digraph of order 4.
+    ///
+    /// ![Path digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/path_4.svg)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     gen::Path,
+    ///     op::Arcs,
+    /// };
+    ///
+    /// assert!(Digraph::path(4).arcs().eq([(0, 1), (1, 2), (2, 3)]));
+    /// ```
     #[must_use]
     fn path(order: usize) -> Self;
 }

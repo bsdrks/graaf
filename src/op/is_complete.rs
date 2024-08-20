@@ -30,7 +30,7 @@ use super::{
 
 /// Check whether a digraph is complete.
 ///
-/// # How can I implement `IsComplete`?
+/// # Implementing `IsComplete`
 ///
 /// Provide an implementation of `is_complete` that returns whether the digraph
 /// is complete OR implement `HasEdge` and `Order`.

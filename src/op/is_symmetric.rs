@@ -54,7 +54,7 @@ use super::{
 
 /// Check whether a digraph is symmetric.
 ///
-/// # How can I implement `IsSymmetric`?
+/// # Implementing `IsSymmetric`
 ///
 /// Provide an implementation of `is_symmetric` that returns whether the
 /// digraph is symmetric OR implement `Arcs` and `HasArc`.

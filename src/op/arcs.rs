@@ -23,7 +23,7 @@
 
 /// Return a digraph's arcs.
 ///
-/// # How can I implement `Arcs`?
+/// # Implementing `Arcs`
 ///
 /// Provide an implementation of `arcs` that returns an iterator over the arcs
 /// in a digraph.
