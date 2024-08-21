@@ -384,9 +384,12 @@ mod tests {
         super::*,
         crate::{
             adjacency_matrix::fixture::{
+                bang_jensen_196,
                 bang_jensen_34,
                 bang_jensen_94,
                 kattis_builddeps,
+                kattis_cantinaofbabel_1,
+                kattis_cantinaofbabel_2,
                 kattis_escapewallmaria_1,
                 kattis_escapewallmaria_2,
                 kattis_escapewallmaria_3,
@@ -430,11 +433,6 @@ mod tests {
             },
             proptest_strategy::arc,
             r#gen::Path,
-        },
-        adjacency_list::fixture::{
-            bang_jensen_196,
-            kattis_cantinaofbabel_1,
-            kattis_cantinaofbabel_2,
         },
         proptest::proptest,
     };

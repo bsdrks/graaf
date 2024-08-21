@@ -32,6 +32,12 @@ Added
 - Add images to `adjacency_list/fixture` documentation.
 - Add images to `adjacency_matrix/fixture` documentation.
 
+Fixed
+
+- Fix `adjacency_matrix::*::*_bang_jensen_196` unit tests.
+- Fix `adjacency_matrix::*::*_kattis_caninaofbabel_1` unit tests.
+- Fix `adjacency_matrix::*::*_kattis_caninaofbabel_2` unit tests.
+
 ## [0.82.2] - 2024-08-20
 
 Added
