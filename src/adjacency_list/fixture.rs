@@ -1,4 +1,40 @@
 //! Adjacency list fixtures for testing and benchmarking
+//!
+//! [`bang_jensen_196`]:
+//!
+//! ![Bang-Jensen, 196](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bang_jensen_196.svg)
+//!
+//! [`bang_jensen_34`]:
+//!
+//! ![Bang-Jensen, 34](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bang_jensen_34.svg)
+//!
+//! [`bang_jensen_94`]:
+//!
+//! ![Bang-Jensen, 94](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bang_jensen_94.svg)
+//!
+//! [`kattis_builddeps`]:
+//!
+//! ![Kattis, builddeps](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_builddeps.svg)
+//!
+//! [`kattis_cantinaofbabel_1`]:
+//!
+//! ![Kattis, cantinaofbabel, sample 1](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_cantinaofbabel_1.svg)
+//!
+//! [`kattis_cantinaofbabel_2`]:
+//!
+//! ![Kattis, cantinaofbabel, sample 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_cantinaofbabel_2.svg)
+//!
+//! [`kattis_escapewallmaria_1`]:
+//!
+//! ![Kattis, escapewallmaria, sample 1](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_escapewallmaria_1.svg)
+//!
+//! [`kattis_escapewallmaria_2`]:
+//!
+//! ![Kattis, escapewallmaria, sample 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_escapewallmaria_2.svg)
+//!
+//! [`kattis_escapewallmaria_3`]:
+//!
+//! ![Kattis, escapewallmaria, sample 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_escapewallmaria_3.svg)
 
 use {
     super::Digraph,
@@ -8,6 +44,8 @@ use {
 /// Jørgen Bang-Jensen and Gregory Z. Gutin. 2009. Digraphs: Theory,
 /// Algorithms and Applications (2nd ed.). Springer, London, 196.
 /// <https://doi.org/10.1007/978-1-84800-998-1>
+///
+/// ![Bang-Jensen, 196](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bang_jensen_196.svg)
 ///
 /// ```text
 /// 0 -> {1, 4, 7}
@@ -37,6 +75,8 @@ pub fn bang_jensen_196() -> Digraph {
 /// Algorithms and Applications (2nd ed.). Springer, London, 34.
 /// <https://doi.org/10.1007/978-1-84800-998-1>
 ///
+/// ![Bang-Jensen, 34](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bang_jensen_34.svg)
+///
 /// ```text
 /// 0 -> {4}
 /// 1 -> {0}
@@ -60,6 +100,8 @@ pub fn bang_jensen_34() -> Digraph {
 /// Jørgen Bang-Jensen and Gregory Z. Gutin. 2009. Digraphs: Theory,
 /// Algorithms and Applications (2nd ed.). Springer, London, 94.
 /// <https://doi.org/10.1007/978-1-84800-998-1>
+///
+/// ![Bang-Jensen, 94](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bang_jensen_94.svg)
 ///
 /// ```text
 /// 0 -> {1, 2}
@@ -85,6 +127,8 @@ pub fn bang_jensen_94() -> Digraph {
 
 /// Jeroen Bransen. 2015. Build Dependencies. Kattis.
 /// <https://open.kattis.com/problems/builddeps>
+///
+/// ![Kattis, builddeps](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_builddeps.svg)
 ///
 /// ```text
 /// 0: gmp
@@ -117,6 +161,8 @@ pub fn kattis_builddeps() -> Digraph {
 
 /// David Sturgill. 2015. Cantina of Babel. (Sample Input 1). Kattis.
 /// <https://open.kattis.com/problems/cantinaofbabel>
+///
+/// ![Kattis, cantinaofbabel, sample 1](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_cantinaofbabel_1.svg)
 ///
 /// ```text
 /// 0: Jabba-the-Hutt
@@ -178,6 +224,8 @@ pub fn kattis_cantinaofbabel_1() -> Digraph {
 /// David Sturgill. 2015. Cantina of Babel. (Sample Input 2). Kattis.
 /// <https://open.kattis.com/problems/cantinaofbabel>
 ///
+/// ![Kattis, cantinaofbabel, sample 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_cantinaofbabel_2.svg)
+///
 /// ```text
 /// 0: Fran
 /// 1: French
@@ -237,6 +285,8 @@ pub fn kattis_cantinaofbabel_2() -> Digraph {
 /// Arash Behpour. 2019. Escape Wall Maria. Kattis. (Sample Input 1)
 /// <https://open.kattis.com/problems/escapewallmaria>
 ///
+/// ![Kattis, escapewallmaria, sample 1](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_escapewallmaria_1.svg)
+///
 /// ```text
 /// 0 -> {}
 /// 1 -> {}
@@ -280,6 +330,8 @@ pub fn kattis_escapewallmaria_1() -> Digraph {
 /// Arash Behpour. 2019. Escape Wall Maria. Kattis. (Sample Input 2)
 /// <https://open.kattis.com/problems/escapewallmaria>
 ///
+/// ![Kattis, escapewallmaria, sample 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_escapewallmaria_2.svg)
+///
 /// ```text
 /// 0 -> {}
 /// 1 -> {}
@@ -322,6 +374,8 @@ pub fn kattis_escapewallmaria_2() -> Digraph {
 
 /// Arash Behpour. 2019. Escape Wall Maria. Kattis. (Sample Input 3)
 /// <https://open.kattis.com/problems/escapewallmaria>
+///
+/// ![Kattis, escapewallmaria, sample 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_escapewallmaria_3.svg)
 ///
 /// ```text
 /// 0 -> {}

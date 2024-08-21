@@ -24,6 +24,14 @@
 - Review the documentation test examples.
 - Add examples to `algo/mod`.
 
+## [0.82.3] - 2024-08-21
+
+Added
+
+- Add images to `bfs` documentation.
+- Add images to `adjacency_list/fixture` documentation.
+- Add images to `adjacency_matrix/fixture` documentation.
+
 ## [0.82.2] - 2024-08-20
 
 Added

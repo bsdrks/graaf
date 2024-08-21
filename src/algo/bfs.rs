@@ -6,6 +6,8 @@
 //!
 //! # Examples
 //!
+//! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_012.svg)
+//!
 //! ```
 //! use graaf::{
 //!     adjacency_list::Digraph,
@@ -13,11 +15,6 @@
 //!     gen::Empty,
 //!     op::AddArc,
 //! };
-//!
-//! // 0 -> {1}
-//! // 1 -> {2}
-//! // 2 -> {}
-//! // 3 -> {0}
 //!
 //! let mut digraph = Digraph::empty(4);
 //!
@@ -40,6 +37,8 @@ use {
 ///
 /// # Examples
 ///
+/// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_012.svg?)
+///
 /// ```
 /// use graaf::{
 ///     adjacency_list::Digraph,
@@ -47,11 +46,6 @@ use {
 ///     gen::Empty,
 ///     op::AddArc,
 /// };
-///
-/// // 0 -> {1}
-/// // 1 -> {2}
-/// // 2 -> {}
-/// // 3 -> {0}
 ///
 /// let mut digraph = Digraph::empty(4);
 ///
@@ -62,17 +56,14 @@ use {
 /// assert!(Bfs::new(&digraph, &[0]).eq([0, 1, 2]));
 /// ```
 ///
+/// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_complete_4.svg?)
+///
 /// ```
 /// use graaf::{
 ///     adjacency_list::Digraph,
 ///     algo::bfs::Bfs,
 ///     gen::Complete,
 /// };
-///
-/// // 0 -> {1, 2, 3}
-/// // 1 -> {0, 2, 3}
-/// // 2 -> {0, 1, 3}
-/// // 3 -> {0, 1, 2}
 ///
 /// let digraph = Digraph::complete(4);
 ///
