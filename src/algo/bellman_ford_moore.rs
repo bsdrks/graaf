@@ -7,6 +7,12 @@
 //!
 //! # Examples
 //!
+//! ## Shortest path
+//!
+//! The image highlights the shortest path between vertices 0 and 4.
+//!
+//! ![Bellman-Ford-Moore](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_1.svg?)
+//!
 //! ```
 //! use graaf::{
 //!     adjacency_list_weighted::Digraph,
@@ -14,13 +20,6 @@
 //!     gen::Empty,
 //!     op::AddArcWeighted,
 //! };
-//!
-//! // 0 -> {1 (8), 2 (4)}
-//! // 1 -> {2 (-5)}
-//! // 2 -> {3 (-2), 4 (4)}
-//! // 3 -> {5 (-2)}
-//! // 4 -> {3 (10), 5 (9)}
-//! // 5 -> {3 (5), 4 (-3)}
 //!
 //! let mut digraph = Digraph::<isize>::empty(6);
 //!
@@ -38,10 +37,21 @@
 //! assert!(single_source_distances(&digraph, 0)
 //!     .unwrap()
 //!     .eq(&[0, 8, 3, 1, -4, -1]));
+//! ```
 //!
-//! // 0 -> {1 (-2)}
-//! // 1 -> {2 (-1)}
-//! // 2 -> {0 (-1)}
+//! ## Negative cycle
+//!
+//! There is no shortest path from vertex 0 to vertex 2.
+//!
+//! ![Bellman-Ford-Moore](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_2.svg)
+//!
+//! ```
+//! use graaf::{
+//!     adjacency_list_weighted::Digraph,
+//!     algo::bellman_ford_moore::single_source_distances,
+//!     gen::Empty,
+//!     op::AddArcWeighted,
+//! };
 //!
 //! let mut digraph = Digraph::empty(3);
 //!
@@ -51,6 +61,7 @@
 //!
 //! assert_eq!(single_source_distances(&digraph, 0), None);
 //! ```
+#![doc(alias = "bellman_ford")]
 
 use crate::op::{
     ArcsWeighted,
@@ -72,6 +83,12 @@ use crate::op::{
 ///
 /// # Examples
 ///
+/// ## Shortest path
+///
+/// The image highlights the shortest path between vertices 0 and 4.
+///
+/// ![Bellman-Ford-Moore](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_1.svg?)
+///
 /// ```
 /// use graaf::{
 ///     adjacency_list_weighted::Digraph,
@@ -79,13 +96,6 @@ use crate::op::{
 ///     gen::Empty,
 ///     op::AddArcWeighted,
 /// };
-///
-/// // 0 -> {1 (8), 2 (4)}
-/// // 1 -> {2 (-5)}
-/// // 2 -> {3 (-2), 4 (4)}
-/// // 3 -> {5 (-2)}
-/// // 4 -> {3 (10), 5 (9)}
-/// // 5 -> {3 (5), 4 (-3)}
 ///
 /// let mut digraph = Digraph::<isize>::empty(6);
 ///
@@ -103,12 +113,23 @@ use crate::op::{
 /// assert!(single_source_distances(&digraph, 0)
 ///     .unwrap()
 ///     .eq(&[0, 8, 3, 1, -4, -1]));
+/// ```
 ///
-/// // 0 -> {1 (-2)}
-/// // 1 -> {2 (-1)}
-/// // 2 -> {0 (-1)}
+/// ## Negative cycle
 ///
-/// let mut digraph = Digraph::<isize>::empty(3);
+/// There is no shortest path from vertex 0 to vertex 2.
+///
+/// ![Bellman-Ford-Moore](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_2.svg)
+///
+/// ```
+/// use graaf::{
+///     adjacency_list_weighted::Digraph,
+///     algo::bellman_ford_moore::single_source_distances,
+///     gen::Empty,
+///     op::AddArcWeighted,
+/// };
+///
+/// let mut digraph = Digraph::empty(3);
 ///
 /// digraph.add_arc_weighted(0, 1, -2);
 /// digraph.add_arc_weighted(1, 2, -1);

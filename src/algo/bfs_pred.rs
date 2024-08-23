@@ -135,15 +135,22 @@ impl<'a, D> Bfs<'a, D> {
     ///
     /// * `digraph`: The digraph.
     /// * `sources`: The source vertices.
-    pub fn new(digraph: &'a D, sources: &[usize]) -> Self {
+    pub fn new<'b, T>(digraph: &'a D, sources: T) -> Self
+    where
+        T: IntoIterator<Item = &'b usize>,
+    {
+        let mut queue = VecDeque::new();
+        let mut visited = BTreeSet::new();
+
+        for &source in sources {
+            queue.push_back(Step { u: None, v: source });
+            let _ = visited.insert(source);
+        }
+
         Self {
             digraph,
-            queue: sources
-                .iter()
-                .copied()
-                .map(|u| Step { u: None, v: u })
-                .collect(),
-            visited: sources.iter().copied().collect(),
+            queue,
+            visited,
         }
     }
 

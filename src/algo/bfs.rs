@@ -6,7 +6,7 @@
 //!
 //! # Examples
 //!
-//! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_012.svg)
+//! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_1.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -16,13 +16,15 @@
 //!     op::AddArc,
 //! };
 //!
-//! let mut digraph = Digraph::empty(4);
+//! let mut digraph = Digraph::empty(6);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(1, 2);
+//! digraph.add_arc(1, 4);
+//! digraph.add_arc(2, 5);
 //! digraph.add_arc(3, 0);
 //!
-//! assert!(Bfs::new(&digraph, &[0]).eq([0, 1, 2]));
+//! assert!(Bfs::new(&digraph, &[0]).eq([0, 1, 2, 4, 5]));
 //! ```
 
 use {
@@ -37,7 +39,9 @@ use {
 ///
 /// # Examples
 ///
-/// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_012.svg?)
+/// Red marks the path:
+///
+/// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_1.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -47,27 +51,17 @@ use {
 ///     op::AddArc,
 /// };
 ///
-/// let mut digraph = Digraph::empty(4);
+/// let mut digraph = Digraph::empty(6);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(1, 2);
+/// digraph.add_arc(1, 4);
+/// digraph.add_arc(2, 5);
 /// digraph.add_arc(3, 0);
 ///
-/// assert!(Bfs::new(&digraph, &[0]).eq([0, 1, 2]));
-/// ```
+/// println!("{:?}", Bfs::new(&digraph, &[0]).collect::<Vec<_>>());
 ///
-/// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_complete_4.svg?)
-///
-/// ```
-/// use graaf::{
-///     adjacency_list::Digraph,
-///     algo::bfs::Bfs,
-///     gen::Complete,
-/// };
-///
-/// let digraph = Digraph::complete(4);
-///
-/// assert!(Bfs::new(&digraph, &[0]).eq([0, 1, 2, 3]));
+/// assert!(Bfs::new(&digraph, &[0]).eq([0, 1, 2, 4, 5]));
 /// ```
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct Bfs<'a, D> {
@@ -83,11 +77,22 @@ impl<'a, D> Bfs<'a, D> {
     ///
     /// * `digraph`: The digraph.
     /// * `sources`: The source vertices.
-    pub fn new(digraph: &'a D, sources: &[usize]) -> Self {
+    pub fn new<'b, T>(digraph: &'a D, sources: T) -> Self
+    where
+        T: IntoIterator<Item = &'b usize>,
+    {
+        let mut queue = VecDeque::new();
+        let mut visited = BTreeSet::new();
+
+        for &source in sources {
+            queue.push_back(source);
+            let _ = visited.insert(source);
+        }
+
         Self {
             digraph,
-            queue: sources.iter().copied().collect(),
-            visited: sources.iter().copied().collect(),
+            queue,
+            visited,
         }
     }
 }

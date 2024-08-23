@@ -4,6 +4,7 @@
 
 - Add a trait for path contraction.
 - Add a trait for set contraction.
+- Add examples to `algo/mod`.
 - Add the `Barabási–Albert` generator.
 - Add the `DeleteArc` trait.
 - Add the `DeleteVertex` trait.
@@ -22,7 +23,29 @@
 - Benchmark trait implementations.
 - Review documentation.
 - Review the documentation test examples.
-- Add examples to `algo/mod`.
+- Test multi-source BFS.
+- Test multi-source DFS.
+
+## [0.83.0] - 2024-08-23
+
+Added
+
+- Add alias `algo::bellman_ford` for `algo::bellman_ford_moore`.
+- Add images to the `adjacency_list_weighted/fixture` documentation.
+- Add images to the `algo/bellman_ford_moore` documentation.
+- Add images to the `algo/bfs` documentation.
+
+Changed
+
+- Breaking: change `source: usize` in `dfs::Dfs::new` to `sources: Vec<usize>`.
+- Breaking: change `source: usize` in `dfs_dist::Dfs::new` to `sources: IntoIterator<Item = &'b usize>`.
+- Breaking: change `sources` in `bfs::Bfs::new` to `IntoIterator<Item = &'b usize>`.
+- Breaking: change `sources` in `bfs_dist::Bfs::new` to `IntoIterator<Item = &'b usize>`.
+- Breaking: change `sources` in `bfs_pred::Bfs::new` to `IntoIterator<Item = &'b usize>`.
+- Breaking: change `sources` in `dijkstra::Dijkstra::new` to `IntoIterator<Item = &'b usize>`.
+- Breaking: change `sources` in `dijkstra_dist::Dijkstra::new` to `IntoIterator<Item = &'b usize>`.
+- Breaking: change `sources` in `dijkstra_pred::Dijkstra::new` to `IntoIterator<Item = &'b usize>`.
+- Improve documentation examples for `algo::bfs`.
 
 ## [0.82.3] - 2024-08-21
 

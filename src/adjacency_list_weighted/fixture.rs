@@ -10,6 +10,8 @@ use {
 /// Algorithms and Applications (2nd ed.). Springer, London, 94.
 /// <https://doi.org/10.1007/978-1-84800-998-1>
 ///
+/// ![Bang-Jensen, 94](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bang_jensen_94.svg)
+///
 /// ```text
 /// 0 -> {1 (1), 2 (1)}
 /// 1 -> {3 (1)}
@@ -28,6 +30,8 @@ pub fn bang_jensen_94_usize() -> Digraph<usize> {
 /// Algorithms and Applications (2nd ed.). Springer, London, 94.
 /// <https://doi.org/10.1007/978-1-84800-998-1>
 ///
+/// ![Bang-Jensen, 94](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bang_jensen_94.svg)
+///
 /// ```text
 /// 0 -> {1 (1), 2 (1)}
 /// 1 -> {3 (1)}
@@ -45,6 +49,8 @@ pub fn bang_jensen_94_isize() -> Digraph<isize> {
 /// Jørgen Bang-Jensen and Gregory Z. Gutin. 2009. Digraphs: Theory,
 /// Algorithms and Applications (2nd ed.). Springer, London, 96.
 /// <https://doi.org/10.1007/978-1-84800-998-1>
+///
+/// ![Bang-Jensen, 96](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bang_jensen_96.svg)
 ///
 /// ```text
 /// 0 -> {1 (9), 2 (3)}
@@ -70,6 +76,8 @@ pub fn bang_jensen_96_usize() -> Digraph<usize> {
 /// Algorithms and Applications (2nd ed.). Springer, London, 96.
 /// <https://doi.org/10.1007/978-1-84800-998-1>
 ///
+/// ![Bang-Jensen, 96](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bang_jensen_96.svg)
+///
 /// ```text
 /// 0 -> {1 (9), 2 (3)}
 /// 1 -> {2 (6), 3 (2)}
@@ -94,6 +102,8 @@ pub fn bang_jensen_96_isize() -> Digraph<isize> {
 /// Algorithms and Applications (2nd ed.). Springer, London, 99.
 /// <https://doi.org/10.1007/978-1-84800-998-1>
 ///
+/// ![Bang-Jensen, 99](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bang_jensen_99.svg)
+///
 /// ```text
 /// 0 -> {1 (8), 2 (4)}
 /// 1 -> {2 (-5)}
@@ -117,6 +127,8 @@ pub fn bang_jensen_99() -> Digraph<isize> {
 /// Arnar Bjarni Arnarson and Unnar Freyr Erlendsson. 2019. Bridges (Sample
 /// Input 1). Kattis. <https://open.kattis.com/problems/bryr>
 ///
+/// ![Kattis, bryr, sample 1](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_bryr_1.svg)
+///
 /// ```text
 /// 0 -> {1 (1), 2 (1)}
 /// 1 -> {0 (1), 2 (1)}
@@ -134,6 +146,8 @@ pub fn kattis_bryr_1_usize() -> Digraph<usize> {
 /// Arnar Bjarni Arnarson and Unnar Freyr Erlendsson. 2019. Bridges (Sample
 /// Input 1). Kattis. <https://open.kattis.com/problems/bryr>
 ///
+/// ![Kattis, bryr, sample 1](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_bryr_1.svg)
+///
 /// ```text
 /// 0 -> {1 (1), 2 (1)}
 /// 1 -> {0 (1), 2 (1)}
@@ -150,6 +164,8 @@ pub fn kattis_bryr_1_isize() -> Digraph<isize> {
 
 /// Arnar Bjarni Arnarson and Unnar Freyr Erlendsson. 2019. Bridges (Sample
 /// Input 2). Kattis. <https://open.kattis.com/problems/bryr>
+///
+/// ![Kattis, bryr, sample 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_bryr_2.svg)
 ///
 /// ```text
 /// 0 -> {1 (1), 3 (1)}
@@ -174,8 +190,10 @@ pub fn kattis_bryr_2_usize() -> Digraph<usize> {
 /// Arnar Bjarni Arnarson and Unnar Freyr Erlendsson. 2019. Bridges (Sample
 /// Input 2). Kattis. <https://open.kattis.com/problems/bryr>
 ///
+/// ![Kattis, bryr, sample 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_bryr_2.svg)
+///
 /// ```text
-/// 0 -> {3 (1), 1 (1)}
+/// 0 -> {1 (1), 3 (1)}
 /// 1 -> {0 (1), 2 (1)}
 /// 2 -> {1 (1), 3 (1)}
 /// 3 -> {0 (1), 2 (1), 4 (1)}
@@ -196,6 +214,8 @@ pub fn kattis_bryr_2_isize() -> Digraph<isize> {
 
 /// Arnar Bjarni Arnarson and Unnar Freyr Erlendsson. 2019. Bridges (Sample
 /// Input 3). Kattis. <https://open.kattis.com/problems/bryr>
+///
+/// ![Kattis, bryr, sample 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_bryr_3.svg)
 ///
 /// ```text
 /// 0 -> {3 (0)}
@@ -228,6 +248,8 @@ pub fn kattis_bryr_3_usize() -> Digraph<usize> {
 /// Arnar Bjarni Arnarson and Unnar Freyr Erlendsson. 2019. Bridges (Sample
 /// Input 3). Kattis. <https://open.kattis.com/problems/bryr>
 ///
+/// ![Kattis, bryr, sample 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_bryr_3.svg)
+///
 /// ```text
 /// 0 -> {3 (0)}
 /// 1 -> {7 (0), 9 (1)}
@@ -259,6 +281,8 @@ pub fn kattis_bryr_3_isize() -> Digraph<isize> {
 /// Karl Johan Sande Heimark. 2018. Cross Country. Kattis.
 /// <https://open.kattis.com/problems/crosscountry>
 ///
+/// ![Kattis, crosscountry, sample](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_crosscountry.svg)
+///
 /// ```text
 /// 0 -> {1 (1), 2 (3), 3 (14)}
 /// 1 -> {0 (2), 2 (4), 3 (22)}
@@ -277,6 +301,8 @@ pub fn kattis_crosscountry_usize() -> Digraph<usize> {
 
 /// Karl Johan Sande Heimark. 2018. Cross Country. Kattis.
 /// <https://open.kattis.com/problems/crosscountry>
+///
+/// ![Kattis, crosscountry, sample](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_crosscountry.svg)
 ///
 /// ```text
 /// 0 -> {1 (1), 2 (3), 3 (14)}
@@ -297,6 +323,8 @@ pub fn kattis_crosscountry_isize() -> Digraph<isize> {
 /// Per Austrin. 2005. Single source shortest path, non-negative weights.
 /// Kattis. <https://open.kattis.com/problems/shortestpath1>
 ///
+/// ![Kattis, shortestpath1, sample](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_shortestpath1.svg)
+///
 /// ```text
 /// 0 -> {1 (2)}
 /// 1 -> {2 (2)}
@@ -316,6 +344,8 @@ pub fn kattis_shortestpath1_usize() -> Digraph<usize> {
 /// Per Austrin. 2005. Single source shortest path, non-negative weights.
 /// Kattis. <https://open.kattis.com/problems/shortestpath1>
 ///
+/// ![Kattis, shortestpath1, sample](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_shortestpath1.svg)
+///
 /// ```text
 /// 0 -> {1 (2)}
 /// 1 -> {2 (2)}
@@ -334,6 +364,8 @@ pub fn kattis_shortestpath1_isize() -> Digraph<isize> {
 
 /// Per Austrin. 2005. Single source shortest path, negative weights.
 /// Kattis. <https://open.kattis.com/problems/shortestpath3>
+///
+/// ![Kattis, shortestpath3, sample](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_shortestpath3.svg)
 ///
 /// ```text
 /// 0 -> {1 (999), 3 (2)}

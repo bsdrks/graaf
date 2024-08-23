@@ -121,21 +121,22 @@ where
     ///
     /// * `digraph`: The digraph.
     /// * `sources`: The source vertices.
-    pub fn new(digraph: &'a D, sources: &[usize]) -> Self {
+    pub fn new<'b, T>(digraph: &'a D, sources: T) -> Self
+    where
+        T: IntoIterator<Item = &'b usize>,
+    {
         let mut dist = vec![usize::MAX; digraph.order()];
+        let mut heap = BinaryHeap::new();
 
         for &u in sources {
             dist[u] = 0;
+            heap.push((Reverse(0), Step { u: None, v: u }));
         }
 
         Self {
             digraph,
             dist,
-            heap: sources
-                .iter()
-                .copied()
-                .map(|v| (Reverse(0), Step { u: None, v }))
-                .collect(),
+            heap,
         }
     }
 

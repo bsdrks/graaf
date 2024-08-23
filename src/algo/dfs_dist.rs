@@ -33,7 +33,7 @@
 //! digraph.add_arc(2, 4);
 //! digraph.add_arc(3, 4);
 //!
-//! assert!(Dfs::new(&digraph, 0).eq([
+//! assert!(Dfs::new(&digraph, &[0]).eq([
 //!     Step { u: 0, dist: 0 },
 //!     Step { u: 2, dist: 1 },
 //!     Step { u: 4, dist: 2 },
@@ -47,10 +47,7 @@ use {
         Order,
         OutNeighbors,
     },
-    std::{
-        collections::BTreeSet,
-        vec,
-    },
+    std::collections::BTreeSet,
 };
 
 /// Depth-first search with distances.
@@ -83,7 +80,7 @@ use {
 /// digraph.add_arc(2, 4);
 /// digraph.add_arc(3, 4);
 ///
-/// assert!(Dfs::new(&digraph, 0).eq([
+/// assert!(Dfs::new(&digraph, &[0]).eq([
 ///     Step { u: 0, dist: 0 },
 ///     Step { u: 2, dist: 1 },
 ///     Step { u: 4, dist: 2 },
@@ -113,14 +110,15 @@ impl<'a, D> Dfs<'a, D> {
     /// # Arguments
     ///
     /// * `digraph`: The digraph.
-    /// * `source`: The source vertex.
-    pub fn new(digraph: &'a D, source: usize) -> Self
+    /// * `sources`: The source vertices.
+    pub fn new<'b, T>(digraph: &'a D, sources: T) -> Self
     where
         D: Order + OutNeighbors,
+        T: IntoIterator<Item = &'b usize>,
     {
         Self {
             digraph,
-            stack: vec![(source, 0)],
+            stack: sources.into_iter().map(|&u| (u, 0)).collect(),
             visited: BTreeSet::new(),
         }
     }
@@ -176,7 +174,7 @@ mod tests {
     fn iter_bang_jensen_196() {
         let digraph = bang_jensen_196();
 
-        assert!(Dfs::new(&digraph, 0).eq([
+        assert!(Dfs::new(&digraph, &[0]).eq([
             Step { u: 0, dist: 0 },
             Step { u: 7, dist: 1 },
             Step { u: 5, dist: 2 },
@@ -192,7 +190,7 @@ mod tests {
     fn iter_bang_jensen_34() {
         let digraph = bang_jensen_34();
 
-        assert!(Dfs::new(&digraph, 0)
+        assert!(Dfs::new(&digraph, &[0])
             .eq([Step { u: 0, dist: 0 }, Step { u: 4, dist: 1 }]));
     }
 
@@ -200,7 +198,7 @@ mod tests {
     fn iter_bang_jensen_94() {
         let digraph = bang_jensen_94();
 
-        assert!(Dfs::new(&digraph, 0).eq([
+        assert!(Dfs::new(&digraph, &[0]).eq([
             Step { u: 0, dist: 0 },
             Step { u: 2, dist: 1 },
             Step { u: 5, dist: 2 },
@@ -215,7 +213,7 @@ mod tests {
     fn iter_kattis_builddeps() {
         let digraph = kattis_builddeps();
 
-        assert!(Dfs::new(&digraph, 0).eq([
+        assert!(Dfs::new(&digraph, &[0]).eq([
             Step { u: 0, dist: 0 },
             Step { u: 4, dist: 1 },
             Step { u: 1, dist: 2 },
@@ -227,7 +225,7 @@ mod tests {
     fn iter_kattis_cantinaofbabel_1() {
         let digraph = kattis_cantinaofbabel_1();
 
-        assert!(Dfs::new(&digraph, 0).eq([
+        assert!(Dfs::new(&digraph, &[0]).eq([
             Step { u: 0, dist: 0 },
             Step { u: 1, dist: 1 },
             Step { u: 4, dist: 2 },
@@ -245,7 +243,7 @@ mod tests {
     fn iter_kattis_cantinaofbabel_2() {
         let digraph = kattis_cantinaofbabel_2();
 
-        assert!(Dfs::new(&digraph, 0).eq([
+        assert!(Dfs::new(&digraph, &[0]).eq([
             Step { u: 0, dist: 0 },
             Step { u: 1, dist: 1 },
             Step { u: 7, dist: 2 },
@@ -261,7 +259,7 @@ mod tests {
     fn iter_kattis_escapewallmaria_1() {
         let digraph = kattis_escapewallmaria_1();
 
-        assert!(Dfs::new(&digraph, 5).eq([
+        assert!(Dfs::new(&digraph, &[5]).eq([
             Step { u: 5, dist: 0 },
             Step { u: 9, dist: 1 },
             Step { u: 13, dist: 2 },
@@ -274,7 +272,7 @@ mod tests {
     fn iter_kattis_escapewallmaria_2() {
         let digraph = kattis_escapewallmaria_2();
 
-        assert!(Dfs::new(&digraph, 5).eq([
+        assert!(Dfs::new(&digraph, &[5]).eq([
             Step { u: 5, dist: 0 },
             Step { u: 9, dist: 1 },
             Step { u: 6, dist: 1 }
@@ -285,7 +283,7 @@ mod tests {
     fn iter_kattis_escapewallmaria_3() {
         let digraph = kattis_escapewallmaria_3();
 
-        assert!(Dfs::new(&digraph, 5).eq([
+        assert!(Dfs::new(&digraph, &[5]).eq([
             Step { u: 5, dist: 0 },
             Step { u: 9, dist: 1 },
             Step { u: 13, dist: 2 },
