@@ -9,7 +9,7 @@
 //!
 //! ## Shortest path
 //!
-//! The image highlights the shortest path between vertices 0 and 4.
+//! Red highlights the shortest path between vertices 0 and 4.
 //!
 //! ![Bellman-Ford-Moore](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_1.svg?)
 //!
@@ -85,7 +85,7 @@ use crate::op::{
 ///
 /// ## Shortest path
 ///
-/// The image highlights the shortest path between vertices 0 and 4.
+/// Red highlights the shortest path between vertices 0 and 4.
 ///
 /// ![Bellman-Ford-Moore](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_1.svg?)
 ///

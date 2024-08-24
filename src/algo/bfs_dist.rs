@@ -6,6 +6,12 @@
 //!
 //! # Examples
 //!
+//! ## Single source
+//!
+//! Red marks the path:
+//!
+//! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_1.svg?)
+//!
 //! ```
 //! use graaf::{
 //!     adjacency_list::Digraph,
@@ -17,27 +23,62 @@
 //!     op::AddArc,
 //! };
 //!
-//! // 0 -> {1}
-//! // 1 -> {2}
-//! // 2 -> {}
-//! // 3 -> {0}
-//!
-//! let mut digraph = Digraph::empty(4);
+//! let mut digraph = Digraph::empty(6);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(1, 2);
+//! digraph.add_arc(1, 4);
+//! digraph.add_arc(2, 5);
 //! digraph.add_arc(3, 0);
 //!
 //! assert!(Bfs::new(&digraph, &[0]).eq([
 //!     Step { u: 0, dist: 0 },
 //!     Step { u: 1, dist: 1 },
 //!     Step { u: 2, dist: 2 },
+//!     Step { u: 4, dist: 2 },
+//!     Step { u: 5, dist: 3 },
 //! ]));
+//! ```
 //!
-//! assert!(Bfs::new(&digraph, &[0]).distances().into_iter().eq([
-//!     (0, 0),
-//!     (1, 1),
-//!     (2, 2),
+//! ## Multiple sources
+//!
+//! Red marks the path starting at `3` and blue the path starting at `7`:
+//!
+//! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_multi_source_1.svg?)
+//!
+//! ```
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     algo::bfs_dist::{
+//!         Bfs,
+//!         Step,
+//!     },
+//!     gen::Empty,
+//!     op::AddArc,
+//! };
+//!
+//! let mut digraph = Digraph::empty(8);
+//!
+//! digraph.add_arc(0, 1);
+//! digraph.add_arc(1, 2);
+//! digraph.add_arc(1, 4);
+//! digraph.add_arc(2, 3);
+//! digraph.add_arc(2, 5);
+//! digraph.add_arc(2, 6);
+//! digraph.add_arc(3, 0);
+//! digraph.add_arc(6, 5);
+//! digraph.add_arc(6, 7);
+//! digraph.add_arc(7, 6);
+//!
+//! assert!(Bfs::new(&digraph, &[3, 7]).eq([
+//!     Step { u: 3, dist: 0 },
+//!     Step { u: 7, dist: 0 },
+//!     Step { u: 0, dist: 1 },
+//!     Step { u: 6, dist: 1 },
+//!     Step { u: 1, dist: 2 },
+//!     Step { u: 5, dist: 2 },
+//!     Step { u: 2, dist: 3 },
+//!     Step { u: 4, dist: 3 },
 //! ]));
 //! ```
 

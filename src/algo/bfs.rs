@@ -6,6 +6,10 @@
 //!
 //! # Examples
 //!
+//! ## Single source
+//!
+//! Red marks the path:
+//!
 //! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_1.svg?)
 //!
 //! ```
@@ -25,6 +29,36 @@
 //! digraph.add_arc(3, 0);
 //!
 //! assert!(Bfs::new(&digraph, &[0]).eq([0, 1, 2, 4, 5]));
+//! ```
+//!
+//! ## Multiple sources
+//!
+//! Red marks the path starting at `3` and blue the path starting at `7`:
+//!
+//! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_multi_source_1.svg?)
+//!
+//! ```
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     algo::bfs::Bfs,
+//!     gen::Empty,
+//!     op::AddArc,
+//! };
+//!
+//! let mut digraph = Digraph::empty(8);
+//!
+//! digraph.add_arc(0, 1);
+//! digraph.add_arc(1, 2);
+//! digraph.add_arc(1, 4);
+//! digraph.add_arc(2, 3);
+//! digraph.add_arc(2, 5);
+//! digraph.add_arc(2, 6);
+//! digraph.add_arc(3, 0);
+//! digraph.add_arc(6, 5);
+//! digraph.add_arc(6, 7);
+//! digraph.add_arc(7, 6);
+//!
+//! assert!(Bfs::new(&digraph, &[3, 7]).eq([3, 7, 0, 6, 1, 5, 2, 4]));
 //! ```
 
 use {
@@ -59,9 +93,37 @@ use {
 /// digraph.add_arc(2, 5);
 /// digraph.add_arc(3, 0);
 ///
-/// println!("{:?}", Bfs::new(&digraph, &[0]).collect::<Vec<_>>());
-///
 /// assert!(Bfs::new(&digraph, &[0]).eq([0, 1, 2, 4, 5]));
+/// ```
+///
+/// ## Multiple sources
+///
+/// Red marks the path starting at `3` and blue the path starting at `7`:
+///
+/// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_multi_source_1.svg?)
+///
+/// ```
+/// use graaf::{
+///     adjacency_list::Digraph,
+///     algo::bfs::Bfs,
+///     gen::Empty,
+///     op::AddArc,
+/// };
+///
+/// let mut digraph = Digraph::empty(8);
+///
+/// digraph.add_arc(0, 1);
+/// digraph.add_arc(1, 2);
+/// digraph.add_arc(1, 4);
+/// digraph.add_arc(2, 3);
+/// digraph.add_arc(2, 5);
+/// digraph.add_arc(2, 6);
+/// digraph.add_arc(3, 0);
+/// digraph.add_arc(6, 5);
+/// digraph.add_arc(6, 7);
+/// digraph.add_arc(7, 6);
+///
+/// assert!(Bfs::new(&digraph, &[3, 7]).eq([3, 7, 0, 6, 1, 5, 2, 4]));
 /// ```
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct Bfs<'a, D> {

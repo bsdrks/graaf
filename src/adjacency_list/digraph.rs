@@ -44,7 +44,7 @@
 //! ## Self-loop
 //!
 //! A self-loop is not allowed. The following pseudograph can not be
-//! represented:
+//! represented. The self-loop is marked in red:
 //!
 //! ![self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_self_loop.svg?)
 //!
@@ -69,7 +69,7 @@
 //! ## Parallel arcs
 //!
 //! Parallel arcs are not allowed. The following multigraph can not be
-//! represented:
+//! represented. The parallel arc is marked in red:
 //!
 //! ![parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_parallel_arcs.svg?)
 //!
@@ -6358,6 +6358,7 @@ mod tests {
     fn star_2_complement() {
         assert!(Digraph::star(2).complement().arcs().eq([]));
     }
+
     #[test]
     fn star_3() {
         assert!(Digraph::star(3).arcs().eq([(0, 1), (0, 2), (1, 0), (2, 0)]));

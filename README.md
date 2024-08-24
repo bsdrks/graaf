@@ -17,8 +17,6 @@ Rust-powered directed graphs.
   - [Tarjan](#tarjan)
   - [Predecessor Tree](#predecessor-tree)
   - [Distance Matrix](#distance-matrix)
-- [Naming Conventions](#naming-conventions)
-- [Project Goals](#project-goals)
 - [Changelog](#changelog)
 - [License](#license)
 - [Contact](#contact)
@@ -30,7 +28,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.83.0"
+graaf = "0.83.1"
 ```
 
 ## Digraph Types
@@ -227,26 +225,6 @@ A [`DistanceMatrix`](https://docs.rs/graaf/latest/graaf/algo/types/distance_matr
 [`algo`]: https://docs.rs/graaf/latest/graaf/algo/index.html
 [`gen`]: https://docs.rs/graaf/latest/graaf/gen/index.html
 [`op`]: https://docs.rs/graaf/latest/graaf/op/index.html
-
-## Naming Conventions
-
-- `s` denotes a source vertex.
-- `t` denotes a target vertex.
-- `u` denotes a tail vertex or the first vertex in scope.
-- `v` denotes a head vertex or the second vertex in scope.
-- `w` denotes the weight of an arc.
-- `x` denotes a tail vertex or the third vertex in scope.
-- `y` denotes a head vertex or the fourth vertex in scope.
-
-## Project Goals
-
-- A flexible API for digraph operations
-- A comprehensive set of algorithms
-- Generators for common digraphs
-- Competitive performance
-- Complete documentation
-- Extensive property tests
-- Complete unit test coverage
 
 ## Changelog
 

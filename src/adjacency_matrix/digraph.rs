@@ -6275,6 +6275,7 @@ mod tests {
     fn star_1_complement() {
         assert!(Digraph::star(1).complement().arcs().eq([]));
     }
+
     #[test]
     fn star_2() {
         assert!(Digraph::star(2).arcs().eq([(0, 1), (1, 0)]));
