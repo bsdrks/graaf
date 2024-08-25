@@ -28,7 +28,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.83.2"
+graaf = "0.83.3"
 ```
 
 ## Digraph Types
@@ -117,10 +117,10 @@ A breadth-first search explores the vertices of an unweighted digraph in order o
 
 - [`bfs::Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs/struct.Bfs.html) iterates over the vertices.
 - [`bfs_dist::Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs_dist/struct.Bfs.html) iterates over the vertices and their distance from the source.
-- [`bfs_successors::Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html) iterates over the vertices and their successors.
-- [`bfs_dist::Bfs::distances`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html#method.distances) finds the shortest distances.
-- [`bfs_successors::Bfs::predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html#method.predecessors) finds the predecessors.
-- [`bfs_successors::Bfs::shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs_successors/struct.Bfs.html#method.shortest_path) finds the shortest path.
+- [`bfs_pred::Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.Bfs.html) iterates over the vertices and their successors.
+- [`bfs_dist::Bfs::distances`](https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.Bfs.html#method.distances) finds the shortest distances.
+- [`bfs_pred::Bfs::predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.Bfs.html#method.predecessors) finds the predecessors.
+- [`bfs_pred::Bfs::shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.Bfs.html#method.shortest_path) finds the shortest path.
 
 ### Depth-First Search (DFS)
 

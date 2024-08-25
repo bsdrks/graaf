@@ -27,6 +27,12 @@
 - Test multi-source DFS.
 - Move goals to `GOALS.md`.
 
+## [0.83.3] - 2024-08-25
+
+Fixed
+
+- Fix links to `bfs_pred` documentation.
+
 ## [0.83.2] - 2024-08-25
 
 Changed
@@ -204,13 +210,13 @@ Added
 - Add the `dfs_depth::Dfs` iterator.
 - Add the `bfs::Bfs` iterator.
 - Add the `bfs_depth::Bfs` iterator.
-- Add the `bfs_successors::Bfs` iterator.
+- Add the `bfs_pred::Bfs` iterator.
 
 Changed
 
 - Breaking: move `Bfs::distances` to `bfs_depth::Bfs::distances`.
-- Breaking: move `Bfs::predecessors` to `bfs_successors::Bfs::predecessors`.
-- Breaking: move `Bfs::shortest_path` to `bfs_successors::Bfs::shortest_path`.
+- Breaking: move `Bfs::predecessors` to `bfs_pred::Bfs::predecessors`.
+- Breaking: move `Bfs::shortest_path` to `bfs_pred::Bfs::shortest_path`.
 
 Removed
 
