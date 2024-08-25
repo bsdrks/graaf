@@ -1,16 +1,16 @@
-//! An adjacency list representation of an unweighted digraph
+//! An edge list representation of an unweighted digraph
 //!
-//! # Examples
+//! # Example
 //!
 //! ## Valid digraph
 //!
 //! A valid digraph of order 5 and size 8.
 //!
-//! ![digraph of order 5 and size 8](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_1.svg?)
+//! ![digraph of order 5 and size 8](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/edge_list_1.svg?)
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
+//!     edge_list::Digraph,
 //!     gen::Empty,
 //!     op::{
 //!         AddArc,
@@ -46,13 +46,13 @@
 //! A self-loop is not allowed. The following pseudograph can not be
 //! represented. The self-loop is marked in red.
 //!
-//! ![self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_self_loop.svg?)
+//! ![self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/edge_list_self_loop.svg?)
 //!
 //! Adding a self-loop will panic:
 //!
 //! ```should_panic
 //! use graaf::{
-//!     adjacency_list::Digraph,
+//!     edge_list::Digraph,
 //!     gen::Empty,
 //!     op::AddArc,
 //! };
@@ -71,13 +71,13 @@
 //! Parallel arcs are not allowed. The following multigraph can not be
 //! represented. The parallel arc is marked in red:
 //!
-//! ![parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_parallel_arcs.svg?)
+//! ![parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/edge_list_parallel_arcs.svg?)
 //!
 //! Adding a parallel arc does not change the digraph:
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
+//!     edge_list::Digraph,
 //!     gen::Empty,
 //!     op::{
 //!         AddArc,
@@ -101,7 +101,13 @@
 
 use {
     crate::{
-        gen::Empty,
+        adjacency_list,
+        adjacency_matrix,
+        gen::{
+            Biclique,
+            Circuit,
+            Empty,
+        },
         op::{
             AddArc,
             ArcWeight,
@@ -119,27 +125,23 @@ use {
             Size,
             Vertices,
         },
-        r#gen::{
-            Biclique,
-            Circuit,
-        },
     },
     std::collections::BTreeSet,
 };
 
-/// An adjacency list representation of an unweighted digraph.
+/// An edge list representation of an unweighted digraph
 ///
-/// # Examples
+/// # Example
 ///
 /// ## Valid digraph
 ///
 /// A valid digraph of order 5 and size 8.
 ///
-/// ![digraph of order 5 and size 8](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_1.svg?)
+/// ![digraph of order 5 and size 8](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/edge_list_1.svg?)
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
+///     edge_list::Digraph,
 ///     gen::Empty,
 ///     op::{
 ///         AddArc,
@@ -173,15 +175,15 @@ use {
 /// ## Self-loop
 ///
 /// A self-loop is not allowed. The following pseudograph can not be
-/// represented.
+/// represented. The self-loop is marked in red.
 ///
-/// ![self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_self_loop.svg?)
+/// ![self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/edge_list_self_loop.svg?)
 ///
 /// Adding a self-loop will panic:
 ///
 /// ```should_panic
 /// use graaf::{
-///     adjacency_list::Digraph,
+///     edge_list::Digraph,
 ///     gen::Empty,
 ///     op::AddArc,
 /// };
@@ -198,15 +200,15 @@ use {
 /// ## Parallel arcs
 ///
 /// Parallel arcs are not allowed. The following multigraph can not be
-/// represented:
+/// represented. The parallel arc is marked in red:
 ///
-/// ![parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_parallel_arcs.svg?)
+/// ![parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/edge_list_parallel_arcs.svg?)
 ///
-/// Adding a parallel arc does not change the digraph.
+/// Adding a parallel arc does not change the digraph:
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
+///     edge_list::Digraph,
 ///     gen::Empty,
 ///     op::{
 ///         AddArc,
@@ -229,7 +231,8 @@ use {
 /// ```
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct Digraph {
-    arcs: Vec<BTreeSet<usize>>,
+    arcs: BTreeSet<(usize, usize)>,
+    order: usize,
 }
 
 impl AddArc for Digraph {
@@ -242,12 +245,10 @@ impl AddArc for Digraph {
         // Self-loops are not allowed.
         assert_ne!(u, v, "u = {u} equals v = {v}");
 
-        let order = self.order();
+        assert!(u < self.order, "u = {u} is out of bounds");
+        assert!(v < self.order, "v = {v} is out of bounds");
 
-        assert!(u < order, "u = {u} is out of bounds");
-        assert!(v < order, "v = {v} is out of bounds");
-
-        let _ = self.arcs[u].insert(v);
+        let _ = self.arcs.insert((u, v));
     }
 }
 
@@ -259,10 +260,7 @@ impl ArcWeight<usize> for Digraph {
 
 impl Arcs for Digraph {
     fn arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.arcs
-            .iter()
-            .enumerate()
-            .flat_map(|(u, set)| set.iter().map(move |&v| (u, v)))
+        self.arcs.iter().copied()
     }
 }
 
@@ -273,7 +271,7 @@ impl ArcsWeighted<usize> for Digraph {
     where
         usize: 'a,
     {
-        self.arcs().map(move |(u, v)| (u, v, &1))
+        self.arcs.iter().map(|&(u, v)| (u, v, &1))
     }
 }
 
@@ -287,16 +285,13 @@ impl Biclique for Digraph {
         assert!(n > 0, "n = {n} must be greater than zero");
 
         let order = m + n;
-        let clique_1 = (0..m).collect::<BTreeSet<_>>();
-        let clique_2 = (m..order).collect::<BTreeSet<_>>();
         let mut digraph = Self::empty(order);
 
         for u in 0..m {
-            digraph.arcs[u].clone_from(&clique_2);
-        }
-
-        for u in m..order {
-            digraph.arcs[u].clone_from(&clique_1);
+            for v in m..order {
+                digraph.add_arc(u, v);
+                digraph.add_arc(v, u);
+            }
         }
 
         digraph
@@ -308,29 +303,27 @@ impl Circuit for Digraph {
     ///
     /// Panics if `order` is zero.
     fn circuit(order: usize) -> Self {
-        assert!(order > 0, "a digraph must have at least one vertex");
+        let mut digraph = Self::empty(order);
 
         if order == 1 {
-            return Self::trivial();
+            return digraph;
         }
 
-        Self {
-            arcs: (0..order)
-                .map(|u| BTreeSet::from([(u + 1) % order]))
-                .collect::<Vec<_>>(),
+        for u in 0..order - 1 {
+            digraph.add_arc(u, u + 1);
         }
+
+        digraph.add_arc(order - 1, 0);
+
+        digraph
     }
 }
 
 impl Converse for Digraph {
-    /// # Panics
-    ///
-    /// Panics if the order of the digraph is zero.
     fn converse(&self) -> Self {
-        let order = self.order();
-        let mut converse = Self::empty(order);
+        let mut converse = Self::empty(self.order);
 
-        for (u, v) in self.arcs() {
+        for &(u, v) in &self.arcs {
             converse.add_arc(v, u);
         }
 
@@ -341,77 +334,113 @@ impl Converse for Digraph {
 impl Empty for Digraph {
     /// # Panics
     ///
-    /// Panics if `order` is zero.
+    /// * Panics if `order` is zero. A digraph must have at least one vertex.
     fn empty(order: usize) -> Self {
         assert!(order > 0, "a digraph must have at least one vertex");
 
-        Self::from(vec![BTreeSet::new(); order])
+        Self {
+            arcs: BTreeSet::new(),
+            order,
+        }
     }
 }
 
-impl From<Vec<BTreeSet<usize>>> for Digraph {
-    /// # Panics
-    ///
-    /// * Panics if, for any arc `u -> v` in `arcs`, `u` equals `v`.
-    /// * Panics if, for any arc `u -> v` in `arcs`, `v` is out of bounds.
-    fn from(arcs: Vec<BTreeSet<usize>>) -> Self {
-        let digraph = Self { arcs };
+impl From<BTreeSet<(usize, usize)>> for Digraph {
+    fn from(arcs: BTreeSet<(usize, usize)>) -> Self {
+        let mut order = 0;
 
-        for (u, v) in digraph.arcs() {
+        for &(u, v) in &arcs {
             assert_ne!(u, v, "u = {u} equals v = {v}");
-            assert!(v < digraph.order(), "v = {v} is out of bounds");
+
+            order = order.max(u).max(v);
         }
 
-        digraph
+        Self {
+            arcs,
+            order: order + 1,
+        }
+    }
+}
+
+impl From<adjacency_list::Digraph> for Digraph {
+    fn from(adj_list: adjacency_list::Digraph) -> Self {
+        let order = adj_list.order();
+        let mut edge_list = Self::empty(order);
+
+        for (u, v) in adj_list.arcs() {
+            edge_list.add_arc(u, v);
+        }
+
+        edge_list
+    }
+}
+
+impl From<adjacency_matrix::Digraph> for Digraph {
+    fn from(adj_matrix: adjacency_matrix::Digraph) -> Self {
+        let order = adj_matrix.order();
+        let mut edge_list = Self::empty(order);
+
+        for (u, v) in adj_matrix.arcs() {
+            edge_list.add_arc(u, v);
+        }
+
+        edge_list
     }
 }
 
 impl HasArc for Digraph {
     fn has_arc(&self, u: usize, v: usize) -> bool {
-        self.arcs.get(u).map_or(false, |set| set.contains(&v))
+        self.arcs.contains(&(u, v))
     }
 }
 
 impl Indegree for Digraph {
+    /// Warning: The time complexity of this implementation is *O*(*a*).
+    ///
     /// # Panics
     ///
     /// Panics if `v` is out of bounds.
     fn indegree(&self, v: usize) -> usize {
-        assert!(v < self.order(), "v = {v} is out of bounds");
+        assert!(v < self.order, "v = {v} is out of bounds");
 
-        self.arcs.iter().filter(|set| set.contains(&v)).count()
+        self.arcs.iter().filter(|(_, y)| v == *y).count()
     }
 }
 
 impl IsSimple for Digraph {
+    // We only check for self-loops. Parallel arcs can not exist in this
+    // representation.
     fn is_simple(&self) -> bool {
-        // We only check for self-loops. Parallel arcs can not exist in this
-        // representation.
-        self.arcs
-            .iter()
-            .enumerate()
-            .all(|(u, set)| !set.contains(&u))
+        self.vertices().all(|u| !self.has_arc(u, u))
     }
 }
 
 impl Order for Digraph {
     fn order(&self) -> usize {
-        self.arcs.len()
+        self.order
     }
 }
 
 impl OutNeighbors for Digraph {
+    /// Warning: The time complexity of this implementation is *O*(*a*)
+    /// compared to *O*(1) for `adjacency_list` and `adjacency_list_weighted`.
+    ///
     /// # Panics
     ///
     /// Panics if `u` is out of bounds.
     fn out_neighbors(&self, u: usize) -> impl Iterator<Item = usize> {
-        assert!(u < self.order(), "u = {u} is out of bounds");
+        assert!(u < self.order, "u = {u} is out of bounds");
 
-        self.arcs[u].iter().copied()
+        self.arcs
+            .iter()
+            .filter_map(move |&(x, y)| (x == u).then_some(y))
     }
 }
 
 impl OutNeighborsWeighted<usize> for Digraph {
+    /// Warning: The time complexity of this implementation is *O*(*a*)
+    /// compared to *O*(1) for `adjacency_list` and `adjacency_list_weighted`.
+    ///
     /// # Panics
     ///
     /// Panics if `u` is out of bounds.
@@ -422,36 +451,44 @@ impl OutNeighborsWeighted<usize> for Digraph {
     where
         usize: 'a,
     {
-        self.out_neighbors(u).map(move |v| (v, &1))
+        assert!(u < self.order, "u = {u} is out of bounds");
+
+        self.arcs
+            .iter()
+            .filter_map(move |&(x, y)| (x == u).then_some((y, &1)))
     }
 }
 
 impl Outdegree for Digraph {
+    /// Warning: The time complexity of this implementation is *O*(*a*)
+    /// compared to *O*(1) for `adjacency_list` and
+    /// `adjacency_list_weighted`.
+    ///
     /// # Panics
     ///
     /// Panics if `u` is out of bounds.
     fn outdegree(&self, u: usize) -> usize {
-        assert!(u < self.order(), "u = {u} is out of bounds");
+        assert!(u < self.order, "u = {u} is out of bounds");
 
-        self.arcs[u].len()
+        self.arcs.iter().filter(|&(x, _)| u == *x).count()
     }
 }
 
 impl RemoveArc for Digraph {
     fn remove_arc(&mut self, u: usize, v: usize) -> bool {
-        self.arcs.get_mut(u).map_or(false, |set| set.remove(&v))
+        self.arcs.remove(&(u, v))
     }
 }
 
 impl Size for Digraph {
     fn size(&self) -> usize {
-        self.arcs.iter().map(BTreeSet::len).sum()
+        self.arcs.len()
     }
 }
 
 impl Vertices for Digraph {
     fn vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.order()
+        0..self.order
     }
 }
 
@@ -3633,28 +3670,17 @@ mod tests {
     }
 
     #[test]
-    fn from_vec() {
-        let digraph = Digraph::from(vec![
-            BTreeSet::from([1]),
-            BTreeSet::from([2]),
-            BTreeSet::new(),
-        ]);
+    fn from_btree_set() {
+        let digraph = Digraph::from(BTreeSet::from([(0, 1), (1, 2)]));
 
         assert_eq!(digraph.order(), 3);
         assert!(digraph.arcs().eq([(0, 1), (1, 2)]));
     }
 
     #[test]
-    #[should_panic(expected = "v = 1 is out of bounds")]
-    fn from_vec_out_of_bounds_v() {
-        let vec = vec![BTreeSet::from([1])];
-        let _ = Digraph::from(vec);
-    }
-
-    #[test]
     #[should_panic(expected = "u = 0 equals v = 0")]
     fn from_vec_u_equals_v() {
-        let vec = vec![BTreeSet::from([0])];
+        let vec = BTreeSet::from([(0, 0)]);
         let _ = Digraph::from(vec);
     }
 

@@ -21,18 +21,18 @@
 //!
 //! # Digraph Types
 //!
-//! Graaf provides directed graphs representations.
+//! Graaf provides directed graphs representations. These types eagerly
+//! implement digraph [operations](#operations) and [algorithms](#algorithms).
 //!
 //! - [`adjacency_list`] represents unweighted sparse digraphs.
 //! - [`adjacency_matrix`] represents unweighted dense digraphs.
 //! - [`adjacency_list_weighted`] represents arc-weighted sparse digraphs.
-//!
-//! These types eagerly implement digraph [operations](#operations) and
-//! [algorithms](#algorithms).
+//! - [`edge_list`] represents unweighted sparse digraphs.
 //!
 //! # Creating Digraphs
 //!
-//! The [`gen`] module provides digraph generators.
+//! The [`gen`] module provides digraph generators. Each digraph representation
+//! can be constructed with the operations in the [`op`] module.
 //!
 //! - [`Biclique`](gen::Biclique) generates a complete bipartite digraph.
 //! - [`Circuit`](gen::Circuit) generates a circuit digraph.
@@ -44,9 +44,6 @@
 //!   tournament.
 //! - [`Star`](gen::Star) generates a star digraph.
 //! - [`Path`](gen::Path) generates a path digraph.
-//!
-//! Each digraph representation can be constructed with the operations in the
-//! [`op`] module.
 //!
 //! # Operations
 //!
@@ -257,6 +254,7 @@ pub mod adjacency_list;
 pub mod adjacency_list_weighted;
 pub mod adjacency_matrix;
 pub mod algo;
+pub mod edge_list;
 pub mod gen;
 pub mod op;
 #[cfg(test)]

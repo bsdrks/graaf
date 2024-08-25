@@ -284,6 +284,8 @@ impl HasArc for Digraph {
 }
 
 impl Indegree for Digraph {
+    /// Warning: The time complexity of this implementation is *O*(*v*).
+    ///
     /// # Panics
     ///
     /// Panics if `v` is out of bounds.
@@ -309,6 +311,8 @@ impl Order for Digraph {
 }
 
 impl OutNeighbors for Digraph {
+    /// Warning: The time complexity of this implementation is *O*(*v*).
+    ///
     /// # Panics
     ///
     /// Panics if `u` is out of bounds.
@@ -320,6 +324,8 @@ impl OutNeighbors for Digraph {
 }
 
 impl OutNeighborsWeighted<usize> for Digraph {
+    /// Warning: The time complexity of this implementation is *O*(*v*).
+    ///
     /// # Panics
     ///
     /// Panics if `u` is out of bounds.
@@ -335,6 +341,8 @@ impl OutNeighborsWeighted<usize> for Digraph {
 }
 
 impl Outdegree for Digraph {
+    /// Warning: The time complexity of this implementation is *O*(*v*).
+    ///
     /// # Panics
     ///
     /// Panics if `u` is out of bounds.
@@ -3029,6 +3037,12 @@ mod tests {
             (5, 1),
             (5, 2)
         ]));
+    }
+
+    #[test]
+    #[should_panic(expected = "a digraph must have at least one vertex")]
+    fn circuit_0() {
+        let _ = Digraph::circuit(0);
     }
 
     #[test]

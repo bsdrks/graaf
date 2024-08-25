@@ -27,6 +27,48 @@
 - Test multi-source DFS.
 - Move goals to `GOALS.md`.
 
+## [0.84.0] - 2024-08-25
+
+Added
+
+- Add module `edge_list::digraph`.
+- Add module `edge_list::fixture`.
+- Add module `edge_list`.
+- Add struct `edge_list::Digraph`.
+- Add time complexity warnings to `Indegree::indegree` for `adjacency_matrix`.
+- Add time complexity warnings to `OutNeighbors::out_neighbors` for `adjacency_matrix`.
+- Add time complexity warnings to `OutNeighborsWeighted::out_neighbors_weighted` for `adjacency_matrix`.
+- Add time complexity warnings to `Outdegree::outdegree` for `adjacency_matrix`.
+- Add unit test `circuit_0` for `adjacency_list`.
+- Add unit test `circuit_0` for `adjacency_matrix`.
+- Implement `AddArc` for `edge_list::Digraph`.
+- Implement `AddWeight<usize>` for `edge_list::Digraph`.
+- Implement `ArcsWeighted` for `edge_list::Digraph`.
+- Implement `Arcs` for `edge_list::Digraph`.
+- Implement `Biclique` for `edge_list::Digraph`.
+- Implement `Circuit` for `edge_list::Digraph`.
+- Implement `Converse` for `edge_list::Digraph`.
+- Implement `Empty` for `edge_list::Digraph`.
+- Implement `Empty` for `edge_list::Digraph`.
+- Implement `From<BTreeSet<(usize, usize)>>` for `edge_list::Digraph`.
+- Implement `From<adjacency_list::Digraph>` for `edge_list::Digraph`.
+- Implement `From<adjacency_matrix::Digraph>` for `edge_list::Digraph`.
+- Implement `IsSimple` for `edge_list::Digraph`.
+- Implement `Order` for `edge_list::Digraph`.
+- Implement `OutNeighborsWeighted<usize>` for `edge_list::Digraph`.
+- Implement `OutNeighbors` for `edge_list::Digraph`.
+- Implement `Outdegree` for `edge_list::Digraph`.
+- Implement `RemoveArc` for `edge_list::Digraph`.
+- Implement `Size` for `edge_list::Digraph`.
+- Implement `Vertices` for `edge_list::Digraph`.
+
+Changed
+
+- Breaking: assert that `order > 0` in `Circuit::circuit` for `adjacency_list`.
+- Misc. improvements to `adjacency_list` documentation.
+- Misc. improvements to `lib.rs` documentation.
+- Misc. improvements to `README.md`.
+
 ## [0.83.3] - 2024-08-25
 
 Fixed
