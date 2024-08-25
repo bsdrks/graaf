@@ -1,4 +1,4 @@
-//! Unweighted adjacency matrix fixtures for testing and benchmarking
+//! Unweighted edge list fixtures for testing and benchmarking
 //!
 //! [`bang_jensen_196`]:
 //!
