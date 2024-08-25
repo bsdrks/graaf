@@ -62,6 +62,7 @@
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(1, 2);
 //! digraph.add_arc(3, 2);
+//!
 //! // This will panic.
 //! digraph.add_arc(2, 2);
 //! ```
@@ -191,6 +192,7 @@ use {
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(1, 2);
 /// digraph.add_arc(3, 2);
+///
 /// // This will panic.
 /// digraph.add_arc(2, 2);
 /// ```

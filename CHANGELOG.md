@@ -65,9 +65,10 @@ Added
 Changed
 
 - Breaking: assert that `order > 0` in `Circuit::circuit` for `adjacency_list`.
-- Misc. improvements to `adjacency_list` documentation.
-- Misc. improvements to `lib.rs` documentation.
 - Misc. improvements to `README.md`.
+- Misc. improvements to `adjacency_list` documentation.
+- Misc. improvements to `adjacency_matrix` documentation.
+- Misc. improvements to `lib.rs` documentation.
 
 ## [0.83.3] - 2024-08-25
 

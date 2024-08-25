@@ -1,11 +1,21 @@
-//! An adjacency matrix representation for unweighted digraphs
+//! An adjacency matrix representation of an unweighted digraph
 //!
 //! An adjacency matrix is a symmetric binary matrix where a value of `1` at
 //! row `u` and column `v` indicates an arc from vertex `u` to vertex `v`. The
 //! matrix is stored as a bit vector, and is suited for dense digraphs with a
 //! small number of vertices.
 //!
-//! # Examples
+//! # Example
+//!
+//! ## Valid digraph
+//!
+//! A valid digraph of order 5 and size 8.
+//!
+//! ![digraph of order 5 and size 8](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_1.svg?)
+//!
+//! Represented as a matrix.
+//!
+//! ![the matrix for the above digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_matrix_1.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -17,17 +27,86 @@
 //!     },
 //! };
 //!
-//! // 0 -> {1, 2}
-//! // 1 -> {0}
-//! // 2 -> {}
-//!
-//! let mut digraph = Digraph::empty(3);
+//! let mut digraph = Digraph::empty(5);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(0, 2);
 //! digraph.add_arc(1, 0);
+//! digraph.add_arc(1, 3);
+//! digraph.add_arc(1, 4);
+//! digraph.add_arc(3, 0);
+//! digraph.add_arc(3, 2);
+//! digraph.add_arc(4, 1);
 //!
-//! assert!(digraph.arcs().eq([(0, 1), (0, 2), (1, 0)]));
+//! assert!(digraph.arcs().eq([
+//!     (0, 1),
+//!     (0, 2),
+//!     (1, 0),
+//!     (1, 3),
+//!     (1, 4),
+//!     (3, 0),
+//!     (3, 2),
+//!     (4, 1)
+//! ]));
+//! ```
+//!
+//! ## Self-loop
+//!
+//! A self-loop is not allowed. The following pseudograph can not be
+//! represented. The self-loop is marked in red.
+//!
+//! ![self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_self_loop.svg?)
+//!
+//! Adding a self-loop will panic:
+//!
+//! ```should_panic
+//! use graaf::{
+//!     adjacency_matrix::Digraph,
+//!     gen::Empty,
+//!     op::AddArc,
+//! };
+//!
+//! let mut digraph = Digraph::empty(4);
+//!
+//! digraph.add_arc(0, 1);
+//! digraph.add_arc(1, 2);
+//! digraph.add_arc(3, 2);
+//!
+//! // This will panic.
+//! digraph.add_arc(2, 2);
+//! ```
+//!
+//! ## Parallel arcs
+//!
+//! Parallel arcs are not allowed. The following multigraph can not be
+//! represented. The parallel arc is marked in red:
+//!
+//! ![parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_parallel_arcs.svg?)
+//!
+//! Adding a parallel arc does not change the digraph:
+//!
+//! ```
+//! use graaf::{
+//!     adjacency_matrix::Digraph,
+//!     gen::Empty,
+//!     op::{
+//!         AddArc,
+//!         Arcs,
+//!     },
+//! };
+//!
+//! let mut digraph = Digraph::empty(4);
+//!
+//! digraph.add_arc(0, 1);
+//! digraph.add_arc(1, 2);
+//! digraph.add_arc(3, 2);
+//!
+//! assert!(digraph.arcs().eq([(0, 1), (1, 2), (3, 2),]));
+//!
+//! // This does not change the digraph.
+//! digraph.add_arc(0, 1);
+//!
+//! assert!(digraph.arcs().eq([(0, 1), (1, 2), (3, 2),]));
 //! ```
 
 use {
@@ -60,6 +139,110 @@ use {
 };
 
 /// An adjacency matrix representation of an unweighted digraph.
+///
+/// # Example
+///
+/// ## Valid digraph
+///
+/// A valid digraph of order 5 and size 8.
+///
+/// ![digraph of order 5 and size 8](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_1.svg?)
+///
+/// Represented as a matrix.
+///
+/// ![the matrix for the above digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_matrix_1.svg?)
+///
+/// ```
+/// use graaf::{
+///     adjacency_matrix::Digraph,
+///     gen::Empty,
+///     op::{
+///         AddArc,
+///         Arcs,
+///     },
+/// };
+///
+/// let mut digraph = Digraph::empty(5);
+///
+/// digraph.add_arc(0, 1);
+/// digraph.add_arc(0, 2);
+/// digraph.add_arc(1, 0);
+/// digraph.add_arc(1, 3);
+/// digraph.add_arc(1, 4);
+/// digraph.add_arc(3, 0);
+/// digraph.add_arc(3, 2);
+/// digraph.add_arc(4, 1);
+///
+/// assert!(digraph.arcs().eq([
+///     (0, 1),
+///     (0, 2),
+///     (1, 0),
+///     (1, 3),
+///     (1, 4),
+///     (3, 0),
+///     (3, 2),
+///     (4, 1)
+/// ]));
+/// ```
+///
+/// ## Self-loop
+///
+/// A self-loop is not allowed. The following pseudograph can not be
+/// represented. The self-loop is marked in red.
+///
+/// ![self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_self_loop.svg?)
+///
+/// Adding a self-loop will panic:
+///
+/// ```should_panic
+/// use graaf::{
+///     adjacency_matrix::Digraph,
+///     gen::Empty,
+///     op::AddArc,
+/// };
+///
+/// let mut digraph = Digraph::empty(4);
+///
+/// digraph.add_arc(0, 1);
+/// digraph.add_arc(1, 2);
+/// digraph.add_arc(3, 2);
+///
+/// // This will panic.
+/// digraph.add_arc(2, 2);
+/// ```
+///
+/// ## Parallel arcs
+///
+/// Parallel arcs are not allowed. The following multigraph can not be
+/// represented. The parallel arc is marked in red:
+///
+/// ![parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_parallel_arcs.svg?)
+///
+/// Adding a parallel arc does not change the digraph:
+///
+/// ```
+/// use graaf::{
+///     adjacency_matrix::Digraph,
+///     gen::Empty,
+///     op::{
+///         AddArc,
+///         Arcs,
+///     },
+/// };
+///
+/// let mut digraph = Digraph::empty(4);
+///
+/// digraph.add_arc(0, 1);
+/// digraph.add_arc(1, 2);
+/// digraph.add_arc(3, 2);
+///
+/// assert!(digraph.arcs().eq([(0, 1), (1, 2), (3, 2),]));
+///
+/// // This does not change the digraph.
+/// digraph.add_arc(0, 1);
+///
+/// assert!(digraph.arcs().eq([(0, 1), (1, 2), (3, 2),]));
+/// ```
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct Digraph {
     blocks: Vec<usize>,
