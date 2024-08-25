@@ -9,7 +9,7 @@
 //!
 //! ## Shortest path
 //!
-//! Red highlights the shortest path between vertices 0 and 4.
+//! Red marks the shortest path between vertices `0` and `4`.
 //!
 //! ![Bellman-Ford-Moore](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_1.svg?)
 //!
@@ -41,7 +41,7 @@
 //!
 //! ## Negative cycle
 //!
-//! There is no shortest path from vertex 0 to vertex 2.
+//! There is no shortest path between  vertices `0` and `2`.
 //!
 //! ![Bellman-Ford-Moore](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_2.svg)
 //!
@@ -85,7 +85,7 @@ use crate::op::{
 ///
 /// ## Shortest path
 ///
-/// Red highlights the shortest path between vertices 0 and 4.
+/// Red marks the shortest path between vertices `0` and `4`.
 ///
 /// ![Bellman-Ford-Moore](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_1.svg?)
 ///
@@ -117,7 +117,7 @@ use crate::op::{
 ///
 /// ## Negative cycle
 ///
-/// There is no shortest path from vertex 0 to vertex 2.
+/// There is no shortest path between vertices `0` and `2`.
 ///
 /// ![Bellman-Ford-Moore](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_2.svg)
 ///

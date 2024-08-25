@@ -8,7 +8,8 @@
 //!
 //! ## Single source
 //!
-//! Red marks the path:
+//! Red marks the path starting at vertex `0` and `t` denotes the iteration
+//! index.
 //!
 //! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_1.svg?)
 //!
@@ -33,7 +34,8 @@
 //!
 //! ## Multiple sources
 //!
-//! Red marks the path starting at `3` and blue the path starting at `7`:
+//! Red marks the path starting at vertex `3` and blue the path starting at
+//! vertex `7`.
 //!
 //! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_multi_source_1.svg?)
 //!
@@ -73,7 +75,8 @@ use {
 ///
 /// # Examples
 ///
-/// Red marks the path:
+/// Red marks the path starting at vertex `0` and `t` denotes the iteration
+/// index.
 ///
 /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_1.svg?)
 ///
@@ -98,7 +101,8 @@ use {
 ///
 /// ## Multiple sources
 ///
-/// Red marks the path starting at `3` and blue the path starting at `7`:
+/// Red marks the path starting at vertex `3` and blue the path starting at
+/// vertex `7`.
 ///
 /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_multi_source_1.svg?)
 ///

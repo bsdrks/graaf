@@ -27,12 +27,19 @@
 - Test multi-source DFS.
 - Move goals to `GOALS.md`.
 
+## [0.83.2] - 2024-08-25
+
+Changed
+
+- Add images to `bfs_pred` documentation.
+- Improve documentation images.
+
 ## [0.83.1] - 2024-08-24
 
 Changed
 
 - Add images to `bfs_dist` documentation.
-- Improve documentation example image consistency.
+- Improve documentation image consistency.
 - Split `README.md` into `README.md`, `GOALS.md`, and `NAMING.md`.
 
 ## [0.83.0] - 2024-08-23

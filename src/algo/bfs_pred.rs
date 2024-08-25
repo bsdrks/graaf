@@ -6,6 +6,14 @@
 //!
 //! # Examples
 //!
+//! ## Single source
+//!
+//! Red marks the path starting at vertex `0`, with `p` denoting the
+//! predecessor. Note that, in the digraph, vertex `3` preceeds vertex `0`, but
+//! the BFS algorithm starts at vertex `0`.
+//!
+//! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_1.svg?)
+//!
 //! ```
 //! use graaf::{
 //!     adjacency_list::Digraph,
@@ -17,28 +25,63 @@
 //!     op::AddArc,
 //! };
 //!
-//! // 0 -> {1}
-//! // 1 -> {2}
-//! // 2 -> {}
-//! // 3 -> {0}
-//!
-//! let mut digraph = Digraph::empty(4);
+//! let mut digraph = Digraph::empty(6);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(1, 2);
+//! digraph.add_arc(1, 4);
+//! digraph.add_arc(2, 5);
 //! digraph.add_arc(3, 0);
 //!
 //! assert!(Bfs::new(&digraph, &[0]).eq([
 //!     Step { u: None, v: 0 },
 //!     Step { u: Some(0), v: 1 },
 //!     Step { u: Some(1), v: 2 },
+//!     Step { u: Some(1), v: 4 },
+//!     Step { u: Some(2), v: 5 },
 //! ]));
+//! ```
 //!
-//! assert!(Bfs::new(&digraph, &[0]).predecessors().into_iter().eq([
-//!     None,
-//!     Some(0),
-//!     Some(1),
-//!     None
+//! ## Multiple sources
+//!
+//! Red marks the path starting at vertex `3` and blue the path starting at
+//! vertex `7`.
+//!
+//! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_multi_source_1.svg?)
+//!
+//! ```
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     algo::bfs_pred::{
+//!         Bfs,
+//!         Step,
+//!     },
+//!     gen::Empty,
+//!     op::AddArc,
+//! };
+//!
+//! let mut digraph = Digraph::empty(8);
+//!
+//! digraph.add_arc(0, 1);
+//! digraph.add_arc(1, 2);
+//! digraph.add_arc(1, 4);
+//! digraph.add_arc(2, 3);
+//! digraph.add_arc(2, 5);
+//! digraph.add_arc(2, 6);
+//! digraph.add_arc(3, 0);
+//! digraph.add_arc(6, 5);
+//! digraph.add_arc(6, 7);
+//! digraph.add_arc(7, 6);
+//!
+//! assert!(Bfs::new(&digraph, &[3, 7]).eq([
+//!     Step { u: None, v: 3 },
+//!     Step { u: None, v: 7 },
+//!     Step { u: Some(3), v: 0 },
+//!     Step { u: Some(7), v: 6 },
+//!     Step { u: Some(0), v: 1 },
+//!     Step { u: Some(6), v: 5 },
+//!     Step { u: Some(1), v: 2 },
+//!     Step { u: Some(1), v: 4 },
 //! ]));
 //! ```
 
@@ -68,6 +111,14 @@ pub struct Step {
 ///
 /// # Examples
 ///
+/// ## Single source
+///
+/// Red marks the path starting at vertex `0`, with `p` denoting the
+/// predecessor. Note that, in the digraph, vertex `3` preceeds vertex `0`, but
+/// the BFS algorithm starts at vertex `0`.
+///
+/// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_1.svg?)
+///
 /// ```
 /// use graaf::{
 ///     adjacency_list::Digraph,
@@ -79,23 +130,29 @@ pub struct Step {
 ///     op::AddArc,
 /// };
 ///
-/// // 0 -> {1}
-/// // 1 -> {2}
-/// // 2 -> {}
-/// // 3 -> {0}
-///
-/// let mut digraph = Digraph::empty(4);
+/// let mut digraph = Digraph::empty(6);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(1, 2);
+/// digraph.add_arc(1, 4);
+/// digraph.add_arc(2, 5);
 /// digraph.add_arc(3, 0);
 ///
 /// assert!(Bfs::new(&digraph, &[0]).eq([
 ///     Step { u: None, v: 0 },
 ///     Step { u: Some(0), v: 1 },
 ///     Step { u: Some(1), v: 2 },
+///     Step { u: Some(1), v: 4 },
+///     Step { u: Some(2), v: 5 },
 /// ]));
 /// ```
+///
+/// ## Multiple sources
+///
+/// Red marks the path starting at vertex `3` and blue the path starting at
+/// vertex `7`.
+///
+/// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_multi_source_1.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -104,21 +161,32 @@ pub struct Step {
 ///         Bfs,
 ///         Step,
 ///     },
-///     gen::Complete,
+///     gen::Empty,
+///     op::AddArc,
 /// };
 ///
-/// // 0 -> {1, 2, 3}
-/// // 1 -> {0, 2, 3}
-/// // 2 -> {0, 1, 3}
-/// // 3 -> {0, 1, 2}
+/// let mut digraph = Digraph::empty(8);
 ///
-/// let digraph = Digraph::complete(4);
+/// digraph.add_arc(0, 1);
+/// digraph.add_arc(1, 2);
+/// digraph.add_arc(1, 4);
+/// digraph.add_arc(2, 3);
+/// digraph.add_arc(2, 5);
+/// digraph.add_arc(2, 6);
+/// digraph.add_arc(3, 0);
+/// digraph.add_arc(6, 5);
+/// digraph.add_arc(6, 7);
+/// digraph.add_arc(7, 6);
 ///
-/// assert!(Bfs::new(&digraph, &[0]).eq([
-///     Step { u: None, v: 0 },
+/// assert!(Bfs::new(&digraph, &[3, 7]).eq([
+///     Step { u: None, v: 3 },
+///     Step { u: None, v: 7 },
+///     Step { u: Some(3), v: 0 },
+///     Step { u: Some(7), v: 6 },
 ///     Step { u: Some(0), v: 1 },
-///     Step { u: Some(0), v: 2 },
-///     Step { u: Some(0), v: 3 },
+///     Step { u: Some(6), v: 5 },
+///     Step { u: Some(1), v: 2 },
+///     Step { u: Some(1), v: 4 },
 /// ]));
 /// ```
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
@@ -164,6 +232,13 @@ impl<'a, D> Bfs<'a, D> {
     ///
     /// # Examples
     ///
+    /// ## Single source
+    ///
+    /// Red marks the traversal starting at vertex `0` and the dashed arcs mark
+    /// the predecessor tree.
+    ///
+    /// ![BFS and the predecessor tree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_predecessors_1.svg?)
+    ///
     /// ```
     /// use graaf::{
     ///     adjacency_list::Digraph,
@@ -175,21 +250,63 @@ impl<'a, D> Bfs<'a, D> {
     ///     op::AddArc,
     /// };
     ///
-    /// // 0 -> {1}
-    /// // 1 -> {2}
-    /// // 2 -> {}
-    /// // 3 -> {0}
-    ///
-    /// let mut digraph = Digraph::empty(4);
+    /// let mut digraph = Digraph::empty(6);
     ///
     /// digraph.add_arc(0, 1);
     /// digraph.add_arc(1, 2);
-    /// digraph.add_arc(3, 0);
+    /// digraph.add_arc(1, 4);
+    /// digraph.add_arc(2, 5);
     ///
     /// assert!(Bfs::new(&digraph, &[0]).predecessors().into_iter().eq([
     ///     None,
     ///     Some(0),
     ///     Some(1),
+    ///     None,
+    ///     Some(1),
+    ///     Some(2),
+    /// ]));
+    /// ```
+    ///
+    /// ## Multiple sources
+    ///
+    /// Red marks the traversal starting at vertex `3` and blue marks the
+    /// traversal starting at vertex `7`. The dashed arcs mark the predecessor
+    /// tree.
+    ///
+    /// ![BFS and the predecessor tree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_predecessors_multi_source_1.svg?)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     algo::{
+    ///         bfs_pred::Bfs,
+    ///         PredecessorTree,
+    ///     },
+    ///     gen::Empty,
+    ///     op::AddArc,
+    /// };
+    ///
+    /// let mut digraph = Digraph::empty(8);
+    ///
+    /// digraph.add_arc(0, 1);
+    /// digraph.add_arc(1, 2);
+    /// digraph.add_arc(1, 4);
+    /// digraph.add_arc(2, 3);
+    /// digraph.add_arc(2, 5);
+    /// digraph.add_arc(2, 6);
+    /// digraph.add_arc(3, 0);
+    /// digraph.add_arc(6, 5);
+    /// digraph.add_arc(6, 7);
+    /// digraph.add_arc(7, 6);
+    ///
+    /// assert!(Bfs::new(&digraph, &[3, 7]).predecessors().into_iter().eq([
+    ///     Some(3),
+    ///     Some(0),
+    ///     Some(1),
+    ///     None,
+    ///     Some(1),
+    ///     Some(6),
+    ///     Some(7),
     ///     None
     /// ]));
     /// ```
@@ -215,8 +332,7 @@ impl<'a, D> Bfs<'a, D> {
     /// # Returns
     ///
     /// If it finds a target vertex, the function returns the shortest path
-    /// from the source vertices to this target vertex. Otherwise, it returns
-    /// `None`.
+    /// to this target vertex. Otherwise, it returns `None`.
     ///
     /// # Panics
     ///
@@ -226,6 +342,12 @@ impl<'a, D> Bfs<'a, D> {
     ///
     /// # Examples
     ///
+    /// ## Single source
+    ///
+    /// Red marks the path matching `v > 4`.
+    ///
+    /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_shortest_path_1.svg?)
+    ///
     /// ```
     /// use graaf::{
     ///     adjacency_list::Digraph,
@@ -234,21 +356,56 @@ impl<'a, D> Bfs<'a, D> {
     ///     op::AddArc,
     /// };
     ///
-    /// // 0 -> {1}
-    /// // 1 -> {2}
-    /// // 2 -> {}
-    /// // 3 -> {0}
-    ///
-    /// let mut digraph = Digraph::empty(4);
+    /// let mut digraph = Digraph::empty(6);
     ///
     /// digraph.add_arc(0, 1);
     /// digraph.add_arc(1, 2);
+    /// digraph.add_arc(1, 4);
+    /// digraph.add_arc(2, 5);
     /// digraph.add_arc(3, 0);
     ///
     /// assert!(Bfs::new(&digraph, &[0])
+    ///     .shortest_path(|v| v > 4)
+    ///     .unwrap()
+    ///     .eq(&[0, 1, 2, 5]));
+    /// ```
+    ///
+    /// ## Multiple sources
+    ///
+    /// Red marks the path starting at vertex `3` matching `v == 2` and blue
+    /// marks the path starting at vertex `7`  matching `v == 5`.
+    ///
+    /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_shortest_path_multi_source_1.svg?)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     algo::bfs_pred::Bfs,
+    ///     gen::Empty,
+    ///     op::AddArc,
+    /// };
+    ///
+    /// let mut digraph = Digraph::empty(8);
+    ///
+    /// digraph.add_arc(0, 1);
+    /// digraph.add_arc(1, 2);
+    /// digraph.add_arc(1, 4);
+    /// digraph.add_arc(2, 5);
+    /// digraph.add_arc(2, 6);
+    /// digraph.add_arc(3, 0);
+    /// digraph.add_arc(6, 5);
+    /// digraph.add_arc(6, 7);
+    /// digraph.add_arc(7, 6);
+    ///
+    /// assert!(Bfs::new(&digraph, &[3, 7])
     ///     .shortest_path(|v| v == 2)
     ///     .unwrap()
-    ///     .eq(&[0, 1, 2]));
+    ///     .eq(&[3, 0, 1, 2]));
+    ///
+    /// assert!(Bfs::new(&digraph, &[3, 7])
+    ///     .shortest_path(|v| v == 5)
+    ///     .unwrap()
+    ///     .eq(&[7, 6, 5]));
     /// ```
     #[must_use]
     pub fn shortest_path<P>(&mut self, is_target: P) -> Option<Vec<usize>>
