@@ -27,6 +27,12 @@
 - Test multi-source DFS.
 - Move goals to `GOALS.md`.
 
+## [0.84.1] - 2024-08-26
+
+Added
+
+- Add images to `dfs_dist` documentation.
+
 ## [0.84.0] - 2024-08-25
 
 Added
