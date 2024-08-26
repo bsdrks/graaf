@@ -33,6 +33,10 @@ Added
 
 - Add images to `dfs_dist` documentation.
 
+Fixed
+
+- Fix test coverage.
+
 ## [0.84.0] - 2024-08-25
 
 Added

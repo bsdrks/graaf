@@ -499,7 +499,7 @@ mod tests {
     use {
         super::*,
         crate::{
-            adjacency_list::fixture::{
+            edge_list::fixture::{
                 bang_jensen_196,
                 bang_jensen_34,
                 bang_jensen_94,
@@ -3672,6 +3672,60 @@ mod tests {
     }
 
     #[test]
+    fn from_adjacency_list() {
+        let mut adj_list = adjacency_list::Digraph::empty(5);
+
+        adj_list.add_arc(0, 1);
+        adj_list.add_arc(1, 2);
+        adj_list.add_arc(2, 0);
+        adj_list.add_arc(2, 3);
+        adj_list.add_arc(2, 4);
+        adj_list.add_arc(4, 0);
+        adj_list.add_arc(4, 3);
+
+        let digraph = Digraph::from(adj_list);
+
+        assert_eq!(digraph.order(), 5);
+
+        assert!(digraph.arcs().eq([
+            (0, 1),
+            (1, 2),
+            (2, 0),
+            (2, 3),
+            (2, 4),
+            (4, 0),
+            (4, 3)
+        ]));
+    }
+
+    #[test]
+    fn from_adjacency_matrix() {
+        let mut matrix = adjacency_matrix::Digraph::empty(5);
+
+        matrix.add_arc(0, 1);
+        matrix.add_arc(1, 2);
+        matrix.add_arc(2, 0);
+        matrix.add_arc(2, 3);
+        matrix.add_arc(2, 4);
+        matrix.add_arc(4, 0);
+        matrix.add_arc(4, 3);
+
+        let digraph = Digraph::from(matrix);
+
+        assert_eq!(digraph.order(), 5);
+
+        assert!(digraph.arcs().eq([
+            (0, 1),
+            (1, 2),
+            (2, 0),
+            (2, 3),
+            (2, 4),
+            (4, 0),
+            (4, 3)
+        ]));
+    }
+
+    #[test]
     fn from_btree_set() {
         let digraph = Digraph::from(BTreeSet::from([(0, 1), (1, 2)]));
 
@@ -3681,9 +3735,10 @@ mod tests {
 
     #[test]
     #[should_panic(expected = "u = 0 equals v = 0")]
-    fn from_vec_u_equals_v() {
-        let vec = BTreeSet::from([(0, 0)]);
-        let _ = Digraph::from(vec);
+    fn from_btree_set_u_equals_v() {
+        let btree_set = BTreeSet::from([(0, 0)]);
+
+        let _ = Digraph::from(btree_set);
     }
 
     #[test]
