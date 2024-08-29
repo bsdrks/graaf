@@ -17,7 +17,6 @@
 //!    - [Breath-First Tree](#breadth-first-tree)
 //!    - [Distance Matrix](#distance-matrix)
 //! - [Naming Conventions](#naming-conventions)
-//! - [Project Goals](#project-goals)
 //!
 //! # Digraph Types
 //!

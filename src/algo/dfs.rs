@@ -7,6 +7,13 @@
 //!
 //! # Examples
 //!
+//! ## Single source
+//!
+//! Red marks the path starting at vertex `0` and `t` denotes the iteration
+//! index.
+//!
+//! ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_1.svg?)
+//!
 //! ```
 //! use graaf::{
 //!     adjacency_list::Digraph,
@@ -15,22 +22,45 @@
 //!     op::AddArc,
 //! };
 //!
-//! // 0 -> {1, 2}
-//! // 1 -> {4}
-//! // 2 -> {3, 4}
-//! // 3 -> {4}
-//! // 4 -> {}
-//!
-//! let mut digraph = Digraph::empty(5);
+//! let mut digraph = Digraph::empty(6);
 //!
 //! digraph.add_arc(0, 1);
-//! digraph.add_arc(0, 2);
+//! digraph.add_arc(1, 2);
+//! digraph.add_arc(1, 4);
+//! digraph.add_arc(2, 5);
+//! digraph.add_arc(3, 0);
+//!
+//! assert!(Dfs::new(&digraph, &[0]).eq([0, 1, 2, 5, 4]));
+//! ```
+//!
+//! ## Multiple sources
+//!
+//! Red marks the path starting at vertex `3` and blue the path starting at
+//! vertex `7`.
+//!
+//! ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_multi_source_1.svg?)
+//!
+//! ```
+//! use graaf::{
+//!     adjacency_list::Digraph,
+//!     algo::dfs::Dfs,
+//!     gen::Empty,
+//!     op::AddArc,
+//! };
+//!
+//! let mut digraph = Digraph::empty(8);
+//!
+//! digraph.add_arc(0, 1);
 //! digraph.add_arc(1, 4);
 //! digraph.add_arc(2, 3);
-//! digraph.add_arc(2, 4);
-//! digraph.add_arc(3, 4);
+//! digraph.add_arc(2, 5);
+//! digraph.add_arc(2, 6);
+//! digraph.add_arc(3, 0);
+//! digraph.add_arc(6, 5);
+//! digraph.add_arc(6, 7);
+//! digraph.add_arc(7, 6);
 //!
-//! assert!(Dfs::new(&digraph, vec![0]).eq([0, 2, 4, 3, 1]));
+//! assert!(Dfs::new(&digraph, &[3, 7]).eq([7, 6, 5, 3, 0, 1, 4]));
 //! ```
 
 use {
@@ -45,6 +75,13 @@ use {
 ///
 /// # Examples
 ///
+/// ## Single source
+///
+/// Red marks the path starting at vertex `0` and `t` denotes the iteration
+/// index.
+///
+/// ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_1.svg?)
+///
 /// ```
 /// use graaf::{
 ///     adjacency_list::Digraph,
@@ -53,22 +90,45 @@ use {
 ///     op::AddArc,
 /// };
 ///
-/// // 0 -> {1, 2}
-/// // 1 -> {4}
-/// // 2 -> {3, 4}
-/// // 3 -> {4}
-/// // 4 -> {}
-///
-/// let mut digraph = Digraph::empty(5);
+/// let mut digraph = Digraph::empty(6);
 ///
 /// digraph.add_arc(0, 1);
-/// digraph.add_arc(0, 2);
+/// digraph.add_arc(1, 2);
+/// digraph.add_arc(1, 4);
+/// digraph.add_arc(2, 5);
+/// digraph.add_arc(3, 0);
+///
+/// assert!(Dfs::new(&digraph, &[0]).eq([0, 1, 2, 5, 4]));
+/// ```
+///
+/// ## Multiple sources
+///
+/// Red marks the path starting at vertex `3` and blue the path starting at
+/// vertex `7`.
+///
+/// ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_multi_source_1.svg?)
+///
+/// ```
+/// use graaf::{
+///     adjacency_list::Digraph,
+///     algo::dfs::Dfs,
+///     gen::Empty,
+///     op::AddArc,
+/// };
+///
+/// let mut digraph = Digraph::empty(8);
+///
+/// digraph.add_arc(0, 1);
 /// digraph.add_arc(1, 4);
 /// digraph.add_arc(2, 3);
-/// digraph.add_arc(2, 4);
-/// digraph.add_arc(3, 4);
+/// digraph.add_arc(2, 5);
+/// digraph.add_arc(2, 6);
+/// digraph.add_arc(3, 0);
+/// digraph.add_arc(6, 5);
+/// digraph.add_arc(6, 7);
+/// digraph.add_arc(7, 6);
 ///
-/// assert!(Dfs::new(&digraph, vec![0]).eq([0, 2, 4, 3, 1]));
+/// assert!(Dfs::new(&digraph, &[3, 7]).eq([7, 6, 5, 3, 0, 1, 4]));
 /// ```
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct Dfs<'a, D> {

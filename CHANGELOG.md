@@ -23,9 +23,16 @@
 - Benchmark trait implementations.
 - Review documentation.
 - Review the documentation test examples.
-- Test multi-source BFS.
-- Test multi-source DFS.
-- Move goals to `GOALS.md`.
+
+## [0.84.2] - 2024-08-29
+
+Added
+
+- Add images to `dfs` documentation.
+
+Changed
+
+- Remove link to removed documentation header in `lib.rs`.
 
 ## [0.84.1] - 2024-08-26
 
