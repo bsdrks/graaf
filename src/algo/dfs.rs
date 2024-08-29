@@ -30,7 +30,7 @@
 //! digraph.add_arc(2, 5);
 //! digraph.add_arc(3, 0);
 //!
-//! assert!(Dfs::new(&digraph, &[0]).eq([0, 1, 2, 5, 4]));
+//! assert!(Dfs::new(&digraph, vec![0]).eq([0, 1, 4, 2, 5]));
 //! ```
 //!
 //! ## Multiple sources
@@ -60,7 +60,7 @@
 //! digraph.add_arc(6, 7);
 //! digraph.add_arc(7, 6);
 //!
-//! assert!(Dfs::new(&digraph, &[3, 7]).eq([7, 6, 5, 3, 0, 1, 4]));
+//! assert!(Dfs::new(&digraph, vec![3, 7]).eq([7, 6, 5, 3, 0, 1, 4]));
 //! ```
 
 use {
@@ -98,7 +98,8 @@ use {
 /// digraph.add_arc(2, 5);
 /// digraph.add_arc(3, 0);
 ///
-/// assert!(Dfs::new(&digraph, &[0]).eq([0, 1, 2, 5, 4]));
+/// println!("{:?}", Dfs::new(&digraph, vec![0]).collect::<Vec<_>>());
+/// assert!(Dfs::new(&digraph, vec![0]).eq([0, 1, 4, 2, 5]));
 /// ```
 ///
 /// ## Multiple sources
@@ -128,7 +129,7 @@ use {
 /// digraph.add_arc(6, 7);
 /// digraph.add_arc(7, 6);
 ///
-/// assert!(Dfs::new(&digraph, &[3, 7]).eq([7, 6, 5, 3, 0, 1, 4]));
+/// assert!(Dfs::new(&digraph, vec![3, 7]).eq([7, 6, 5, 3, 0, 1, 4]));
 /// ```
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct Dfs<'a, D> {
