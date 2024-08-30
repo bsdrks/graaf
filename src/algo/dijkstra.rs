@@ -7,6 +7,13 @@
 //!
 //! # Examples
 //!
+//! ## Single source
+//!
+//! Red marks the path starting at vertex `0` and `t` denotes the iteration
+//! index.
+//!
+//! ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_1.svg?)
+//!
 //! ```
 //! use graaf::{
 //!     adjacency_list_weighted::Digraph,
@@ -15,23 +22,50 @@
 //!     op::AddArcWeighted,
 //! };
 //!
-//! // 0 -> {1 (2), 2 (3), 3 (4)}
-//! // 1 -> {2 (5), 3 (0)}
-//! // 2 -> {3 (1)}
-//! // 3 -> {}
+//! let mut digraph = Digraph::<usize>::empty(7);
 //!
-//! let mut digraph = Digraph::<usize>::empty(4);
-//!
-//! digraph.add_arc_weighted(0, 1, 2);
-//! digraph.add_arc_weighted(0, 2, 3);
-//! digraph.add_arc_weighted(0, 3, 4);
-//! digraph.add_arc_weighted(1, 2, 5);
-//! digraph.add_arc_weighted(1, 3, 0);
-//! digraph.add_arc_weighted(2, 3, 1);
+//! digraph.add_arc_weighted(0, 1, 1);
+//! digraph.add_arc_weighted(1, 2, 1);
+//! digraph.add_arc_weighted(1, 6, 5);
+//! digraph.add_arc_weighted(2, 4, 1);
+//! digraph.add_arc_weighted(3, 0, 2);
+//! digraph.add_arc_weighted(4, 5, 1);
+//! digraph.add_arc_weighted(5, 6, 1);
 //!
 //! let mut dijkstra = Dijkstra::new(&digraph, &[0]);
 //!
-//! assert!(dijkstra.eq([0, 1, 3, 2]));
+//! assert!(dijkstra.eq([0, 1, 2, 4, 5, 6]));
+//! ```
+//!
+//! ## Multiple sources
+//!
+//! Red marks the path starting at vertex `0` and blue the path starting at
+//! vertex `3`.
+//!
+//! ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_multi_source_1.svg?)
+//!
+//! ```
+//! use graaf::{
+//!     adjacency_list_weighted::Digraph,
+//!     algo::dijkstra::Dijkstra,
+//!     gen::Empty,
+//!     op::AddArcWeighted,
+//! };
+//!
+//! let mut digraph = Digraph::<usize>::empty(7);
+//!
+//! digraph.add_arc_weighted(0, 1, 1);
+//! digraph.add_arc_weighted(1, 2, 1);
+//! digraph.add_arc_weighted(1, 6, 5);
+//! digraph.add_arc_weighted(2, 4, 1);
+//! digraph.add_arc_weighted(3, 0, 2);
+//! digraph.add_arc_weighted(3, 5, 1);
+//! digraph.add_arc_weighted(4, 5, 1);
+//! digraph.add_arc_weighted(5, 6, 1);
+//!
+//! let mut dijkstra = Dijkstra::new(&digraph, &[0, 3]);
+//!
+//! assert!(dijkstra.eq([3, 0, 5, 1, 6, 2, 4]));
 //! ```
 //!
 //! [^1]: Edsger Wybe Dijkstra. 1959. A note on two problems in connexion
@@ -51,6 +85,13 @@ use {
 ///
 /// # Examples
 ///
+/// ## Single source
+///
+/// Red marks the path starting at vertex `0` and `t` denotes the iteration
+/// index.
+///
+/// ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_1.svg?)
+///
 /// ```
 /// use graaf::{
 ///     adjacency_list_weighted::Digraph,
@@ -59,23 +100,50 @@ use {
 ///     op::AddArcWeighted,
 /// };
 ///
-/// // 0 -> {1 (2), 2 (3), 3 (4)}
-/// // 1 -> {2 (5), 3 (0)}
-/// // 2 -> {3 (1)}
-/// // 3 -> {}
+/// let mut digraph = Digraph::<usize>::empty(7);
 ///
-/// let mut digraph = Digraph::<usize>::empty(4);
-///
-/// digraph.add_arc_weighted(0, 1, 2);
-/// digraph.add_arc_weighted(0, 2, 3);
-/// digraph.add_arc_weighted(0, 3, 4);
-/// digraph.add_arc_weighted(1, 2, 5);
-/// digraph.add_arc_weighted(1, 3, 0);
-/// digraph.add_arc_weighted(2, 3, 1);
+/// digraph.add_arc_weighted(0, 1, 1);
+/// digraph.add_arc_weighted(1, 2, 1);
+/// digraph.add_arc_weighted(1, 6, 5);
+/// digraph.add_arc_weighted(2, 4, 1);
+/// digraph.add_arc_weighted(3, 0, 2);
+/// digraph.add_arc_weighted(4, 5, 1);
+/// digraph.add_arc_weighted(5, 6, 1);
 ///
 /// let mut dijkstra = Dijkstra::new(&digraph, &[0]);
 ///
-/// assert!(dijkstra.eq([0, 1, 3, 2]));
+/// assert!(dijkstra.eq([0, 1, 2, 4, 5, 6]));
+/// ```
+///
+/// ## Multiple sources
+///
+/// Red marks the path starting at vertex `0` and blue the path starting at
+/// vertex `3`.
+///
+/// ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_multi_source_1.svg?)
+///
+/// ```
+/// use graaf::{
+///     adjacency_list_weighted::Digraph,
+///     algo::dijkstra::Dijkstra,
+///     gen::Empty,
+///     op::AddArcWeighted,
+/// };
+///
+/// let mut digraph = Digraph::<usize>::empty(7);
+///
+/// digraph.add_arc_weighted(0, 1, 1);
+/// digraph.add_arc_weighted(1, 2, 1);
+/// digraph.add_arc_weighted(1, 6, 5);
+/// digraph.add_arc_weighted(2, 4, 1);
+/// digraph.add_arc_weighted(3, 0, 2);
+/// digraph.add_arc_weighted(3, 5, 1);
+/// digraph.add_arc_weighted(4, 5, 1);
+/// digraph.add_arc_weighted(5, 6, 1);
+///
+/// let mut dijkstra = Dijkstra::new(&digraph, &[0, 3]);
+///
+/// assert!(dijkstra.eq([3, 0, 5, 1, 6, 2, 4]));
 /// ```
 #[derive(Clone, Debug)]
 pub struct Dijkstra<'a, D> {

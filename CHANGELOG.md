@@ -24,6 +24,12 @@
 - Review documentation.
 - Review the documentation test examples.
 
+## [0.84.3] - 2024-08-30
+
+Added
+
+- Add images to `dijkstra` documentation.
+
 ## [0.84.2] - 2024-08-29
 
 Added
@@ -33,6 +39,7 @@ Added
 Changed
 
 - Remove link to removed documentation header in `lib.rs`.
+- Improve labels in `dfs*` documentation images.
 
 ## [0.84.1] - 2024-08-26
 
