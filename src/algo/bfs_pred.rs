@@ -92,7 +92,7 @@ use {
         OutNeighbors,
     },
     std::collections::{
-        BTreeSet,
+        HashSet,
         VecDeque,
     },
 };
@@ -189,11 +189,11 @@ pub struct Step {
 ///     Step { u: Some(1), v: 4 },
 /// ]));
 /// ```
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Bfs<'a, D> {
     digraph: &'a D,
     queue: VecDeque<Step>,
-    visited: BTreeSet<usize>,
+    visited: HashSet<usize>,
 }
 
 impl<'a, D> Bfs<'a, D> {
@@ -208,7 +208,7 @@ impl<'a, D> Bfs<'a, D> {
         T: IntoIterator<Item = &'b usize>,
     {
         let mut queue = VecDeque::new();
-        let mut visited = BTreeSet::new();
+        let mut visited = HashSet::new();
 
         for &source in sources {
             queue.push_back(Step { u: None, v: source });

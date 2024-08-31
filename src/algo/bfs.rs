@@ -66,7 +66,7 @@
 use {
     crate::op::OutNeighbors,
     std::collections::{
-        BTreeSet,
+        HashSet,
         VecDeque,
     },
 };
@@ -129,11 +129,11 @@ use {
 ///
 /// assert!(Bfs::new(&digraph, &[3, 7]).eq([3, 7, 0, 6, 1, 5, 2, 4]));
 /// ```
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Bfs<'a, D> {
     digraph: &'a D,
     queue: VecDeque<usize>,
-    visited: BTreeSet<usize>,
+    visited: HashSet<usize>,
 }
 
 impl<'a, D> Bfs<'a, D> {
@@ -148,7 +148,7 @@ impl<'a, D> Bfs<'a, D> {
         T: IntoIterator<Item = &'b usize>,
     {
         let mut queue = VecDeque::new();
-        let mut visited = BTreeSet::new();
+        let mut visited = HashSet::new();
 
         for &source in sources {
             queue.push_back(source);

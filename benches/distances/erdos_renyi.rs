@@ -33,8 +33,8 @@ fn bfs_adjacency_list(bencher: Bencher<'_, '_>) {
         let mut bfs = Bfs::new(&digraph, &[0]);
         let dist = bfs.distances();
 
-        assert_eq!(dist[&0], 0);
-        assert_eq!(dist[&999], 6);
+        assert_eq!(dist[0], 0);
+        assert_eq!(dist[999], 6);
     });
 }
 
@@ -48,8 +48,8 @@ fn bfs_adjacency_matrix(bencher: Bencher<'_, '_>) {
         let mut bfs = Bfs::new(&digraph, &[0]);
         let dist = bfs.distances();
 
-        assert_eq!(dist[&0], 0);
-        assert_eq!(dist[&999], 6);
+        assert_eq!(dist[0], 0);
+        assert_eq!(dist[999], 6);
     });
 }
 

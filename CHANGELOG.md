@@ -24,6 +24,23 @@
 - Review documentation.
 - Review the documentation test examples.
 
+## [0.85.0] - 2024-08-31
+
+Changed
+
+- Breaking: `bfs::Bfs` no longer implements `Hash`.
+- Breaking: `bfs::Bfs` no longer implements `Ord`.
+- Breaking: `bfs::Bfs` no longer implements `PartialOrd`.
+- Breaking: `bfs_dist::Bfs` no longer implements `Hash`.
+- Breaking: `bfs_dist::Bfs` no longer implements `Ord`.
+- Breaking: `bfs_dist::Bfs` no longer implements `PartialOrd`.
+- Breaking: `bfs_pred::Bfs` no longer implements `Hash`.
+- Breaking: `bfs_pred::Bfs` no longer implements `Ord`.
+- Breaking: `bfs_pred::Bfs` no longer implements `PartialOrd`.
+- Breaking: speed up `bfs_dist::Bfs::distances` by returning distances in a `Vec`.
+- Speed up `Iterator for bfs::Bfs` by tracking visited vertices in a `HashMap`.
+- Speed up `Iterator for bfs_dist::Bfs` by tracking visited vertices in a `HashMap`.
+
 ## [0.84.5] - 2024-08-31
 
 Added
