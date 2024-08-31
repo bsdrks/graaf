@@ -7,6 +7,8 @@
 //!
 //! # Examples
 //!
+//! ![Floyd-Warshall](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/floyd_warshall_1-0.83.5.svg?)
+//!
 //! ```
 //! use graaf::{
 //!     adjacency_list_weighted::Digraph,
@@ -17,11 +19,6 @@
 //!     gen::Empty,
 //!     op::AddArcWeighted,
 //! };
-//!
-//! // 0 -> {2 (-2)}
-//! // 1 -> {0 (4), 2 (3)}
-//! // 2 -> {3 (2)}
-//! // 3 -> {1 (-1)}
 //!
 //! let mut digraph = Digraph::<isize>::empty(4);
 //!
@@ -76,6 +73,8 @@ use {
 ///
 /// # Examples
 ///
+/// ![Floyd-Warshall](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/floyd_warshall_1-0.83.5.svg?)
+///
 /// ```
 /// use graaf::{
 ///     adjacency_list_weighted::Digraph,
@@ -86,11 +85,6 @@ use {
 ///     gen::Empty,
 ///     op::AddArcWeighted,
 /// };
-///
-/// // 0 -> {2 (-2)}
-/// // 1 -> {0 (4), 2 (3)}
-/// // 2 -> {3 (2)}
-/// // 3 -> {1 (-1)}
 ///
 /// let mut digraph = Digraph::<isize>::empty(4);
 ///
