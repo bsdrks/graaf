@@ -24,6 +24,27 @@
 - Review documentation.
 - Review the documentation test examples.
 
+## [0.84.5] - 2024-08-31
+
+Added
+
+- Add benchmark `distances/erdos_renyi`.
+- Benchmark `BFS.distances` for `adjacency_matrix` in `distances/bang_jensen_94`.
+- Benchmark `BFS.distances` for `adjacency_matrix` in `distances/erdos_renyi`.
+
+Changed
+
+- Reduce benchmark overhead.
+- Split `algo/single_source_distances` benchmarks into:
+  - `distances/bang_jensen_94`
+  - `distances/bang_jensen_96`
+  - `distances/bang_jensen_99`
+  - `distances/kattis_bryr_1`
+  - `distances/kattis_bryr_2`
+  - `distances/kattis_bryr_3`
+  - `distances/kattis_crosscountry`
+  - `distances/kattis_shortestpath1`
+
 ## [0.84.4] - 2024-08-31
 
 Added

@@ -1,6 +1,6 @@
 [package]
 name = "graaf"
-version = "0.84.4"
+version = "0.84.5"
 edition = "2021"
 authors = ["Bas Dirks <bas.dirks@protonmail.com>"]
 categories = ["algorithms", "data-structures", "mathematics"]
@@ -61,6 +61,46 @@ path = "benches/gen/star.rs"
 harness = false
 
 [[bench]]
-name = "single_source_distances"
-path = "benches/algo/single_source_distances.rs"
+name = "bang_jensen_94"
+path = "benches/distances/bang_jensen_94.rs"
+harness = false
+
+[[bench]]
+name = "bang_jensen_96"
+path = "benches/distances/bang_jensen_96.rs"
+harness = false
+
+[[bench]]
+name = "bang_jensen_99"
+path = "benches/distances/bang_jensen_99.rs"
+harness = false
+
+[[bench]]
+name = "erdos_renyi"
+path = "benches/distances/erdos_renyi.rs"
+harness = false
+
+[[bench]]
+name = "kattis_bryr_1"
+path = "benches/distances/kattis_bryr_1.rs"
+harness = false
+
+[[bench]]
+name = "kattis_bryr_2"
+path = "benches/distances/kattis_bryr_2.rs"
+harness = false
+
+[[bench]]
+name = "kattis_bryr_3"
+path = "benches/distances/kattis_bryr_3.rs"
+harness = false
+
+[[bench]]
+name = "kattis_crosscountry"
+path = "benches/distances/kattis_crosscountry.rs"
+harness = false
+
+[[bench]]
+name = "kattis_shortestpath1"
+path = "benches/distances/kattis_shortestpath1.rs"
 harness = false
