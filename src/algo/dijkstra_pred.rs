@@ -36,8 +36,6 @@
 //!
 //! let mut dijkstra = Dijkstra::new(&digraph, &[0]);
 //!
-//! println!("{:?}", dijkstra.clone().collect::<Vec<_>>());
-//!
 //! assert!(dijkstra.eq([
 //!     Step { u: None, v: 0 },
 //!     Step { u: Some(0), v: 1 },

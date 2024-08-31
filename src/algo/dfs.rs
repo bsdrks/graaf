@@ -98,7 +98,6 @@ use {
 /// digraph.add_arc(2, 5);
 /// digraph.add_arc(3, 0);
 ///
-/// println!("{:?}", Dfs::new(&digraph, vec![0]).collect::<Vec<_>>());
 /// assert!(Dfs::new(&digraph, vec![0]).eq([0, 1, 4, 2, 5]));
 /// ```
 ///
