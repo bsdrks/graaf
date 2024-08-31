@@ -12,7 +12,7 @@
 //! Red marks the path starting at vertex `0` and `t` denotes the iteration
 //! index.
 //!
-//! ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_1.svg?)
+//! ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_1-0.83.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -26,10 +26,10 @@
 //!
 //! digraph.add_arc_weighted(0, 1, 1);
 //! digraph.add_arc_weighted(1, 2, 1);
-//! digraph.add_arc_weighted(1, 6, 5);
+//! digraph.add_arc_weighted(1, 6, 6);
 //! digraph.add_arc_weighted(2, 4, 1);
 //! digraph.add_arc_weighted(3, 0, 2);
-//! digraph.add_arc_weighted(4, 5, 1);
+//! digraph.add_arc_weighted(4, 5, 2);
 //! digraph.add_arc_weighted(5, 6, 1);
 //!
 //! let mut dijkstra = Dijkstra::new(&digraph, &[0]);
@@ -42,7 +42,7 @@
 //! Red marks the path starting at vertex `0` and blue the path starting at
 //! vertex `3`.
 //!
-//! ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_multi_source_1.svg?)
+//! ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_multi_source_1-0.83.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -61,11 +61,11 @@
 //! digraph.add_arc_weighted(3, 0, 2);
 //! digraph.add_arc_weighted(3, 5, 1);
 //! digraph.add_arc_weighted(4, 5, 1);
-//! digraph.add_arc_weighted(5, 6, 1);
+//! digraph.add_arc_weighted(5, 6, 3);
 //!
 //! let mut dijkstra = Dijkstra::new(&digraph, &[0, 3]);
 //!
-//! assert!(dijkstra.eq([3, 0, 5, 1, 6, 2, 4]));
+//! assert!(dijkstra.eq([3, 0, 5, 1, 2, 4, 6]));
 //! ```
 //!
 //! [^1]: Edsger Wybe Dijkstra. 1959. A note on two problems in connexion
@@ -90,7 +90,7 @@ use {
 /// Red marks the path starting at vertex `0` and `t` denotes the iteration
 /// index.
 ///
-/// ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_1.svg?)
+/// ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_1-0.83.4.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -104,10 +104,10 @@ use {
 ///
 /// digraph.add_arc_weighted(0, 1, 1);
 /// digraph.add_arc_weighted(1, 2, 1);
-/// digraph.add_arc_weighted(1, 6, 5);
+/// digraph.add_arc_weighted(1, 6, 6);
 /// digraph.add_arc_weighted(2, 4, 1);
 /// digraph.add_arc_weighted(3, 0, 2);
-/// digraph.add_arc_weighted(4, 5, 1);
+/// digraph.add_arc_weighted(4, 5, 2);
 /// digraph.add_arc_weighted(5, 6, 1);
 ///
 /// let mut dijkstra = Dijkstra::new(&digraph, &[0]);
@@ -120,7 +120,7 @@ use {
 /// Red marks the path starting at vertex `0` and blue the path starting at
 /// vertex `3`.
 ///
-/// ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_multi_source_1.svg?)
+/// ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_multi_source_1-0.83.4.svg?)
 ///
 /// ```
 /// use graaf::{

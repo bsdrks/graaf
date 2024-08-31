@@ -24,6 +24,13 @@
 - Review documentation.
 - Review the documentation test examples.
 
+## [0.84.4] - 2024-08-31
+
+Added
+
+- Add images to `dijkstra_dist` documentation.
+- Add images to `dijkstra_pred` documentation.
+
 ## [0.84.3] - 2024-08-30
 
 Added

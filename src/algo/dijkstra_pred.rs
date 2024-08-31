@@ -7,6 +7,12 @@
 //!
 //! # Examples
 //!
+//! ## Single source
+//!
+//! Red marks the path starting at vertex `0`.
+//!
+//! ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_pred_1-0.83.4.svg?)
+//!
 //! ```
 //! use graaf::{
 //!     adjacency_list_weighted::Digraph,
@@ -18,27 +24,69 @@
 //!     op::AddArcWeighted,
 //! };
 //!
-//! // 0 -> {1 (2), 2 (3), 3 (4)}
-//! // 1 -> {2 (5), 3 (0)}
-//! // 2 -> {3 (1)}
-//! // 3 -> {}
+//! let mut digraph = Digraph::<usize>::empty(7);
 //!
-//! let mut digraph = Digraph::<usize>::empty(4);
-//!
-//! digraph.add_arc_weighted(0, 1, 2);
-//! digraph.add_arc_weighted(0, 2, 3);
-//! digraph.add_arc_weighted(0, 3, 4);
-//! digraph.add_arc_weighted(1, 2, 5);
-//! digraph.add_arc_weighted(1, 3, 0);
-//! digraph.add_arc_weighted(2, 3, 1);
+//! digraph.add_arc_weighted(0, 1, 1);
+//! digraph.add_arc_weighted(1, 2, 1);
+//! digraph.add_arc_weighted(1, 6, 6);
+//! digraph.add_arc_weighted(2, 4, 1);
+//! digraph.add_arc_weighted(3, 0, 2);
+//! digraph.add_arc_weighted(4, 5, 2);
+//! digraph.add_arc_weighted(5, 6, 1);
 //!
 //! let mut dijkstra = Dijkstra::new(&digraph, &[0]);
+//!
+//! println!("{:?}", dijkstra.clone().collect::<Vec<_>>());
 //!
 //! assert!(dijkstra.eq([
 //!     Step { u: None, v: 0 },
 //!     Step { u: Some(0), v: 1 },
-//!     Step { u: Some(1), v: 3 },
-//!     Step { u: Some(0), v: 2 },
+//!     Step { u: Some(1), v: 2 },
+//!     Step { u: Some(2), v: 4 },
+//!     Step { u: Some(4), v: 5 },
+//!     Step { u: Some(5), v: 6 },
+//! ]));
+//! ```
+//!
+//! ## Multiple sources
+//!
+//! Red marks the path starting at vertex `0` and blue the path starting at
+//! vertex `3`.
+//!
+//! ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_pred_multi_source_1-0.83.4.svg?)
+//!
+//! ```
+//! use graaf::{
+//!     adjacency_list_weighted::Digraph,
+//!     algo::dijkstra_pred::{
+//!         Dijkstra,
+//!         Step,
+//!     },
+//!     gen::Empty,
+//!     op::AddArcWeighted,
+//! };
+//!
+//! let mut digraph = Digraph::<usize>::empty(7);
+//!
+//! digraph.add_arc_weighted(0, 1, 1);
+//! digraph.add_arc_weighted(1, 2, 1);
+//! digraph.add_arc_weighted(1, 6, 5);
+//! digraph.add_arc_weighted(2, 4, 1);
+//! digraph.add_arc_weighted(3, 0, 2);
+//! digraph.add_arc_weighted(3, 5, 1);
+//! digraph.add_arc_weighted(4, 5, 1);
+//! digraph.add_arc_weighted(5, 6, 3);
+//!
+//! let mut dijkstra = Dijkstra::new(&digraph, &[0, 3]);
+//!
+//! assert!(dijkstra.eq([
+//!     Step { u: None, v: 3 },
+//!     Step { u: None, v: 0 },
+//!     Step { u: Some(3), v: 5 },
+//!     Step { u: Some(0), v: 1 },
+//!     Step { u: Some(1), v: 2 },
+//!     Step { u: Some(2), v: 4 },
+//!     Step { u: Some(5), v: 6 },
 //! ]));
 //! ```
 //!
@@ -70,6 +118,12 @@ pub struct Step {
 ///
 /// # Examples
 ///
+/// ## Single source
+///
+/// Red marks the path starting at vertex `0`.
+///
+/// ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_pred_1-0.83.4.svg?)
+///
 /// ```
 /// use graaf::{
 ///     adjacency_list_weighted::Digraph,
@@ -81,29 +135,73 @@ pub struct Step {
 ///     op::AddArcWeighted,
 /// };
 ///
-/// // 0 -> {1 (2), 2 (3), 3 (4)}
-/// // 1 -> {2 (5), 3 (0)}
-/// // 2 -> {3 (1)}
-/// // 3 -> {}
+/// let mut digraph = Digraph::<usize>::empty(7);
 ///
-/// let mut digraph = Digraph::<usize>::empty(4);
-///
-/// digraph.add_arc_weighted(0, 1, 2);
-/// digraph.add_arc_weighted(0, 2, 3);
-/// digraph.add_arc_weighted(0, 3, 4);
-/// digraph.add_arc_weighted(1, 2, 5);
-/// digraph.add_arc_weighted(1, 3, 0);
-/// digraph.add_arc_weighted(2, 3, 1);
+/// digraph.add_arc_weighted(0, 1, 1);
+/// digraph.add_arc_weighted(1, 2, 1);
+/// digraph.add_arc_weighted(1, 6, 6);
+/// digraph.add_arc_weighted(2, 4, 1);
+/// digraph.add_arc_weighted(3, 0, 2);
+/// digraph.add_arc_weighted(4, 5, 2);
+/// digraph.add_arc_weighted(5, 6, 1);
 ///
 /// let mut dijkstra = Dijkstra::new(&digraph, &[0]);
 ///
 /// assert!(dijkstra.eq([
 ///     Step { u: None, v: 0 },
 ///     Step { u: Some(0), v: 1 },
-///     Step { u: Some(1), v: 3 },
-///     Step { u: Some(0), v: 2 },
+///     Step { u: Some(1), v: 2 },
+///     Step { u: Some(2), v: 4 },
+///     Step { u: Some(4), v: 5 },
+///     Step { u: Some(5), v: 6 },
 /// ]));
 /// ```
+///
+/// ## Multiple sources
+///
+/// Red marks the path starting at vertex `0` and blue the path starting at
+/// vertex `3`.
+///
+/// ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_pred_multi_source_1-0.83.4.svg?)
+///
+/// ```
+/// use graaf::{
+///     adjacency_list_weighted::Digraph,
+///     algo::dijkstra_pred::{
+///         Dijkstra,
+///         Step,
+///     },
+///     gen::Empty,
+///     op::AddArcWeighted,
+/// };
+///
+/// let mut digraph = Digraph::<usize>::empty(7);
+///
+/// digraph.add_arc_weighted(0, 1, 1);
+/// digraph.add_arc_weighted(1, 2, 1);
+/// digraph.add_arc_weighted(1, 6, 5);
+/// digraph.add_arc_weighted(2, 4, 1);
+/// digraph.add_arc_weighted(3, 0, 2);
+/// digraph.add_arc_weighted(3, 5, 1);
+/// digraph.add_arc_weighted(4, 5, 1);
+/// digraph.add_arc_weighted(5, 6, 3);
+///
+/// let mut dijkstra = Dijkstra::new(&digraph, &[0, 3]);
+///
+/// assert!(dijkstra.eq([
+///     Step { u: None, v: 3 },
+///     Step { u: None, v: 0 },
+///     Step { u: Some(3), v: 5 },
+///     Step { u: Some(0), v: 1 },
+///     Step { u: Some(1), v: 2 },
+///     Step { u: Some(2), v: 4 },
+///     Step { u: Some(5), v: 6 },
+/// ]));
+/// ```
+///
+/// [^1]: Edsger Wybe Dijkstra. 1959. A note on two problems in connexion
+///   with graphs. Numer. Math. 1, 1 (December 1959), 269–271.
+///   <https://doi.org/10.1007/BF01386390>
 #[derive(Clone, Debug)]
 pub struct Dijkstra<'a, D> {
     digraph: &'a D,
