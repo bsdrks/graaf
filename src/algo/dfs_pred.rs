@@ -490,7 +490,7 @@ mod tests {
         assert!(DfsPred::new(&digraph, &[0]).predecessors().into_iter().eq([
             None,
             Some(0),
-            Some(1),
+            Some(4),
             Some(2),
             Some(0),
             Some(7),
@@ -519,9 +519,9 @@ mod tests {
 
         assert!(DfsPred::new(&digraph, &[0]).predecessors().into_iter().eq([
             None,
+            Some(2),
             Some(0),
-            Some(0),
-            Some(1),
+            Some(2),
             Some(2),
             Some(2),
             Some(4)
@@ -534,7 +534,7 @@ mod tests {
 
         assert!(DfsPred::new(&digraph, &[0]).predecessors().into_iter().eq([
             None,
-            Some(3),
+            Some(4),
             None,
             Some(0),
             Some(0),
@@ -549,12 +549,12 @@ mod tests {
         assert!(DfsPred::new(&digraph, &[0]).predecessors().into_iter().eq([
             None,
             Some(0),
-            Some(1),
+            None,
             Some(4),
             Some(1),
-            Some(3),
-            Some(5),
-            Some(3),
+            Some(6),
+            Some(10),
+            Some(9),
             None,
             Some(11),
             Some(3),
@@ -636,11 +636,11 @@ mod tests {
 
         assert!(DfsPred::new(&digraph, &[5]).predecessors().into_iter().eq([
             None,
-            Some(5),
+            None,
+            Some(6),
+            None,
+            None,
             Some(1),
-            None,
-            None,
-            None,
             Some(5),
             None,
             None,
