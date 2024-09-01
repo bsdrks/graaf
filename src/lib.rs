@@ -139,6 +139,8 @@
 //!   distance from the source.
 //! - [`DfsPred`](algo::dfs_pred::DfsPred) iterates over the vertices and their
 //!   predecessors.
+//! - [`DfsPred::predecessors`](algo::dfs_pred::DfsPred::predecessors) finds
+//!   the predecessors.
 //!
 //! ## Dijkstra
 //!
@@ -183,6 +185,7 @@
 //! These functions produce a predecessor tree.
 //!
 //! - [`BfsPred::predecessors`](algo::bfs_pred::BfsPred::predecessors)
+//! - [`DfsPred::predecessors`](algo::dfs_pred::DfsPred::predecessors)
 //! - [`DijkstraPred::predecessors`](algo::dijkstra_pred::DijkstraPred::predecessors)
 //!
 //! ## Distance Matrix

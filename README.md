@@ -126,6 +126,7 @@ A depth-first search explores the vertices of an unweighted digraph in order of 
 - [`Dfs`](https://docs.rs/graaf/latest/graaf/algo/dfs/struct.Dfs.html) iterates over the vertices.
 - [`DfsDist`](https://docs.rs/graaf/latest/graaf/algo/dfs_dist/struct.DfsDist.html) iterates over the vertices and their distance from the source.
 - [`DfsPred`](https://docs.rs/graaf/latest/graaf/algo/dfs_pred/struct.DfsPred.html) iterates over the vertices and their predecessors.
+- [`DfsPred::predecessors`](https://docs.rs/graaf/latest/graaf/algo/dfs_pred/struct.DfsPred.html#method.predecessors) finds the predecessors.
 
 ### Dijkstra
 
@@ -160,6 +161,7 @@ A [`PredecessorTree`](https://docs.rs/graaf/latest/graaf/algo/types/predecessor_
 These functions produce a predecessor tree.
 
 - [`BfsPred::predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.BfsPred.html#method.predecessors)
+- [`DfsPred::predecessors`](https://docs.rs/graaf/latest/graaf/algo/dfs_pred/struct.DfsPred.html#method.predecessors)
 - [`DijkstraPred::predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_pred/struct.DijkstraPred.html#method.predecessors)
 
 ### Distance Matrix
