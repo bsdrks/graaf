@@ -143,8 +143,7 @@
 //! Dijkstra's algorithm finds the shortest paths from one or more source
 //! vertices in an arc-weighted digraph.
 //!
-//! - [`dijkstra::Dijkstra`](algo::dijkstra::Dijkstra) iterates over the
-//!   vertices.
+//! - [`Dijkstra`](algo::dijkstra::Dijkstra) iterates over the vertices.
 //! - [`DijkstraDist`](algo::dijkstra_dist::DijkstraDist) iterates over the
 //!   vertices and their distance from the source.
 //! - [`DijkstraPred`](algo::dijkstra_pred::DijkstraPred) iterates over the
@@ -181,8 +180,8 @@
 //!
 //! These functions produce a predecessor tree.
 //!
-//! - [`bfs_pred::Bfs::predecessors`](algo::bfs_pred::BfsPred::predecessors)
-//! - [`dijkstra_pred::Dijkstra::predecessors`](algo::dijkstra_pred::DijkstraPred::predecessors)
+//! - [`BfsPred::predecessors`](algo::bfs_pred::BfsPred::predecessors)
+//! - [`DijkstraPred::predecessors`](algo::dijkstra_pred::DijkstraPred::predecessors)
 //!
 //! ## Distance Matrix
 //!

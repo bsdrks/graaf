@@ -158,8 +158,8 @@ A [`PredecessorTree`](https://docs.rs/graaf/latest/graaf/algo/types/predecessor_
 
 These functions produce a predecessor tree.
 
-- [`bfs_pred::Bfs::predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.Bfs.html#method.predecessors)
-- [`dijkstra_pred::Dijkstra::predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_pred/struct.Dijkstra.html#method.predecessors)
+- [`BfsPred::predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.BfsPred.html#method.predecessors)
+- [`DijkstraPred::predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_pred/struct.DijkstraPred.html#method.predecessors)
 
 ### Distance Matrix
 
