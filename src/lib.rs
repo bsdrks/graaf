@@ -16,7 +16,6 @@
 //!    - [Tarjan](#tarjan)
 //!    - [Breath-First Tree](#breadth-first-tree)
 //!    - [Distance Matrix](#distance-matrix)
-//! - [Naming Conventions](#naming-conventions)
 //!
 //! # Digraph Types
 //!
@@ -200,20 +199,6 @@
 //!   checks if the digraph is connected.
 //! - [`DistanceMatrix::periphery`](algo::DistanceMatrix::periphery) finds the
 //!   periphery of the digraph.
-//!
-//! ## Naming Conventions
-//!
-//! - `s` denotes a source vertex.
-//! - `t` denotes a target vertex.
-//! - `u` denotes a tail vertex or the first vertex in scope.
-//! - `v` denotes a head vertex or the second vertex in scope.
-//! - `w` denotes the weight of an arc.
-//! - `x` denotes a tail vertex or the third vertex in scope.
-//! - `y` denotes a head vertex or the fourth vertex in scope.
-//!
-//! [Adjacency List]: `adjacency_list::Digraph`
-//! [Adjacency Matrix]: `adjacency_matrix::Digraph`
-//! [Weighted Adjacency List]: `adjacency_list_weighted::Digraph`
 
 // Clippy lint groups
 #![deny(clippy::all, clippy::cargo, clippy::pedantic, clippy::nursery)]

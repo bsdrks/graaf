@@ -43,6 +43,10 @@ Fixed
 
 - Fix link in `dfs_dist` documentation.
 
+Removed
+
+- Remove naming conventions from `lib.rs`.
+
 ## [0.85.0] - 2024-08-31
 
 Changed
