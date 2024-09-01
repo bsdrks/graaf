@@ -8,6 +8,7 @@ pub mod bfs_dist;
 pub mod bfs_pred;
 pub mod dfs;
 pub mod dfs_dist;
+pub mod dfs_pred;
 pub mod dijkstra;
 pub mod dijkstra_dist;
 pub mod dijkstra_pred;

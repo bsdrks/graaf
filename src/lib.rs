@@ -137,6 +137,8 @@
 //! - [`Dfs`](algo::dfs::Dfs) iterates over the vertices.
 //! - [`DfsDist`](algo::dfs_dist::DfsDist) iterates over the vertices and their
 //!   distance from the source.
+//! - [`DfsPred`](algo::dfs_pred::DfsPred) iterates over the vertices and their
+//!   predecessors.
 //!
 //! ## Dijkstra
 //!

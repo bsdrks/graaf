@@ -83,11 +83,8 @@
 //! ```
 
 use {
-    crate::op::{
-        Order,
-        OutNeighbors,
-    },
-    std::collections::BTreeSet,
+    crate::op::OutNeighbors,
+    std::collections::HashSet,
 };
 
 /// Depth-first search with distances.
@@ -168,11 +165,11 @@ use {
 ///     Step { u: 4, dist: 3 },
 /// ]));
 /// ```
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct DfsDist<'a, D> {
     digraph: &'a D,
     stack: Vec<(usize, usize)>,
-    visited: BTreeSet<usize>,
+    visited: HashSet<usize>,
 }
 
 /// A step in the depth-first search.
@@ -193,13 +190,12 @@ impl<'a, D> DfsDist<'a, D> {
     /// * `sources`: The source vertices.
     pub fn new<'b, T>(digraph: &'a D, sources: T) -> Self
     where
-        D: Order + OutNeighbors,
         T: IntoIterator<Item = &'b usize>,
     {
         Self {
             digraph,
             stack: sources.into_iter().map(|&u| (u, 0)).collect(),
-            visited: BTreeSet::new(),
+            visited: HashSet::new(),
         }
     }
 }

@@ -1,7 +1,7 @@
 //! Bellman-Ford-Moore
 //!
 //! The Bellman-Ford-Moore algorithm is a single-source shortest-path algorithm
-//! for weighted digraphs.
+//! for arc-weighted digraphs.
 //!
 //! The time complexity is *O*(*ve*).
 //!
@@ -68,12 +68,12 @@ use crate::op::{
     Order,
 };
 
-/// Computes the distances from the source vertex to all other vertices in a
-/// weighted digraph.
+/// Computes the distances from the source vertex to all other vertices in an
+/// arc-weighted digraph.
 ///
 /// # Arguments
 ///
-/// * `digraph`: The weighted digraph.
+/// * `digraph`: The digraph.
 /// * `s`: The source vertex.
 ///
 /// # Returns

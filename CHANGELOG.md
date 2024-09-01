@@ -24,6 +24,38 @@
 - Review documentation.
 - Review the documentation test examples.
 
+## [0.87.0] - 2024-09-01
+
+Added
+
+- Add `algo::dfs_pred::DfsPred`.
+- Add `algo::dfs_pred::Step`.
+- Add unit test `dfs_pred::iter_bang_jensen_196`.
+- Add unit test `dfs_pred::iter_bang_jensen_34`.
+- Add unit test `dfs_pred::iter_bang_jensen_94`.
+- Add unit test `dfs_pred::iter_kattis_builddeps`.
+- Add unit test `dfs_pred::iter_kattis_cantinaofbabel_1`.
+- Add unit test `dfs_pred::iter_kattis_cantinaofbabel_2`.
+- Add unit test `dfs_pred::iter_kattis_escapewallmaria_1`.
+- Add unit test `dfs_pred::iter_kattis_escapewallmaria_2`.
+- Add unit test `dfs_pred::iter_kattis_escapewallmaria_3`.
+- Implement `Iterator for DfsPred`.
+- Implement `dfs_pred::DfsPred::new`.
+
+Changed
+
+- Breaking: `dfs::Dfs::new` is no longer `const`.
+- Breaking: `dfs::Dfs` no longer implements `Hash`.
+- Breaking: `dfs::Dfs` no longer implements `Ord`.
+- Breaking: `dfs::Dfs` no longer implements `PartialOrd`.
+- Breaking: `dfs_dist::DfsDist` no longer implements `Hash`.
+- Breaking: `dfs_dist::DfsDist` no longer implements `Ord`.
+- Breaking: `dfs_dist::DfsDist` no longer implements `PartialOrd`.
+- Use a `HashMap` to track visited vertices in `dfs::Dfs`.
+- Use a `HashMap` to track visited vertices in `dfs_dist::DfsDist`.
+- `dfs::Dfs::new<D>` is no longer constrained to `D: Order + Outneighbors`.
+- `dfs_dist::DfsDist::new<D>` is no longer constrained to `D: Order + Outneighbors`.
+
 ## [0.86.0] - 2024-09-01
 
 Changed

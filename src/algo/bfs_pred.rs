@@ -1,4 +1,4 @@
-//! Breadth-first search: vertices and their predecessors.
+//! Breadth-first search with predecessors
 //!
 //! Breadth-first search explores the vertices of an unweighted digraph in
 //! order of their distance from a source. The time complexity is
@@ -8,8 +8,8 @@
 //!
 //! ## Single source
 //!
-//! Red marks the path starting at vertex `0`, with `p` denoting the
-//! predecessor. Note that, in the digraph, vertex `3` preceeds vertex `0`, but
+//! Red marks the path starting at vertex `0` and `p` denotes the predecessor.
+//! Note that, in the digraph, vertex `3` preceeds vertex `0`, but
 //! the BFS algorithm starts at vertex `0`.
 //!
 //! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_1.svg?)
@@ -107,14 +107,14 @@ pub struct Step {
     pub v: usize,
 }
 
-/// Breadth-first search: vertices and their predecessors.
+/// Breadth-first search with predecessors.
 ///
 /// # Examples
 ///
 /// ## Single source
 ///
-/// Red marks the path starting at vertex `0`, with `p` denoting the
-/// predecessor. Note that, in the digraph, vertex `3` preceeds vertex `0`, but
+/// Red marks the path starting at vertex `0` and `p` denotes the predecessor.
+/// Note that, in the digraph, vertex `3` preceeds vertex `0`, but
 /// the BFS algorithm starts at vertex `0`.
 ///
 /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_1.svg?)
@@ -212,6 +212,7 @@ impl<'a, D> BfsPred<'a, D> {
 
         for &source in sources {
             queue.push_back(Step { u: None, v: source });
+
             let _ = visited.insert(source);
         }
 
@@ -227,8 +228,8 @@ impl<'a, D> BfsPred<'a, D> {
     /// # Panics
     ///
     /// * Panics if `self.next` panics.
-    /// * Panics if a source vertex is not in the digraph.
-    /// * Panics if a successor vertex is not in the digraph.
+    /// * Panics if a source vertex is not in `self.digraph`.
+    /// * Panics if a successor vertex is not in `self.digraph`.
     ///
     /// # Examples
     ///

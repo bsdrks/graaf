@@ -152,6 +152,7 @@ impl<'a, D> Bfs<'a, D> {
 
         for &source in sources {
             queue.push_back(source);
+
             let _ = visited.insert(source);
         }
 

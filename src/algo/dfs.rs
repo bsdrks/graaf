@@ -64,11 +64,8 @@
 //! ```
 
 use {
-    crate::op::{
-        Order,
-        OutNeighbors,
-    },
-    std::collections::BTreeSet,
+    crate::op::OutNeighbors,
+    std::collections::HashSet,
 };
 
 /// Depth-first search.
@@ -130,11 +127,11 @@ use {
 ///
 /// assert!(Dfs::new(&digraph, vec![3, 7]).eq([7, 6, 5, 3, 0, 1, 4]));
 /// ```
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Dfs<'a, D> {
     digraph: &'a D,
     stack: Vec<usize>,
-    visited: BTreeSet<usize>,
+    visited: HashSet<usize>,
 }
 
 impl<'a, D> Iterator for Dfs<'a, D>
@@ -169,14 +166,11 @@ impl<'a, D> Dfs<'a, D> {
     ///
     /// * `digraph`: The digraph.
     /// * `sources`: The source vertices.
-    pub const fn new(digraph: &'a D, sources: Vec<usize>) -> Self
-    where
-        D: Order + OutNeighbors,
-    {
+    pub fn new(digraph: &'a D, sources: Vec<usize>) -> Self {
         Self {
             digraph,
             stack: sources,
-            visited: BTreeSet::new(),
+            visited: HashSet::new(),
         }
     }
 }

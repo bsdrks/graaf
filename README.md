@@ -28,7 +28,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.86.0"
+graaf = "0.87.0"
 ```
 
 ## Digraph Types
@@ -125,6 +125,7 @@ A depth-first search explores the vertices of an unweighted digraph in order of 
 
 - [`Dfs`](https://docs.rs/graaf/latest/graaf/algo/dfs/struct.Dfs.html) iterates over the vertices.
 - [`DfsDist`](https://docs.rs/graaf/latest/graaf/algo/dfs_dist/struct.DfsDist.html) iterates over the vertices and their distance from the source.
+- [`DfsPred`](https://docs.rs/graaf/latest/graaf/algo/dfs_pred/struct.DfsPred.html) iterates over the vertices and their predecessors.
 
 ### Dijkstra
 

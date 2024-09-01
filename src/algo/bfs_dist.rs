@@ -1,4 +1,4 @@
-//! Breadth-first search iterator with distances
+//! Breadth-first search with distances
 //!
 //! Breadth-first search explores the vertices of an unweighted digraph in
 //! order of their distance from a source. The time complexity is
@@ -94,7 +94,7 @@ use {
     },
 };
 
-/// Breadth-first search iterator with distances.
+/// Breadth-first search with distances.
 ///
 /// # Examples
 ///
@@ -222,8 +222,8 @@ impl<'a, D> BfsDist<'a, D> {
     /// # Panics
     ///
     /// * Panics if `self.next` panics.
-    /// * Panics if a source vertex is not in the digraph.
-    /// * Panics if a successor vertex is not in the digraph.
+    /// * Panics if a source vertex is not in `self.digraph`.
+    /// * Panics if a successor vertex is not in `self.digraph`.
     ///
     /// # Examples
     ///

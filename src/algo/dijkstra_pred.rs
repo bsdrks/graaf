@@ -1,4 +1,4 @@
-//! Dijkstra's algorithm: vertices and their predecessors.
+//! Dijkstra's algorithm with predecessors
 //!
 //! Dijkstra's algorithm with binary heap finds the shortest path in an
 //! arc-weighted digraph.[^1]
@@ -112,7 +112,7 @@ pub struct Step {
     pub v: usize,
 }
 
-/// Dijkstra's algorithm: vertices and their predecessors.
+/// Dijkstra's algorithm with predecessors.
 ///
 /// # Examples
 ///
@@ -241,8 +241,8 @@ where
     /// # Panics
     ///
     /// * Panics if `self.next` panics.
-    /// * Panics if a source vertex is not in the digraph.
-    /// * Panics if a successor vertex is not in the digraph.
+    /// * Panics if a source vertex is not in `self.digraph`.
+    /// * Panics if a successor vertex is not in `self.digraph`.
     ///
     /// # Examples
     ///
