@@ -182,8 +182,8 @@
 //!
 //! These functions produce a predecessor tree.
 //!
-//! - [`bfs_pred::Bfs::predecessors`](algo::bfs_pred::Bfs::predecessors)
-//! - [`dijkstra_pred::Dijkstra::predecessors`](algo::dijkstra_pred::Dijkstra::predecessors)
+//! - [`bfs_pred::Bfs::predecessors`](algo::bfs_pred::BfsPred::predecessors)
+//! - [`dijkstra_pred::Dijkstra::predecessors`](algo::dijkstra_pred::DijkstraPred::predecessors)
 //!
 //! ## Distance Matrix
 //!
