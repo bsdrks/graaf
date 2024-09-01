@@ -636,11 +636,11 @@ mod tests {
 
         assert!(DfsPred::new(&digraph, &[5]).predecessors().into_iter().eq([
             None,
-            None,
+            Some(2),
             Some(6),
             None,
             None,
-            Some(1),
+            None,
             Some(5),
             None,
             None,
