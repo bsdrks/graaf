@@ -16,7 +16,7 @@
 //! use graaf::{
 //!     adjacency_list::Digraph,
 //!     algo::bfs_dist::{
-//!         Bfs,
+//!         BfsDist,
 //!         Step,
 //!     },
 //!     gen::Empty,
@@ -31,7 +31,7 @@
 //! digraph.add_arc(2, 5);
 //! digraph.add_arc(3, 0);
 //!
-//! assert!(Bfs::new(&digraph, &[0]).eq([
+//! assert!(BfsDist::new(&digraph, &[0]).eq([
 //!     Step { u: 0, dist: 0 },
 //!     Step { u: 1, dist: 1 },
 //!     Step { u: 2, dist: 2 },
@@ -51,7 +51,7 @@
 //! use graaf::{
 //!     adjacency_list::Digraph,
 //!     algo::bfs_dist::{
-//!         Bfs,
+//!         BfsDist,
 //!         Step,
 //!     },
 //!     gen::Empty,
@@ -71,7 +71,7 @@
 //! digraph.add_arc(6, 7);
 //! digraph.add_arc(7, 6);
 //!
-//! assert!(Bfs::new(&digraph, &[3, 7]).eq([
+//! assert!(BfsDist::new(&digraph, &[3, 7]).eq([
 //!     Step { u: 3, dist: 0 },
 //!     Step { u: 7, dist: 0 },
 //!     Step { u: 0, dist: 1 },
@@ -108,7 +108,7 @@ use {
 /// use graaf::{
 ///     adjacency_list::Digraph,
 ///     algo::bfs_dist::{
-///         Bfs,
+///         BfsDist,
 ///         Step,
 ///     },
 ///     gen::Empty,
@@ -123,7 +123,7 @@ use {
 /// digraph.add_arc(2, 5);
 /// digraph.add_arc(3, 0);
 ///
-/// assert!(Bfs::new(&digraph, &[0]).eq([
+/// assert!(BfsDist::new(&digraph, &[0]).eq([
 ///     Step { u: 0, dist: 0 },
 ///     Step { u: 1, dist: 1 },
 ///     Step { u: 2, dist: 2 },
@@ -143,7 +143,7 @@ use {
 /// use graaf::{
 ///     adjacency_list::Digraph,
 ///     algo::bfs_dist::{
-///         Bfs,
+///         BfsDist,
 ///         Step,
 ///     },
 ///     gen::Empty,
@@ -163,7 +163,7 @@ use {
 /// digraph.add_arc(6, 7);
 /// digraph.add_arc(7, 6);
 ///
-/// assert!(Bfs::new(&digraph, &[3, 7]).eq([
+/// assert!(BfsDist::new(&digraph, &[3, 7]).eq([
 ///     Step { u: 3, dist: 0 },
 ///     Step { u: 7, dist: 0 },
 ///     Step { u: 0, dist: 1 },
@@ -175,7 +175,7 @@ use {
 /// ]));
 /// ```
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub struct Bfs<'a, D> {
+pub struct BfsDist<'a, D> {
     digraph: &'a D,
     queue: VecDeque<(usize, usize)>,
     visited: HashSet<usize>,
@@ -190,7 +190,7 @@ pub struct Step {
     pub dist: usize,
 }
 
-impl<'a, D> Bfs<'a, D> {
+impl<'a, D> BfsDist<'a, D> {
     /// Constructs a new breadth-first search.
     ///
     /// # Arguments
@@ -230,7 +230,7 @@ impl<'a, D> Bfs<'a, D> {
     /// ```
     /// use graaf::{
     ///     adjacency_list::Digraph,
-    ///     algo::bfs_dist::Bfs,
+    ///     algo::bfs_dist::BfsDist,
     ///     gen::Empty,
     ///     op::AddArc,
     /// };
@@ -246,9 +246,12 @@ impl<'a, D> Bfs<'a, D> {
     /// digraph.add_arc(1, 2);
     /// digraph.add_arc(3, 0);
     ///
-    /// assert!(Bfs::new(&digraph, &[0])
-    ///     .distances()
-    ///     .eq(&[0, 1, 2, usize::MAX]));
+    /// assert!(BfsDist::new(&digraph, &[0]).distances().eq(&[
+    ///     0,
+    ///     1,
+    ///     2,
+    ///     usize::MAX
+    /// ]));
     /// ```
     #[must_use]
     pub fn distances(&mut self) -> Vec<usize>
@@ -265,7 +268,7 @@ impl<'a, D> Bfs<'a, D> {
     }
 }
 
-impl<'a, D> Iterator for Bfs<'a, D>
+impl<'a, D> Iterator for BfsDist<'a, D>
 where
     D: OutNeighbors,
 {
@@ -319,14 +322,14 @@ mod tests {
     fn distances_trivial() {
         let digraph = Digraph::trivial();
 
-        assert!(Bfs::new(&digraph, &[0]).distances().eq(&[0]));
+        assert!(BfsDist::new(&digraph, &[0]).distances().eq(&[0]));
     }
 
     #[test]
     fn distances_bang_jensen_94() {
         let digraph = bang_jensen_94();
 
-        assert!(Bfs::new(&digraph, &[0])
+        assert!(BfsDist::new(&digraph, &[0])
             .distances()
             .eq(&[0, 1, 1, 2, 2, 2, 3]));
     }
@@ -335,7 +338,7 @@ mod tests {
     fn distances_kattis_escapewallmaria_1() {
         let digraph = kattis_escapewallmaria_1();
 
-        assert!(Bfs::new(&digraph, &[5]).distances().eq(&[
+        assert!(BfsDist::new(&digraph, &[5]).distances().eq(&[
             usize::MAX,
             usize::MAX,
             usize::MAX,
@@ -359,7 +362,7 @@ mod tests {
     fn distances_kattis_escapewallmaria_2() {
         let digraph = kattis_escapewallmaria_2();
 
-        assert!(Bfs::new(&digraph, &[5]).distances().eq(&[
+        assert!(BfsDist::new(&digraph, &[5]).distances().eq(&[
             usize::MAX,
             usize::MAX,
             usize::MAX,
@@ -383,7 +386,7 @@ mod tests {
     fn distances_kattis_escapewallmaria_3() {
         let digraph = kattis_escapewallmaria_3();
 
-        assert!(Bfs::new(&digraph, &[1]).distances().eq(&[
+        assert!(BfsDist::new(&digraph, &[1]).distances().eq(&[
             usize::MAX,
             0,
             1,
@@ -407,7 +410,7 @@ mod tests {
     fn iter_bang_jensen_196() {
         let digraph = bang_jensen_196();
 
-        assert!(Bfs::new(&digraph, &[0]).eq([
+        assert!(BfsDist::new(&digraph, &[0]).eq([
             Step { u: 0, dist: 0 },
             Step { u: 1, dist: 1 },
             Step { u: 4, dist: 1 },
@@ -423,7 +426,7 @@ mod tests {
     fn iter_bang_jensen_34() {
         let digraph = bang_jensen_34();
 
-        assert!(Bfs::new(&digraph, &[0])
+        assert!(BfsDist::new(&digraph, &[0])
             .eq([Step { u: 0, dist: 0 }, Step { u: 4, dist: 1 }]));
     }
 
@@ -431,7 +434,7 @@ mod tests {
     fn iter_bang_jensen_94() {
         let digraph = bang_jensen_94();
 
-        assert!(Bfs::new(&digraph, &[0]).eq([
+        assert!(BfsDist::new(&digraph, &[0]).eq([
             Step { u: 0, dist: 0 },
             Step { u: 1, dist: 1 },
             Step { u: 2, dist: 1 },
@@ -446,7 +449,7 @@ mod tests {
     fn iter_kattis_builddeps() {
         let digraph = kattis_builddeps();
 
-        assert!(Bfs::new(&digraph, &[0]).eq([
+        assert!(BfsDist::new(&digraph, &[0]).eq([
             Step { u: 0, dist: 0 },
             Step { u: 3, dist: 1 },
             Step { u: 4, dist: 1 },
@@ -458,7 +461,7 @@ mod tests {
     fn iter_kattis_cantinaofbabel_1() {
         let digraph = kattis_cantinaofbabel_1();
 
-        assert!(Bfs::new(&digraph, &[0]).eq([
+        assert!(BfsDist::new(&digraph, &[0]).eq([
             Step { u: 0, dist: 0 },
             Step { u: 1, dist: 1 },
             Step { u: 2, dist: 2 },
@@ -477,7 +480,7 @@ mod tests {
     fn iter_kattis_cantinaofbabel_2() {
         let digraph = kattis_cantinaofbabel_2();
 
-        assert!(Bfs::new(&digraph, &[0]).eq([
+        assert!(BfsDist::new(&digraph, &[0]).eq([
             Step { u: 0, dist: 0 },
             Step { u: 1, dist: 1 },
             Step { u: 7, dist: 2 },
@@ -493,7 +496,7 @@ mod tests {
     fn iter_kattis_escapewallmaria_1() {
         let digraph = kattis_escapewallmaria_1();
 
-        assert!(Bfs::new(&digraph, &[5]).eq([
+        assert!(BfsDist::new(&digraph, &[5]).eq([
             Step { u: 5, dist: 0 },
             Step { u: 6, dist: 1 },
             Step { u: 9, dist: 1 },
@@ -506,7 +509,7 @@ mod tests {
     fn iter_kattis_escapewallmaria_2() {
         let digraph = kattis_escapewallmaria_2();
 
-        assert!(Bfs::new(&digraph, &[5]).eq([
+        assert!(BfsDist::new(&digraph, &[5]).eq([
             Step { u: 5, dist: 0 },
             Step { u: 6, dist: 1 },
             Step { u: 9, dist: 1 }
@@ -517,7 +520,7 @@ mod tests {
     fn iter_kattis_escapewallmaria_3() {
         let digraph = kattis_escapewallmaria_3();
 
-        assert!(Bfs::new(&digraph, &[1]).eq([
+        assert!(BfsDist::new(&digraph, &[1]).eq([
             Step { u: 1, dist: 0 },
             Step { u: 2, dist: 1 },
             Step { u: 5, dist: 1 },

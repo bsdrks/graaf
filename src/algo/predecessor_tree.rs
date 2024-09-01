@@ -9,7 +9,7 @@
 //! use graaf::{
 //!     adjacency_list::Digraph,
 //!     algo::{
-//!         bfs_pred::Bfs,
+//!         bfs_pred::BfsPred,
 //!         PredecessorTree,
 //!     },
 //!     gen::Empty,
@@ -27,7 +27,7 @@
 //! digraph.add_arc(1, 2);
 //! digraph.add_arc(3, 0);
 //!
-//! assert!(Bfs::new(&digraph, &[0]).predecessors().into_iter().eq([
+//! assert!(BfsPred::new(&digraph, &[0]).predecessors().into_iter().eq([
 //!     None,
 //!     Some(0),
 //!     Some(1),
@@ -190,14 +190,14 @@ impl From<Vec<Option<usize>>> for PredecessorTree {
 impl Index<usize> for PredecessorTree {
     type Output = Option<usize>;
 
-    fn index(&self, u: usize) -> &Self::Output {
-        &self.pred[u]
+    fn index(&self, index: usize) -> &Self::Output {
+        &self.pred[index]
     }
 }
 
 impl IndexMut<usize> for PredecessorTree {
-    fn index_mut(&mut self, u: usize) -> &mut Self::Output {
-        &mut self.pred[u]
+    fn index_mut(&mut self, index: usize) -> &mut Self::Output {
+        &mut self.pred[index]
     }
 }
 

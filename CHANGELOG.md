@@ -24,6 +24,25 @@
 - Review documentation.
 - Review the documentation test examples.
 
+## [0.86.0] - 2024-09-01
+
+Changed
+
+- Breaking: rename `bfs_dist::Bfs` to `bfs_dist::BfsDist`.
+- Breaking: rename `bfs_pred::Bfs` to `bfs_pred::BfsPred`.
+- Breaking: rename `dfs_dist::Dfs` to `dfs_dist::DfsDist`.
+- Breaking: rename `dijkstra_dist::Dijkstra` to `dijkstra_dist::DijkstraDist`.
+- Breaking: rename `dijkstra_pred::Dijkstra` to `dijkstra_pred::DijkstraPred`.
+- Deny `renamed_function_params` lint.
+- Rename argument in `Index for DistanceMatrix` to `index`.
+- Rename argument in `Index for PredecessorTree` to `index`.
+- Rename argument in `IndexMut for DistanceMatrix` to `index`.
+- Rename argument in `IndexMut for PredecessorTree` to `index`.
+
+Fixed
+
+- Fix link in `dfs_dist` documentation.
+
 ## [0.85.0] - 2024-08-31
 
 Changed

@@ -9,7 +9,7 @@ use {
         },
         algo::{
             bellman_ford_moore,
-            dijkstra_dist::Dijkstra,
+            dijkstra_dist::DijkstraDist,
             floyd_warshall,
         },
     },
@@ -32,7 +32,7 @@ fn dijkstra(bencher: Bencher<'_, '_>) {
     let digraph = kattis_bryr_3_usize();
 
     bencher.bench_local(|| {
-        let mut dijkstra = Dijkstra::new(&digraph, &[0]);
+        let mut dijkstra = DijkstraDist::new(&digraph, &[0]);
         let _ = dijkstra.distances();
     });
 }

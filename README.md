@@ -28,7 +28,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.85.0"
+graaf = "0.86.0"
 ```
 
 ## Digraph Types
@@ -112,30 +112,30 @@ The Bellman-Ford-Moore algorithm finds the shortest paths in an arc-weighted dig
 
 A breadth-first search explores the vertices of an unweighted digraph in order of their distance from a source.
 
-- [`bfs::Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs/struct.Bfs.html) iterates over the vertices.
-- [`bfs_dist::Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs_dist/struct.Bfs.html) iterates over the vertices and their distance from the source.
-- [`bfs_pred::Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.Bfs.html) iterates over the vertices and their successors.
-- [`bfs_dist::Bfs::distances`](https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.Bfs.html#method.distances) finds the shortest distances.
-- [`bfs_pred::Bfs::predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.Bfs.html#method.predecessors) finds the predecessors.
-- [`bfs_pred::Bfs::shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.Bfs.html#method.shortest_path) finds the shortest path.
+- [`Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs/struct.Bfs.html) iterates over the vertices.
+- [`BfsDist`](https://docs.rs/graaf/latest/graaf/algo/bfs_dist/struct.BfsDist.html) iterates over the vertices and their distance from the source.
+- [`BfsPred`](https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.BfsPred.html) iterates over the vertices and their predecessors.
+- [`BfsDist::distances`](https://docs.rs/graaf/latest/graaf/algo/bfs_dist/struct.BfsDist.html#method.distances) finds the shortest distances.
+- [`BfsPred::predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.BfsPred.html#method.predecessors) finds the predecessors.
+- [`BfsPred::shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.BfsPred.html#method.shortest_path) finds the shortest path.
 
 ### Depth-First Search (DFS)
 
 A depth-first search explores the vertices of an unweighted digraph in order of their depth from a source.
 
-- [`dfs::Dfs`](https://docs.rs/graaf/latest/graaf/algo/dfs/struct.Dfs.html) iterates over the vertices.
-- [`dfs_dist::Dfs`](https://docs.rs/graaf/latest/graaf/algo/dfs_dist/struct.Dfs.html) iterates over the vertices and their distance from the source.
+- [`Dfs`](https://docs.rs/graaf/latest/graaf/algo/dfs/struct.Dfs.html) iterates over the vertices.
+- [`DfsDist`](https://docs.rs/graaf/latest/graaf/algo/dfs_dist/struct.DfsDist.html) iterates over the vertices and their distance from the source.
 
 ### Dijkstra
 
 Dijkstra's algorithm finds the shortest paths in an arc-weighted digraph.
 
-- [`dijkstra::Dijkstra`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/struct.Dijkstra.html) iterates over the vertices.
-- [`dijkstra_dist::Dijkstra`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_dist/struct.Dijkstra.html) iterates over the vertices.
-- [`dijkstra_pred::Dijkstra`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_pred/struct.Dijkstra.html) iterates over the vertices and their predecessors.
-- [`dijkstra_dist::Dijkstra::distances`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_dist/struct.Dijkstra.html#method.distances) finds the shortest distances.
-- [`dijkstra_pred::Dijkstra::predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_pred/struct.Dijkstra.html#method.predecessors) finds the predecessors.
-- [`dijkstra_pred::Dijkstra::shortest_path`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_pred/struct.Dijkstra.html#method.shortest_path) finds the shortest path.
+- [`Dijkstra`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/struct.Dijkstra.html) iterates over the vertices.
+- [`DijkstraDist`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_dist/struct.DijkstraDist.html) iterates over the vertices.
+- [`DijkstraPred`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_pred/struct.DijkstraPred.html) iterates over the vertices and their predecessors.
+- [`DijkstraDist::distances`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_dist/struct.DijkstraDist.html#method.distances) finds the shortest distances.
+- [`DijkstraPred::predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_pred/struct.DijkstraPred.html#method.predecessors) finds the predecessors.
+- [`DijkstraPred::shortest_path`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_pred/struct.DijkstraPred.html#method.shortest_path) finds the shortest path.
 
 ### Floyd-Warshall
 

@@ -10,8 +10,8 @@ use {
         adjacency_matrix,
         algo::{
             bellman_ford_moore,
-            bfs_dist::Bfs,
-            dijkstra_dist::Dijkstra,
+            bfs_dist::BfsDist,
+            dijkstra_dist::DijkstraDist,
             floyd_warshall,
         },
     },
@@ -35,7 +35,7 @@ fn bfs_adjacency_matrix(bencher: Bencher<'_, '_>) {
     let digraph = adjacency_matrix::Digraph::from(bang_jensen_94());
 
     bencher.bench_local(|| {
-        let mut bfs = Bfs::new(&digraph, &[0]);
+        let mut bfs = BfsDist::new(&digraph, &[0]);
         let _ = bfs.distances();
     });
 }
@@ -45,7 +45,7 @@ fn bfs_adjacency_list(bencher: Bencher<'_, '_>) {
     let digraph = bang_jensen_94();
 
     bencher.bench_local(|| {
-        let mut bfs = Bfs::new(&digraph, &[0]);
+        let mut bfs = BfsDist::new(&digraph, &[0]);
         let _ = bfs.distances();
     });
 }
@@ -55,7 +55,7 @@ fn dijkstra(bencher: Bencher<'_, '_>) {
     let digraph = bang_jensen_94_usize();
 
     bencher.bench_local(|| {
-        let mut dijkstra = Dijkstra::new(&digraph, &[0]);
+        let mut dijkstra = DijkstraDist::new(&digraph, &[0]);
         let _ = dijkstra.distances();
     });
 }

@@ -9,8 +9,8 @@ use {
         adjacency_matrix,
         algo::{
             bellman_ford_moore,
-            bfs_dist::Bfs,
-            dijkstra_dist::Dijkstra,
+            bfs_dist::BfsDist,
+            dijkstra_dist::DijkstraDist,
         },
         gen::ErdosRenyi,
     },
@@ -30,7 +30,7 @@ fn bfs_adjacency_list(bencher: Bencher<'_, '_>) {
         adjacency_list::Digraph::erdos_renyi(ORDER, PROBABILITY, SEED);
 
     bencher.bench_local(|| {
-        let mut bfs = Bfs::new(&digraph, &[0]);
+        let mut bfs = BfsDist::new(&digraph, &[0]);
         let dist = bfs.distances();
 
         assert_eq!(dist[0], 0);
@@ -45,7 +45,7 @@ fn bfs_adjacency_matrix(bencher: Bencher<'_, '_>) {
     );
 
     bencher.bench_local(|| {
-        let mut bfs = Bfs::new(&digraph, &[0]);
+        let mut bfs = BfsDist::new(&digraph, &[0]);
         let dist = bfs.distances();
 
         assert_eq!(dist[0], 0);
@@ -75,7 +75,7 @@ fn dijkstra(bencher: Bencher<'_, '_>) {
     );
 
     bencher.bench_local(|| {
-        let mut dijkstra = Dijkstra::new(&digraph, &[0]);
+        let mut dijkstra = DijkstraDist::new(&digraph, &[0]);
         let dist = dijkstra.distances();
 
         assert_eq!(dist[&0], 0);

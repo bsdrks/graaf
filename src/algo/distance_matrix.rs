@@ -410,14 +410,14 @@ impl<W> DistanceMatrix<W> {
 impl<W> Index<usize> for DistanceMatrix<W> {
     type Output = Vec<W>;
 
-    fn index(&self, u: usize) -> &Self::Output {
-        &self.dist[u]
+    fn index(&self, index: usize) -> &Self::Output {
+        &self.dist[index]
     }
 }
 
 impl<W> IndexMut<usize> for DistanceMatrix<W> {
-    fn index_mut(&mut self, u: usize) -> &mut Self::Output {
-        &mut self.dist[u]
+    fn index_mut(&mut self, index: usize) -> &mut Self::Output {
+        &mut self.dist[index]
     }
 }
 
