@@ -102,7 +102,11 @@
 
 use {
     crate::{
-        gen::Empty,
+        gen::{
+            Biclique,
+            Circuit,
+            Empty,
+        },
         op::{
             AddArc,
             ArcWeight,
@@ -119,10 +123,6 @@ use {
             RemoveArc,
             Size,
             Vertices,
-        },
-        r#gen::{
-            Biclique,
-            Circuit,
         },
     },
     std::collections::BTreeSet,

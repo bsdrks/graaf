@@ -3,9 +3,11 @@
 use graaf::{
     adjacency_list,
     adjacency_matrix,
-    gen::Biclique,
+    gen::{
+        Biclique,
+        Empty,
+    },
     op::AddArc,
-    r#gen::Empty,
 };
 
 fn main() {

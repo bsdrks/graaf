@@ -59,8 +59,7 @@ use super::IsSubdigraph;
 /// # Implementing `IsSuperdigraph`
 ///
 /// Provide an implementation of `is_superdigraph` that returns whether the
-/// digraph is a superdigraph of the given digraph OR implement `HasArc`,
-/// `Arcs`, and `Vertices`.
+/// digraph is a superdigraph of the given digraph OR implement `IsSubDigraph`.
 ///
 /// ```
 /// use {

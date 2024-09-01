@@ -83,7 +83,11 @@
 //! ```
 
 use {
-    crate::op::OutNeighbors,
+    super::PredecessorTree,
+    crate::op::{
+        Order,
+        OutNeighbors,
+    },
     std::collections::HashSet,
 };
 
@@ -204,6 +208,110 @@ impl<'a, D> DfsPred<'a, D> {
             stack,
             visited: HashSet::new(),
         }
+    }
+
+    /// Finds the predecessors tree.
+    ///
+    /// # Panics
+    ///
+    /// * Panics if the `self.next` panics.
+    /// * Panics if a source vertex is not in `self.digraph`.
+    /// * Panics if a successor vertex is not in `self.digraph`.
+    ///
+    /// # Examples
+    ///
+    /// ## Single source
+    ///
+    /// Red marks the traversal starting at vertex `0` and the dashed arcs mark
+    /// the predecessor tree.
+    ///
+    /// ![DFS and the predecessor tree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_pred_predecessors_1-0.87.1.svg?)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     algo::{
+    ///         dfs_pred::DfsPred,
+    ///         PredecessorTree,
+    ///     },
+    ///     gen::Empty,
+    ///     op::AddArc,
+    /// };
+    ///
+    /// let mut digraph = Digraph::empty(6);
+    ///
+    /// digraph.add_arc(0, 1);
+    /// digraph.add_arc(1, 2);
+    /// digraph.add_arc(1, 4);
+    /// digraph.add_arc(2, 5);
+    ///
+    /// assert!(DfsPred::new(&digraph, &[0]).predecessors().into_iter().eq([
+    ///     None,
+    ///     Some(0),
+    ///     Some(1),
+    ///     None,
+    ///     Some(1),
+    ///     Some(2),
+    /// ]));
+    /// ```
+    ///
+    /// ## Multiple sources
+    ///
+    /// Red marks the traversal starting at vertex `3` and blue marks the
+    /// traversal starting at vertex `7`. The dashed arcs mark the predecessor
+    /// tree.
+    ///
+    /// ![DFS and the predecessor tree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_pred_predecessors_multi_source_1-0.87.1.svg?)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     algo::{
+    ///         dfs_pred::DfsPred,
+    ///         PredecessorTree,
+    ///     },
+    ///     gen::Empty,
+    ///     op::AddArc,
+    /// };
+    ///
+    /// let mut digraph = Digraph::empty(8);
+    ///
+    /// digraph.add_arc(0, 1);
+    /// digraph.add_arc(1, 2);
+    /// digraph.add_arc(1, 4);
+    /// digraph.add_arc(2, 3);
+    /// digraph.add_arc(2, 5);
+    /// digraph.add_arc(2, 6);
+    /// digraph.add_arc(3, 0);
+    /// digraph.add_arc(6, 5);
+    /// digraph.add_arc(6, 7);
+    /// digraph.add_arc(7, 6);
+    ///
+    /// assert!(DfsPred::new(&digraph, &[3, 7])
+    ///     .predecessors()
+    ///     .into_iter()
+    ///     .eq([
+    ///         Some(3),
+    ///         Some(0),
+    ///         Some(1),
+    ///         None,
+    ///         Some(1),
+    ///         Some(6),
+    ///         Some(7),
+    ///         None
+    ///     ]));
+    /// ```
+    pub fn predecessors(&mut self) -> PredecessorTree
+    where
+        D: Order + OutNeighbors,
+    {
+        let mut pred = PredecessorTree::new(self.digraph.order());
+
+        for Step { u, v } in self {
+            pred[v] = u;
+        }
+
+        pred
     }
 }
 
@@ -372,6 +480,177 @@ mod tests {
             Step { u: Some(13), v: 12 },
             Step { u: Some(5), v: 6 },
             Step { u: Some(6), v: 2 },
+        ]));
+    }
+
+    #[test]
+    fn predecessors_bang_jensen_196() {
+        let digraph = bang_jensen_196();
+
+        assert!(DfsPred::new(&digraph, &[0]).predecessors().into_iter().eq([
+            None,
+            Some(0),
+            Some(1),
+            Some(2),
+            Some(0),
+            Some(7),
+            Some(5),
+            Some(0)
+        ]));
+    }
+
+    #[test]
+    fn predecessors_bang_jensen_34() {
+        let digraph = bang_jensen_34();
+
+        assert!(DfsPred::new(&digraph, &[0]).predecessors().into_iter().eq([
+            None,
+            None,
+            None,
+            None,
+            Some(0),
+            None
+        ]));
+    }
+
+    #[test]
+    fn predecessors_bang_jensen_94() {
+        let digraph = bang_jensen_94();
+
+        assert!(DfsPred::new(&digraph, &[0]).predecessors().into_iter().eq([
+            None,
+            Some(0),
+            Some(0),
+            Some(1),
+            Some(2),
+            Some(2),
+            Some(4)
+        ]));
+    }
+
+    #[test]
+    fn predecessors_kattis_builddeps() {
+        let digraph = kattis_builddeps();
+
+        assert!(DfsPred::new(&digraph, &[0]).predecessors().into_iter().eq([
+            None,
+            Some(3),
+            None,
+            Some(0),
+            Some(0),
+            None
+        ]));
+    }
+
+    #[test]
+    fn predecessors_kattis_cantinaofbabel_1() {
+        let digraph = kattis_cantinaofbabel_1();
+
+        assert!(DfsPred::new(&digraph, &[0]).predecessors().into_iter().eq([
+            None,
+            Some(0),
+            Some(1),
+            Some(4),
+            Some(1),
+            Some(3),
+            Some(5),
+            Some(3),
+            None,
+            Some(11),
+            Some(3),
+            Some(3)
+        ]));
+    }
+
+    #[test]
+    fn predecessors_kattis_cantinaofbabel_2() {
+        let digraph = kattis_cantinaofbabel_2();
+
+        assert!(DfsPred::new(&digraph, &[0]).predecessors().into_iter().eq([
+            None,
+            Some(0),
+            Some(7),
+            Some(5),
+            Some(3),
+            Some(2),
+            Some(5),
+            Some(1),
+            None,
+            None,
+            None,
+            None
+        ]));
+    }
+
+    #[test]
+    fn predecessors_kattis_escapewallmaria_1() {
+        let digraph = kattis_escapewallmaria_1();
+
+        assert!(DfsPred::new(&digraph, &[5]).predecessors().into_iter().eq([
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            Some(5),
+            None,
+            None,
+            Some(5),
+            None,
+            None,
+            Some(13),
+            Some(9),
+            None,
+            None
+        ]));
+    }
+
+    #[test]
+    fn predecessors_kattis_escapewallmaria_2() {
+        let digraph = kattis_escapewallmaria_2();
+
+        assert!(DfsPred::new(&digraph, &[5]).predecessors().into_iter().eq([
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            Some(5),
+            None,
+            None,
+            Some(5),
+            None,
+            None,
+            None,
+            None,
+            None,
+            None
+        ]));
+    }
+
+    #[test]
+    fn predecessors_kattis_escapewallmaria_3() {
+        let digraph = kattis_escapewallmaria_3();
+
+        assert!(DfsPred::new(&digraph, &[5]).predecessors().into_iter().eq([
+            None,
+            Some(5),
+            Some(1),
+            None,
+            None,
+            None,
+            Some(5),
+            None,
+            None,
+            Some(5),
+            None,
+            None,
+            Some(13),
+            Some(9),
+            None,
+            None
         ]));
     }
 }

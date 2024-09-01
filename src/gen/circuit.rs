@@ -59,7 +59,7 @@
 /// # Implementing `Circuit`
 ///
 /// Provide an implementation of `circuit` that generates a circuit digraph of
-/// a given `order` OR implement `AddArc` and `Empty`.
+/// a given `order`.
 ///
 /// ```
 /// use {

@@ -3,9 +3,11 @@
 use graaf::{
     adjacency_list,
     adjacency_matrix,
-    gen::Circuit,
+    gen::{
+        Circuit,
+        Empty,
+    },
     op::AddArc,
-    r#gen::Empty,
 };
 
 fn main() {

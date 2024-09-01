@@ -9,8 +9,8 @@
 //! - [Operations](#operations)
 //! - [Algorithms](#algorithms)
 //!    - [Bellman-Ford-Moore](#bellman-ford-moore)
-//!    - [Breadth-First Search (BFS)](#breadth-first-search-bfs)
-//!    - [Depth-First Search (DFS)](#depth-first-search-dfs)
+//!    - [Breadth-First Search](#breadth-first-search-bfs)
+//!    - [Depth-First Search](#depth-first-search-dfs)
 //!    - [Dijkstra](#dijkstra)
 //!    - [Floyd-Warshall](#floyd-warshall)
 //!    - [Tarjan](#tarjan)
@@ -112,7 +112,7 @@
 //!
 //! - [`single_source_distances`](algo::bellman_ford_moore::single_source_distances) finds the shortest distances.
 //!
-//! ## Breadth-First Search (BFS)
+//! ## Breadth-First Search
 //!
 //! A breadth-first search explores the vertices of an unweighted digraph in
 //! order of their distance from a source.
@@ -129,7 +129,7 @@
 //! - [`BfsPred::shortest_path`](algo::bfs_pred::BfsPred::shortest_path) finds
 //!   the shortest path.
 
-//! ## Depth-First Search (DFS)
+//! ## Depth-First Search
 //!
 //! A depth-first search explores the vertices of an unweighted digraph in
 //! order of their distance from a source.

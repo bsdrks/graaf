@@ -24,6 +24,25 @@
 - Review documentation.
 - Review the documentation test examples.
 
+## [0.87.1] - 2024-09-01
+
+Added
+
+- Add unit test `dfs_pred::iter_bang_jensen_196`.
+- Add unit test `dfs_pred::iter_bang_jensen_34`.
+- Add unit test `dfs_pred::iter_bang_jensen_94`.
+- Add unit test `dfs_pred::iter_kattis_builddeps`.
+- Add unit test `dfs_pred::iter_kattis_cantinaofbabel_1`.
+- Add unit test `dfs_pred::iter_kattis_cantinaofbabel_2`.
+- Add unit test `dfs_pred::iter_kattis_escapewallmaria_1`.
+- Add unit test `dfs_pred::iter_kattis_escapewallmaria_2`.
+- Add unit test `dfs_pred::iter_kattis_escapewallmaria_3`.
+- Implement `DfsPred::predecessors`.
+
+Changed
+
+- Improve documentation consistency.
+
 ## [0.87.0] - 2024-09-01
 
 Added

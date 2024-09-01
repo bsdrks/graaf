@@ -112,7 +112,11 @@
 use {
     crate::{
         adjacency_list,
-        gen::Empty,
+        gen::{
+            Biclique,
+            Circuit,
+            Empty,
+        },
         op::{
             AddArc,
             ArcWeight,
@@ -129,10 +133,6 @@ use {
             RemoveArc,
             Size,
             Vertices,
-        },
-        r#gen::{
-            Biclique,
-            Circuit,
         },
     },
     std::collections::BTreeSet,
@@ -592,6 +592,7 @@ mod tests {
                 Cycle,
                 Empty,
                 ErdosRenyi,
+                Path,
                 RandomTournament,
                 Star,
             },
@@ -623,7 +624,6 @@ mod tests {
                 Sources,
             },
             proptest_strategy::arc,
-            r#gen::Path,
         },
         proptest::proptest,
     };

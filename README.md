@@ -10,8 +10,8 @@ Rust-powered directed graphs.
 - [Operations](#operations)
 - [Algorithms](#algorithms)
   - [Bellman-Ford-Moore](#bellman-ford-moore)
-  - [Breadth-First Search (BFS)](#breadth-first-search-bfs)
-  - [Depth-First Search (DFS)](#depth-first-search-dfs)
+  - [Breadth-First Search](#breadth-first-search)
+  - [Depth-First Search](#depth-first-search)
   - [Dijkstra](#dijkstra)
   - [Floyd-Warshall](#floyd-warshall)
   - [Tarjan](#tarjan)
@@ -28,7 +28,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.87.0"
+graaf = "0.87.1"
 ```
 
 ## Digraph Types
@@ -108,7 +108,7 @@ The Bellman-Ford-Moore algorithm finds the shortest paths in an arc-weighted dig
 
 - [`single_source_distances`](https://docs.rs/graaf/latest/graaf/algo/bellman_ford_moore/fn.single_source_distances.html) finds the shortest distances.
 
-### Breadth-First Search (BFS)
+### Breadth-First Search
 
 A breadth-first search explores the vertices of an unweighted digraph in order of their distance from a source.
 
@@ -119,7 +119,7 @@ A breadth-first search explores the vertices of an unweighted digraph in order o
 - [`BfsPred::predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.BfsPred.html#method.predecessors) finds the predecessors.
 - [`BfsPred::shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.BfsPred.html#method.shortest_path) finds the shortest path.
 
-### Depth-First Search (DFS)
+### Depth-First Search
 
 A depth-first search explores the vertices of an unweighted digraph in order of their depth from a source.
 
