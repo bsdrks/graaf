@@ -1,6 +1,6 @@
 //! Predecessor trees
 //!
-//! A predecessor tree contains the predecessor of each vertex on the
+//! A [`PredecessorTree`] contains the predecessor of each vertex on the
 //! shortest path from the source vertex.
 //!
 //! # Examples
@@ -51,7 +51,7 @@ pub struct PredecessorTree {
 }
 
 impl PredecessorTree {
-    /// Creates a predecessor tree.
+    /// Creates a [`PredecessorTree`] with a given order.
     ///
     /// # Arguments
     ///
@@ -61,6 +61,38 @@ impl PredecessorTree {
     /// # Panics
     ///
     /// Panics if `order` is zero.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use graaf::{
+    ///     adjacency_list::Digraph,
+    ///     algo::{
+    ///         bfs_pred::BfsPred,
+    ///         PredecessorTree,
+    ///     },
+    ///     gen::Empty,
+    ///     op::AddArc,
+    /// };
+    ///
+    /// // 0 -> {1}
+    /// // 1 -> {2}
+    /// // 2 -> {}
+    /// // 3 -> {0}
+    ///
+    /// let mut digraph = Digraph::empty(4);
+    ///
+    /// digraph.add_arc(0, 1);
+    /// digraph.add_arc(1, 2);
+    /// digraph.add_arc(3, 0);
+    ///
+    /// assert!(BfsPred::new(&digraph, &[0]).predecessors().into_iter().eq([
+    ///     None,
+    ///     Some(0),
+    ///     Some(1),
+    ///     None
+    /// ]));
+    /// ```
     #[must_use]
     pub fn new(order: usize) -> Self {
         assert!(
@@ -73,7 +105,7 @@ impl PredecessorTree {
         }
     }
 
-    /// Searches a predecessor tree for a path from a source vertex to a
+    /// Searches a [`PredecessorTree`] for a path from a source vertex to a
     /// target vertex.
     ///
     /// # Arguments
@@ -100,7 +132,7 @@ impl PredecessorTree {
         self.search_by(s, |&v, _| v == t)
     }
 
-    /// Searches a predecessor tree for a path from a source vertex to a
+    /// Searches a [`PredecessorTree`] for a path from a source vertex to a
     /// target vertex that satisfies a predicate.
     ///
     /// # Arguments

@@ -24,6 +24,12 @@
 - Review documentation.
 - Review the documentation test examples.
 
+## [0.87.2] - 2024-09-03
+
+Added
+
+- Add images and new examples to the `DistanceMatrix` documentation.
+
 ## [0.87.1] - 2024-09-01
 
 Added

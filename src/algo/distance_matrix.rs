@@ -1,9 +1,22 @@
-//! Distance matrices
+//! A distance matrix
 //!
-//! A distance matrix contains the distance between each pair of vertices in a
-//! digraph.
+//! A [`DistanceMatrix`] contains the distance between each pair of vertices in
+//! a digraph.
 //!
 //! # Examples
+//!
+//! ## A digraph
+//!
+//! A digraph of order 7 and size 15.
+//!
+//! ![the digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_digraph_1-0.87.2.svg?)
+//!
+//! ### The distance matrix
+//!
+//! The corresponding [`DistanceMatrix`] calculated using the Floyd-Warshall
+//! algorithm.
+//!
+//! ![the distance matrix](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_matrix_1-0.87.2.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -13,38 +26,36 @@
 //!         DistanceMatrix,
 //!     },
 //!     gen::Empty,
-//!     op::{
-//!         AddArcWeighted,
-//!         Arcs,
-//!     },
+//!     op::AddArcWeighted,
 //! };
 //!
-//! // 0 -> {1 (1), 2 (3), 3 (14)}
-//! // 1 -> {0 (2), 2 (4), 3 (22)}
-//! // 2 -> {0 (3), 1 (10), 3 (7)}
-//! // 3 -> {0 (13), 1 (8), 2 (2)}
+//! let mut digraph = Digraph::<isize>::empty(7);
 //!
-//! let mut digraph = Digraph::<isize>::empty(4);
-//!
-//! digraph.add_arc_weighted(0, 1, 1);
+//! digraph.add_arc_weighted(0, 1, 5);
 //! digraph.add_arc_weighted(0, 2, 3);
-//! digraph.add_arc_weighted(0, 3, 14);
-//! digraph.add_arc_weighted(1, 0, 2);
-//! digraph.add_arc_weighted(1, 2, 4);
-//! digraph.add_arc_weighted(1, 3, 22);
-//! digraph.add_arc_weighted(2, 0, 3);
-//! digraph.add_arc_weighted(2, 1, 10);
-//! digraph.add_arc_weighted(2, 3, 7);
-//! digraph.add_arc_weighted(3, 0, 13);
-//! digraph.add_arc_weighted(3, 1, 8);
-//! digraph.add_arc_weighted(3, 2, 2);
+//! digraph.add_arc_weighted(0, 3, 2);
+//! digraph.add_arc_weighted(0, 4, 4);
+//! digraph.add_arc_weighted(1, 0, 3);
+//! digraph.add_arc_weighted(1, 3, 1);
+//! digraph.add_arc_weighted(1, 4, 2);
+//! digraph.add_arc_weighted(2, 6, 4);
+//! digraph.add_arc_weighted(3, 4, 1);
+//! digraph.add_arc_weighted(3, 5, 1);
+//! digraph.add_arc_weighted(4, 2, 3);
+//! digraph.add_arc_weighted(5, 6, 1);
+//! digraph.add_arc_weighted(6, 0, 9);
+//! digraph.add_arc_weighted(6, 1, 8);
+//! digraph.add_arc_weighted(6, 2, 5);
 //!
 //! let dist = distances(&digraph);
 //!
-//! assert!(dist[0].iter().eq(&[0, 1, 3, 10]));
-//! assert!(dist[1].iter().eq(&[2, 0, 4, 11]));
-//! assert!(dist[2].iter().eq(&[3, 4, 0, 7]));
-//! assert!(dist[3].iter().eq(&[5, 6, 2, 0]));
+//! assert!(dist[0].eq(&[0, 5, 3, 2, 3, 3, 4]));
+//! assert!(dist[1].eq(&[3, 0, 5, 1, 2, 2, 3]));
+//! assert!(dist[2].eq(&[13, 12, 0, 13, 14, 14, 4]));
+//! assert!(dist[3].eq(&[11, 10, 4, 0, 1, 1, 2]));
+//! assert!(dist[4].eq(&[16, 15, 3, 16, 0, 17, 7]));
+//! assert!(dist[5].eq(&[10, 9, 6, 10, 11, 0, 1]));
+//! assert!(dist[6].eq(&[9, 8, 5, 9, 10, 10, 0]));
 //! ```
 
 use std::{
@@ -60,6 +71,62 @@ use std::{
 };
 
 /// A distance matrix
+///
+/// A [`DistanceMatrix`] contains the distance between each pair of vertices in
+/// a digraph.
+///
+/// # Examples
+///
+/// A digraph of order 7 and size 15.
+///
+/// ![the digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_digraph_1-0.87.2.svg?)
+///
+/// ### The distance matrix
+///
+/// The corresponding [`DistanceMatrix`] calculated using the Floyd-Warshall
+/// algorithm.
+///
+/// ![the distance matrix](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_matrix_1-0.87.2.svg?)
+///
+/// ```
+/// use graaf::{
+///     adjacency_list_weighted::Digraph,
+///     algo::{
+///         floyd_warshall::distances,
+///         DistanceMatrix,
+///     },
+///     gen::Empty,
+///     op::AddArcWeighted,
+/// };
+///
+/// let mut digraph = Digraph::<isize>::empty(7);
+///
+/// digraph.add_arc_weighted(0, 1, 5);
+/// digraph.add_arc_weighted(0, 2, 3);
+/// digraph.add_arc_weighted(0, 3, 2);
+/// digraph.add_arc_weighted(0, 4, 4);
+/// digraph.add_arc_weighted(1, 0, 3);
+/// digraph.add_arc_weighted(1, 3, 1);
+/// digraph.add_arc_weighted(1, 4, 2);
+/// digraph.add_arc_weighted(2, 6, 4);
+/// digraph.add_arc_weighted(3, 4, 1);
+/// digraph.add_arc_weighted(3, 5, 1);
+/// digraph.add_arc_weighted(4, 2, 3);
+/// digraph.add_arc_weighted(5, 6, 1);
+/// digraph.add_arc_weighted(6, 0, 9);
+/// digraph.add_arc_weighted(6, 1, 8);
+/// digraph.add_arc_weighted(6, 2, 5);
+///
+/// let dist = distances(&digraph);
+///
+/// assert!(dist[0].eq(&[0, 5, 3, 2, 3, 3, 4]));
+/// assert!(dist[1].eq(&[3, 0, 5, 1, 2, 2, 3]));
+/// assert!(dist[2].eq(&[13, 12, 0, 13, 14, 14, 4]));
+/// assert!(dist[3].eq(&[11, 10, 4, 0, 1, 1, 2]));
+/// assert!(dist[4].eq(&[16, 15, 3, 16, 0, 17, 7]));
+/// assert!(dist[5].eq(&[10, 9, 6, 10, 11, 0, 1]));
+/// assert!(dist[6].eq(&[9, 8, 5, 9, 10, 10, 0]));
+/// ```
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct DistanceMatrix<W> {
     dist: Vec<Vec<W>>,
@@ -68,7 +135,7 @@ pub struct DistanceMatrix<W> {
 }
 
 impl<W> DistanceMatrix<W> {
-    /// Creates a distance matrix from a vector of vectors.
+    /// Creates a [`DistanceMatrix`] from a vector of vectors.
     ///
     /// # Arguments
     ///
@@ -105,7 +172,7 @@ impl<W> DistanceMatrix<W> {
         }
     }
 
-    /// Finds the center of a distance matrix.
+    /// Returns the center of the digraph.
     ///
     /// The center of a digraph is the set of vertices with the smallest
     /// eccentricity. The center is also known as the Jordan center.
@@ -115,6 +182,10 @@ impl<W> DistanceMatrix<W> {
     /// Returns the vertices with the smallest eccentricity.
     ///
     /// # Examples
+    ///
+    /// Red marks the center of the digraph.
+    ///
+    /// ![eccentricities](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_center_1-0.87.2.svg?)
     ///
     /// ```
     /// use graaf::{
@@ -127,29 +198,27 @@ impl<W> DistanceMatrix<W> {
     ///     op::AddArcWeighted,
     /// };
     ///
-    /// // 0 -> {1 (1), 2 (3), 3 (14)}
-    /// // 1 -> {0 (2), 2 (4), 3 (22)}
-    /// // 2 -> {0 (3), 1 (10), 3 (7)}
-    /// // 3 -> {0 (13), 1 (8), 2 (2)}
+    /// let mut digraph = Digraph::<isize>::empty(7);
     ///
-    /// let mut digraph = Digraph::<isize>::empty(4);
-    ///
-    /// digraph.add_arc_weighted(0, 1, 1);
+    /// digraph.add_arc_weighted(0, 1, 5);
     /// digraph.add_arc_weighted(0, 2, 3);
-    /// digraph.add_arc_weighted(0, 3, 14);
-    /// digraph.add_arc_weighted(1, 0, 2);
-    /// digraph.add_arc_weighted(1, 2, 4);
-    /// digraph.add_arc_weighted(1, 3, 22);
-    /// digraph.add_arc_weighted(2, 0, 3);
-    /// digraph.add_arc_weighted(2, 1, 10);
-    /// digraph.add_arc_weighted(2, 3, 7);
-    /// digraph.add_arc_weighted(3, 0, 13);
-    /// digraph.add_arc_weighted(3, 1, 8);
-    /// digraph.add_arc_weighted(3, 2, 2);
+    /// digraph.add_arc_weighted(0, 3, 2);
+    /// digraph.add_arc_weighted(0, 4, 4);
+    /// digraph.add_arc_weighted(1, 0, 3);
+    /// digraph.add_arc_weighted(1, 3, 1);
+    /// digraph.add_arc_weighted(1, 4, 2);
+    /// digraph.add_arc_weighted(2, 6, 4);
+    /// digraph.add_arc_weighted(3, 4, 1);
+    /// digraph.add_arc_weighted(3, 5, 1);
+    /// digraph.add_arc_weighted(4, 2, 3);
+    /// digraph.add_arc_weighted(5, 6, 1);
+    /// digraph.add_arc_weighted(6, 0, 9);
+    /// digraph.add_arc_weighted(6, 1, 8);
+    /// digraph.add_arc_weighted(6, 2, 5);
     ///
     /// let dist = distances(&digraph);
     ///
-    /// assert!(dist.center().iter().eq(&[3]));
+    /// assert!(dist.center().iter().eq(&[0, 1]));
     /// ```
     #[doc(alias = "centre")]
     #[doc(alias = "jordan_center")]
@@ -184,6 +253,11 @@ impl<W> DistanceMatrix<W> {
     ///
     /// # Examples
     ///
+    /// Red marks the longest shortest path in the digraph between vertices `4`
+    /// and `5`.
+    ///
+    /// ![eccentricities](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_diameter_1-0.87.2.svg?)
+    ///
     /// ```
     /// use graaf::{
     ///     adjacency_list_weighted::Digraph,
@@ -195,29 +269,27 @@ impl<W> DistanceMatrix<W> {
     ///     op::AddArcWeighted,
     /// };
     ///
-    /// // 0 -> {1 (1), 2 (3), 3 (14)}
-    /// // 1 -> {0 (2), 2 (4), 3 (22)}
-    /// // 2 -> {0 (3), 1 (10), 3 (7)}
-    /// // 3 -> {0 (13), 1 (8), 2 (2)}
+    /// let mut digraph = Digraph::<isize>::empty(7);
     ///
-    /// let mut digraph = Digraph::<isize>::empty(4);
-    ///
-    /// digraph.add_arc_weighted(0, 1, 1);
+    /// digraph.add_arc_weighted(0, 1, 5);
     /// digraph.add_arc_weighted(0, 2, 3);
-    /// digraph.add_arc_weighted(0, 3, 14);
-    /// digraph.add_arc_weighted(1, 0, 2);
-    /// digraph.add_arc_weighted(1, 2, 4);
-    /// digraph.add_arc_weighted(1, 3, 22);
-    /// digraph.add_arc_weighted(2, 0, 3);
-    /// digraph.add_arc_weighted(2, 1, 10);
-    /// digraph.add_arc_weighted(2, 3, 7);
-    /// digraph.add_arc_weighted(3, 0, 13);
-    /// digraph.add_arc_weighted(3, 1, 8);
-    /// digraph.add_arc_weighted(3, 2, 2);
+    /// digraph.add_arc_weighted(0, 3, 2);
+    /// digraph.add_arc_weighted(0, 4, 4);
+    /// digraph.add_arc_weighted(1, 0, 3);
+    /// digraph.add_arc_weighted(1, 3, 1);
+    /// digraph.add_arc_weighted(1, 4, 2);
+    /// digraph.add_arc_weighted(2, 6, 4);
+    /// digraph.add_arc_weighted(3, 4, 1);
+    /// digraph.add_arc_weighted(3, 5, 1);
+    /// digraph.add_arc_weighted(4, 2, 3);
+    /// digraph.add_arc_weighted(5, 6, 1);
+    /// digraph.add_arc_weighted(6, 0, 9);
+    /// digraph.add_arc_weighted(6, 1, 8);
+    /// digraph.add_arc_weighted(6, 2, 5);
     ///
     /// let dist = distances(&digraph);
     ///
-    /// assert_eq!(dist.diameter(), 11);
+    /// assert_eq!(dist.diameter(), 17);
     /// ```
     #[must_use]
     pub fn diameter(&self) -> W
@@ -238,6 +310,8 @@ impl<W> DistanceMatrix<W> {
     ///
     /// # Examples
     ///
+    /// ![eccentricities](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_eccentricities_1-0.87.2.svg?)
+    ///
     /// ```
     /// use graaf::{
     ///     adjacency_list_weighted::Digraph,
@@ -249,29 +323,27 @@ impl<W> DistanceMatrix<W> {
     ///     op::AddArcWeighted,
     /// };
     ///
-    /// // 0 -> {1 (1), 2 (3), 3 (14)}
-    /// // 1 -> {0 (2), 2 (4), 3 (22)}
-    /// // 2 -> {0 (3), 1 (10), 3 (7)}
-    /// // 3 -> {0 (13), 1 (8), 2 (2)}
+    /// let mut digraph = Digraph::<isize>::empty(7);
     ///
-    /// let mut digraph = Digraph::<isize>::empty(4);
-    ///
-    /// digraph.add_arc_weighted(0, 1, 1);
+    /// digraph.add_arc_weighted(0, 1, 5);
     /// digraph.add_arc_weighted(0, 2, 3);
-    /// digraph.add_arc_weighted(0, 3, 14);
-    /// digraph.add_arc_weighted(1, 0, 2);
-    /// digraph.add_arc_weighted(1, 2, 4);
-    /// digraph.add_arc_weighted(1, 3, 22);
-    /// digraph.add_arc_weighted(2, 0, 3);
-    /// digraph.add_arc_weighted(2, 1, 10);
-    /// digraph.add_arc_weighted(2, 3, 7);
-    /// digraph.add_arc_weighted(3, 0, 13);
-    /// digraph.add_arc_weighted(3, 1, 8);
-    /// digraph.add_arc_weighted(3, 2, 2);
+    /// digraph.add_arc_weighted(0, 3, 2);
+    /// digraph.add_arc_weighted(0, 4, 4);
+    /// digraph.add_arc_weighted(1, 0, 3);
+    /// digraph.add_arc_weighted(1, 3, 1);
+    /// digraph.add_arc_weighted(1, 4, 2);
+    /// digraph.add_arc_weighted(2, 6, 4);
+    /// digraph.add_arc_weighted(3, 4, 1);
+    /// digraph.add_arc_weighted(3, 5, 1);
+    /// digraph.add_arc_weighted(4, 2, 3);
+    /// digraph.add_arc_weighted(5, 6, 1);
+    /// digraph.add_arc_weighted(6, 0, 9);
+    /// digraph.add_arc_weighted(6, 1, 8);
+    /// digraph.add_arc_weighted(6, 2, 5);
     ///
     /// let dist = distances(&digraph);
     ///
-    /// assert!(dist.eccentricities().iter().eq(&[10, 11, 7, 6]));
+    /// assert!(dist.eccentricities().iter().eq(&[5, 5, 14, 11, 17, 11, 10]));
     /// ```
     #[must_use]
     pub fn eccentricities(&self) -> Vec<W>
@@ -307,40 +379,27 @@ impl<W> DistanceMatrix<W> {
     ///     op::AddArcWeighted,
     /// };
     ///
-    /// // 0 -> {1 (1), 2 (1)}
-    /// // 1 -> {0 (1), 2 (1)}
-    /// // 2 -> {0 (1), 1 (1)}
+    /// let mut digraph = Digraph::<isize>::empty(7);
     ///
-    /// let mut digraph = Digraph::<isize>::empty(3);
-    ///
-    /// digraph.add_arc_weighted(0, 1, 1);
-    /// digraph.add_arc_weighted(0, 2, 1);
-    /// digraph.add_arc_weighted(1, 0, 1);
-    /// digraph.add_arc_weighted(1, 2, 1);
-    /// digraph.add_arc_weighted(2, 0, 1);
-    /// digraph.add_arc_weighted(2, 1, 1);
+    /// digraph.add_arc_weighted(0, 1, 5);
+    /// digraph.add_arc_weighted(0, 2, 3);
+    /// digraph.add_arc_weighted(0, 3, 2);
+    /// digraph.add_arc_weighted(0, 4, 4);
+    /// digraph.add_arc_weighted(1, 0, 3);
+    /// digraph.add_arc_weighted(1, 3, 1);
+    /// digraph.add_arc_weighted(1, 4, 2);
+    /// digraph.add_arc_weighted(2, 6, 4);
+    /// digraph.add_arc_weighted(3, 4, 1);
+    /// digraph.add_arc_weighted(3, 5, 1);
+    /// digraph.add_arc_weighted(4, 2, 3);
+    /// digraph.add_arc_weighted(5, 6, 1);
+    /// digraph.add_arc_weighted(6, 0, 9);
+    /// digraph.add_arc_weighted(6, 1, 8);
+    /// digraph.add_arc_weighted(6, 2, 5);
     ///
     /// let dist = distances(&digraph);
     ///
     /// assert!(dist.is_connected());
-    ///
-    /// // 0 -> {1 (1), 2 (1)}
-    /// // 1 -> {0 (1), 2 (1)}
-    /// // 2 -> {0 (1), 1 (1)}
-    /// // 3 -> {}
-    ///
-    /// let mut digraph = Digraph::<isize>::empty(4);
-    ///
-    /// digraph.add_arc_weighted(0, 1, 1);
-    /// digraph.add_arc_weighted(0, 2, 1);
-    /// digraph.add_arc_weighted(1, 0, 1);
-    /// digraph.add_arc_weighted(1, 2, 1);
-    /// digraph.add_arc_weighted(2, 0, 1);
-    /// digraph.add_arc_weighted(2, 1, 1);
-    ///
-    /// let dist = distances(&digraph);
-    ///
-    /// assert!(!dist.is_connected());
     /// ```
     #[must_use]
     pub fn is_connected(&self) -> bool
@@ -368,29 +427,27 @@ impl<W> DistanceMatrix<W> {
     ///     op::AddArcWeighted,
     /// };
     ///
-    /// // 0 -> {1 (1), 2 (3), 3 (14)}
-    /// // 1 -> {0 (2), 2 (4), 3 (22)}
-    /// // 2 -> {0 (3), 1 (10), 3 (7)}
-    /// // 3 -> {0 (13), 1 (8), 2 (2)}
+    /// let mut digraph = Digraph::<isize>::empty(7);
     ///
-    /// let mut digraph = Digraph::<isize>::empty(4);
-    ///
-    /// digraph.add_arc_weighted(0, 1, 1);
+    /// digraph.add_arc_weighted(0, 1, 5);
     /// digraph.add_arc_weighted(0, 2, 3);
-    /// digraph.add_arc_weighted(0, 3, 14);
-    /// digraph.add_arc_weighted(1, 0, 2);
-    /// digraph.add_arc_weighted(1, 2, 4);
-    /// digraph.add_arc_weighted(1, 3, 22);
-    /// digraph.add_arc_weighted(2, 0, 3);
-    /// digraph.add_arc_weighted(2, 1, 10);
-    /// digraph.add_arc_weighted(2, 3, 7);
-    /// digraph.add_arc_weighted(3, 0, 13);
-    /// digraph.add_arc_weighted(3, 1, 8);
-    /// digraph.add_arc_weighted(3, 2, 2);
+    /// digraph.add_arc_weighted(0, 3, 2);
+    /// digraph.add_arc_weighted(0, 4, 4);
+    /// digraph.add_arc_weighted(1, 0, 3);
+    /// digraph.add_arc_weighted(1, 3, 1);
+    /// digraph.add_arc_weighted(1, 4, 2);
+    /// digraph.add_arc_weighted(2, 6, 4);
+    /// digraph.add_arc_weighted(3, 4, 1);
+    /// digraph.add_arc_weighted(3, 5, 1);
+    /// digraph.add_arc_weighted(4, 2, 3);
+    /// digraph.add_arc_weighted(5, 6, 1);
+    /// digraph.add_arc_weighted(6, 0, 9);
+    /// digraph.add_arc_weighted(6, 1, 8);
+    /// digraph.add_arc_weighted(6, 2, 5);
     ///
     /// let dist = distances(&digraph);
     ///
-    /// assert!(dist.periphery().iter().eq(&[1]));
+    /// assert!(dist.periphery().iter().eq(&[4]));
     /// ```
     #[must_use]
     pub fn periphery(&self) -> Vec<usize>
