@@ -5,18 +5,18 @@ Rust-powered directed graphs.
 ## Table of Contents
 
 - [Installation](#installation)
-- [Digraph Types](#digraph-types)
-- [Creating Digraphs](#creating-digraphs)
+- [Representations](#representations)
+- [Generators](#generators)
 - [Operations](#operations)
 - [Algorithms](#algorithms)
   - [Bellman-Ford-Moore](#bellman-ford-moore)
   - [Breadth-First Search](#breadth-first-search)
   - [Depth-First Search](#depth-first-search)
   - [Dijkstra](#dijkstra)
-  - [Floyd-Warshall](#floyd-warshall)
-  - [Tarjan](#tarjan)
-  - [Predecessor Tree](#predecessor-tree)
   - [Distance Matrix](#distance-matrix)
+  - [Floyd-Warshall](#floyd-warshall)
+  - [Predecessor Tree](#predecessor-tree)
+  - [Tarjan](#tarjan)
 - [Changelog](#changelog)
 - [License](#license)
 - [Contact](#contact)
@@ -28,21 +28,17 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.87.2"
+graaf = "0.87.3"
 ```
 
-## Digraph Types
-
-Graaf provides representations of directed graphs. These types eagerly implement digraph [operations](#operations) and [algorithms](#algorithms).
+## Representations
 
 - [`adjacency_list`](https://docs.rs/graaf/latest/graaf/adjacency_list/digraph/struct.Digraph.html) represents unweighted sparse digraphs.
 - [`adjacency_matrix`](https://docs.rs/graaf/latest/graaf/adjacency_matrix/digraph/struct.Digraph.html) represents unweighted dense digraphs.
 - [`adjacency_list_weighted`](https://docs.rs/graaf/latest/graaf/adjacency_list_weighted/digraph/struct.Digraph.html) represents arc-weighted sparse digraphs.
 - [`edge_list`](https://docs.rs/graaf/latest/graaf/edge_list/digraph/struct.Digraph.html) represents unweighted sparse digraphs.
 
-## Creating Digraphs
-
-The [`gen`] module provides digraph generators. Each digraph representation can be constructed with the operations in the [`op`] module.
+## Generators
 
 - [`Biclique`] generates a complete bipartite digraph.
 - [`Circuit`] generates a circuit digraph.
@@ -55,8 +51,6 @@ The [`gen`] module provides digraph generators. Each digraph representation can 
 - [`Star`] generates a star digraph.
 
 ## Operations
-
-The [`op`] module provides digraph operation traits. The [digraph types](#digraph-types) implement these traits. One can implement these traits for custom digraph types. Operations form the foundation for [algorithms](#algorithms).
 
 - [`AddArcWeighted`] adds an arc to an arc-weighted digraph.
 - [`AddArc`] adds an arc to an unweighted digraph.
@@ -100,8 +94,6 @@ The [`op`] module provides digraph operation traits. The [digraph types](#digrap
 
 ## Algorithms
 
-The [`algo`] module provides digraph algorithms.
-
 ### Bellman-Ford-Moore
 
 The Bellman-Ford-Moore algorithm finds the shortest paths in an arc-weighted digraph with negative weights.
@@ -139,31 +131,6 @@ Dijkstra's algorithm finds the shortest paths in an arc-weighted digraph.
 - [`DijkstraPred::predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_pred/struct.DijkstraPred.html#method.predecessors) finds the predecessors.
 - [`DijkstraPred::shortest_path`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_pred/struct.DijkstraPred.html#method.shortest_path) finds the shortest path.
 
-### Floyd-Warshall
-
-The Floyd-Warshall algorithm finds the shortest paths between all pairs of vertices in an arc-weighted digraph.
-
-- [`distances`](https://docs.rs/graaf/latest/graaf/algo/floyd_warshall/fn.distances.html) finds the shortest distances.
-
-### Tarjan
-
-Tarjan's algorithm finds the strongly connected components in a digraph.
-
-- [`strongly_connected_components`](https://docs.rs/graaf/latest/graaf/algo/tarjan/fn.strongly_connected_components.html) finds the strongly connected components.
-
-### Predecessor Tree
-
-A [`PredecessorTree`](https://docs.rs/graaf/latest/graaf/algo/types/predecessor_tree/struct.PredecessorTree.html) is the result of a breadth-first search.
-
-- [`search`](https://docs.rs/graaf/latest/graaf/algo/types/predecessor_tree/struct.PredecessorTree.html#method.search) finds a vertex by value.
-- [`search_by`](https://docs.rs/graaf/latest/graaf/algo/types/predecessor_tree/struct.PredecessorTree.html#method.search_by) finds a vertex by predicate.
-
-These functions produce a predecessor tree.
-
-- [`BfsPred::predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.BfsPred.html#method.predecessors)
-- [`DfsPred::predecessors`](https://docs.rs/graaf/latest/graaf/algo/dfs_pred/struct.DfsPred.html#method.predecessors)
-- [`DijkstraPred::predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_pred/struct.DijkstraPred.html#method.predecessors)
-
 ### Distance Matrix
 
 A [`DistanceMatrix`](https://docs.rs/graaf/latest/graaf/algo/types/distance_matrix/struct.DistanceMatrix.html) contains the shortest distances between all pairs of vertices in a digraph.
@@ -173,6 +140,31 @@ A [`DistanceMatrix`](https://docs.rs/graaf/latest/graaf/algo/types/distance_matr
 - [`eccentricities`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.eccentricities) returns the eccentricities of the vertices.
 - [`is_connected`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.is_connected) checks if the digraph is connected.
 - [`periphery`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.periphery) finds the periphery of the digraph.
+
+### Floyd-Warshall
+
+The Floyd-Warshall algorithm finds the distance between each pair of vertices in an arc-weighted digraph.
+
+- [`distances`](https://docs.rs/graaf/latest/graaf/algo/floyd_warshall/fn.distances.html) finds the shortest distances.
+
+### Predecessor Tree
+
+A [`PredecessorTree`](https://docs.rs/graaf/latest/graaf/algo/types/predecessor_tree/struct.PredecessorTree.html) is the result of a search and contains the predecessors of the vertices.
+
+- [`search`](https://docs.rs/graaf/latest/graaf/algo/types/predecessor_tree/struct.PredecessorTree.html#method.search) finds a vertex by value.
+- [`search_by`](https://docs.rs/graaf/latest/graaf/algo/types/predecessor_tree/struct.PredecessorTree.html#method.search_by) finds a vertex by predicate.
+
+These functions produce a [`PredecessorTree`](https://docs.rs/graaf/latest/graaf/algo/types/predecessor_tree/struct.PredecessorTree.html):
+
+- [`BfsPred::predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.BfsPred.html#method.predecessors)
+- [`DfsPred::predecessors`](https://docs.rs/graaf/latest/graaf/algo/dfs_pred/struct.DfsPred.html#method.predecessors)
+- [`DijkstraPred::predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_pred/struct.DijkstraPred.html#method.predecessors)
+
+### Tarjan
+
+Tarjan's algorithm finds strongly connected components in a digraph.
+
+- [`strongly_connected_components`](https://docs.rs/graaf/latest/graaf/algo/tarjan/fn.strongly_connected_components.html) finds strongly connected components.
 
 [`AddArcWeighted`]: https://docs.rs/graaf/latest/graaf/op/add_arc_weighted/trait.AddArcWeighted.html
 [`AddArc`]: https://docs.rs/graaf/latest/graaf/op/add_arc/trait.AddArc.html
@@ -222,9 +214,6 @@ A [`DistanceMatrix`](https://docs.rs/graaf/latest/graaf/algo/types/distance_matr
 [`Sources`]: https://docs.rs/graaf/latest/graaf/op/sources/trait.Sources.html
 [`Star`]: https://docs.rs/graaf/latest/graaf/gen/star/trait.Star.html
 [`Vertices`]: https://docs.rs/graaf/latest/graaf/op/vertices/trait.Vertices.html
-[`algo`]: https://docs.rs/graaf/latest/graaf/algo/index.html
-[`gen`]: https://docs.rs/graaf/latest/graaf/gen/index.html
-[`op`]: https://docs.rs/graaf/latest/graaf/op/index.html
 
 ## Changelog
 

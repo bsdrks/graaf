@@ -4,33 +4,27 @@
 //!
 //! # Table of Contents
 //!
-//! - [Digraph Types](#digraph-types)
-//! - [Creating Digraphs](#creating-digraphs)
+//! - [Representations](#representations)
+//! - [Generators](#generators)
 //! - [Operations](#operations)
 //! - [Algorithms](#algorithms)
 //!    - [Bellman-Ford-Moore](#bellman-ford-moore)
 //!    - [Breadth-First Search](#breadth-first-search-bfs)
 //!    - [Depth-First Search](#depth-first-search-dfs)
 //!    - [Dijkstra](#dijkstra)
-//!    - [Floyd-Warshall](#floyd-warshall)
-//!    - [Tarjan](#tarjan)
-//!    - [Breath-First Tree](#breadth-first-tree)
 //!    - [Distance Matrix](#distance-matrix)
+//!    - [Floyd-Warshall](#floyd-warshall)
+//!    - [Predecessor Tree](#predecessor-tree)
+//!    - [Tarjan](#tarjan)
 //!
-//! # Digraph Types
-//!
-//! Graaf provides directed graphs representations. These types eagerly
-//! implement digraph [operations](#operations) and [algorithms](#algorithms).
+//! # Representations
 //!
 //! - [`adjacency_list`] represents unweighted sparse digraphs.
 //! - [`adjacency_matrix`] represents unweighted dense digraphs.
 //! - [`adjacency_list_weighted`] represents arc-weighted sparse digraphs.
 //! - [`edge_list`] represents unweighted sparse digraphs.
 //!
-//! # Creating Digraphs
-//!
-//! The [`gen`] module provides digraph generators. Each digraph representation
-//! can be constructed with the operations in the [`op`] module.
+//! # Generators
 //!
 //! - [`Biclique`](gen::Biclique) generates a complete bipartite digraph.
 //! - [`Circuit`](gen::Circuit) generates a circuit digraph.
@@ -44,11 +38,6 @@
 //! - [`Path`](gen::Path) generates a path digraph.
 //!
 //! # Operations
-//!
-//! The [`op`] module provides digraph operation traits. The [digraph
-//! types](#digraph-types) implement these traits. One can implement these
-//! traits for custom digraph types. Operations form the foundation for
-//! [algorithms](#algorithms).
 //!
 //! - [`AddArcWeighted`](op::AddArcWeighted) adds an arc to an arc-weighted
 //!   digraph.
@@ -103,8 +92,6 @@
 //!
 //! # Algorithms
 //!
-//! The [`algo`] module provides digraph algorithms.
-//!
 //! ## Bellman-Ford-Moore
 //!
 //! The Bellman-Ford-Moore algorithm finds the shortest paths in an
@@ -128,7 +115,7 @@
 //!   the predecessors.
 //! - [`BfsPred::shortest_path`](algo::bfs_pred::BfsPred::shortest_path) finds
 //!   the shortest path.
-
+//!
 //! ## Depth-First Search
 //!
 //! A depth-first search explores the vertices of an unweighted digraph in
@@ -157,37 +144,6 @@
 //! - [`DijkstraPred::predecessors`](algo::dijkstra_pred::DijkstraPred::predecessors) finds the predecessors.
 //! - [`DijkstraPred::shortest_path`](algo::dijkstra_pred::DijkstraPred::shortest_path) finds the shortest path.
 //!
-//! ## Floyd-Warshall
-//!
-//! The Floyd-Warshall algorithm finds the shortest paths between all pairs
-//! of vertices in an arc-weighted digraph.
-//!
-//! - [`distances`](algo::floyd_warshall::distances) finds the shortest
-//!   distances.
-//!
-//! ## Tarjan
-//!
-//! Tarjan's algorithm finds the strongly connected components in a digraph.
-//!
-//! - [`strongly_connected_components`](algo::tarjan::strongly_connected_components) finds the strongly connected components.
-//!
-//! ## Predecessor Tree
-//!
-//! A [`PredecessorTree`](algo::PredecessorTree) is the result of a
-//! breadth-first search and contains the predecessors of the vertices on the
-//! shortest paths.
-//!
-//! - [`PredecessorTree::search`](algo::PredecessorTree::search) finds a vertex
-//!   by value.
-//! - [`PredecessorTree::search_by`](algo::PredecessorTree::search_by) finds a
-//!   vertex by predicate.
-//!
-//! These functions produce a predecessor tree.
-//!
-//! - [`BfsPred::predecessors`](algo::bfs_pred::BfsPred::predecessors)
-//! - [`DfsPred::predecessors`](algo::dfs_pred::DfsPred::predecessors)
-//! - [`DijkstraPred::predecessors`](algo::dijkstra_pred::DijkstraPred::predecessors)
-//!
 //! ## Distance Matrix
 //!
 //! A [`DistanceMatrix`](algo::DistanceMatrix) contains the shortest distances
@@ -203,6 +159,36 @@
 //!   checks if the digraph is connected.
 //! - [`DistanceMatrix::periphery`](algo::DistanceMatrix::periphery) finds the
 //!   periphery of the digraph.
+//!
+//! ## Floyd-Warshall
+//!
+//! The Floyd-Warshall algorithm finds the distance between each pair
+//! of vertices in an arc-weighted digraph.
+//!
+//! - [`distances`](algo::floyd_warshall::distances) finds the shortest
+//!   distances.
+//!
+//! ## Predecessor Tree
+//!
+//! A [`PredecessorTree`](algo::PredecessorTree) is the result of a search and
+//! contains the predecessors of the vertices.
+//!
+//! - [`PredecessorTree::search`](algo::PredecessorTree::search) finds a vertex
+//!   by value.
+//! - [`PredecessorTree::search_by`](algo::PredecessorTree::search_by) finds a
+//!   vertex by predicate.
+//!
+//! These functions produce a [`PredecessorTree`](algo::PredecessorTree):
+//!
+//! - [`BfsPred::predecessors`](algo::bfs_pred::BfsPred::predecessors)
+//! - [`DfsPred::predecessors`](algo::dfs_pred::DfsPred::predecessors)
+//! - [`DijkstraPred::predecessors`](algo::dijkstra_pred::DijkstraPred::predecessors)
+//!
+//! ## Tarjan
+//!
+//! Tarjan's algorithm finds strongly connected components in a digraph.
+//!
+//! - [`strongly_connected_components`](algo::tarjan::strongly_connected_components) finds strongly connected components.
 
 // Clippy lint groups
 #![deny(clippy::all, clippy::cargo, clippy::pedantic, clippy::nursery)]

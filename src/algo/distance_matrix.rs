@@ -135,7 +135,7 @@ pub struct DistanceMatrix<W> {
 }
 
 impl<W> DistanceMatrix<W> {
-    /// Creates a [`DistanceMatrix`] from a vector of vectors.
+    /// Creates a new [`DistanceMatrix`].
     ///
     /// # Arguments
     ///
