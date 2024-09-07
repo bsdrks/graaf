@@ -41,6 +41,9 @@ use {
 
 /// Generate random tournaments.
 ///
+/// A tournament is a digraph in which an arc connects every unordered pair of
+/// distinct vertices.
+///
 /// # Implementing `RandomTournament`
 ///
 /// Provide an implementation of `random_tournament` that generates a random

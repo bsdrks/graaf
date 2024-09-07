@@ -1,12 +1,15 @@
 //! Generate star digraphs.
 //!
+//! A star digraph is a digraph with a single vertex that is connected to all
+//! other vertices.
+//!
 //! # Examples
 //!
 //! ## Order 2
 //!
-//! Generate a star digraph of order 2.
+//! Generate a star digraph of order `2`.
 //!
-//! ![Star digraph of order 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_2.svg)
+//! ![Star digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_2.svg)
 //!
 //! ```
 //! use graaf::{
@@ -20,9 +23,9 @@
 //!
 //! ## Order 3
 //!
-//! Generate a star digraph of order 3.
+//! Generate a star digraph of order `3`.
 //!
-//! ![Star digraph of order 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_3.svg)
+//! ![Star digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_3.svg)
 //!
 //! ```
 //! use graaf::{
@@ -36,9 +39,9 @@
 //!
 //! ## Order 4
 //!
-//! Generate a star digraph of order 4.
+//! Generate a star digraph of order `4`.
 //!
-//! ![Star digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_4.svg)
+//! ![Star digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_4.svg)
 //!
 //! ```
 //! use graaf::{
@@ -63,6 +66,9 @@ use crate::{
 };
 
 /// Generate star digraphs.
+///
+/// A star digraph is a digraph with a single vertex that is connected to all
+/// other vertices.
 ///
 /// # Implementing `Star`
 ///
@@ -99,10 +105,6 @@ use crate::{
 ///     }
 /// }
 ///
-/// // 0 -> {1, 2}
-/// // 1 -> {0}
-/// // 2 -> {0}
-///
 /// let digraph = Digraph::star(3);
 ///
 /// assert!(digraph.arcs.iter().eq(&[
@@ -122,9 +124,9 @@ pub trait Star {
     ///
     /// ## Order 2
     ///
-    /// Generate a star digraph of order 2.
+    /// Generate a star digraph of order `2`.
     ///
-    /// ![Star digraph of order 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_2.svg)
+    /// ![Star digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_2.svg)
     ///
     /// ```
     /// use graaf::{
@@ -138,9 +140,9 @@ pub trait Star {
     ///
     /// ## Order 3
     ///
-    /// Generate a star digraph of order 3.
+    /// Generate a star digraph of order `3`.
     ///
-    /// ![Star digraph of order 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_3.svg)
+    /// ![Star digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_3.svg)
     ///
     /// ```
     /// use graaf::{
@@ -154,9 +156,9 @@ pub trait Star {
     ///
     /// ## Order 4
     ///
-    /// Generate a star digraph of order 4.
+    /// Generate a star digraph of order `4`.
     ///
-    /// ![Star digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_4.svg)
+    /// ![Star digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_4.svg)
     ///
     /// ```
     /// use graaf::{

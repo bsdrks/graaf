@@ -14,10 +14,6 @@
 //!     },
 //! };
 //!
-//! // 0 -> {1, 2}
-//! // 1 -> {0}
-//! // 2 -> {}
-//!
 //! let mut digraph = Digraph::empty(3);
 //!
 //! digraph.add_arc(0, 1);
@@ -66,10 +62,6 @@
 ///     },
 /// };
 ///
-/// // 0 -> {1, 2}
-/// // 1 -> {0}
-/// // 2 -> {1}
-///
 /// let mut digraph = Digraph::empty(3);
 ///
 /// digraph.add_arc(0, 1);
@@ -110,10 +102,6 @@ pub trait Outdegree {
     ///         Outdegree,
     ///     },
     /// };
-    ///
-    /// // 0 -> {1, 2}
-    /// // 1 -> {0}
-    /// // 2 -> {}
     ///
     /// let mut digraph = Digraph::empty(3);
     ///

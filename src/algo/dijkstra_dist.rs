@@ -3,7 +3,8 @@
 //! Dijkstra's algorithm with binary heap finds the shortest path in an
 //! arc-weighted digraph.[^1]
 //!
-//! The time complexity is *O*(*v* log *v* + *a*).
+//! Runs in **O(v log v + a)** time, where **v** is the number of vertices and
+//! **a** is the number of arcs.
 //!
 //! # Examples
 //!
@@ -11,7 +12,7 @@
 //!
 //! Red marks the path starting at vertex `0` and `d` denotes the distance.
 //!
-//! ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_1-0.83.4.svg?)
+//! ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -51,7 +52,7 @@
 //! Red marks the path starting at vertex `0` and blue the path starting at
 //! vertex `3`.
 //!
-//! ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_multi_source_1-0.83.4.svg?)
+//! ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_multi_source_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -112,7 +113,7 @@ use {
 ///
 /// Red marks the path starting at vertex `0` and `d` denotes the distance.
 ///
-/// ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_1-0.83.4.svg?)
+/// ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -152,7 +153,7 @@ use {
 /// Red marks the path starting at vertex `0` and blue the path starting at
 /// vertex `3`.
 ///
-/// ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_multi_source_1-0.83.4.svg?)
+/// ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_multi_source_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -248,11 +249,6 @@ where
     ///     gen::Empty,
     ///     op::AddArcWeighted,
     /// };
-    ///
-    /// // 0 -> {1 (2), 2 (3), 3 (4)}
-    /// // 1 -> {2 (5), 3 (0)}
-    /// // 2 -> {3 (1)}
-    /// // 3 -> {}
     ///
     /// let mut digraph = Digraph::<usize>::empty(4);
     ///

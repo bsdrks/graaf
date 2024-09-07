@@ -1,4 +1,4 @@
-//! Return a digraph's weighted arcs.
+//! Iterates a digraph's weighted arcs.
 //!
 //! # Examples
 //!
@@ -12,10 +12,6 @@
 //!     },
 //! };
 //!
-//! // 0 -> {1 (2)}
-//! // 1 -> {2 (3)}
-//! // 2 -> {0 (4)}
-//!
 //! let mut digraph = Digraph::empty(3);
 //!
 //! digraph.add_arc_weighted(0, 1, 2);
@@ -27,7 +23,7 @@
 //!     .eq([(0, 1, &2), (1, 2, &3), (2, 0, &4)]));
 //! ```
 
-/// Return a digraph's weighted arcs.
+/// Iterates a digraph's weighted arcs.
 ///
 /// # Implementing `ArcsWeighted`
 ///
@@ -64,10 +60,6 @@
 ///         ArcsWeighted,
 ///     },
 /// };
-///
-/// // 0 -> {1 (2)}
-/// // 1 -> {2 (3)}
-/// // 2 -> {0 (4)}
 ///
 /// let mut digraph = Digraph::empty(3);
 ///

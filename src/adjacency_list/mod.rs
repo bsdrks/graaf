@@ -4,9 +4,9 @@
 //!
 //! ## Valid digraph
 //!
-//! A valid digraph of order 5 and size 8:
+//! A valid digraph of order `5` and size `8`:
 //!
-//! ![digraph of order 5 and size 8](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_1.svg?)
+//! ![digraph of order `5` and size `8`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_1.svg?)
 //!
 //! ```
 //! use graaf::{

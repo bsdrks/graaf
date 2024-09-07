@@ -3,7 +3,8 @@
 //! Depth-first search is a digraph traversal algorithm that explores a digraph
 //! by following a path as far as possible before backtracking.
 //!
-//! The time complexity is *O*(*v* + *a*).
+//! Runs in **O(v + a)** time, where **v** is the number of vertices and **a**
+//! is the number of arcs.
 //!
 //! # Examples
 //!
@@ -11,7 +12,7 @@
 //!
 //! Red marks the path starting at vertex `0` and `p` denotes the predecessor.
 //!
-//! ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_pred_1-0.87.0.svg?)
+//! ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_pred_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -46,7 +47,7 @@
 //! Red marks the path starting at vertex `3` and blue the path starting at
 //! vertex `7`.
 //!
-//! ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_pred_multi_source_1-0.87.0.svg?)
+//! ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_pred_multi_source_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -109,7 +110,7 @@ pub struct Step {
 ///
 /// Red marks the path starting at vertex `0` and `p` denotes the predecessor.
 ///
-/// ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_pred_1-0.87.0.svg?)
+/// ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_pred_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -144,7 +145,7 @@ pub struct Step {
 /// Red marks the path starting at vertex `3` and blue the path starting at
 /// vertex `7`.
 ///
-/// ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_pred_multi_source_1-0.87.0.svg?)
+/// ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_pred_multi_source_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -225,7 +226,7 @@ impl<'a, D> DfsPred<'a, D> {
     /// Red marks the traversal starting at vertex `0` and the dashed arcs mark
     /// the predecessor tree.
     ///
-    /// ![DFS and the predecessor tree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_pred_predecessors_1-0.87.1.svg?)
+    /// ![DFS and the predecessor tree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_pred_predecessors_1-0.87.4.svg?)
     ///
     /// ```
     /// use graaf::{
@@ -261,7 +262,7 @@ impl<'a, D> DfsPred<'a, D> {
     /// traversal starting at vertex `7`. The dashed arcs mark the predecessor
     /// tree.
     ///
-    /// ![DFS and the predecessor tree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_pred_predecessors_multi_source_1-0.87.1.svg?)
+    /// ![DFS and the predecessor tree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_pred_predecessors_multi_source_1-0.87.4.svg?)
     ///
     /// ```
     /// use graaf::{

@@ -1,4 +1,4 @@
-//! An adjacency list representation of an arc-weighted digraph
+//! A representation of an arc-weighted digraph.
 //!
 //! # Examples
 //!
@@ -11,10 +11,6 @@
 //!         ArcsWeighted,
 //!     },
 //! };
-//!
-//! // 0 -> {1 (2)}
-//! // 1 -> {2 (3)}
-//! // 2 -> {0 (4)}
 //!
 //! let mut digraph = Digraph::<isize>::empty(3);
 //!
@@ -53,7 +49,7 @@ use {
     std::collections::BTreeMap,
 };
 
-/// An adjacency list representation of an arc-weighted digraph.
+/// An representation of an arc-weighted digraph.
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct Digraph<W> {
     arcs: Vec<BTreeMap<usize, W>>,

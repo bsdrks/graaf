@@ -3,7 +3,8 @@
 //! Dijkstra's algorithm with binary heap finds the shortest path in an
 //! arc-weighted digraph.[^1]
 //!
-//! The time complexity is *O*(*v* log *v* + *a*).
+//! Runs in **O(v log v + a)** time, where **v** is the number of vertices and
+//! **a** is the number of arcs.
 //!
 //! # Examples
 //!
@@ -11,7 +12,7 @@
 //!
 //! Red marks the path starting at vertex `0`.
 //!
-//! ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_pred_1-0.83.4.svg?)
+//! ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_pred_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -51,7 +52,7 @@
 //! Red marks the path starting at vertex `0` and blue the path starting at
 //! vertex `3`.
 //!
-//! ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_pred_multi_source_1-0.83.4.svg?)
+//! ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_pred_multi_source_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -120,7 +121,7 @@ pub struct Step {
 ///
 /// Red marks the path starting at vertex `0`.
 ///
-/// ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_pred_1-0.83.4.svg?)
+/// ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_pred_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -160,7 +161,7 @@ pub struct Step {
 /// Red marks the path starting at vertex `0` and blue the path starting at
 /// vertex `3`.
 ///
-/// ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_pred_multi_source_1-0.83.4.svg?)
+/// ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_pred_multi_source_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -257,11 +258,6 @@ where
     ///     op::AddArcWeighted,
     /// };
     ///
-    /// // 0 -> {1 (2), 2 (3), 3 (4)}
-    /// // 1 -> {2 (5), 3 (0)}
-    /// // 2 -> {3 (1)}
-    /// // 3 -> {}
-    ///
     /// let mut digraph = Digraph::<usize>::empty(4);
     ///
     /// digraph.add_arc_weighted(0, 1, 2);
@@ -318,11 +314,6 @@ where
     ///     gen::Empty,
     ///     op::AddArcWeighted,
     /// };
-    ///
-    /// // 0 -> {1 (2), 2 (3), 3 (4)}
-    /// // 1 -> {2 (5), 3 (0)}
-    /// // 2 -> {3 (1)}
-    /// // 3 -> {}
     ///
     /// let mut digraph = Digraph::<usize>::empty(4);
     ///

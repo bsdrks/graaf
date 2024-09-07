@@ -1,4 +1,4 @@
-//! Return a digraph's arcs.
+//! Iterates a digraph's arcs.
 //!
 //! # Examples
 //!
@@ -12,16 +12,12 @@
 //!     },
 //! };
 //!
-//! // 0 -> {1}
-//! // 1 -> {2}
-//! // 2 -> {0}
-//!
 //! let digraph = Digraph::circuit(3);
 //!
 //! assert!(digraph.arcs().eq([(0, 1), (1, 2), (2, 0)]));
 //! ```
 
-/// Return a digraph's arcs.
+/// Iterates a digraph's arcs.
 ///
 /// # Implementing `Arcs`
 ///
@@ -50,10 +46,6 @@
 ///     gen::Circuit,
 ///     op::Arcs,
 /// };
-///
-/// // 0 -> {1}
-/// // 1 -> {2}
-/// // 2 -> {0}
 ///
 /// let digraph = Digraph::circuit(3);
 ///

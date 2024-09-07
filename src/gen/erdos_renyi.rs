@@ -1,7 +1,9 @@
 //! Generate Erdős-Rényi digraphs.
 //!
 //! The Erdős-Rényi model generates a random digraph with a given number of
-//! vertices. The time complexity is *O*(*v*²).
+//! vertices.
+//!
+//! Runs in **O(v²)** time, where **v** is the number of vertices.
 //!
 //! # Examples
 //!
@@ -29,6 +31,11 @@ use {
 };
 
 /// Generate Erdős-Rényi digraphs.
+///
+/// The Erdős-Rényi model generates a random digraph with a given number of
+/// vertices.
+///
+/// Runs in **O(v²)** time, where **v** is the number of vertices.
 ///
 /// # Implementing `ErdosRenyi`
 ///

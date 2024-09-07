@@ -1,12 +1,12 @@
-//! An edge list representation of an unweighted digraph
+//! A representation of an unweighted digraph.
 //!
 //! # Example
 //!
 //! ## Valid digraph
 //!
-//! A valid digraph of order 5 and size 8.
+//! A valid digraph of order `5` and size `8`.
 //!
-//! ![digraph of order 5 and size 8](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/edge_list_1.svg?)
+//! ![digraph of order `5` and size `8`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/edge_list_1.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -130,15 +130,15 @@ use {
     std::collections::BTreeSet,
 };
 
-/// An edge list representation of an unweighted digraph
+/// A representation of an unweighted digraph.
 ///
 /// # Example
 ///
 /// ## Valid digraph
 ///
-/// A valid digraph of order 5 and size 8.
+/// A valid digraph of order `5` and size `8`.
 ///
-/// ![digraph of order 5 and size 8](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/edge_list_1.svg?)
+/// ![digraph of order `5` and size `8`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/edge_list_1.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -397,7 +397,7 @@ impl HasArc for Digraph {
 }
 
 impl Indegree for Digraph {
-    /// Warning: The time complexity of this implementation is *O*(*a*).
+    /// Warning: runs in **O(a)** time, where **a** is the number of arcs.
     ///
     /// # Panics
     ///
@@ -424,8 +424,9 @@ impl Order for Digraph {
 }
 
 impl OutNeighbors for Digraph {
-    /// Warning: The time complexity of this implementation is *O*(*a*)
-    /// compared to *O*(1) for `adjacency_list` and `adjacency_list_weighted`.
+    /// Warning: runs in **O(a)** time, where **a** is the number of arcs,
+    /// compared to **O(1)** for `adjacency_list` and
+    /// `adjacency_list_weighted`.
     ///
     /// # Panics
     ///
@@ -440,8 +441,9 @@ impl OutNeighbors for Digraph {
 }
 
 impl OutNeighborsWeighted<usize> for Digraph {
-    /// Warning: The time complexity of this implementation is *O*(*a*)
-    /// compared to *O*(1) for `adjacency_list` and `adjacency_list_weighted`.
+    /// Warning: runs in **O(a)**, where **a** is the number of arcs,
+    /// compared to **O(1)** for `adjacency_list` and
+    /// `adjacency_list_weighted`.
     ///
     /// # Panics
     ///
@@ -462,9 +464,8 @@ impl OutNeighborsWeighted<usize> for Digraph {
 }
 
 impl Outdegree for Digraph {
-    /// Warning: The time complexity of this implementation is *O*(*a*)
-    /// compared to *O*(1) for `adjacency_list` and
-    /// `adjacency_list_weighted`.
+    /// Warning: runs in **O(a)**, where **a** is the number of arcs, compared
+    /// to **O(1)** for `adjacency_list` and `adjacency_list_weighted`.
     ///
     /// # Panics
     ///

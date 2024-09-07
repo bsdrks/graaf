@@ -57,18 +57,11 @@ use super::{
 ///     }
 /// }
 ///
-/// // 0 -> {1}
-/// // 1 -> {0}
-///
 /// let digraph = Digraph {
 ///     arcs: vec![BTreeSet::from([1]), BTreeSet::from([0])],
 /// };
 ///
 /// assert!(!digraph.is_oriented());
-///
-/// // 0 -> {1}
-/// // 1 -> {2}
-/// // 2 -> {0}
 ///
 /// let digraph = Digraph {
 ///     arcs: vec![

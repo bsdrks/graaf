@@ -6,9 +6,9 @@
 //!
 //! ## Order 2
 //!
-//! Generate an empty digraph of order 2.
+//! Generate an empty digraph of order `2`.
 //!
-//! ![Empty digraph of order 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_2.svg)
+//! ![Empty digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_2.svg)
 //!
 //! ```
 //! use graaf::{
@@ -22,9 +22,9 @@
 //!
 //! ## Order 3
 //!
-//! Generate an empty digraph of order 3.
+//! Generate an empty digraph of order `3`.
 //!
-//! ![Empty digraph of order 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_3.svg)
+//! ![Empty digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_3.svg)
 //!
 //! ```
 //! use graaf::{
@@ -38,9 +38,9 @@
 //!
 //! ## Order 4
 //!
-//! Generate an empty digraph of order 4.
+//! Generate an empty digraph of order `4`.
 //!
-//! ![Empty digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_4.svg)
+//! ![Empty digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_4.svg)
 //!
 //! ```
 //! use graaf::{
@@ -54,6 +54,8 @@
 #![doc(alias = "edgeless")]
 
 /// Generate empty digraphs.
+///
+/// An empty digraph has no arcs.
 ///
 /// # Implementing `Empty`
 ///
@@ -83,10 +85,6 @@
 ///     }
 /// }
 ///
-/// // 0 -> {}
-/// // 1 -> {}
-/// // 2 -> {}
-///
 /// assert!(Digraph::empty(3).arcs.iter().eq(&[
 ///     BTreeSet::new(),
 ///     BTreeSet::new(),
@@ -105,9 +103,9 @@ pub trait Empty {
     ///
     /// ## Order 2
     ///
-    /// Generate an empty digraph of order 2.
+    /// Generate an empty digraph of order `2`.
     ///
-    /// ![Empty digraph of order 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_2.svg)
+    /// ![Empty digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_2.svg)
     ///
     /// ```
     /// use graaf::{
@@ -121,9 +119,9 @@ pub trait Empty {
     ///
     /// ## Order 3
     ///
-    /// Generate an empty digraph of order 3.
+    /// Generate an empty digraph of order `3`.
     ///
-    /// ![Empty digraph of order 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_3.svg)
+    /// ![Empty digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_3.svg)
     ///
     /// ```
     /// use graaf::{
@@ -137,9 +135,9 @@ pub trait Empty {
     ///
     /// ## Order 4
     ///
-    /// Generate an empty digraph of order 4.
+    /// Generate an empty digraph of order `4`.
     ///
-    /// ![Empty digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_4.svg)
+    /// ![Empty digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_4.svg)
     ///
     /// ```
     /// use graaf::{
@@ -166,8 +164,6 @@ pub trait Empty {
     ///     gen::Empty,
     ///     op::Arcs,
     /// };
-    ///
-    /// // 0 -> {}
     ///
     /// assert!(Digraph::trivial().arcs().eq([]));
     /// ```

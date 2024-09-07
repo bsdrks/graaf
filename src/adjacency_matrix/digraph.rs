@@ -1,4 +1,4 @@
-//! An adjacency matrix representation of an unweighted digraph
+//! A representation of an unweighted digraph.
 //!
 //! An adjacency matrix is a symmetric binary matrix where a value of `1` at
 //! row `u` and column `v` indicates an arc from vertex `u` to vertex `v`. The
@@ -9,13 +9,13 @@
 //!
 //! ## Valid digraph
 //!
-//! A valid digraph of order 5 and size 8.
+//! A valid digraph of order `5` and size `8`.
 //!
-//! ![digraph of order 5 and size 8](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_1.svg?)
+//! ![digraph of order `5` and size `8`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_1-0.87.4.svg?)
 //!
 //! Represented as a matrix.
 //!
-//! ![the matrix for the above digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_matrix_1.svg?)
+//! ![the matrix for the above digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_matrix_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -55,7 +55,7 @@
 //! A self-loop is not allowed. The following pseudograph can not be
 //! represented. The self-loop is marked in red.
 //!
-//! ![self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_self_loop.svg?)
+//! ![self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_self_loop-0.87.4.svg?)
 //!
 //! Adding a self-loop will panic:
 //!
@@ -81,7 +81,7 @@
 //! Parallel arcs are not allowed. The following multigraph can not be
 //! represented. The parallel arc is marked in red:
 //!
-//! ![parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_parallel_arcs.svg?)
+//! ![parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_parallel_arcs-0.87.4.svg?)
 //!
 //! Adding a parallel arc does not change the digraph:
 //!
@@ -138,19 +138,24 @@ use {
     std::collections::BTreeSet,
 };
 
-/// An adjacency matrix representation of an unweighted digraph.
+/// A representation of an unweighted digraph.
+///
+/// An adjacency matrix is a symmetric binary matrix where a value of `1` at
+/// row `u` and column `v` indicates an arc from vertex `u` to vertex `v`. The
+/// matrix is stored as a bit vector, and is suited for dense digraphs with a
+/// small number of vertices.
 ///
 /// # Example
 ///
 /// ## Valid digraph
 ///
-/// A valid digraph of order 5 and size 8.
+/// A valid digraph of order `5` and size `8`.
 ///
-/// ![digraph of order 5 and size 8](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_1.svg?)
+/// ![digraph of order `5` and size `8`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_1-0.87.4.svg?)
 ///
 /// Represented as a matrix.
 ///
-/// ![the matrix for the above digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_matrix_1.svg?)
+/// ![the matrix for the above digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_matrix_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -190,7 +195,7 @@ use {
 /// A self-loop is not allowed. The following pseudograph can not be
 /// represented. The self-loop is marked in red.
 ///
-/// ![self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_self_loop.svg?)
+/// ![self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_self_loop-0.87.4.svg?)
 ///
 /// Adding a self-loop will panic:
 ///
@@ -216,7 +221,7 @@ use {
 /// Parallel arcs are not allowed. The following multigraph can not be
 /// represented. The parallel arc is marked in red:
 ///
-/// ![parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_parallel_arcs.svg?)
+/// ![parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_parallel_arcs-0.87.4.svg?)
 ///
 /// Adding a parallel arc does not change the digraph:
 ///
@@ -280,17 +285,9 @@ impl Digraph {
     ///     op::HasArc,
     /// };
     ///
-    /// // 0 -> {}
-    /// // 1 -> {}
-    /// // 2 -> {}
-    ///
     /// let mut digraph = Digraph::empty(3);
     ///
     /// assert!(!digraph.has_arc(0, 1));
-    ///
-    /// // 0 -> {1}
-    /// // 1 -> {}
-    /// // 2 -> {}
     ///
     /// digraph.toggle(0, 1);
     ///
@@ -467,7 +464,7 @@ impl HasArc for Digraph {
 }
 
 impl Indegree for Digraph {
-    /// Warning: The time complexity of this implementation is *O*(*v*).
+    /// Warning: this implementation runs in **O(v)**.
     ///
     /// # Panics
     ///
@@ -494,7 +491,7 @@ impl Order for Digraph {
 }
 
 impl OutNeighbors for Digraph {
-    /// Warning: The time complexity of this implementation is *O*(*v*).
+    /// Warning: this implementation runs in **O(v)**.
     ///
     /// # Panics
     ///
@@ -507,7 +504,7 @@ impl OutNeighbors for Digraph {
 }
 
 impl OutNeighborsWeighted<usize> for Digraph {
-    /// Warning: The time complexity of this implementation is *O*(*v*).
+    /// Warning: this implementation runs in **O(v)**.
     ///
     /// # Panics
     ///
@@ -524,7 +521,7 @@ impl OutNeighborsWeighted<usize> for Digraph {
 }
 
 impl Outdegree for Digraph {
-    /// Warning: The time complexity of this implementation is *O*(*v*).
+    /// Warning: this implementation runs in **O(v)**.
     ///
     /// # Panics
     ///

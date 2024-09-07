@@ -1,17 +1,19 @@
-//! Bellman-Ford-Moore
+//! The Bellman-Ford-Moore algorithm.
 //!
-//! The Bellman-Ford-Moore algorithm is a single-source shortest-path algorithm
-//! for arc-weighted digraphs.
+//! Finds the shortest distances from a source vertex to all other vertices in
+//! an arc-weighted digraph with negative weights.
 //!
-//! The time complexity is *O*(*ve*).
+//! Runs in **O(va)** time (worst-case), where **v** is the number of vertices
+//! and **a** is the number of arcs.
 //!
 //! # Examples
 //!
-//! ## Shortest path
+//! ## Shortest distances
 //!
-//! Red marks the shortest path between vertices `0` and `4`.
+//! Red marks the shortest path between vertices `0` and `4`. The dashed arcs
+//! represent the other shortest distances.
 //!
-//! ![Bellman-Ford-Moore](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_1.svg?)
+//! ![Bellman-Ford-Moore](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -41,9 +43,10 @@
 //!
 //! ## Negative cycle
 //!
-//! There is no shortest path between  vertices `0` and `2`.
+//! There is no shortest path between vertices `0` and the other vertices due
+//! to the negative cycle.
 //!
-//! ![Bellman-Ford-Moore](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_2.svg)
+//! ![Bellman-Ford-Moore](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_2-0.87.4.svg)
 //!
 //! ```
 //! use graaf::{
@@ -68,8 +71,11 @@ use crate::op::{
     Order,
 };
 
-/// Computes the distances from the source vertex to all other vertices in an
-/// arc-weighted digraph.
+/// Finds the shortest distances from a source vertex to all other vertices in
+/// an arc-weighted digraph with negative weights.
+///
+/// Runs in **O(va)** time (worst-case), where **v** is the number of vertices
+/// and **a** is the number of arcs.
 ///
 /// # Arguments
 ///
@@ -78,16 +84,17 @@ use crate::op::{
 ///
 /// # Returns
 ///
-/// Returns the distances one the source vertex to all other vertices. Returns
+/// Returns the distances from the source vertex to all other vertices. Returns
 /// `None` if the digraph contains a negative circuit.
 ///
 /// # Examples
 ///
-/// ## Shortest path
+/// ## Shortest distances
 ///
-/// Red marks the shortest path between vertices `0` and `4`.
+/// Red marks the shortest path between vertices `0` and `4`. The dashed arcs
+/// represent the other shortest distances.
 ///
-/// ![Bellman-Ford-Moore](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_1.svg?)
+/// ![Bellman-Ford-Moore](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -117,9 +124,10 @@ use crate::op::{
 ///
 /// ## Negative cycle
 ///
-/// There is no shortest path between vertices `0` and `2`.
+/// There is no shortest path between vertices `0` and the other vertices due
+/// to the negative cycle.
 ///
-/// ![Bellman-Ford-Moore](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_2.svg)
+/// ![Bellman-Ford-Moore](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_2-0.87.4.svg)
 ///
 /// ```
 /// use graaf::{

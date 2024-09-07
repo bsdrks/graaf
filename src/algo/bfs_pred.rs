@@ -1,8 +1,10 @@
-//! Breadth-first search with predecessors
+//! Breadth-first search with predecessors.
 //!
 //! Breadth-first search explores the vertices of an unweighted digraph in
-//! order of their distance from a source. The time complexity is
-//! *O*(*v* + *a*).
+//! order of their distance from a source.
+//!
+//! Runs in **O(v + a)** time, where **v** is the number of vertices and **a**
+//! the number of arcs.
 //!
 //! # Examples
 //!
@@ -12,7 +14,7 @@
 //! Note that, in the digraph, vertex `3` preceeds vertex `0`, but
 //! the BFS algorithm starts at vertex `0`.
 //!
-//! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_1.svg?)
+//! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -47,7 +49,7 @@
 //! Red marks the path starting at vertex `3` and blue the path starting at
 //! vertex `7`.
 //!
-//! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_multi_source_1.svg?)
+//! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_multi_source_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -109,6 +111,12 @@ pub struct Step {
 
 /// Breadth-first search with predecessors.
 ///
+/// Breadth-first search explores the vertices of an unweighted digraph in
+/// order of their distance from a source.
+///
+/// Runs in **O(v + a)** time, where **v** is the number of vertices and **a**
+/// the number of arcs.
+///
 /// # Examples
 ///
 /// ## Single source
@@ -117,7 +125,7 @@ pub struct Step {
 /// Note that, in the digraph, vertex `3` preceeds vertex `0`, but
 /// the BFS algorithm starts at vertex `0`.
 ///
-/// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_1.svg?)
+/// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -152,7 +160,7 @@ pub struct Step {
 /// Red marks the path starting at vertex `3` and blue the path starting at
 /// vertex `7`.
 ///
-/// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_multi_source_1.svg?)
+/// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_multi_source_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -238,15 +246,12 @@ impl<'a, D> BfsPred<'a, D> {
     /// Red marks the traversal starting at vertex `0` and the dashed arcs mark
     /// the predecessor tree.
     ///
-    /// ![BFS and the predecessor tree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_predecessors_1.svg?)
+    /// ![BFS and the predecessor tree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_predecessors_1-0.87.4.svg?)
     ///
     /// ```
     /// use graaf::{
     ///     adjacency_list::Digraph,
-    ///     algo::{
-    ///         bfs_pred::BfsPred,
-    ///         PredecessorTree,
-    ///     },
+    ///     algo::bfs_pred::BfsPred,
     ///     gen::Empty,
     ///     op::AddArc,
     /// };
@@ -274,15 +279,12 @@ impl<'a, D> BfsPred<'a, D> {
     /// traversal starting at vertex `7`. The dashed arcs mark the predecessor
     /// tree.
     ///
-    /// ![BFS and the predecessor tree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_predecessors_multi_source_1.svg?)
+    /// ![BFS and the predecessor tree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_predecessors_multi_source_1-0.87.4.svg?)
     ///
     /// ```
     /// use graaf::{
     ///     adjacency_list::Digraph,
-    ///     algo::{
-    ///         bfs_pred::BfsPred,
-    ///         PredecessorTree,
-    ///     },
+    ///     algo::bfs_pred::BfsPred,
     ///     gen::Empty,
     ///     op::AddArc,
     /// };
@@ -350,7 +352,7 @@ impl<'a, D> BfsPred<'a, D> {
     ///
     /// Red marks the path matching `v > 4`.
     ///
-    /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_shortest_path_1.svg?)
+    /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_shortest_path_1-0.87.4.svg?)
     ///
     /// ```
     /// use graaf::{
@@ -379,7 +381,7 @@ impl<'a, D> BfsPred<'a, D> {
     /// Red marks the path starting at vertex `3` matching `v == 2` and blue
     /// marks the path starting at vertex `7`  matching `v == 5`.
     ///
-    /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_shortest_path_multi_source_1.svg?)
+    /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_shortest_path_multi_source_1-0.87.4.svg?)
     ///
     /// ```
     /// use graaf::{

@@ -6,9 +6,9 @@
 //!
 //! ## Order 2
 //!
-//! Generate a complete digraph of order 2.
+//! Generate a complete digraph of order `2`.
 //!
-//! ![Complete digraph of order 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_2.svg)
+//! ![Complete digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_2.svg)
 //!
 //! ```
 //! use graaf::{
@@ -22,9 +22,9 @@
 //!
 //! ## Order 3
 //!
-//! Generate a complete digraph of order 3.
+//! Generate a complete digraph of order `3`.
 //!
-//! ![Complete digraph of order 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_3.svg)
+//! ![Complete digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_3.svg)
 //!
 //! ```
 //! use graaf::{
@@ -45,9 +45,9 @@
 //!
 //! ## Order 4
 //!
-//! Generate a complete digraph of order 4.
+//! Generate a complete digraph of order `4`.
 //!
-//! ![Complete digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_4.svg)
+//! ![Complete digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_4.svg)
 //!
 //! ```
 //! use graaf::{
@@ -116,10 +116,6 @@ use crate::{
 ///     }
 /// }
 ///
-/// // 0 -> {1, 2}
-/// // 1 -> {0, 2}
-/// // 2 -> {0, 1}
-///
 /// let digraph = Digraph::complete(3);
 ///
 /// assert!(digraph.arcs.iter().eq(&[
@@ -139,9 +135,9 @@ pub trait Complete {
     ///
     /// ## Order 2
     ///
-    /// Generate a complete digraph of order 2.
+    /// Generate a complete digraph of order `2`.
     ///
-    /// ![Complete digraph of order 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_2.svg)
+    /// ![Complete digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_2.svg)
     ///
     /// ```
     /// use graaf::{
@@ -155,9 +151,9 @@ pub trait Complete {
     ///
     /// ## Order 3
     ///
-    /// Generate a complete digraph of order 3.
+    /// Generate a complete digraph of order `3`.
     ///
-    /// ![Complete digraph of order 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_3.svg)
+    /// ![Complete digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_3.svg)
     ///
     /// ```
     /// use graaf::{
@@ -178,9 +174,9 @@ pub trait Complete {
     ///
     /// ## Order 4
     ///
-    /// Generate a complete digraph of order 4.
+    /// Generate a complete digraph of order `4`.
     ///
-    /// ![Complete digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_4.svg)
+    /// ![Complete digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_4.svg)
     ///
     /// ```
     /// use graaf::{

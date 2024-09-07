@@ -1,8 +1,10 @@
-//! Breadth-first search with distances
+//! Breadth-first search with distances.
 //!
 //! Breadth-first search explores the vertices of an unweighted digraph in
-//! order of their distance from a source. The time complexity is
-//! *O*(*v* + *a*).
+//! order of their distance from a source.
+//!
+//! Runs in **O(v + a)** time, where **v** is the number of vertices and **a**
+//! is the number of arcs.
 //!
 //! # Examples
 //!
@@ -10,7 +12,7 @@
 //!
 //! Red marks the path starting at vertex `0` and `d` denotes the distance.
 //!
-//! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_1.svg?)
+//! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -45,7 +47,7 @@
 //! Red marks the path starting at vertex `3` and blue the path starting at
 //! vertex `7`.
 //!
-//! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_multi_source_1.svg?)
+//! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_multi_source_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -96,13 +98,19 @@ use {
 
 /// Breadth-first search with distances.
 ///
+/// Breadth-first search explores the vertices of an unweighted digraph in
+/// order of their distance from a source.
+///
+/// Runs in **O(v + a)** time, where **v** is the number of vertices and **a**
+/// is the number of arcs.
+///
 /// # Examples
 ///
 /// ## Single source
 ///
 /// Red marks the path starting at vertex `0` and `d` denotes the distance.
 ///
-/// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_1.svg?)
+/// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -137,7 +145,7 @@ use {
 /// Red marks the path starting at vertex `3` and blue the path starting at
 /// vertex `7`.
 ///
-/// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_multi_source_1.svg?)
+/// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_multi_source_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -234,11 +242,6 @@ impl<'a, D> BfsDist<'a, D> {
     ///     gen::Empty,
     ///     op::AddArc,
     /// };
-    ///
-    /// // 0 -> {1}
-    /// // 1 -> {2}
-    /// // 2 -> {}
-    /// // 3 -> {0}
     ///
     /// let mut digraph = Digraph::empty(4);
     ///

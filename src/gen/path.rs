@@ -7,9 +7,9 @@
 //!
 //! ## Order 2
 //!
-//! Generate a path digraph of order 2.
+//! Generate a path digraph of order `2`.
 //!
-//! ![Path digraph of order 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/path_2.svg)
+//! ![Path digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/path_2.svg)
 //!
 //! ```
 //! use graaf::{
@@ -23,9 +23,9 @@
 //!
 //! ## Order 3
 //!
-//! Generate a path digraph of order 3.
+//! Generate a path digraph of order `3`.
 //!
-//! ![Path digraph of order 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/path_3.svg)
+//! ![Path digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/path_3.svg)
 //!
 //! ```
 //! use graaf::{
@@ -39,9 +39,9 @@
 //!
 //! ## Order 4
 //!
-//! Generate a path digraph of order 4.
+//! Generate a path digraph of order `4`.
 //!
-//! ![Path digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/path_4.svg)
+//! ![Path digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/path_4.svg)
 //!
 //! ```
 //! use graaf::{
@@ -59,6 +59,9 @@ use crate::{
 };
 
 /// Generate path digraphs.
+///
+/// A path digraph is a chain of arcs that connect vertices in a linear
+/// sequence.
 ///
 /// # Implementing `Path`
 ///
@@ -95,10 +98,6 @@ use crate::{
 ///     }
 /// }
 ///
-/// // 0 -> {1}
-/// // 1 -> {2}
-/// // 2 -> {}
-///
 /// let digraph = Digraph::path(3);
 ///
 /// assert!(digraph.arcs.iter().eq(&[
@@ -118,9 +117,9 @@ pub trait Path {
     ///
     /// ## Order 2
     ///
-    /// Generate a path digraph of order 2.
+    /// Generate a path digraph of order `2`.
     ///
-    /// ![Path digraph of order 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/path_2.svg)
+    /// ![Path digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/path_2.svg)
     ///
     /// ```
     /// use graaf::{
@@ -134,9 +133,9 @@ pub trait Path {
     ///
     /// ## Order 3
     ///
-    /// Generate a path digraph of order 3.
+    /// Generate a path digraph of order `3`.
     ///
-    /// ![Path digraph of order 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/path_3.svg)
+    /// ![Path digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/path_3.svg)
     ///
     /// ```
     /// use graaf::{
@@ -150,9 +149,9 @@ pub trait Path {
     ///
     /// ## Order 4
     ///
-    /// Generate a path digraph of order 4.
+    /// Generate a path digraph of order `4`.
     ///
-    /// ![Path digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/path_4.svg)
+    /// ![Path digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/path_4.svg)
     ///
     /// ```
     /// use graaf::{

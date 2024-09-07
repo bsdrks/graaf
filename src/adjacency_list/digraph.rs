@@ -1,12 +1,12 @@
-//! An adjacency list represents an unweighted digraph.
+//! A representation of an unweighted digraph.
 //!
 //! # Examples
 //!
 //! ## Valid digraph
 //!
-//! A valid digraph of order 5 and size 8.
+//! A valid digraph of order `5` and size `8`.
 //!
-//! ![digraph of order 5 and size 8](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_1.svg?)
+//! ![digraph of order `5` and size `8`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_1.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -128,15 +128,15 @@ use {
     std::collections::BTreeSet,
 };
 
-/// An adjacency list representation of an unweighted digraph.
+/// A representation of an unweighted digraph.
 ///
 /// # Examples
 ///
 /// ## Valid digraph
 ///
-/// A valid digraph of order 5 and size 8.
+/// A valid digraph of order `5` and size `8`.
 ///
-/// ![digraph of order 5 and size 8](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_1.svg?)
+/// ![digraph of order `5` and size `8`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_1.svg?)
 ///
 /// ```
 /// use graaf::{

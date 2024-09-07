@@ -12,10 +12,6 @@
 //!     },
 //! };
 //!
-//! // 0 -> {1, 2}
-//! // 1 -> {}
-//! // 2 -> {0}
-//!
 //! let mut digraph = Digraph::empty(3);
 //!
 //! digraph.add_arc(0, 1);
@@ -47,10 +43,6 @@
 ///     }
 /// }
 ///
-/// // 0 -> {1, 2}
-/// // 1 -> {}
-/// // 2 -> {0}
-///
 /// let mut digraph = Digraph {
 ///     arcs: vec![BTreeSet::new(), BTreeSet::new(), BTreeSet::new()],
 /// };
@@ -77,10 +69,6 @@
 ///         Arcs,
 ///     },
 /// };
-///
-/// // 0 -> {1, 2}
-/// // 1 -> {}
-/// // 2 -> {0}
 ///
 /// let mut digraph = Digraph::empty(3);
 ///

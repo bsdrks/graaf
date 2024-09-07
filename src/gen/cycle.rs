@@ -6,9 +6,9 @@
 //!
 //! ## Order 2
 //!
-//! Generate a cycle digraph of order 2.
+//! Generate a cycle digraph of order `2`.
 //!
-//! ![Cycle digraph of order 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_2.svg)
+//! ![Cycle digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_2.svg)
 //!
 //! ```
 //! use graaf::{
@@ -22,9 +22,9 @@
 //!
 //! ## Order 3
 //!
-//! Generate a cycle digraph of order 3.
+//! Generate a cycle digraph of order `3`.
 //!
-//! ![Cycle digraph of order 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_3.svg)
+//! ![Cycle digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_3.svg)
 //!
 //! ```
 //! use graaf::{
@@ -45,9 +45,9 @@
 //!
 //! ## Order 4
 //!
-//! Generate a cycle digraph of order 4.
+//! Generate a cycle digraph of order `4`.
 //!
-//! ![Cycle digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_4.svg)
+//! ![Cycle digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_4.svg)
 //!
 //! ```
 //! use graaf::{
@@ -74,6 +74,8 @@ use crate::{
 };
 
 /// Generate cycle digraphs.
+///
+/// A cycle is a digraph with a single bidirectional cycle.
 ///
 /// # Implementing `Cycle`
 ///
@@ -110,10 +112,6 @@ use crate::{
 ///     }
 /// }
 ///
-/// // 0 -> {1, 2}
-/// // 1 -> {0, 2}
-/// // 2 -> {0, 1}
-///
 /// let digraph = Digraph::cycle(3);
 ///
 /// assert!(digraph.arcs.iter().eq(&[
@@ -132,18 +130,8 @@ use crate::{
 ///     op::Arcs,
 /// };
 ///
-/// // 0 -> {}
-///
 /// assert!(Digraph::cycle(1).arcs().eq([]));
-///
-/// // 0 -> {1}
-/// // 1 -> {0}
-///
 /// assert!(Digraph::cycle(2).arcs().eq([(0, 1), (1, 0)]));
-///
-/// // 0 -> {1}
-/// // 1 -> {2}
-/// // 2 -> {0}
 ///
 /// assert!(Digraph::cycle(3).arcs().eq([
 ///     (0, 1),
@@ -165,9 +153,9 @@ pub trait Cycle {
     ///
     /// ## Order 2
     ///
-    /// Generate a cycle digraph of order 2.
+    /// Generate a cycle digraph of order `2`.
     ///
-    /// ![Cycle digraph of order 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_2.svg)
+    /// ![Cycle digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_2.svg)
     ///
     /// ```
     /// use graaf::{
@@ -181,9 +169,9 @@ pub trait Cycle {
     ///
     /// ## Order 3
     ///
-    /// Generate a cycle digraph of order 3.
+    /// Generate a cycle digraph of order `3`.
     ///
-    /// ![Cycle digraph of order 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_3.svg)
+    /// ![Cycle digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_3.svg)
     ///
     /// ```
     /// use graaf::{
@@ -204,9 +192,9 @@ pub trait Cycle {
     ///
     /// ## Order 4
     ///
-    /// Generate a cycle digraph of order 4.
+    /// Generate a cycle digraph of order `4`.
     ///
-    /// ![Cycle digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_4.svg)
+    /// ![Cycle digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_4.svg)
     ///
     /// ```
     /// use graaf::{

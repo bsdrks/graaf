@@ -1,5 +1,3 @@
-//! Digraph generators.
-//!
 //! Generate parameterized and random digraphs.
 //!
 //! # Examples
@@ -35,9 +33,9 @@
 //!
 //! ## Circuit digraph
 //!
-//! Generate a circuit digraph of order 4.
+//! Generate a circuit digraph of order `4`.
 //!
-//! ![Circuit digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_4.svg?)
+//! ![Circuit digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -53,9 +51,9 @@
 //!
 //! ## Complete digraph
 //!
-//! Generate a complete digraph of order 4.
+//! Generate a complete digraph of order `4`.
 //!
-//! ![Complete digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_4.svg?)
+//! ![Complete digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -82,9 +80,9 @@
 //!
 //! ## Cycle digraph
 //!
-//! Generate a cycle digraph of order 4.
+//! Generate a cycle digraph of order `4`.
 //!
-//! ![Cycle digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_4.svg?)
+//! ![Cycle digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -107,9 +105,9 @@
 //!
 //! ## Empty digraph
 //!
-//! Generate an empty digraph of order 4.
+//! Generate an empty digraph of order `4`.
 //!
-//! ![Empty digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_4.svg?)
+//! ![Empty digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -123,7 +121,7 @@
 //!
 //! ## Erdős-Rényi digraph
 //!
-//! Generate a random Erdős-Rényi digraph of order 4 and probability 0.5.
+//! Generate a random Erdős-Rényi digraph of order `4` and probability 0.5.
 //!
 //! ```
 //! use graaf::{
@@ -137,9 +135,9 @@
 //!
 //! ## Path digraph
 //!
-//! Generate a path digraph of order 4.
+//! Generate a path digraph of order `4`.
 //!
-//! ![Path digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/path_4.svg?)
+//! ![Path digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/path_4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -153,7 +151,7 @@
 //!
 //! ## Random tournament digraph
 //!
-//! Generate a random tournament digraph of order 4.
+//! Generate a random tournament digraph of order `4`.
 //!
 //! ```
 //! use graaf::{
@@ -167,9 +165,9 @@
 //!
 //! ## Star digraph
 //!
-//! Generate a star digraph of order 4.
+//! Generate a star digraph of order `4`.
 //!
-//! ![Star digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_4.svg?)
+//! ![Star digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_4.svg?)
 //!
 //! ```
 //! use graaf::{

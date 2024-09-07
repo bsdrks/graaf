@@ -6,9 +6,9 @@
 //!
 //! ## Order 2
 //!
-//! Generate a circuit digraph of order 2.
+//! Generate a circuit digraph of order `2`.
 //!
-//! ![Circuit digraph of order 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_2.svg)
+//! ![Circuit digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_2.svg)
 //!
 //! ```
 //! use graaf::{
@@ -22,9 +22,9 @@
 //!
 //! ## Order 3
 //!
-//! Generate a circuit digraph of order 3.
+//! Generate a circuit digraph of order `3`.
 //!
-//! ![Circuit digraph of order 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_3.svg)
+//! ![Circuit digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_3.svg)
 //!
 //! ```
 //! use graaf::{
@@ -38,9 +38,9 @@
 //!
 //! ## Order 4
 //!
-//! Generate a circuit digraph of order 4.
+//! Generate a circuit digraph of order `4`.
 //!
-//! ![Circuit digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_4.svg)
+//! ![Circuit digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_4.svg)
 //!
 //! ```
 //! use graaf::{
@@ -55,6 +55,8 @@
 //! ```
 
 /// Generate circuit digraphs.
+///
+/// A circuit is an oriented cycle.
 ///
 /// # Implementing `Circuit`
 ///
@@ -90,10 +92,6 @@
 ///     }
 /// }
 ///
-/// // 0 -> {1}
-/// // 1 -> {2}
-/// // 2 -> {0}
-///
 /// let digraph = Digraph::circuit(3);
 ///
 /// assert!(digraph.arcs.iter().eq(&[
@@ -112,19 +110,8 @@
 ///     op::Arcs,
 /// };
 ///
-/// // 0 -> {}
-///
 /// assert!(Digraph::circuit(1).arcs().eq([]));
-///
-/// // 0 -> {1}
-/// // 1 -> {0}
-///
 /// assert!(Digraph::circuit(2).arcs().eq([(0, 1), (1, 0)]));
-///
-/// // 0 -> {1}
-/// // 1 -> {2}
-/// // 2 -> {0}
-///
 /// assert!(Digraph::circuit(3).arcs().eq([(0, 1), (1, 2), (2, 0)]));
 /// ```
 pub trait Circuit {
@@ -138,9 +125,9 @@ pub trait Circuit {
     ///
     /// ## Order 2
     ///
-    /// Generate a circuit digraph of order 2.
+    /// Generate a circuit digraph of order `2`.
     ///
-    /// ![Circuit digraph of order 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_2.svg)
+    /// ![Circuit digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_2.svg)
     ///
     /// ```
     /// use graaf::{
@@ -154,9 +141,9 @@ pub trait Circuit {
     ///
     /// ## Order 3
     ///
-    /// Generate a circuit digraph of order 3.
+    /// Generate a circuit digraph of order `3`.
     ///
-    /// ![Circuit digraph of order 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_3.svg)
+    /// ![Circuit digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_3.svg)
     ///
     /// ```
     /// use graaf::{
@@ -170,9 +157,9 @@ pub trait Circuit {
     ///
     /// ## Order 4
     ///
-    /// Generate a circuit digraph of order 4.
+    /// Generate a circuit digraph of order `4`.
     ///
-    /// ![Circuit digraph of order 4](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_4.svg)
+    /// ![Circuit digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_4.svg)
     ///
     /// ```
     /// use graaf::{

@@ -1,8 +1,10 @@
-//! Breadth-first search
+//! Breadth-first search.
 //!
 //! Breadth-first search explores the vertices of an unweighted digraph in
-//! order of their distance from a source. The time complexity is
-//! *O*(*v* + *a*).
+//! order of their distance from a source.
+//!
+//! Runs in **O(v + a)** time, where **v** is the number of vertices and **a**
+//! the number of arcs.
 //!
 //! # Examples
 //!
@@ -11,7 +13,7 @@
 //! Red marks the path starting at vertex `0` and `t` denotes the iteration
 //! index.
 //!
-//! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_1.svg?)
+//! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -37,7 +39,7 @@
 //! Red marks the path starting at vertex `3` and blue the path starting at
 //! vertex `7`.
 //!
-//! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_multi_source_1.svg?)
+//! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_multi_source_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -73,12 +75,18 @@ use {
 
 /// Breadth-first search.
 ///
+/// Breadth-first search explores the vertices of an unweighted digraph in
+/// order of their distance from a source.
+///
+/// Runs in **O(v + a)** time, where **v** is the number of vertices and **a**
+/// the number of arcs.
+///
 /// # Examples
 ///
 /// Red marks the path starting at vertex `0` and `t` denotes the iteration
 /// index.
 ///
-/// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_1.svg?)
+/// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -104,7 +112,7 @@ use {
 /// Red marks the path starting at vertex `3` and blue the path starting at
 /// vertex `7`.
 ///
-/// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_multi_source_1.svg?)
+/// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_multi_source_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{

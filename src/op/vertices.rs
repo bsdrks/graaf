@@ -37,10 +37,6 @@
 ///     }
 /// }
 ///
-/// // 0 -> {}
-/// // 1 -> {}
-/// // 2 -> {}
-///
 /// let digraph = Digraph {
 ///     vertices: vec![BTreeSet::new(), BTreeSet::new(), BTreeSet::new()],
 /// };
@@ -56,11 +52,6 @@
 ///     gen::Empty,
 ///     op::Vertices,
 /// };
-///
-/// // 0 -> {}
-/// // 1 -> {}
-/// // 2 -> {}
-/// // 3 -> {}
 ///
 /// let digraph = Digraph::empty(4);
 ///

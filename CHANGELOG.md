@@ -24,6 +24,16 @@
 - Review documentation.
 - Review the documentation test examples.
 
+## [0.87.4] - 2024-09-07
+
+Documentation improvements.
+
+Changed
+
+- Improve documentation images.
+- Improve module descriptions.
+- Remove `// 0 -> 1` annotations from doctests.
+
 ## [0.87.3] - 2024-09-04
 
 Changed

@@ -9,8 +9,8 @@
 //! - [Operations](#operations)
 //! - [Algorithms](#algorithms)
 //!    - [Bellman-Ford-Moore](#bellman-ford-moore)
-//!    - [Breadth-First Search](#breadth-first-search-bfs)
-//!    - [Depth-First Search](#depth-first-search-dfs)
+//!    - [Breadth-First Search](#breadth-first-search)
+//!    - [Depth-First Search](#depth-first-search)
 //!    - [Dijkstra](#dijkstra)
 //!    - [Distance Matrix](#distance-matrix)
 //!    - [Floyd-Warshall](#floyd-warshall)
@@ -43,19 +43,18 @@
 //!   digraph.
 //! - [`AddArc`](op::AddArc) adds an arc to an unweighted digraph.
 //! - [`ArcWeight`](op::ArcWeight) returns an arc's weight.
-//! - [`ArcsWeighted`](op::ArcsWeighted) returns a digraph's weighted arcs.
-//! - [`Arcs`](op::Arcs) returns a digraph's arcs.
+//! - [`ArcsWeighted`](op::ArcsWeighted) iterates a digraph's weighted arcs.
+//! - [`Arcs`](op::Arcs) iterates a digraph's arcs.
 //! - [`Complement`](op::Complement) returns a digraph's complement.
 //! - [`Converse`](op::Converse) returns a digraph's converse.
-//! - [`DegreeSequence`](op::DegreeSequence) returns a digraph's degree
-//!   sequence.
+//! - [`DegreeSequence`](op::DegreeSequence) iterates a digraph's degrees.
 //! - [`Degree`](op::Degree) returns a vertex's degree.
 //! - [`HasArc`](op::HasArc) checks whether a digraph contains an arc.
 //! - [`HasEdge`](op::HasEdge) checks whether a digraph contains an edge.
 //! - [`HasWalk`](op::HasWalk) checks whether a digraph contains a walk.
-//! - [`InNeighbors`](op::InNeighbors) returns a vertex's in-neighbors.
-//! - [`IndegreeSequence`](op::IndegreeSequence) returns a digraph's indegree
-//!   sequence.
+//! - [`InNeighbors`](op::InNeighbors) iterates a vertex's in-neighbors.
+//! - [`IndegreeSequence`](op::IndegreeSequence) iterates a digraph's
+//!   indegrees.
 //! - [`Indegree`](op::Indegree) a vertex's indegree.
 //! - [`IsBalanced`](op::IsBalanced) checks whether a digraph is balanced.
 //! - [`IsComplete`](op::IsComplete) checks whether a digraph is complete.
@@ -76,27 +75,27 @@
 //! - [`IsTournament`](op::IsTournament) checks whether a digraph is a
 //!   tournament.
 //! - [`Order`](op::Order) returns the number of vertices in a digraph.
-//! - [`OutNeighborsWeighted`](op::OutNeighborsWeighted) returns a vertex's
+//! - [`OutNeighborsWeighted`](op::OutNeighborsWeighted) iterates a vertex's
 //!   weighted out-neighbors.
-//! - [`OutNeighbors`](op::OutNeighbors) returns a vertex's out-neighbors.
-//! - [`OutdegreeSequence`](op::OutdegreeSequence) returns a digraph's
-//!   outdegree sequence.
+//! - [`OutNeighbors`](op::OutNeighbors) iterates a vertex's out-neighbors.
+//! - [`OutdegreeSequence`](op::OutdegreeSequence) iterates a digraph's
+//!   outdegrees.
 //! - [`Outdegree`](op::Outdegree) returns a vertex's outdegree.
 //! - [`RemoveArc`](op::RemoveArc) removes an arc from a digraph.
-//! - [`SemidegreeSequence`](op::SemidegreeSequence) returns a digraph's
-//!   semidegree sequence.
-//! - [`Sinks`](op::Sinks) returns a digraph's sinks.
+//! - [`SemidegreeSequence`](op::SemidegreeSequence) iterates a digraph's
+//!   semidegrees.
+//! - [`Sinks`](op::Sinks) iterates a digraph's sinks.
 //! - [`Size`](op::Size) returns the number of arcs in a digraph.
-//! - [`Sources`](op::Sources) returns a digraph's sources.
-//! - [`Vertices`](op::Vertices) returns a digraph's vertices.
+//! - [`Sources`](op::Sources) iterates a digraph's sources.
+//! - [`Vertices`](op::Vertices) iterates a digraph's vertices.
 //!
 //! # Algorithms
 //!
 //! ## Bellman-Ford-Moore
 //!
-//! The Bellman-Ford-Moore algorithm finds the shortest paths in an
-//! arc-weighted digraph with negative weights.
-//!
+//! Finds the shortest distances from a source vertex to all other vertices in
+//! an arc-weighted digraph with negative weights.
+
 //! - [`single_source_distances`](algo::bellman_ford_moore::single_source_distances) finds the shortest distances.
 //!
 //! ## Breadth-First Search

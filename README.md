@@ -28,7 +28,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.87.3"
+graaf = "0.87.4"
 ```
 
 ## Representations
@@ -55,17 +55,17 @@ graaf = "0.87.3"
 - [`AddArcWeighted`] adds an arc to an arc-weighted digraph.
 - [`AddArc`] adds an arc to an unweighted digraph.
 - [`ArcWeight`] returns an arc's weight.
-- [`ArcsWeighted`] returns a digraph's weighted arcs.
-- [`Arcs`] returns a digraph's arcs.
+- [`ArcsWeighted`] iterates a digraph's weighted arcs.
+- [`Arcs`] iterates a digraph's arcs.
 - [`Complement`] returns a digraph's complement.
 - [`Converse`] returns a digraph's converse.
-- [`DegreeSequence`] returns a digraph's degree sequence.
+- [`DegreeSequence`] iterates a digraph's degrees.
 - [`Degree`] returns a vertex's degree.
 - [`HasArc`] checks whether a digraph contains an arc.
 - [`HasEdge`] checks whether a digraph contains an edge.
 - [`HasWalk`] checks whether a digraph contains a walk.
-- [`InNeighbors`] returns a vertex's in-neighbors.
-- [`IndegreeSequence`] returns a digraph's indegree sequence.
+- [`InNeighbors`] iterates a vertex's in-neighbors.
+- [`IndegreeSequence`] iterates a digraph's indegrees.
 - [`Indegree`] returns a vertex's indegree.
 - [`IsBalanced`] checks whether a digraph is balanced.
 - [`IsComplete`] checks whether a digraph is complete.
@@ -81,22 +81,22 @@ graaf = "0.87.3"
 - [`IsSymmetric`] checks whether a digraph is symmetric.
 - [`IsTournament`] checks whether a digraph is a tournament.
 - [`Order`] returns the number of vertices in a digraph.
-- [`OutNeighborsWeighted`] returns a vertex's weighted out-neighbors.
-- [`OutNeighbors`] returns a vertex's out-neighbors.
-- [`OutdegreeSequence`] returns a digraph's outdegree sequence.
+- [`OutNeighborsWeighted`] iterates a vertex's weighted out-neighbors.
+- [`OutNeighbors`] iterates a vertex's out-neighbors.
+- [`OutdegreeSequence`] iterates a digraph's outdegrees.
 - [`Outdegree`] returns a vertex's outdegree.
 - [`RemoveArc`] removes an arc from a digraph.
-- [`SemidegreeSequence`] returns a digraph's semidegree sequence.
-- [`Sinks`] returns a digraph's sinks.
+- [`SemidegreeSequence`] iterates a digraph's semidegrees.
+- [`Sinks`] iterates a digraph's sinks.
 - [`Size`] returns the number of arcs in a digraph.
-- [`Sources`] returns a digraph's sources.
-- [`Vertices`] returns a digraph's vertices.
+- [`Sources`] iterates a digraph's sources.
+- [`Vertices`] iterates a digraph's vertices.
 
 ## Algorithms
 
 ### Bellman-Ford-Moore
 
-The Bellman-Ford-Moore algorithm finds the shortest paths in an arc-weighted digraph with negative weights.
+The Bellman-Ford-Moore algorithm finds the shortest distances from a source vertex to all other vertices in an arc-weighted digraph with negative weights.
 
 - [`single_source_distances`](https://docs.rs/graaf/latest/graaf/algo/bellman_ford_moore/fn.single_source_distances.html) finds the shortest distances.
 
@@ -133,7 +133,7 @@ Dijkstra's algorithm finds the shortest paths in an arc-weighted digraph.
 
 ### Distance Matrix
 
-A [`DistanceMatrix`](https://docs.rs/graaf/latest/graaf/algo/types/distance_matrix/struct.DistanceMatrix.html) contains the shortest distances between all pairs of vertices in a digraph.
+A [`DistanceMatrix`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html) contains the shortest distances between all pairs of vertices in a digraph.
 
 - [`center`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.center) finds the center of the digraph.
 - [`diameter`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.diameter) finds the diameter of the digraph.
@@ -149,12 +149,12 @@ The Floyd-Warshall algorithm finds the distance between each pair of vertices in
 
 ### Predecessor Tree
 
-A [`PredecessorTree`](https://docs.rs/graaf/latest/graaf/algo/types/predecessor_tree/struct.PredecessorTree.html) is the result of a search and contains the predecessors of the vertices.
+A [`PredecessorTree`](https://docs.rs/graaf/latest/graaf/algo/predecessor_tree/struct.PredecessorTree.html) is the result of a search and contains the predecessors of the vertices.
 
-- [`search`](https://docs.rs/graaf/latest/graaf/algo/types/predecessor_tree/struct.PredecessorTree.html#method.search) finds a vertex by value.
-- [`search_by`](https://docs.rs/graaf/latest/graaf/algo/types/predecessor_tree/struct.PredecessorTree.html#method.search_by) finds a vertex by predicate.
+- [`search`](https://docs.rs/graaf/latest/graaf/algo/predecessor_tree/struct.PredecessorTree.html#method.search) finds a vertex by value.
+- [`search_by`](https://docs.rs/graaf/latest/graaf/algo/predecessor_tree/struct.PredecessorTree.html#method.search_by) finds a vertex by predicate.
 
-These functions produce a [`PredecessorTree`](https://docs.rs/graaf/latest/graaf/algo/types/predecessor_tree/struct.PredecessorTree.html):
+These functions produce a [`PredecessorTree`](https://docs.rs/graaf/latest/graaf/algo/predecessor_tree/struct.PredecessorTree.html):
 
 - [`BfsPred::predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.BfsPred.html#method.predecessors)
 - [`DfsPred::predecessors`](https://docs.rs/graaf/latest/graaf/algo/dfs_pred/struct.DfsPred.html#method.predecessors)

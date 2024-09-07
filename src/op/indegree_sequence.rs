@@ -15,10 +15,6 @@
 //!     },
 //! };
 //!
-//! // 0 -> {1, 2}
-//! // 1 -> {2}
-//! // 2 -> {0}
-//!
 //! let mut digraph = Digraph::empty(3);
 //!
 //! digraph.add_arc(0, 1);
@@ -67,10 +63,6 @@ use super::{
 ///     }
 /// }
 ///
-/// // 0 -> {1, 2}
-/// // 1 -> {2}
-/// // 2 -> {0}
-///
 /// let mut digraph = Digraph {
 ///     arcs: vec![
 ///         BTreeSet::from([1, 2]),
@@ -93,10 +85,6 @@ use super::{
 ///         IndegreeSequence,
 ///     },
 /// };
-///
-/// // 0 -> {1, 2}
-/// // 1 -> {2}
-/// // 2 -> {0}
 ///
 /// let mut digraph = Digraph::empty(3);
 ///

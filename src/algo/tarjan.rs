@@ -1,8 +1,12 @@
-//! Tarjan
+//! Tarjan's algorithm.
 //!
 //! Tarjan's algorithm finds strongly connected components in a digraph.
 //!
 //! # Examples
+//!
+//! There are three strongly connected components in the following digraph:
+//!
+//! ![Tarjan](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/tarjan_1-0.87.4.svg?)
 //!
 //! ```
 //! use {
@@ -15,21 +19,11 @@
 //!     std::collections::BTreeSet,
 //! };
 //!
-//! // 0 -> {1}
-//! // 1 -> {2, 4, 5}
-//! // 2 -> {3, 6}
-//! // 3 -> {2, 7}
-//! // 4 -> {0, 5}
-//! // 5 -> {6}
-//! // 6 -> {5}
-//! // 7 -> {3, 6}
-//!
 //! let mut digraph = Digraph::empty(8);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(1, 2);
 //! digraph.add_arc(1, 4);
-//! digraph.add_arc(1, 5);
 //! digraph.add_arc(2, 3);
 //! digraph.add_arc(2, 6);
 //! digraph.add_arc(3, 2);
@@ -64,13 +58,19 @@ use {
     },
 };
 
-/// Tarjan's algorithm for finding strongly connected components in a digraph.
+/// Tarjan's algorithm.
+///
+/// Tarjan's algorithm finds strongly connected components in a digraph.
 ///
 /// # Arguments
 ///
 /// * `digraph`: The digraph.
 ///
 /// # Examples
+///
+/// There are three strongly connected components in the following digraph:
+///
+/// ![Tarjan](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/tarjan_1-0.87.4.svg?)
 ///
 /// ```
 /// use {
@@ -83,23 +83,31 @@ use {
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// // 0 -> {1}
-/// // 1 -> {2}
-/// // 2 -> {0}
-/// // 3 -> {0}
-///
-/// let mut digraph = Digraph::empty(4);
+/// let mut digraph = Digraph::empty(8);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(1, 2);
-/// digraph.add_arc(2, 0);
-/// digraph.add_arc(3, 0);
+/// digraph.add_arc(1, 4);
+/// digraph.add_arc(2, 3);
+/// digraph.add_arc(2, 6);
+/// digraph.add_arc(3, 2);
+/// digraph.add_arc(3, 7);
+/// digraph.add_arc(4, 0);
+/// digraph.add_arc(4, 5);
+/// digraph.add_arc(5, 6);
+/// digraph.add_arc(6, 5);
+/// digraph.add_arc(7, 3);
+/// digraph.add_arc(7, 6);
 ///
 /// assert_eq!(
 ///     strongly_connected_components(&digraph)
 ///         .into_iter()
 ///         .collect::<BTreeSet<BTreeSet<usize>>>(),
-///     BTreeSet::from([BTreeSet::from([0, 1, 2]), BTreeSet::from([3])])
+///     BTreeSet::from([
+///         BTreeSet::from([4, 1, 0]),
+///         BTreeSet::from([5, 6]),
+///         BTreeSet::from([7, 3, 2])
+///     ])
 /// );
 /// ```
 #[doc(alias = "scc")]

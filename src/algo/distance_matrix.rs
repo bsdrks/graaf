@@ -7,16 +7,16 @@
 //!
 //! ## A digraph
 //!
-//! A digraph of order 7 and size 15.
+//! A digraph of order `7` and size `15`.
 //!
-//! ![the digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_digraph_1-0.87.2.svg?)
+//! ![The digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_digraph_1-0.87.4.svg?)
 //!
 //! ### The distance matrix
 //!
-//! The corresponding [`DistanceMatrix`] calculated using the Floyd-Warshall
-//! algorithm.
+//! The corresponding [`DistanceMatrix`] by
+//! [`floyd_warshall::distances`](crate::algo::floyd_warshall::distances).
 //!
-//! ![the distance matrix](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_matrix_1-0.87.2.svg?)
+//! ![The distance matrix](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_matrix_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -77,16 +77,16 @@ use std::{
 ///
 /// # Examples
 ///
-/// A digraph of order 7 and size 15.
+/// A digraph of order `7` and size `15`.
 ///
-/// ![the digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_digraph_1-0.87.2.svg?)
+/// ![The digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_digraph_1-0.87.4.svg?)
 ///
 /// ### The distance matrix
 ///
-/// The corresponding [`DistanceMatrix`] calculated using the Floyd-Warshall
-/// algorithm.
+/// The corresponding [`DistanceMatrix`] by
+/// [`floyd_warshall::distances`](crate::algo::floyd_warshall::distances).
 ///
-/// ![the distance matrix](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_matrix_1-0.87.2.svg?)
+/// ![The distance matrix](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_matrix_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -185,7 +185,7 @@ impl<W> DistanceMatrix<W> {
     ///
     /// Red marks the center of the digraph.
     ///
-    /// ![eccentricities](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_center_1-0.87.2.svg?)
+    /// ![eccentricities](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_center_1-0.87.4.svg?)
     ///
     /// ```
     /// use graaf::{
@@ -256,7 +256,7 @@ impl<W> DistanceMatrix<W> {
     /// Red marks the longest shortest path in the digraph between vertices `4`
     /// and `5`.
     ///
-    /// ![eccentricities](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_diameter_1-0.87.2.svg?)
+    /// ![eccentricities](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_diameter_1-0.87.4.svg?)
     ///
     /// ```
     /// use graaf::{
@@ -310,7 +310,7 @@ impl<W> DistanceMatrix<W> {
     ///
     /// # Examples
     ///
-    /// ![eccentricities](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_eccentricities_1-0.87.2.svg?)
+    /// ![eccentricities](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_eccentricities_1-0.87.4.svg?)
     ///
     /// ```
     /// use graaf::{

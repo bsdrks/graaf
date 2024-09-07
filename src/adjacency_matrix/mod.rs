@@ -9,13 +9,13 @@
 //!
 //! ## Valid digraph
 //!
-//! A valid digraph of order 5 and size 8.
+//! A valid digraph of order `5` and size `8`.
 //!
-//! ![digraph of order 5 and size 8](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_1.svg?)
+//! ![digraph of order `5` and size `8`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_1-0.87.4.svg?)
 //!
 //! Represented as a matrix.
 //!
-//! ![the matrix for the above digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_matrix_1.svg?)
+//! ![the matrix for the above digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_matrix_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -55,7 +55,7 @@
 //! A self-loop is not allowed. The following pseudograph can not be
 //! represented. The self-loop is marked in red.
 //!
-//! ![self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_self_loop.svg?)
+//! ![self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_self_loop-0.87.4.svg?)
 //!
 //! Adding a self-loop will panic:
 //!
@@ -81,7 +81,7 @@
 //! Parallel arcs are not allowed. The following multigraph can not be
 //! represented. The parallel arc is marked in red:
 //!
-//! ![parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_parallel_arcs.svg?)
+//! ![parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_parallel_arcs-0.87.4.svg?)
 //!
 //! Adding a parallel arc does not change the digraph:
 //!
