@@ -4,11 +4,9 @@
 
 - Add a trait for path contraction.
 - Add a trait for set contraction.
-- Add examples to `algo/mod`.
 - Add the `Barabási–Albert` generator.
 - Add the `DeleteArc` trait.
 - Add the `DeleteVertex` trait.
-- Add the `Grid` generator.
 - Add the `IsIsomorphic` trait.
 - Add the `MaxDegree` trait.
 - Add the `MaxIndegree` trait.
@@ -21,8 +19,18 @@
 - Add the `Wheel` generator.
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
-- Review documentation.
-- Review the documentation test examples.
+- Implement `DfsDist::distances`.
+- Improve doctest and add image to `BfsDist::distances`.
+- Improve doctest and add image to `DijkstraDist::distances`.
+- Improve doctest and add image to `DijkstraPred::predecessors`.
+- Improve doctest and add image to `DijkstraPred::shortest_path`.
+- Improve doctest and add image to `DistanceMatrix::is_connected`.
+- Improve doctest and add image to `DistanceMatrix::periphery`.
+- Improve doctest and add image to `PredecessorTree::search`.
+- Improve doctest and add image to `PredecessorTree::search_by`.
+- Mention the order of tranversal in the `Bfs` documentation.
+- Mention the order of tranversal in the `Dfs` documentation.
+- Mention the order of tranversal in the `Dijkstra` documentation.
 
 ## [0.87.4] - 2024-09-07
 
