@@ -35,6 +35,7 @@
 //! - [`RandomTournament`] generates a random tournament.
 //! - [`Star`] generates a star digraph.
 //! - [`Path`] generates a path digraph.
+//! - [`Wheel`] generates a wheel digraph.
 //!
 //! # Operations
 //!
