@@ -1,9 +1,9 @@
 //! Benchmark the `Path::path` implementation for different types.
 
 use graaf::{
-    adjacency_list,
-    adjacency_matrix,
-    gen::Path,
+    AdjacencyList,
+    AdjacencyMatrix,
+    Path,
 };
 
 fn main() {
@@ -12,10 +12,10 @@ fn main() {
 
 #[divan::bench(args = [10, 100, 1000])]
 fn adjacency_list(n: usize) {
-    let _ = adjacency_list::Digraph::path(n);
+    let _ = AdjacencyList::path(n);
 }
 
 #[divan::bench(args = [10, 100, 1000])]
 fn adjacency_matrix(n: usize) {
-    let _ = adjacency_matrix::Digraph::path(n);
+    let _ = AdjacencyMatrix::path(n);
 }

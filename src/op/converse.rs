@@ -6,16 +6,14 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Circuit,
-//!     op::{
-//!         AddArc,
-//!         Arcs,
-//!         Converse,
-//!     },
+//!     AddArc,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Circuit,
+//!     Converse,
 //! };
 //!
-//! let digraph = Digraph::circuit(4);
+//! let digraph = AdjacencyList::circuit(4);
 //! let converse = digraph.converse();
 //!
 //! assert!(converse.arcs().eq([(0, 3), (1, 0), (2, 1), (3, 2)]));
@@ -30,15 +28,15 @@
 ///
 /// ```
 /// use {
-///     graaf::op::Converse,
+///     graaf::Converse,
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl Converse for Digraph {
+/// impl Converse for AdjacencyList {
 ///     fn converse(&self) -> Self {
 ///         let order = self.arcs.len();
 ///         let mut arcs = vec![BTreeSet::<usize>::new(); order];
@@ -53,7 +51,7 @@
 ///     }
 /// }
 ///
-/// let digraph = Digraph {
+/// let digraph = AdjacencyList {
 ///     arcs: vec![
 ///         BTreeSet::from([1]),
 ///         BTreeSet::from([2]),

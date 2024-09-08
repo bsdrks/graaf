@@ -17,13 +17,13 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list_weighted::Digraph,
-//!     algo::bellman_ford_moore::single_source_distances,
-//!     gen::Empty,
-//!     op::AddArcWeighted,
+//!     bellman_ford_moore::single_source_distances,
+//!     AddArcWeighted,
+//!     AdjacencyListWeighted,
+//!     Empty,
 //! };
 //!
-//! let mut digraph = Digraph::<isize>::empty(6);
+//! let mut digraph = AdjacencyListWeighted::<isize>::empty(6);
 //!
 //! digraph.add_arc_weighted(0, 1, 8);
 //! digraph.add_arc_weighted(0, 2, 4);
@@ -50,13 +50,13 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list_weighted::Digraph,
-//!     algo::bellman_ford_moore::single_source_distances,
-//!     gen::Empty,
-//!     op::AddArcWeighted,
+//!     bellman_ford_moore::single_source_distances,
+//!     AddArcWeighted,
+//!     AdjacencyListWeighted,
+//!     Empty,
 //! };
 //!
-//! let mut digraph = Digraph::empty(3);
+//! let mut digraph = AdjacencyListWeighted::empty(3);
 //!
 //! digraph.add_arc_weighted(0, 1, -2);
 //! digraph.add_arc_weighted(1, 2, -1);
@@ -66,7 +66,7 @@
 //! ```
 #![doc(alias = "bellman_ford")]
 
-use crate::op::{
+use crate::{
     ArcsWeighted,
     Order,
 };
@@ -98,13 +98,13 @@ use crate::op::{
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list_weighted::Digraph,
-///     algo::bellman_ford_moore::single_source_distances,
-///     gen::Empty,
-///     op::AddArcWeighted,
+///     bellman_ford_moore::single_source_distances,
+///     AddArcWeighted,
+///     AdjacencyListWeighted,
+///     Empty,
 /// };
 ///
-/// let mut digraph = Digraph::<isize>::empty(6);
+/// let mut digraph = AdjacencyListWeighted::<isize>::empty(6);
 ///
 /// digraph.add_arc_weighted(0, 1, 8);
 /// digraph.add_arc_weighted(0, 2, 4);
@@ -131,13 +131,13 @@ use crate::op::{
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list_weighted::Digraph,
-///     algo::bellman_ford_moore::single_source_distances,
-///     gen::Empty,
-///     op::AddArcWeighted,
+///     bellman_ford_moore::single_source_distances,
+///     AddArcWeighted,
+///     AdjacencyListWeighted,
+///     Empty,
 /// };
 ///
-/// let mut digraph = Digraph::empty(3);
+/// let mut digraph = AdjacencyListWeighted::empty(3);
 ///
 /// digraph.add_arc_weighted(0, 1, -2);
 /// digraph.add_arc_weighted(1, 2, -1);
@@ -175,31 +175,32 @@ mod tests {
     use {
         super::*,
         crate::{
-            adjacency_list_weighted::{
-                fixture::{
-                    bang_jensen_94_isize,
-                    bang_jensen_96_isize,
-                    bang_jensen_99,
-                    kattis_bryr_1_isize,
-                    kattis_bryr_2_isize,
-                    kattis_bryr_3_isize,
-                    kattis_crosscountry_isize,
-                    kattis_shortestpath1_isize,
-                    kattis_shortestpath3,
-                },
-                Digraph,
+            repr::adjacency_list_weighted::fixture::{
+                bang_jensen_94_isize,
+                bang_jensen_96_isize,
+                bang_jensen_99,
+                kattis_bryr_1_isize,
+                kattis_bryr_2_isize,
+                kattis_bryr_3_isize,
+                kattis_crosscountry_isize,
+                kattis_shortestpath1_isize,
+                kattis_shortestpath3,
             },
-            gen::Empty,
-            op::AddArcWeighted,
+            AddArcWeighted,
+            AdjacencyListWeighted,
+            Empty,
         },
     };
 
     #[test]
     fn single_source_distances_trivial() {
-        assert!(single_source_distances(&Digraph::<isize>::trivial(), 0)
-            .unwrap()
-            .iter()
-            .eq(&[0]));
+        assert!(single_source_distances(
+            &AdjacencyListWeighted::<isize>::trivial(),
+            0
+        )
+        .unwrap()
+        .iter()
+        .eq(&[0]));
     }
 
     #[test]
@@ -265,7 +266,7 @@ mod tests {
 
     #[test]
     fn test_negative_circuit() {
-        let mut digraph = Digraph::<isize>::empty(3);
+        let mut digraph = AdjacencyListWeighted::<isize>::empty(3);
 
         digraph.add_arc_weighted(0, 1, -2);
         digraph.add_arc_weighted(1, 2, -1);

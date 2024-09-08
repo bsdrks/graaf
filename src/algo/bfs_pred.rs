@@ -18,16 +18,16 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     algo::bfs_pred::{
+//!     bfs_pred::{
 //!         BfsPred,
 //!         Step,
 //!     },
-//!     gen::Empty,
-//!     op::AddArc,
+//!     AddArc,
+//!     AdjacencyList,
+//!     Empty,
 //! };
 //!
-//! let mut digraph = Digraph::empty(6);
+//! let mut digraph = AdjacencyList::empty(6);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(1, 2);
@@ -53,16 +53,16 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     algo::bfs_pred::{
+//!     bfs_pred::{
 //!         BfsPred,
 //!         Step,
 //!     },
-//!     gen::Empty,
-//!     op::AddArc,
+//!     AddArc,
+//!     AdjacencyList,
+//!     Empty,
 //! };
 //!
-//! let mut digraph = Digraph::empty(8);
+//! let mut digraph = AdjacencyList::empty(8);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(1, 2);
@@ -88,10 +88,10 @@
 //! ```
 
 use {
-    super::PredecessorTree,
-    crate::op::{
+    crate::{
         Order,
         OutNeighbors,
+        PredecessorTree,
     },
     std::collections::{
         HashSet,
@@ -129,16 +129,16 @@ pub struct Step {
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     algo::bfs_pred::{
+///     bfs_pred::{
 ///         BfsPred,
 ///         Step,
 ///     },
-///     gen::Empty,
-///     op::AddArc,
+///     AddArc,
+///     AdjacencyList,
+///     Empty,
 /// };
 ///
-/// let mut digraph = Digraph::empty(6);
+/// let mut digraph = AdjacencyList::empty(6);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(1, 2);
@@ -164,16 +164,16 @@ pub struct Step {
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     algo::bfs_pred::{
+///     bfs_pred::{
 ///         BfsPred,
 ///         Step,
 ///     },
-///     gen::Empty,
-///     op::AddArc,
+///     AddArc,
+///     AdjacencyList,
+///     Empty,
 /// };
 ///
-/// let mut digraph = Digraph::empty(8);
+/// let mut digraph = AdjacencyList::empty(8);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(1, 2);
@@ -250,13 +250,13 @@ impl<'a, D> BfsPred<'a, D> {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     algo::bfs_pred::BfsPred,
-    ///     gen::Empty,
-    ///     op::AddArc,
+    ///     bfs_pred::BfsPred,
+    ///     AddArc,
+    ///     AdjacencyList,
+    ///     Empty,
     /// };
     ///
-    /// let mut digraph = Digraph::empty(6);
+    /// let mut digraph = AdjacencyList::empty(6);
     ///
     /// digraph.add_arc(0, 1);
     /// digraph.add_arc(1, 2);
@@ -283,13 +283,13 @@ impl<'a, D> BfsPred<'a, D> {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     algo::bfs_pred::BfsPred,
-    ///     gen::Empty,
-    ///     op::AddArc,
+    ///     bfs_pred::BfsPred,
+    ///     AddArc,
+    ///     AdjacencyList,
+    ///     Empty,
     /// };
     ///
-    /// let mut digraph = Digraph::empty(8);
+    /// let mut digraph = AdjacencyList::empty(8);
     ///
     /// digraph.add_arc(0, 1);
     /// digraph.add_arc(1, 2);
@@ -356,13 +356,13 @@ impl<'a, D> BfsPred<'a, D> {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     algo::bfs_pred::BfsPred,
-    ///     gen::Empty,
-    ///     op::AddArc,
+    ///     bfs_pred::BfsPred,
+    ///     AddArc,
+    ///     AdjacencyList,
+    ///     Empty,
     /// };
     ///
-    /// let mut digraph = Digraph::empty(6);
+    /// let mut digraph = AdjacencyList::empty(6);
     ///
     /// digraph.add_arc(0, 1);
     /// digraph.add_arc(1, 2);
@@ -385,13 +385,13 @@ impl<'a, D> BfsPred<'a, D> {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     algo::bfs_pred::BfsPred,
-    ///     gen::Empty,
-    ///     op::AddArc,
+    ///     bfs_pred::BfsPred,
+    ///     AddArc,
+    ///     AdjacencyList,
+    ///     Empty,
     /// };
     ///
-    /// let mut digraph = Digraph::empty(8);
+    /// let mut digraph = AdjacencyList::empty(8);
     ///
     /// digraph.add_arc(0, 1);
     /// digraph.add_arc(1, 2);
@@ -466,7 +466,7 @@ where
 mod tests {
     use {
         super::*,
-        crate::adjacency_list::fixture::{
+        crate::repr::adjacency_list::fixture::{
             bang_jensen_196,
             bang_jensen_34,
             bang_jensen_94,

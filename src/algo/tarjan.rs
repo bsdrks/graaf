@@ -11,15 +11,15 @@
 //! ```
 //! use {
 //!     graaf::{
-//!         adjacency_list::Digraph,
-//!         algo::tarjan::strongly_connected_components,
-//!         gen::Empty,
-//!         op::AddArc,
+//!         tarjan::strongly_connected_components,
+//!         AddArc,
+//!         AdjacencyList,
+//!         Empty,
 //!     },
 //!     std::collections::BTreeSet,
 //! };
 //!
-//! let mut digraph = Digraph::empty(8);
+//! let mut digraph = AdjacencyList::empty(8);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(1, 2);
@@ -48,7 +48,7 @@
 //! ```
 
 use {
-    crate::op::{
+    crate::{
         Order,
         OutNeighbors,
     },
@@ -75,15 +75,15 @@ use {
 /// ```
 /// use {
 ///     graaf::{
-///         adjacency_list::Digraph,
-///         algo::tarjan::strongly_connected_components,
-///         gen::Empty,
-///         op::AddArc,
+///         tarjan::strongly_connected_components,
+///         AddArc,
+///         AdjacencyList,
+///         Empty,
 ///     },
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// let mut digraph = Digraph::empty(8);
+/// let mut digraph = AdjacencyList::empty(8);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(1, 2);
@@ -196,15 +196,13 @@ mod tests {
     use {
         super::*,
         crate::{
-            adjacency_list::{
-                fixture::{
-                    bang_jensen_196,
-                    kattis_cantinaofbabel_1,
-                    kattis_cantinaofbabel_2,
-                },
-                Digraph,
+            repr::adjacency_list::fixture::{
+                bang_jensen_196,
+                kattis_cantinaofbabel_1,
+                kattis_cantinaofbabel_2,
             },
-            gen::Empty,
+            AdjacencyList,
+            Empty,
         },
     };
 
@@ -254,7 +252,7 @@ mod tests {
     #[test]
     fn strongly_connected_components_trivial() {
         assert_eq!(
-            strongly_connected_components(&Digraph::trivial())
+            strongly_connected_components(&AdjacencyList::trivial())
                 .into_iter()
                 .collect::<BTreeSet<BTreeSet<_>>>(),
             BTreeSet::from([BTreeSet::from([0])])

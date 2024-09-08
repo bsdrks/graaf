@@ -7,12 +7,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Circuit,
-//!     op::HasWalk,
+//!     AdjacencyList,
+//!     Circuit,
+//!     HasWalk,
 //! };
 //!
-//! let digraph = Digraph::circuit(2);
+//! let digraph = AdjacencyList::circuit(2);
 //!
 //! assert!(digraph.has_walk(&[0, 1]));
 //! assert!(digraph.has_walk(&[1, 0]));
@@ -25,7 +25,7 @@
 //! assert!(!digraph.has_walk(&[0, 2]));
 //! ```
 
-use super::HasArc;
+use crate::HasArc;
 
 /// Check whether a digraph contains a walk.
 ///
@@ -37,17 +37,17 @@ use super::HasArc;
 /// ```
 /// use {
 ///     graaf::{
-///         gen::Circuit,
-///         op::HasWalk,
+///         Circuit,
+///         HasWalk,
 ///     },
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     pub arcs: BTreeSet<(usize, usize)>,
 /// }
 ///
-/// impl HasWalk for Digraph {
+/// impl HasWalk for AdjacencyList {
 ///     fn has_walk(&self, walk: &[usize]) -> bool {
 ///         let mut arcs = walk.iter().zip(walk.iter().skip(1));
 ///
@@ -56,7 +56,7 @@ use super::HasArc;
 ///     }
 /// }
 ///
-/// let digraph = Digraph {
+/// let digraph = AdjacencyList {
 ///     arcs: BTreeSet::from([(0, 1), (1, 0)]),
 /// };
 ///
@@ -68,12 +68,12 @@ use super::HasArc;
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::Circuit,
-///     op::HasWalk,
+///     AdjacencyList,
+///     Circuit,
+///     HasWalk,
 /// };
 ///
-/// let digraph = Digraph::circuit(2);
+/// let digraph = AdjacencyList::circuit(2);
 ///
 /// assert!(digraph.has_walk(&[0, 1]));
 /// assert!(digraph.has_walk(&[1, 0]));

@@ -7,15 +7,13 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Empty,
-//!     op::{
-//!         AddArc,
-//!         DegreeSequence,
-//!     },
+//!     AddArc,
+//!     AdjacencyList,
+//!     DegreeSequence,
+//!     Empty,
 //! };
 //!
-//! let mut digraph = Digraph::empty(3);
+//! let mut digraph = AdjacencyList::empty(3);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(0, 2);
@@ -25,7 +23,7 @@
 //! assert!(digraph.degree_sequence().eq([3, 2, 3]));
 //! ```
 
-use super::{
+use crate::{
     Degree,
     Vertices,
 };
@@ -39,7 +37,7 @@ use super::{
 ///
 /// ```
 /// use {
-///     graaf::op::{
+///     graaf::{
 ///         Degree,
 ///         DegreeSequence,
 ///         Vertices,
@@ -47,24 +45,24 @@ use super::{
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl Degree for Digraph {
+/// impl Degree for AdjacencyList {
 ///     fn degree(&self, v: usize) -> usize {
 ///         self.arcs[v].len()
 ///             + self.arcs.iter().filter(|a| a.contains(&v)).count()
 ///     }
 /// }
 ///
-/// impl Vertices for Digraph {
+/// impl Vertices for AdjacencyList {
 ///     fn vertices(&self) -> impl Iterator<Item = usize> {
 ///         0..self.arcs.len()
 ///     }
 /// }
 ///
-/// let mut digraph = Digraph {
+/// let mut digraph = AdjacencyList {
 ///     arcs: vec![
 ///         BTreeSet::from([1, 2]),
 ///         BTreeSet::from([2]),
@@ -79,15 +77,13 @@ use super::{
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::Empty,
-///     op::{
-///         AddArc,
-///         DegreeSequence,
-///     },
+///     AddArc,
+///     AdjacencyList,
+///     DegreeSequence,
+///     Empty,
 /// };
 ///
-/// let mut digraph = Digraph::empty(3);
+/// let mut digraph = AdjacencyList::empty(3);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(0, 2);

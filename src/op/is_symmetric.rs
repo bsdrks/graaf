@@ -7,16 +7,14 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Empty,
-//!     op::{
-//!         AddArc,
-//!         IsSymmetric,
-//!         RemoveArc,
-//!     },
+//!     AddArc,
+//!     AdjacencyList,
+//!     Empty,
+//!     IsSymmetric,
+//!     RemoveArc,
 //! };
 //!
-//! let mut digraph = Digraph::empty(2);
+//! let mut digraph = AdjacencyList::empty(2);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(1, 0);
@@ -27,7 +25,7 @@
 //!
 //! assert!(!digraph.is_symmetric());
 //!
-//! let mut digraph = Digraph::empty(3);
+//! let mut digraph = AdjacencyList::empty(3);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(0, 2);
@@ -37,7 +35,7 @@
 //! assert!(!digraph.is_symmetric());
 //! ```
 
-use super::{
+use crate::{
     Arcs,
     HasArc,
 };
@@ -51,7 +49,7 @@ use super::{
 ///
 /// ```
 /// use {
-///     graaf::op::{
+///     graaf::{
 ///         Arcs,
 ///         HasArc,
 ///         IsSymmetric,
@@ -59,17 +57,17 @@ use super::{
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl HasArc for Digraph {
+/// impl HasArc for AdjacencyList {
 ///     fn has_arc(&self, u: usize, v: usize) -> bool {
 ///         self.arcs[u].contains(&v)
 ///     }
 /// }
 ///
-/// impl Arcs for Digraph {
+/// impl Arcs for AdjacencyList {
 ///     fn arcs(&self) -> impl Iterator<Item = (usize, usize)> {
 ///         self.arcs
 ///             .iter()
@@ -78,13 +76,13 @@ use super::{
 ///     }
 /// }
 ///
-/// let digraph = Digraph {
+/// let digraph = AdjacencyList {
 ///     arcs: vec![BTreeSet::from([1]), BTreeSet::from([0])],
 /// };
 ///
 /// assert!(digraph.is_symmetric());
 ///
-/// let digraph = Digraph {
+/// let digraph = AdjacencyList {
 ///     arcs: vec![BTreeSet::from([1]), BTreeSet::new()],
 /// };
 ///
@@ -94,16 +92,14 @@ use super::{
 /// # Examples
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::Empty,
-///     op::{
-///         AddArc,
-///         IsSymmetric,
-///         RemoveArc,
-///     },
+///     AddArc,
+///     AdjacencyList,
+///     Empty,
+///     IsSymmetric,
+///     RemoveArc,
 /// };
 ///
-/// let mut digraph = Digraph::empty(2);
+/// let mut digraph = AdjacencyList::empty(2);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(1, 0);

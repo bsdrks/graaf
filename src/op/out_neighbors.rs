@@ -4,15 +4,13 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Empty,
-//!     op::{
-//!         AddArc,
-//!         OutNeighbors,
-//!     },
+//!     AddArc,
+//!     AdjacencyList,
+//!     Empty,
+//!     OutNeighbors,
 //! };
 //!
-//! let mut digraph = Digraph::empty(4);
+//! let mut digraph = AdjacencyList::empty(4);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(0, 2);
@@ -41,21 +39,21 @@
 ///
 /// ```
 /// use {
-///     graaf::op::OutNeighbors,
+///     graaf::OutNeighbors,
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl OutNeighbors for Digraph {
+/// impl OutNeighbors for AdjacencyList {
 ///     fn out_neighbors(&self, u: usize) -> impl Iterator<Item = usize> {
 ///         self.arcs[u].iter().copied()
 ///     }
 /// }
 ///
-/// let digraph = Digraph {
+/// let digraph = AdjacencyList {
 ///     arcs: vec![
 ///         BTreeSet::from([1, 2]),
 ///         BTreeSet::from([0]),
@@ -74,15 +72,13 @@
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::Empty,
-///     op::{
-///         AddArc,
-///         OutNeighbors,
-///     },
+///     AddArc,
+///     AdjacencyList,
+///     Empty,
+///     OutNeighbors,
 /// };
 ///
-/// let mut digraph = Digraph::empty(4);
+/// let mut digraph = AdjacencyList::empty(4);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(0, 2);

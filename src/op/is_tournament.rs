@@ -1,34 +1,35 @@
 //! Check whether a digraph is a tournament.
 //!
-//! A tournament is a digraph in which there is an arc between every unordered
+//! A tournament is a digraph in which there is one arc between every unordered
 //! pair of distinct vertices.
 //!
 //! # Examples
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::{
-//!         Circuit,
-//!         Complete,
-//!         Empty,
-//!         RandomTournament,
-//!     },
-//!     op::IsTournament,
+//!     AdjacencyList,
+//!     Circuit,
+//!     Complete,
+//!     Empty,
+//!     IsTournament,
+//!     RandomTournament,
 //! };
 //!
-//! assert!(!Digraph::empty(3).is_tournament());
-//! assert!(!Digraph::complete(3).is_tournament());
-//! assert!(Digraph::circuit(3).is_tournament());
-//! assert!(Digraph::random_tournament(3, 0).is_tournament());
+//! assert!(!AdjacencyList::empty(3).is_tournament());
+//! assert!(!AdjacencyList::complete(3).is_tournament());
+//! assert!(AdjacencyList::circuit(3).is_tournament());
+//! assert!(AdjacencyList::random_tournament(3, 0).is_tournament());
 //! ```
 
-use super::{
+use crate::{
     HasArc,
     Order,
 };
 
 /// Check whether a digraph is a tournament.
+///
+/// A tournament is a digraph in which there is one arc between every unordered
+/// pair of distinct vertices.
 ///
 /// # Implementing `IsTournament`
 ///
@@ -38,37 +39,33 @@ use super::{
 /// ```
 /// use {
 ///     graaf::{
-///         gen::{
-///             Circuit,
-///             Complete,
-///             Empty,
-///         },
-///         op::{
-///             HasArc,
-///             IsTournament,
-///             Order,
-///         },
+///         Circuit,
+///         Complete,
+///         Empty,
+///         HasArc,
+///         IsTournament,
+///         Order,
 ///     },
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     pub arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl HasArc for Digraph {
+/// impl HasArc for AdjacencyList {
 ///     fn has_arc(&self, u: usize, v: usize) -> bool {
 ///         self.arcs[u].contains(&v)
 ///     }
 /// }
 ///
-/// impl Order for Digraph {
+/// impl Order for AdjacencyList {
 ///     fn order(&self) -> usize {
 ///         self.arcs.len()
 ///     }
 /// }
 ///
-/// assert!(Digraph {
+/// assert!(AdjacencyList {
 ///     arcs: vec![
 ///         BTreeSet::from([1, 2]),
 ///         BTreeSet::from([2]),
@@ -77,12 +74,12 @@ use super::{
 /// }
 /// .is_tournament());
 ///
-/// assert!(!Digraph {
+/// assert!(!AdjacencyList {
 ///     arcs: vec![BTreeSet::from([1, 2]), BTreeSet::new(), BTreeSet::new()]
 /// }
 /// .is_tournament());
 ///
-/// assert!(!Digraph {
+/// assert!(!AdjacencyList {
 ///     arcs: vec![
 ///         BTreeSet::from([1, 2]),
 ///         BTreeSet::from([2]),
@@ -96,20 +93,18 @@ use super::{
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::{
-///         Circuit,
-///         Complete,
-///         Empty,
-///         RandomTournament,
-///     },
-///     op::IsTournament,
+///     AdjacencyList,
+///     Circuit,
+///     Complete,
+///     Empty,
+///     IsTournament,
+///     RandomTournament,
 /// };
 ///
-/// assert!(!Digraph::empty(3).is_tournament());
-/// assert!(!Digraph::complete(3).is_tournament());
-/// assert!(Digraph::circuit(3).is_tournament());
-/// assert!(Digraph::random_tournament(3, 0).is_tournament());
+/// assert!(!AdjacencyList::empty(3).is_tournament());
+/// assert!(!AdjacencyList::complete(3).is_tournament());
+/// assert!(AdjacencyList::circuit(3).is_tournament());
+/// assert!(AdjacencyList::random_tournament(3, 0).is_tournament());
 /// ```
 pub trait IsTournament {
     /// Checks whether the digraph is a tournament.

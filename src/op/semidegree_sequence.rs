@@ -7,15 +7,13 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Empty,
-//!     op::{
-//!         AddArc,
-//!         SemidegreeSequence,
-//!     },
+//!     AddArc,
+//!     AdjacencyList,
+//!     Empty,
+//!     SemidegreeSequence,
 //! };
 //!
-//! let mut digraph = Digraph::empty(3);
+//! let mut digraph = AdjacencyList::empty(3);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(0, 2);
@@ -25,7 +23,7 @@
 //! assert!(digraph.semidegree_sequence().eq([(1, 2), (1, 1), (2, 1)]));
 //! ```
 
-use super::{
+use crate::{
     Indegree,
     Outdegree,
     Vertices,
@@ -41,7 +39,7 @@ use super::{
 ///
 /// ```
 /// use {
-///     graaf::op::{
+///     graaf::{
 ///         Indegree,
 ///         Outdegree,
 ///         SemidegreeSequence,
@@ -50,29 +48,29 @@ use super::{
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl Indegree for Digraph {
+/// impl Indegree for AdjacencyList {
 ///     fn indegree(&self, v: usize) -> usize {
 ///         self.arcs.iter().filter(|set| set.contains(&v)).count()
 ///     }
 /// }
 ///
-/// impl Outdegree for Digraph {
+/// impl Outdegree for AdjacencyList {
 ///     fn outdegree(&self, u: usize) -> usize {
 ///         self.arcs[u].len()
 ///     }
 /// }
 ///
-/// impl Vertices for Digraph {
+/// impl Vertices for AdjacencyList {
 ///     fn vertices(&self) -> impl Iterator<Item = usize> {
 ///         0..self.arcs.len()
 ///     }
 /// }
 ///
-/// let digraph = Digraph {
+/// let digraph = AdjacencyList {
 ///     arcs: vec![
 ///         BTreeSet::from([1, 2]),
 ///         BTreeSet::from([2]),
@@ -87,15 +85,13 @@ use super::{
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::Empty,
-///     op::{
-///         AddArc,
-///         SemidegreeSequence,
-///     },
+///     AddArc,
+///     AdjacencyList,
+///     Empty,
+///     SemidegreeSequence,
 /// };
 ///
-/// let mut digraph = Digraph::empty(3);
+/// let mut digraph = AdjacencyList::empty(3);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(0, 2);

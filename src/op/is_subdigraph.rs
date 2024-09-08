@@ -8,22 +8,18 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::{
-//!         Circuit,
-//!         Empty,
-//!     },
-//!     op::{
-//!         AddArc,
-//!         IsSubdigraph,
-//!     },
+//!     AddArc,
+//!     AdjacencyList,
+//!     Circuit,
+//!     Empty,
+//!     IsSubdigraph,
 //! };
 //!
-//! let mut h = Digraph::empty(3);
+//! let mut h = AdjacencyList::empty(3);
 //!
 //! h.add_arc(0, 1);
 //!
-//! let d = Digraph::circuit(3);
+//! let d = AdjacencyList::circuit(3);
 //!
 //! assert!(h.is_subdigraph(&d));
 //! ```
@@ -32,12 +28,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::RandomTournament,
-//!     op::IsSubdigraph,
+//!     AdjacencyList,
+//!     IsSubdigraph,
+//!     RandomTournament,
 //! };
 //!
-//! let tournament = Digraph::random_tournament(4, 0);
+//! let tournament = AdjacencyList::random_tournament(4, 0);
 //!
 //! assert!(tournament.is_subdigraph(&tournament));
 //! ```
@@ -47,20 +43,18 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Empty,
-//!     op::{
-//!         AddArc,
-//!         IsSubdigraph,
-//!     },
+//!     AddArc,
+//!     AdjacencyList,
+//!     Empty,
+//!     IsSubdigraph,
 //! };
 //!
-//! let mut h = Digraph::empty(2);
+//! let mut h = AdjacencyList::empty(2);
 //!
 //! h.add_arc(0, 1);
 //! h.add_arc(1, 0);
 //!
-//! let mut d = Digraph::empty(2);
+//! let mut d = AdjacencyList::empty(2);
 //!
 //! d.add_arc(0, 1);
 //!
@@ -72,19 +66,17 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Empty,
-//!     op::{
-//!         AddArc,
-//!         IsSubdigraph,
-//!     },
+//!     AddArc,
+//!     AdjacencyList,
+//!     Empty,
+//!     IsSubdigraph,
 //! };
 //!
-//! let mut h = Digraph::empty(2);
+//! let mut h = AdjacencyList::empty(2);
 //!
 //! h.add_arc(0, 1);
 //!
-//! let d = Digraph::empty(2);
+//! let d = AdjacencyList::empty(2);
 //!
 //! assert!(!h.is_subdigraph(&d));
 //! ```
@@ -94,23 +86,21 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Empty,
-//!     op::{
-//!         AddArc,
-//!         IsSubdigraph,
-//!     },
+//!     AddArc,
+//!     AdjacencyList,
+//!     Empty,
+//!     IsSubdigraph,
 //! };
 //!
 //! // The arc (0, 2) has end-vertex `2` which is not in the vertex set of `H`.
 //!
-//! let mut h = Digraph::empty(3);
+//! let mut h = AdjacencyList::empty(3);
 //!
 //! h.add_arc(0, 1);
 //! h.add_arc(0, 2);
 //! h.add_arc(1, 0);
 //!
-//! let mut d = Digraph::empty(3);
+//! let mut d = AdjacencyList::empty(3);
 //!
 //! d.add_arc(0, 1);
 //! d.add_arc(1, 0);
@@ -119,7 +109,7 @@
 //! ```
 
 use {
-    super::{
+    crate::{
         Arcs,
         HasArc,
         Vertices,
@@ -137,7 +127,7 @@ use {
 ///
 /// ```
 /// use {
-///     graaf::op::{
+///     graaf::{
 ///         Arcs,
 ///         HasArc,
 ///         IsSubdigraph,
@@ -146,17 +136,17 @@ use {
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl HasArc for Digraph {
+/// impl HasArc for AdjacencyList {
 ///     fn has_arc(&self, u: usize, v: usize) -> bool {
 ///         self.arcs[u].contains(&v)
 ///     }
 /// }
 ///
-/// impl Arcs for Digraph {
+/// impl Arcs for AdjacencyList {
 ///     fn arcs(&self) -> impl Iterator<Item = (usize, usize)> {
 ///         self.arcs
 ///             .iter()
@@ -165,17 +155,17 @@ use {
 ///     }
 /// }
 ///
-/// impl Vertices for Digraph {
+/// impl Vertices for AdjacencyList {
 ///     fn vertices(&self) -> impl Iterator<Item = usize> {
 ///         0..self.arcs.len()
 ///     }
 /// }
 ///
-/// let h = Digraph {
+/// let h = AdjacencyList {
 ///     arcs: vec![BTreeSet::from([1]), BTreeSet::new()],
 /// };
 ///
-/// let d = Digraph {
+/// let d = AdjacencyList {
 ///     arcs: vec![
 ///         BTreeSet::from([1]),
 ///         BTreeSet::from([2]),

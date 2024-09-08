@@ -12,12 +12,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Circuit,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Circuit,
 //! };
 //!
-//! assert!(Digraph::circuit(2).arcs().eq([(0, 1), (1, 0)]));
+//! assert!(AdjacencyList::circuit(2).arcs().eq([(0, 1), (1, 0)]));
 //! ```
 //!
 //! ## Order 3
@@ -28,12 +28,14 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Circuit,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Circuit,
 //! };
 //!
-//! assert!(Digraph::circuit(3).arcs().eq([(0, 1), (1, 2), (2, 0)]));
+//! assert!(AdjacencyList::circuit(3)
+//!     .arcs()
+//!     .eq([(0, 1), (1, 2), (2, 0)]));
 //! ```
 //!
 //! ## Order 4
@@ -44,14 +46,17 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Circuit,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Circuit,
 //! };
 //!
-//! assert!(Digraph::circuit(4)
-//!     .arcs()
-//!     .eq([(0, 1), (1, 2), (2, 3), (3, 0)]));
+//! assert!(AdjacencyList::circuit(4).arcs().eq([
+//!     (0, 1),
+//!     (1, 2),
+//!     (2, 3),
+//!     (3, 0)
+//! ]));
 //! ```
 
 /// Generate circuit digraphs.
@@ -65,15 +70,15 @@
 ///
 /// ```
 /// use {
-///     graaf::gen::Circuit,
+///     graaf::Circuit,
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl Circuit for Digraph {
+/// impl Circuit for AdjacencyList {
 ///     /// # Panics
 ///     ///
 ///     /// Panics if `order` is zero.
@@ -92,7 +97,7 @@
 ///     }
 /// }
 ///
-/// let digraph = Digraph::circuit(3);
+/// let digraph = AdjacencyList::circuit(3);
 ///
 /// assert!(digraph.arcs.iter().eq(&[
 ///     BTreeSet::from([1]),
@@ -105,14 +110,16 @@
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::Circuit,
-///     op::Arcs,
+///     AdjacencyList,
+///     Arcs,
+///     Circuit,
 /// };
 ///
-/// assert!(Digraph::circuit(1).arcs().eq([]));
-/// assert!(Digraph::circuit(2).arcs().eq([(0, 1), (1, 0)]));
-/// assert!(Digraph::circuit(3).arcs().eq([(0, 1), (1, 2), (2, 0)]));
+/// assert!(AdjacencyList::circuit(1).arcs().eq([]));
+/// assert!(AdjacencyList::circuit(2).arcs().eq([(0, 1), (1, 0)]));
+/// assert!(AdjacencyList::circuit(3)
+///     .arcs()
+///     .eq([(0, 1), (1, 2), (2, 0)]));
 /// ```
 pub trait Circuit {
     /// Generates a circuit digraph.
@@ -131,12 +138,12 @@ pub trait Circuit {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     gen::Circuit,
-    ///     op::Arcs,
+    ///     AdjacencyList,
+    ///     Arcs,
+    ///     Circuit,
     /// };
     ///
-    /// assert!(Digraph::circuit(2).arcs().eq([(0, 1), (1, 0)]));
+    /// assert!(AdjacencyList::circuit(2).arcs().eq([(0, 1), (1, 0)]));
     /// ```
     ///
     /// ## Order 3
@@ -147,12 +154,14 @@ pub trait Circuit {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     gen::Circuit,
-    ///     op::Arcs,
+    ///     AdjacencyList,
+    ///     Arcs,
+    ///     Circuit,
     /// };
     ///
-    /// assert!(Digraph::circuit(3).arcs().eq([(0, 1), (1, 2), (2, 0)]));
+    /// assert!(AdjacencyList::circuit(3)
+    ///     .arcs()
+    ///     .eq([(0, 1), (1, 2), (2, 0)]));
     /// ```
     ///
     /// ## Order 4
@@ -163,14 +172,17 @@ pub trait Circuit {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     gen::Circuit,
-    ///     op::Arcs,
+    ///     AdjacencyList,
+    ///     Arcs,
+    ///     Circuit,
     /// };
     ///
-    /// assert!(Digraph::circuit(4)
-    ///     .arcs()
-    ///     .eq([(0, 1), (1, 2), (2, 3), (3, 0)]));
+    /// assert!(AdjacencyList::circuit(4).arcs().eq([
+    ///     (0, 1),
+    ///     (1, 2),
+    ///     (2, 3),
+    ///     (3, 0)
+    /// ]));
     /// ```
     #[must_use]
     fn circuit(order: usize) -> Self;

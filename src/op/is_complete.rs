@@ -7,23 +7,21 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::{
-//!         Circuit,
-//!         Complete,
-//!         Empty,
-//!         RandomTournament,
-//!     },
-//!     op::IsComplete,
+//!     AdjacencyList,
+//!     Circuit,
+//!     Complete,
+//!     Empty,
+//!     IsComplete,
+//!     RandomTournament,
 //! };
 //!
-//! assert!(Digraph::complete(3).is_complete());
-//! assert!(!Digraph::circuit(3).is_complete());
-//! assert!(!Digraph::empty(3).is_complete());
-//! assert!(!Digraph::random_tournament(3, 0).is_complete());
+//! assert!(AdjacencyList::complete(3).is_complete());
+//! assert!(!AdjacencyList::circuit(3).is_complete());
+//! assert!(!AdjacencyList::empty(3).is_complete());
+//! assert!(!AdjacencyList::random_tournament(3, 0).is_complete());
 //! ```
 
-use super::{
+use crate::{
     HasEdge,
     Order,
 };
@@ -38,38 +36,34 @@ use super::{
 /// ```
 /// use {
 ///     graaf::{
-///         gen::{
-///             Circuit,
-///             Complete,
-///             Empty,
-///             RandomTournament,
-///         },
-///         op::{
-///             HasArc,
-///             IsComplete,
-///             Order,
-///         },
+///         Circuit,
+///         Complete,
+///         Empty,
+///         HasArc,
+///         IsComplete,
+///         Order,
+///         RandomTournament,
 ///     },
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     pub arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl HasArc for Digraph {
+/// impl HasArc for AdjacencyList {
 ///     fn has_arc(&self, u: usize, v: usize) -> bool {
 ///         self.arcs.get(u).map_or(false, |set| set.contains(&v))
 ///     }
 /// }
 ///
-/// impl Order for Digraph {
+/// impl Order for AdjacencyList {
 ///     fn order(&self) -> usize {
 ///         self.arcs.len()
 ///     }
 /// }
 ///
-/// assert!(Digraph {
+/// assert!(AdjacencyList {
 ///     arcs: vec![
 ///         BTreeSet::from([1, 2]),
 ///         BTreeSet::from([0, 2]),
@@ -78,7 +72,7 @@ use super::{
 /// }
 /// .is_complete());
 ///
-/// assert!(!Digraph {
+/// assert!(!AdjacencyList {
 ///     arcs: vec![
 ///         BTreeSet::from([1]),
 ///         BTreeSet::from([2]),
@@ -87,7 +81,7 @@ use super::{
 /// }
 /// .is_complete());
 ///
-/// assert!(!Digraph {
+/// assert!(!AdjacencyList {
 ///     arcs: vec![BTreeSet::new(); 3]
 /// }
 /// .is_complete());

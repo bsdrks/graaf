@@ -9,25 +9,21 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::ErdosRenyi,
-//!     op::{
-//!         Order,
-//!         Size,
-//!     },
+//!     AdjacencyList,
+//!     ErdosRenyi,
+//!     Order,
+//!     Size,
 //! };
 //!
-//! let digraph = Digraph::erdos_renyi(4, 0.5, 0);
+//! let digraph = AdjacencyList::erdos_renyi(4, 0.5, 0);
 //!
 //! assert_eq!(digraph.order(), 4);
 //! ```
 
-use {
-    super::prng::Xoshiro256StarStar,
-    crate::{
-        gen::Empty,
-        op::AddArc,
-    },
+use crate::{
+    gen::prng::Xoshiro256StarStar,
+    AddArc,
+    Empty,
 };
 
 /// Generate Erdős-Rényi digraphs.
@@ -44,19 +40,19 @@ use {
 ///
 /// ```
 /// use {
-///     graaf::gen::{
-///         prng::Xoshiro256StarStar,
+///     graaf::{
+///         gen::prng::Xoshiro256StarStar,
 ///         Empty,
 ///         ErdosRenyi,
 ///     },
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// pub struct Digraph {
+/// pub struct AdjacencyList {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl ErdosRenyi for Digraph {
+/// impl ErdosRenyi for AdjacencyList {
 ///     /// # Panics
 ///     ///
 ///     /// * Panics if `p` is negative.
@@ -83,7 +79,7 @@ use {
 ///     }
 /// }
 ///
-/// let digraph = Digraph::erdos_renyi(4, 0.5, 0);
+/// let digraph = AdjacencyList::erdos_renyi(4, 0.5, 0);
 ///
 /// assert!((0..=12).contains(&digraph.arcs.len()));
 /// ```
@@ -92,19 +88,17 @@ use {
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::ErdosRenyi,
-///     op::{
-///         Degree,
-///         Indegree,
-///         Order,
-///         Outdegree,
-///         Size,
-///         Vertices,
-///     },
+///     AdjacencyList,
+///     Degree,
+///     ErdosRenyi,
+///     Indegree,
+///     Order,
+///     Outdegree,
+///     Size,
+///     Vertices,
 /// };
 ///
-/// let digraph = Digraph::erdos_renyi(4, 0.5, 0);
+/// let digraph = AdjacencyList::erdos_renyi(4, 0.5, 0);
 ///
 /// assert!(digraph.size() <= 12);
 /// assert_eq!(digraph.order(), 4);

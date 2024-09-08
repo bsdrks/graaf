@@ -4,15 +4,13 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Circuit,
-//!     op::{
-//!         AddArc,
-//!         Arcs,
-//!     },
+//!     AddArc,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Circuit,
 //! };
 //!
-//! let digraph = Digraph::circuit(3);
+//! let digraph = AdjacencyList::circuit(3);
 //!
 //! assert!(digraph.arcs().eq([(0, 1), (1, 2), (2, 0)]));
 //! ```
@@ -25,13 +23,13 @@
 /// in a digraph.
 ///
 /// ```
-/// use graaf::op::Arcs;
+/// use graaf::Arcs;
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<(usize, usize)>,
 /// }
 ///
-/// impl Arcs for Digraph {
+/// impl Arcs for AdjacencyList {
 ///     fn arcs(&self) -> impl Iterator<Item = (usize, usize)> {
 ///         self.arcs.iter().copied()
 ///     }
@@ -42,12 +40,12 @@
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::Circuit,
-///     op::Arcs,
+///     AdjacencyList,
+///     Arcs,
+///     Circuit,
 /// };
 ///
-/// let digraph = Digraph::circuit(3);
+/// let digraph = AdjacencyList::circuit(3);
 ///
 /// assert!(digraph.arcs().eq([(0, 1), (1, 2), (2, 0)]));
 /// ```

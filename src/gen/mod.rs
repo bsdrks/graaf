@@ -10,12 +10,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Biclique,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Biclique,
 //! };
 //!
-//! assert!(Digraph::biclique(2, 3).arcs().eq([
+//! assert!(AdjacencyList::biclique(2, 3).arcs().eq([
 //!     (0, 2),
 //!     (0, 3),
 //!     (0, 4),
@@ -39,14 +39,17 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Circuit,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Circuit,
 //! };
 //!
-//! assert!(Digraph::circuit(4)
-//!     .arcs()
-//!     .eq([(0, 1), (1, 2), (2, 3), (3, 0)]));
+//! assert!(AdjacencyList::circuit(4).arcs().eq([
+//!     (0, 1),
+//!     (1, 2),
+//!     (2, 3),
+//!     (3, 0)
+//! ]));
 //! ```
 //!
 //! ## Complete digraph
@@ -57,12 +60,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Complete,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Complete,
 //! };
 //!
-//! assert!(Digraph::complete(4).arcs().eq([
+//! assert!(AdjacencyList::complete(4).arcs().eq([
 //!     (0, 1),
 //!     (0, 2),
 //!     (0, 3),
@@ -86,12 +89,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Cycle,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Cycle,
 //! };
 //!
-//! assert!(Digraph::cycle(4).arcs().eq([
+//! assert!(AdjacencyList::cycle(4).arcs().eq([
 //!     (0, 1),
 //!     (0, 3),
 //!     (1, 0),
@@ -111,12 +114,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Empty,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Empty,
 //! };
 //!
-//! assert!(Digraph::empty(4).arcs().eq([]));
+//! assert!(AdjacencyList::empty(4).arcs().eq([]));
 //! ```
 //!
 //! ## Erdős-Rényi digraph
@@ -125,12 +128,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::ErdosRenyi,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     ErdosRenyi,
 //! };
 //!
-//! assert!(Digraph::erdos_renyi(4, 0.5, 0).arcs().count() <= 12);
+//! assert!(AdjacencyList::erdos_renyi(4, 0.5, 0).arcs().count() <= 12);
 //! ```
 //!
 //! ## Path digraph
@@ -141,12 +144,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Path,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Path,
 //! };
 //!
-//! assert!(Digraph::path(4).arcs().eq([(0, 1), (1, 2), (2, 3),]));
+//! assert!(AdjacencyList::path(4).arcs().eq([(0, 1), (1, 2), (2, 3),]));
 //! ```
 //!
 //! ## Random tournament digraph
@@ -155,12 +158,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::RandomTournament,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     RandomTournament,
 //! };
 //!
-//! assert!(Digraph::random_tournament(4, 0).arcs().count() <= 12);
+//! assert!(AdjacencyList::random_tournament(4, 0).arcs().count() <= 12);
 //! ```
 //!
 //! ## Star digraph
@@ -171,18 +174,47 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Star,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Star,
 //! };
 //!
-//! assert!(Digraph::star(4).arcs().eq([
+//! assert!(AdjacencyList::star(4).arcs().eq([
 //!     (0, 1),
 //!     (0, 2),
 //!     (0, 3),
 //!     (1, 0),
 //!     (2, 0),
 //!     (3, 0),
+//! ]));
+//! ```
+//!
+//! ## Wheel digraph
+//!
+//! Generate a wheel digraph of order `4`.
+//!
+//! ![Wheel digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/wheel_4-0.87.5.svg?)
+//!
+//! ```
+//! use graaf::{
+//!     AdjacencyList,
+//!     Arcs,
+//!     Wheel,
+//! };
+//!
+//! assert!(AdjacencyList::wheel(4).arcs().eq([
+//!     (0, 1),
+//!     (0, 2),
+//!     (0, 3),
+//!     (1, 0),
+//!     (1, 2),
+//!     (1, 3),
+//!     (2, 0),
+//!     (2, 1),
+//!     (2, 3),
+//!     (3, 0),
+//!     (3, 1),
+//!     (3, 2),
 //! ]));
 //! ```
 
@@ -196,6 +228,7 @@ pub mod path;
 pub mod prng;
 pub mod random_tournament;
 pub mod star;
+pub mod wheel;
 
 pub use {
     biclique::Biclique,
@@ -207,4 +240,5 @@ pub use {
     path::Path,
     random_tournament::RandomTournament,
     star::Star,
+    wheel::Wheel,
 };

@@ -1,13 +1,11 @@
 //! Benchmark the `Circuit::circuit` implementation for different types.
 
 use graaf::{
-    adjacency_list,
-    adjacency_matrix,
-    gen::{
-        Circuit,
-        Empty,
-    },
-    op::AddArc,
+    AddArc,
+    AdjacencyList,
+    AdjacencyMatrix,
+    Circuit,
+    Empty,
 };
 
 fn main() {
@@ -17,8 +15,8 @@ fn main() {
 /// # Panics
 ///
 /// Panics if `order` is zero.
-fn circuit_adjacency_list_naive(order: usize) -> adjacency_list::Digraph {
-    let mut digraph = adjacency_list::Digraph::empty(order);
+fn circuit_adjacency_list_naive(order: usize) -> AdjacencyList {
+    let mut digraph = AdjacencyList::empty(order);
 
     if order == 1 {
         return digraph;
@@ -40,10 +38,10 @@ fn adjacency_list_naive(order: usize) {
 
 #[divan::bench(args = [10, 100, 1000])]
 fn adjacency_list(n: usize) {
-    let _ = adjacency_list::Digraph::circuit(n);
+    let _ = AdjacencyList::circuit(n);
 }
 
 #[divan::bench(args = [10, 100, 1000])]
 fn adjacency_matrix(n: usize) {
-    let _ = adjacency_matrix::Digraph::circuit(n);
+    let _ = AdjacencyMatrix::circuit(n);
 }

@@ -4,12 +4,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Empty,
-//!     op::Vertices,
+//!     AdjacencyList,
+//!     Empty,
+//!     Vertices,
 //! };
 //!
-//! let digraph = Digraph::empty(4);
+//! let digraph = AdjacencyList::empty(4);
 //!
 //! assert!(digraph.vertices().eq(0..4));
 //! ```
@@ -23,21 +23,21 @@
 ///
 /// ```
 /// use {
-///     graaf::op::Vertices,
+///     graaf::Vertices,
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     vertices: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl Vertices for Digraph {
+/// impl Vertices for AdjacencyList {
 ///     fn vertices(&self) -> impl Iterator<Item = usize> {
 ///         0..self.vertices.len()
 ///     }
 /// }
 ///
-/// let digraph = Digraph {
+/// let digraph = AdjacencyList {
 ///     vertices: vec![BTreeSet::new(), BTreeSet::new(), BTreeSet::new()],
 /// };
 ///
@@ -48,12 +48,12 @@
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::Empty,
-///     op::Vertices,
+///     AdjacencyList,
+///     Empty,
+///     Vertices,
 /// };
 ///
-/// let digraph = Digraph::empty(4);
+/// let digraph = AdjacencyList::empty(4);
 ///
 /// assert!(digraph.vertices().eq(0..4));
 /// ```

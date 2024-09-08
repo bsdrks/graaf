@@ -4,15 +4,13 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list_weighted::Digraph,
-//!     gen::Empty,
-//!     op::{
-//!         AddArcWeighted,
-//!         ArcWeight,
-//!     },
+//!     AddArcWeighted,
+//!     AdjacencyListWeighted,
+//!     ArcWeight,
+//!     Empty,
 //! };
 //!
-//! let mut digraph = Digraph::<usize>::empty(3);
+//! let mut digraph = AdjacencyListWeighted::<usize>::empty(3);
 //!
 //! digraph.add_arc_weighted(0, 1, 2);
 //! digraph.add_arc_weighted(0, 2, 3);
@@ -39,15 +37,15 @@
 ///
 /// ```
 /// use {
-///     graaf::op::ArcWeight,
+///     graaf::ArcWeight,
 ///     std::collections::BTreeMap,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyListWeighted {
 ///     arcs: Vec<BTreeMap<usize, usize>>,
 /// }
 ///
-/// impl ArcWeight<usize> for Digraph {
+/// impl ArcWeight<usize> for AdjacencyListWeighted {
 ///     fn arc_weight(&self, u: usize, v: usize) -> Option<&usize> {
 ///         self.arcs.get(u).and_then(|m| m.get(&v))
 ///     }
@@ -58,15 +56,13 @@
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list_weighted::Digraph,
-///     gen::Empty,
-///     op::{
-///         AddArcWeighted,
-///         ArcWeight,
-///     },
+///     AddArcWeighted,
+///     AdjacencyListWeighted,
+///     ArcWeight,
+///     Empty,
 /// };
 ///
-/// let mut digraph = Digraph::<usize>::empty(3);
+/// let mut digraph = AdjacencyListWeighted::<usize>::empty(3);
 ///
 /// digraph.add_arc_weighted(0, 1, 2);
 /// digraph.add_arc_weighted(0, 2, 3);

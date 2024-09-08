@@ -12,12 +12,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Cycle,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Cycle,
 //! };
 //!
-//! assert!(Digraph::cycle(2).arcs().eq([(0, 1), (1, 0)]));
+//! assert!(AdjacencyList::cycle(2).arcs().eq([(0, 1), (1, 0)]));
 //! ```
 //!
 //! ## Order 3
@@ -28,12 +28,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Cycle,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Cycle,
 //! };
 //!
-//! assert!(Digraph::cycle(3).arcs().eq([
+//! assert!(AdjacencyList::cycle(3).arcs().eq([
 //!     (0, 1),
 //!     (0, 2),
 //!     (1, 0),
@@ -51,12 +51,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Cycle,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Cycle,
 //! };
 //!
-//! assert!(Digraph::cycle(4).arcs().eq([
+//! assert!(AdjacencyList::cycle(4).arcs().eq([
 //!     (0, 1),
 //!     (0, 3),
 //!     (1, 0),
@@ -69,8 +69,8 @@
 //! ```
 
 use crate::{
-    gen::Empty,
-    op::AddArc,
+    AddArc,
+    Empty,
 };
 
 /// Generate cycle digraphs.
@@ -85,26 +85,24 @@ use crate::{
 /// ```
 /// use {
 ///     graaf::{
-///         gen::{
-///             Cycle,
-///             Empty,
-///         },
-///         op::AddArc,
+///         AddArc,
+///         Cycle,
+///         Empty,
 ///     },
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl AddArc for Digraph {
+/// impl AddArc for AdjacencyList {
 ///     fn add_arc(&mut self, u: usize, v: usize) {
 ///         self.arcs[u].insert(v);
 ///     }
 /// }
 ///
-/// impl Empty for Digraph {
+/// impl Empty for AdjacencyList {
 ///     fn empty(order: usize) -> Self {
 ///         Self {
 ///             arcs: vec![BTreeSet::new(); order],
@@ -112,7 +110,7 @@ use crate::{
 ///     }
 /// }
 ///
-/// let digraph = Digraph::cycle(3);
+/// let digraph = AdjacencyList::cycle(3);
 ///
 /// assert!(digraph.arcs.iter().eq(&[
 ///     BTreeSet::from([1, 2]),
@@ -125,15 +123,15 @@ use crate::{
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::Cycle,
-///     op::Arcs,
+///     AdjacencyList,
+///     Arcs,
+///     Cycle,
 /// };
 ///
-/// assert!(Digraph::cycle(1).arcs().eq([]));
-/// assert!(Digraph::cycle(2).arcs().eq([(0, 1), (1, 0)]));
+/// assert!(AdjacencyList::cycle(1).arcs().eq([]));
+/// assert!(AdjacencyList::cycle(2).arcs().eq([(0, 1), (1, 0)]));
 ///
-/// assert!(Digraph::cycle(3).arcs().eq([
+/// assert!(AdjacencyList::cycle(3).arcs().eq([
 ///     (0, 1),
 ///     (0, 2),
 ///     (1, 0),
@@ -159,12 +157,12 @@ pub trait Cycle {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     gen::Cycle,
-    ///     op::Arcs,
+    ///     AdjacencyList,
+    ///     Arcs,
+    ///     Cycle,
     /// };
     ///
-    /// assert!(Digraph::cycle(2).arcs().eq([(0, 1), (1, 0)]));
+    /// assert!(AdjacencyList::cycle(2).arcs().eq([(0, 1), (1, 0)]));
     /// ```
     ///
     /// ## Order 3
@@ -175,12 +173,12 @@ pub trait Cycle {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     gen::Cycle,
-    ///     op::Arcs,
+    ///     AdjacencyList,
+    ///     Arcs,
+    ///     Cycle,
     /// };
     ///
-    /// assert!(Digraph::cycle(3).arcs().eq([
+    /// assert!(AdjacencyList::cycle(3).arcs().eq([
     ///     (0, 1),
     ///     (0, 2),
     ///     (1, 0),
@@ -198,12 +196,12 @@ pub trait Cycle {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     gen::Cycle,
-    ///     op::Arcs,
+    ///     AdjacencyList,
+    ///     Arcs,
+    ///     Cycle,
     /// };
     ///
-    /// assert!(Digraph::cycle(4).arcs().eq([
+    /// assert!(AdjacencyList::cycle(4).arcs().eq([
     ///     (0, 1),
     ///     (0, 3),
     ///     (1, 0),

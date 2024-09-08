@@ -7,15 +7,13 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Circuit,
-//!     op::{
-//!         IsRegular,
-//!         RemoveArc,
-//!     },
+//!     AdjacencyList,
+//!     Circuit,
+//!     IsRegular,
+//!     RemoveArc,
 //! };
 //!
-//! let mut digraph = Digraph::circuit(7);
+//! let mut digraph = AdjacencyList::circuit(7);
 //!
 //! assert!(digraph.is_regular());
 //!
@@ -24,7 +22,7 @@
 //! assert!(!digraph.is_regular());
 //! ```
 
-use super::{
+use crate::{
     Indegree,
     Outdegree,
     Vertices,
@@ -39,7 +37,7 @@ use super::{
 ///
 /// ```
 /// use {
-///     graaf::op::{
+///     graaf::{
 ///         Indegree,
 ///         IsRegular,
 ///         Outdegree,
@@ -48,29 +46,29 @@ use super::{
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl Indegree for Digraph {
+/// impl Indegree for AdjacencyList {
 ///     fn indegree(&self, v: usize) -> usize {
 ///         self.arcs.iter().filter(|set| set.contains(&v)).count()
 ///     }
 /// }
 ///
-/// impl Vertices for Digraph {
+/// impl Vertices for AdjacencyList {
 ///     fn vertices(&self) -> impl Iterator<Item = usize> {
 ///         0..self.arcs.len()
 ///     }
 /// }
 ///
-/// impl Outdegree for Digraph {
+/// impl Outdegree for AdjacencyList {
 ///     fn outdegree(&self, u: usize) -> usize {
 ///         self.arcs[u].len()
 ///     }
 /// }
 ///
-/// let digraph = Digraph {
+/// let digraph = AdjacencyList {
 ///     arcs: vec![
 ///         BTreeSet::from([1, 2]),
 ///         BTreeSet::from([2, 0]),
@@ -80,7 +78,7 @@ use super::{
 ///
 /// assert!(digraph.is_regular());
 ///
-/// let digraph = Digraph {
+/// let digraph = AdjacencyList {
 ///     arcs: vec![
 ///         BTreeSet::from([1, 2]),
 ///         BTreeSet::from([0, 2]),
@@ -106,9 +104,8 @@ where
     fn is_regular(&self) -> bool {
         let mut vertices = self.vertices();
 
-        let order = vertices
-            .next()
-            .expect("a digraph must have at least one vertex");
+        let order =
+            vertices.next().expect("a digraph has at least one vertex");
 
         let indegree = self.indegree(order);
         let outdegree = self.outdegree(order);

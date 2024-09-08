@@ -6,15 +6,13 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Empty,
-//!     op::{
-//!         AddArc,
-//!         Degree,
-//!     },
+//!     AddArc,
+//!     AdjacencyList,
+//!     Degree,
+//!     Empty,
 //! };
 //!
-//! let mut digraph = Digraph::empty(3);
+//! let mut digraph = AdjacencyList::empty(3);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(0, 2);
@@ -28,7 +26,7 @@
 #![doc(alias = "valence")]
 #![doc(alias = "valency")]
 
-use super::{
+use crate::{
     Indegree,
     Outdegree,
 };
@@ -42,7 +40,7 @@ use super::{
 ///
 /// ```
 /// use {
-///     graaf::op::{
+///     graaf::{
 ///         Degree,
 ///         Indegree,
 ///         Outdegree,
@@ -50,23 +48,23 @@ use super::{
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl Indegree for Digraph {
+/// impl Indegree for AdjacencyList {
 ///     fn indegree(&self, v: usize) -> usize {
 ///         self.arcs.iter().filter(|set| set.contains(&v)).count()
 ///     }
 /// }
 ///
-/// impl Outdegree for Digraph {
+/// impl Outdegree for AdjacencyList {
 ///     fn outdegree(&self, u: usize) -> usize {
 ///         self.arcs[u].len()
 ///     }
 /// }
 ///
-/// let digraph = Digraph {
+/// let digraph = AdjacencyList {
 ///     arcs: vec![
 ///         BTreeSet::from([1, 2]),
 ///         BTreeSet::from([2]),
@@ -85,15 +83,13 @@ use super::{
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::Empty,
-///     op::{
-///         AddArc,
-///         Degree,
-///     },
+///     AddArc,
+///     AdjacencyList,
+///     Degree,
+///     Empty,
 /// };
 ///
-/// let mut digraph = Digraph::empty(3);
+/// let mut digraph = AdjacencyList::empty(3);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(0, 2);

@@ -6,15 +6,13 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Empty,
-//!     op::{
-//!         AddArc,
-//!         IsPendant,
-//!     },
+//!     AddArc,
+//!     AdjacencyList,
+//!     Empty,
+//!     IsPendant,
 //! };
 //!
-//! let mut digraph = Digraph::empty(4);
+//! let mut digraph = AdjacencyList::empty(4);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(0, 2);
@@ -27,7 +25,7 @@
 //! assert!(digraph.is_pendant(3));
 //! ```
 
-use super::Degree;
+use crate::Degree;
 
 /// Check whether a vertex is Pendant.
 ///
@@ -38,7 +36,7 @@ use super::Degree;
 ///
 /// ```
 /// use {
-///     graaf::op::{
+///     graaf::{
 ///         Indegree,
 ///         IsPendant,
 ///         Outdegree,
@@ -46,23 +44,23 @@ use super::Degree;
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl Indegree for Digraph {
+/// impl Indegree for AdjacencyList {
 ///     fn indegree(&self, u: usize) -> usize {
 ///         self.arcs.iter().filter(|set| set.contains(&u)).count()
 ///     }
 /// }
 ///
-/// impl Outdegree for Digraph {
+/// impl Outdegree for AdjacencyList {
 ///     fn outdegree(&self, u: usize) -> usize {
 ///         self.arcs[u].len()
 ///     }
 /// }
 ///
-/// let digraph = Digraph {
+/// let digraph = AdjacencyList {
 ///     arcs: vec![
 ///         BTreeSet::from([1, 2]),
 ///         BTreeSet::from([0]),

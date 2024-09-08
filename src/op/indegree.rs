@@ -6,15 +6,13 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Empty,
-//!     op::{
-//!         AddArc,
-//!         Indegree,
-//!     },
+//!     AddArc,
+//!     AdjacencyList,
+//!     Empty,
+//!     Indegree,
 //! };
 //!
-//! let mut digraph = Digraph::empty(3);
+//! let mut digraph = AdjacencyList::empty(3);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(0, 2);
@@ -35,21 +33,21 @@
 ///
 /// ```
 /// use {
-///     graaf::op::Indegree,
+///     graaf::Indegree,
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl Indegree for Digraph {
+/// impl Indegree for AdjacencyList {
 ///     fn indegree(&self, v: usize) -> usize {
 ///         self.arcs.iter().filter(|set| set.contains(&v)).count()
 ///     }
 /// }
 ///
-/// let digraph = Digraph {
+/// let digraph = AdjacencyList {
 ///     arcs: vec![
 ///         BTreeSet::from([1, 2]),
 ///         BTreeSet::from([2]),
@@ -66,15 +64,13 @@
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::Empty,
-///     op::{
-///         AddArc,
-///         Indegree,
-///     },
+///     AddArc,
+///     AdjacencyList,
+///     Empty,
+///     Indegree,
 /// };
 ///
-/// let mut digraph = Digraph::empty(3);
+/// let mut digraph = AdjacencyList::empty(3);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(0, 2);
@@ -107,15 +103,13 @@ pub trait Indegree {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     gen::Empty,
-    ///     op::{
-    ///         AddArc,
-    ///         Indegree,
-    ///     },
+    ///     AddArc,
+    ///     AdjacencyList,
+    ///     Empty,
+    ///     Indegree,
     /// };
     ///
-    /// let mut digraph = Digraph::empty(3);
+    /// let mut digraph = AdjacencyList::empty(3);
     ///
     /// digraph.add_arc(0, 1);
     /// digraph.add_arc(0, 2);

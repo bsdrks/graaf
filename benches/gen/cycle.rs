@@ -1,9 +1,9 @@
 //! Benchmark the `Cycle::cycle` implementation for different types.
 
 use graaf::{
-    adjacency_list,
-    adjacency_matrix,
-    gen::Cycle,
+    AdjacencyList,
+    AdjacencyMatrix,
+    Cycle,
 };
 
 fn main() {
@@ -12,10 +12,10 @@ fn main() {
 
 #[divan::bench(args = [10, 100, 1000])]
 fn adjacency_list(n: usize) {
-    let _ = adjacency_list::Digraph::cycle(n);
+    let _ = AdjacencyList::cycle(n);
 }
 
 #[divan::bench(args = [10, 100, 1000])]
 fn adjacency_matrix(n: usize) {
-    let _ = adjacency_matrix::Digraph::cycle(n);
+    let _ = AdjacencyMatrix::cycle(n);
 }

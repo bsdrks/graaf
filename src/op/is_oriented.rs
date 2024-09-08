@@ -6,16 +6,16 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Circuit,
-//!     op::IsOriented,
+//!     AdjacencyList,
+//!     Circuit,
+//!     IsOriented,
 //! };
 //!
-//! assert!(!Digraph::circuit(2).is_oriented());
-//! assert!(Digraph::circuit(3).is_oriented());
+//! assert!(!AdjacencyList::circuit(2).is_oriented());
+//! assert!(AdjacencyList::circuit(3).is_oriented());
 //! ```
 
-use super::{
+use crate::{
     Arcs,
     HasArc,
 };
@@ -30,40 +30,38 @@ use super::{
 /// ```
 /// use {
 ///     graaf::{
-///         gen::Circuit,
-///         op::{
-///             Arcs,
-///             HasArc,
-///             IsOriented,
-///         },
+///         Arcs,
+///         Circuit,
+///         HasArc,
+///         IsOriented,
 ///     },
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     pub arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl Arcs for Digraph {
+/// impl Arcs for AdjacencyList {
 ///     fn arcs(&self) -> impl Iterator<Item = (usize, usize)> {
 ///         (0..self.arcs.len())
 ///             .flat_map(move |u| self.arcs[u].iter().map(move |&v| (u, v)))
 ///     }
 /// }
 ///
-/// impl HasArc for Digraph {
+/// impl HasArc for AdjacencyList {
 ///     fn has_arc(&self, u: usize, v: usize) -> bool {
 ///         self.arcs[u].contains(&v)
 ///     }
 /// }
 ///
-/// let digraph = Digraph {
+/// let digraph = AdjacencyList {
 ///     arcs: vec![BTreeSet::from([1]), BTreeSet::from([0])],
 /// };
 ///
 /// assert!(!digraph.is_oriented());
 ///
-/// let digraph = Digraph {
+/// let digraph = AdjacencyList {
 ///     arcs: vec![
 ///         BTreeSet::from([1]),
 ///         BTreeSet::from([2]),
@@ -78,13 +76,13 @@ use super::{
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::Circuit,
-///     op::IsOriented,
+///     AdjacencyList,
+///     Circuit,
+///     IsOriented,
 /// };
 ///
-/// assert!(!Digraph::circuit(2).is_oriented());
-/// assert!(Digraph::circuit(3).is_oriented());
+/// assert!(!AdjacencyList::circuit(2).is_oriented());
+/// assert!(AdjacencyList::circuit(3).is_oriented());
 /// ```
 pub trait IsOriented {
     /// Checks whether the digraph is oriented.

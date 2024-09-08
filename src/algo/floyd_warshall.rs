@@ -21,16 +21,14 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list_weighted::Digraph,
-//!     algo::{
-//!         floyd_warshall::distances,
-//!         DistanceMatrix,
-//!     },
-//!     gen::Empty,
-//!     op::AddArcWeighted,
+//!     floyd_warshall::distances,
+//!     AddArcWeighted,
+//!     AdjacencyListWeighted,
+//!     DistanceMatrix,
+//!     Empty,
 //! };
 //!
-//! let mut digraph = Digraph::<isize>::empty(7);
+//! let mut digraph = AdjacencyListWeighted::<isize>::empty(7);
 //!
 //! digraph.add_arc_weighted(0, 1, 5);
 //! digraph.add_arc_weighted(0, 2, 3);
@@ -62,13 +60,11 @@
 //! [^1]: Robert W. Floyd. 1962. Algorithm 97: Shortest path. Commun.
 //!   ACM 5, 6 (June 1962), 345. <https://doi.org/10.1145/367766.368168>
 
-use {
-    super::DistanceMatrix,
-    crate::op::{
-        ArcsWeighted,
-        Order,
-        Vertices,
-    },
+use crate::{
+    ArcsWeighted,
+    DistanceMatrix,
+    Order,
+    Vertices,
 };
 
 /// Computes the distances between all pairs of vertices in an arc-weighted
@@ -92,16 +88,14 @@ use {
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list_weighted::Digraph,
-///     algo::{
-///         floyd_warshall::distances,
-///         DistanceMatrix,
-///     },
-///     gen::Empty,
-///     op::AddArcWeighted,
+///     floyd_warshall::distances,
+///     AddArcWeighted,
+///     AdjacencyListWeighted,
+///     DistanceMatrix,
+///     Empty,
 /// };
 ///
-/// let mut digraph = Digraph::<isize>::empty(7);
+/// let mut digraph = AdjacencyListWeighted::<isize>::empty(7);
 ///
 /// digraph.add_arc_weighted(0, 1, 5);
 /// digraph.add_arc_weighted(0, 2, 3);
@@ -181,27 +175,25 @@ mod tests {
     use {
         super::*,
         crate::{
-            adjacency_list_weighted::{
-                fixture::{
-                    bang_jensen_94_isize,
-                    bang_jensen_96_isize,
-                    bang_jensen_99,
-                    kattis_bryr_1_isize,
-                    kattis_bryr_2_isize,
-                    kattis_bryr_3_isize,
-                    kattis_crosscountry_isize,
-                    kattis_shortestpath1_isize,
-                },
-                Digraph,
+            repr::adjacency_list_weighted::fixture::{
+                bang_jensen_94_isize,
+                bang_jensen_96_isize,
+                bang_jensen_99,
+                kattis_bryr_1_isize,
+                kattis_bryr_2_isize,
+                kattis_bryr_3_isize,
+                kattis_crosscountry_isize,
+                kattis_shortestpath1_isize,
             },
-            gen::Empty,
-            op::AddArcWeighted,
+            AddArcWeighted,
+            AdjacencyListWeighted,
+            Empty,
         },
     };
 
     #[test]
     fn distances_doctest() {
-        let mut digraph = Digraph::empty(4);
+        let mut digraph = AdjacencyListWeighted::empty(4);
 
         digraph.add_arc_weighted(0, 2, -2);
         digraph.add_arc_weighted(1, 0, 4);
@@ -231,7 +223,7 @@ mod tests {
 
     #[test]
     fn distances_trivial() {
-        let dist = distances(&Digraph::<isize>::trivial());
+        let dist = distances(&AdjacencyListWeighted::<isize>::trivial());
 
         assert_eq!(dist[0][0], 0);
     }

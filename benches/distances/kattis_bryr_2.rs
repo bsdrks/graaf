@@ -1,16 +1,12 @@
-#![macro_use]
-
 use {
     divan::Bencher,
     graaf::{
-        adjacency_list_weighted::fixture::{
+        bellman_ford_moore,
+        dijkstra_dist::DijkstraDist,
+        floyd_warshall,
+        repr::adjacency_list_weighted::fixture::{
             kattis_bryr_2_isize,
             kattis_bryr_2_usize,
-        },
-        algo::{
-            bellman_ford_moore,
-            dijkstra_dist::DijkstraDist,
-            floyd_warshall,
         },
     },
 };

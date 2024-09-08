@@ -4,16 +4,14 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Empty,
-//!     op::{
-//!         AddArc,
-//!         Arcs,
-//!         RemoveArc,
-//!     },
+//!     AddArc,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Empty,
+//!     RemoveArc,
 //! };
 //!
-//! let mut digraph = Digraph::empty(3);
+//! let mut digraph = AdjacencyList::empty(3);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(0, 2);
@@ -44,15 +42,15 @@
 ///
 /// ```
 /// use {
-///     graaf::op::RemoveArc,
+///     graaf::RemoveArc,
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl RemoveArc for Digraph {
+/// impl RemoveArc for AdjacencyList {
 ///     fn remove_arc(&mut self, u: usize, v: usize) -> bool {
 ///         self.arcs[u].remove(&v)
 ///     }
@@ -63,16 +61,14 @@
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::Empty,
-///     op::{
-///         AddArc,
-///         Arcs,
-///         RemoveArc,
-///     },
+///     AddArc,
+///     AdjacencyList,
+///     Arcs,
+///     Empty,
+///     RemoveArc,
 /// };
 ///
-/// let mut digraph = Digraph::empty(3);
+/// let mut digraph = AdjacencyList::empty(3);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(0, 2);
@@ -93,9 +89,6 @@
 /// assert!(digraph.remove_arc(2, 1));
 /// assert!(digraph.arcs().eq([]));
 /// ```
-///
-/// [`AddArc`]: crate::op::AddArc
-/// [`AddArcWeighted`]: crate::op::AddArcWeighted
 pub trait RemoveArc {
     /// Removes the arc from `u` to `v` from the digraph. Checks whether the
     /// arc was removed.

@@ -13,12 +13,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Path,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Path,
 //! };
 //!
-//! assert!(Digraph::path(2).arcs().eq([(0, 1)]));
+//! assert!(AdjacencyList::path(2).arcs().eq([(0, 1)]));
 //! ```
 //!
 //! ## Order 3
@@ -29,12 +29,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Path,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Path,
 //! };
 //!
-//! assert!(Digraph::path(3).arcs().eq([(0, 1), (1, 2)]));
+//! assert!(AdjacencyList::path(3).arcs().eq([(0, 1), (1, 2)]));
 //! ```
 //!
 //! ## Order 4
@@ -45,17 +45,17 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Path,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Path,
 //! };
 //!
-//! assert!(Digraph::path(4).arcs().eq([(0, 1), (1, 2), (2, 3)]));
+//! assert!(AdjacencyList::path(4).arcs().eq([(0, 1), (1, 2), (2, 3)]));
 //! ```
 
 use crate::{
-    gen::Empty,
-    op::AddArc,
+    AddArc,
+    Empty,
 };
 
 /// Generate path digraphs.
@@ -71,26 +71,24 @@ use crate::{
 /// ```
 /// use {
 ///     graaf::{
-///         gen::{
-///             Empty,
-///             Path,
-///         },
-///         op::AddArc,
+///         AddArc,
+///         Empty,
+///         Path,
 ///     },
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl AddArc for Digraph {
+/// impl AddArc for AdjacencyList {
 ///     fn add_arc(&mut self, u: usize, v: usize) {
 ///         self.arcs[u].insert(v);
 ///     }
 /// }
 ///
-/// impl Empty for Digraph {
+/// impl Empty for AdjacencyList {
 ///     fn empty(order: usize) -> Self {
 ///         Self {
 ///             arcs: vec![BTreeSet::new(); order],
@@ -98,7 +96,7 @@ use crate::{
 ///     }
 /// }
 ///
-/// let digraph = Digraph::path(3);
+/// let digraph = AdjacencyList::path(3);
 ///
 /// assert!(digraph.arcs.iter().eq(&[
 ///     BTreeSet::from([1]),
@@ -123,12 +121,12 @@ pub trait Path {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     gen::Path,
-    ///     op::Arcs,
+    ///     AdjacencyList,
+    ///     Arcs,
+    ///     Path,
     /// };
     ///
-    /// assert!(Digraph::path(2).arcs().eq([(0, 1)]));
+    /// assert!(AdjacencyList::path(2).arcs().eq([(0, 1)]));
     /// ```
     ///
     /// ## Order 3
@@ -139,12 +137,12 @@ pub trait Path {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     gen::Path,
-    ///     op::Arcs,
+    ///     AdjacencyList,
+    ///     Arcs,
+    ///     Path,
     /// };
     ///
-    /// assert!(Digraph::path(3).arcs().eq([(0, 1), (1, 2)]));
+    /// assert!(AdjacencyList::path(3).arcs().eq([(0, 1), (1, 2)]));
     /// ```
     ///
     /// ## Order 4
@@ -155,12 +153,12 @@ pub trait Path {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     gen::Path,
-    ///     op::Arcs,
+    ///     AdjacencyList,
+    ///     Arcs,
+    ///     Path,
     /// };
     ///
-    /// assert!(Digraph::path(4).arcs().eq([(0, 1), (1, 2), (2, 3)]));
+    /// assert!(AdjacencyList::path(4).arcs().eq([(0, 1), (1, 2), (2, 3)]));
     /// ```
     #[must_use]
     fn path(order: usize) -> Self;

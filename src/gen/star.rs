@@ -13,12 +13,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Star,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Star,
 //! };
 //!
-//! assert!(Digraph::star(2).arcs().eq([(0, 1), (1, 0)]));
+//! assert!(AdjacencyList::star(2).arcs().eq([(0, 1), (1, 0)]));
 //! ```
 //!
 //! ## Order 3
@@ -29,12 +29,17 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Star,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Star,
 //! };
 //!
-//! assert!(Digraph::star(3).arcs().eq([(0, 1), (0, 2), (1, 0), (2, 0)]));
+//! assert!(AdjacencyList::star(3).arcs().eq([
+//!     (0, 1),
+//!     (0, 2),
+//!     (1, 0),
+//!     (2, 0)
+//! ]));
 //! ```
 //!
 //! ## Order 4
@@ -45,12 +50,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Star,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Star,
 //! };
 //!
-//! assert!(Digraph::star(4).arcs().eq([
+//! assert!(AdjacencyList::star(4).arcs().eq([
 //!     (0, 1),
 //!     (0, 2),
 //!     (0, 3),
@@ -61,8 +66,8 @@
 //! ```
 
 use crate::{
-    gen::Empty,
-    op::AddArc,
+    AddArc,
+    Empty,
 };
 
 /// Generate star digraphs.
@@ -78,26 +83,24 @@ use crate::{
 /// ```
 /// use {
 ///     graaf::{
-///         gen::{
-///             Empty,
-///             Star,
-///         },
-///         op::AddArc,
+///         AddArc,
+///         Empty,
+///         Star,
 ///     },
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl AddArc for Digraph {
+/// impl AddArc for AdjacencyList {
 ///     fn add_arc(&mut self, u: usize, v: usize) {
 ///         self.arcs[u].insert(v);
 ///     }
 /// }
 ///
-/// impl Empty for Digraph {
+/// impl Empty for AdjacencyList {
 ///     fn empty(order: usize) -> Self {
 ///         Self {
 ///             arcs: vec![BTreeSet::new(); order],
@@ -105,7 +108,7 @@ use crate::{
 ///     }
 /// }
 ///
-/// let digraph = Digraph::star(3);
+/// let digraph = AdjacencyList::star(3);
 ///
 /// assert!(digraph.arcs.iter().eq(&[
 ///     BTreeSet::from([1, 2]),
@@ -130,12 +133,12 @@ pub trait Star {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     gen::Star,
-    ///     op::Arcs,
+    ///     AdjacencyList,
+    ///     Arcs,
+    ///     Star,
     /// };
     ///
-    /// assert!(Digraph::star(2).arcs().eq([(0, 1), (1, 0)]));
+    /// assert!(AdjacencyList::star(2).arcs().eq([(0, 1), (1, 0)]));
     /// ```
     ///
     /// ## Order 3
@@ -146,12 +149,17 @@ pub trait Star {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     gen::Star,
-    ///     op::Arcs,
+    ///     AdjacencyList,
+    ///     Arcs,
+    ///     Star,
     /// };
     ///
-    /// assert!(Digraph::star(3).arcs().eq([(0, 1), (0, 2), (1, 0), (2, 0)]));
+    /// assert!(AdjacencyList::star(3).arcs().eq([
+    ///     (0, 1),
+    ///     (0, 2),
+    ///     (1, 0),
+    ///     (2, 0)
+    /// ]));
     /// ```
     ///
     /// ## Order 4
@@ -162,12 +170,12 @@ pub trait Star {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     gen::Star,
-    ///     op::Arcs,
+    ///     AdjacencyList,
+    ///     Arcs,
+    ///     Star,
     /// };
     ///
-    /// assert!(Digraph::star(4).arcs().eq([
+    /// assert!(AdjacencyList::star(4).arcs().eq([
     ///     (0, 1),
     ///     (0, 2),
     ///     (0, 3),

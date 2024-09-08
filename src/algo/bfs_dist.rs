@@ -16,16 +16,16 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     algo::bfs_dist::{
+//!     bfs_dist::{
 //!         BfsDist,
 //!         Step,
 //!     },
-//!     gen::Empty,
-//!     op::AddArc,
+//!     AddArc,
+//!     AdjacencyList,
+//!     Empty,
 //! };
 //!
-//! let mut digraph = Digraph::empty(6);
+//! let mut digraph = AdjacencyList::empty(6);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(1, 2);
@@ -51,16 +51,16 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     algo::bfs_dist::{
+//!     bfs_dist::{
 //!         BfsDist,
 //!         Step,
 //!     },
-//!     gen::Empty,
-//!     op::AddArc,
+//!     AddArc,
+//!     AdjacencyList,
+//!     Empty,
 //! };
 //!
-//! let mut digraph = Digraph::empty(8);
+//! let mut digraph = AdjacencyList::empty(8);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(1, 2);
@@ -86,7 +86,7 @@
 //! ```
 
 use {
-    crate::op::{
+    crate::{
         Order,
         OutNeighbors,
     },
@@ -114,16 +114,16 @@ use {
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     algo::bfs_dist::{
+///     bfs_dist::{
 ///         BfsDist,
 ///         Step,
 ///     },
-///     gen::Empty,
-///     op::AddArc,
+///     AddArc,
+///     AdjacencyList,
+///     Empty,
 /// };
 ///
-/// let mut digraph = Digraph::empty(6);
+/// let mut digraph = AdjacencyList::empty(6);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(1, 2);
@@ -149,16 +149,16 @@ use {
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     algo::bfs_dist::{
+///     bfs_dist::{
 ///         BfsDist,
 ///         Step,
 ///     },
-///     gen::Empty,
-///     op::AddArc,
+///     AddArc,
+///     AdjacencyList,
+///     Empty,
 /// };
 ///
-/// let mut digraph = Digraph::empty(8);
+/// let mut digraph = AdjacencyList::empty(8);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(1, 2);
@@ -237,13 +237,13 @@ impl<'a, D> BfsDist<'a, D> {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     algo::bfs_dist::BfsDist,
-    ///     gen::Empty,
-    ///     op::AddArc,
+    ///     bfs_dist::BfsDist,
+    ///     AddArc,
+    ///     AdjacencyList,
+    ///     Empty,
     /// };
     ///
-    /// let mut digraph = Digraph::empty(4);
+    /// let mut digraph = AdjacencyList::empty(4);
     ///
     /// digraph.add_arc(0, 1);
     /// digraph.add_arc(1, 2);
@@ -303,27 +303,25 @@ mod tests {
     use {
         super::*,
         crate::{
-            adjacency_list::{
-                fixture::{
-                    bang_jensen_196,
-                    bang_jensen_34,
-                    bang_jensen_94,
-                    kattis_builddeps,
-                    kattis_cantinaofbabel_1,
-                    kattis_cantinaofbabel_2,
-                    kattis_escapewallmaria_1,
-                    kattis_escapewallmaria_2,
-                    kattis_escapewallmaria_3,
-                },
-                Digraph,
+            repr::adjacency_list::fixture::{
+                bang_jensen_196,
+                bang_jensen_34,
+                bang_jensen_94,
+                kattis_builddeps,
+                kattis_cantinaofbabel_1,
+                kattis_cantinaofbabel_2,
+                kattis_escapewallmaria_1,
+                kattis_escapewallmaria_2,
+                kattis_escapewallmaria_3,
             },
-            gen::Empty,
+            AdjacencyList,
+            Empty,
         },
     };
 
     #[test]
     fn distances_trivial() {
-        let digraph = Digraph::trivial();
+        let digraph = AdjacencyList::trivial();
 
         assert!(BfsDist::new(&digraph, &[0]).distances().eq(&[0]));
     }

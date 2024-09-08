@@ -1,18 +1,13 @@
-#![macro_use]
-
 use {
     divan::Bencher,
     graaf::{
-        self,
-        adjacency_list,
-        adjacency_list_weighted,
-        adjacency_matrix,
-        algo::{
-            bellman_ford_moore,
-            bfs_dist::BfsDist,
-            dijkstra_dist::DijkstraDist,
-        },
-        gen::ErdosRenyi,
+        bellman_ford_moore,
+        bfs_dist::BfsDist,
+        dijkstra_dist::DijkstraDist,
+        AdjacencyList,
+        AdjacencyListWeighted,
+        AdjacencyMatrix,
+        ErdosRenyi,
     },
 };
 
@@ -26,8 +21,7 @@ const SEED: u64 = 0;
 
 #[divan::bench]
 fn bfs_adjacency_list(bencher: Bencher<'_, '_>) {
-    let digraph =
-        adjacency_list::Digraph::erdos_renyi(ORDER, PROBABILITY, SEED);
+    let digraph = AdjacencyList::erdos_renyi(ORDER, PROBABILITY, SEED);
 
     bencher.bench_local(|| {
         let mut bfs = BfsDist::new(&digraph, &[0]);
@@ -40,9 +34,11 @@ fn bfs_adjacency_list(bencher: Bencher<'_, '_>) {
 
 #[divan::bench]
 fn bfs_adjacency_matrix(bencher: Bencher<'_, '_>) {
-    let digraph = adjacency_matrix::Digraph::from(
-        adjacency_list::Digraph::erdos_renyi(ORDER, PROBABILITY, SEED),
-    );
+    let digraph = AdjacencyMatrix::from(AdjacencyList::erdos_renyi(
+        ORDER,
+        PROBABILITY,
+        SEED,
+    ));
 
     bencher.bench_local(|| {
         let mut bfs = BfsDist::new(&digraph, &[0]);
@@ -55,9 +51,11 @@ fn bfs_adjacency_matrix(bencher: Bencher<'_, '_>) {
 
 #[divan::bench]
 fn bellman_ford_moore(bencher: Bencher<'_, '_>) {
-    let digraph = adjacency_list_weighted::Digraph::from(
-        adjacency_list::Digraph::erdos_renyi(ORDER, PROBABILITY, SEED),
-    );
+    let digraph = AdjacencyListWeighted::from(AdjacencyList::erdos_renyi(
+        ORDER,
+        PROBABILITY,
+        SEED,
+    ));
 
     bencher.bench_local(|| {
         let dist =
@@ -70,9 +68,11 @@ fn bellman_ford_moore(bencher: Bencher<'_, '_>) {
 
 #[divan::bench]
 fn dijkstra(bencher: Bencher<'_, '_>) {
-    let digraph = adjacency_list_weighted::Digraph::from(
-        adjacency_list::Digraph::erdos_renyi(ORDER, PROBABILITY, SEED),
-    );
+    let digraph = AdjacencyListWeighted::from(AdjacencyList::erdos_renyi(
+        ORDER,
+        PROBABILITY,
+        SEED,
+    ));
 
     bencher.bench_local(|| {
         let mut dijkstra = DijkstraDist::new(&digraph, &[0]);

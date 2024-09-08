@@ -6,15 +6,13 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Empty,
-//!     op::{
-//!         AddArc,
-//!         IsSimple,
-//!     },
+//!     AddArc,
+//!     AdjacencyList,
+//!     Empty,
+//!     IsSimple,
 //! };
 //!
-//! let mut digraph = Digraph::empty(3);
+//! let mut digraph = AdjacencyList::empty(3);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(1, 2);
@@ -32,15 +30,15 @@
 ///
 /// ```
 /// use {
-///     graaf::op::IsSimple,
+///     graaf::IsSimple,
 ///     std::collections::HashSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<HashSet<usize>>,
 /// }
 ///
-/// impl IsSimple for Digraph {
+/// impl IsSimple for AdjacencyList {
 ///     fn is_simple(&self) -> bool {
 ///         self.arcs
 ///             .iter()
@@ -54,15 +52,13 @@
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::Empty,
-///     op::{
-///         AddArc,
-///         IsSimple,
-///     },
+///     AddArc,
+///     AdjacencyList,
+///     Empty,
+///     IsSimple,
 /// };
 ///
-/// let mut digraph = Digraph::empty(3);
+/// let mut digraph = AdjacencyList::empty(3);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(0, 2);

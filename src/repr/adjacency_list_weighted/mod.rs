@@ -4,15 +4,13 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list_weighted::Digraph,
-//!     gen::Empty,
-//!     op::{
-//!         AddArcWeighted,
-//!         ArcsWeighted,
-//!     },
+//!     AddArcWeighted,
+//!     AdjacencyListWeighted,
+//!     ArcsWeighted,
+//!     Empty,
 //! };
 //!
-//! let mut digraph = Digraph::<isize>::empty(3);
+//! let mut digraph = AdjacencyListWeighted::<isize>::empty(3);
 //!
 //! digraph.add_arc_weighted(0, 1, 2);
 //! digraph.add_arc_weighted(1, 2, 3);
@@ -23,39 +21,39 @@
 //!     .eq([(0, 1, &2), (1, 2, &3), (2, 0, &4)]));
 //! ```
 
+pub mod fixture;
+
 use {
     crate::{
-        adjacency_list,
-        adjacency_matrix,
-        gen::Empty,
-        op::{
-            AddArcWeighted,
-            ArcWeight,
-            Arcs,
-            ArcsWeighted,
-            Converse,
-            HasArc,
-            Indegree,
-            IsSimple,
-            Order,
-            OutNeighbors,
-            OutNeighborsWeighted,
-            Outdegree,
-            RemoveArc,
-            Size,
-            Vertices,
-        },
+        AddArcWeighted,
+        AdjacencyList,
+        AdjacencyMatrix,
+        ArcWeight,
+        Arcs,
+        ArcsWeighted,
+        Converse,
+        Empty,
+        HasArc,
+        Indegree,
+        IsSimple,
+        Order,
+        OutNeighbors,
+        OutNeighborsWeighted,
+        Outdegree,
+        RemoveArc,
+        Size,
+        Vertices,
     },
     std::collections::BTreeMap,
 };
 
 /// An representation of an arc-weighted digraph.
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
-pub struct Digraph<W> {
+pub struct AdjacencyListWeighted<W> {
     arcs: Vec<BTreeMap<usize, W>>,
 }
 
-impl<W> AddArcWeighted<W> for Digraph<W> {
+impl<W> AddArcWeighted<W> for AdjacencyListWeighted<W> {
     /// # Panics
     ///
     /// * Panics if `u` equals `v`.
@@ -73,13 +71,13 @@ impl<W> AddArcWeighted<W> for Digraph<W> {
     }
 }
 
-impl<W> ArcWeight<W> for Digraph<W> {
+impl<W> ArcWeight<W> for AdjacencyListWeighted<W> {
     fn arc_weight(&self, u: usize, v: usize) -> Option<&W> {
         self.arcs.get(u).and_then(|arcs| arcs.get(&v))
     }
 }
 
-impl<W> Arcs for Digraph<W> {
+impl<W> Arcs for AdjacencyListWeighted<W> {
     fn arcs(&self) -> impl Iterator<Item = (usize, usize)> {
         self.arcs
             .iter()
@@ -88,7 +86,7 @@ impl<W> Arcs for Digraph<W> {
     }
 }
 
-impl<W> ArcsWeighted<W> for Digraph<W> {
+impl<W> ArcsWeighted<W> for AdjacencyListWeighted<W> {
     fn arcs_weighted<'a>(
         &'a self,
     ) -> impl Iterator<Item = (usize, usize, &'a W)>
@@ -102,7 +100,7 @@ impl<W> ArcsWeighted<W> for Digraph<W> {
     }
 }
 
-impl<W> Converse for Digraph<W>
+impl<W> Converse for AdjacencyListWeighted<W>
 where
     W: Copy,
 {
@@ -118,7 +116,7 @@ where
     }
 }
 
-impl<W> Empty for Digraph<W>
+impl<W> Empty for AdjacencyListWeighted<W>
 where
     W: Clone,
 {
@@ -126,7 +124,7 @@ where
     ///
     /// Panics if `order` is zero.
     fn empty(order: usize) -> Self {
-        assert!(order > 0, "a digraph must have at least one vertex");
+        assert!(order > 0, "a digraph has at least one vertex");
 
         Self {
             arcs: vec![BTreeMap::new(); order],
@@ -134,8 +132,8 @@ where
     }
 }
 
-impl From<adjacency_list::Digraph> for Digraph<isize> {
-    fn from(digraph: adjacency_list::Digraph) -> Self {
+impl From<AdjacencyList> for AdjacencyListWeighted<isize> {
+    fn from(digraph: AdjacencyList) -> Self {
         let mut h = Self::empty(digraph.order());
 
         for (u, v) in digraph.arcs() {
@@ -146,8 +144,8 @@ impl From<adjacency_list::Digraph> for Digraph<isize> {
     }
 }
 
-impl From<adjacency_list::Digraph> for Digraph<usize> {
-    fn from(digraph: adjacency_list::Digraph) -> Self {
+impl From<AdjacencyList> for AdjacencyListWeighted<usize> {
+    fn from(digraph: AdjacencyList) -> Self {
         let mut h = Self::empty(digraph.order());
 
         for (u, v) in digraph.arcs() {
@@ -158,8 +156,8 @@ impl From<adjacency_list::Digraph> for Digraph<usize> {
     }
 }
 
-impl From<adjacency_matrix::Digraph> for Digraph<isize> {
-    fn from(digraph: adjacency_matrix::Digraph) -> Self {
+impl From<AdjacencyMatrix> for AdjacencyListWeighted<isize> {
+    fn from(digraph: AdjacencyMatrix) -> Self {
         let mut h = Self::empty(digraph.order());
 
         for (u, v) in digraph.arcs() {
@@ -170,8 +168,8 @@ impl From<adjacency_matrix::Digraph> for Digraph<isize> {
     }
 }
 
-impl From<adjacency_matrix::Digraph> for Digraph<usize> {
-    fn from(digraph: adjacency_matrix::Digraph) -> Self {
+impl From<AdjacencyMatrix> for AdjacencyListWeighted<usize> {
+    fn from(digraph: AdjacencyMatrix) -> Self {
         let mut h = Self::empty(digraph.order());
 
         for (u, v) in digraph.arcs() {
@@ -182,7 +180,7 @@ impl From<adjacency_matrix::Digraph> for Digraph<usize> {
     }
 }
 
-impl<W> From<Vec<BTreeMap<usize, W>>> for Digraph<W> {
+impl<W> From<Vec<BTreeMap<usize, W>>> for AdjacencyListWeighted<W> {
     /// # Panics
     ///
     /// * Panics if, for any arc `u -> v` in `arcs`, `u` equals `v`.
@@ -199,13 +197,13 @@ impl<W> From<Vec<BTreeMap<usize, W>>> for Digraph<W> {
     }
 }
 
-impl<W> HasArc for Digraph<W> {
+impl<W> HasArc for AdjacencyListWeighted<W> {
     fn has_arc(&self, u: usize, v: usize) -> bool {
         self.arcs.get(u).map_or(false, |set| set.contains_key(&v))
     }
 }
 
-impl<W> Indegree for Digraph<W> {
+impl<W> Indegree for AdjacencyListWeighted<W> {
     /// # Panics
     ///
     /// Panics if `v` is out of bounds.
@@ -219,7 +217,7 @@ impl<W> Indegree for Digraph<W> {
     }
 }
 
-impl<W> IsSimple for Digraph<W> {
+impl<W> IsSimple for AdjacencyListWeighted<W> {
     fn is_simple(&self) -> bool {
         self.arcs
             .iter()
@@ -228,7 +226,7 @@ impl<W> IsSimple for Digraph<W> {
     }
 }
 
-impl<W> OutNeighbors for Digraph<W> {
+impl<W> OutNeighbors for AdjacencyListWeighted<W> {
     /// # Panics
     ///
     /// Panics if `u` is out of bounds.
@@ -237,7 +235,7 @@ impl<W> OutNeighbors for Digraph<W> {
     }
 }
 
-impl<W> OutNeighborsWeighted<W> for Digraph<W> {
+impl<W> OutNeighborsWeighted<W> for AdjacencyListWeighted<W> {
     /// # Panics
     ///
     /// Panics if `u` is out of bounds.
@@ -252,13 +250,13 @@ impl<W> OutNeighborsWeighted<W> for Digraph<W> {
     }
 }
 
-impl<W> Order for Digraph<W> {
+impl<W> Order for AdjacencyListWeighted<W> {
     fn order(&self) -> usize {
         self.arcs.len()
     }
 }
 
-impl<W> Outdegree for Digraph<W> {
+impl<W> Outdegree for AdjacencyListWeighted<W> {
     /// # Panics
     ///
     /// Panics if `u` is out of bounds.
@@ -267,7 +265,7 @@ impl<W> Outdegree for Digraph<W> {
     }
 }
 
-impl<W> RemoveArc for Digraph<W> {
+impl<W> RemoveArc for AdjacencyListWeighted<W> {
     fn remove_arc(&mut self, u: usize, v: usize) -> bool {
         self.arcs
             .get_mut(u)
@@ -275,13 +273,13 @@ impl<W> RemoveArc for Digraph<W> {
     }
 }
 
-impl<W> Size for Digraph<W> {
+impl<W> Size for AdjacencyListWeighted<W> {
     fn size(&self) -> usize {
         self.arcs.iter().map(BTreeMap::len).sum()
     }
 }
 
-impl<W> Vertices for Digraph<W> {
+impl<W> Vertices for AdjacencyListWeighted<W> {
     fn vertices(&self) -> impl Iterator<Item = usize> {
         0..self.order()
     }
@@ -292,35 +290,37 @@ mod tests {
     use {
         super::*,
         crate::{
-            adjacency_list_weighted::fixture::{
-                bang_jensen_94_usize,
-                bang_jensen_96_usize,
-                bang_jensen_99,
-                kattis_bryr_1_usize,
-                kattis_bryr_2_usize,
-                kattis_bryr_3_usize,
-                kattis_crosscountry_usize,
-                kattis_shortestpath1_usize,
-                kattis_shortestpath3,
-            },
-            op::{
-                Degree,
-                HasEdge,
-                InNeighbors,
-                IsBalanced,
-                IsComplete,
-                IsIsolated,
-                IsOriented,
-                IsPendant,
-                IsRegular,
-                IsSemicomplete,
-                IsSubdigraph,
-                IsSuperdigraph,
-                IsSymmetric,
-                IsTournament,
-                SemidegreeSequence,
-            },
             proptest_strategy::arc,
+            repr::{
+                adjacency_list,
+                adjacency_list_weighted::fixture::{
+                    bang_jensen_94_usize,
+                    bang_jensen_96_usize,
+                    bang_jensen_99,
+                    kattis_bryr_1_usize,
+                    kattis_bryr_2_usize,
+                    kattis_bryr_3_usize,
+                    kattis_crosscountry_usize,
+                    kattis_shortestpath1_usize,
+                    kattis_shortestpath3,
+                },
+                adjacency_matrix,
+            },
+            Degree,
+            HasEdge,
+            InNeighbors,
+            IsBalanced,
+            IsComplete,
+            IsIsolated,
+            IsOriented,
+            IsPendant,
+            IsRegular,
+            IsSemicomplete,
+            IsSubdigraph,
+            IsSuperdigraph,
+            IsSymmetric,
+            IsTournament,
+            SemidegreeSequence,
         },
         proptest::proptest,
     };
@@ -331,7 +331,7 @@ mod tests {
             (u, v) in arc(25_usize),
             w in 1..25_usize
         ) {
-            let mut digraph = Digraph::empty(100);
+            let mut digraph = AdjacencyListWeighted::empty(100);
 
             digraph.add_arc_weighted(u, v, w);
 
@@ -350,7 +350,7 @@ mod tests {
             (u, v) in arc(25_usize),
             w in 1..25_usize
         ) {
-            let mut digraph = Digraph::empty(100);
+            let mut digraph = AdjacencyListWeighted::empty(100);
 
             digraph.add_arc_weighted(u, v, w);
 
@@ -367,7 +367,7 @@ mod tests {
             (u, v) in arc(25_usize),
             w in 1..25_usize
         ) {
-            let mut digraph = Digraph::empty(100);
+            let mut digraph = AdjacencyListWeighted::empty(100);
 
             digraph.add_arc_weighted(u, v, w);
 
@@ -379,7 +379,7 @@ mod tests {
             (u, v) in arc(25_usize),
             w in 1..25_usize
         ) {
-            let mut digraph = Digraph::empty(100);
+            let mut digraph = AdjacencyListWeighted::empty(100);
 
             digraph.add_arc_weighted(u, v, w);
 
@@ -393,7 +393,7 @@ mod tests {
             (u, v) in arc(25_usize),
             w in 1..25_usize
         ) {
-            let mut digraph = Digraph::empty(100);
+            let mut digraph = AdjacencyListWeighted::empty(100);
 
             digraph.add_arc_weighted(u, v, w);
 
@@ -407,7 +407,7 @@ mod tests {
             (u, v) in arc(25_usize),
             w in 1..25_usize
         ) {
-            let d = Digraph::empty(100);
+            let d = AdjacencyListWeighted::empty(100);
             let mut h = d.clone();
 
             h.add_arc_weighted(u, v, w);
@@ -427,12 +427,12 @@ mod tests {
 
         #[test]
         fn empty_arcs(order in 1..25_usize) {
-            assert!(Digraph::<usize>::empty(order).arcs().eq([]));
+            assert!(AdjacencyListWeighted::<usize>::empty(order).arcs().eq([]));
         }
 
         #[test]
         fn empty_degree(order in 1..25_usize) {
-            let digraph = Digraph::<usize>::empty(order);
+            let digraph = AdjacencyListWeighted::<usize>::empty(order);
 
             for u in digraph.vertices() {
                 assert_eq!(digraph.degree(u), 0);
@@ -441,7 +441,7 @@ mod tests {
 
         #[test]
         fn empty_has_arc(order in 1..25_usize) {
-            let digraph = Digraph::<usize>::empty(order);
+            let digraph = AdjacencyListWeighted::<usize>::empty(order);
 
             for u in digraph.vertices() {
                 for v in digraph.vertices() {
@@ -452,7 +452,7 @@ mod tests {
 
         #[test]
         fn empty_has_edge(order in 1..25_usize) {
-            let digraph = Digraph::<usize>::empty(order);
+            let digraph = AdjacencyListWeighted::<usize>::empty(order);
 
             for u in digraph.vertices() {
                 for v in digraph.vertices() {
@@ -463,7 +463,7 @@ mod tests {
 
         #[test]
         fn empty_indegree(order in 1..25_usize) {
-            let digraph = Digraph::<usize>::empty(order);
+            let digraph = AdjacencyListWeighted::<usize>::empty(order);
 
             for u in digraph.vertices() {
                 assert_eq!(digraph.indegree(u), 0);
@@ -472,17 +472,17 @@ mod tests {
 
         #[test]
         fn empty_is_balanced(order in 1..25_usize) {
-            assert!(Digraph::<usize>::empty(order).is_balanced());
+            assert!(AdjacencyListWeighted::<usize>::empty(order).is_balanced());
         }
 
         #[test]
         fn empty_is_complete(order in 2..25_usize) {
-            assert!(!Digraph::<usize>::empty(order).is_complete());
+            assert!(!AdjacencyListWeighted::<usize>::empty(order).is_complete());
         }
 
         #[test]
         fn empty_is_isolated(order in 1..25_usize) {
-            let digraph = Digraph::<usize>::empty(order);
+            let digraph = AdjacencyListWeighted::<usize>::empty(order);
 
             for u in digraph.vertices() {
                 assert!(digraph.is_isolated(u));
@@ -491,12 +491,12 @@ mod tests {
 
         #[test]
         fn empty_is_oriented(order in 1..25_usize) {
-            assert!(Digraph::<usize>::empty(order).is_oriented());
+            assert!(AdjacencyListWeighted::<usize>::empty(order).is_oriented());
         }
 
         #[test]
         fn empty_is_pendant(order in 1..25_usize) {
-            let digraph = Digraph::<usize>::empty(order);
+            let digraph = AdjacencyListWeighted::<usize>::empty(order);
 
             for u in digraph.vertices() {
                 assert!(!digraph.is_pendant(u));
@@ -505,22 +505,22 @@ mod tests {
 
         #[test]
         fn empty_is_regular(order in 1..25_usize) {
-            assert!(Digraph::<usize>::empty(order).is_regular());
+            assert!(AdjacencyListWeighted::<usize>::empty(order).is_regular());
         }
 
         #[test]
         fn empty_is_semicomplete(order in 2..25_usize) {
-            assert!(!Digraph::<usize>::empty(order).is_semicomplete());
+            assert!(!AdjacencyListWeighted::<usize>::empty(order).is_semicomplete());
         }
 
         #[test]
         fn empty_is_simple(order in 1..25_usize) {
-            assert!(Digraph::<usize>::empty(order).is_simple());
+            assert!(AdjacencyListWeighted::<usize>::empty(order).is_simple());
         }
 
         #[test]
         fn empty_is_sink(order in 1..25_usize) {
-            let digraph = Digraph::<usize>::empty(order);
+            let digraph = AdjacencyListWeighted::<usize>::empty(order);
 
             for u in digraph.vertices() {
                 assert!(digraph.is_sink(u));
@@ -529,7 +529,7 @@ mod tests {
 
         #[test]
         fn empty_is_source(order in 1..25_usize) {
-            let digraph = Digraph::<usize>::empty(order);
+            let digraph = AdjacencyListWeighted::<usize>::empty(order);
 
             for u in digraph.vertices() {
                 assert!(digraph.is_source(u));
@@ -538,31 +538,31 @@ mod tests {
 
         #[test]
         fn empty_is_subdigraph(order in 1..25_usize) {
-            let digraph = Digraph::<usize>::empty(order);
+            let digraph = AdjacencyListWeighted::<usize>::empty(order);
 
             assert!(digraph.is_subdigraph(&digraph));
         }
 
         #[test]
         fn empty_is_superdigraph(order in 1..25_usize) {
-            let digraph = Digraph::<usize>::empty(order);
+            let digraph = AdjacencyListWeighted::<usize>::empty(order);
 
             assert!(digraph.is_superdigraph(&digraph));
         }
 
         #[test]
         fn empty_is_symmetric(order in 1..25_usize) {
-            assert!(Digraph::<usize>::empty(order).is_symmetric());
+            assert!(AdjacencyListWeighted::<usize>::empty(order).is_symmetric());
         }
 
         #[test]
         fn empty_is_tournament(order in 2..25_usize) {
-            assert!(!Digraph::<usize>::empty(order).is_tournament());
+            assert!(!AdjacencyListWeighted::<usize>::empty(order).is_tournament());
         }
 
         #[test]
         fn empty_outdegree(order in 1..25_usize) {
-            let digraph = Digraph::<usize>::empty(order);
+            let digraph = AdjacencyListWeighted::<usize>::empty(order);
 
             for u in digraph.vertices() {
                 assert_eq!(digraph.outdegree(u), 0);
@@ -571,7 +571,7 @@ mod tests {
 
         #[test]
         fn has_arc_out_of_bounds(order in 1..25_usize) {
-            let digraph = Digraph::<isize>::empty(order);
+            let digraph = AdjacencyListWeighted::<isize>::empty(order);
 
             for u in 0..order {
                 assert!(!digraph.has_arc(u, order));
@@ -583,19 +583,19 @@ mod tests {
     #[test]
     #[should_panic(expected = "v = 1 is out of bounds")]
     fn add_arc_weighted_out_of_bounds_u() {
-        Digraph::trivial().add_arc_weighted(0, 1, 1);
+        AdjacencyListWeighted::trivial().add_arc_weighted(0, 1, 1);
     }
 
     #[test]
     #[should_panic(expected = "u = 1 is out of bounds")]
     fn add_arc_weighted_out_of_bounds_v() {
-        Digraph::trivial().add_arc_weighted(1, 0, 1);
+        AdjacencyListWeighted::trivial().add_arc_weighted(1, 0, 1);
     }
 
     #[test]
     #[should_panic(expected = "u = 0 equals v = 0")]
     fn add_arc_weighted_u_equals_v() {
-        Digraph::trivial().add_arc_weighted(0, 0, 1);
+        AdjacencyListWeighted::trivial().add_arc_weighted(0, 0, 1);
     }
 
     #[test]
@@ -1007,9 +1007,11 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "a digraph must have at least one vertex")]
+    #[should_panic(expected = "a digraph has at least one vertex")]
     fn converse_0() {
-        let digraph: Digraph<usize> = Digraph { arcs: vec![] };
+        let digraph: AdjacencyListWeighted<usize> =
+            AdjacencyListWeighted { arcs: vec![] };
+
         let _ = digraph.converse();
     }
 
@@ -1214,41 +1216,42 @@ mod tests {
 
     #[test]
     fn empty() {
-        assert!(Digraph::<usize>::empty(1).arcs().eq([]));
-        assert!(Digraph::<usize>::empty(2).arcs().eq([]));
-        assert!(Digraph::<usize>::empty(3).arcs().eq([]));
+        assert!(AdjacencyListWeighted::<usize>::empty(1).arcs().eq([]));
+        assert!(AdjacencyListWeighted::<usize>::empty(2).arcs().eq([]));
+        assert!(AdjacencyListWeighted::<usize>::empty(3).arcs().eq([]));
     }
 
     #[test]
-    #[should_panic(expected = "a digraph must have at least one vertex")]
+    #[should_panic(expected = "a digraph has at least one vertex")]
     fn empty_0() {
-        let _ = Digraph::<usize>::empty(0);
+        let _ = AdjacencyListWeighted::<usize>::empty(0);
     }
 
     #[test]
     fn empty_is_complete_singleton() {
-        assert!(Digraph::<usize>::trivial().is_complete());
+        assert!(AdjacencyListWeighted::<usize>::trivial().is_complete());
     }
 
     #[test]
     fn empty_is_semicomplete_singleton() {
-        assert!(Digraph::<usize>::trivial().is_semicomplete());
+        assert!(AdjacencyListWeighted::<usize>::trivial().is_semicomplete());
     }
 
     #[test]
     fn empty_trivial() {
-        assert!(Digraph::<usize>::trivial().arcs().eq([]));
+        assert!(AdjacencyListWeighted::<usize>::trivial().arcs().eq([]));
     }
 
     #[test]
     fn empty_trivial_is_tournament() {
-        assert!(Digraph::<usize>::trivial().is_tournament());
+        assert!(AdjacencyListWeighted::<usize>::trivial().is_tournament());
     }
 
     #[test]
     fn from_adjacency_list_isize() {
-        let digraph =
-            Digraph::<isize>::from(adjacency_list::fixture::bang_jensen_34());
+        let digraph = AdjacencyListWeighted::<isize>::from(
+            adjacency_list::fixture::bang_jensen_34(),
+        );
 
         assert_eq!(digraph.order(), 6);
 
@@ -1264,8 +1267,9 @@ mod tests {
 
     #[test]
     fn from_adjacency_list_usize() {
-        let digraph =
-            Digraph::<usize>::from(adjacency_list::fixture::bang_jensen_34());
+        let digraph = AdjacencyListWeighted::<usize>::from(
+            adjacency_list::fixture::bang_jensen_34(),
+        );
 
         assert_eq!(digraph.order(), 6);
 
@@ -1281,7 +1285,7 @@ mod tests {
 
     #[test]
     fn from_adjacency_matrix_isize() {
-        let digraph = Digraph::<isize>::from(
+        let digraph = AdjacencyListWeighted::<isize>::from(
             adjacency_matrix::fixture::bang_jensen_34(),
         );
 
@@ -1299,7 +1303,7 @@ mod tests {
 
     #[test]
     fn from_adjacency_matrix_usize() {
-        let digraph = Digraph::<usize>::from(
+        let digraph = AdjacencyListWeighted::<usize>::from(
             adjacency_matrix::fixture::bang_jensen_34(),
         );
 
@@ -1323,7 +1327,7 @@ mod tests {
             BTreeMap::new(),
         ];
 
-        let digraph = Digraph::from(arcs);
+        let digraph = AdjacencyListWeighted::from(arcs);
 
         assert_eq!(digraph.order(), 3);
         assert!(digraph.arcs_weighted().eq([(0, 1, &-2), (1, 2, &-1)]));
@@ -1333,14 +1337,14 @@ mod tests {
     #[should_panic(expected = "v = 1 is out of bounds")]
     fn from_vec_out_of_bounds_v() {
         let vec = vec![BTreeMap::from([(1, -1)])];
-        let _ = Digraph::from(vec);
+        let _ = AdjacencyListWeighted::from(vec);
     }
 
     #[test]
     #[should_panic(expected = "u = 0 equals v = 0")]
     fn from_vec_u_equals_v() {
         let vec = vec![BTreeMap::from([(0, -1)])];
-        let _ = Digraph::from(vec);
+        let _ = AdjacencyListWeighted::from(vec);
     }
 
     #[test]
@@ -1534,7 +1538,7 @@ mod tests {
     #[test]
     #[should_panic(expected = "v = 1 is out of bounds")]
     fn indegree_out_of_bounds() {
-        let _ = Digraph::<usize>::trivial().indegree(1);
+        let _ = AdjacencyListWeighted::<usize>::trivial().indegree(1);
     }
 
     #[test]
@@ -2115,7 +2119,7 @@ mod tests {
         expected = "index out of bounds: the len is 1 but the index is 1"
     )]
     fn out_neighbors_out_of_bounds() {
-        let _ = Digraph::<usize>::trivial().out_neighbors(1);
+        let _ = AdjacencyListWeighted::<usize>::trivial().out_neighbors(1);
     }
 
     #[test]
@@ -2123,7 +2127,8 @@ mod tests {
         expected = "index out of bounds: the len is 1 but the index is 1"
     )]
     fn out_neighbors_weighted_out_of_bounds() {
-        let _ = Digraph::<usize>::trivial().out_neighbors_weighted(1);
+        let _ = AdjacencyListWeighted::<usize>::trivial()
+            .out_neighbors_weighted(1);
     }
 
     #[test]
@@ -2225,7 +2230,7 @@ mod tests {
         expected = "index out of bounds: the len is 1 but the index is 1"
     )]
     fn outdegree_out_of_bounds() {
-        let _ = Digraph::<usize>::trivial().outdegree(1);
+        let _ = AdjacencyListWeighted::<usize>::trivial().outdegree(1);
     }
 
     #[test]
@@ -2481,8 +2486,8 @@ mod tests {
 
     #[test]
     fn remove_arc_out_of_bounds() {
-        assert!(!Digraph::<usize>::trivial().remove_arc(0, 1));
-        assert!(!Digraph::<usize>::trivial().remove_arc(1, 0));
+        assert!(!AdjacencyListWeighted::<usize>::trivial().remove_arc(0, 1));
+        assert!(!AdjacencyListWeighted::<usize>::trivial().remove_arc(1, 0));
     }
 
     #[test]

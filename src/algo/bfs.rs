@@ -17,13 +17,13 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     algo::bfs::Bfs,
-//!     gen::Empty,
-//!     op::AddArc,
+//!     bfs::Bfs,
+//!     AddArc,
+//!     AdjacencyList,
+//!     Empty,
 //! };
 //!
-//! let mut digraph = Digraph::empty(6);
+//! let mut digraph = AdjacencyList::empty(6);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(1, 2);
@@ -43,13 +43,13 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     algo::bfs::Bfs,
-//!     gen::Empty,
-//!     op::AddArc,
+//!     bfs::Bfs,
+//!     AddArc,
+//!     AdjacencyList,
+//!     Empty,
 //! };
 //!
-//! let mut digraph = Digraph::empty(8);
+//! let mut digraph = AdjacencyList::empty(8);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(1, 2);
@@ -66,7 +66,7 @@
 //! ```
 
 use {
-    crate::op::OutNeighbors,
+    crate::OutNeighbors,
     std::collections::{
         HashSet,
         VecDeque,
@@ -90,13 +90,13 @@ use {
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     algo::bfs::Bfs,
-///     gen::Empty,
-///     op::AddArc,
+///     bfs::Bfs,
+///     AddArc,
+///     AdjacencyList,
+///     Empty,
 /// };
 ///
-/// let mut digraph = Digraph::empty(6);
+/// let mut digraph = AdjacencyList::empty(6);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(1, 2);
@@ -116,13 +116,13 @@ use {
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     algo::bfs::Bfs,
-///     gen::Empty,
-///     op::AddArc,
+///     bfs::Bfs,
+///     AddArc,
+///     AdjacencyList,
+///     Empty,
 /// };
 ///
-/// let mut digraph = Digraph::empty(8);
+/// let mut digraph = AdjacencyList::empty(8);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(1, 2);
@@ -199,7 +199,7 @@ where
 mod tests {
     use {
         super::*,
-        crate::adjacency_list::fixture::{
+        crate::repr::adjacency_list::fixture::{
             bang_jensen_196,
             bang_jensen_34,
             bang_jensen_94,

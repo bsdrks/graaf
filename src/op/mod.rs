@@ -7,17 +7,15 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Empty,
-//!     op::{
-//!         AddArc,
-//!         IndegreeSequence,
-//!         OutdegreeSequence,
-//!         RemoveArc,
-//!     },
+//!     AddArc,
+//!     AdjacencyList,
+//!     Empty,
+//!     IndegreeSequence,
+//!     OutdegreeSequence,
+//!     RemoveArc,
 //! };
 //!
-//! let mut digraph = Digraph::empty(3);
+//! let mut digraph = AdjacencyList::empty(3);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(0, 2);

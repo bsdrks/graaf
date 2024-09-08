@@ -7,19 +7,17 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::RandomTournament,
-//!     op::{
-//!         Degree,
-//!         Indegree,
-//!         Order,
-//!         Outdegree,
-//!         Size,
-//!         Vertices,
-//!     },
+//!     AdjacencyList,
+//!     Degree,
+//!     Indegree,
+//!     Order,
+//!     Outdegree,
+//!     RandomTournament,
+//!     Size,
+//!     Vertices,
 //! };
 //!
-//! let tournament = Digraph::random_tournament(4, 0);
+//! let tournament = AdjacencyList::random_tournament(4, 0);
 //!
 //! assert_eq!(tournament.size(), 6);
 //! assert_eq!(tournament.order(), 4);
@@ -31,12 +29,10 @@
 //! }
 //! ```
 
-use {
-    super::prng::Xoshiro256StarStar,
-    crate::{
-        gen::Empty,
-        op::AddArc,
-    },
+use crate::{
+    gen::prng::Xoshiro256StarStar,
+    AddArc,
+    Empty,
 };
 
 /// Generate random tournaments.
@@ -52,20 +48,16 @@ use {
 /// ```
 /// use {
 ///     graaf::{
-///         gen::{
-///             prng::Xoshiro256StarStar,
-///             Empty,
-///             RandomTournament,
-///         },
-///         op::{
-///             AddArc,
-///             Degree,
-///             Indegree,
-///             Order,
-///             Outdegree,
-///             Size,
-///             Vertices,
-///         },
+///         gen::prng::Xoshiro256StarStar,
+///         AddArc,
+///         Degree,
+///         Empty,
+///         Indegree,
+///         Order,
+///         Outdegree,
+///         RandomTournament,
+///         Size,
+///         Vertices,
 ///     },
 ///     std::collections::BTreeSet,
 /// };
@@ -114,19 +106,17 @@ use {
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::RandomTournament,
-///     op::{
-///         Degree,
-///         Indegree,
-///         Order,
-///         Outdegree,
-///         Size,
-///         Vertices,
-///     },
+///     AdjacencyList,
+///     Degree,
+///     Indegree,
+///     Order,
+///     Outdegree,
+///     RandomTournament,
+///     Size,
+///     Vertices,
 /// };
 ///
-/// let tournament = Digraph::random_tournament(4, 0);
+/// let tournament = AdjacencyList::random_tournament(4, 0);
 ///
 /// assert_eq!(tournament.size(), 6);
 /// assert_eq!(tournament.order(), 4);
@@ -149,19 +139,17 @@ pub trait RandomTournament {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     gen::RandomTournament,
-    ///     op::{
-    ///         Degree,
-    ///         Indegree,
-    ///         Order,
-    ///         Outdegree,
-    ///         Size,
-    ///         Vertices,
-    ///     },
+    ///     AdjacencyList,
+    ///     Degree,
+    ///     Indegree,
+    ///     Order,
+    ///     Outdegree,
+    ///     RandomTournament,
+    ///     Size,
+    ///     Vertices,
     /// };
     ///
-    /// let tournament = Digraph::random_tournament(4, 0);
+    /// let tournament = AdjacencyList::random_tournament(4, 0);
     ///
     /// assert_eq!(tournament.size(), 6);
     /// assert_eq!(tournament.order(), 4);

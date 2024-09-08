@@ -17,13 +17,13 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list_weighted::Digraph,
-//!     algo::dijkstra::Dijkstra,
-//!     gen::Empty,
-//!     op::AddArcWeighted,
+//!     dijkstra::Dijkstra,
+//!     AddArcWeighted,
+//!     AdjacencyListWeighted,
+//!     Empty,
 //! };
 //!
-//! let mut digraph = Digraph::<usize>::empty(7);
+//! let mut digraph = AdjacencyListWeighted::<usize>::empty(7);
 //!
 //! digraph.add_arc_weighted(0, 1, 1);
 //! digraph.add_arc_weighted(1, 2, 1);
@@ -47,13 +47,13 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list_weighted::Digraph,
-//!     algo::dijkstra::Dijkstra,
-//!     gen::Empty,
-//!     op::AddArcWeighted,
+//!     dijkstra::Dijkstra,
+//!     AddArcWeighted,
+//!     AdjacencyListWeighted,
+//!     Empty,
 //! };
 //!
-//! let mut digraph = Digraph::<usize>::empty(7);
+//! let mut digraph = AdjacencyListWeighted::<usize>::empty(7);
 //!
 //! digraph.add_arc_weighted(0, 1, 1);
 //! digraph.add_arc_weighted(1, 2, 1);
@@ -74,7 +74,7 @@
 //!   <https://doi.org/10.1007/BF01386390>
 
 use {
-    crate::op::{
+    crate::{
         Order,
         OutNeighborsWeighted,
     },
@@ -95,13 +95,13 @@ use {
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list_weighted::Digraph,
-///     algo::dijkstra::Dijkstra,
-///     gen::Empty,
-///     op::AddArcWeighted,
+///     dijkstra::Dijkstra,
+///     AddArcWeighted,
+///     AdjacencyListWeighted,
+///     Empty,
 /// };
 ///
-/// let mut digraph = Digraph::<usize>::empty(7);
+/// let mut digraph = AdjacencyListWeighted::<usize>::empty(7);
 ///
 /// digraph.add_arc_weighted(0, 1, 1);
 /// digraph.add_arc_weighted(1, 2, 1);
@@ -125,13 +125,13 @@ use {
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list_weighted::Digraph,
-///     algo::dijkstra::Dijkstra,
-///     gen::Empty,
-///     op::AddArcWeighted,
+///     dijkstra::Dijkstra,
+///     AddArcWeighted,
+///     AdjacencyListWeighted,
+///     Empty,
 /// };
 ///
-/// let mut digraph = Digraph::<usize>::empty(7);
+/// let mut digraph = AdjacencyListWeighted::<usize>::empty(7);
 ///
 /// digraph.add_arc_weighted(0, 1, 1);
 /// digraph.add_arc_weighted(1, 2, 1);
@@ -213,7 +213,7 @@ where
 mod tests {
     use {
         super::*,
-        crate::adjacency_list_weighted::fixture::{
+        crate::repr::adjacency_list_weighted::fixture::{
             bang_jensen_94_usize,
             bang_jensen_96_usize,
             kattis_bryr_1_usize,

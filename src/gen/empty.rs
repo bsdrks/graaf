@@ -12,12 +12,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Empty,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Empty,
 //! };
 //!
-//! assert!(Digraph::empty(2).arcs().eq([]));
+//! assert!(AdjacencyList::empty(2).arcs().eq([]));
 //! ```
 //!
 //! ## Order 3
@@ -28,12 +28,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Empty,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Empty,
 //! };
 //!
-//! assert!(Digraph::empty(3).arcs().eq([]));
+//! assert!(AdjacencyList::empty(3).arcs().eq([]));
 //! ```
 //!
 //! ## Order 4
@@ -44,12 +44,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Empty,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Empty,
 //! };
 //!
-//! assert!(Digraph::empty(4).arcs().eq([]));
+//! assert!(AdjacencyList::empty(4).arcs().eq([]));
 //! ```
 #![doc(alias = "edgeless")]
 
@@ -64,28 +64,28 @@
 ///
 /// ```
 /// use {
-///     graaf::gen::Empty,
+///     graaf::Empty,
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl Empty for Digraph {
+/// impl Empty for AdjacencyList {
 ///     /// # Panics
 ///     ///
 ///     /// Panics if `order` is zero.
 ///     fn empty(order: usize) -> Self {
-///         assert!(order > 0, "a digraph must have at least one vertex");
+///         assert!(order > 0, "a digraph has at least one vertex");
 ///
-///         Digraph {
+///         AdjacencyList {
 ///             arcs: vec![BTreeSet::new(); order],
 ///         }
 ///     }
 /// }
 ///
-/// assert!(Digraph::empty(3).arcs.iter().eq(&[
+/// assert!(AdjacencyList::empty(3).arcs.iter().eq(&[
 ///     BTreeSet::new(),
 ///     BTreeSet::new(),
 ///     BTreeSet::new()
@@ -109,12 +109,12 @@ pub trait Empty {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     gen::Empty,
-    ///     op::Arcs,
+    ///     AdjacencyList,
+    ///     Arcs,
+    ///     Empty,
     /// };
     ///
-    /// assert!(Digraph::empty(2).arcs().eq([]));
+    /// assert!(AdjacencyList::empty(2).arcs().eq([]));
     /// ```
     ///
     /// ## Order 3
@@ -125,12 +125,12 @@ pub trait Empty {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     gen::Empty,
-    ///     op::Arcs,
+    ///     AdjacencyList,
+    ///     Arcs,
+    ///     Empty,
     /// };
     ///
-    /// assert!(Digraph::empty(3).arcs().eq([]));
+    /// assert!(AdjacencyList::empty(3).arcs().eq([]));
     /// ```
     ///
     /// ## Order 4
@@ -141,12 +141,12 @@ pub trait Empty {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     gen::Empty,
-    ///     op::Arcs,
+    ///     AdjacencyList,
+    ///     Arcs,
+    ///     Empty,
     /// };
     ///
-    /// assert!(Digraph::empty(4).arcs().eq([]));
+    /// assert!(AdjacencyList::empty(4).arcs().eq([]));
     /// ```
     #[doc(alias = "edgeless")]
     #[must_use]
@@ -160,12 +160,12 @@ pub trait Empty {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     gen::Empty,
-    ///     op::Arcs,
+    ///     AdjacencyList,
+    ///     Arcs,
+    ///     Empty,
     /// };
     ///
-    /// assert!(Digraph::trivial().arcs().eq([]));
+    /// assert!(AdjacencyList::trivial().arcs().eq([]));
     /// ```
     #[doc(alias = "singleton")]
     #[must_use]

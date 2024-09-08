@@ -1,4 +1,4 @@
-//! Unweighted edge list fixtures for testing and benchmarking
+//! Unweighted adjacency matrix fixtures for testing and benchmarking
 //!
 //! [`bang_jensen_196`]:
 //!
@@ -36,9 +36,9 @@
 //!
 //! ![Kattis, escapewallmaria, sample 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_escapewallmaria_3.svg)
 
-use {
-    super::Digraph,
-    crate::adjacency_list::fixture,
+use crate::{
+    repr::adjacency_list::fixture,
+    AdjacencyMatrix,
 };
 
 /// Jørgen Bang-Jensen and Gregory Z. Gutin. 2009. Digraphs: Theory,
@@ -58,8 +58,8 @@ use {
 /// 7 -> {5}
 /// ```
 #[must_use]
-pub fn bang_jensen_196() -> Digraph {
-    Digraph::from(fixture::bang_jensen_196())
+pub fn bang_jensen_196() -> AdjacencyMatrix {
+    AdjacencyMatrix::from(fixture::bang_jensen_196())
 }
 
 /// Jørgen Bang-Jensen and Gregory Z. Gutin. 2009. Digraphs: Theory,
@@ -75,8 +75,8 @@ pub fn bang_jensen_196() -> Digraph {
 /// 5 -> {4}
 /// ```
 #[must_use]
-pub fn bang_jensen_34() -> Digraph {
-    Digraph::from(fixture::bang_jensen_34())
+pub fn bang_jensen_34() -> AdjacencyMatrix {
+    AdjacencyMatrix::from(fixture::bang_jensen_34())
 }
 
 /// Jørgen Bang-Jensen and Gregory Z. Gutin. 2009. Digraphs: Theory,
@@ -93,8 +93,8 @@ pub fn bang_jensen_34() -> Digraph {
 /// 6 -> {}
 /// ```
 #[must_use]
-pub fn bang_jensen_94() -> Digraph {
-    Digraph::from(fixture::bang_jensen_94())
+pub fn bang_jensen_94() -> AdjacencyMatrix {
+    AdjacencyMatrix::from(fixture::bang_jensen_94())
 }
 
 /// Jeroen Bransen. 2015. Build Dependencies. Kattis.
@@ -118,8 +118,8 @@ pub fn bang_jensen_94() -> Digraph {
 /// 5 -> {1}
 /// ```
 #[must_use]
-pub fn kattis_builddeps() -> Digraph {
-    Digraph::from(fixture::kattis_builddeps())
+pub fn kattis_builddeps() -> AdjacencyMatrix {
+    AdjacencyMatrix::from(fixture::kattis_builddeps())
 }
 
 /// David Sturgill. 2015. Cantina of Babel. (Sample Input 1). Kattis.
@@ -167,8 +167,8 @@ pub fn kattis_builddeps() -> Digraph {
 /// 11 -> {9}
 /// ```
 #[must_use]
-pub fn kattis_cantinaofbabel_1() -> Digraph {
-    Digraph::from(fixture::kattis_cantinaofbabel_1())
+pub fn kattis_cantinaofbabel_1() -> AdjacencyMatrix {
+    AdjacencyMatrix::from(fixture::kattis_cantinaofbabel_1())
 }
 
 /// David Sturgill. 2015. Cantina of Babel. (Sample Input 2). Kattis.
@@ -215,8 +215,8 @@ pub fn kattis_cantinaofbabel_1() -> Digraph {
 /// 11 -> {10}
 /// ```
 #[must_use]
-pub fn kattis_cantinaofbabel_2() -> Digraph {
-    Digraph::from(fixture::kattis_cantinaofbabel_2())
+pub fn kattis_cantinaofbabel_2() -> AdjacencyMatrix {
+    AdjacencyMatrix::from(fixture::kattis_cantinaofbabel_2())
 }
 
 /// Arash Behpour. 2019. Escape Wall Maria. Kattis. (Sample Input 1)
@@ -239,8 +239,8 @@ pub fn kattis_cantinaofbabel_2() -> Digraph {
 /// 13 -> {9, 12}
 /// ```
 #[must_use]
-pub fn kattis_escapewallmaria_1() -> Digraph {
-    Digraph::from(fixture::kattis_escapewallmaria_1())
+pub fn kattis_escapewallmaria_1() -> AdjacencyMatrix {
+    AdjacencyMatrix::from(fixture::kattis_escapewallmaria_1())
 }
 
 /// Arash Behpour. 2019. Escape Wall Maria. Kattis. (Sample Input 2)
@@ -263,8 +263,8 @@ pub fn kattis_escapewallmaria_1() -> Digraph {
 /// 13 -> {9, 12}
 /// ```
 #[must_use]
-pub fn kattis_escapewallmaria_2() -> Digraph {
-    Digraph::from(fixture::kattis_escapewallmaria_2())
+pub fn kattis_escapewallmaria_2() -> AdjacencyMatrix {
+    AdjacencyMatrix::from(fixture::kattis_escapewallmaria_2())
 }
 
 /// Arash Behpour. 2019. Escape Wall Maria. Kattis. (Sample Input 3)
@@ -287,6 +287,6 @@ pub fn kattis_escapewallmaria_2() -> Digraph {
 /// 13 -> {9, 12}
 /// ```
 #[must_use]
-pub fn kattis_escapewallmaria_3() -> Digraph {
-    Digraph::from(fixture::kattis_escapewallmaria_3())
+pub fn kattis_escapewallmaria_3() -> AdjacencyMatrix {
+    AdjacencyMatrix::from(fixture::kattis_escapewallmaria_3())
 }

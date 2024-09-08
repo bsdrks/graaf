@@ -4,15 +4,13 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Empty,
-//!     op::{
-//!         AddArc,
-//!         Size,
-//!     },
+//!     AddArc,
+//!     AdjacencyList,
+//!     Empty,
+//!     Size,
 //! };
 //!
-//! let mut digraph = Digraph::empty(4);
+//! let mut digraph = AdjacencyList::empty(4);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(0, 2);
@@ -37,15 +35,15 @@
 ///
 /// ```
 /// use {
-///     graaf::op::Size,
+///     graaf::Size,
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl Size for Digraph {
+/// impl Size for AdjacencyList {
 ///     fn size(&self) -> usize {
 ///         self.arcs.iter().map(BTreeSet::len).sum()
 ///     }
@@ -56,12 +54,12 @@
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::Circuit,
-///     op::Size,
+///     AdjacencyList,
+///     Circuit,
+///     Size,
 /// };
 ///
-/// let digraph = Digraph::circuit(3);
+/// let digraph = AdjacencyList::circuit(3);
 ///
 /// assert_eq!(digraph.size(), 3);
 /// ```

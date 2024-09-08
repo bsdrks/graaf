@@ -6,30 +6,26 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::{
-//!         Circuit,
-//!         Empty,
-//!     },
-//!     op::{
-//!         AddArc,
-//!         HasEdge,
-//!     },
+//!     AddArc,
+//!     AdjacencyList,
+//!     Circuit,
+//!     Empty,
+//!     HasEdge,
 //! };
 //!
-//! let digraph = Digraph::circuit(2);
+//! let digraph = AdjacencyList::circuit(2);
 //!
 //! assert!(digraph.has_edge(0, 1));
 //! assert!(digraph.has_edge(1, 0));
 //!
-//! let mut digraph = Digraph::empty(2);
+//! let mut digraph = AdjacencyList::empty(2);
 //!
 //! digraph.add_arc(0, 1);
 //!
 //! assert!(!digraph.has_edge(0, 1));
 //! assert!(!digraph.has_edge(1, 0));
 //!
-//! let mut digraph = Digraph::empty(3);
+//! let mut digraph = AdjacencyList::empty(3);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(0, 2);
@@ -44,9 +40,9 @@
 //! assert!(!digraph.has_edge(2, 1));
 //! ```
 //!
-//! [`HasArc`]: crate::op::HasArc
+//! [`HasArc`]: crate::HasArc
 
-use super::HasArc;
+use crate::HasArc;
 
 /// Checks whether a digraph contains an edge.
 ///
@@ -57,24 +53,24 @@ use super::HasArc;
 ///
 /// ```
 /// use {
-///     graaf::op::{
+///     graaf::{
 ///         HasArc,
 ///         HasEdge,
 ///     },
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl HasArc for Digraph {
+/// impl HasArc for AdjacencyList {
 ///     fn has_arc(&self, u: usize, v: usize) -> bool {
 ///         self.arcs.get(u).map_or(false, |set| set.contains(&v))
 ///     }
 /// }
 ///
-/// let digraph = Digraph {
+/// let digraph = AdjacencyList {
 ///     arcs: vec![BTreeSet::from([1]), BTreeSet::from([0])],
 /// };
 ///
@@ -86,30 +82,26 @@ use super::HasArc;
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::{
-///         Circuit,
-///         Empty,
-///     },
-///     op::{
-///         AddArc,
-///         HasEdge,
-///     },
+///     AddArc,
+///     AdjacencyList,
+///     Circuit,
+///     Empty,
+///     HasEdge,
 /// };
 ///
-/// let digraph = Digraph::circuit(2);
+/// let digraph = AdjacencyList::circuit(2);
 ///
 /// assert!(digraph.has_edge(0, 1));
 /// assert!(digraph.has_edge(1, 0));
 ///
-/// let mut digraph = Digraph::empty(2);
+/// let mut digraph = AdjacencyList::empty(2);
 ///
 /// digraph.add_arc(0, 1);
 ///
 /// assert!(!digraph.has_edge(0, 1));
 /// assert!(!digraph.has_edge(1, 0));
 ///
-/// let mut digraph = Digraph::empty(3);
+/// let mut digraph = AdjacencyList::empty(3);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(0, 2);

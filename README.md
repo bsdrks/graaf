@@ -28,15 +28,15 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.87.4"
+graaf = "0.88.0"
 ```
 
 ## Representations
 
-- [`adjacency_list`](https://docs.rs/graaf/latest/graaf/adjacency_list/digraph/struct.Digraph.html) represents unweighted sparse digraphs.
-- [`adjacency_matrix`](https://docs.rs/graaf/latest/graaf/adjacency_matrix/digraph/struct.Digraph.html) represents unweighted dense digraphs.
-- [`adjacency_list_weighted`](https://docs.rs/graaf/latest/graaf/adjacency_list_weighted/digraph/struct.Digraph.html) represents arc-weighted sparse digraphs.
-- [`edge_list`](https://docs.rs/graaf/latest/graaf/edge_list/digraph/struct.Digraph.html) represents unweighted sparse digraphs.
+- [`AdjacencyList`] represents unweighted sparse digraphs.
+- [`AdjacencyMatrix`] represents unweighted dense digraphs.
+- [`AdjacencyListWeighted`] represents arc-weighted sparse digraphs.
+- [`EdgeList`] represents unweighted sparse digraphs.
 
 ## Generators
 
@@ -49,6 +49,7 @@ graaf = "0.87.4"
 - [`Path`] generates a path digraph.
 - [`RandomTournament`] generates a random tournament.
 - [`Star`] generates a star digraph.
+- [`Wheel`] generates a wheel digraph.
 
 ## Operations
 
@@ -98,87 +99,103 @@ graaf = "0.87.4"
 
 The Bellman-Ford-Moore algorithm finds the shortest distances from a source vertex to all other vertices in an arc-weighted digraph with negative weights.
 
-- [`single_source_distances`](https://docs.rs/graaf/latest/graaf/algo/bellman_ford_moore/fn.single_source_distances.html) finds the shortest distances.
+- [`bellman_ford_moore::single_source_distances`]finds the shortest distances.
 
 ### Breadth-First Search
 
 A breadth-first search explores the vertices of an unweighted digraph in order of their distance from a source.
 
-- [`Bfs`](https://docs.rs/graaf/latest/graaf/algo/bfs/struct.Bfs.html) iterates over the vertices.
-- [`BfsDist`](https://docs.rs/graaf/latest/graaf/algo/bfs_dist/struct.BfsDist.html) iterates over the vertices and their distance from the source.
-- [`BfsPred`](https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.BfsPred.html) iterates over the vertices and their predecessors.
-- [`BfsDist::distances`](https://docs.rs/graaf/latest/graaf/algo/bfs_dist/struct.BfsDist.html#method.distances) finds the shortest distances.
-- [`BfsPred::predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.BfsPred.html#method.predecessors) finds the predecessors.
-- [`BfsPred::shortest_path`](https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.BfsPred.html#method.shortest_path) finds the shortest path.
+- [`Bfs`] iterates over the vertices.
+- [`BfsDist`] iterates over the vertices and their distance from the source.
+- [`BfsPred`] iterates over the vertices and their predecessors.
+- [`BfsDist::distances`] finds the shortest distances.
+- [`BfsPred::predecessors`] finds the predecessors.
+- [`BfsPred::shortest_path`] finds the shortest path.
 
 ### Depth-First Search
 
 A depth-first search explores the vertices of an unweighted digraph in order of their depth from a source.
 
-- [`Dfs`](https://docs.rs/graaf/latest/graaf/algo/dfs/struct.Dfs.html) iterates over the vertices.
-- [`DfsDist`](https://docs.rs/graaf/latest/graaf/algo/dfs_dist/struct.DfsDist.html) iterates over the vertices and their distance from the source.
-- [`DfsPred`](https://docs.rs/graaf/latest/graaf/algo/dfs_pred/struct.DfsPred.html) iterates over the vertices and their predecessors.
-- [`DfsPred::predecessors`](https://docs.rs/graaf/latest/graaf/algo/dfs_pred/struct.DfsPred.html#method.predecessors) finds the predecessors.
+- [`Dfs`] iterates over the vertices.
+- [`DfsDist`] iterates over the vertices and their distance from the source.
+- [`DfsPred`] iterates over the vertices and their predecessors.
+- [`DfsPred::predecessors`] finds the predecessors.
 
 ### Dijkstra
 
 Dijkstra's algorithm finds the shortest paths in an arc-weighted digraph.
 
-- [`Dijkstra`](https://docs.rs/graaf/latest/graaf/algo/dijkstra/struct.Dijkstra.html) iterates over the vertices.
-- [`DijkstraDist`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_dist/struct.DijkstraDist.html) iterates over the vertices.
-- [`DijkstraPred`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_pred/struct.DijkstraPred.html) iterates over the vertices and their predecessors.
-- [`DijkstraDist::distances`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_dist/struct.DijkstraDist.html#method.distances) finds the shortest distances.
-- [`DijkstraPred::predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_pred/struct.DijkstraPred.html#method.predecessors) finds the predecessors.
-- [`DijkstraPred::shortest_path`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_pred/struct.DijkstraPred.html#method.shortest_path) finds the shortest path.
+- [`Dijkstra`] iterates over the vertices.
+- [`DijkstraDist`] iterates over the vertices.
+- [`DijkstraPred`] iterates over the vertices and their predecessors.
+- [`DijkstraDist::distances`] finds the shortest distances.
+- [`DijkstraPred::predecessors`] finds the predecessors.
+- [`DijkstraPred::shortest_path`] finds the shortest path.
 
 ### Distance Matrix
 
-A [`DistanceMatrix`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html) contains the shortest distances between all pairs of vertices in a digraph.
+A [`DistanceMatrix`] contains the shortest distances between all pairs of vertices in a digraph.
 
-- [`center`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.center) finds the center of the digraph.
-- [`diameter`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.diameter) finds the diameter of the digraph.
-- [`eccentricities`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.eccentricities) returns the eccentricities of the vertices.
-- [`is_connected`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.is_connected) checks if the digraph is connected.
-- [`periphery`](https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.periphery) finds the periphery of the digraph.
+- [`DistanceMatrix::center`] finds the center of the digraph.
+- [`DistanceMatrix::diameter`] finds the diameter of the digraph.
+- [`DistanceMatrix::eccentricities`] returns the eccentricities of the vertices.
+- [`DistanceMatrix::is_connected`] checks if the digraph is connected.
+- [`DistanceMatrix::periphery`] finds the periphery of the digraph.
 
 ### Floyd-Warshall
 
 The Floyd-Warshall algorithm finds the distance between each pair of vertices in an arc-weighted digraph.
 
-- [`distances`](https://docs.rs/graaf/latest/graaf/algo/floyd_warshall/fn.distances.html) finds the shortest distances.
+- [`floyd_warshall::distances`] finds the shortest distances.
 
 ### Predecessor Tree
 
-A [`PredecessorTree`](https://docs.rs/graaf/latest/graaf/algo/predecessor_tree/struct.PredecessorTree.html) is the result of a search and contains the predecessors of the vertices.
+A [`PredecessorTree`] is the result of a search and contains the predecessors of the vertices.
 
-- [`search`](https://docs.rs/graaf/latest/graaf/algo/predecessor_tree/struct.PredecessorTree.html#method.search) finds a vertex by value.
-- [`search_by`](https://docs.rs/graaf/latest/graaf/algo/predecessor_tree/struct.PredecessorTree.html#method.search_by) finds a vertex by predicate.
-
-These functions produce a [`PredecessorTree`](https://docs.rs/graaf/latest/graaf/algo/predecessor_tree/struct.PredecessorTree.html):
-
-- [`BfsPred::predecessors`](https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.BfsPred.html#method.predecessors)
-- [`DfsPred::predecessors`](https://docs.rs/graaf/latest/graaf/algo/dfs_pred/struct.DfsPred.html#method.predecessors)
-- [`DijkstraPred::predecessors`](https://docs.rs/graaf/latest/graaf/algo/dijkstra_pred/struct.DijkstraPred.html#method.predecessors)
+- [`PredecessorTree::search`] finds a vertex by value.
+- [`PredecessorTree::search_by`] finds a vertex by predicate.
 
 ### Tarjan
 
 Tarjan's algorithm finds strongly connected components in a digraph.
 
-- [`strongly_connected_components`](https://docs.rs/graaf/latest/graaf/algo/tarjan/fn.strongly_connected_components.html) finds strongly connected components.
+- [`tarjan::strongly_connected_components`] finds strongly connected components.
 
 [`AddArcWeighted`]: https://docs.rs/graaf/latest/graaf/op/add_arc_weighted/trait.AddArcWeighted.html
 [`AddArc`]: https://docs.rs/graaf/latest/graaf/op/add_arc/trait.AddArc.html
 [`ArcWeight`]: https://docs.rs/graaf/latest/graaf/op/arc_weight/trait.ArcWeight.html
 [`ArcsWeighted`]: https://docs.rs/graaf/latest/graaf/op/arcs_weighted/trait.ArcsWeighted.html
 [`Arcs`]: https://docs.rs/graaf/latest/graaf/op/arcs/trait.Arcs.html
+[`BfsDist::distances`]: https://docs.rs/graaf/latest/graaf/algo/bfs_dist/struct.BfsDist.html#method.distances
+[`BfsDist`]: https://docs.rs/graaf/latest/graaf/algo/bfs_dist/struct.BfsDist.html
+[`BfsPred::predecessors`]: https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.BfsPred.html#method.predecessors
+[`BfsPred::shortest_path`]: https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.BfsPred.html#method.shortest_path
+[`BfsPred`]: https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.BfsPred.html
+[`Bfs`]: https://docs.rs/graaf/latest/graaf/algo/bfs/struct.Bfs.html
 [`Biclique`]: https://docs.rs/graaf/latest/graaf/gen/biclique/trait.Biclique.html
 [`Circuit`]: https://docs.rs/graaf/latest/graaf/gen/circuit/trait.Circuit.html
 [`Complement`]: https://docs.rs/graaf/latest/graaf/op/complement/trait.Complement.html
 [`Complete`]: https://docs.rs/graaf/latest/graaf/gen/complete/trait.Complete.html
 [`Converse`]: https://docs.rs/graaf/latest/graaf/op/converse/trait.Converse.html
 [`Cycle`]: https://docs.rs/graaf/latest/graaf/gen/cycle/trait.Cycle.html
-[`Degree`]: https://docs.rs/graaf/latest/graaf/op/degree/trait.Degree.html
 [`DegreeSequence`]: https://docs.rs/graaf/latest/graaf/op/degree_sequence/trait.DegreeSequence.html
+[`Degree`]: https://docs.rs/graaf/latest/graaf/op/degree/trait.Degree.html
+[`DfsDist`]: https://docs.rs/graaf/latest/graaf/algo/dfs_dist/struct.DfsDist.html
+[`DfsPred::predecessors`]: https://docs.rs/graaf/latest/graaf/algo/dfs_pred/struct.DfsPred.html#method.predecessors
+[`DfsPred`]: https://docs.rs/graaf/latest/graaf/algo/dfs_pred/struct.DfsPred.html
+[`Dfs`]: https://docs.rs/graaf/latest/graaf/algo/dfs/struct.Dfs.html
+[`DijkstraDist::distances`]: https://docs.rs/graaf/latest/graaf/algo/dijkstra_dist/struct.DijkstraDist.html#method.distances
+[`DijkstraDist`]: https://docs.rs/graaf/latest/graaf/algo/dijkstra_dist/struct.DijkstraDist.html
+[`DijkstraPred::predecessors`]: https://docs.rs/graaf/latest/graaf/algo/dijkstra_pred/struct.DijkstraPred.html#method.predecessors
+[`DijkstraPred::shortest_path`]: https://docs.rs/graaf/latest/graaf/algo/dijkstra_pred/struct.DijkstraPred.html#method.shortest_path
+[`DijkstraPred`]: https://docs.rs/graaf/latest/graaf/algo/dijkstra_pred/struct.DijkstraPred.html
+[`Dijkstra`]: https://docs.rs/graaf/latest/graaf/algo/dijkstra/struct.Dijkstra.html
+[`DistanceMatrix::center`]: https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.center
+[`DistanceMatrix::diameter`]: https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.diameter
+[`DistanceMatrix::eccentricities`]: https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.eccentricities
+[`DistanceMatrix::is_connected`]: https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.is_connected
+[`DistanceMatrix::periphery`]: https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.periphery
+[`DistanceMatrix`]: https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html
 [`Empty`]: https://docs.rs/graaf/latest/graaf/gen/empty/trait.Empty.html
 [`ErdosRenyi`]: https://docs.rs/graaf/latest/graaf/gen/erdos_renyi/trait.ErdosRenyi.html
 [`HasArc`]: https://docs.rs/graaf/latest/graaf/op/has_arc/trait.HasArc.html
@@ -203,9 +220,12 @@ Tarjan's algorithm finds strongly connected components in a digraph.
 [`Order`]: https://docs.rs/graaf/latest/graaf/op/order/trait.Order.html
 [`OutNeighborsWeighted`]: https://docs.rs/graaf/latest/graaf/op/out_neighbors_weighted/trait.OutNeighborsWeighted.html
 [`OutNeighbors`]: https://docs.rs/graaf/latest/graaf/op/out_neighbors/trait.OutNeighbors.html
-[`Outdegree`]: https://docs.rs/graaf/latest/graaf/op/outdegree/trait.Outdegree.html
 [`OutdegreeSequence`]: https://docs.rs/graaf/latest/graaf/op/outdegree_sequence/trait.OutdegreeSequence.html
+[`Outdegree`]: https://docs.rs/graaf/latest/graaf/op/outdegree/trait.Outdegree.html
 [`Path`]: https://docs.rs/graaf/latest/graaf/gen/path/trait.Path.html
+[`PredecessorTree::search_by`]: https://docs.rs/graaf/latest/graaf/algo/predecessor_tree/struct.PredecessorTree.html#method.search_by
+[`PredecessorTree::search`]: https://docs.rs/graaf/latest/graaf/algo/predecessor_tree/struct.PredecessorTree.html#method.search
+[`PredecessorTree`]: https://docs.rs/graaf/latest/graaf/algo/predecessor_tree/struct.PredecessorTree.html
 [`RandomTournament`]: https://docs.rs/graaf/latest/graaf/gen/random_tournament/trait.RandomTournament.html
 [`RemoveArc`]: https://docs.rs/graaf/latest/graaf/op/remove_arc/trait.RemoveArc.html
 [`SemidegreeSequence`]: https://docs.rs/graaf/latest/graaf/op/semidegree_sequence/trait.SemidegreeSequence.html
@@ -214,6 +234,10 @@ Tarjan's algorithm finds strongly connected components in a digraph.
 [`Sources`]: https://docs.rs/graaf/latest/graaf/op/sources/trait.Sources.html
 [`Star`]: https://docs.rs/graaf/latest/graaf/gen/star/trait.Star.html
 [`Vertices`]: https://docs.rs/graaf/latest/graaf/op/vertices/trait.Vertices.html
+[`Wheel`]: https://docs.rs/graaf/latest/graaf/gen/wheel/trait.Wheel.html
+[`bellman_ford_moore::single_source_distances`]: https://docs.rs/graaf/latest/graaf/algo/bellman_ford_moore/fn.single_source_distances.html
+[`floyd_warshall::distances`]: https://docs.rs/graaf/latest/graaf/algo/floyd_warshall/fn.distances.html
+[`tarjan::strongly_connected_components`]: https://docs.rs/graaf/latest/graaf/algo/tarjan/fn.strongly_connected_components.html
 
 ## Changelog
 

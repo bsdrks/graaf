@@ -1,8 +1,10 @@
 //! Weighted adjacency list fixtures for testing and benchmarking
 
 use {
-    super::Digraph,
-    crate::adjacency_list::fixture::bang_jensen_94,
+    crate::{
+        repr::adjacency_list::fixture::bang_jensen_94,
+        AdjacencyListWeighted,
+    },
     std::collections::BTreeMap,
 };
 
@@ -22,8 +24,8 @@ use {
 /// 6 -> {}
 /// ```
 #[must_use]
-pub fn bang_jensen_94_usize() -> Digraph<usize> {
-    Digraph::from(bang_jensen_94())
+pub fn bang_jensen_94_usize() -> AdjacencyListWeighted<usize> {
+    AdjacencyListWeighted::from(bang_jensen_94())
 }
 
 /// Jørgen Bang-Jensen and Gregory Z. Gutin. 2009. Digraphs: Theory,
@@ -42,8 +44,8 @@ pub fn bang_jensen_94_usize() -> Digraph<usize> {
 /// 6 -> {}
 /// ```
 #[must_use]
-pub fn bang_jensen_94_isize() -> Digraph<isize> {
-    Digraph::from(bang_jensen_94())
+pub fn bang_jensen_94_isize() -> AdjacencyListWeighted<isize> {
+    AdjacencyListWeighted::from(bang_jensen_94())
 }
 
 /// Jørgen Bang-Jensen and Gregory Z. Gutin. 2009. Digraphs: Theory,
@@ -61,8 +63,8 @@ pub fn bang_jensen_94_isize() -> Digraph<isize> {
 /// 5 -> {3 (2)}
 /// ```
 #[must_use]
-pub fn bang_jensen_96_usize() -> Digraph<usize> {
-    Digraph::from(vec![
+pub fn bang_jensen_96_usize() -> AdjacencyListWeighted<usize> {
+    AdjacencyListWeighted::from(vec![
         BTreeMap::from([(1, 9), (2, 3)]),
         BTreeMap::from([(2, 6), (3, 2)]),
         BTreeMap::from([(1, 2), (4, 1)]),
@@ -87,8 +89,8 @@ pub fn bang_jensen_96_usize() -> Digraph<usize> {
 /// 5 -> {3 (2)}
 /// ```
 #[must_use]
-pub fn bang_jensen_96_isize() -> Digraph<isize> {
-    Digraph::from(vec![
+pub fn bang_jensen_96_isize() -> AdjacencyListWeighted<isize> {
+    AdjacencyListWeighted::from(vec![
         BTreeMap::from([(1, 9), (2, 3)]),
         BTreeMap::from([(2, 6), (3, 2)]),
         BTreeMap::from([(1, 2), (4, 1)]),
@@ -113,8 +115,8 @@ pub fn bang_jensen_96_isize() -> Digraph<isize> {
 /// 5 -> {3 (5), 4 (-3)}
 /// ```
 #[must_use]
-pub fn bang_jensen_99() -> Digraph<isize> {
-    Digraph::from(vec![
+pub fn bang_jensen_99() -> AdjacencyListWeighted<isize> {
+    AdjacencyListWeighted::from(vec![
         BTreeMap::from([(1, 8), (2, 4)]),
         BTreeMap::from([(2, -5)]),
         BTreeMap::from([(3, -2), (4, 4)]),
@@ -135,8 +137,8 @@ pub fn bang_jensen_99() -> Digraph<isize> {
 /// 2 -> {0 (1), 1 (1)}
 /// ```
 #[must_use]
-pub fn kattis_bryr_1_usize() -> Digraph<usize> {
-    Digraph::from(vec![
+pub fn kattis_bryr_1_usize() -> AdjacencyListWeighted<usize> {
+    AdjacencyListWeighted::from(vec![
         BTreeMap::from([(1, 1), (2, 1)]),
         BTreeMap::from([(0, 1), (2, 1)]),
         BTreeMap::from([(0, 1), (1, 1)]),
@@ -154,8 +156,8 @@ pub fn kattis_bryr_1_usize() -> Digraph<usize> {
 /// 2 -> {0 (1), 1 (1)}
 /// ```
 #[must_use]
-pub fn kattis_bryr_1_isize() -> Digraph<isize> {
-    Digraph::from(vec![
+pub fn kattis_bryr_1_isize() -> AdjacencyListWeighted<isize> {
+    AdjacencyListWeighted::from(vec![
         BTreeMap::from([(1, 1), (2, 1)]),
         BTreeMap::from([(0, 1), (2, 1)]),
         BTreeMap::from([(0, 1), (1, 1)]),
@@ -176,8 +178,8 @@ pub fn kattis_bryr_1_isize() -> Digraph<isize> {
 /// 5 -> {4 (1)}
 /// ```
 #[must_use]
-pub fn kattis_bryr_2_usize() -> Digraph<usize> {
-    Digraph::from(vec![
+pub fn kattis_bryr_2_usize() -> AdjacencyListWeighted<usize> {
+    AdjacencyListWeighted::from(vec![
         BTreeMap::from([(1, 1), (3, 1)]),
         BTreeMap::from([(0, 1), (2, 1)]),
         BTreeMap::from([(1, 1), (3, 1)]),
@@ -201,8 +203,8 @@ pub fn kattis_bryr_2_usize() -> Digraph<usize> {
 /// 5 -> {4 (1)}
 /// ```
 #[must_use]
-pub fn kattis_bryr_2_isize() -> Digraph<isize> {
-    Digraph::from(vec![
+pub fn kattis_bryr_2_isize() -> AdjacencyListWeighted<isize> {
+    AdjacencyListWeighted::from(vec![
         BTreeMap::from([(1, 1), (3, 1)]),
         BTreeMap::from([(0, 1), (2, 1)]),
         BTreeMap::from([(1, 1), (3, 1)]),
@@ -230,8 +232,8 @@ pub fn kattis_bryr_2_isize() -> Digraph<isize> {
 /// 9 -> {1 (1), 2 (0), 6 (1)}
 /// ```
 #[must_use]
-pub fn kattis_bryr_3_usize() -> Digraph<usize> {
-    Digraph::from(vec![
+pub fn kattis_bryr_3_usize() -> AdjacencyListWeighted<usize> {
+    AdjacencyListWeighted::from(vec![
         BTreeMap::from([(3, 0)]),
         BTreeMap::from([(7, 0), (9, 1)]),
         BTreeMap::from([(6, 0)]),
@@ -263,8 +265,8 @@ pub fn kattis_bryr_3_usize() -> Digraph<usize> {
 /// 9 -> {1 (1), 2 (0), 6 (1)}
 /// ```
 #[must_use]
-pub fn kattis_bryr_3_isize() -> Digraph<isize> {
-    Digraph::from(vec![
+pub fn kattis_bryr_3_isize() -> AdjacencyListWeighted<isize> {
+    AdjacencyListWeighted::from(vec![
         BTreeMap::from([(3, 0)]),
         BTreeMap::from([(7, 0), (9, 1)]),
         BTreeMap::from([(6, 0)]),
@@ -290,8 +292,8 @@ pub fn kattis_bryr_3_isize() -> Digraph<isize> {
 /// 3 -> {0 (13), 1 (8), 2 (2)}
 /// ```
 #[must_use]
-pub fn kattis_crosscountry_usize() -> Digraph<usize> {
-    Digraph::from(vec![
+pub fn kattis_crosscountry_usize() -> AdjacencyListWeighted<usize> {
+    AdjacencyListWeighted::from(vec![
         BTreeMap::from([(1, 1), (2, 3), (3, 14)]),
         BTreeMap::from([(0, 2), (2, 4), (3, 22)]),
         BTreeMap::from([(0, 3), (1, 10), (3, 7)]),
@@ -311,8 +313,8 @@ pub fn kattis_crosscountry_usize() -> Digraph<usize> {
 /// 3 -> {0 (13), 1 (8), 2 (2)}
 /// ```
 #[must_use]
-pub fn kattis_crosscountry_isize() -> Digraph<isize> {
-    Digraph::from(vec![
+pub fn kattis_crosscountry_isize() -> AdjacencyListWeighted<isize> {
+    AdjacencyListWeighted::from(vec![
         BTreeMap::from([(1, 1), (2, 3), (3, 14)]),
         BTreeMap::from([(0, 2), (2, 4), (3, 22)]),
         BTreeMap::from([(0, 3), (1, 10), (3, 7)]),
@@ -332,8 +334,8 @@ pub fn kattis_crosscountry_isize() -> Digraph<isize> {
 /// 3 -> {0 (2)}
 /// ```
 #[must_use]
-pub fn kattis_shortestpath1_usize() -> Digraph<usize> {
-    Digraph::from(vec![
+pub fn kattis_shortestpath1_usize() -> AdjacencyListWeighted<usize> {
+    AdjacencyListWeighted::from(vec![
         BTreeMap::from([(1, 2)]),
         BTreeMap::from([(2, 2)]),
         BTreeMap::new(),
@@ -353,8 +355,8 @@ pub fn kattis_shortestpath1_usize() -> Digraph<usize> {
 /// 3 -> {0 (2)}
 /// ```
 #[must_use]
-pub fn kattis_shortestpath1_isize() -> Digraph<isize> {
-    Digraph::from(vec![
+pub fn kattis_shortestpath1_isize() -> AdjacencyListWeighted<isize> {
+    AdjacencyListWeighted::from(vec![
         BTreeMap::from([(1, 2)]),
         BTreeMap::from([(2, 2)]),
         BTreeMap::new(),
@@ -373,8 +375,8 @@ pub fn kattis_shortestpath1_isize() -> Digraph<isize> {
 /// 2 -> {1 (1)}
 /// ```
 #[must_use]
-pub fn kattis_shortestpath3() -> Digraph<isize> {
-    Digraph::from(vec![
+pub fn kattis_shortestpath3() -> AdjacencyListWeighted<isize> {
+    AdjacencyListWeighted::from(vec![
         BTreeMap::from([(1, 999), (3, 2)]),
         BTreeMap::from([(2, -2)]),
         BTreeMap::from([(1, 1)]),

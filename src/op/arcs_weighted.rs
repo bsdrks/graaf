@@ -4,15 +4,13 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list_weighted::Digraph,
-//!     gen::Empty,
-//!     op::{
-//!         AddArcWeighted,
-//!         ArcsWeighted,
-//!     },
+//!     AddArcWeighted,
+//!     AdjacencyListWeighted,
+//!     ArcsWeighted,
+//!     Empty,
 //! };
 //!
-//! let mut digraph = Digraph::empty(3);
+//! let mut digraph = AdjacencyListWeighted::empty(3);
 //!
 //! digraph.add_arc_weighted(0, 1, 2);
 //! digraph.add_arc_weighted(1, 2, 3);
@@ -31,13 +29,13 @@
 /// the arcs in a digraph with their weights.
 ///
 /// ```
-/// use graaf::op::ArcsWeighted;
+/// use graaf::ArcsWeighted;
 ///
-/// struct Digraph {
+/// struct AdjacencyListWeighted {
 ///     arcs: Vec<(usize, usize, usize)>,
 /// }
 ///
-/// impl ArcsWeighted<usize> for Digraph {
+/// impl ArcsWeighted<usize> for AdjacencyListWeighted {
 ///     fn arcs_weighted<'a>(
 ///         &'a self,
 ///     ) -> impl Iterator<Item = (usize, usize, &'a usize)>
@@ -53,15 +51,13 @@
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list_weighted::Digraph,
-///     gen::Empty,
-///     op::{
-///         AddArcWeighted,
-///         ArcsWeighted,
-///     },
+///     AddArcWeighted,
+///     AdjacencyListWeighted,
+///     ArcsWeighted,
+///     Empty,
 /// };
 ///
-/// let mut digraph = Digraph::empty(3);
+/// let mut digraph = AdjacencyListWeighted::empty(3);
 ///
 /// digraph.add_arc_weighted(0, 1, 2);
 /// digraph.add_arc_weighted(1, 2, 3);

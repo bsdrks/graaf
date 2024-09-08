@@ -6,15 +6,13 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Empty,
-//!     op::{
-//!         AddArc,
-//!         Outdegree,
-//!     },
+//!     AddArc,
+//!     AdjacencyList,
+//!     Empty,
+//!     Outdegree,
 //! };
 //!
-//! let mut digraph = Digraph::empty(3);
+//! let mut digraph = AdjacencyList::empty(3);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(0, 2);
@@ -35,15 +33,15 @@
 ///
 /// ```
 /// use {
-///     graaf::op::Outdegree,
+///     graaf::Outdegree,
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl Outdegree for Digraph {
+/// impl Outdegree for AdjacencyList {
 ///     fn outdegree(&self, u: usize) -> usize {
 ///         self.arcs.get(u).map_or(0, BTreeSet::len)
 ///     }
@@ -54,15 +52,13 @@
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::Empty,
-///     op::{
-///         AddArc,
-///         Outdegree,
-///     },
+///     AddArc,
+///     AdjacencyList,
+///     Empty,
+///     Outdegree,
 /// };
 ///
-/// let mut digraph = Digraph::empty(3);
+/// let mut digraph = AdjacencyList::empty(3);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(0, 2);
@@ -95,15 +91,13 @@ pub trait Outdegree {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     gen::Empty,
-    ///     op::{
-    ///         AddArc,
-    ///         Outdegree,
-    ///     },
+    ///     AddArc,
+    ///     AdjacencyList,
+    ///     Empty,
+    ///     Outdegree,
     /// };
     ///
-    /// let mut digraph = Digraph::empty(3);
+    /// let mut digraph = AdjacencyList::empty(3);
     ///
     /// digraph.add_arc(0, 1);
     /// digraph.add_arc(0, 2);

@@ -12,12 +12,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Complete,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Complete,
 //! };
 //!
-//! assert!(Digraph::complete(2).arcs().eq([(0, 1), (1, 0)]));
+//! assert!(AdjacencyList::complete(2).arcs().eq([(0, 1), (1, 0)]));
 //! ```
 //!
 //! ## Order 3
@@ -28,12 +28,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Complete,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Complete,
 //! };
 //!
-//! assert!(Digraph::complete(3).arcs().eq([
+//! assert!(AdjacencyList::complete(3).arcs().eq([
 //!     (0, 1),
 //!     (0, 2),
 //!     (1, 0),
@@ -51,12 +51,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Complete,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Complete,
 //! };
 //!
-//! assert!(Digraph::complete(4).arcs().eq([
+//! assert!(AdjacencyList::complete(4).arcs().eq([
 //!     (0, 1),
 //!     (0, 2),
 //!     (0, 3),
@@ -73,8 +73,8 @@
 //! ```
 
 use crate::{
-    gen::Empty,
-    op::AddArc,
+    AddArc,
+    Empty,
 };
 
 /// Generate complete digraphs.
@@ -89,34 +89,32 @@ use crate::{
 /// ```
 /// use {
 ///     graaf::{
-///         gen::{
-///             Complete,
-///             Empty,
-///         },
-///         op::AddArc,
+///         AddArc,
+///         Complete,
+///         Empty,
 ///     },
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl AddArc for Digraph {
+/// impl AddArc for AdjacencyList {
 ///     fn add_arc(&mut self, u: usize, v: usize) {
 ///         self.arcs[u].insert(v);
 ///     }
 /// }
 ///
-/// impl Empty for Digraph {
+/// impl Empty for AdjacencyList {
 ///     fn empty(order: usize) -> Self {
-///         Digraph {
+///         AdjacencyList {
 ///             arcs: vec![BTreeSet::new(); order],
 ///         }
 ///     }
 /// }
 ///
-/// let digraph = Digraph::complete(3);
+/// let digraph = AdjacencyList::complete(3);
 ///
 /// assert!(digraph.arcs.iter().eq(&[
 ///     BTreeSet::from([1, 2]),
@@ -141,12 +139,12 @@ pub trait Complete {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     gen::Complete,
-    ///     op::Arcs,
+    ///     AdjacencyList,
+    ///     Arcs,
+    ///     Complete,
     /// };
     ///
-    /// assert!(Digraph::complete(2).arcs().eq([(0, 1), (1, 0)]));
+    /// assert!(AdjacencyList::complete(2).arcs().eq([(0, 1), (1, 0)]));
     /// ```
     ///
     /// ## Order 3
@@ -157,12 +155,12 @@ pub trait Complete {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     gen::Complete,
-    ///     op::Arcs,
+    ///     AdjacencyList,
+    ///     Arcs,
+    ///     Complete,
     /// };
     ///
-    /// assert!(Digraph::complete(3).arcs().eq([
+    /// assert!(AdjacencyList::complete(3).arcs().eq([
     ///     (0, 1),
     ///     (0, 2),
     ///     (1, 0),
@@ -180,12 +178,12 @@ pub trait Complete {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     gen::Complete,
-    ///     op::Arcs,
+    ///     AdjacencyList,
+    ///     Arcs,
+    ///     Complete,
     /// };
     ///
-    /// assert!(Digraph::complete(4).arcs().eq([
+    /// assert!(AdjacencyList::complete(4).arcs().eq([
     ///     (0, 1),
     ///     (0, 2),
     ///     (0, 3),

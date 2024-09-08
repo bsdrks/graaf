@@ -1,19 +1,18 @@
-#![macro_use]
 use {
     divan::Bencher,
     graaf::{
-        adjacency_list::fixture::bang_jensen_94,
-        adjacency_list_weighted::fixture::{
-            bang_jensen_94_isize,
-            bang_jensen_94_usize,
+        bellman_ford_moore,
+        bfs_dist::BfsDist,
+        dijkstra_dist::DijkstraDist,
+        floyd_warshall,
+        repr::{
+            adjacency_list::fixture::bang_jensen_94,
+            adjacency_list_weighted::fixture::{
+                bang_jensen_94_isize,
+                bang_jensen_94_usize,
+            },
         },
-        adjacency_matrix,
-        algo::{
-            bellman_ford_moore,
-            bfs_dist::BfsDist,
-            dijkstra_dist::DijkstraDist,
-            floyd_warshall,
-        },
+        AdjacencyMatrix,
     },
 };
 
@@ -32,7 +31,7 @@ fn bellman_ford_moore(bencher: Bencher<'_, '_>) {
 
 #[divan::bench]
 fn bfs_adjacency_matrix(bencher: Bencher<'_, '_>) {
-    let digraph = adjacency_matrix::Digraph::from(bang_jensen_94());
+    let digraph = AdjacencyMatrix::from(bang_jensen_94());
 
     bencher.bench_local(|| {
         let mut bfs = BfsDist::new(&digraph, &[0]);

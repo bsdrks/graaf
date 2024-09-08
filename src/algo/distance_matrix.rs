@@ -14,22 +14,20 @@
 //! ### The distance matrix
 //!
 //! The corresponding [`DistanceMatrix`] by
-//! [`floyd_warshall::distances`](crate::algo::floyd_warshall::distances).
+//! [`floyd_warshall::distances`](crate::floyd_warshall::distances).
 //!
 //! ![The distance matrix](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_matrix_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list_weighted::Digraph,
-//!     algo::{
-//!         floyd_warshall::distances,
-//!         DistanceMatrix,
-//!     },
-//!     gen::Empty,
-//!     op::AddArcWeighted,
+//!     floyd_warshall::distances,
+//!     AddArcWeighted,
+//!     AdjacencyListWeighted,
+//!     DistanceMatrix,
+//!     Empty,
 //! };
 //!
-//! let mut digraph = Digraph::<isize>::empty(7);
+//! let mut digraph = AdjacencyListWeighted::<isize>::empty(7);
 //!
 //! digraph.add_arc_weighted(0, 1, 5);
 //! digraph.add_arc_weighted(0, 2, 3);
@@ -84,22 +82,20 @@ use std::{
 /// ### The distance matrix
 ///
 /// The corresponding [`DistanceMatrix`] by
-/// [`floyd_warshall::distances`](crate::algo::floyd_warshall::distances).
+/// [`floyd_warshall::distances`](crate::floyd_warshall::distances).
 ///
 /// ![The distance matrix](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_matrix_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list_weighted::Digraph,
-///     algo::{
-///         floyd_warshall::distances,
-///         DistanceMatrix,
-///     },
-///     gen::Empty,
-///     op::AddArcWeighted,
+///     floyd_warshall::distances,
+///     AddArcWeighted,
+///     AdjacencyListWeighted,
+///     DistanceMatrix,
+///     Empty,
 /// };
 ///
-/// let mut digraph = Digraph::<isize>::empty(7);
+/// let mut digraph = AdjacencyListWeighted::<isize>::empty(7);
 ///
 /// digraph.add_arc_weighted(0, 1, 5);
 /// digraph.add_arc_weighted(0, 2, 3);
@@ -149,7 +145,7 @@ impl<W> DistanceMatrix<W> {
     /// # Examples
     ///
     /// ```
-    /// use graaf::algo::DistanceMatrix;
+    /// use graaf::DistanceMatrix;
     ///
     /// let dist = DistanceMatrix::new(4, 0);
     ///
@@ -164,7 +160,7 @@ impl<W> DistanceMatrix<W> {
     where
         W: Copy,
     {
-        assert!(order > 0, "a distance matrix must have at least one vertex");
+        assert!(order > 0, "a distance matrix has at least one vertex");
 
         Self {
             dist: vec![vec![infinity; order]; order],
@@ -189,16 +185,14 @@ impl<W> DistanceMatrix<W> {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list_weighted::Digraph,
-    ///     algo::{
-    ///         floyd_warshall::distances,
-    ///         DistanceMatrix,
-    ///     },
-    ///     gen::Empty,
-    ///     op::AddArcWeighted,
+    ///     floyd_warshall::distances,
+    ///     AddArcWeighted,
+    ///     AdjacencyListWeighted,
+    ///     DistanceMatrix,
+    ///     Empty,
     /// };
     ///
-    /// let mut digraph = Digraph::<isize>::empty(7);
+    /// let mut digraph = AdjacencyListWeighted::<isize>::empty(7);
     ///
     /// digraph.add_arc_weighted(0, 1, 5);
     /// digraph.add_arc_weighted(0, 2, 3);
@@ -260,16 +254,14 @@ impl<W> DistanceMatrix<W> {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list_weighted::Digraph,
-    ///     algo::{
-    ///         floyd_warshall::distances,
-    ///         DistanceMatrix,
-    ///     },
-    ///     gen::Empty,
-    ///     op::AddArcWeighted,
+    ///     floyd_warshall::distances,
+    ///     AddArcWeighted,
+    ///     AdjacencyListWeighted,
+    ///     DistanceMatrix,
+    ///     Empty,
     /// };
     ///
-    /// let mut digraph = Digraph::<isize>::empty(7);
+    /// let mut digraph = AdjacencyListWeighted::<isize>::empty(7);
     ///
     /// digraph.add_arc_weighted(0, 1, 5);
     /// digraph.add_arc_weighted(0, 2, 3);
@@ -314,16 +306,14 @@ impl<W> DistanceMatrix<W> {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list_weighted::Digraph,
-    ///     algo::{
-    ///         floyd_warshall::distances,
-    ///         DistanceMatrix,
-    ///     },
-    ///     gen::Empty,
-    ///     op::AddArcWeighted,
+    ///     floyd_warshall::distances,
+    ///     AddArcWeighted,
+    ///     AdjacencyListWeighted,
+    ///     DistanceMatrix,
+    ///     Empty,
     /// };
     ///
-    /// let mut digraph = Digraph::<isize>::empty(7);
+    /// let mut digraph = AdjacencyListWeighted::<isize>::empty(7);
     ///
     /// digraph.add_arc_weighted(0, 1, 5);
     /// digraph.add_arc_weighted(0, 2, 3);
@@ -370,16 +360,14 @@ impl<W> DistanceMatrix<W> {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list_weighted::Digraph,
-    ///     algo::{
-    ///         floyd_warshall::distances,
-    ///         DistanceMatrix,
-    ///     },
-    ///     gen::Empty,
-    ///     op::AddArcWeighted,
+    ///     floyd_warshall::distances,
+    ///     AddArcWeighted,
+    ///     AdjacencyListWeighted,
+    ///     DistanceMatrix,
+    ///     Empty,
     /// };
     ///
-    /// let mut digraph = Digraph::<isize>::empty(7);
+    /// let mut digraph = AdjacencyListWeighted::<isize>::empty(7);
     ///
     /// digraph.add_arc_weighted(0, 1, 5);
     /// digraph.add_arc_weighted(0, 2, 3);
@@ -418,16 +406,14 @@ impl<W> DistanceMatrix<W> {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list_weighted::Digraph,
-    ///     algo::{
-    ///         floyd_warshall::distances,
-    ///         DistanceMatrix,
-    ///     },
-    ///     gen::Empty,
-    ///     op::AddArcWeighted,
+    ///     floyd_warshall::distances,
+    ///     AddArcWeighted,
+    ///     AdjacencyListWeighted,
+    ///     DistanceMatrix,
+    ///     Empty,
     /// };
     ///
-    /// let mut digraph = Digraph::<isize>::empty(7);
+    /// let mut digraph = AdjacencyListWeighted::<isize>::empty(7);
     ///
     /// digraph.add_arc_weighted(0, 1, 5);
     /// digraph.add_arc_weighted(0, 2, 3);
@@ -483,17 +469,15 @@ mod tests {
     use {
         super::*,
         crate::{
-            adjacency_list_weighted::{
-                fixture::{
-                    kattis_bryr_1_isize,
-                    kattis_bryr_2_isize,
-                    kattis_bryr_3_isize,
-                    kattis_crosscountry_isize,
-                },
-                Digraph,
+            floyd_warshall::distances,
+            repr::adjacency_list_weighted::fixture::{
+                kattis_bryr_1_isize,
+                kattis_bryr_2_isize,
+                kattis_bryr_3_isize,
+                kattis_crosscountry_isize,
             },
-            algo::floyd_warshall::distances,
-            gen::Empty,
+            AdjacencyListWeighted,
+            Empty,
         },
     };
 
@@ -528,7 +512,7 @@ mod tests {
 
     #[test]
     fn center_trivial() {
-        assert!(distances(&Digraph::<isize>::trivial())
+        assert!(distances(&AdjacencyListWeighted::<isize>::trivial())
             .center()
             .iter()
             .eq(&[0]));
@@ -556,7 +540,10 @@ mod tests {
 
     #[test]
     fn diameter_trivial() {
-        assert_eq!(distances(&Digraph::<isize>::trivial()).diameter(), 0);
+        assert_eq!(
+            distances(&AdjacencyListWeighted::<isize>::trivial()).diameter(),
+            0
+        );
     }
 
     #[test]
@@ -593,7 +580,7 @@ mod tests {
 
     #[test]
     fn eccentricities_trivial() {
-        assert!(distances(&Digraph::<isize>::trivial())
+        assert!(distances(&AdjacencyListWeighted::<isize>::trivial())
             .eccentricities()
             .iter()
             .eq(&[0]));
@@ -621,7 +608,8 @@ mod tests {
 
     #[test]
     fn is_connected_trivial() {
-        assert!(distances(&Digraph::<isize>::trivial()).is_connected());
+        assert!(distances(&AdjacencyListWeighted::<isize>::trivial())
+            .is_connected());
     }
 
     #[test]
@@ -685,9 +673,7 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(
-        expected = "a distance matrix must have at least one vertex"
-    )]
+    #[should_panic(expected = "a distance matrix has at least one vertex")]
     fn new_0() {
         let _ = DistanceMatrix::new(0, isize::MAX);
     }
@@ -726,7 +712,7 @@ mod tests {
 
     #[test]
     fn periphery_trivial() {
-        assert!(distances(&Digraph::<isize>::trivial())
+        assert!(distances(&AdjacencyListWeighted::<isize>::trivial())
             .periphery()
             .iter()
             .eq(&[0]));

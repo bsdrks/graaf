@@ -4,15 +4,13 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Empty,
-//!     op::{
-//!         AddArc,
-//!         Arcs,
-//!     },
+//!     AddArc,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Empty,
 //! };
 //!
-//! let mut digraph = Digraph::empty(3);
+//! let mut digraph = AdjacencyList::empty(3);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(0, 2);
@@ -29,21 +27,21 @@
 ///
 /// ```
 /// use {
-///     graaf::op::AddArc,
+///     graaf::AddArc,
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl AddArc for Digraph {
+/// impl AddArc for AdjacencyList {
 ///     fn add_arc(&mut self, u: usize, v: usize) {
 ///         self.arcs[u].insert(v);
 ///     }
 /// }
 ///
-/// let mut digraph = Digraph {
+/// let mut digraph = AdjacencyList {
 ///     arcs: vec![BTreeSet::new(), BTreeSet::new(), BTreeSet::new()],
 /// };
 ///
@@ -62,15 +60,13 @@
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::Empty,
-///     op::{
-///         AddArc,
-///         Arcs,
-///     },
+///     AddArc,
+///     AdjacencyList,
+///     Arcs,
+///     Empty,
 /// };
 ///
-/// let mut digraph = Digraph::empty(3);
+/// let mut digraph = AdjacencyList::empty(3);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(0, 2);
@@ -78,9 +74,6 @@
 ///
 /// assert!(digraph.arcs().eq([(0, 1), (0, 2), (2, 0)]));
 /// ```
-///
-/// [`HasArc`]: crate::op::HasArc
-/// [`RemoveArc`]: crate::op::RemoveArc
 pub trait AddArc {
     /// Adds an arc from `u` to `v` to the digraph.
     ///

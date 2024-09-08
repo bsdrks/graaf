@@ -12,12 +12,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Biclique,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Biclique,
 //! };
 //!
-//! assert!(Digraph::biclique(2, 3).arcs().eq([
+//! assert!(AdjacencyList::biclique(2, 3).arcs().eq([
 //!     (0, 2),
 //!     (0, 3),
 //!     (0, 4),
@@ -41,12 +41,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Biclique,
-//!     op::Arcs,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Biclique,
 //! };
 //!
-//! assert!(Digraph::biclique(4, 2).arcs().eq([
+//! assert!(AdjacencyList::biclique(4, 2).arcs().eq([
 //!     (0, 4),
 //!     (0, 5),
 //!     (1, 4),
@@ -78,15 +78,15 @@
 ///
 /// ```
 /// use {
-///     graaf::gen::Biclique,
+///     graaf::Biclique,
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl Biclique for Digraph {
+/// impl Biclique for AdjacencyList {
 ///     fn biclique(m: usize, n: usize) -> Self {
 ///         let order = m + n;
 ///         let clique_1 = (0..m).collect::<BTreeSet<_>>();
@@ -105,7 +105,7 @@
 ///     }
 /// }
 ///
-/// let digraph = Digraph::biclique(3, 3);
+/// let digraph = AdjacencyList::biclique(3, 3);
 ///
 /// assert_eq!(
 ///     digraph.arcs,
@@ -138,12 +138,12 @@ pub trait Biclique {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     gen::Biclique,
-    ///     op::Arcs,
+    ///     AdjacencyList,
+    ///     Arcs,
+    ///     Biclique,
     /// };
     ///
-    /// assert!(Digraph::biclique(2, 3).arcs().eq([
+    /// assert!(AdjacencyList::biclique(2, 3).arcs().eq([
     ///     (0, 2),
     ///     (0, 3),
     ///     (0, 4),
@@ -167,12 +167,12 @@ pub trait Biclique {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     gen::Biclique,
-    ///     op::Arcs,
+    ///     AdjacencyList,
+    ///     Arcs,
+    ///     Biclique,
     /// };
     ///
-    /// assert!(Digraph::biclique(4, 2).arcs().eq([
+    /// assert!(AdjacencyList::biclique(4, 2).arcs().eq([
     ///     (0, 4),
     ///     (0, 5),
     ///     (1, 4),
@@ -205,12 +205,12 @@ pub trait Biclique {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     gen::Biclique,
-    ///     op::Arcs,
+    ///     AdjacencyList,
+    ///     Arcs,
+    ///     Biclique,
     /// };
     ///
-    /// assert!(Digraph::claw().arcs().eq([
+    /// assert!(AdjacencyList::claw().arcs().eq([
     ///     (0, 1),
     ///     (0, 2),
     ///     (0, 3),
@@ -237,12 +237,12 @@ pub trait Biclique {
     ///
     /// ```
     /// use graaf::{
-    ///     adjacency_list::Digraph,
-    ///     gen::Biclique,
-    ///     op::Arcs,
+    ///     AdjacencyList,
+    ///     Arcs,
+    ///     Biclique,
     /// };
     ///
-    /// assert!(Digraph::utility().arcs().eq([
+    /// assert!(AdjacencyList::utility().arcs().eq([
     ///     (0, 3),
     ///     (0, 4),
     ///     (0, 5),

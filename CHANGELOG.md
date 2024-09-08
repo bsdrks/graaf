@@ -31,6 +31,104 @@
 - Mention the order of tranversal in the `Bfs` documentation.
 - Mention the order of tranversal in the `Dfs` documentation.
 - Mention the order of tranversal in the `Dijkstra` documentation.
+- Check examples for `op::*`.
+
+## [0.88.0] - 2024-09-08
+
+Summary
+
+- Add the `Wheel` generator.
+- Lift the public API to the top level.
+- Move common unit tests for unweighted digraphs to the `test_unweighted` module.
+
+Added
+
+- Add `gen::Wheel`.
+
+Changed
+
+- Breaking: move `adjacency_list::digraph::Digraph` to `repr::adjacency_list::AdjacencyList`.
+- Breaking: move `adjacency_list_weighted::digraph::Digraph` to `repr::adjacency_list_weighted::AdjacencyListWeighted`.
+- Breaking: move `adjacency_list_weighted` to `repr::adjacency_list_weighted`.
+- Breaking: move `adjacency_list` to `repr::adjacency_list`.
+- Breaking: move `adjacency_matrix::digraph::Digraph` to `repr::adjacency_matrix::AdjacencyMatrix`.
+- Breaking: move `adjacency_matrix` to `repr::adjacency_matrix`.
+- Breaking: move `edge_list::digraph::Digraph` to `repr::edge_list::EdgeList`.
+- Breaking: move `edge_list` to `repr::edge_list`.
+- Export `graaf::AddArcWeighted`.
+- Export `graaf::AddArc`.
+- Export `graaf::AdjacencyListWeighted`.
+- Export `graaf::AdjacencyList`.
+- Export `graaf::AdjacencyMatrix`.
+- Export `graaf::ArcWeight`.
+- Export `graaf::ArcsWeighted`.
+- Export `graaf::Arcs`.
+- Export `graaf::Biclique`.
+- Export `graaf::Circuit`.
+- Export `graaf::Complement`.
+- Export `graaf::Complete`.
+- Export `graaf::Converse`.
+- Export `graaf::Cycle`.
+- Export `graaf::DegreeSequence`.
+- Export `graaf::Degree`.
+- Export `graaf::EdgeList`.
+- Export `graaf::Empty`.
+- Export `graaf::ErdosRenyi`.
+- Export `graaf::HasArc`.
+- Export `graaf::HasEdge`.
+- Export `graaf::HasWalk`.
+- Export `graaf::InNeighbors`.
+- Export `graaf::IndegreeSequence`.
+- Export `graaf::Indegree`.
+- Export `graaf::IsBalanced`.
+- Export `graaf::IsComplete`.
+- Export `graaf::IsIsolated`.
+- Export `graaf::IsOriented`.
+- Export `graaf::IsPendant`.
+- Export `graaf::IsRegular`.
+- Export `graaf::IsSemicomplete`.
+- Export `graaf::IsSimple`.
+- Export `graaf::IsSpanningSubdigraph`.
+- Export `graaf::IsSubdigraph`.
+- Export `graaf::IsSuperdigraph`.
+- Export `graaf::IsSymmetric`.
+- Export `graaf::IsTournament`.
+- Export `graaf::Order`.
+- Export `graaf::OutNeighborsWeighted`.
+- Export `graaf::OutNeighbors`.
+- Export `graaf::OutdegreeSequence`.
+- Export `graaf::Outdegree`.
+- Export `graaf::Path`.
+- Export `graaf::RandomTournament`.
+- Export `graaf::RemoveArc`.
+- Export `graaf::SemidegreeSequence`.
+- Export `graaf::Sinks`.
+- Export `graaf::Size`.
+- Export `graaf::Sources`.
+- Export `graaf::Star`.
+- Export `graaf::Vertices`.
+- Export `graaf::Wheel`.
+- Export `graaf::bellman_ford_moore`.
+- Export `graaf::bfs_dist`.
+- Export `graaf::bfs_pred`.
+- Export `graaf::bfs`.
+- Export `graaf::dfs_dist`.
+- Export `graaf::dfs_pred`.
+- Export `graaf::dfs`.
+- Export `graaf::dijkstra_dist`.
+- Export `graaf::dijkstra_pred`.
+- Export `graaf::dijkstra`.
+- Export `graaf::distance_matrix`.
+- Export `graaf::floyd_warshall`.
+- Export `graaf::predecessor_tree`.
+- Export `graaf::tarjan`.
+- Move common unit tests for unweighted digraphs to `test_unweighted`.
+
+pub use {
+    distance_matrix::DistanceMatrix,
+    predecessor_tree::PredecessorTree,
+};
+
 
 ## [0.87.4] - 2024-09-07
 

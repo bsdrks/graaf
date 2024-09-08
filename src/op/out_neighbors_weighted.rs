@@ -4,15 +4,13 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list_weighted::Digraph,
-//!     gen::Empty,
-//!     op::{
-//!         AddArcWeighted,
-//!         OutNeighborsWeighted,
-//!     },
+//!     AddArcWeighted,
+//!     AdjacencyListWeighted,
+//!     Empty,
+//!     OutNeighborsWeighted,
 //! };
 //!
-//! let mut digraph = Digraph::empty(6);
+//! let mut digraph = AdjacencyListWeighted::empty(6);
 //!
 //! digraph.add_arc_weighted(0, 1, 2);
 //! digraph.add_arc_weighted(0, 2, 3);
@@ -47,15 +45,15 @@
 ///
 /// ```
 /// use {
-///     graaf::op::OutNeighborsWeighted,
+///     graaf::OutNeighborsWeighted,
 ///     std::collections::BTreeMap,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyListWeighted {
 ///     arcs: Vec<BTreeMap<usize, usize>>,
 /// }
 ///
-/// impl OutNeighborsWeighted<usize> for Digraph {
+/// impl OutNeighborsWeighted<usize> for AdjacencyListWeighted {
 ///     fn out_neighbors_weighted<'a>(
 ///         &'a self,
 ///         u: usize,
@@ -72,15 +70,13 @@
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list_weighted::Digraph,
-///     gen::Empty,
-///     op::{
-///         AddArcWeighted,
-///         OutNeighborsWeighted,
-///     },
+///     AddArcWeighted,
+///     AdjacencyListWeighted,
+///     Empty,
+///     OutNeighborsWeighted,
 /// };
 ///
-/// let mut digraph = Digraph::empty(6);
+/// let mut digraph = AdjacencyListWeighted::empty(6);
 ///
 /// digraph.add_arc_weighted(0, 1, 2);
 /// digraph.add_arc_weighted(0, 2, 3);

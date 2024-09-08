@@ -1,13 +1,9 @@
-#![macro_use]
-
 use {
     divan::Bencher,
     graaf::{
-        adjacency_list_weighted::fixture::bang_jensen_99,
-        algo::{
-            bellman_ford_moore,
-            floyd_warshall,
-        },
+        bellman_ford_moore,
+        floyd_warshall,
+        repr::adjacency_list_weighted::fixture::bang_jensen_99,
     },
 };
 

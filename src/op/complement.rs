@@ -7,16 +7,14 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Circuit,
-//!     op::{
-//!         AddArc,
-//!         Arcs,
-//!         Complement,
-//!     },
+//!     AddArc,
+//!     AdjacencyList,
+//!     Arcs,
+//!     Circuit,
+//!     Complement,
 //! };
 //!
-//! let digraph = Digraph::circuit(4);
+//! let digraph = AdjacencyList::circuit(4);
 //! let converse = digraph.complement();
 //!
 //! assert!(converse.arcs().eq([
@@ -31,13 +29,11 @@
 //! ]));
 //! ```
 
-use {
-    super::{
-        AddArc,
-        HasArc,
-        Order,
-    },
-    crate::gen::Empty,
+use crate::{
+    AddArc,
+    Empty,
+    HasArc,
+    Order,
 };
 
 /// Return a digraph's complement.
@@ -49,15 +45,15 @@ use {
 ///
 /// ```
 /// use {
-///     graaf::op::Complement,
+///     graaf::Complement,
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl Complement for Digraph {
+/// impl Complement for AdjacencyList {
 ///     fn complement(&self) -> Self {
 ///         let order = self.arcs.len();
 ///         let mut arcs = vec![BTreeSet::<usize>::new(); order];
@@ -78,7 +74,7 @@ use {
 ///     }
 /// }
 ///
-/// let digraph = Digraph {
+/// let digraph = AdjacencyList {
 ///     arcs: vec![
 ///         BTreeSet::from([1]),
 ///         BTreeSet::from([2]),

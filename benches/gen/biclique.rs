@@ -1,13 +1,11 @@
 //! Benchmark the `Biclique::biclique` implementation for different types.
 
 use graaf::{
-    adjacency_list,
-    adjacency_matrix,
-    gen::{
-        Biclique,
-        Empty,
-    },
-    op::AddArc,
+    AddArc,
+    AdjacencyList,
+    AdjacencyMatrix,
+    Biclique,
+    Empty,
 };
 
 fn main() {
@@ -18,15 +16,12 @@ fn main() {
 ///
 /// * Panics if `m` is zero.
 /// * Panics if `n` is zero.
-fn biclique_adjacency_list_naive(
-    m: usize,
-    n: usize,
-) -> adjacency_list::Digraph {
+fn biclique_adjacency_list_naive(m: usize, n: usize) -> AdjacencyList {
     assert!(m > 0, "m = {m} must be greater than zero");
     assert!(n > 0, "n = {n} must be greater than zero");
 
     let order = m + n;
-    let mut digraph = adjacency_list::Digraph::empty(order);
+    let mut digraph = AdjacencyList::empty(order);
 
     for u in 0..m {
         for v in m..order {
@@ -59,7 +54,7 @@ fn adjacency_list_naive((m, n): (usize, usize)) {
     (100, 1000),
 ])]
 fn adjacency_list((m, n): (usize, usize)) {
-    let _ = adjacency_list::Digraph::biclique(m, n);
+    let _ = AdjacencyList::biclique(m, n);
 }
 
 #[divan::bench(args = [
@@ -71,5 +66,5 @@ fn adjacency_list((m, n): (usize, usize)) {
     (100, 1000),
 ])]
 fn adjacency_matrix((m, n): (usize, usize)) {
-    let _ = adjacency_matrix::Digraph::biclique(m, n);
+    let _ = AdjacencyMatrix::biclique(m, n);
 }

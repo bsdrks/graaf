@@ -1,4 +1,4 @@
-//! Unweighted adjacency matrix fixtures for testing and benchmarking
+//! Adjacency list fixtures for testing and benchmarking
 //!
 //! [`bang_jensen_196`]:
 //!
@@ -37,8 +37,8 @@
 //! ![Kattis, escapewallmaria, sample 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_escapewallmaria_3.svg)
 
 use {
-    super::Digraph,
-    crate::adjacency_list::fixture,
+    crate::AdjacencyList,
+    std::collections::BTreeSet,
 };
 
 /// Jørgen Bang-Jensen and Gregory Z. Gutin. 2009. Digraphs: Theory,
@@ -58,13 +58,24 @@ use {
 /// 7 -> {5}
 /// ```
 #[must_use]
-pub fn bang_jensen_196() -> Digraph {
-    Digraph::from(fixture::bang_jensen_196())
+pub fn bang_jensen_196() -> AdjacencyList {
+    AdjacencyList::from(vec![
+        BTreeSet::from([1, 4, 7]),
+        BTreeSet::from([0, 2, 7]),
+        BTreeSet::from([3]),
+        BTreeSet::from([2, 4]),
+        BTreeSet::from([2]),
+        BTreeSet::from([6]),
+        BTreeSet::from([7]),
+        BTreeSet::from([5]),
+    ])
 }
 
 /// Jørgen Bang-Jensen and Gregory Z. Gutin. 2009. Digraphs: Theory,
 /// Algorithms and Applications (2nd ed.). Springer, London, 34.
 /// <https://doi.org/10.1007/978-1-84800-998-1>
+///
+/// ![Bang-Jensen, 34](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bang_jensen_34.svg)
 ///
 /// ```text
 /// 0 -> {4}
@@ -75,13 +86,22 @@ pub fn bang_jensen_196() -> Digraph {
 /// 5 -> {4}
 /// ```
 #[must_use]
-pub fn bang_jensen_34() -> Digraph {
-    Digraph::from(fixture::bang_jensen_34())
+pub fn bang_jensen_34() -> AdjacencyList {
+    AdjacencyList::from(vec![
+        BTreeSet::from([4]),
+        BTreeSet::from([0]),
+        BTreeSet::from([1, 3, 5]),
+        BTreeSet::new(),
+        BTreeSet::new(),
+        BTreeSet::from([4]),
+    ])
 }
 
 /// Jørgen Bang-Jensen and Gregory Z. Gutin. 2009. Digraphs: Theory,
 /// Algorithms and Applications (2nd ed.). Springer, London, 94.
 /// <https://doi.org/10.1007/978-1-84800-998-1>
+///
+/// ![Bang-Jensen, 94](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bang_jensen_94.svg)
 ///
 /// ```text
 /// 0 -> {1, 2}
@@ -93,20 +113,30 @@ pub fn bang_jensen_34() -> Digraph {
 /// 6 -> {}
 /// ```
 #[must_use]
-pub fn bang_jensen_94() -> Digraph {
-    Digraph::from(fixture::bang_jensen_94())
+pub fn bang_jensen_94() -> AdjacencyList {
+    AdjacencyList::from(vec![
+        BTreeSet::from([1, 2]),
+        BTreeSet::from([3]),
+        BTreeSet::from([1, 3, 4, 5]),
+        BTreeSet::from([5]),
+        BTreeSet::from([6]),
+        BTreeSet::new(),
+        BTreeSet::new(),
+    ])
 }
 
 /// Jeroen Bransen. 2015. Build Dependencies. Kattis.
 /// <https://open.kattis.com/problems/builddeps>
 ///
+/// ![Kattis, builddeps](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_builddeps.svg)
+///
 /// ```text
-/// 0 = gmp
-/// 1 = solution
-/// 2 = base
-/// 3 = set
-/// 4 = map
-/// 5 = queue
+/// 0: gmp
+/// 1: solution
+/// 2: base
+/// 3: set
+/// 4: map
+/// 5: queue
 /// ```
 ///
 /// ```text
@@ -118,8 +148,15 @@ pub fn bang_jensen_94() -> Digraph {
 /// 5 -> {1}
 /// ```
 #[must_use]
-pub fn kattis_builddeps() -> Digraph {
-    Digraph::from(fixture::kattis_builddeps())
+pub fn kattis_builddeps() -> AdjacencyList {
+    AdjacencyList::from(vec![
+        BTreeSet::from([3, 4]),
+        BTreeSet::new(),
+        BTreeSet::from([3, 4, 5]),
+        BTreeSet::from([1]),
+        BTreeSet::from([1]),
+        BTreeSet::from([1]),
+    ])
 }
 
 /// David Sturgill. 2015. Cantina of Babel. (Sample Input 1). Kattis.
@@ -167,8 +204,21 @@ pub fn kattis_builddeps() -> Digraph {
 /// 11 -> {9}
 /// ```
 #[must_use]
-pub fn kattis_cantinaofbabel_1() -> Digraph {
-    Digraph::from(fixture::kattis_cantinaofbabel_1())
+pub fn kattis_cantinaofbabel_1() -> AdjacencyList {
+    AdjacencyList::from(vec![
+        BTreeSet::from([1]),
+        BTreeSet::from([0, 2, 4]),
+        BTreeSet::from([1]),
+        BTreeSet::from([2, 4, 5, 7, 10, 11]),
+        BTreeSet::from([3]),
+        BTreeSet::from([6]),
+        BTreeSet::from([5, 10]),
+        BTreeSet::from([3]),
+        BTreeSet::from([7, 10]),
+        BTreeSet::from([7, 11]),
+        BTreeSet::from([6]),
+        BTreeSet::from([9]),
+    ])
 }
 
 /// David Sturgill. 2015. Cantina of Babel. (Sample Input 2). Kattis.
@@ -215,12 +265,27 @@ pub fn kattis_cantinaofbabel_1() -> Digraph {
 /// 11 -> {10}
 /// ```
 #[must_use]
-pub fn kattis_cantinaofbabel_2() -> Digraph {
-    Digraph::from(fixture::kattis_cantinaofbabel_2())
+pub fn kattis_cantinaofbabel_2() -> AdjacencyList {
+    AdjacencyList::from(vec![
+        BTreeSet::from([1]),
+        BTreeSet::from([0, 7]),
+        BTreeSet::from([0, 5, 7]),
+        BTreeSet::from([4]),
+        BTreeSet::from([3]),
+        BTreeSet::from([3, 6]),
+        BTreeSet::from([5]),
+        BTreeSet::from([2]),
+        BTreeSet::from([7, 9, 11]),
+        BTreeSet::from([8]),
+        BTreeSet::from([9, 11]),
+        BTreeSet::from([10]),
+    ])
 }
 
 /// Arash Behpour. 2019. Escape Wall Maria. Kattis. (Sample Input 1)
 /// <https://open.kattis.com/problems/escapewallmaria>
+///
+/// ![Kattis, escapewallmaria, sample 1](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_escapewallmaria_1.svg)
 ///
 /// ```text
 /// 0 -> {}
@@ -237,14 +302,35 @@ pub fn kattis_cantinaofbabel_2() -> Digraph {
 /// 11 -> {}
 /// 12 -> {}
 /// 13 -> {9, 12}
+/// 14 -> {}
+/// 15 -> {}
 /// ```
 #[must_use]
-pub fn kattis_escapewallmaria_1() -> Digraph {
-    Digraph::from(fixture::kattis_escapewallmaria_1())
+pub fn kattis_escapewallmaria_1() -> AdjacencyList {
+    AdjacencyList::from(vec![
+        BTreeSet::new(),
+        BTreeSet::new(),
+        BTreeSet::new(),
+        BTreeSet::new(),
+        BTreeSet::new(),
+        BTreeSet::from([6, 9]),
+        BTreeSet::from([5]),
+        BTreeSet::new(),
+        BTreeSet::new(),
+        BTreeSet::from([5, 13]),
+        BTreeSet::new(),
+        BTreeSet::new(),
+        BTreeSet::new(),
+        BTreeSet::from([9, 12]),
+        BTreeSet::new(),
+        BTreeSet::new(),
+    ])
 }
 
 /// Arash Behpour. 2019. Escape Wall Maria. Kattis. (Sample Input 2)
 /// <https://open.kattis.com/problems/escapewallmaria>
+///
+/// ![Kattis, escapewallmaria, sample 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_escapewallmaria_2.svg)
 ///
 /// ```text
 /// 0 -> {}
@@ -261,14 +347,35 @@ pub fn kattis_escapewallmaria_1() -> Digraph {
 /// 11 -> {}
 /// 12 -> {13}
 /// 13 -> {9, 12}
+/// 14 -> {}
+/// 15 -> {}
 /// ```
 #[must_use]
-pub fn kattis_escapewallmaria_2() -> Digraph {
-    Digraph::from(fixture::kattis_escapewallmaria_2())
+pub fn kattis_escapewallmaria_2() -> AdjacencyList {
+    AdjacencyList::from(vec![
+        BTreeSet::new(),
+        BTreeSet::new(),
+        BTreeSet::new(),
+        BTreeSet::new(),
+        BTreeSet::new(),
+        BTreeSet::from([6, 9]),
+        BTreeSet::from([5]),
+        BTreeSet::new(),
+        BTreeSet::new(),
+        BTreeSet::from([5]),
+        BTreeSet::new(),
+        BTreeSet::new(),
+        BTreeSet::from([13]),
+        BTreeSet::from([9, 12]),
+        BTreeSet::new(),
+        BTreeSet::new(),
+    ])
 }
 
 /// Arash Behpour. 2019. Escape Wall Maria. Kattis. (Sample Input 3)
 /// <https://open.kattis.com/problems/escapewallmaria>
+///
+/// ![Kattis, escapewallmaria, sample 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_escapewallmaria_3.svg)
 ///
 /// ```text
 /// 0 -> {}
@@ -285,8 +392,27 @@ pub fn kattis_escapewallmaria_2() -> Digraph {
 /// 11 -> {}
 /// 12 -> {13}
 /// 13 -> {9, 12}
+/// 14 -> {}
+/// 15 -> {}
 /// ```
 #[must_use]
-pub fn kattis_escapewallmaria_3() -> Digraph {
-    Digraph::from(fixture::kattis_escapewallmaria_3())
+pub fn kattis_escapewallmaria_3() -> AdjacencyList {
+    AdjacencyList::from(vec![
+        BTreeSet::new(),
+        BTreeSet::from([2, 5]),
+        BTreeSet::from([1, 6]),
+        BTreeSet::new(),
+        BTreeSet::new(),
+        BTreeSet::from([1, 6, 9]),
+        BTreeSet::from([2, 5]),
+        BTreeSet::new(),
+        BTreeSet::new(),
+        BTreeSet::from([5, 13]),
+        BTreeSet::new(),
+        BTreeSet::new(),
+        BTreeSet::from([13]),
+        BTreeSet::from([9, 12]),
+        BTreeSet::new(),
+        BTreeSet::new(),
+    ])
 }

@@ -7,15 +7,13 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Empty,
-//!     op::{
-//!         AddArc,
-//!         HasArc,
-//!     },
+//!     AddArc,
+//!     AdjacencyList,
+//!     Empty,
+//!     HasArc,
 //! };
 //!
-//! let mut digraph = Digraph::empty(3);
+//! let mut digraph = AdjacencyList::empty(3);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(0, 2);
@@ -29,7 +27,7 @@
 //! assert!(!digraph.has_arc(2, 1));
 //! ```
 //!
-//! [`HasEdge`]: crate::op::HasEdge
+//! [`HasEdge`]: crate::HasEdge
 
 /// Check whether a digraph contains an arc.
 ///
@@ -40,21 +38,21 @@
 ///
 /// ```
 /// use {
-///     graaf::op::HasArc,
+///     graaf::HasArc,
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl HasArc for Digraph {
+/// impl HasArc for AdjacencyList {
 ///     fn has_arc(&self, u: usize, v: usize) -> bool {
 ///         self.arcs.get(u).map_or(false, |set| set.contains(&v))
 ///     }
 /// }
 ///
-/// let digraph = Digraph {
+/// let digraph = AdjacencyList {
 ///     arcs: vec![
 ///         BTreeSet::from([1, 2]),
 ///         BTreeSet::from([0]),
@@ -74,15 +72,13 @@
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::Empty,
-///     op::{
-///         AddArc,
-///         HasArc,
-///     },
+///     AddArc,
+///     AdjacencyList,
+///     Empty,
+///     HasArc,
 /// };
 ///
-/// let mut digraph = Digraph::empty(3);
+/// let mut digraph = AdjacencyList::empty(3);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(0, 2);
@@ -95,9 +91,6 @@
 /// assert!(!digraph.has_arc(2, 0));
 /// assert!(!digraph.has_arc(2, 1));
 /// ```
-///
-/// [`AddArc`]: crate::op::AddArc
-/// [`AddArcWeighted`]: crate::op::AddArcWeighted
 pub trait HasArc {
     /// Checks whether an arc exists from `u` to `v` in the digraph.
     ///

@@ -4,15 +4,13 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Empty,
-//!     op::{
-//!         AddArc,
-//!         InNeighbors,
-//!     },
+//!     AddArc,
+//!     AdjacencyList,
+//!     Empty,
+//!     InNeighbors,
 //! };
 //!
-//! let mut digraph = Digraph::empty(4);
+//! let mut digraph = AdjacencyList::empty(4);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(0, 2);
@@ -29,7 +27,7 @@
 //! ```
 #![doc(alias = "iter_in_neighbours")]
 
-use super::Arcs;
+use crate::Arcs;
 
 /// Returns a digraph's in-neighbors.
 ///
@@ -40,15 +38,15 @@ use super::Arcs;
 ///
 /// ```
 /// use {
-///     graaf::op::InNeighbors,
+///     graaf::InNeighbors,
 ///     std::collections::BTreeSet,
 /// };
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
-/// impl InNeighbors for Digraph {
+/// impl InNeighbors for AdjacencyList {
 ///     fn in_neighbors(&self, v: usize) -> impl Iterator<Item = usize> {
 ///         self.arcs.iter().enumerate().filter_map(move |(u, set)| {
 ///             set.iter().find(|&&v_| v_ == v).map(move |_| u)
@@ -56,7 +54,7 @@ use super::Arcs;
 ///     }
 /// }
 ///
-/// let digraph = Digraph {
+/// let digraph = AdjacencyList {
 ///     arcs: vec![
 ///         BTreeSet::from([1, 2]),
 ///         BTreeSet::from([0]),
@@ -75,15 +73,13 @@ use super::Arcs;
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::Empty,
-///     op::{
-///         AddArc,
-///         InNeighbors,
-///     },
+///     AddArc,
+///     AdjacencyList,
+///     Empty,
+///     InNeighbors,
 /// };
 ///
-/// let mut digraph = Digraph::empty(4);
+/// let mut digraph = AdjacencyList::empty(4);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(0, 2);

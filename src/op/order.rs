@@ -4,12 +4,12 @@
 //!
 //! ```
 //! use graaf::{
-//!     adjacency_list::Digraph,
-//!     gen::Empty,
-//!     op::Order,
+//!     AdjacencyList,
+//!     Empty,
+//!     Order,
 //! };
 //!
-//! let digraph = Digraph::empty(4);
+//! let digraph = AdjacencyList::empty(4);
 //!
 //! assert_eq!(digraph.order(), 4);
 //! ```
@@ -22,13 +22,13 @@
 /// in the digraph.
 ///
 /// ```
-/// use graaf::op::Order;
+/// use graaf::Order;
 ///
-/// struct Digraph {
+/// struct AdjacencyList {
 ///     vertices: Vec<usize>,
 /// }
 ///
-/// impl Order for Digraph {
+/// impl Order for AdjacencyList {
 ///     fn order(&self) -> usize {
 ///         self.vertices.len()
 ///     }
@@ -39,12 +39,12 @@
 ///
 /// ```
 /// use graaf::{
-///     adjacency_list::Digraph,
-///     gen::Empty,
-///     op::Order,
+///     AdjacencyList,
+///     Empty,
+///     Order,
 /// };
 ///
-/// let digraph = Digraph::empty(4);
+/// let digraph = AdjacencyList::empty(4);
 ///
 /// assert_eq!(digraph.order(), 4);
 /// ```
