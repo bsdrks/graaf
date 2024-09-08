@@ -454,7 +454,7 @@ mod tests {
         crate::test_unweighted,
     };
 
-    test_unweighted!(AdjacencyList);
+    test_unweighted!(AdjacencyList, repr::adjacency_list::fixture);
 
     #[test]
     fn from_vec() {

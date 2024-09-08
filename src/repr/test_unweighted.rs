@@ -3,11 +3,11 @@
 /// Common tests for unweighted digraphs.
 #[macro_export]
 macro_rules! test_unweighted {
-    ($type:ident) => {
+    ($type:ident, $fixture:path) => {
         use {
             $crate::{
                 proptest_strategy::arc,
-                repr::adjacency_list::fixture::{
+                $fixture::{
                     bang_jensen_196,
                     bang_jensen_34,
                     bang_jensen_94,

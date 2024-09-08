@@ -493,5 +493,28 @@ mod tests {
         crate::test_unweighted,
     };
 
-    test_unweighted!(EdgeList);
+    test_unweighted!(EdgeList, repr::edge_list::fixture);
+
+    #[test]
+    fn from_btree_set() {
+        let arcs = BTreeSet::from([(0, 1), (1, 2)]);
+        let digraph = EdgeList::from(arcs);
+
+        assert_eq!(digraph.order(), 3);
+        assert!(digraph.arcs().eq([(0, 1), (1, 2)]));
+    }
+
+    #[test]
+    fn from_adjacency_matrix() {
+        let digraph = AdjacencyMatrix::from(vec![
+            BTreeSet::from([1]),
+            BTreeSet::from([2]),
+            BTreeSet::new(),
+        ]);
+
+        let digraph = EdgeList::from(digraph);
+
+        assert_eq!(digraph.order(), 3);
+        assert!(digraph.arcs().eq([(0, 1), (1, 2)]));
+    }
 }
