@@ -16,9 +16,9 @@
 - Add the `MinIndegree` trait.
 - Add the `MinOutdegree` trait.
 - Add the `MinSemidegree` trait.
-- Add the `Wheel` generator.
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
+- Check examples for `op::*`.
 - Implement `DfsDist::distances`.
 - Improve doctest and add image to `BfsDist::distances`.
 - Improve doctest and add image to `DijkstraDist::distances`.
@@ -26,12 +26,17 @@
 - Improve doctest and add image to `DijkstraPred::shortest_path`.
 - Improve doctest and add image to `DistanceMatrix::is_connected`.
 - Improve doctest and add image to `DistanceMatrix::periphery`.
-- Improve doctest and add image to `PredecessorTree::search`.
 - Improve doctest and add image to `PredecessorTree::search_by`.
+- Improve doctest and add image to `PredecessorTree::search`.
 - Mention the order of tranversal in the `Bfs` documentation.
 - Mention the order of tranversal in the `Dfs` documentation.
 - Mention the order of tranversal in the `Dijkstra` documentation.
-- Check examples for `op::*`.
+
+## [0.88.1] - 2024-09-08
+
+Added
+
+- Add `Wheel` to `lib.rs` documentation
 
 ## [0.88.0] - 2024-09-08
 
@@ -71,6 +76,7 @@ Changed
 - Export `graaf::Cycle`.
 - Export `graaf::DegreeSequence`.
 - Export `graaf::Degree`.
+- Export `graaf::DistanceMatrix`.
 - Export `graaf::EdgeList`.
 - Export `graaf::Empty`.
 - Export `graaf::ErdosRenyi`.
@@ -99,6 +105,7 @@ Changed
 - Export `graaf::OutdegreeSequence`.
 - Export `graaf::Outdegree`.
 - Export `graaf::Path`.
+- Export `graaf::PredecessorTree`.
 - Export `graaf::RandomTournament`.
 - Export `graaf::RemoveArc`.
 - Export `graaf::SemidegreeSequence`.
@@ -123,12 +130,6 @@ Changed
 - Export `graaf::predecessor_tree`.
 - Export `graaf::tarjan`.
 - Move common unit tests for unweighted digraphs to `test_unweighted`.
-
-pub use {
-    distance_matrix::DistanceMatrix,
-    predecessor_tree::PredecessorTree,
-};
-
 
 ## [0.87.4] - 2024-09-07
 
