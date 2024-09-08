@@ -90,7 +90,7 @@ pub struct PredecessorTree {
 }
 
 impl PredecessorTree {
-    /// Creates a [`PredecessorTree`] with a given order.
+    /// Construct a [`PredecessorTree`] with a given order.
     ///
     /// # Arguments
     ///
@@ -118,7 +118,7 @@ impl PredecessorTree {
         }
     }
 
-    /// Searches a [`PredecessorTree`] for a path from a source vertex to a
+    /// Search a [`PredecessorTree`] for a path from a source vertex to a
     /// target vertex.
     ///
     /// # Arguments
@@ -145,7 +145,7 @@ impl PredecessorTree {
         self.search_by(s, |&v, _| v == t)
     }
 
-    /// Searches a [`PredecessorTree`] for a path from a source vertex to a
+    /// Search a [`PredecessorTree`] for a path from a source vertex to a
     /// target vertex that satisfies a predicate.
     ///
     /// # Arguments

@@ -40,10 +40,11 @@ use crate::{
 /// A tournament is a digraph in which an arc connects every unordered pair of
 /// distinct vertices.
 ///
-/// # Implementing `RandomTournament`
+/// # Implementing [`RandomTournament`] for a custom type
 ///
-/// Provide an implementation of `random_tournament` that generates a random
-/// tournament of a given `order` OR implement `AddArc` and `Empty`.
+/// Provide an implementation of
+/// [`random_tournament`](RandomTournament::random_tournament) that generates a
+/// random tournament of a given `order` OR implement `AddArc` and `Empty`.
 ///
 /// ```
 /// use {
@@ -128,7 +129,7 @@ use crate::{
 /// }
 /// ```
 pub trait RandomTournament {
-    /// Generates a random tournament.
+    /// Generate a random tournament.
     ///
     /// # Arguments
     ///

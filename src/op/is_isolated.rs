@@ -29,12 +29,13 @@ use crate::{
     Outdegree,
 };
 
-/// Determine whether a vertex is isolated.
+/// Check whether a vertex is isolated.
 ///
-/// # Implementing `IsIsolated`
+/// # Implementing [`IsIsolated`] for a custom type
 ///
-/// Provide an implementation of `is_isolated` that returns whether the vertex
-/// is isolated OR implement `Indegree` and `Outdegree`.
+/// Provide an implementation of [`is_isolated`](IsIsolated::is_isolated) that
+/// returns whether the vertex is isolated OR implement `Indegree` and
+/// `Outdegree`.
 ///
 /// ```
 /// use {
@@ -97,7 +98,7 @@ use crate::{
 /// assert!(digraph.is_isolated(2));
 /// ```
 pub trait IsIsolated {
-    /// Checks whether the vertex is isolated in the digraph.
+    /// Check whether the vertex is isolated in the digraph.
     ///
     /// # Arguments
     ///

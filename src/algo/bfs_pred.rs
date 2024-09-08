@@ -205,7 +205,7 @@ pub struct BfsPred<'a, D> {
 }
 
 impl<'a, D> BfsPred<'a, D> {
-    /// Constructs a new breadth-first search.
+    /// Construct a new breadth-first search.
     ///
     /// # Arguments
     ///
@@ -231,7 +231,7 @@ impl<'a, D> BfsPred<'a, D> {
         }
     }
 
-    /// Finds the predecessor tree.
+    /// Find the predecessor tree.
     ///
     /// # Panics
     ///
@@ -329,7 +329,7 @@ impl<'a, D> BfsPred<'a, D> {
         pred
     }
 
-    /// Finds the shortest path from the source vertices to a target vertex.
+    /// Find the shortest path from the source vertices to a target vertex.
     ///
     /// # Arguments
     ///

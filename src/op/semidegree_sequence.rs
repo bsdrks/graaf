@@ -31,11 +31,12 @@ use crate::{
 
 /// Return a digraph's semidegree sequence.
 ///
-/// # Implementing `SemidegreeSequence`
+/// # Implementing [`SemidegreeSequence`] for a custom type
 ///
-/// Provide an implementation of `SemidegreeSequence` that returns the
-/// semidegree sequence of the digraph OR implement `Indegree`, `Outdegree`,
-/// and `Vertices`.
+/// Provide an implementation of
+/// [`semidegree_sequence`](SemidegreeSequence::semidegree_sequence) that
+/// returns the semidegree sequence of the digraph OR implement `Indegree`,
+/// `Outdegree`, and `Vertices`.
 ///
 /// ```
 /// use {
@@ -101,7 +102,7 @@ use crate::{
 /// assert!(digraph.semidegree_sequence().eq([(1, 2), (1, 1), (2, 1)]));
 /// ```
 pub trait SemidegreeSequence {
-    /// Returns the semidegree sequence of a digraph.
+    /// Return the semidegree sequence of a digraph.
     #[must_use]
     fn semidegree_sequence(&self) -> impl Iterator<Item = (usize, usize)>;
 }

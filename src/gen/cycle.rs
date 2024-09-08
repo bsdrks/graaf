@@ -77,10 +77,10 @@ use crate::{
 ///
 /// A cycle is a digraph with a single bidirectional cycle.
 ///
-/// # Implementing `Cycle`
+/// # Implementing [`Cycle`] for a custom type
 ///
-/// Provide an implementation of `cycle` that generates a cycle digraph of a
-/// given `order` OR implement `AddArc` and `Empty`.
+/// Provide an implementation of [`cycle`](Cycle::cycle) that generates a cycle
+/// digraph of a given `order` OR implement `AddArc` and `Empty`.
 ///
 /// ```
 /// use {
@@ -141,7 +141,7 @@ use crate::{
 /// ]));
 /// ```
 pub trait Cycle {
-    /// Generates a cycle digraph.
+    /// Generate a cycle digraph.
     ///
     /// # Arguments
     ///

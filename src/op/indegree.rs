@@ -26,10 +26,10 @@
 
 /// Return a vertex's indegree.
 ///
-/// # Implementing `Indegree`
+/// # Implementing [`Indegree`] for a custom type
 ///
-/// Provide an implementation of `indegree` that returns the indegree of the
-/// vertex.
+/// Provide an implementation of [`indegree`](Indegree::indegree) that returns
+/// the indegree of the vertex.
 ///
 /// ```
 /// use {
@@ -82,7 +82,7 @@
 /// ```
 #[doc(alias = "InDegree")]
 pub trait Indegree {
-    /// Returns the indegree of a vertex in the digraph.
+    /// Return the indegree of a vertex in the digraph.
     ///
     /// # Arguments
     ///
@@ -91,7 +91,7 @@ pub trait Indegree {
     #[must_use]
     fn indegree(&self, v: usize) -> usize;
 
-    /// Checks whether a vertex is a source of the digraph.
+    /// Check whether a vertex is a source of the digraph.
     ///
     /// A source is a vertex with an indegree of 0.
     ///

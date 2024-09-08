@@ -33,10 +33,11 @@ use crate::{
 ///
 /// Runs in **O(v²)** time, where **v** is the number of vertices.
 ///
-/// # Implementing `ErdosRenyi`
+/// # Implementing [`ErdosRenyi`] for a custom type
 ///
-/// Provide an implementation of `erdos_renyi` that generates an Erdős-Rényi
-/// digraph of a given `order` and `p` OR implement `AddArc` and `Empty`.
+/// Provide an implementation of [`erdos_renyi`](ErdosRenyi::erdos_renyi) that
+/// generates an Erdős-Rényi digraph of a given `order` and `p` OR implement
+/// `AddArc` and `Empty`.
 ///
 /// ```
 /// use {
@@ -110,7 +111,7 @@ use crate::{
 /// }
 /// ```
 pub trait ErdosRenyi {
-    /// Generates a random Erdős-Rényi digraph.
+    /// Generate a random Erdős-Rényi digraph.
     ///
     /// # Arguments
     ///

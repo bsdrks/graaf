@@ -30,10 +30,11 @@ use crate::{
 
 /// Return a digraph's degree sequence.
 ///
-/// # Implementing `DegreeSequence`
+/// # Implementing [`DegreeSequence`] for a custom type
 ///
-/// Provide an implementation of `DegreeSequence` that returns the degree
-/// sequence of the digraph OR implement `Degree` and `Vertices`.
+/// Provide an implementation of
+/// [`degree_sequence`](DegreeSequence::degree_sequence) that returns the
+/// degree sequence of the digraph OR implement `Degree` and `Vertices`.
 ///
 /// ```
 /// use {
@@ -93,7 +94,7 @@ use crate::{
 /// assert!(digraph.degree_sequence().eq([3, 2, 3]));
 /// ```
 pub trait DegreeSequence {
-    /// Returns the degree sequence of the digraph.
+    /// Return the degree sequence of the digraph.
     #[must_use]
     fn degree_sequence(&self) -> impl Iterator<Item = usize>;
 }

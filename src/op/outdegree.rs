@@ -26,10 +26,10 @@
 
 /// Return a vertex's outdegree.
 ///
-/// # Implementing `Outdegree`
+/// # Implementing [`Outdegree`] for a custom type
 ///
-/// Provide an implementation of `outdegree` that returns the outdegree of the
-/// vertex.
+/// Provide an implementation of [`outdegree`](Outdegree::outdegree) that
+/// returns the outdegree of the vertex.
 ///
 /// ```
 /// use {
@@ -70,7 +70,7 @@
 /// assert_eq!(digraph.outdegree(2), 1);
 /// ```
 pub trait Outdegree {
-    /// Returns the outdegree of a vertex in the digraph.
+    /// Return the outdegree of a vertex in the digraph.
     ///
     /// # Arguments
     ///
@@ -79,7 +79,7 @@ pub trait Outdegree {
     #[must_use]
     fn outdegree(&self, u: usize) -> usize;
 
-    /// Checks whether a vertex is a sink of the digraph.
+    /// Check whether a vertex is a sink of the digraph.
     ///
     /// A sink is a vertex with no out-neighbors.
     ///

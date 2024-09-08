@@ -67,7 +67,7 @@ use crate::{
     Vertices,
 };
 
-/// Computes the distances between all pairs of vertices in an arc-weighted
+/// Compute the distances between all pairs of vertices in an arc-weighted
 /// digraph.[^1]
 ///
 /// # Arguments

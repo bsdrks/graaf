@@ -1,4 +1,4 @@
-//! Return a digraph's sources.
+//! Iterate a digraph's sources.
 //!
 //! A source is a vertex with no in-neighbors.
 //!
@@ -26,12 +26,13 @@ use crate::{
     Vertices,
 };
 
-/// Return a digraph's sources.
+/// Iterate a digraph's sources.
 ///
-/// # Implementing `Sources`
+/// # Implementing [`Sources`] for a custom type
 ///
-/// Provide an implementation of `sources` that returns an iterator over the
-/// sources in the digraph OR implement `Indegree` and `Vertices`.
+/// Provide an implementation of [`sources`](Sources::sources) that returns an
+/// iterator over the sources in the digraph OR implement `Indegree` and
+/// `Vertices`.
 ///
 /// ```
 /// use {
@@ -90,7 +91,7 @@ use crate::{
 /// assert!(digraph.sources().eq([0, 3]));
 /// ```
 pub trait Sources {
-    /// Returns an iterator over the sources in the digraph.
+    /// Return an iterator over the sources in the digraph.
     fn sources(&self) -> impl Iterator<Item = usize>;
 }
 

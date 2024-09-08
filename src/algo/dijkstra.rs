@@ -157,7 +157,7 @@ impl<'a, D> Dijkstra<'a, D>
 where
     D: Order,
 {
-    /// Initializes Dijsktra's algorithm.
+    /// Initialize Dijsktra's algorithm.
     ///
     /// # Arguments
     ///

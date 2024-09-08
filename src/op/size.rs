@@ -28,10 +28,10 @@
 
 /// Return the number of arcs in a digraph.
 ///
-/// # Implementing `Size`
+/// # Implementing [`Size`] for a custom type
 ///
-/// Provide an implementation of `size` that returns the number of arcs in the
-/// digraph.
+/// Provide an implementation of [`size`](Size::size) that returns the number
+/// of arcs in the digraph.
 ///
 /// ```
 /// use {

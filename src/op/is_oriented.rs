@@ -22,10 +22,10 @@ use crate::{
 
 /// Check whether a digraph is oriented.
 ///
-/// # Implementing `IsOriented`
+/// # Implementing [`IsOriented`] for a custom type
 ///
-/// Provide an implementation of `is_oriented` that returns whether the digraph
-/// is oriented OR implement `Arcs` and `HasArc`.
+/// Provide an implementation of [`is_oriented`](IsOriented::is_oriented) that
+/// returns whether the digraph is oriented OR implement `Arcs` and `HasArc`.
 ///
 /// ```
 /// use {
@@ -85,7 +85,7 @@ use crate::{
 /// assert!(AdjacencyList::circuit(3).is_oriented());
 /// ```
 pub trait IsOriented {
-    /// Checks whether the digraph is oriented.
+    /// Check whether the digraph is oriented.
     #[must_use]
     fn is_oriented(&self) -> bool;
 }

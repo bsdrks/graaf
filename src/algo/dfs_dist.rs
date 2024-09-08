@@ -183,7 +183,7 @@ pub struct Step {
 }
 
 impl<'a, D> DfsDist<'a, D> {
-    /// Constructs a new depth-first search.
+    /// Construct a new depth-first search.
     ///
     /// # Arguments
     ///

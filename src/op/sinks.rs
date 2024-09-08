@@ -1,4 +1,4 @@
-//! Return a digraph's sinks.
+//! Iterate a digraph's sinks.
 //!
 //! A sink is a vertex with no out-neighbors.
 //!
@@ -26,12 +26,13 @@ use crate::{
     Vertices,
 };
 
-/// Return a digraph's sinks.
+/// Iterate a digraph's sinks.
 ///
-/// # Implementing `Sinks`
+/// # Implementing [`Sinks`] for a custom type
 ///
-/// Provide an implementation of `sinks` that returns an iterator over the
-/// sinks in the digraph OR implement `Outdegree` and `Vertices`.
+/// Provide an implementation of [`sinks`](Sinks::sinks) that returns an
+/// iterator over the sinks in the digraph OR implement `Outdegree` and
+/// `Vertices`.
 ///
 /// ```
 /// use {
@@ -90,7 +91,7 @@ use crate::{
 /// assert!(digraph.sinks().eq([2, 3]));
 /// ```
 pub trait Sinks {
-    /// Returns an iterator over the sinks in the digraph.
+    /// Return an iterator over the sinks in the digraph.
     fn sinks(&self) -> impl Iterator<Item = usize>;
 }
 

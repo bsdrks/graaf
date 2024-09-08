@@ -83,7 +83,7 @@
 //!
 //! ## Bellman-Ford-Moore
 //!
-//! Finds the shortest distances from a source vertex to all other vertices in
+//! Find the shortest distances from a source vertex to all other vertices in
 //! an arc-weighted digraph with negative weights.
 
 //! - [`bellman_ford_moore::single_source_distances`] finds the shortest

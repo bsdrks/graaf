@@ -1,6 +1,6 @@
 //! The Bellman-Ford-Moore algorithm.
 //!
-//! Finds the shortest distances from a source vertex to all other vertices in
+//! Find the shortest distances from a source vertex to all other vertices in
 //! an arc-weighted digraph with negative weights.
 //!
 //! Runs in **O(va)** time (worst-case), where **v** is the number of vertices
@@ -71,7 +71,7 @@ use crate::{
     Order,
 };
 
-/// Finds the shortest distances from a source vertex to all other vertices in
+/// Find the shortest distances from a source vertex to all other vertices in
 /// an arc-weighted digraph with negative weights.
 ///
 /// Runs in **O(va)** time (worst-case), where **v** is the number of vertices
@@ -84,8 +84,8 @@ use crate::{
 ///
 /// # Returns
 ///
-/// Returns the distances from the source vertex to all other vertices. Returns
-/// `None` if the digraph contains a negative circuit.
+/// The distances from the source vertex to all other vertices. Returns `None`
+/// if the digraph contains a negative circuit.
 ///
 /// # Examples
 ///

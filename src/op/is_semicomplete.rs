@@ -28,10 +28,11 @@ use crate::{
 
 /// Check whether a digraph is semicomplete.
 ///
-/// # Implementing `IsSemicomplete`
+/// # Implementing [`IsSemicomplete`] for a custom type
 ///
-/// Provide an implementation of `is_semicomplete` that returns whether the
-/// digraph is semicomplete OR implement `HasArc` and `Order`.
+/// Provide an implementation of
+/// [`is_semicomplete`](IsSemicomplete::is_semicomplete) that returns whether
+/// the digraph is semicomplete OR implement `HasArc` and `Order`.
 ///
 /// ```
 /// use {
@@ -104,7 +105,7 @@ use crate::{
 /// assert!(AdjacencyList::random_tournament(3, 0).is_semicomplete());
 /// ```
 pub trait IsSemicomplete {
-    /// Checks whether the digraph is semicomplete.
+    /// Check whether the digraph is semicomplete.
     #[must_use]
     fn is_semicomplete(&self) -> bool;
 }

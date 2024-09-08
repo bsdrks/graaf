@@ -52,10 +52,11 @@ use crate::IsSubdigraph;
 /// arc set of `H` is a subset of the arc set of `D`. Additionally, the
 /// end-vertices of each arc in `H` must be vertices in `H`.
 ///
-/// # Implementing `IsSuperdigraph`
+/// # Implementing [`IsSuperdigraph`] for a custom type
 ///
-/// Provide an implementation of `is_superdigraph` that returns whether the
-/// digraph is a superdigraph of the given digraph OR implement
+/// Provide an implementation of
+/// [`is_superdigraph`](IsSuperdigraph::is_superdigraph) that returns whether
+/// the digraph is a superdigraph of the given digraph OR implement
 /// `IsSubAdjacencyList`.
 ///
 /// ```
@@ -152,7 +153,7 @@ use crate::IsSubdigraph;
 /// assert!(tournament.is_superdigraph(&tournament));
 /// ```
 pub trait IsSuperdigraph {
-    /// Checks whether the digraph is a superdigraph of another digraph.
+    /// Check whether the digraph is a superdigraph of another digraph.
     ///
     /// # Arguments
     ///

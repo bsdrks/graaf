@@ -131,7 +131,7 @@ pub struct DistanceMatrix<W> {
 }
 
 impl<W> DistanceMatrix<W> {
-    /// Creates a new [`DistanceMatrix`].
+    /// Construct a new [`DistanceMatrix`].
     ///
     /// # Arguments
     ///
@@ -168,14 +168,10 @@ impl<W> DistanceMatrix<W> {
         }
     }
 
-    /// Returns the center of the digraph.
+    /// Return the center of the digraph.
     ///
     /// The center of a digraph is the set of vertices with the smallest
     /// eccentricity. The center is also known as the Jordan center.
-    ///
-    /// # Returns
-    ///
-    /// Returns the vertices with the smallest eccentricity.
     ///
     /// # Examples
     ///
@@ -241,7 +237,7 @@ impl<W> DistanceMatrix<W> {
         center
     }
 
-    /// Returns the diameter of the digraph.
+    /// Return the diameter of the digraph.
     ///
     /// The diameter of a digraph is the maximum eccentricity of any vertex.
     ///
@@ -295,7 +291,7 @@ impl<W> DistanceMatrix<W> {
             .unwrap_or(self.infinity)
     }
 
-    /// Returns the eccentricities of the vertices.
+    /// Return the eccentricities of the vertices.
     ///
     /// The eccentricity of a vertex is the maximum distance to any other
     /// vertex.
@@ -351,7 +347,7 @@ impl<W> DistanceMatrix<W> {
             .collect()
     }
 
-    /// Checks whether the distance matrix is connected.
+    /// Check whether the distance matrix is connected.
     ///
     /// A distance matrix is connected if the eccentricity of every vertex is
     /// finite.
@@ -397,7 +393,7 @@ impl<W> DistanceMatrix<W> {
         self.eccentricities().iter().all(|&e| e != self.infinity)
     }
 
-    /// Returns the periphery of the digraph.
+    /// Return the periphery of the digraph.
     ///
     /// The periphery of a digraph is the set of vertices with an eccentricity
     /// equal to the diameter.

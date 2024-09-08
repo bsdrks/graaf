@@ -44,12 +44,12 @@
 
 use crate::HasArc;
 
-/// Checks whether a digraph contains an edge.
+/// Check whether a digraph contains an edge.
 ///
-/// # Implementing `HasEdge`
+/// # Implementing [`HasEdge`] for a custom type
 ///
-/// Provide an implementation of `has_edge` that returns `true` if the
-/// digraph contains the arc OR implement `HasArc`.
+/// Provide an implementation of [`has_edge`](HasEdge::has_edge) that returns
+/// `true` if the digraph contains the arc OR implement `HasArc`.
 ///
 /// ```
 /// use {
@@ -116,7 +116,7 @@ use crate::HasArc;
 /// assert!(!digraph.has_edge(2, 1));
 /// ```
 pub trait HasEdge {
-    /// Determines whether the digraph has an arc from `u` to `v` AND from `v`
+    /// Check whether the digraph has an arc from `u` to `v` AND from `v`
     /// to `u`.
     ///
     /// # Arguments

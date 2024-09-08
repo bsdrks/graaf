@@ -63,10 +63,10 @@
 ///
 /// A circuit is an oriented cycle.
 ///
-/// # Implementing `Circuit`
+/// # Implementing [`Circuit`] for a custom type
 ///
-/// Provide an implementation of `circuit` that generates a circuit digraph of
-/// a given `order`.
+/// Provide an implementation of [`circuit`](Circuit::circuit) that generates a
+/// circuit digraph of a given `order`.
 ///
 /// ```
 /// use {
@@ -122,7 +122,7 @@
 ///     .eq([(0, 1), (1, 2), (2, 0)]));
 /// ```
 pub trait Circuit {
-    /// Generates a circuit digraph.
+    /// Generate a circuit digraph.
     ///
     /// # Arguments
     ///

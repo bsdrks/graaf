@@ -81,10 +81,11 @@ use crate::{
 ///
 /// In a complete digraph, an arc connects every ordered pair of vertices.
 ///
-/// # Implementing `Complete`
+/// # Implementing [`Complete`] for a custom type
 ///
-/// Provide an implementation of `complete` that generates a complete digraph
-/// of a given `order` OR implement `AddArc` and `Empty`.
+/// Provide an implementation of [`complete`](Complete::complete) that
+/// generates a complete digraph of a given `order` OR implement `AddArc` and
+/// `Empty`.
 ///
 /// ```
 /// use {
@@ -123,7 +124,7 @@ use crate::{
 /// ]));
 /// ```
 pub trait Complete {
-    /// Generates a complete digraph.
+    /// Generate a complete digraph.
     ///
     /// # Arguments
     ///

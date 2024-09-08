@@ -38,10 +38,11 @@ use crate::{
 
 /// Check whether a digraph is balanced.
 ///
-/// # Implementing `IsBalanced`
+/// # Implementing [`IsBalanced`] for a custom type
 ///
-/// Provide an implementation of `is_balanced` that returns whether the digraph
-/// is balanced OR implement `Indegree`, `Outdegree`, and `Vertices`.
+/// Provide an implementation of [`is_balanced`](IsBalanced::is_balanced) that
+/// returns whether the digraph is balanced OR implement `Indegree`,
+/// `Outdegree`, and `Vertices`.
 ///
 /// ```
 /// use {
@@ -124,7 +125,7 @@ use crate::{
 #[doc(alias = "Isograph")]
 #[doc(alias = "Pseudosymmetric")]
 pub trait IsBalanced {
-    /// Checks whether the digraph is balanced.
+    /// Check whether the digraph is balanced.
     #[doc(alias = "isograph")]
     #[doc(alias = "pseudosymmetric")]
     #[must_use]

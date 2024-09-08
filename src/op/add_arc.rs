@@ -21,9 +21,10 @@
 
 /// Add an arc to a digraph.
 ///
-/// # Implementing `AddArc`
+/// # Implementing [`AddArc`] for a custom type
 ///
-/// Provide an implementation of `add_arc` that adds an arc to the digraph.
+/// Provide an implementation of [`add_arc`](AddArc::add_arc) that adds an arc
+/// to the digraph.
 ///
 /// ```
 /// use {
@@ -75,7 +76,7 @@
 /// assert!(digraph.arcs().eq([(0, 1), (0, 2), (2, 0)]));
 /// ```
 pub trait AddArc {
-    /// Adds an arc from `u` to `v` to the digraph.
+    /// Add an arc from `u` to `v` to the digraph.
     ///
     /// # Arguments
     ///

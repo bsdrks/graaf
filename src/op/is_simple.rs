@@ -23,10 +23,10 @@
 
 /// Check whether a digraph is simple.
 ///
-/// # Implementing `IsSimple`
+/// # Implementing [`IsSimple`] for a custom type
 ///
-/// Provide an implementation of `is_simple` that returns whether the digraph
-/// is simple.
+/// Provide an implementation of [`is_simple`](IsSimple::is_simple) that
+/// returns whether the digraph is simple.
 ///
 /// ```
 /// use {
@@ -67,7 +67,7 @@
 /// assert!(digraph.is_simple());
 /// ```
 pub trait IsSimple {
-    /// Checks whether the digraph is simple.
+    /// Check whether the digraph is simple.
     #[must_use]
     fn is_simple(&self) -> bool;
 }

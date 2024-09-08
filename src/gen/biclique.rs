@@ -71,10 +71,11 @@
 ///
 /// Bicliques are also known as complete bipartite digraphs.
 ///
-/// # Implementing `Biclique`
+/// # Implementing [`Biclique`] for a custom type
 ///
-/// Provide an implementation of `biclique` that generates a complete bipartite
-/// digraph with two partitions of `m` and `n` vertices.
+/// Provide an implementation of [`biclique`](Biclique::biclique) that
+/// generates a complete bipartite digraph with two partitions of `m` and `n`
+/// vertices.
 ///
 /// ```
 /// use {
@@ -121,7 +122,7 @@
 /// ```
 #[doc(alias = "CompleteBipartite")]
 pub trait Biclique {
-    /// Generates a biclique digraph.
+    /// Generate a biclique digraph.
     ///
     /// # Arguments
     ///
@@ -195,7 +196,7 @@ pub trait Biclique {
     #[must_use]
     fn biclique(m: usize, n: usize) -> Self;
 
-    /// Generates a claw digraph.
+    /// Generate a claw digraph.
     ///
     /// The claw digraph is also known as K{1, 3}.
     ///
@@ -227,7 +228,7 @@ pub trait Biclique {
         Self::biclique(1, 3)
     }
 
-    /// Generates a utility digraph.
+    /// Generate a utility digraph.
     ///
     /// The utility digraph is also known as K{3, 3}.
     ///

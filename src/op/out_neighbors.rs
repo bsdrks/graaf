@@ -32,10 +32,10 @@
 
 /// Return a vertex's out-neighbors.
 ///
-/// # Implementing `OutNeighbors`
+/// # Implementing [`OutNeighbors`] for a custom type
 ///
-/// Provide an implementation of `out_neighbors` that returns an iterator
-/// over the out-neighbors of a vertex in the digraph.
+/// Provide an implementation of [`out_neighbors`](OutNeighbors::out_neighbors)
+/// that returns an iterator over the out-neighbors of a vertex in the digraph.
 ///
 /// ```
 /// use {
@@ -95,7 +95,7 @@
 /// ```
 #[doc(alias = "IterOutNeighbours")]
 pub trait OutNeighbors {
-    /// Returns an iterator over the out-neighbors of a vertex in the digraph.
+    /// Return an iterator over the out-neighbors of a vertex in the digraph.
     ///
     /// # Arguments
     ///

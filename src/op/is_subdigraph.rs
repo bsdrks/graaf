@@ -119,11 +119,11 @@ use {
 
 /// Check whether a digraph is a subdigraph of another digraph.
 ///
-/// # Implementing `IsSubdigraph`
+/// # Implementing [`IsSubdigraph`] for a custom type
 ///
-/// Provide an implementation of `is_subdigraph` that returns whether the
-/// digraph is a subdigraph of the given digraph OR implement `HasArc`, `Arcs`,
-/// and `Vertices`.
+/// Provide an implementation of [`is_subdigraph`](IsSubdigraph::is_subdigraph)
+/// that returns whether the digraph is a subdigraph of the given digraph OR
+/// implement `HasArc`, `Arcs`, and `Vertices`.
 ///
 /// ```
 /// use {
@@ -176,7 +176,7 @@ use {
 /// assert!(h.is_subdigraph(&d));
 /// ```
 pub trait IsSubdigraph {
-    /// Checks whether the digraph is a subdigraph of another digraph.
+    /// Check whether the digraph is a subdigraph of another digraph.
     ///
     /// # Arguments
     ///

@@ -204,7 +204,7 @@ impl<'a, D> DijkstraDist<'a, D>
 where
     D: Order,
 {
-    /// Constructs a new Dijkstra's algorithm.
+    /// Initialize Dijkstra's algorithm.
     ///
     /// # Arguments
     ///
@@ -229,7 +229,7 @@ where
         }
     }
 
-    /// Finds the distances from the source vertices to all other vertices.
+    /// Find the distances from the source vertices to all other vertices.
     ///
     /// # Panics
     ///

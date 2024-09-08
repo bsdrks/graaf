@@ -42,10 +42,11 @@ use crate::{
 
 /// Check whether a digraph is symmetric.
 ///
-/// # Implementing `IsSymmetric`
+/// # Implementing [`IsSymmetric`] for a custom type
 ///
-/// Provide an implementation of `is_symmetric` that returns whether the
-/// digraph is symmetric OR implement `Arcs` and `HasArc`.
+/// Provide an implementation of [`is_symmetric`](IsSymmetric::is_symmetric)
+/// that returns whether the digraph is symmetric OR implement `Arcs` and
+/// `HasArc`.
 ///
 /// ```
 /// use {
@@ -111,7 +112,7 @@ use crate::{
 /// assert!(!digraph.is_symmetric());
 /// ```
 pub trait IsSymmetric {
-    /// Checks whether the digraph is symmetric.
+    /// Check whether the digraph is symmetric.
     #[must_use]
     fn is_symmetric(&self) -> bool;
 }

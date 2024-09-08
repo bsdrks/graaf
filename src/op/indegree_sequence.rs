@@ -30,10 +30,11 @@ use crate::{
 
 /// Return a digraph's indegree sequence.
 ///
-/// # Implementing `IndegreeSequence`
+/// # Implementing [`IndegreeSequence`] for a custom type
 ///
-/// Provide an implementation of `IndegreeSequence` that returns the indegree
-/// sequence of the digraph OR implement `Indegree` and `Vertices`.
+/// Provide an implementation of
+/// [`indegree_sequence`](IndegreeSequence::indegree_sequence) that returns the
+/// indegree sequence of the digraph OR implement `Indegree` and `Vertices`.
 ///
 /// ```
 /// use {
@@ -92,7 +93,7 @@ use crate::{
 /// assert!(digraph.indegree_sequence().eq([1, 1, 2]));
 /// ```
 pub trait IndegreeSequence {
-    /// Returns the indegree sequence of the digraph.
+    /// Return the indegree sequence of the digraph.
     #[must_use]
     fn indegree_sequence(&self) -> impl Iterator<Item = usize>;
 }

@@ -75,10 +75,10 @@ use crate::{
 /// A star digraph is a digraph with a single vertex that is connected to all
 /// other vertices.
 ///
-/// # Implementing `Star`
+/// # Implementing [`Star`] for a custom type
 ///
-/// Provide an implementation of `star` that generates a star digraph of a
-/// given `order` OR implement `AddArc` and `Empty`.
+/// Provide an implementation of [`star`](Star::star) that generates a star
+/// digraph of a given `order` OR implement `AddArc` and `Empty`.
 ///
 /// ```
 /// use {
@@ -117,7 +117,7 @@ use crate::{
 /// ]));
 /// ```
 pub trait Star {
-    /// Generates a star digraph.
+    /// Generate a star digraph.
     ///
     /// # Arguments
     ///

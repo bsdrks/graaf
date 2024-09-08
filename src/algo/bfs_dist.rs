@@ -199,7 +199,7 @@ pub struct Step {
 }
 
 impl<'a, D> BfsDist<'a, D> {
-    /// Constructs a new breadth-first search.
+    /// Construct a new breadth-first search.
     ///
     /// # Arguments
     ///
@@ -225,7 +225,7 @@ impl<'a, D> BfsDist<'a, D> {
         }
     }
 
-    /// Finds the distances from the source vertices to all other vertices.
+    /// Find the distances from the source vertices to all other vertices.
     ///
     /// # Panics
     ///

@@ -33,10 +33,10 @@ use crate::{
 
 /// Return a vertex's degree.
 ///
-/// # Implementing `Degree`
+/// # Implementing [`Degree`] for a custom type
 ///
-/// Provide an implementation of `Degree` that returns the degree of the vertex
-/// OR implement `Indegree` and `Outdegree`.
+/// Provide an implementation of [`degree`](Degree::degree) that returns the
+/// degree of the vertex OR implement `Indegree` and `Outdegree`.
 ///
 /// ```
 /// use {
@@ -103,7 +103,7 @@ use crate::{
 #[doc(alias = "Valence")]
 #[doc(alias = "Valency")]
 pub trait Degree {
-    /// Returns a vertex's degree.
+    /// Return a vertex's degree.
     ///
     /// # Arguments
     ///

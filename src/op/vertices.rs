@@ -16,10 +16,10 @@
 
 /// Return a digraph's vertices.
 ///
-/// # Implementing `Vertices`
+/// # Implementing [`Vertices`] for a custom type
 ///
-/// Provide an implementation of `vertices` that returns an iterator over
-/// all vertices in the digraph.
+/// Provide an implementation of [`vertices`](Vertices::vertices) that returns
+/// an iterator over all vertices in the digraph.
 ///
 /// ```
 /// use {
@@ -58,7 +58,7 @@
 /// assert!(digraph.vertices().eq(0..4));
 /// ```
 pub trait Vertices {
-    /// Returns an iterator over the vertices.
+    /// Return an iterator over the vertices.
     #[must_use]
     fn vertices(&self) -> impl Iterator<Item = usize>;
 }

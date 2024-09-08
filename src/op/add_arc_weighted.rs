@@ -23,10 +23,11 @@
 
 /// Add an arc to an arc-weighted digraph.
 ///
-/// # Implementing `AddArcWeighted`
+/// # Implementing [`AddArcWeighted`] for a custom type
 ///
-/// Provide an implementation of `add_arc_weighted` that adds a weighted arc to
-/// the digraph.
+/// Provide an implementation of
+/// [`add_arc_weighted`](AddArcWeighted::add_arc_weighted) that adds a weighted
+/// arc to the digraph.
 ///
 /// ```
 /// use {
@@ -80,7 +81,7 @@
 ///     .eq([(0, 1, &2), (0, 2, &1), (1, 2, &-3)]));
 /// ```
 pub trait AddArcWeighted<W> {
-    /// Adds an arc from `u` to `v` with weight `w` to the digraph.
+    /// Add an arc from `u` to `v` with weight `w` to the digraph.
     ///
     /// # Arguments
     ///

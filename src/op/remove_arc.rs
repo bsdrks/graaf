@@ -35,10 +35,10 @@
 
 /// Remove an arc from a digraph.
 ///
-/// # Implementing `RemoveArc`
+/// # Implementing [`RemoveArc`] for a custom type
 ///
-/// Provide an implementation of `remove_arc` that removes the arc from a
-/// digraph. Check whether the arc was removed.
+/// Provide an implementation of [`remove_arc`](RemoveArc::remove_arc) that
+/// removes the arc from a digraph. Check whether the arc was removed.
 ///
 /// ```
 /// use {
@@ -90,7 +90,7 @@
 /// assert!(digraph.arcs().eq([]));
 /// ```
 pub trait RemoveArc {
-    /// Removes the arc from `u` to `v` from the digraph. Checks whether the
+    /// Remove the arc from `u` to `v` from the digraph. Check whether the
     /// arc was removed.
     ///
     /// # Arguments

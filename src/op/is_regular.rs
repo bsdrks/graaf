@@ -30,10 +30,11 @@ use crate::{
 
 /// Check whether a digraph is regular.
 ///
-/// # Implementing `IsRegular`
+/// # Implementing [`IsRegular`] for a custom type
 ///
-/// Provide an implementation of `is_regular` that returns whether the digraph
-/// is regular OR implement `Indegree`, `Vertices`, and `Outdegree`.
+/// Provide an implementation of [`is_regular`](IsRegular::is_regular) that
+/// returns whether the digraph is regular OR implement `Indegree`, `Vertices`,
+/// and `Outdegree`.
 ///
 /// ```
 /// use {
@@ -89,7 +90,7 @@ use crate::{
 /// assert!(!digraph.is_regular());
 /// ```
 pub trait IsRegular {
-    /// Checks whether the digraph is regular.
+    /// Check whether the digraph is regular.
     #[must_use]
     fn is_regular(&self) -> bool;
 }

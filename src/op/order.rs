@@ -16,10 +16,10 @@
 
 /// Return the number of vertices in a digraph.
 ///
-/// # Implementing `Order`
+/// # Implementing [`Order`] for a custom type
 ///
-/// Provides an implementation of `order` that returns the number of vertices
-/// in the digraph.
+/// Provides an implementation of [`order`](Order::order) that returns the
+/// number of vertices in the digraph.
 ///
 /// ```
 /// use graaf::Order;

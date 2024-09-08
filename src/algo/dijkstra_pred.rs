@@ -212,7 +212,7 @@ impl<'a, D> DijkstraPred<'a, D>
 where
     D: Order,
 {
-    /// Initializes Dijsktra's algorithm.
+    /// Initialize Dijsktra's algorithm.
     ///
     /// # Arguments
     ///
@@ -237,7 +237,7 @@ where
         }
     }
 
-    /// Finds the predecessor tree.
+    /// Find the predecessor tree.
     ///
     /// # Panics
     ///
@@ -290,7 +290,7 @@ where
         pred
     }
 
-    /// Finds the shortest path from the source vertices to a target vertex.
+    /// Find the shortest path from the source vertices to a target vertex.
     ///
     /// # Arguments
     ///

@@ -30,10 +30,10 @@
 
 /// Return an arc's weight.
 ///
-/// # Implementing `ArcWeight`
+/// # Implementing [`ArcWeight`] for a custom type
 ///
-/// Provide an implementation of `arc_weight` that returns the weight of the
-/// arc.
+/// Provide an implementation of [`arc_weight`](ArcWeight::arc_weight) that
+/// returns the weight of the arc.
 ///
 /// ```
 /// use {
@@ -80,7 +80,7 @@
 /// assert_eq!(digraph.arc_weight(2, 2), None);
 /// ```
 pub trait ArcWeight<W> {
-    /// Returns the weight of the arc from `u` to `v` if it exists in the
+    /// Return the weight of the arc from `u` to `v` if it exists in the
     /// digraph.
     ///
     /// # Arguments

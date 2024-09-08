@@ -63,10 +63,10 @@ use crate::{
 /// A path digraph is a chain of arcs that connect vertices in a linear
 /// sequence.
 ///
-/// # Implementing `Path`
+/// # Implementing [`Path`] for a custom type
 ///
-/// Provide an implementation of `path` that generates a path digraph of a
-/// given `order` OR implement `AddArc` and `Empty`.
+/// Provide an implementation of [`path`](Path::path) that generates a path
+/// digraph of a given `order` OR implement `AddArc` and `Empty`.
 ///
 /// ```
 /// use {
@@ -105,7 +105,7 @@ use crate::{
 /// ]));
 /// ```
 pub trait Path {
-    /// Generates a path digraph.
+    /// Generate a path digraph.
     ///
     /// # Arguments
     ///

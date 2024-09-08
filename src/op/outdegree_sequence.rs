@@ -30,10 +30,12 @@ use crate::{
 
 /// Return a digraph's outdegree sequence.
 ///
-/// # Implementing `OutdegreeSequence`
+/// # Implementing [`OutdegreeSequence`] for a custom type
 ///
-/// Provide an implementation of `OutdegreeSequence` that returns the outdegree
-/// sequence of the digraph OR implement `Outdegree` and `Vertices`.
+/// Provide an implementation of
+/// [`outdegree_sequence`](OutdegreeSequence::outdegree_sequence) that returns
+/// the outdegree sequence of the digraph OR implement `Outdegree` and
+/// `Vertices`.
 ///
 /// ```
 /// use {
@@ -93,7 +95,7 @@ use crate::{
 /// assert!(digraph.outdegree_sequence().eq([2, 1, 1]));
 /// ```
 pub trait OutdegreeSequence {
-    /// Returns the outdegree sequence of the digraph.
+    /// Return the outdegree sequence of the digraph.
     #[must_use]
     fn outdegree_sequence(&self) -> impl Iterator<Item = usize>;
 }

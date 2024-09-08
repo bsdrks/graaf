@@ -29,10 +29,10 @@ use crate::Degree;
 
 /// Check whether a vertex is Pendant.
 ///
-/// # Implementing `IsPendant`
+/// # Implementing [`IsPendant`] for a custom type
 ///
-/// Provide an implementation of `is_pendant` that returns whether the vertex
-/// is pendant OR implement `Degree`.
+/// Provide an implementation of [`is_pendant`](IsPendant::is_pendant) that
+/// returns whether the vertex is pendant OR implement `Degree`.
 ///
 /// ```
 /// use {
@@ -75,7 +75,7 @@ use crate::Degree;
 /// assert!(digraph.is_pendant(3));
 /// ```
 pub trait IsPendant {
-    /// Checks whether a vertex is a pendant vertex.
+    /// Check whether a vertex is a pendant vertex.
     ///
     /// # Arguments
     ///

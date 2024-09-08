@@ -161,7 +161,7 @@ where
 }
 
 impl<'a, D> Dfs<'a, D> {
-    /// Constructs a new depth-first search.
+    /// Construct a new depth-first search.
     ///
     /// # Arguments
     ///

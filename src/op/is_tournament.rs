@@ -31,10 +31,11 @@ use crate::{
 /// A tournament is a digraph in which there is one arc between every unordered
 /// pair of distinct vertices.
 ///
-/// # Implementing `IsTournament`
+/// # Implementing [`IsTournament`] for a custom type
 ///
-/// Provide an implementation of `is_tournament` that returns whether the
-/// digraph is a tournament OR implement `HasArc` and `Order`.
+/// Provide an implementation of [`is_tournament`](IsTournament::is_tournament)
+/// that returns whether the digraph is a tournament OR implement `HasArc` and
+/// `Order`.
 ///
 /// ```
 /// use {
@@ -107,7 +108,7 @@ use crate::{
 /// assert!(AdjacencyList::random_tournament(3, 0).is_tournament());
 /// ```
 pub trait IsTournament {
-    /// Checks whether the digraph is a tournament.
+    /// Check whether the digraph is a tournament.
     #[must_use]
     fn is_tournament(&self) -> bool;
 }

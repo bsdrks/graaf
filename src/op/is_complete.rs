@@ -28,10 +28,10 @@ use crate::{
 
 /// Check whether a digraph is complete.
 ///
-/// # Implementing `IsComplete`
+/// # Implementing [`IsComplete`] for a custom type
 ///
-/// Provide an implementation of `is_complete` that returns whether the digraph
-/// is complete OR implement `HasEdge` and `Order`.
+/// Provide an implementation of [`is_complete`](IsComplete::is_complete) that
+/// returns whether the digraph is complete OR implement `HasEdge` and `Order`.
 ///
 /// ```
 /// use {
@@ -87,7 +87,7 @@ use crate::{
 /// .is_complete());
 /// ```
 pub trait IsComplete {
-    /// Determines whether the digraph is complete.
+    /// Check whether the digraph is complete.
     #[must_use]
     fn is_complete(&self) -> bool;
 }

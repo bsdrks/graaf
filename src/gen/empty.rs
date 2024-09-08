@@ -57,10 +57,10 @@
 ///
 /// An empty digraph has no arcs.
 ///
-/// # Implementing `Empty`
+/// # Implementing [`Empty`] for a custom type
 ///
-/// Provide an implementation of `empty` that generates an empty digraph with
-/// `v` vertices.
+/// Provide an implementation of [`empty`](Empty::empty) that generates an
+/// empty digraph with `v` vertices.
 ///
 /// ```
 /// use {
@@ -93,7 +93,7 @@
 /// ```
 #[doc(alias = "Edgeless")]
 pub trait Empty {
-    /// Generates an empty digraph.
+    /// Generate an empty digraph.
     ///
     /// # Arguments
     ///
@@ -152,7 +152,7 @@ pub trait Empty {
     #[must_use]
     fn empty(order: usize) -> Self;
 
-    /// Generates a trivial digraph.
+    /// Generate a trivial digraph.
     ///
     /// A trivial digraph has one vertex and no arcs.
     ///

@@ -145,7 +145,7 @@ pub struct Bfs<'a, D> {
 }
 
 impl<'a, D> Bfs<'a, D> {
-    /// Constructs a new breadth-first search.
+    /// Construct a new breadth-first search.
     ///
     /// # Arguments
     ///

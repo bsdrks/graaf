@@ -86,7 +86,7 @@ use crate::HasArc;
 /// assert!(!digraph.has_walk(&[0, 2]));
 /// ```
 pub trait HasWalk {
-    /// Checks whether the sequence is a walk in the digraph.
+    /// Check whether the sequence is a walk in the digraph.
     ///
     /// # Arguments
     ///

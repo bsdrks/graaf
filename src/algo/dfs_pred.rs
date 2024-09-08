@@ -188,7 +188,7 @@ pub struct DfsPred<'a, D> {
 }
 
 impl<'a, D> DfsPred<'a, D> {
-    /// Constructs a new depth-first search.
+    /// Construct a new depth-first search.
     ///
     /// # Arguments
     ///
@@ -211,7 +211,7 @@ impl<'a, D> DfsPred<'a, D> {
         }
     }
 
-    /// Finds the predecessors tree.
+    /// Find the predecessors tree.
     ///
     /// # Panics
     ///

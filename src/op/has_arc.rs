@@ -31,10 +31,10 @@
 
 /// Check whether a digraph contains an arc.
 ///
-/// # Implementing `HasArc`
+/// # Implementing [`HasArc`] for a custom type
 ///
-/// Provide an implementation of `has_arc` that returns `true` if there is an
-/// arc from `u` to `v`.
+/// Provide an implementation of [`has_arc`](HasArc::has_arc) that returns
+/// `true` if there is an arc from `u` to `v`.
 ///
 /// ```
 /// use {
@@ -92,7 +92,7 @@
 /// assert!(!digraph.has_arc(2, 1));
 /// ```
 pub trait HasArc {
-    /// Checks whether an arc exists from `u` to `v` in the digraph.
+    /// Check whether an arc exists from `u` to `v` in the digraph.
     ///
     /// # Arguments
     ///

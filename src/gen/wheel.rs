@@ -126,10 +126,10 @@ use crate::{
 ///
 /// A wheel is a digraph with a single bidirectional wheel.
 ///
-/// # Implementing `Wheel`
+/// # Implementing [`Wheel`] for a custom type
 ///
-/// Provide an implementation of `wheel` that generates a wheel digraph of a
-/// given `order` OR implement `AddArc` and `Empty`.
+/// Provide an implementation of [`wheel`](Wheel::wheel) that generates a wheel
+/// digraph of a given `order` OR implement `AddArc` and `Empty`.
 ///
 /// ```
 /// use {
@@ -169,7 +169,7 @@ use crate::{
 /// ]));
 /// ```
 pub trait Wheel {
-    /// Generates a wheel digraph.
+    /// Generate a wheel digraph.
     ///
     /// # Arguments
     ///

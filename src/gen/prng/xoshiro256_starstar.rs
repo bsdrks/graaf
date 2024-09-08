@@ -29,7 +29,7 @@ pub struct Xoshiro256StarStar {
 }
 
 impl Xoshiro256StarStar {
-    /// Constructs a new `Xoshiro256StarStar`.
+    /// Construct a new `Xoshiro256StarStar`.
     ///
     /// # Arguments
     ///
@@ -62,7 +62,7 @@ impl Xoshiro256StarStar {
         Self { state }
     }
 
-    /// Generates a pseudo-random boolean.
+    /// Generate a pseudo-random boolean.
     ///
     /// # Examples
     ///
@@ -85,7 +85,7 @@ impl Xoshiro256StarStar {
         self.next().unwrap() & 1 == 1
     }
 
-    /// Generates a pseudo-random `f64` in the range `[0, 1)`.
+    /// Generate a pseudo-random `f64` in the range `[0, 1)`.
     ///
     /// # Examples
     ///

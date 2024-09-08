@@ -96,7 +96,7 @@ use crate::{
 /// );
 /// ```
 pub trait Complement {
-    /// Generates the complement of the digraph.
+    /// Generate the complement of the digraph.
     #[must_use]
     fn complement(&self) -> Self;
 }
