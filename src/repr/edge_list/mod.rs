@@ -120,6 +120,7 @@ use {
         Outdegree,
         RemoveArc,
         Size,
+        Union,
         Vertices,
     },
     std::collections::BTreeSet,
@@ -477,6 +478,22 @@ impl RemoveArc for EdgeList {
 impl Size for EdgeList {
     fn size(&self) -> usize {
         self.arcs.len()
+    }
+}
+
+impl Union for EdgeList {
+    fn union(&self, other: &Self) -> Self {
+        let (mut union, other) = if self.order() > other.order() {
+            (self.clone(), other)
+        } else {
+            (other.clone(), self)
+        };
+
+        for &(u, v) in &other.arcs {
+            union.add_arc(u, v);
+        }
+
+        union
     }
 }
 

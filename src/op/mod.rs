@@ -67,6 +67,7 @@ pub mod semidegree_sequence;
 pub mod sinks;
 pub mod size;
 pub mod sources;
+pub mod union;
 pub mod vertices;
 
 pub use {
@@ -108,5 +109,6 @@ pub use {
     sinks::Sinks,
     size::Size,
     sources::Sources,
+    union::Union,
     vertices::Vertices,
 };

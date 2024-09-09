@@ -28,7 +28,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.88.2"
+graaf = "0.88.3"
 ```
 
 ## Representations
@@ -91,6 +91,7 @@ graaf = "0.88.2"
 - [`Sinks`] iterates a digraph's sinks.
 - [`Size`] returns the number of arcs in a digraph.
 - [`Sources`] iterates a digraph's sources.
+- [`Union`] returns the union of two digraphs.
 - [`Vertices`] iterates a digraph's vertices.
 
 ## Algorithms
@@ -238,6 +239,7 @@ Tarjan's algorithm finds strongly connected components in a digraph.
 [`Sources`]: https://docs.rs/graaf/latest/graaf/op/sources/trait.Sources.html
 [`Star`]: https://docs.rs/graaf/latest/graaf/gen/star/trait.Star.html
 [`Vertices`]: https://docs.rs/graaf/latest/graaf/op/vertices/trait.Vertices.html
+[`Union`]: https://docs.rs/graaf/latest/graaf/op/union/trait.Union.html
 [`Wheel`]: https://docs.rs/graaf/latest/graaf/gen/wheel/trait.Wheel.html
 [`bellman_ford_moore::single_source_distances`]: https://docs.rs/graaf/latest/graaf/algo/bellman_ford_moore/fn.single_source_distances.html
 [`floyd_warshall::distances`]: https://docs.rs/graaf/latest/graaf/algo/floyd_warshall/fn.distances.html

@@ -32,6 +32,12 @@
 - Mention the order of tranversal in the `Dfs` documentation.
 - Mention the order of tranversal in the `Dijkstra` documentation.
 
+## [0.88.3] - 2024-09-09
+
+Added
+
+- Add the `Union` trait.
+
 ## [0.88.2] - 2024-09-08
 
 Changed

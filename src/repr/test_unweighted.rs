@@ -51,6 +51,7 @@ macro_rules! test_unweighted {
                 Sinks,
                 Sources,
                 Star,
+                Union,
                 Wheel,
             },
             proptest::proptest,
@@ -2190,6 +2191,270 @@ macro_rules! test_unweighted {
                 } else {
                     $type::star(order).sources().eq([])
                 });
+            }
+
+            #[test]
+            fn union_biclique_complement_is_complete(
+                m in 1..25_usize,
+                n in 1..25_usize
+            ) {
+                let biclique = $type::biclique(m, n);
+
+                assert!(biclique.union(&biclique.complement()).is_complete());
+            }
+
+            #[test]
+            fn union_circuit_complement_is_complete(order in 3..25_usize) {
+                let circuit = $type::circuit(order);
+
+                assert!(circuit.union(&circuit.complement()).is_complete());
+            }
+
+            #[test]
+            fn union_complete_complement_is_complete(order in 1..25_usize) {
+                let complete = $type::complete(order);
+
+                assert!(complete.union(&complete.complement()).is_complete());
+            }
+
+            #[test]
+            fn union_cycle_complement_is_complete(order in 1..25_usize) {
+                let cycle = $type::cycle(order);
+
+                assert!(cycle.union(&cycle.complement()).is_complete());
+            }
+
+            #[test]
+            fn union_empty_complement_is_complete(order in 1..25_usize) {
+                let empty = $type::empty(order);
+
+                assert!(empty.union(&empty.complement()).is_complete());
+            }
+
+            #[test]
+            fn union_empty_id_biclique(m in 1..25_usize, n in 1..25_usize) {
+                let digraph = $type::biclique(m, n);
+
+                assert!($type::union(&$type::empty(m + n), &digraph)
+                    .arcs()
+                    .eq(digraph.arcs()));
+
+                assert!($type::union(&digraph, &$type::empty(m + n))
+                    .arcs()
+                    .eq(digraph.arcs()));
+            }
+
+            #[test]
+            fn union_empty_id_circuit(order in 3..25_usize) {
+                let digraph = $type::circuit(order);
+
+                assert!($type::union(&digraph, &$type::empty(order))
+                    .arcs()
+                    .eq(digraph.arcs()));
+
+                assert!($type::union(&$type::empty(order), &digraph)
+                    .arcs()
+                    .eq(digraph.arcs()));
+            }
+
+            #[test]
+            fn union_empty_id_cycle(order in 1..25_usize) {
+                let digraph = $type::cycle(order);
+
+                assert!($type::union(&$type::empty(order), &digraph)
+                    .arcs()
+                    .eq(digraph.arcs()));
+
+                assert!($type::union(&digraph, &$type::empty(order))
+                    .arcs()
+                    .eq(digraph.arcs()));
+            }
+
+            #[test]
+            fn union_empty_id_empty(order in 1..25_usize) {
+                let digraph = $type::empty(order);
+
+                assert!($type::union(&$type::empty(order), &digraph)
+                    .arcs()
+                    .eq(digraph.arcs()));
+
+                assert!($type::union(&digraph, &$type::empty(order))
+                    .arcs()
+                    .eq(digraph.arcs()));
+            }
+
+            #[test]
+            fn union_empty_id_erdos_renyi(
+                order in 1..25_usize,
+                p in 0.0..1.0,
+                seed in 0..1000_u64
+            ) {
+                let digraph = $type::erdos_renyi(order, p, seed);
+
+                assert!($type::union(&$type::empty(order), &digraph)
+                    .arcs()
+                    .eq(digraph.arcs()));
+
+                assert!($type::union(&digraph, &$type::empty(order))
+                    .arcs()
+                    .eq(digraph.arcs()));
+            }
+
+            #[test]
+            fn union_empty_id_path(order in 1..25_usize) {
+                let digraph = $type::path(order);
+
+                assert!($type::union(&$type::empty(order), &digraph)
+                    .arcs()
+                    .eq(digraph.arcs()));
+
+                assert!($type::union(&digraph, &$type::empty(order))
+                    .arcs()
+                    .eq(digraph.arcs()));
+            }
+
+            #[test]
+            fn union_empty_id_random_tournament(
+                order in 1..25_usize,
+                seed in 0..1000_u64
+            ) {
+                let digraph = $type::random_tournament(order, seed);
+
+                assert!($type::union(&$type::empty(order), &digraph)
+                    .arcs()
+                    .eq(digraph.arcs()));
+
+                assert!($type::union(&digraph, &$type::empty(order))
+                    .arcs()
+                    .eq(digraph.arcs()));
+            }
+
+            #[test]
+            fn union_empty_id_star(order in 1..25_usize) {
+                let star = $type::star(order);
+
+                assert!($type::union(&$type::empty(order), &star)
+                    .arcs()
+                    .eq(star.arcs()));
+
+                assert!($type::union(&star, &$type::empty(order))
+                    .arcs()
+                    .eq(star.arcs()));
+            }
+
+            #[test]
+            fn union_empty_id_wheel(order in 4..25_usize) {
+                let wheel = $type::wheel(order);
+
+                assert!($type::union(&$type::empty(order), &wheel)
+                    .arcs()
+                    .eq(wheel.arcs()));
+
+                assert!($type::union(&wheel, &$type::empty(order))
+                    .arcs()
+                    .eq(wheel.arcs()));
+            }
+
+            #[test]
+            fn union_erdos_renyi_commutative(
+                order_1 in 1..25_usize,
+                order_2 in 1..25_usize,
+                p in 0.0..1.0,
+                seed_1 in 0..1000_u64,
+                seed_2 in 0..1000_u64
+            ) {
+                let digraph = $type::erdos_renyi(order_1, p, seed_1);
+                let other = $type::erdos_renyi(order_2, p, seed_2);
+
+                assert_eq!(digraph.union(&other), other.union(&digraph));
+            }
+
+            #[test]
+            fn union_erdos_renyi_complement_is_complete(
+                order in 1..25_usize,
+                p in 0.0..1.0,
+                seed in 0..1000_u64
+            ) {
+                let erdos_renyi = $type::erdos_renyi(order, p, seed);
+
+                assert!(
+                    erdos_renyi.union(&erdos_renyi.complement()).is_complete()
+                );
+            }
+
+            #[test]
+            fn union_erdos_renyi_size_gte(
+                order_1 in 1..25_usize,
+                order_2 in 1..25_usize,
+                p in 0.0..1.0,
+                seed_1 in 0..1000_u64,
+                seed_2 in 0..1000_u64
+            ) {
+                let digraph = $type::erdos_renyi(order_1, p, seed_1);
+                let other = $type::erdos_renyi(order_2, p, seed_2);
+
+                assert!(digraph.size() + other.size() >= digraph.union(&other)
+                    .size());
+            }
+
+            #[test]
+            fn union_path_complement_is_complete(order in 1..25_usize) {
+                let path = $type::path(order);
+
+                assert!(path.union(&path.complement()).is_complete());
+            }
+
+            #[test]
+            fn union_random_tournament_size_gte(
+                order_1 in 1..25_usize,
+                order_2 in 1..25_usize,
+                seed_1 in 0..1000_u64,
+                seed_2 in 0..1000_u64
+            ) {
+                let digraph = $type::random_tournament(order_1, seed_1);
+                let other = $type::random_tournament(order_2, seed_2);
+
+                assert!(digraph.size() + other.size() >= digraph.union(&other)
+                    .size());
+            }
+
+            #[test]
+            fn union_random_tournament_commutative(
+                order_1 in 1..25_usize,
+                order_2 in 1..25_usize,
+                seed_1 in 0..1000_u64,
+                seed_2 in 0..1000_u64
+            ) {
+                let digraph = $type::random_tournament(order_1, seed_1);
+                let other = $type::random_tournament(order_2, seed_2);
+
+                assert_eq!(digraph.union(&other), other.union(&digraph));
+            }
+
+            #[test]
+            fn union_random_tournament_complement_is_complete(
+                order in 1..25_usize,
+                seed in 0..1000_u64
+            ) {
+                let random_tournament = $type::random_tournament(order, seed);
+
+                assert!(random_tournament
+                    .union(&random_tournament.complement())
+                    .is_complete());
+            }
+
+            #[test]
+            fn union_star_complement_is_complete(order in 1..25_usize) {
+                let star = $type::star(order);
+
+                assert!(star.union(&star.complement()).is_complete());
+            }
+
+            #[test]
+            fn union_wheel_complement_is_complete(order in 4..25_usize) {
+                let wheel = $type::wheel(order);
+
+                assert!(wheel.union(&wheel.complement()).is_complete());
             }
 
             #[test]

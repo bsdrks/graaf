@@ -100,6 +100,7 @@ pub mod fixture;
 
 use {
     crate::{
+        op::Union,
         AddArc,
         ArcWeight,
         Arcs,
@@ -438,6 +439,22 @@ impl RemoveArc for AdjacencyList {
 impl Size for AdjacencyList {
     fn size(&self) -> usize {
         self.arcs.iter().map(BTreeSet::len).sum()
+    }
+}
+
+impl Union for AdjacencyList {
+    fn union(&self, other: &Self) -> Self {
+        let (mut union, other) = if self.order() > other.order() {
+            (self.clone(), other)
+        } else {
+            (other.clone(), self)
+        };
+
+        for (u, v) in other.arcs() {
+            union.add_arc(u, v);
+        }
+
+        union
     }
 }
 

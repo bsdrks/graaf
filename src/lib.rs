@@ -77,6 +77,7 @@
 //! - [`Sinks`] iterates a digraph's sinks.
 //! - [`Size`] returns the number of arcs in a digraph.
 //! - [`Sources`] iterates a digraph's sources.
+//! - [`Union`] returns the union of two digraphs.
 //! - [`Vertices`] iterates a digraph's vertices.
 //!
 //! # Algorithms
@@ -264,6 +265,7 @@ pub use op::{
     Sinks,
     Size,
     Sources,
+    Union,
     Vertices,
 };
 

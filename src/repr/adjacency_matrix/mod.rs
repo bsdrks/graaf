@@ -127,6 +127,7 @@ use {
         Outdegree,
         RemoveArc,
         Size,
+        Union,
         Vertices,
     },
     std::collections::BTreeSet,
@@ -547,6 +548,22 @@ impl Size for AdjacencyMatrix {
             .iter()
             .map(|&block| block.count_ones() as usize)
             .sum()
+    }
+}
+
+impl Union for AdjacencyMatrix {
+    fn union(&self, other: &Self) -> Self {
+        let (mut union, other) = if self.order() > other.order() {
+            (self.clone(), other)
+        } else {
+            (other.clone(), self)
+        };
+
+        for (u, v) in other.arcs() {
+            union.add_arc(u, v);
+        }
+
+        union
     }
 }
 
