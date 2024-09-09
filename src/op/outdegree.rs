@@ -51,9 +51,9 @@ use crate::Vertices;
 ///
 /// let digraph = AdjacencyList {
 ///     arcs: vec![
-///         BTreeset::from([1, 2]),
-///         BTreeset::from([0]),
-///         BTreeset::from([1]),
+///         BTreeSet::from([1, 2]),
+///         BTreeSet::from([0]),
+///         BTreeSet::from([1]),
 ///     ],
 /// };
 ///
