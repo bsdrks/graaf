@@ -8,11 +8,9 @@
 - Add the `DeleteArc` trait.
 - Add the `DeleteVertex` trait.
 - Add the `IsIsomorphic` trait.
-- Add the `MaxDegree` trait.
 - Add the `MaxIndegree` trait.
 - Add the `MaxOutdegree` trait.
 - Add the `MaxSemidegree` trait.
-- Add the `MinDegree` trait.
 - Add the `MinIndegree` trait.
 - Add the `MinOutdegree` trait.
 - Add the `MinSemidegree` trait.
@@ -31,6 +29,17 @@
 - Mention the order of tranversal in the `Bfs` documentation.
 - Mention the order of tranversal in the `Dfs` documentation.
 - Mention the order of tranversal in the `Dijkstra` documentation.
+
+## [0.88.4] - 2024-09-09
+
+Added
+
+- Implement `Degree::max_degree`.
+- Implement `Degree::min_degree`.
+
+Changed
+
+- Improve `Union` documentation.
 
 ## [0.88.3] - 2024-09-09
 

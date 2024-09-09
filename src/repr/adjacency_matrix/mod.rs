@@ -51,7 +51,7 @@
 //! ## Self-loop
 //!
 //! A self-loop is not allowed. The following pseudograph can not be
-//! represented. The self-loop is marked in red.
+//! represented. The self-loop is red:
 //!
 //! ![self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_self_loop-0.87.4.svg?)
 //!
@@ -77,7 +77,7 @@
 //! ## Parallel arcs
 //!
 //! Parallel arcs are not allowed. The following multigraph can not be
-//! represented. The parallel arc is marked in red:
+//! represented. The parallel arc is red:
 //!
 //! ![parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_parallel_arcs-0.87.4.svg?)
 //!
@@ -186,7 +186,7 @@ use {
 /// ## Self-loop
 ///
 /// A self-loop is not allowed. The following pseudograph can not be
-/// represented. The self-loop is marked in red.
+/// represented. The self-loop is red:
 ///
 /// ![self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_self_loop-0.87.4.svg?)
 ///
@@ -212,7 +212,7 @@ use {
 /// ## Parallel arcs
 ///
 /// Parallel arcs are not allowed. The following multigraph can not be
-/// represented. The parallel arc is marked in red:
+/// represented. The parallel arc is red:
 ///
 /// ![parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_parallel_arcs-0.87.4.svg?)
 ///

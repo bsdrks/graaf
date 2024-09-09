@@ -2,6 +2,20 @@
 //!
 //! # Example
 //!
+//! The union of a cycle digraph and a star digraph form a wheel digraph.
+//!
+//! The cycle digraph:
+//!
+//! ![Cycle digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/union_cycle_1-0.88.4.svg?)
+//!
+//! The star digraph:
+//!
+//! ![Star digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/union_star_1-0.88.4.svg?)
+//!
+//! The union, a wheel digraph:
+//!
+//! ![Wheel digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/union_union_1-0.88.4.svg?)
+//!
 //! ```
 //! use {
 //!     graaf::{
@@ -102,42 +116,6 @@
 ///
 /// assert!(cycle.union(&star).vertices.iter().eq(wheel.vertices.iter()));
 /// ```
-///
-/// # Example
-///
-/// ```
-/// use {
-///     graaf::{
-///         AdjacencyList,
-///         Arcs,
-///         Cycle,
-///         Star,
-///         Union,
-///         Wheel,
-///     },
-///     std::collections::BTreeSet,
-/// };
-///
-/// let cycle = AdjacencyList::from(vec![
-///     BTreeSet::new(),
-///     BTreeSet::from([2, 4]),
-///     BTreeSet::from([1, 3]),
-///     BTreeSet::from([2, 4]),
-///     BTreeSet::from([1, 3]),
-/// ]);
-///
-/// let star = AdjacencyList::from(vec![
-///     BTreeSet::from([1, 2, 3, 4]),
-///     BTreeSet::from([0]),
-///     BTreeSet::from([0]),
-///     BTreeSet::from([0]),
-///     BTreeSet::from([0]),
-/// ]);
-///
-/// let wheel = AdjacencyList::wheel(5);
-///
-/// assert!(cycle.union(&star).arcs().eq(wheel.arcs()));
-/// ```
 pub trait Union {
     /// Return the union of two digraphs.
     ///
@@ -146,6 +124,20 @@ pub trait Union {
     /// * `other`: The other digraph.
     ///
     /// # Example
+    ///
+    /// The union of a cycle digraph and a star digraph form a wheel digraph.
+    ///
+    /// The cycle digraph:
+    ///
+    /// ![Cycle digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/union_cycle_1-0.88.4.svg?)
+    ///
+    /// The star digraph:
+    ///
+    /// ![Star digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/union_star_1-0.88.4.svg?)
+    ///
+    /// The union, a wheel digraph:
+    ///
+    /// ![Wheel digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/union_union_1-0.88.4.svg?)
     ///
     /// ```
     /// use {

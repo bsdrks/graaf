@@ -331,6 +331,20 @@ macro_rules! test_unweighted {
             }
 
             #[test]
+            fn biclique_max_degree(m in 1..25_usize, n in 1..25_usize) {
+                let digraph = $type::biclique(m, n);
+
+                assert_eq!(digraph.max_degree(), m.max(n) * 2);
+            }
+
+            #[test]
+            fn biclique_min_degree(m in 1..25_usize, n in 1..25_usize) {
+                let digraph = $type::biclique(m, n);
+
+                assert_eq!(digraph.min_degree(), m.min(n) * 2);
+            }
+
+            #[test]
             fn biclique_order(m in 1..25_usize, n in 1..25_usize) {
                 assert_eq!($type::biclique(m, n).order(), m + n);
             }
@@ -582,6 +596,22 @@ macro_rules! test_unweighted {
             }
 
             #[test]
+            fn circuit_max_degree(order in 1..25_usize) {
+                assert_eq!(
+                    $type::circuit(order).max_degree(),
+                    if order == 1 { 0 } else { 2 }
+                );
+            }
+
+            #[test]
+            fn circuit_min_degree(order in 1..25_usize) {
+                assert_eq!(
+                    $type::circuit(order).min_degree(),
+                    if order == 1 { 0 } else { 2 }
+                );
+            }
+
+            #[test]
             fn circuit_outdegree(order in 1..25_usize) {
                 let digraph = $type::circuit(order);
 
@@ -787,6 +817,22 @@ macro_rules! test_unweighted {
             #[test]
             fn complete_is_tournament(order in 1..25_usize) {
                 assert!((order == 1) == $type::complete(order).is_tournament());
+            }
+
+            #[test]
+            fn complete_max_degree(order in 1..25_usize) {
+                assert_eq!(
+                    $type::complete(order).max_degree(),
+                    if order == 1 { 0 } else { (order - 1) * 2 }
+                );
+            }
+
+            #[test]
+            fn complete_min_degree(order in 1..25_usize) {
+                assert_eq!(
+                    $type::complete(order).min_degree(),
+                    if order == 1 { 0 } else { (order - 1) * 2 }
+                );
             }
 
             #[test]
@@ -1020,6 +1066,30 @@ macro_rules! test_unweighted {
             #[test]
             fn cycle_is_tournament(order in 1..25_usize) {
                 assert!((order == 1) == $type::cycle(order).is_tournament());
+            }
+
+            #[test]
+            fn cycle_max_degree(order in 1..25_usize) {
+                assert_eq!(
+                    $type::cycle(order).max_degree(),
+                    match order {
+                        1 => 0,
+                        2 => 2,
+                        _ => 4,
+                    }
+                );
+            }
+
+            #[test]
+            fn cycle_min_degree(order in 1..25_usize) {
+                assert_eq!(
+                    $type::cycle(order).min_degree(),
+                    match order {
+                        1 => 0,
+                        2 => 2,
+                        _ => 4,
+                    }
+                );
             }
 
             #[test]
@@ -1260,6 +1330,16 @@ macro_rules! test_unweighted {
             #[test]
             fn empty_is_tournament(order in 1..25_usize) {
                 assert!((order == 1) == $type::empty(order).is_tournament());
+            }
+
+            #[test]
+            fn empty_max_degree(order in 1..25_usize) {
+                assert_eq!($type::empty(order).max_degree(), 0);
+            }
+
+            #[test]
+            fn empty_min_degree(order in 1..25_usize) {
+                assert_eq!($type::empty(order).min_degree(), 0);
             }
 
             #[test]
@@ -1645,6 +1725,26 @@ macro_rules! test_unweighted {
             }
 
             #[test]
+            fn path_max_degree(order in 1..25_usize) {
+                assert_eq!(
+                    $type::path(order).max_degree(),
+                    match order {
+                        1 => 0,
+                        2 => 1,
+                        _ => 2,
+                    }
+                );
+            }
+
+            #[test]
+            fn path_min_degree(order in 1..25_usize) {
+                assert_eq!(
+                    $type::path(order).min_degree(),
+                    if order == 1 { 0 } else { 1 }
+                );
+            }
+
+            #[test]
             fn path_outdegree(order in 1..25_usize) {
                 let digraph = $type::path(order);
                 let last = order - 1;
@@ -1915,6 +2015,28 @@ macro_rules! test_unweighted {
             }
 
             #[test]
+            fn random_tournament_max_degree(
+                order in 1..25_usize,
+                seed in 0..1000_u64
+            ) {
+                assert_eq!(
+                    $type::random_tournament(order, seed).max_degree(),
+                    if order == 1 { 0 } else { order - 1 }
+                );
+            }
+
+            #[test]
+            fn random_tournament_min_degree(
+                order in 1..25_usize,
+                seed in 0..1000_u64
+            ) {
+                assert_eq!(
+                    $type::random_tournament(order, seed).min_degree(),
+                    if order == 1 { 0 } else { order - 1 }
+                );
+            }
+
+            #[test]
             fn random_tournament_order(
                 order in 1..25_usize,
                 seed in 0..1000_u64
@@ -2138,6 +2260,22 @@ macro_rules! test_unweighted {
             #[test]
             fn star_is_tournament(order in 1..25_usize) {
                 assert!((order == 1) == $type::star(order).is_tournament());
+            }
+
+            #[test]
+            fn star_max_degree(order in 1..25_usize) {
+                assert_eq!(
+                    $type::star(order).max_degree(),
+                    (order - 1) * 2
+                );
+            }
+
+            #[test]
+            fn star_min_degree(order in 1..25_usize) {
+                assert_eq!(
+                    $type::star(order).min_degree(),
+                    if order == 1 { 0 } else { 2 }
+                );
             }
 
             #[test]
@@ -2619,6 +2757,16 @@ macro_rules! test_unweighted {
             #[test]
             fn wheel_is_tournament(order in 4..25_usize) {
                 assert!(!$type::wheel(order).is_tournament());
+            }
+
+            #[test]
+            fn wheel_max_degree(order in 4..25_usize) {
+                assert_eq!($type::wheel(order).max_degree(), (order - 1) * 2);
+            }
+
+            #[test]
+            fn wheel_min_degree(order in 4..25_usize) {
+                assert_eq!($type::wheel(order).min_degree(), 6);
             }
 
             #[test]

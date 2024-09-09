@@ -43,7 +43,7 @@
 //! ## Self-loop
 //!
 //! A self-loop is not allowed. The following pseudograph can not be
-//! represented. The self-loop is marked in red.
+//! represented. The self-loop is red:
 //!
 //! ![self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/edge_list_self_loop.svg?)
 //!
@@ -69,7 +69,7 @@
 //! ## Parallel arcs
 //!
 //! Parallel arcs are not allowed. The following multigraph can not be
-//! represented. The parallel arc is marked in red:
+//! represented. The parallel arc is red:
 //!
 //! ![parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/edge_list_parallel_arcs.svg?)
 //!
@@ -170,7 +170,7 @@ use {
 /// ## Self-loop
 ///
 /// A self-loop is not allowed. The following pseudograph can not be
-/// represented. The self-loop is marked in red.
+/// represented. The self-loop is red:
 ///
 /// ![self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/edge_list_self_loop.svg?)
 ///
@@ -196,7 +196,7 @@ use {
 /// ## Parallel arcs
 ///
 /// Parallel arcs are not allowed. The following multigraph can not be
-/// represented. The parallel arc is marked in red:
+/// represented. The parallel arc is red:
 ///
 /// ![parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/edge_list_parallel_arcs.svg?)
 ///

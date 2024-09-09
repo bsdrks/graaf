@@ -6,3 +6,5 @@
 # everyone who runs the test benefits from these saved cases.
 cc fd166a159729733ab106febf8a6e169189fff145a9a437f154c4950d4dd072f5 # shrinks to order = 1
 cc e24369e76b7afc2e023240c7ff1d2128a2974fd55a060439dd46da051d4e5163 # shrinks to order = 1, seed_1 = 0, seed_2 = 0
+cc c3dc6daace23dea997db458a98c818da4c5de605ee4be90b76a579a54867deab # shrinks to order = 1
+cc ac5e643d2f7ada6979a659facf4e4b508d6e9645b4883209083a6b333985da85 # shrinks to order = 1
