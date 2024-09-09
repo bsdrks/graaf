@@ -114,50 +114,50 @@ use crate::IsSubdigraph;
 ///
 /// assert!(!d.is_superdigraph(&h));
 /// ```
-///
-/// # Examples
-///
-/// ```
-/// use graaf::{
-///     AddArc,
-///     AdjacencyList,
-///     Circuit,
-///     Empty,
-///     IsSuperdigraph,
-/// };
-///
-/// let mut h = AdjacencyList::empty(3);
-///
-/// h.add_arc(0, 1);
-///
-/// let d = AdjacencyList::circuit(4);
-///
-/// assert!(d.is_superdigraph(&h));
-///
-/// h.add_arc(0, 2);
-///
-/// assert!(!d.is_superdigraph(&h));
-/// ```
-///
-/// Every digraph is a superdigraph of itself.
-///
-/// ```
-/// use graaf::{
-///     AdjacencyList,
-///     IsSuperdigraph,
-///     RandomTournament,
-/// };
-///
-/// let tournament = AdjacencyList::random_tournament(4, 0);
-///
-/// assert!(tournament.is_superdigraph(&tournament));
-/// ```
 pub trait IsSuperdigraph {
     /// Check whether the digraph is a superdigraph of another digraph.
     ///
     /// # Arguments
     ///
     /// * `d`: The digraph to compare against.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use graaf::{
+    ///     AddArc,
+    ///     AdjacencyList,
+    ///     Circuit,
+    ///     Empty,
+    ///     IsSuperdigraph,
+    /// };
+    ///
+    /// let mut h = AdjacencyList::empty(3);
+    ///
+    /// h.add_arc(0, 1);
+    ///
+    /// let d = AdjacencyList::circuit(4);
+    ///
+    /// assert!(d.is_superdigraph(&h));
+    ///
+    /// h.add_arc(0, 2);
+    ///
+    /// assert!(!d.is_superdigraph(&h));
+    /// ```
+    ///
+    /// Every digraph is a superdigraph of itself.
+    ///
+    /// ```
+    /// use graaf::{
+    ///     AdjacencyList,
+    ///     IsSuperdigraph,
+    ///     RandomTournament,
+    /// };
+    ///
+    /// let tournament = AdjacencyList::random_tournament(4, 0);
+    ///
+    /// assert!(tournament.is_superdigraph(&tournament));
+    /// ```
     #[must_use]
     fn is_superdigraph(&self, d: &Self) -> bool;
 }

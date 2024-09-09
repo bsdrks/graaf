@@ -59,27 +59,6 @@
 ///     BTreeMap::new(),
 /// ]));
 /// ```
-///
-/// # Examples
-///
-/// ```
-/// use graaf::{
-///     AddArcWeighted,
-///     AdjacencyListWeighted,
-///     ArcsWeighted,
-///     Empty,
-/// };
-///
-/// let mut digraph = AdjacencyListWeighted::<isize>::empty(3);
-///
-/// digraph.add_arc_weighted(0, 1, 2);
-/// digraph.add_arc_weighted(0, 2, 1);
-/// digraph.add_arc_weighted(1, 2, -3);
-///
-/// assert!(digraph
-///     .arcs_weighted()
-///     .eq([(0, 1, &2), (0, 2, &1), (1, 2, &-3)]));
-/// ```
 pub trait AddArcWeighted<W> {
     /// Add an arc from `u` to `v` with weight `w` to the digraph.
     ///
@@ -94,5 +73,26 @@ pub trait AddArcWeighted<W> {
     /// * Should panic if `u` equals `v`.
     /// * Should panic if `u` is out of bounds.
     /// * Should panic if `v` is out of bounds.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use graaf::{
+    ///     AddArcWeighted,
+    ///     AdjacencyListWeighted,
+    ///     ArcsWeighted,
+    ///     Empty,
+    /// };
+    ///
+    /// let mut digraph = AdjacencyListWeighted::<isize>::empty(3);
+    ///
+    /// digraph.add_arc_weighted(0, 1, 2);
+    /// digraph.add_arc_weighted(0, 2, 1);
+    /// digraph.add_arc_weighted(1, 2, -3);
+    ///
+    /// assert!(digraph
+    ///     .arcs_weighted()
+    ///     .eq([(0, 1, &2), (0, 2, &1), (1, 2, &-3)]));
+    /// ```
     fn add_arc_weighted(&mut self, u: usize, v: usize, w: W);
 }

@@ -453,7 +453,9 @@ macro_rules! test_unweighted {
                 let digraph = $type::circuit(order);
 
                 assert_eq!(
-                    digraph.vertices().fold(0, |acc, u| acc + digraph.degree(u)),
+                    digraph
+                        .vertices()
+                        .fold(0, |acc, u| acc + digraph.degree(u)),
                     2 * digraph.size()
                 );
             }
@@ -476,9 +478,8 @@ macro_rules! test_unweighted {
             fn circuit_has_edge(order in 1..25_usize) {
                 let digraph = $type::circuit(order);
 
-                assert!(digraph.vertices().all(|u| {
-                    (u + 1..order).all(|v| (order == 2) == digraph.has_edge(u, v))
-                }));
+                assert!(digraph.vertices().all(|u| (u + 1..order)
+                    .all(|v| (order == 2) == digraph.has_edge(u, v))));
             }
 
             #[test]
@@ -535,7 +536,9 @@ macro_rules! test_unweighted {
 
             #[test]
             fn circuit_is_semicomplete(order in 1..25_usize) {
-                assert!((order < 4) == $type::circuit(order).is_semicomplete());
+                assert!(
+                    (order < 4) == $type::circuit(order).is_semicomplete()
+                );
             }
 
             #[test]
@@ -655,7 +658,9 @@ macro_rules! test_unweighted {
                 let digraph = $type::circuit(order);
                 let sources = digraph.sources();
 
-                assert!(if order == 1 { sources.eq([0]) } else { sources.eq([]) });
+                assert!(
+                    if order == 1 { sources.eq([0]) } else { sources.eq([]) }
+                );
             }
 
             #[test]
@@ -695,7 +700,9 @@ macro_rules! test_unweighted {
                 let digraph = $type::complete(order);
 
                 assert_eq!(
-                    digraph.vertices().fold(0, |acc, u| acc + digraph.degree(u)),
+                    digraph
+                    .vertices()
+                    .fold(0, |acc, u| acc + digraph.degree(u)),
                     2 * digraph.size()
                 );
             }
@@ -816,7 +823,9 @@ macro_rules! test_unweighted {
 
             #[test]
             fn complete_is_tournament(order in 1..25_usize) {
-                assert!((order == 1) == $type::complete(order).is_tournament());
+                assert!(
+                    (order == 1) == $type::complete(order).is_tournament()
+                );
             }
 
             #[test]
@@ -930,7 +939,9 @@ macro_rules! test_unweighted {
                 let digraph = $type::cycle(order);
 
                 assert_eq!(
-                    digraph.vertices().fold(0, |acc, u| acc + digraph.degree(u)),
+                    digraph
+                        .vertices()
+                        .fold(0, |acc, u| acc + digraph.degree(u)),
                     2 * digraph.size()
                 );
             }
@@ -1194,7 +1205,9 @@ macro_rules! test_unweighted {
                 let digraph = $type::empty(order);
 
                 assert_eq!(
-                    digraph.vertices().fold(0, |acc, u| acc + digraph.degree(u)),
+                    digraph
+                        .vertices()
+                        .fold(0, |acc, u| acc + digraph.degree(u)),
                     2 * digraph.size()
                 );
             }
@@ -1240,7 +1253,9 @@ macro_rules! test_unweighted {
 
             #[test]
             fn empty_indegree_sequence(order in 1..25_usize) {
-                assert!($type::empty(order).indegree_sequence().all(|d| d == 0));
+                assert!($type::empty(order)
+                    .indegree_sequence()
+                    .all(|d| d == 0));
             }
 
             #[test]
@@ -1401,7 +1416,9 @@ macro_rules! test_unweighted {
                 let digraph = $type::erdos_renyi(order, p, seed);
 
                 assert_eq!(
-                    digraph.vertices().fold(0, |acc, u| acc + digraph.degree(u)),
+                    digraph
+                        .vertices()
+                        .fold(0, |acc, u| acc + digraph.degree(u)),
                     2 * digraph.size()
                 );
             }
@@ -1577,7 +1594,9 @@ macro_rules! test_unweighted {
                 let digraph = $type::path(order);
 
                 assert_eq!(
-                    digraph.vertices().fold(0, |acc, u| acc + digraph.degree(u)),
+                    digraph
+                        .vertices()
+                        .fold(0, |acc, u| acc + digraph.degree(u)),
                     2 * digraph.size()
                 );
             }
@@ -1771,7 +1790,9 @@ macro_rules! test_unweighted {
                     semidegree_sequence.next() == Some((0, 0))
                 } else {
                     semidegree_sequence.next() == Some((0, 1))
-                        && semidegree_sequence.take(order - 2).all(|d| d == (1, 1))
+                        && semidegree_sequence
+                            .take(order - 2)
+                            .all(|d| d == (1, 1))
                         && semidegree_sequence.next() == Some((1, 0))
                 });
             }
@@ -1835,7 +1856,9 @@ macro_rules! test_unweighted {
                 let digraph = $type::random_tournament(order, seed);
 
                 assert_eq!(
-                    digraph.vertices().fold(0, |acc, u| acc + digraph.degree(u)),
+                    digraph
+                        .vertices()
+                        .fold(0, |acc, u| acc + digraph.degree(u)),
                     2 * digraph.size()
                 );
             }
@@ -1954,7 +1977,9 @@ macro_rules! test_unweighted {
                 order in 1..25_usize,
                 seed in 0..1000_u64
             ) {
-                assert!($type::random_tournament(order, seed).is_semicomplete());
+                assert!(
+                    $type::random_tournament(order, seed).is_semicomplete()
+                );
             }
 
             #[test]
@@ -2041,7 +2066,9 @@ macro_rules! test_unweighted {
                 order in 1..25_usize,
                 seed in 0..1000_u64
             ) {
-                assert_eq!($type::random_tournament(order, seed).order(), order);
+                assert_eq!(
+                    $type::random_tournament(order, seed).order(), order
+                );
             }
 
             #[test]
@@ -2123,7 +2150,9 @@ macro_rules! test_unweighted {
                 let digraph = $type::star(order);
 
                 assert_eq!(
-                    digraph.vertices().fold(0, |acc, u| acc + digraph.degree(u)),
+                    digraph
+                        .vertices()
+                        .fold(0, |acc, u| acc + digraph.degree(u)),
                     2 * digraph.size()
                 );
             }
@@ -2625,7 +2654,9 @@ macro_rules! test_unweighted {
                 let digraph = $type::wheel(order);
 
                 assert_eq!(
-                    digraph.vertices().fold(0, |acc, u| acc + digraph.degree(u)),
+                    digraph
+                        .vertices()
+                        .fold(0, |acc, u| acc + digraph.degree(u)),
                     2 * digraph.size()
                 );
             }
@@ -3705,12 +3736,16 @@ macro_rules! test_unweighted {
 
         #[test]
         fn degree_sequence_bang_jensen_94() {
-            assert!(bang_jensen_94().degree_sequence().eq([2, 3, 5, 3, 2, 2, 1]));
+            assert!(bang_jensen_94()
+                .degree_sequence()
+                .eq([2, 3, 5, 3, 2, 2, 1]));
         }
 
         #[test]
         fn degree_sequence_kattis_builddeps() {
-            assert!(kattis_builddeps().degree_sequence().eq([2, 3, 3, 3, 3, 2]));
+            assert!(kattis_builddeps()
+                .degree_sequence()
+                .eq([2, 3, 3, 3, 3, 2]));
         }
 
         #[test]
@@ -4120,7 +4155,9 @@ macro_rules! test_unweighted {
 
         #[test]
         fn indegree_sequence_bang_jensen_34() {
-            assert!(bang_jensen_34().indegree_sequence().eq([1, 1, 0, 1, 2, 1]));
+            assert!(bang_jensen_34()
+                .indegree_sequence()
+                .eq([1, 1, 0, 1, 2, 1]));
         }
 
         #[test]
@@ -5406,7 +5443,11 @@ macro_rules! test_unweighted {
             ]));
 
             assert!(digraph.out_neighbors_weighted(9).eq([(8, &1)]));
-            assert!(digraph.out_neighbors_weighted(10).eq([(9, &1), (11, &1)]));
+
+            assert!(digraph
+                .out_neighbors_weighted(10)
+                .eq([(9, &1), (11, &1)]));
+
             assert!(digraph.out_neighbors_weighted(11).eq([(10, &1)]));
         }
 
@@ -5428,7 +5469,10 @@ macro_rules! test_unweighted {
             assert!(digraph.out_neighbors_weighted(10).eq([]));
             assert!(digraph.out_neighbors_weighted(11).eq([]));
             assert!(digraph.out_neighbors_weighted(12).eq([]));
-            assert!(digraph.out_neighbors_weighted(13).eq([(9, &1), (12, &1)]));
+
+            assert!(digraph
+                .out_neighbors_weighted(13)
+                .eq([(9, &1), (12, &1)]));
         }
 
         #[test]
@@ -5448,7 +5492,10 @@ macro_rules! test_unweighted {
             assert!(digraph.out_neighbors_weighted(10).eq([]));
             assert!(digraph.out_neighbors_weighted(11).eq([]));
             assert!(digraph.out_neighbors_weighted(12).eq([(13, &1)]));
-            assert!(digraph.out_neighbors_weighted(13).eq([(9, &1), (12, &1)]));
+
+            assert!(digraph
+                .out_neighbors_weighted(13)
+                .eq([(9, &1), (12, &1)]));
         }
 
         #[test]
@@ -5474,7 +5521,10 @@ macro_rules! test_unweighted {
             assert!(digraph.out_neighbors_weighted(10).eq([]));
             assert!(digraph.out_neighbors_weighted(11).eq([]));
             assert!(digraph.out_neighbors_weighted(12).eq([(13, &1)]));
-            assert!(digraph.out_neighbors_weighted(13).eq([(9, &1), (12, &1)]));
+
+            assert!(digraph
+                .out_neighbors_weighted(13)
+                .eq([(9, &1), (12, &1)]));
         }
 
         #[test]
@@ -5645,7 +5695,9 @@ macro_rules! test_unweighted {
 
         #[test]
         fn outdegree_sequence_bang_jensen_34() {
-            assert!(bang_jensen_34().outdegree_sequence().eq([1, 1, 3, 0, 0, 1]));
+            assert!(bang_jensen_34()
+                .outdegree_sequence()
+                .eq([1, 1, 3, 0, 0, 1]));
         }
 
         #[test]

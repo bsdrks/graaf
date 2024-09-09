@@ -71,21 +71,21 @@ use crate::{
 ///
 /// assert!(digraph.is_oriented());
 /// ```
-///
-/// # Examples
-///
-/// ```
-/// use graaf::{
-///     AdjacencyList,
-///     Circuit,
-///     IsOriented,
-/// };
-///
-/// assert!(!AdjacencyList::circuit(2).is_oriented());
-/// assert!(AdjacencyList::circuit(3).is_oriented());
-/// ```
 pub trait IsOriented {
     /// Check whether the digraph is oriented.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use graaf::{
+    ///     AdjacencyList,
+    ///     Circuit,
+    ///     IsOriented,
+    /// };
+    ///
+    /// assert!(!AdjacencyList::circuit(2).is_oriented());
+    /// assert!(AdjacencyList::circuit(3).is_oriented());
+    /// ```
     #[must_use]
     fn is_oriented(&self) -> bool;
 }

@@ -89,30 +89,30 @@ use crate::{
 ///
 /// assert!(!digraph.is_symmetric());
 /// ```
-///
-/// # Examples
-/// ```
-/// use graaf::{
-///     AddArc,
-///     AdjacencyList,
-///     Empty,
-///     IsSymmetric,
-///     RemoveArc,
-/// };
-///
-/// let mut digraph = AdjacencyList::empty(2);
-///
-/// digraph.add_arc(0, 1);
-/// digraph.add_arc(1, 0);
-///
-/// assert!(digraph.is_symmetric());
-///
-/// digraph.remove_arc(1, 0);
-///
-/// assert!(!digraph.is_symmetric());
-/// ```
 pub trait IsSymmetric {
     /// Check whether the digraph is symmetric.
+    ///
+    /// # Examples
+    /// ```
+    /// use graaf::{
+    ///     AddArc,
+    ///     AdjacencyList,
+    ///     Empty,
+    ///     IsSymmetric,
+    ///     RemoveArc,
+    /// };
+    ///
+    /// let mut digraph = AdjacencyList::empty(2);
+    ///
+    /// digraph.add_arc(0, 1);
+    /// digraph.add_arc(1, 0);
+    ///
+    /// assert!(digraph.is_symmetric());
+    ///
+    /// digraph.remove_arc(1, 0);
+    ///
+    /// assert!(!digraph.is_symmetric());
+    /// ```
     #[must_use]
     fn is_symmetric(&self) -> bool;
 }

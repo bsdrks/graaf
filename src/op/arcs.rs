@@ -35,22 +35,22 @@
 ///     }
 /// }
 /// ```
-///
-/// # Examples
-///
-/// ```
-/// use graaf::{
-///     AdjacencyList,
-///     Arcs,
-///     Circuit,
-/// };
-///
-/// let digraph = AdjacencyList::circuit(3);
-///
-/// assert!(digraph.arcs().eq([(0, 1), (1, 2), (2, 0)]));
-/// ```
 pub trait Arcs {
     /// Return an iterator over the arcs in the digraph.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use graaf::{
+    ///     AdjacencyList,
+    ///     Arcs,
+    ///     Circuit,
+    /// };
+    ///
+    /// let digraph = AdjacencyList::circuit(3);
+    ///
+    /// assert!(digraph.arcs().eq([(0, 1), (1, 2), (2, 0)]));
+    /// ```
     #[must_use]
     fn arcs(&self) -> impl Iterator<Item = (usize, usize)>;
 }

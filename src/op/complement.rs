@@ -97,6 +97,32 @@ use crate::{
 /// ```
 pub trait Complement {
     /// Generate the complement of the digraph.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use graaf::{
+    ///     AddArc,
+    ///     AdjacencyList,
+    ///     Arcs,
+    ///     Circuit,
+    ///     Complement,
+    /// };
+    ///
+    /// let digraph = AdjacencyList::circuit(4);
+    /// let converse = digraph.complement();
+    ///
+    /// assert!(converse.arcs().eq([
+    ///     (0, 2),
+    ///     (0, 3),
+    ///     (1, 0),
+    ///     (1, 3),
+    ///     (2, 0),
+    ///     (2, 1),
+    ///     (3, 1),
+    ///     (3, 2)
+    /// ]));
+    /// ```
     #[must_use]
     fn complement(&self) -> Self;
 }

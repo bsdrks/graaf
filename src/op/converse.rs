@@ -74,6 +74,23 @@
 /// ```
 pub trait Converse {
     /// Generate the converse of the digraph.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use graaf::{
+    ///     AddArc,
+    ///     AdjacencyList,
+    ///     Arcs,
+    ///     Circuit,
+    ///     Converse,
+    /// };
+    ///
+    /// let digraph = AdjacencyList::circuit(4);
+    /// let converse = digraph.converse();
+    ///
+    /// assert!(converse.arcs().eq([(0, 3), (1, 0), (2, 1), (3, 2)]));
+    /// ```
     #[must_use]
     fn converse(&self) -> Self;
 }

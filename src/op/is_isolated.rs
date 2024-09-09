@@ -77,32 +77,32 @@ use crate::{
 /// assert!(!digraph.is_isolated(2));
 /// assert!(digraph.is_isolated(3));
 /// ```
-///
-/// # Examples
-///
-/// ```
-/// use graaf::{
-///     AddArc,
-///     AdjacencyList,
-///     Empty,
-///     IsIsolated,
-/// };
-///
-/// let mut digraph = AdjacencyList::empty(3);
-///
-/// digraph.add_arc(0, 1);
-/// digraph.add_arc(1, 0);
-///
-/// assert!(!digraph.is_isolated(0));
-/// assert!(!digraph.is_isolated(1));
-/// assert!(digraph.is_isolated(2));
-/// ```
 pub trait IsIsolated {
     /// Check whether the vertex is isolated in the digraph.
     ///
     /// # Arguments
     ///
     /// * `u`: The vertex.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use graaf::{
+    ///     AddArc,
+    ///     AdjacencyList,
+    ///     Empty,
+    ///     IsIsolated,
+    /// };
+    ///
+    /// let mut digraph = AdjacencyList::empty(3);
+    ///
+    /// digraph.add_arc(0, 1);
+    /// digraph.add_arc(1, 0);
+    ///
+    /// assert!(!digraph.is_isolated(0));
+    /// assert!(!digraph.is_isolated(1));
+    /// assert!(digraph.is_isolated(2));
+    /// ```
     #[must_use]
     fn is_isolated(&self, u: usize) -> bool;
 }

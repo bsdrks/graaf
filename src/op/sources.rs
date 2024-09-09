@@ -71,27 +71,27 @@ use crate::{
 ///
 /// assert!(digraph.sources().eq([0, 3]));
 /// ```
-///
-/// # Examples
-///
-/// ```
-/// use graaf::{
-///     AddArc,
-///     AdjacencyList,
-///     Empty,
-///     Sources,
-/// };
-///
-/// let mut digraph = AdjacencyList::empty(4);
-///
-/// digraph.add_arc(0, 1);
-/// digraph.add_arc(0, 2);
-/// digraph.add_arc(1, 2);
-///
-/// assert!(digraph.sources().eq([0, 3]));
-/// ```
 pub trait Sources {
     /// Return an iterator over the sources in the digraph.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use graaf::{
+    ///     AddArc,
+    ///     AdjacencyList,
+    ///     Empty,
+    ///     Sources,
+    /// };
+    ///
+    /// let mut digraph = AdjacencyList::empty(4);
+    ///
+    /// digraph.add_arc(0, 1);
+    /// digraph.add_arc(0, 2);
+    /// digraph.add_arc(1, 2);
+    ///
+    /// assert!(digraph.sources().eq([0, 3]));
+    /// ```
     fn sources(&self) -> impl Iterator<Item = usize>;
 }
 

@@ -49,22 +49,22 @@
 ///     }
 /// }
 /// ```
-///
-/// # Examples
-///
-/// ```
-/// use graaf::{
-///     AdjacencyList,
-///     Circuit,
-///     Size,
-/// };
-///
-/// let digraph = AdjacencyList::circuit(3);
-///
-/// assert_eq!(digraph.size(), 3);
-/// ```
 pub trait Size {
-    /// Counts the arcs in the digraph.
+    /// Count the arcs in the digraph.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use graaf::{
+    ///     AdjacencyList,
+    ///     Circuit,
+    ///     Size,
+    /// };
+    ///
+    /// let digraph = AdjacencyList::circuit(3);
+    ///
+    /// assert_eq!(digraph.size(), 3);
+    /// ```
     #[must_use]
     fn size(&self) -> usize;
 }

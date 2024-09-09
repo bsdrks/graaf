@@ -80,28 +80,6 @@ use crate::{
 /// assert_eq!(digraph.degree(2), 3);
 /// assert_eq!(digraph.degree(3), 0);
 /// ```
-///
-/// # Examples
-///
-/// ```
-/// use graaf::{
-///     AddArc,
-///     AdjacencyList,
-///     Degree,
-///     Empty,
-/// };
-///
-/// let mut digraph = AdjacencyList::empty(3);
-///
-/// digraph.add_arc(0, 1);
-/// digraph.add_arc(0, 2);
-/// digraph.add_arc(1, 2);
-/// digraph.add_arc(2, 0);
-///
-/// assert_eq!(digraph.degree(0), 3);
-/// assert_eq!(digraph.degree(1), 2);
-/// assert_eq!(digraph.degree(2), 3);
-/// ```
 #[doc(alias = "Semidegree")]
 #[doc(alias = "Valence")]
 #[doc(alias = "Valency")]
@@ -111,6 +89,28 @@ pub trait Degree {
     /// # Arguments
     ///
     /// * `u`: The vertex.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use graaf::{
+    ///     AddArc,
+    ///     AdjacencyList,
+    ///     Degree,
+    ///     Empty,
+    /// };
+    ///
+    /// let mut digraph = AdjacencyList::empty(3);
+    ///
+    /// digraph.add_arc(0, 1);
+    /// digraph.add_arc(0, 2);
+    /// digraph.add_arc(1, 2);
+    /// digraph.add_arc(2, 0);
+    ///
+    /// assert_eq!(digraph.degree(0), 3);
+    /// assert_eq!(digraph.degree(1), 2);
+    /// assert_eq!(digraph.degree(2), 3);
+    /// ```
     #[doc(alias = "semidegree")]
     #[doc(alias = "valence")]
     #[doc(alias = "valency")]
