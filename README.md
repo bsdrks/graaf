@@ -106,9 +106,9 @@ The Bellman-Ford-Moore algorithm finds the shortest distances from a source vert
 
 A breadth-first search explores the vertices of an unweighted digraph in order of their distance from a source.
 
-- [`Bfs`] iterates over the vertices.
-- [`BfsDist`] iterates over the vertices and their distance from the source.
-- [`BfsPred`] iterates over the vertices and their predecessors.
+- [`Bfs`] iterates the vertices.
+- [`BfsDist`] iterates the vertices and their distance from the source.
+- [`BfsPred`] iterates the vertices and their predecessors.
 - [`BfsDist::distances`] finds the shortest distances.
 - [`BfsPred::predecessors`] finds the predecessors.
 - [`BfsPred::shortest_path`] finds the shortest path.
@@ -117,18 +117,18 @@ A breadth-first search explores the vertices of an unweighted digraph in order o
 
 A depth-first search explores the vertices of an unweighted digraph in order of their depth from a source.
 
-- [`Dfs`] iterates over the vertices.
-- [`DfsDist`] iterates over the vertices and their distance from the source.
-- [`DfsPred`] iterates over the vertices and their predecessors.
+- [`Dfs`] iterates the vertices.
+- [`DfsDist`] iterates the vertices and their distance from the source.
+- [`DfsPred`] iterates the vertices and their predecessors.
 - [`DfsPred::predecessors`] finds the predecessors.
 
 ### Dijkstra
 
 Dijkstra's algorithm finds the shortest paths in an arc-weighted digraph.
 
-- [`Dijkstra`] iterates over the vertices.
-- [`DijkstraDist`] iterates over the vertices.
-- [`DijkstraPred`] iterates over the vertices and their predecessors.
+- [`Dijkstra`] iterates the vertices.
+- [`DijkstraDist`] iterates the vertices.
+- [`DijkstraPred`] iterates the vertices and their predecessors.
 - [`DijkstraDist::distances`] finds the shortest distances.
 - [`DijkstraPred::predecessors`] finds the predecessors.
 - [`DijkstraPred::shortest_path`] finds the shortest path.

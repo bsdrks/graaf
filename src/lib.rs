@@ -95,10 +95,10 @@
 //! A breadth-first search explores the vertices of an unweighted digraph in
 //! order of their distance from a source.
 //!
-//! - [`Bfs`](bfs::Bfs) iterates over the vertices.
-//! - [`BfsDist`](bfs_dist::BfsDist) iterates over the vertices and their
-//!   distance from the source.
-//! - [`BfsPred`](bfs_pred::BfsPred) iterates over the vertices and their
+//! - [`Bfs`](bfs::Bfs) iterates the vertices.
+//! - [`BfsDist`](bfs_dist::BfsDist) iterates the vertices and their distance
+//!   from the source.
+//! - [`BfsPred`](bfs_pred::BfsPred) iterates the vertices and their
 //!   predecessors.
 //! - [`BfsDist::distances`](bfs_dist::BfsDist::distances) finds the shortest
 //!   distances.
@@ -112,10 +112,10 @@
 //! A depth-first search explores the vertices of an unweighted digraph in
 //! order of their distance from a source.
 //!
-//! - [`Dfs`](dfs::Dfs) iterates over the vertices.
-//! - [`DfsDist`](dfs_dist::DfsDist) iterates over the vertices and their
-//!   distance from the source.
-//! - [`DfsPred`](dfs_pred::DfsPred) iterates over the vertices and their
+//! - [`Dfs`](dfs::Dfs) iterates the vertices.
+//! - [`DfsDist`](dfs_dist::DfsDist) iterates the vertices and their distance
+//!   from the source.
+//! - [`DfsPred`](dfs_pred::DfsPred) iterates the vertices and their
 //!   predecessors.
 //! - [`DfsPred::predecessors`](dfs_pred::DfsPred::predecessors) finds the
 //!   predecessors.
@@ -125,11 +125,11 @@
 //! Dijkstra's algorithm finds the shortest paths from one or more source
 //! vertices in an arc-weighted digraph.
 //!
-//! - [`Dijkstra`](dijkstra::Dijkstra) iterates over the vertices.
-//! - [`DijkstraDist`](dijkstra_dist::DijkstraDist) iterates over the vertices
-//!   and their distance from the source.
-//! - [`DijkstraPred`](dijkstra_pred::DijkstraPred) iterates over the vertices
-//!   and their predecessors.
+//! - [`Dijkstra`](dijkstra::Dijkstra) iterates the vertices.
+//! - [`DijkstraDist`](dijkstra_dist::DijkstraDist) iterates the vertices and
+//!   their distance from the source.
+//! - [`DijkstraPred`](dijkstra_pred::DijkstraPred) iterates the vertices and
+//!   their predecessors.
 //! - [`DijkstraDist::distances`](dijkstra_dist::DijkstraDist::distances) finds
 //!   the shortest distances.
 //! - [`DijkstraPred::predecessors`](dijkstra_pred::DijkstraPred::predecessors)
