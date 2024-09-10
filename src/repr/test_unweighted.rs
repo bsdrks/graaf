@@ -338,10 +338,38 @@ macro_rules! test_unweighted {
             }
 
             #[test]
+            fn biclique_max_indegree(m in 1..25_usize, n in 1..25_usize) {
+                let digraph = $type::biclique(m, n);
+
+                assert_eq!(digraph.max_indegree(), m.max(n));
+            }
+
+            #[test]
+            fn biclique_max_outdegree(m in 1..25_usize, n in 1..25_usize) {
+                let digraph = $type::biclique(m, n);
+
+                assert_eq!(digraph.max_outdegree(), m.max(n));
+            }
+
+            #[test]
             fn biclique_min_degree(m in 1..25_usize, n in 1..25_usize) {
                 let digraph = $type::biclique(m, n);
 
                 assert_eq!(digraph.min_degree(), m.min(n) * 2);
+            }
+
+            #[test]
+            fn biclique_min_indegree(m in 1..25_usize, n in 1..25_usize) {
+                let digraph = $type::biclique(m, n);
+
+                assert_eq!(digraph.min_indegree(), m.min(n));
+            }
+
+            #[test]
+            fn biclique_min_outdegree(m in 1..25_usize, n in 1..25_usize) {
+                let digraph = $type::biclique(m, n);
+
+                assert_eq!(digraph.min_outdegree(), m.min(n));
             }
 
             #[test]
@@ -607,10 +635,42 @@ macro_rules! test_unweighted {
             }
 
             #[test]
+            fn circuit_max_indegree(order in 1..25_usize) {
+                assert_eq!(
+                    $type::circuit(order).max_indegree(),
+                    if order == 1 { 0 } else { 1 }
+                );
+            }
+
+            #[test]
+            fn circuit_max_outdegree(order in 1..25_usize) {
+                assert_eq!(
+                    $type::circuit(order).max_outdegree(),
+                    if order == 1 { 0 } else { 1 }
+                );
+            }
+
+            #[test]
             fn circuit_min_degree(order in 1..25_usize) {
                 assert_eq!(
                     $type::circuit(order).min_degree(),
                     if order == 1 { 0 } else { 2 }
+                );
+            }
+
+            #[test]
+            fn circuit_min_indegree(order in 1..25_usize) {
+                assert_eq!(
+                    $type::circuit(order).min_indegree(),
+                    if order == 1 { 0 } else { 1 }
+                );
+            }
+
+            #[test]
+            fn circuit_min_outdegree(order in 1..25_usize) {
+                assert_eq!(
+                    $type::circuit(order).min_outdegree(),
+                    if order == 1 { 0 } else { 1 }
                 );
             }
 
@@ -837,10 +897,42 @@ macro_rules! test_unweighted {
             }
 
             #[test]
+            fn complete_max_indegree(order in 1..25_usize) {
+                assert_eq!(
+                    $type::complete(order).max_indegree(),
+                    if order == 1 { 0 } else { order - 1 }
+                );
+            }
+
+            #[test]
+            fn complete_max_outdegree(order in 1..25_usize) {
+                assert_eq!(
+                    $type::complete(order).max_outdegree(),
+                    if order == 1 { 0 } else { order - 1 }
+                );
+            }
+
+            #[test]
             fn complete_min_degree(order in 1..25_usize) {
                 assert_eq!(
                     $type::complete(order).min_degree(),
                     if order == 1 { 0 } else { (order - 1) * 2 }
+                );
+            }
+
+            #[test]
+            fn complete_min_indegree(order in 1..25_usize) {
+                assert_eq!(
+                    $type::complete(order).min_indegree(),
+                    if order == 1 { 0 } else { order - 1 }
+                );
+            }
+
+            #[test]
+            fn complete_min_outdegree(order in 1..25_usize) {
+                assert_eq!(
+                    $type::complete(order).min_outdegree(),
+                    if order == 1 { 0 } else { order - 1 }
                 );
             }
 
@@ -1092,6 +1184,30 @@ macro_rules! test_unweighted {
             }
 
             #[test]
+            fn cycle_max_indegree(order in 1..25_usize) {
+                assert_eq!(
+                    $type::cycle(order).max_indegree(),
+                    match order {
+                        1 => 0,
+                        2 => 1,
+                        _ => 2,
+                    }
+                );
+            }
+
+            #[test]
+            fn cycle_max_outdegree(order in 1..25_usize) {
+                assert_eq!(
+                    $type::cycle(order).max_outdegree(),
+                    match order {
+                        1 => 0,
+                        2 => 1,
+                        _ => 2,
+                    }
+                );
+            }
+
+            #[test]
             fn cycle_min_degree(order in 1..25_usize) {
                 assert_eq!(
                     $type::cycle(order).min_degree(),
@@ -1099,6 +1215,30 @@ macro_rules! test_unweighted {
                         1 => 0,
                         2 => 2,
                         _ => 4,
+                    }
+                );
+            }
+
+            #[test]
+            fn cycle_min_indegree(order in 1..25_usize) {
+                assert_eq!(
+                    $type::cycle(order).min_indegree(),
+                    match order {
+                        1 => 0,
+                        2 => 1,
+                        _ => 2,
+                    }
+                );
+            }
+
+            #[test]
+            fn cycle_min_outdegree(order in 1..25_usize) {
+                assert_eq!(
+                    $type::cycle(order).min_outdegree(),
+                    match order {
+                        1 => 0,
+                        2 => 1,
+                        _ => 2,
                     }
                 );
             }
@@ -1353,8 +1493,28 @@ macro_rules! test_unweighted {
             }
 
             #[test]
+            fn empty_max_indegree(order in 1..25_usize) {
+                assert_eq!($type::empty(order).max_indegree(), 0);
+            }
+
+            #[test]
+            fn empty_max_outdegree(order in 1..25_usize) {
+                assert_eq!($type::empty(order).max_outdegree(), 0);
+            }
+
+            #[test]
             fn empty_min_degree(order in 1..25_usize) {
                 assert_eq!($type::empty(order).min_degree(), 0);
+            }
+
+            #[test]
+            fn empty_min_indegree(order in 1..25_usize) {
+                assert_eq!($type::empty(order).min_indegree(), 0);
+            }
+
+            #[test]
+            fn empty_min_outdegree(order in 1..25_usize) {
+                assert_eq!($type::empty(order).min_outdegree(), 0);
             }
 
             #[test]
@@ -1756,11 +1916,37 @@ macro_rules! test_unweighted {
             }
 
             #[test]
+            fn path_max_indegree(order in 1..25_usize) {
+                assert_eq!(
+                    $type::path(order).max_indegree(),
+                    if order == 1 { 0 } else { 1 }
+                );
+            }
+
+            #[test]
+            fn path_max_outdegree(order in 1..25_usize) {
+                assert_eq!(
+                    $type::path(order).max_outdegree(),
+                    if order == 1 { 0 } else { 1 }
+                );
+            }
+
+            #[test]
             fn path_min_degree(order in 1..25_usize) {
                 assert_eq!(
                     $type::path(order).min_degree(),
                     if order == 1 { 0 } else { 1 }
                 );
+            }
+
+            #[test]
+            fn path_min_indegree(order in 1..25_usize) {
+                assert_eq!($type::path(order).min_indegree(), 0);
+            }
+
+            #[test]
+            fn path_min_outdegree(order in 1..25_usize) {
+                assert_eq!($type::path(order).min_outdegree(), 0);
             }
 
             #[test]
@@ -2300,10 +2486,36 @@ macro_rules! test_unweighted {
             }
 
             #[test]
+            fn star_max_indegree(order in 1..25_usize) {
+                assert_eq!($type::star(order).max_indegree(), order - 1);
+            }
+
+            #[test]
+            fn star_max_outdegree(order in 1..25_usize) {
+                assert_eq!($type::star(order).max_outdegree(), order - 1);
+            }
+
+            #[test]
             fn star_min_degree(order in 1..25_usize) {
                 assert_eq!(
                     $type::star(order).min_degree(),
                     if order == 1 { 0 } else { 2 }
+                );
+            }
+
+            #[test]
+            fn star_min_indegree(order in 1..25_usize) {
+                assert_eq!(
+                    $type::star(order).min_indegree(),
+                    if order == 1 { 0 } else { 1 }
+                );
+            }
+
+            #[test]
+            fn star_min_outdegree(order in 1..25_usize) {
+                assert_eq!(
+                    $type::star(order).min_outdegree(),
+                    if order == 1 { 0 } else { 1 }
                 );
             }
 
@@ -2796,8 +3008,28 @@ macro_rules! test_unweighted {
             }
 
             #[test]
+            fn wheel_max_indegree(order in 4..25_usize) {
+                assert_eq!($type::wheel(order).max_indegree(), order - 1);
+            }
+
+            #[test]
+            fn wheel_max_outdegree(order in 4..25_usize) {
+                assert_eq!($type::wheel(order).max_outdegree(), order - 1);
+            }
+
+            #[test]
             fn wheel_min_degree(order in 4..25_usize) {
                 assert_eq!($type::wheel(order).min_degree(), 6);
+            }
+
+            #[test]
+            fn wheel_min_indegree(order in 4..25_usize) {
+                assert_eq!($type::wheel(order).min_indegree(), 3);
+            }
+
+            #[test]
+            fn wheel_min_outdegree(order in 4..25_usize) {
+                assert_eq!($type::wheel(order).min_outdegree(), 3);
             }
 
             #[test]
@@ -5104,6 +5336,276 @@ macro_rules! test_unweighted {
             assert!(!digraph.has_walk(&[11]));
             assert!(!digraph.has_walk(&[12, 0]));
             assert!(!digraph.has_walk(&[13, 0]));
+        }
+
+        #[test]
+        fn max_degree_bang_jensen_196() {
+            assert_eq!(bang_jensen_196().max_degree(), 4);
+        }
+
+        #[test]
+        fn max_degree_bang_jensen_34() {
+            assert_eq!(bang_jensen_34().max_degree(), 3);
+        }
+
+        #[test]
+        fn max_degree_bang_jensen_94() {
+            assert_eq!(bang_jensen_94().max_degree(), 5);
+        }
+
+        #[test]
+        fn max_degree_kattis_builddeps() {
+            assert_eq!(kattis_builddeps().max_degree(), 3);
+        }
+
+        #[test]
+        fn max_degree_kattis_cantinaofbabel_1() {
+            assert_eq!(kattis_cantinaofbabel_1().max_degree(), 8);
+        }
+
+        #[test]
+        fn max_degree_kattis_cantinaofbabel_2() {
+            assert_eq!(kattis_cantinaofbabel_2().max_degree(), 4);
+        }
+
+        #[test]
+        fn max_degree_kattis_escapewallmaria_1() {
+            assert_eq!(kattis_escapewallmaria_1().max_degree(), 4);
+        }
+
+        #[test]
+        fn max_degree_kattis_escapewallmaria_2() {
+            assert_eq!(kattis_escapewallmaria_2().max_degree(), 4);
+        }
+
+        #[test]
+        fn max_degree_kattis_escapewallmaria_3() {
+            assert_eq!(kattis_escapewallmaria_3().max_degree(), 6);
+        }
+
+        #[test]
+        fn max_indegree_bang_jensen_196() {
+            assert_eq!(bang_jensen_196().max_indegree(), 3);
+        }
+
+        #[test]
+        fn max_indegree_bang_jensen_34() {
+            assert_eq!(bang_jensen_34().max_indegree(), 2);
+        }
+
+        #[test]
+        fn max_indegree_bang_jensen_94() {
+            assert_eq!(bang_jensen_94().max_indegree(), 2);
+        }
+
+        #[test]
+        fn max_indegree_kattis_builddeps() {
+            assert_eq!(kattis_builddeps().max_indegree(), 3);
+        }
+
+        #[test]
+        fn max_indegree_kattis_cantinaofbabel_1() {
+            assert_eq!(kattis_cantinaofbabel_1().max_indegree(), 3);
+        }
+
+        #[test]
+        fn max_indegree_kattis_cantinaofbabel_2() {
+            assert_eq!(kattis_cantinaofbabel_2().max_indegree(), 3);
+        }
+
+        #[test]
+        fn max_indegree_kattis_escapewallmaria_1() {
+            assert_eq!(kattis_escapewallmaria_1().max_indegree(), 2);
+        }
+
+        #[test]
+        fn max_indegree_kattis_escapewallmaria_2() {
+            assert_eq!(kattis_escapewallmaria_2().max_indegree(), 2);
+        }
+
+        #[test]
+        fn max_indegree_kattis_escapewallmaria_3() {
+            assert_eq!(kattis_escapewallmaria_3().max_indegree(), 3);
+        }
+
+        #[test]
+        fn max_outdegree_bang_jensen_196() {
+            assert_eq!(bang_jensen_196().max_outdegree(), 3);
+        }
+
+        #[test]
+        fn max_outdegree_bang_jensen_34() {
+            assert_eq!(bang_jensen_34().max_outdegree(), 3);
+        }
+
+        #[test]
+        fn max_outdegree_bang_jensen_94() {
+            assert_eq!(bang_jensen_94().max_outdegree(), 4);
+        }
+
+        #[test]
+        fn max_outdegree_kattis_builddeps() {
+            assert_eq!(kattis_builddeps().max_outdegree(), 3);
+        }
+
+        #[test]
+        fn max_outdegree_kattis_cantinaofbabel_1() {
+            assert_eq!(kattis_cantinaofbabel_1().max_outdegree(), 6);
+        }
+
+        #[test]
+        fn max_outdegree_kattis_cantinaofbabel_2() {
+            assert_eq!(kattis_cantinaofbabel_2().max_outdegree(), 3);
+        }
+
+        #[test]
+        fn max_outdegree_kattis_escapewallmaria_1() {
+            assert_eq!(kattis_escapewallmaria_1().max_outdegree(), 2);
+        }
+
+        #[test]
+        fn max_outdegree_kattis_escapewallmaria_2() {
+            assert_eq!(kattis_escapewallmaria_2().max_outdegree(), 2);
+        }
+
+        #[test]
+        fn max_outdegree_kattis_escapewallmaria_3() {
+            assert_eq!(kattis_escapewallmaria_3().max_outdegree(), 3);
+        }
+
+        #[test]
+        fn min_degree_bang_jensen_196() {
+            assert_eq!(bang_jensen_196().min_degree(), 2);
+        }
+
+        #[test]
+        fn min_degree_bang_jensen_34() {
+            assert_eq!(bang_jensen_34().min_degree(), 1);
+        }
+
+        #[test]
+        fn min_degree_bang_jensen_94() {
+            assert_eq!(bang_jensen_94().min_degree(), 1);
+        }
+
+        #[test]
+        fn min_degree_kattis_builddeps() {
+            assert_eq!(kattis_builddeps().min_degree(), 2);
+        }
+
+        #[test]
+        fn min_degree_kattis_cantinaofbabel_1() {
+            assert_eq!(kattis_cantinaofbabel_1().min_degree(), 2);
+        }
+
+        #[test]
+        fn min_degree_kattis_cantinaofbabel_2() {
+            assert_eq!(kattis_cantinaofbabel_2().min_degree(), 2);
+        }
+
+        #[test]
+        fn min_degree_kattis_escapewallmaria_1() {
+            assert_eq!(kattis_escapewallmaria_1().min_degree(), 0);
+        }
+
+        #[test]
+        fn min_degree_kattis_escapewallmaria_2() {
+            assert_eq!(kattis_escapewallmaria_2().min_degree(), 0);
+        }
+
+        #[test]
+        fn min_degree_kattis_escapewallmaria_3() {
+            assert_eq!(kattis_escapewallmaria_3().min_degree(), 0);
+        }
+
+        #[test]
+        fn min_indegree_bang_jensen_196() {
+            assert_eq!(bang_jensen_196().min_indegree(), 1);
+        }
+
+        #[test]
+        fn min_indegree_bang_jensen_34() {
+            assert_eq!(bang_jensen_34().min_indegree(), 0);
+        }
+
+        #[test]
+        fn min_indegree_bang_jensen_94() {
+            assert_eq!(bang_jensen_94().min_indegree(), 0);
+        }
+
+        #[test]
+        fn min_indegree_kattis_builddeps() {
+            assert_eq!(kattis_builddeps().min_indegree(), 0);
+        }
+
+        #[test]
+        fn min_indegree_kattis_cantinaofbabel_1() {
+            assert_eq!(kattis_cantinaofbabel_1().min_indegree(), 0);
+        }
+
+        #[test]
+        fn min_indegree_kattis_cantinaofbabel_2() {
+            assert_eq!(kattis_cantinaofbabel_2().min_indegree(), 1);
+        }
+
+        #[test]
+        fn min_indegree_kattis_escapewallmaria_1() {
+            assert_eq!(kattis_escapewallmaria_1().min_indegree(), 0);
+        }
+
+        #[test]
+        fn min_indegree_kattis_escapewallmaria_2() {
+            assert_eq!(kattis_escapewallmaria_2().min_indegree(), 0);
+        }
+
+        #[test]
+        fn min_indegree_kattis_escapewallmaria_3() {
+            assert_eq!(kattis_escapewallmaria_3().min_indegree(), 0);
+        }
+
+        #[test]
+        fn min_outdegree_bang_jensen_196() {
+            assert_eq!(bang_jensen_196().min_outdegree(), 1);
+        }
+
+        #[test]
+        fn min_outdegree_bang_jensen_34() {
+            assert_eq!(bang_jensen_34().min_outdegree(), 0);
+        }
+
+        #[test]
+        fn min_outdegree_bang_jensen_94() {
+            assert_eq!(bang_jensen_94().min_outdegree(), 0);
+        }
+
+        #[test]
+        fn min_outdegree_kattis_builddeps() {
+            assert_eq!(kattis_builddeps().min_outdegree(), 0);
+        }
+
+        #[test]
+        fn min_outdegree_kattis_cantinaofbabel_1() {
+            assert_eq!(kattis_cantinaofbabel_1().min_outdegree(), 1);
+        }
+
+        #[test]
+        fn min_outdegree_kattis_cantinaofbabel_2() {
+            assert_eq!(kattis_cantinaofbabel_2().min_outdegree(), 1);
+        }
+
+        #[test]
+        fn min_outdegree_kattis_escapewallmaria_1() {
+            assert_eq!(kattis_escapewallmaria_1().min_outdegree(), 0);
+        }
+
+        #[test]
+        fn min_outdegree_kattis_escapewallmaria_2() {
+            assert_eq!(kattis_escapewallmaria_2().min_outdegree(), 0);
+        }
+
+        #[test]
+        fn min_outdegree_kattis_escapewallmaria_3() {
+            assert_eq!(kattis_escapewallmaria_3().min_outdegree(), 0);
         }
 
         #[test]

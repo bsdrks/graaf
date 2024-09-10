@@ -5,8 +5,6 @@
 - Add a trait for path contraction.
 - Add a trait for set contraction.
 - Add the `Barabási–Albert` generator.
-- Add the `DeleteArc` trait.
-- Add the `DeleteVertex` trait.
 - Add the `IsIsomorphic` trait.
 - Add the `MaxSemidegree` trait.
 - Add the `MinSemidegree` trait.
@@ -26,7 +24,16 @@
 - Mention the order of tranversal in the `Dfs` documentation.
 - Mention the order of tranversal in the `Dijkstra` documentation.
 
-## [0.88.5] - 2024-09-10
+## [0.88.6] - 2024-09-10
+
+Added
+
+- Test `MaxIndegree`.
+- Test `MaxOutdegree`.
+- Test `MinIndegree`.
+- Test `MinOutdegree`.
+
+## [0.88.5] - 2024-09-09
 
 Added
 
