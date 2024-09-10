@@ -198,8 +198,14 @@ mod tests {
         crate::{
             repr::adjacency_list::fixture::{
                 bang_jensen_196,
+                bang_jensen_34,
+                bang_jensen_94,
+                kattis_builddeps,
                 kattis_cantinaofbabel_1,
                 kattis_cantinaofbabel_2,
+                kattis_escapewallmaria_1,
+                kattis_escapewallmaria_2,
+                kattis_escapewallmaria_3,
             },
             AdjacencyList,
             Empty,
@@ -221,41 +227,135 @@ mod tests {
     }
 
     #[test]
+    fn strongly_connected_components_bang_jensen_34() {
+        assert!(strongly_connected_components(&bang_jensen_34()).iter().eq(
+            &[
+                BTreeSet::from([4]),
+                BTreeSet::from([0]),
+                BTreeSet::from([1]),
+                BTreeSet::from([3]),
+                BTreeSet::from([5]),
+                BTreeSet::from([2]),
+            ]
+        ));
+    }
+
+    #[test]
+    fn strongly_connected_components_bang_jensen_94() {
+        assert!(strongly_connected_components(&bang_jensen_94()).iter().eq(
+            &[
+                BTreeSet::from([5]),
+                BTreeSet::from([3]),
+                BTreeSet::from([1]),
+                BTreeSet::from([6]),
+                BTreeSet::from([4]),
+                BTreeSet::from([2]),
+                BTreeSet::from([0]),
+            ]
+        ));
+    }
+
+    #[test]
+    fn strongly_connected_components_kattis_builddeps() {
+        assert!(strongly_connected_components(&kattis_builddeps())
+            .iter()
+            .eq(&[
+                BTreeSet::from([1]),
+                BTreeSet::from([3]),
+                BTreeSet::from([4]),
+                BTreeSet::from([0]),
+                BTreeSet::from([5]),
+                BTreeSet::from([2]),
+            ]));
+    }
+
+    #[test]
     fn strongly_connected_components_kattis_cantinaofbabel_1() {
-        assert_eq!(
-            strongly_connected_components(&kattis_cantinaofbabel_1())
-                .into_iter()
-                .collect::<BTreeSet<BTreeSet<_>>>(),
-            BTreeSet::from([
-                BTreeSet::from([0, 1, 2, 3, 4, 7, 9, 11]),
+        assert!(strongly_connected_components(&kattis_cantinaofbabel_1())
+            .iter()
+            .eq(&[
                 BTreeSet::from([5, 6, 10]),
+                BTreeSet::from([0, 1, 2, 3, 4, 7, 9, 11]),
                 BTreeSet::from([8]),
-            ])
-        );
+            ]));
     }
 
     #[test]
     fn strongly_connected_components_kattis_cantinaofbabel_2() {
-        assert_eq!(
-            strongly_connected_components(&kattis_cantinaofbabel_2())
-                .into_iter()
-                .collect::<BTreeSet<BTreeSet<_>>>(),
-            BTreeSet::from([
-                BTreeSet::from([0, 1, 2, 7]),
+        assert!(strongly_connected_components(&kattis_cantinaofbabel_2())
+            .iter()
+            .eq(&[
                 BTreeSet::from([3, 4]),
                 BTreeSet::from([5, 6]),
+                BTreeSet::from([0, 1, 2, 7]),
                 BTreeSet::from([8, 9, 10, 11]),
-            ])
-        );
+            ]));
+    }
+
+    #[test]
+    fn strongly_connected_components_kattis_escapewallmaria_1() {
+        assert!(strongly_connected_components(&kattis_escapewallmaria_1())
+            .iter()
+            .eq(&[
+                BTreeSet::from([0]),
+                BTreeSet::from([1]),
+                BTreeSet::from([2]),
+                BTreeSet::from([3]),
+                BTreeSet::from([4]),
+                BTreeSet::from([12]),
+                BTreeSet::from([5, 6, 9, 13]),
+                BTreeSet::from([7]),
+                BTreeSet::from([8]),
+                BTreeSet::from([10]),
+                BTreeSet::from([11]),
+                BTreeSet::from([14]),
+                BTreeSet::from([15]),
+            ]));
+    }
+
+    #[test]
+    fn strongly_connected_components_kattis_escapewallmaria_2() {
+        assert!(strongly_connected_components(&kattis_escapewallmaria_2())
+            .iter()
+            .eq(&[
+                BTreeSet::from([0]),
+                BTreeSet::from([1]),
+                BTreeSet::from([2]),
+                BTreeSet::from([3]),
+                BTreeSet::from([4]),
+                BTreeSet::from([5, 6, 9]),
+                BTreeSet::from([7]),
+                BTreeSet::from([8]),
+                BTreeSet::from([10]),
+                BTreeSet::from([11]),
+                BTreeSet::from([12, 13]),
+                BTreeSet::from([14]),
+                BTreeSet::from([15]),
+            ]));
+    }
+
+    #[test]
+    fn strongly_connected_components_kattis_escapewallmaria_3() {
+        assert!(strongly_connected_components(&kattis_escapewallmaria_3())
+            .iter()
+            .eq(&[
+                BTreeSet::from([0]),
+                BTreeSet::from([1, 2, 5, 6, 9, 12, 13]),
+                BTreeSet::from([3]),
+                BTreeSet::from([4]),
+                BTreeSet::from([7]),
+                BTreeSet::from([8]),
+                BTreeSet::from([10]),
+                BTreeSet::from([11]),
+                BTreeSet::from([14]),
+                BTreeSet::from([15]),
+            ]));
     }
 
     #[test]
     fn strongly_connected_components_trivial() {
-        assert_eq!(
-            strongly_connected_components(&AdjacencyList::trivial())
-                .into_iter()
-                .collect::<BTreeSet<BTreeSet<_>>>(),
-            BTreeSet::from([BTreeSet::from([0])])
-        );
+        assert!(strongly_connected_components(&AdjacencyList::trivial())
+            .iter()
+            .eq(&[BTreeSet::from([0])]));
     }
 }
