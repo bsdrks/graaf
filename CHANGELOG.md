@@ -18,9 +18,9 @@
 - Improve doctest and add image to `DistanceMatrix::periphery`.
 - Improve doctest and add image to `PredecessorTree::search_by`.
 - Improve doctest and add image to `PredecessorTree::search`.
-- Mention the order of tranversal in the `Bfs` documentation.
-- Mention the order of tranversal in the `Dfs` documentation.
-- Mention the order of tranversal in the `Dijkstra` documentation.
+- Mention the order of traversal in the `Bfs` documentation.
+- Mention the order of traversal in the `Dfs` documentation.
+- Mention the order of traversal in the `Dijkstra` documentation.
 
 ## [0.88.6] - 2024-09-10
 
