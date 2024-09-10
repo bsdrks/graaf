@@ -22,6 +22,12 @@
 - Mention the order of traversal in the `Dfs` documentation.
 - Mention the order of traversal in the `Dijkstra` documentation.
 
+## [0.88.7] - 2024-09-10
+
+Added
+
+- Add `BfsPred::cycles`.
+
 ## [0.88.6] - 2024-09-10
 
 Added

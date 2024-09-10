@@ -489,6 +489,6 @@ mod tests {
         assert!(DijkstraDist::new(&digraph, &[0])
             .distances()
             .values()
-            .eq(&[0, 2, 4,]));
+            .eq(&[0, 2, 4]));
     }
 }

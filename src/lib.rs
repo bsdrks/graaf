@@ -102,6 +102,8 @@
 //!   predecessors.
 //! - [`BfsDist::distances`](bfs_dist::BfsDist::distances) finds the shortest
 //!   distances.
+//! - [`BfsPred::cycles`](bfs_pred::BfsPred::predecessors) returns the cycles
+//!   along the shortest path.
 //! - [`BfsPred::predecessors`](bfs_pred::BfsPred::predecessors) finds the
 //!   predecessors.
 //! - [`BfsPred::shortest_path`](bfs_pred::BfsPred::shortest_path) finds the

@@ -97,12 +97,12 @@
 //! digraph.add_arc(1, 2);
 //! digraph.add_arc(3, 2);
 //!
-//! assert!(digraph.arcs().eq([(0, 1), (1, 2), (3, 2),]));
+//! assert!(digraph.arcs().eq([(0, 1), (1, 2), (3, 2)]));
 //!
 //! // This does not change the digraph.
 //! digraph.add_arc(0, 1);
 //!
-//! assert!(digraph.arcs().eq([(0, 1), (1, 2), (3, 2),]));
+//! assert!(digraph.arcs().eq([(0, 1), (1, 2), (3, 2)]));
 //! ```
 
 pub mod fixture;
@@ -232,12 +232,12 @@ use {
 /// digraph.add_arc(1, 2);
 /// digraph.add_arc(3, 2);
 ///
-/// assert!(digraph.arcs().eq([(0, 1), (1, 2), (3, 2),]));
+/// assert!(digraph.arcs().eq([(0, 1), (1, 2), (3, 2)]));
 ///
 /// // This does not change the digraph.
 /// digraph.add_arc(0, 1);
 ///
-/// assert!(digraph.arcs().eq([(0, 1), (1, 2), (3, 2),]));
+/// assert!(digraph.arcs().eq([(0, 1), (1, 2), (3, 2)]));
 /// ```
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct AdjacencyMatrix {

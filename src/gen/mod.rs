@@ -149,7 +149,7 @@
 //!     Path,
 //! };
 //!
-//! assert!(AdjacencyList::path(4).arcs().eq([(0, 1), (1, 2), (2, 3),]));
+//! assert!(AdjacencyList::path(4).arcs().eq([(0, 1), (1, 2), (2, 3)]));
 //! ```
 //!
 //! ## Random tournament digraph

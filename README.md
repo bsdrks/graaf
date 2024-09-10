@@ -28,7 +28,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.88.6"
+graaf = "0.88.7"
 ```
 
 ## Representations
@@ -110,6 +110,7 @@ A breadth-first search explores the vertices of an unweighted digraph in order o
 - [`BfsDist`] iterates the vertices and their distance from the source.
 - [`BfsPred`] iterates the vertices and their predecessors.
 - [`BfsDist::distances`] finds the shortest distances.
+- [`BfsPred::cycles`] returns the cycles along the shortest path.
 - [`BfsPred::predecessors`] finds the predecessors.
 - [`BfsPred::shortest_path`] finds the shortest path.
 
@@ -173,6 +174,7 @@ Tarjan's algorithm finds strongly connected components in a digraph.
 [`Arcs`]: https://docs.rs/graaf/latest/graaf/op/arcs/trait.Arcs.html
 [`BfsDist::distances`]: https://docs.rs/graaf/latest/graaf/algo/bfs_dist/struct.BfsDist.html#method.distances
 [`BfsDist`]: https://docs.rs/graaf/latest/graaf/algo/bfs_dist/struct.BfsDist.html
+[`BfsPred::cycles`]: https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.BfsPred.html#method.cycles
 [`BfsPred::predecessors`]: https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.BfsPred.html#method.predecessors
 [`BfsPred::shortest_path`]: https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.BfsPred.html#method.shortest_path
 [`BfsPred`]: https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.BfsPred.html

@@ -377,7 +377,7 @@ mod tests {
         let digraph = bang_jensen_34();
 
         assert!(DfsPred::new(&digraph, &[0])
-            .eq([Step { u: None, v: 0 }, Step { u: Some(0), v: 4 },]));
+            .eq([Step { u: None, v: 0 }, Step { u: Some(0), v: 4 }]));
     }
 
     #[test]

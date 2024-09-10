@@ -231,6 +231,140 @@ impl<'a, D> BfsPred<'a, D> {
         }
     }
 
+    /// Return cycles along the shortest path.
+    ///
+    /// Warning: This method does not find all cycles sharing a vertex with
+    /// multiple predecessors.
+    ///
+    /// # Panics
+    ///
+    /// * Panics if `self.next` panics.
+    /// * Panics if a source vertex is not in `self.digraph`.
+    /// * Panics if a successor vertex is not in `self.digraph`.
+    ///
+    /// # Examples
+    ///
+    /// ## Single source, connected
+    ///
+    /// ![Cycles with BFS, single source, connected](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_cycles_1-0.88.6.svg?)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     bfs_pred::BfsPred,
+    ///     AddArc,
+    ///     AdjacencyList,
+    ///     Empty,
+    /// };
+    ///
+    /// let mut digraph = AdjacencyList::empty(10);
+    ///
+    /// digraph.add_arc(0, 1);
+    /// digraph.add_arc(0, 5);
+    /// digraph.add_arc(1, 2);
+    /// digraph.add_arc(1, 3);
+    /// digraph.add_arc(2, 0);
+    /// digraph.add_arc(3, 4);
+    /// digraph.add_arc(3, 5);
+    /// digraph.add_arc(4, 5);
+    /// digraph.add_arc(4, 6);
+    /// digraph.add_arc(5, 8);
+    /// digraph.add_arc(6, 7);
+    /// digraph.add_arc(6, 9);
+    /// digraph.add_arc(7, 3);
+    /// digraph.add_arc(8, 9);
+    /// digraph.add_arc(9, 5);
+    ///
+    /// assert!(BfsPred::new(&digraph, &[0]).cycles().iter().eq(&[
+    ///     vec![0, 1, 2],
+    ///     vec![5, 8, 9],
+    ///     vec![3, 4, 6, 7]
+    /// ]));
+    /// ```
+    ///
+    /// ## Single source, disconnected
+    ///
+    /// ![Cycles with BFS, single source, disconnected](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_cycles_disconnected_1-0.88.6.svg?)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     bfs_pred::BfsPred,
+    ///     AddArc,
+    ///     AdjacencyList,
+    ///     Empty,
+    /// };
+    ///
+    /// let mut digraph = AdjacencyList::empty(10);
+    ///
+    /// digraph.add_arc(0, 1);
+    /// digraph.add_arc(1, 2);
+    /// digraph.add_arc(2, 0);
+    /// digraph.add_arc(3, 4);
+    /// digraph.add_arc(4, 6);
+    /// digraph.add_arc(5, 8);
+    /// digraph.add_arc(6, 7);
+    /// digraph.add_arc(7, 3);
+    /// digraph.add_arc(8, 9);
+    /// digraph.add_arc(9, 5);
+    ///
+    /// assert!(BfsPred::new(&digraph, &[0])
+    ///     .cycles()
+    ///     .iter()
+    ///     .eq(&[vec![0, 1, 2]]));
+    /// ```
+    ///
+    /// ## Multiple sources, disconnected
+    ///
+    /// ![Cycles with BFS, multiple sources, disconnected](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_cycles_multi_source_1-0.88.6.svg?)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     bfs_pred::BfsPred,
+    ///     AddArc,
+    ///     AdjacencyList,
+    ///     Empty,
+    /// };
+    ///
+    /// let mut digraph = AdjacencyList::empty(10);
+    ///
+    /// digraph.add_arc(0, 1);
+    /// digraph.add_arc(1, 2);
+    /// digraph.add_arc(2, 0);
+    /// digraph.add_arc(3, 4);
+    /// digraph.add_arc(4, 6);
+    /// digraph.add_arc(5, 8);
+    /// digraph.add_arc(6, 7);
+    /// digraph.add_arc(7, 3);
+    /// digraph.add_arc(8, 9);
+    /// digraph.add_arc(9, 5);
+    ///
+    /// assert!(BfsPred::new(&digraph, &[1, 8, 4]).cycles().iter().eq(&[
+    ///     vec![1, 2, 0],
+    ///     vec![8, 9, 5],
+    ///     vec![4, 6, 7, 3]
+    /// ]));
+    /// ```
+    #[must_use]
+    pub fn cycles(&mut self) -> Vec<Vec<usize>>
+    where
+        D: Order + OutNeighbors,
+    {
+        let mut pred = PredecessorTree::new(self.digraph.order());
+        let mut cycles = Vec::new();
+
+        while let Some(Step { u, v }) = self.next() {
+            pred[v] = u;
+
+            for x in self.digraph.out_neighbors(v) {
+                if let Some(mut path) = pred.search(v, x) {
+                    path.reverse();
+                    cycles.push(path);
+                }
+            }
+        }
+
+        cycles
+    }
+
     /// Find the predecessor tree.
     ///
     /// # Panics
@@ -478,6 +612,109 @@ mod tests {
             kattis_escapewallmaria_3,
         },
     };
+
+    #[test]
+    fn cycles_bang_jensen_196() {
+        let digraph = bang_jensen_196();
+
+        assert!(BfsPred::new(&digraph, &[0]).cycles().iter().eq(&[
+            vec![0, 1],
+            vec![2, 3],
+            vec![7, 5, 6]
+        ]));
+    }
+
+    #[test]
+    fn cycles_bang_jensen_34() {
+        let digraph = bang_jensen_34();
+
+        assert!(BfsPred::new(&digraph, &[0])
+            .cycles()
+            .iter()
+            .eq::<&[Vec<usize>]>(&[]));
+    }
+
+    #[test]
+    fn cycles_bang_jensen_94() {
+        let digraph = bang_jensen_94();
+
+        assert!(BfsPred::new(&digraph, &[0])
+            .cycles()
+            .iter()
+            .eq::<&[Vec<usize>]>(&[]));
+    }
+
+    #[test]
+    fn cycles_kattis_builddeps() {
+        let digraph = kattis_builddeps();
+
+        assert!(BfsPred::new(&digraph, &[0])
+            .cycles()
+            .iter()
+            .eq::<&[Vec<usize>]>(&[]));
+    }
+
+    #[test]
+    fn cycles_kattis_cantinaofbabel_1() {
+        let digraph = kattis_cantinaofbabel_1();
+
+        assert!(BfsPred::new(&digraph, &[0]).cycles().iter().eq(&[
+            vec![0, 1],
+            vec![1, 2],
+            vec![4, 3],
+            vec![3, 7],
+            vec![5, 6],
+            vec![11, 9]
+        ]));
+    }
+
+    #[test]
+    fn cycles_kattis_cantinaofbabel_2() {
+        let digraph = kattis_cantinaofbabel_2();
+
+        assert!(BfsPred::new(&digraph, &[0]).cycles().iter().eq(&[
+            vec![0, 1],
+            vec![0, 1, 7, 2],
+            vec![7, 2],
+            vec![5, 6],
+            vec![3, 4]
+        ]));
+    }
+
+    #[test]
+    fn cycles_kattis_escapewallmaria_1() {
+        let digraph = kattis_escapewallmaria_1();
+
+        assert!(BfsPred::new(&digraph, &[5]).cycles().iter().eq(&[
+            vec![5, 6],
+            vec![5, 9],
+            vec![9, 13]
+        ]));
+    }
+
+    #[test]
+    fn cycles_kattis_escapewallmaria_2() {
+        let digraph = kattis_escapewallmaria_2();
+
+        assert!(BfsPred::new(&digraph, &[5])
+            .cycles()
+            .iter()
+            .eq(&[vec![5, 6], vec![5, 9]]));
+    }
+
+    #[test]
+    fn cycles_kattis_escapewallmaria_3() {
+        let digraph = kattis_escapewallmaria_3();
+
+        assert!(BfsPred::new(&digraph, &[5]).cycles().iter().eq(&[
+            vec![5, 1],
+            vec![5, 6],
+            vec![5, 9],
+            vec![1, 2],
+            vec![9, 13],
+            vec![13, 12]
+        ]));
+    }
 
     #[test]
     fn iter_bang_jensen_196() {
