@@ -6,8 +6,6 @@
 - Add a trait for set contraction.
 - Add the `Barabási–Albert` generator.
 - Add the `IsIsomorphic` trait.
-- Add the `MaxSemidegree` trait.
-- Add the `MinSemidegree` trait.
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
 - Check examples for `op::*`.
@@ -28,6 +26,7 @@
 
 Added
 
+- Add `MaxDegree` tests.
 - Test `MaxIndegree`.
 - Test `MaxOutdegree`.
 - Test `MinIndegree`.
