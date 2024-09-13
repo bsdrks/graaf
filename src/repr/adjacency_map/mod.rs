@@ -11,12 +11,12 @@
 //! ```
 //! use graaf::{
 //!     AddArc,
-//!     AdjacencyList,
+//!     AdjacencyMap,
 //!     Arcs,
 //!     Empty,
 //! };
 //!
-//! let mut digraph = AdjacencyList::empty(5);
+//! let mut digraph = AdjacencyMap::empty(5);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(0, 2);
@@ -51,11 +51,11 @@
 //! ```should_panic
 //! use graaf::{
 //!     AddArc,
-//!     AdjacencyList,
+//!     AdjacencyMap,
 //!     Empty,
 //! };
 //!
-//! let mut digraph = AdjacencyList::empty(4);
+//! let mut digraph = AdjacencyMap::empty(4);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(1, 2);
@@ -77,12 +77,12 @@
 //! ```
 //! use graaf::{
 //!     AddArc,
-//!     AdjacencyList,
+//!     AdjacencyMap,
 //!     Arcs,
 //!     Empty,
 //! };
 //!
-//! let mut digraph = AdjacencyList::empty(4);
+//! let mut digraph = AdjacencyMap::empty(4);
 //!
 //! digraph.add_arc(0, 1);
 //! digraph.add_arc(1, 2);
@@ -109,6 +109,7 @@ use {
         Circuit,
         Converse,
         Empty,
+        FilterVertices,
         HasArc,
         Indegree,
         IsSimple,
@@ -120,7 +121,10 @@ use {
         Size,
         Vertices,
     },
-    std::collections::BTreeSet,
+    std::collections::{
+        BTreeMap,
+        BTreeSet,
+    },
 };
 
 /// A representation of an unweighted digraph.
@@ -136,12 +140,12 @@ use {
 /// ```
 /// use graaf::{
 ///     AddArc,
-///     AdjacencyList,
+///     AdjacencyMap,
 ///     Arcs,
 ///     Empty,
 /// };
 ///
-/// let mut digraph = AdjacencyList::empty(5);
+/// let mut digraph = AdjacencyMap::empty(5);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(0, 2);
@@ -176,11 +180,11 @@ use {
 /// ```should_panic
 /// use graaf::{
 ///     AddArc,
-///     AdjacencyList,
+///     AdjacencyMap,
 ///     Empty,
 /// };
 ///
-/// let mut digraph = AdjacencyList::empty(4);
+/// let mut digraph = AdjacencyMap::empty(4);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(1, 2);
@@ -202,12 +206,12 @@ use {
 /// ```
 /// use graaf::{
 ///     AddArc,
-///     AdjacencyList,
+///     AdjacencyMap,
 ///     Arcs,
 ///     Empty,
 /// };
 ///
-/// let mut digraph = AdjacencyList::empty(4);
+/// let mut digraph = AdjacencyMap::empty(4);
 ///
 /// digraph.add_arc(0, 1);
 /// digraph.add_arc(1, 2);
@@ -221,11 +225,11 @@ use {
 /// assert!(digraph.arcs().eq([(0, 1), (1, 2), (3, 2)]));
 /// ```
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
-pub struct AdjacencyList {
-    arcs: Vec<BTreeSet<usize>>,
+pub struct AdjacencyMap {
+    arcs: BTreeMap<usize, BTreeSet<usize>>,
 }
 
-impl AddArc for AdjacencyList {
+impl AddArc for AdjacencyMap {
     /// # Panics
     ///
     /// * Panics if `u` equals `v`; self-loops are not allowed.
@@ -235,31 +239,26 @@ impl AddArc for AdjacencyList {
         // Self-loops are not allowed.
         assert_ne!(u, v, "u = {u} equals v = {v}");
 
-        let order = self.order();
-
-        assert!(u < order, "u = {u} is not in the digraph");
-        assert!(v < order, "v = {v} is not in the digraph");
-
-        let _ = self.arcs[u].insert(v);
+        let _ = self.arcs.entry(u).or_default().insert(v);
+        let _ = self.arcs.entry(v).or_default();
     }
 }
 
-impl ArcWeight<usize> for AdjacencyList {
+impl ArcWeight<usize> for AdjacencyMap {
     fn arc_weight(&self, u: usize, v: usize) -> Option<&usize> {
         self.has_arc(u, v).then_some(&1)
     }
 }
 
-impl Arcs for AdjacencyList {
+impl Arcs for AdjacencyMap {
     fn arcs(&self) -> impl Iterator<Item = (usize, usize)> {
         self.arcs
             .iter()
-            .enumerate()
-            .flat_map(|(u, set)| set.iter().map(move |&v| (u, v)))
+            .flat_map(|(u, set)| set.iter().map(move |v| (*u, *v)))
     }
 }
 
-impl ArcsWeighted<usize> for AdjacencyList {
+impl ArcsWeighted<usize> for AdjacencyMap {
     fn arcs_weighted<'a>(
         &'a self,
     ) -> impl Iterator<Item = (usize, usize, &'a usize)>
@@ -270,7 +269,7 @@ impl ArcsWeighted<usize> for AdjacencyList {
     }
 }
 
-impl Biclique for AdjacencyList {
+impl Biclique for AdjacencyMap {
     /// # Panics
     ///
     /// * Panics if `m` is zero.
@@ -285,18 +284,18 @@ impl Biclique for AdjacencyList {
         let mut digraph = Self::empty(order);
 
         for u in 0..m {
-            digraph.arcs[u].clone_from(&clique_2);
+            let _ = digraph.arcs.insert(u, clique_2.clone());
         }
 
         for u in m..order {
-            digraph.arcs[u].clone_from(&clique_1);
+            let _ = digraph.arcs.insert(u, clique_1.clone());
         }
 
         digraph
     }
 }
 
-impl Circuit for AdjacencyList {
+impl Circuit for AdjacencyMap {
     /// # Panics
     ///
     /// Panics if `order` is zero.
@@ -309,13 +308,13 @@ impl Circuit for AdjacencyList {
 
         Self {
             arcs: (0..order)
-                .map(|u| BTreeSet::from([(u + 1) % order]))
-                .collect::<Vec<_>>(),
+                .map(|u| (u, BTreeSet::from([(u + 1) % order])))
+                .collect(),
         }
     }
 }
 
-impl Converse for AdjacencyList {
+impl Converse for AdjacencyMap {
     /// # Panics
     ///
     /// Panics if the order of the digraph is zero.
@@ -331,7 +330,7 @@ impl Converse for AdjacencyList {
     }
 }
 
-impl Empty for AdjacencyList {
+impl Empty for AdjacencyMap {
     /// # Panics
     ///
     /// Panics if `order` is zero.
@@ -342,7 +341,7 @@ impl Empty for AdjacencyList {
     }
 }
 
-impl<I> From<I> for AdjacencyList
+impl<I> From<I> for AdjacencyMap
 where
     I: IntoIterator<Item = BTreeSet<usize>>,
 {
@@ -352,64 +351,86 @@ where
     /// * Panics if, for any arc `u -> v` in `arcs`, `v` is not in the digraph.
     fn from(iter: I) -> Self {
         let digraph = Self {
-            arcs: iter.into_iter().collect(),
+            arcs: iter.into_iter().enumerate().collect(),
         };
 
         for (u, v) in digraph.arcs() {
             assert_ne!(u, v, "u = {u} equals v = {v}");
-            assert!(v < digraph.order(), "v = {v} is not in the digraph");
+
+            assert!(
+                digraph.arcs.contains_key(&v),
+                "v = {v} is not in the digraph"
+            );
         }
 
         digraph
     }
 }
 
-impl HasArc for AdjacencyList {
-    fn has_arc(&self, u: usize, v: usize) -> bool {
-        self.arcs.get(u).map_or(false, |set| set.contains(&v))
+impl FilterVertices for AdjacencyMap {
+    /// # Panics
+    ///
+    /// Panics if the subgraph has zero vertices.
+    fn filter_vertices<P>(&self, predicate: P) -> Self
+    where
+        P: Fn(usize) -> bool,
+    {
+        let mut arcs = BTreeMap::<usize, BTreeSet<usize>>::new();
+
+        for (u, v) in self.arcs() {
+            if predicate(u) && predicate(v) {
+                let _ = arcs.entry(u).or_default().insert(v);
+                let _ = arcs.entry(v).or_default();
+            }
+        }
+
+        Self { arcs }
     }
 }
 
-impl Indegree for AdjacencyList {
+impl HasArc for AdjacencyMap {
+    fn has_arc(&self, u: usize, v: usize) -> bool {
+        self.arcs.get(&u).map_or(false, |set| set.contains(&v))
+    }
+}
+
+impl Indegree for AdjacencyMap {
     /// # Panics
     ///
     /// Panics if `v` is not in the digraph.
     fn indegree(&self, v: usize) -> usize {
-        assert!(v < self.order(), "v = {v} is not in the digraph");
+        assert!(self.arcs.contains_key(&v), "v = {v} is not in the digraph");
 
-        self.arcs.iter().filter(|set| set.contains(&v)).count()
+        self.arcs.values().filter(|set| set.contains(&v)).count()
     }
 }
 
-impl IsSimple for AdjacencyList {
+impl IsSimple for AdjacencyMap {
     fn is_simple(&self) -> bool {
         // We only check for self-loops. Parallel arcs can not exist in this
         // representation.
-        self.arcs
-            .iter()
-            .enumerate()
-            .all(|(u, set)| !set.contains(&u))
+        self.arcs.iter().all(|(u, set)| !set.contains(u))
     }
 }
 
-impl Order for AdjacencyList {
+impl Order for AdjacencyMap {
     fn order(&self) -> usize {
         self.arcs.len()
     }
 }
 
-impl OutNeighbors for AdjacencyList {
+impl OutNeighbors for AdjacencyMap {
     /// # Panics
     ///
     /// Panics if `u` is not in the digraph.
     fn out_neighbors(&self, u: usize) -> impl Iterator<Item = usize> {
-        assert!(u < self.order(), "u = {u} is not in the digraph");
+        assert!(self.arcs.contains_key(&u), "u = {u} is not in the digraph");
 
-        self.arcs[u].iter().copied()
+        self.arcs[&u].iter().copied()
     }
 }
 
-impl OutNeighborsWeighted<usize> for AdjacencyList {
+impl OutNeighborsWeighted<usize> for AdjacencyMap {
     /// # Panics
     ///
     /// Panics if `u` is not in the digraph.
@@ -424,30 +445,30 @@ impl OutNeighborsWeighted<usize> for AdjacencyList {
     }
 }
 
-impl Outdegree for AdjacencyList {
+impl Outdegree for AdjacencyMap {
     /// # Panics
     ///
     /// Panics if `u` is not in the digraph.
     fn outdegree(&self, u: usize) -> usize {
-        assert!(u < self.order(), "u = {u} is not in the digraph");
+        assert!(self.arcs.contains_key(&u), "u = {u} is not in the digraph");
 
-        self.arcs[u].len()
+        self.arcs[&u].len()
     }
 }
 
-impl RemoveArc for AdjacencyList {
+impl RemoveArc for AdjacencyMap {
     fn remove_arc(&mut self, u: usize, v: usize) -> bool {
-        self.arcs.get_mut(u).map_or(false, |set| set.remove(&v))
+        self.arcs.get_mut(&u).map_or(false, |set| set.remove(&v))
     }
 }
 
-impl Size for AdjacencyList {
+impl Size for AdjacencyMap {
     fn size(&self) -> usize {
-        self.arcs.iter().map(BTreeSet::len).sum()
+        self.arcs.values().map(BTreeSet::len).sum()
     }
 }
 
-impl Union for AdjacencyList {
+impl Union for AdjacencyMap {
     fn union(&self, other: &Self) -> Self {
         let (mut union, other) = if self.order() > other.order() {
             (self.clone(), other)
@@ -463,9 +484,9 @@ impl Union for AdjacencyList {
     }
 }
 
-impl Vertices for AdjacencyList {
+impl Vertices for AdjacencyMap {
     fn vertices(&self) -> impl Iterator<Item = usize> {
-        0..self.order()
+        self.arcs.keys().copied()
     }
 }
 
@@ -476,23 +497,11 @@ mod tests {
         crate::test_unweighted,
     };
 
-    test_unweighted!(AdjacencyList, repr::adjacency_list::fixture);
-
-    #[test]
-    #[should_panic(expected = "v = 1 is not in the digraph")]
-    fn add_arc_out_of_bounds_u() {
-        AdjacencyList::trivial().add_arc(0, 1);
-    }
-
-    #[test]
-    #[should_panic(expected = "u = 1 is not in the digraph")]
-    fn add_arc_out_of_bounds_v() {
-        AdjacencyList::trivial().add_arc(1, 0);
-    }
+    test_unweighted!(AdjacencyMap, repr::adjacency_map::fixture);
 
     #[test]
     fn from_vec() {
-        let digraph = AdjacencyList::from(vec![
+        let digraph = AdjacencyMap::from(vec![
             BTreeSet::from([1]),
             BTreeSet::from([2]),
             BTreeSet::new(),
@@ -506,13 +515,13 @@ mod tests {
     #[should_panic(expected = "v = 1 is not in the digraph")]
     fn from_vec_out_of_bounds_v() {
         let vec = vec![BTreeSet::from([1])];
-        let _ = AdjacencyList::from(vec);
+        let _ = AdjacencyMap::from(vec);
     }
 
     #[test]
     #[should_panic(expected = "u = 0 equals v = 0")]
     fn from_vec_u_equals_v() {
         let vec = vec![BTreeSet::from([0])];
-        let _ = AdjacencyList::from(vec);
+        let _ = AdjacencyMap::from(vec);
     }
 }

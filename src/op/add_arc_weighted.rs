@@ -71,8 +71,8 @@ pub trait AddArcWeighted<W> {
     /// # Panics
     ///
     /// * Should panic if `u` equals `v`.
-    /// * Should panic if `u` is out of bounds.
-    /// * Should panic if `v` is out of bounds.
+    /// * Should panic if `u` is not in the digraph.
+    /// * Should panic if `v` is not in the digraph.
     ///
     /// # Examples
     ///

@@ -49,8 +49,8 @@
 
 use {
     crate::{
-        Order,
         OutNeighbors,
+        Vertices,
     },
     std::collections::{
         BTreeMap,
@@ -114,9 +114,8 @@ use {
 #[must_use]
 pub fn strongly_connected_components<D>(digraph: &D) -> Vec<BTreeSet<usize>>
 where
-    D: Order + OutNeighbors,
+    D: OutNeighbors + Vertices,
 {
-    let order = digraph.order();
     let mut i = 0;
     let mut stack = Vec::new();
     let mut on_stack = BTreeSet::new();
@@ -124,7 +123,7 @@ where
     let mut low_link = BTreeMap::new();
     let mut components = Vec::new();
 
-    for u in 0..order {
+    for u in digraph.vertices() {
         if !index.contains_key(&u) {
             connect(
                 digraph,

@@ -15,6 +15,7 @@ Rust-powered directed graphs.
   - [Dijkstra](#dijkstra)
   - [Distance Matrix](#distance-matrix)
   - [Floyd-Warshall](#floyd-warshall)
+  - [Johnson's Circuit-Finding Algorithm](#johnsons-circuit-finding-algorithm)
   - [Predecessor Tree](#predecessor-tree)
   - [Tarjan](#tarjan)
 - [Changelog](#changelog)
@@ -28,15 +29,24 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.88.8"
+graaf = "0.89.0"
 ```
 
 ## Representations
 
-- [`AdjacencyList`] represents unweighted sparse digraphs.
-- [`AdjacencyMatrix`] represents unweighted dense digraphs.
-- [`AdjacencyListWeighted`] represents arc-weighted sparse digraphs.
-- [`EdgeList`] represents unweighted sparse digraphs.
+### Arc-Weighted Sparse Digraphs
+
+- [`AdjacencyListWeighted`] represents digraphs as a vector of maps.
+
+### Unweighted Dense Digraphs
+
+- [`AdjacencyMatrix`] represents digraphs as a matrix using a bit vector.
+
+### Unweighted Sparse Digraphs
+
+- [`AdjacencyList`] represents digraphs as a vector of sets.
+- [`AdjacencyMap`] represents digraphs as a map of sets.
+- [`EdgeList`] represents digraphs as a vector of tuples.
 
 ## Generators
 
@@ -62,6 +72,7 @@ graaf = "0.88.8"
 - [`Converse`] returns a digraph's converse.
 - [`DegreeSequence`] iterates a digraph's degrees.
 - [`Degree`] returns a vertex's degree.
+- [`FilterVertices`] filters a digraph's vertices.
 - [`HasArc`] checks whether a digraph contains an arc.
 - [`HasEdge`] checks whether a digraph contains an edge.
 - [`HasWalk`] checks whether a digraph contains a walk.
@@ -100,7 +111,7 @@ graaf = "0.88.8"
 
 The Bellman-Ford-Moore algorithm finds the shortest distances from a source vertex to all other vertices in an arc-weighted digraph with negative weights.
 
-- [`bellman_ford_moore::single_source_distances`]finds the shortest distances.
+- [`bellman_ford_moore::single_source_distances`] finds the shortest distances.
 
 ### Breadth-First Search
 
@@ -149,6 +160,12 @@ A [`DistanceMatrix`] contains the shortest distances between all pairs of vertic
 The Floyd-Warshall algorithm finds the distance between each pair of vertices in an arc-weighted digraph.
 
 - [`floyd_warshall::distances`] finds the shortest distances.
+
+### Johnson's Circuit-Finding Algorithm
+
+Johnson's circuit-finding algorithm finds all circuits in a digraph.
+
+- [`Johnson75::find_circuits`] finds all circuits.
 
 ### Predecessor Tree
 
@@ -205,6 +222,7 @@ Tarjan's algorithm finds strongly connected components in a digraph.
 [`DistanceMatrix`]: https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html
 [`Empty`]: https://docs.rs/graaf/latest/graaf/gen/empty/trait.Empty.html
 [`ErdosRenyi`]: https://docs.rs/graaf/latest/graaf/gen/erdos_renyi/trait.ErdosRenyi.html
+[`FilterVertices`]: https://docs.rs/graag/latest/graaf/op/filter_vertices/trait.FilterVertices.html
 [`HasArc`]: https://docs.rs/graaf/latest/graaf/op/has_arc/trait.HasArc.html
 [`HasEdge`]: https://docs.rs/graaf/latest/graaf/op/has_edge/trait.HasEdge.html
 [`HasWalk`]: https://docs.rs/graaf/latest/graaf/op/has_walk/trait.HasWalk.html
@@ -224,6 +242,7 @@ Tarjan's algorithm finds strongly connected components in a digraph.
 [`IsSuperdigraph`]: https://docs.rs/graaf/latest/graaf/op/is_superdigraph/trait.IsSuperdigraph.html
 [`IsSymmetric`]: https://docs.rs/graaf/latest/graaf/op/is_symmetric/trait.IsSymmetric.html
 [`IsTournament`]: https://docs.rs/graaf/latest/graaf/op/is_tournament/trait.IsTournament.html
+[`Johnson75::find_circuits`]: https://docs.rs/graaf/latest/graaf/algo/johnson75/struct.Johnson75.html#method.find_circuits
 [`Order`]: https://docs.rs/graaf/latest/graaf/op/order/trait.Order.html
 [`OutNeighborsWeighted`]: https://docs.rs/graaf/latest/graaf/op/out_neighbors_weighted/trait.OutNeighborsWeighted.html
 [`OutNeighbors`]: https://docs.rs/graaf/latest/graaf/op/out_neighbors/trait.OutNeighbors.html

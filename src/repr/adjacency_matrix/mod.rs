@@ -107,30 +107,27 @@
 
 pub mod fixture;
 
-use {
-    crate::{
-        AddArc,
-        AdjacencyList,
-        ArcWeight,
-        Arcs,
-        ArcsWeighted,
-        Biclique,
-        Circuit,
-        Converse,
-        Empty,
-        HasArc,
-        Indegree,
-        IsSimple,
-        Order,
-        OutNeighbors,
-        OutNeighborsWeighted,
-        Outdegree,
-        RemoveArc,
-        Size,
-        Union,
-        Vertices,
-    },
-    std::collections::BTreeSet,
+use crate::{
+    AddArc,
+    AdjacencyList,
+    ArcWeight,
+    Arcs,
+    ArcsWeighted,
+    Biclique,
+    Circuit,
+    Converse,
+    Empty,
+    HasArc,
+    Indegree,
+    IsSimple,
+    Order,
+    OutNeighbors,
+    OutNeighborsWeighted,
+    Outdegree,
+    RemoveArc,
+    Size,
+    Union,
+    Vertices,
 };
 
 /// A representation of an unweighted digraph.
@@ -263,8 +260,8 @@ impl AdjacencyMatrix {
     ///
     /// # Panics
     ///
-    /// * Panics if `u` is out of bounds.
-    /// * Panics if `v` is out of bounds.
+    /// * Panics if `u` is not in the digraph.
+    /// * Panics if `v` is not in the digraph.
     /// * Panics if `u` equals `v`.
     ///
     /// # Examples
@@ -285,8 +282,8 @@ impl AdjacencyMatrix {
     /// assert!(digraph.has_arc(0, 1));
     /// ```
     pub fn toggle(&mut self, u: usize, v: usize) {
-        assert!(u < self.order, "u = {u} is out of bounds.");
-        assert!(v < self.order, "v = {v} is out of bounds.");
+        assert!(u < self.order, "u = {u} is not in the digraph.");
+        assert!(v < self.order, "v = {v} is not in the digraph.");
         assert_ne!(u, v, "u = {u} equals v = {v}.");
 
         let i = self.index(u, v);
@@ -299,12 +296,12 @@ impl AddArc for AdjacencyMatrix {
     /// # Panics
     ///
     /// * Panics if `u` equals `v`.
-    /// * Panics if `u` is out of bounds.
-    /// * Panics if `v` is out of bounds.
+    /// * Panics if `u` is not in the digraph.
+    /// * Panics if `v` is not in the digraph.
     fn add_arc(&mut self, u: usize, v: usize) {
         assert_ne!(u, v, "u = {u} equals v = {v}.");
-        assert!(u < self.order, "u = {u} is out of bounds.");
-        assert!(v < self.order, "v = {v} is out of bounds.");
+        assert!(u < self.order, "u = {u} is not in the digraph.");
+        assert!(v < self.order, "v = {v} is not in the digraph.");
 
         let i = self.index(u, v);
 
@@ -423,19 +420,30 @@ impl From<AdjacencyList> for AdjacencyMatrix {
     }
 }
 
-impl From<Vec<BTreeSet<usize>>> for AdjacencyMatrix {
+impl<I> From<I> for AdjacencyMatrix
+where
+    I: IntoIterator<Item = (usize, usize)>,
+{
     /// # Panics
     ///
     /// * Panics if for any arc `u -> v` in `arcs`, `u` equals `v`.
-    /// * Panics if for any arc `u -> v` in `arcs`, `v` is out of bounds.
-    fn from(vec: Vec<BTreeSet<usize>>) -> Self {
-        let order = vec.len();
-        let mut digraph = Self::empty(order);
+    /// * Panics if for any arc `u -> v` in `arcs`, `v` is not in the digraph.
+    fn from(vec: I) -> Self {
+        let mut order = 0;
+        let mut arcs = Vec::new();
 
-        for (u, set) in vec.into_iter().enumerate() {
-            for v in set {
-                digraph.add_arc(u, v);
-            }
+        for (u, v) in vec {
+            assert_ne!(u, v, "u = {u} equals v = {v}.");
+
+            order = order.max(u).max(v);
+
+            arcs.push((u, v));
+        }
+
+        let mut digraph = Self::empty(order + 1);
+
+        for (u, v) in arcs {
+            digraph.add_arc(u, v);
         }
 
         digraph
@@ -459,9 +467,9 @@ impl Indegree for AdjacencyMatrix {
     ///
     /// # Panics
     ///
-    /// Panics if `v` is out of bounds.
+    /// Panics if `v` is not in the digraph.
     fn indegree(&self, v: usize) -> usize {
-        assert!(v < self.order, "v = {v} is out of bounds.");
+        assert!(v < self.order, "v = {v} is not in the digraph.");
 
         self.vertices().filter(|&u| self.has_arc(u, v)).count()
     }
@@ -486,9 +494,9 @@ impl OutNeighbors for AdjacencyMatrix {
     ///
     /// # Panics
     ///
-    /// Panics if `u` is out of bounds.
+    /// Panics if `u` is not in the digraph.
     fn out_neighbors(&self, u: usize) -> impl Iterator<Item = usize> {
-        assert!(u < self.order, "u = {u} is out of bounds.");
+        assert!(u < self.order, "u = {u} is not in the digraph.");
 
         self.vertices().filter(move |&v| self.has_arc(u, v))
     }
@@ -499,7 +507,7 @@ impl OutNeighborsWeighted<usize> for AdjacencyMatrix {
     ///
     /// # Panics
     ///
-    /// Panics if `u` is out of bounds.
+    /// Panics if `u` is not in the digraph.
     fn out_neighbors_weighted<'a>(
         &'a self,
         u: usize,
@@ -516,9 +524,9 @@ impl Outdegree for AdjacencyMatrix {
     ///
     /// # Panics
     ///
-    /// Panics if `u` is out of bounds.
+    /// Panics if `u` is not in the digraph.
     fn outdegree(&self, u: usize) -> usize {
-        assert!(u < self.order, "u = {u} is out of bounds.");
+        assert!(u < self.order, "u = {u} is not in the digraph.");
 
         self.vertices().filter(|&v| self.has_arc(u, v)).count()
     }
@@ -583,29 +591,23 @@ mod tests {
     test_unweighted!(AdjacencyMatrix, repr::adjacency_matrix::fixture);
 
     #[test]
+    #[should_panic(expected = "v = 1 is not in the digraph")]
+    fn add_arc_out_of_bounds_u() {
+        AdjacencyMatrix::trivial().add_arc(0, 1);
+    }
+
+    #[test]
+    #[should_panic(expected = "u = 1 is not in the digraph")]
+    fn add_arc_out_of_bounds_v() {
+        AdjacencyMatrix::trivial().add_arc(1, 0);
+    }
+
+    #[test]
     fn from_vec() {
-        let digraph = AdjacencyMatrix::from(vec![
-            BTreeSet::from([1]),
-            BTreeSet::from([2]),
-            BTreeSet::new(),
-        ]);
+        let digraph = AdjacencyMatrix::from([(0, 1), (1, 2)]);
 
         assert_eq!(digraph.order(), 3);
         assert!(digraph.arcs().eq([(0, 1), (1, 2)]));
-    }
-
-    #[test]
-    #[should_panic(expected = "v = 1 is out of bounds")]
-    fn from_vec_out_of_bounds_v() {
-        let vec = vec![BTreeSet::from([1])];
-        let _ = AdjacencyMatrix::from(vec);
-    }
-
-    #[test]
-    #[should_panic(expected = "u = 0 equals v = 0")]
-    fn from_vec_u_equals_v() {
-        let vec = vec![BTreeSet::from([0])];
-        let _ = AdjacencyMatrix::from(vec);
     }
 
     #[test]
@@ -619,7 +621,7 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "u = 1 is out of bounds.")]
+    #[should_panic(expected = "u = 1 is not in the digraph.")]
     fn toggle_out_of_bounds_u() {
         let mut digraph = AdjacencyMatrix::trivial();
 
@@ -627,7 +629,7 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "v = 1 is out of bounds.")]
+    #[should_panic(expected = "v = 1 is not in the digraph.")]
     fn toggle_out_of_bounds_v() {
         let mut digraph = AdjacencyMatrix::trivial();
 

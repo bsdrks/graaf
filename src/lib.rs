@@ -14,15 +14,26 @@
 //!    - [Dijkstra](#dijkstra)
 //!    - [Distance Matrix](#distance-matrix)
 //!    - [Floyd-Warshall](#floyd-warshall)
+//!    - [Johnson's Circuit-Finding
+//!      Algorithm](#johnsons-circuit-finding-algorithm)
 //!    - [Predecessor Tree](#predecessor-tree)
 //!    - [Tarjan](#tarjan)
 //!
 //! # Representations
 //!
-//! - [`AdjacencyListWeighted`] represents arc-weighted sparse digraphs.
-//! - [`AdjacencyList`] represents unweighted sparse digraphs.
-//! - [`AdjacencyMatrix`] represents unweighted dense digraphs.
-//! - [`EdgeList`] represents unweighted sparse digraphs.
+//! ## Arc-Weighted Sparse Digraphs
+//!
+//! - [`AdjacencyListWeighted`] represents digraphs as a vector of maps.
+//!
+//! ## Unweighted Dense Digraphs
+//!
+//! - [`AdjacencyMatrix`] represents digraphs as a matrix using a bit vector.
+//!
+//! ## Unweighted Sparse Digraphs
+//!
+//! - [`AdjacencyList`] represents digraphs as a vector of sets.
+//! - [`AdjacencyMap`] represents digraphs as a map of sets.
+//! - [`EdgeList`] represents digraphs as a vector of tuples.
 //!
 //! # Generators
 //!
@@ -48,6 +59,7 @@
 //! - [`Converse`] returns a digraph's converse.
 //! - [`DegreeSequence`] iterates a digraph's degrees.
 //! - [`Degree`] returns a vertex's degree.
+//! - [`FilterVertices`] filters a digraph's vertices.
 //! - [`HasArc`] checks whether a digraph contains an arc.
 //! - [`HasEdge`] checks whether a digraph contains an edge.
 //! - [`HasWalk`] checks whether a digraph contains a walk.
@@ -161,15 +173,20 @@
 //!
 //! - [`floyd_warshall::distances`] finds the shortest distances.
 //!
+//! ## Johnson's Circuit-Finding Algorithm
+//!
+//! Johnson's circuit-finding algorithm finds all circuits in a digraph.
+//!
+//! - [`Johnson75::find_circuits`](johnson_75::Johnson75::find_circuits) finds
+//!   all circuits.
+//!
 //! ## Predecessor Tree
 //!
 //! A [`PredecessorTree`] is the result of a search and contains the
 //! predecessors of the vertices.
 //!
-//! - [`PredecessorTree::search`](PredecessorTree::search) finds a vertex by
-//!   value.
-//! - [`PredecessorTree::search_by`](PredecessorTree::search_by) finds a vertex
-//!   by predicate.
+//! - [`PredecessorTree::search`] finds a vertex by value.
+//! - [`PredecessorTree::search_by`] finds a vertex by predicate.
 //!
 //! ## Tarjan
 //!
@@ -224,6 +241,7 @@ pub mod repr;
 pub use repr::{
     AdjacencyList,
     AdjacencyListWeighted,
+    AdjacencyMap,
     AdjacencyMatrix,
     EdgeList,
 };
@@ -238,6 +256,7 @@ pub use op::{
     Converse,
     Degree,
     DegreeSequence,
+    FilterVertices,
     HasArc,
     HasEdge,
     HasWalk,
@@ -297,6 +316,7 @@ pub use algo::{
     dijkstra_pred,
     distance_matrix,
     floyd_warshall,
+    johnson_75,
     predecessor_tree,
     tarjan,
 };

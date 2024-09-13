@@ -22,6 +22,25 @@
 - Mention the order of traversal in the `Dfs` documentation.
 - Mention the order of traversal in the `Dijkstra` documentation.
 
+## [0.89.0] - 2024-09-12
+
+Added
+
+- Add the `AdjacencyMap` type.
+- Add the `FilterVertices` trait.
+- Add the `Johnson75` algorithm.
+- Implement From<I: IntoIterator<Item = (usize, usize)>> for EdgeList.
+- Implement From<I: IntoIterator<Item = BTreeMap<usize, W>>> for AdjacencyListWeighted\<W\>.
+- Implement From<I: IntoIterator<Item = BTreeSet\<usize\>>> for AdjacencyList.
+- Implement From<I: IntoIterator<Item = BTreeSet\<usize\>>> for AdjacencyMatrix.
+
+Removed
+
+- Breaking: Remove `From<BTreeSet<(usize, usize)>> for EdgeList`.
+- Breaking: Remove `From<Vec<BTreeMap<usize, W>>> for AdjacencyListWeighted<W>`.
+- Breaking: Remove `From<Vec<BTreeSet<usize>>> for AdjacencyList`.
+- Breaking: Remove `From<Vec<BTreeSet<usize>>> for AdjacencyMatrix`.
+
 ## [0.88.8] - 2024-09-10
 
 Changed
@@ -1194,15 +1213,15 @@ Added
 Changed
 
 - Breaking: `From<Vec<BTreeMap<usize, W>>>` for `adjacency_list_weighted::Digraph` panics if for any arc `u -> v`, `u` equals `v`.
-- Breaking: `From<Vec<BTreeMap<usize, W>>>` for `adjacency_list_weighted::Digraph` panics if for any arc `u -> v`, `v` is out of bounds.
+- Breaking: `From<Vec<BTreeMap<usize, W>>>` for `adjacency_list_weighted::Digraph` panics if for any arc `u -> v`, `v` is not in the digraph.
 - Breaking: `From<Vec<BTreeSet<usize>>>` for `adjacency_list::Digraph` panics if for any arc `u -> v`, `u` equals `v`.
-- Breaking: `From<Vec<BTreeSet<usize>>>` for `adjacency_list::Digraph` panics if for any arc `u -> v`, `v` is out of bounds.
+- Breaking: `From<Vec<BTreeSet<usize>>>` for `adjacency_list::Digraph` panics if for any arc `u -> v`, `v` is not in the digraph.
 - Breaking: `adjacency_list::Digraph::add_arc` panics if `u` equals `v`.
-- Breaking: `adjacency_list::Digraph::add_arc` panics if `u` is out of bounds.
-- Breaking: `adjacency_list::Digraph::add_arc` panics if `v` is out of bounds.
+- Breaking: `adjacency_list::Digraph::add_arc` panics if `u` is not in the digraph.
+- Breaking: `adjacency_list::Digraph::add_arc` panics if `v` is not in the digraph.
 - Breaking: `adjacency_list_weighted::Digraph::add_arc_weighted` panics if `u` equals `v`.
-- Breaking: `adjacency_list_weighted::Digraph::add_arc_weighted` panics if `u` is out of bounds.
-- Breaking: `adjacency_list_weighted::Digraph::add_arc_weighted` panics if `v` is out of bounds.
+- Breaking: `adjacency_list_weighted::Digraph::add_arc_weighted` panics if `u` is not in the digraph.
+- Breaking: `adjacency_list_weighted::Digraph::add_arc_weighted` panics if `v` is not in the digraph.
 - Breaking: `adjacency_matrix::Digraph::add_arc` panics if `u` equals `v`.
 - Breaking: `adjacency_matrix::Digraph::toggle` panics if `u` equals `v`.
 - Change unit test `from_vec` for `adjacency_matrix` to match `adjacency_list`.
@@ -1600,8 +1619,8 @@ Added
 
 Changed
 
-- Breaking: `indegree` panics if `v` is out of bounds in `adjacency_list_weighted`.
-- Breaking: `indegree` panics if `v` is out of bounds in `adjacency_list`.
+- Breaking: `indegree` panics if `v` is not in the digraph in `adjacency_list_weighted`.
+- Breaking: `indegree` panics if `v` is not in the digraph in `adjacency_list`.
 
 ## [0.67.2] - 2024-07-13
 
@@ -1835,7 +1854,7 @@ Added
 Changed
 
 - Breaking: `Complete::complete` is `#[must_use]`.
-- Breaking: `remove_arc` no longer panics for `adjacency_matrix` if `u` or `v` is out of bounds.
+- Breaking: `remove_arc` no longer panics for `adjacency_matrix` if `u` or `v` is not in the digraph.
 
 ## [0.64.18] - 2024-07-07
 

@@ -233,14 +233,14 @@ impl AddArc for EdgeList {
     /// # Panics
     ///
     /// * Panics if `u` equals `v`; self-loops are not allowed.
-    /// * Panics if `u` is out of bounds.
-    /// * Panics if `v` is out of bounds.
+    /// * Panics if `u` is not in the digraph.
+    /// * Panics if `v` is not in the digraph.
     fn add_arc(&mut self, u: usize, v: usize) {
         // Self-loops are not allowed.
         assert_ne!(u, v, "u = {u} equals v = {v}");
 
-        assert!(u < self.order, "u = {u} is out of bounds");
-        assert!(v < self.order, "v = {v} is out of bounds");
+        assert!(u < self.order, "u = {u} is not in the digraph");
+        assert!(v < self.order, "v = {v} is not in the digraph");
 
         let _ = self.arcs.insert((u, v));
     }
@@ -339,14 +339,19 @@ impl Empty for EdgeList {
     }
 }
 
-impl From<BTreeSet<(usize, usize)>> for EdgeList {
-    fn from(arcs: BTreeSet<(usize, usize)>) -> Self {
+impl<I> From<I> for EdgeList
+where
+    I: IntoIterator<Item = (usize, usize)>,
+{
+    fn from(iter: I) -> Self {
         let mut order = 0;
+        let mut arcs = BTreeSet::new();
 
-        for &(u, v) in &arcs {
+        for (u, v) in iter {
             assert_ne!(u, v, "u = {u} equals v = {v}");
 
             order = order.max(u).max(v);
+            let _ = arcs.insert((u, v));
         }
 
         Self {
@@ -393,9 +398,9 @@ impl Indegree for EdgeList {
     ///
     /// # Panics
     ///
-    /// Panics if `v` is out of bounds.
+    /// Panics if `v` is not in the digraph.
     fn indegree(&self, v: usize) -> usize {
-        assert!(v < self.order, "v = {v} is out of bounds");
+        assert!(v < self.order, "v = {v} is not in the digraph");
 
         self.arcs.iter().filter(|(_, y)| v == *y).count()
     }
@@ -422,9 +427,9 @@ impl OutNeighbors for EdgeList {
     ///
     /// # Panics
     ///
-    /// Panics if `u` is out of bounds.
+    /// Panics if `u` is not in the digraph.
     fn out_neighbors(&self, u: usize) -> impl Iterator<Item = usize> {
-        assert!(u < self.order, "u = {u} is out of bounds");
+        assert!(u < self.order, "u = {u} is not in the digraph");
 
         self.arcs
             .iter()
@@ -439,7 +444,7 @@ impl OutNeighborsWeighted<usize> for EdgeList {
     ///
     /// # Panics
     ///
-    /// Panics if `u` is out of bounds.
+    /// Panics if `u` is not in the digraph.
     fn out_neighbors_weighted<'a>(
         &'a self,
         u: usize,
@@ -447,7 +452,7 @@ impl OutNeighborsWeighted<usize> for EdgeList {
     where
         usize: 'a,
     {
-        assert!(u < self.order, "u = {u} is out of bounds");
+        assert!(u < self.order, "u = {u} is not in the digraph");
 
         self.arcs
             .iter()
@@ -461,9 +466,9 @@ impl Outdegree for EdgeList {
     ///
     /// # Panics
     ///
-    /// Panics if `u` is out of bounds.
+    /// Panics if `u` is not in the digraph.
     fn outdegree(&self, u: usize) -> usize {
-        assert!(u < self.order, "u = {u} is out of bounds");
+        assert!(u < self.order, "u = {u} is not in the digraph");
 
         self.arcs.iter().filter(|&(x, _)| u == *x).count()
     }
@@ -513,6 +518,18 @@ mod tests {
     test_unweighted!(EdgeList, repr::edge_list::fixture);
 
     #[test]
+    #[should_panic(expected = "v = 1 is not in the digraph")]
+    fn add_arc_out_of_bounds_u() {
+        EdgeList::trivial().add_arc(0, 1);
+    }
+
+    #[test]
+    #[should_panic(expected = "u = 1 is not in the digraph")]
+    fn add_arc_out_of_bounds_v() {
+        EdgeList::trivial().add_arc(1, 0);
+    }
+
+    #[test]
     fn from_btree_set() {
         let arcs = BTreeSet::from([(0, 1), (1, 2)]);
         let digraph = EdgeList::from(arcs);
@@ -523,12 +540,7 @@ mod tests {
 
     #[test]
     fn from_adjacency_matrix() {
-        let digraph = AdjacencyMatrix::from(vec![
-            BTreeSet::from([1]),
-            BTreeSet::from([2]),
-            BTreeSet::new(),
-        ]);
-
+        let digraph = AdjacencyMatrix::from([(0, 1), (1, 2)]);
         let digraph = EdgeList::from(digraph);
 
         assert_eq!(digraph.order(), 3);

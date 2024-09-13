@@ -3079,18 +3079,6 @@ macro_rules! test_unweighted {
         }
 
         #[test]
-        #[should_panic(expected = "v = 1 is out of bounds")]
-        fn add_arc_out_of_bounds_u() {
-            $type::trivial().add_arc(0, 1);
-        }
-
-        #[test]
-        #[should_panic(expected = "u = 1 is out of bounds")]
-        fn add_arc_out_of_bounds_v() {
-            $type::trivial().add_arc(1, 0);
-        }
-
-        #[test]
         #[should_panic(expected = "u = 0 equals v = 0")]
         fn add_arc_u_equals_v() {
             $type::trivial().add_arc(0, 0);
@@ -4373,7 +4361,7 @@ macro_rules! test_unweighted {
         }
 
         #[test]
-        #[should_panic(expected = "v = 1 is out of bounds")]
+        #[should_panic(expected = "v = 1 is not in the digraph")]
         fn indegree_out_of_bounds() {
             let _ = $type::trivial().indegree(1);
         }
@@ -5801,7 +5789,7 @@ macro_rules! test_unweighted {
         }
 
         #[test]
-        #[should_panic(expected = "u = 1 is out of bounds")]
+        #[should_panic(expected = "u = 1 is not in the digraph")]
         fn out_neighbors_out_of_bounds() {
             let _ = $type::trivial().out_neighbors(1);
         }
@@ -6030,7 +6018,7 @@ macro_rules! test_unweighted {
         }
 
         #[test]
-        #[should_panic(expected = "u = 1 is out of bounds")]
+        #[should_panic(expected = "u = 1 is not in the digraph")]
         fn out_neighbors_weighted_out_of_bounds() {
             let _ = $type::trivial().out_neighbors_weighted(1);
         }
@@ -6252,7 +6240,7 @@ macro_rules! test_unweighted {
         }
 
         #[test]
-        #[should_panic(expected = "u = 1 is out of bounds")]
+        #[should_panic(expected = "u = 1 is not in the digraph")]
         fn outdegree_out_of_bounds() {
             let _ = $type::trivial().outdegree(1);
         }

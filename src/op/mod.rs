@@ -38,6 +38,7 @@ pub mod complement;
 pub mod converse;
 pub mod degree;
 pub mod degree_sequence;
+pub mod filter_vertices;
 pub mod has_arc;
 pub mod has_edge;
 pub mod has_walk;
@@ -80,6 +81,7 @@ pub use {
     converse::Converse,
     degree::Degree,
     degree_sequence::DegreeSequence,
+    filter_vertices::FilterVertices,
     has_arc::HasArc,
     has_edge::HasEdge,
     has_walk::HasWalk,
