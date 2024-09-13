@@ -29,7 +29,7 @@ Add the following to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.89.0"
+graaf = "0.89.1"
 ```
 
 ## Representations
@@ -242,7 +242,7 @@ Tarjan's algorithm finds strongly connected components in a digraph.
 [`IsSuperdigraph`]: https://docs.rs/graaf/latest/graaf/op/is_superdigraph/trait.IsSuperdigraph.html
 [`IsSymmetric`]: https://docs.rs/graaf/latest/graaf/op/is_symmetric/trait.IsSymmetric.html
 [`IsTournament`]: https://docs.rs/graaf/latest/graaf/op/is_tournament/trait.IsTournament.html
-[`Johnson75::find_circuits`]: https://docs.rs/graaf/latest/graaf/algo/johnson75/struct.Johnson75.html#method.find_circuits
+[`Johnson75::find_circuits`]: https://docs.rs/graaf/latest/graaf/algo/johnson_75/struct.Johnson75.html#method.find_circuits
 [`Order`]: https://docs.rs/graaf/latest/graaf/op/order/trait.Order.html
 [`OutNeighborsWeighted`]: https://docs.rs/graaf/latest/graaf/op/out_neighbors_weighted/trait.OutNeighborsWeighted.html
 [`OutNeighbors`]: https://docs.rs/graaf/latest/graaf/op/out_neighbors/trait.OutNeighbors.html

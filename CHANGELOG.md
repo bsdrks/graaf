@@ -22,7 +22,13 @@
 - Mention the order of traversal in the `Dfs` documentation.
 - Mention the order of traversal in the `Dijkstra` documentation.
 
-## [0.89.0] - 2024-09-12
+## [0.89.1] - 2024-09-13
+
+Changed
+
+- Fix link.
+
+## [0.89.0] - 2024-09-13
 
 Added
 
