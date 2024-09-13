@@ -231,7 +231,7 @@
 // Rustdoc lints
 #![deny(rustdoc::all)]
 // Overwrites
-// #![allow(clippy::large_stack_frames)]
+#![allow(clippy::large_stack_frames)]
 
 pub mod algo;
 pub mod gen;
