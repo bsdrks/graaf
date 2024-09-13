@@ -230,6 +230,8 @@
 )]
 // Rustdoc lints
 #![deny(rustdoc::all)]
+// Overwrites
+#![allow(clippy::large_stack_frames)]
 
 pub mod algo;
 pub mod gen;
@@ -239,89 +241,30 @@ pub mod proptest_strategy;
 pub mod repr;
 
 pub use repr::{
-    AdjacencyList,
-    AdjacencyListWeighted,
-    AdjacencyMap,
-    AdjacencyMatrix,
+    AdjacencyList, AdjacencyListWeighted, AdjacencyMap, AdjacencyMatrix,
     EdgeList,
 };
 
 pub use op::{
-    AddArc,
-    AddArcWeighted,
-    ArcWeight,
-    Arcs,
-    ArcsWeighted,
-    Complement,
-    Converse,
-    Degree,
-    DegreeSequence,
-    FilterVertices,
-    HasArc,
-    HasEdge,
-    HasWalk,
-    InNeighbors,
-    Indegree,
-    IndegreeSequence,
-    IsBalanced,
-    IsComplete,
-    IsIsolated,
-    IsOriented,
-    IsPendant,
-    IsRegular,
-    IsSemicomplete,
-    IsSimple,
-    IsSpanningSubdigraph,
-    IsSubdigraph,
-    IsSuperdigraph,
-    IsSymmetric,
-    IsTournament,
-    Order,
-    OutNeighbors,
-    OutNeighborsWeighted,
-    Outdegree,
-    OutdegreeSequence,
-    RemoveArc,
-    SemidegreeSequence,
-    Sinks,
-    Size,
-    Sources,
-    Union,
-    Vertices,
+    AddArc, AddArcWeighted, ArcWeight, Arcs, ArcsWeighted, Complement,
+    Converse, Degree, DegreeSequence, FilterVertices, HasArc, HasEdge,
+    HasWalk, InNeighbors, Indegree, IndegreeSequence, IsBalanced, IsComplete,
+    IsIsolated, IsOriented, IsPendant, IsRegular, IsSemicomplete, IsSimple,
+    IsSpanningSubdigraph, IsSubdigraph, IsSuperdigraph, IsSymmetric,
+    IsTournament, Order, OutNeighbors, OutNeighborsWeighted, Outdegree,
+    OutdegreeSequence, RemoveArc, SemidegreeSequence, Sinks, Size, Sources,
+    Union, Vertices,
 };
 
 pub use gen::{
-    Biclique,
-    Circuit,
-    Complete,
-    Cycle,
-    Empty,
-    ErdosRenyi,
-    Path,
-    RandomTournament,
-    Star,
-    Wheel,
+    Biclique, Circuit, Complete, Cycle, Empty, ErdosRenyi, Path,
+    RandomTournament, Star, Wheel,
 };
 
 pub use algo::{
-    bellman_ford_moore,
-    bfs,
-    bfs_dist,
-    bfs_pred,
-    dfs,
-    dfs_dist,
-    dfs_pred,
-    dijkstra,
-    dijkstra_dist,
-    dijkstra_pred,
-    distance_matrix,
-    floyd_warshall,
-    johnson_75,
-    predecessor_tree,
-    tarjan,
+    bellman_ford_moore, bfs, bfs_dist, bfs_pred, dfs, dfs_dist, dfs_pred,
+    dijkstra, dijkstra_dist, dijkstra_pred, distance_matrix, floyd_warshall,
+    johnson_75, predecessor_tree, tarjan,
 };
 
-pub use {
-    distance_matrix::DistanceMatrix,
-    predecessor_tree::PredecessorTree,
-};
+pub use {distance_matrix::DistanceMatrix, predecessor_tree::PredecessorTree};
