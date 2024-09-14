@@ -224,6 +224,7 @@ pub mod complete;
 pub mod cycle;
 pub mod empty;
 pub mod erdos_renyi;
+// pub mod growing_network;
 pub mod path;
 pub mod prng;
 pub mod random_tournament;
@@ -237,6 +238,7 @@ pub use {
     cycle::Cycle,
     empty::Empty,
     erdos_renyi::ErdosRenyi,
+    // growing_network::GrowingNetwork,
     path::Path,
     random_tournament::RandomTournament,
     star::Star,

@@ -1,8 +1,8 @@
 //! Johnson's circuit-finding algorithm.
 
 use {
-    super::tarjan::strongly_connected_components,
     crate::{
+        tarjan::strongly_connected_components,
         FilterVertices,
         Order,
         OutNeighbors,
@@ -123,6 +123,76 @@ mod tests {
     };
 
     #[test]
+    fn biclique_2_2() {
+        let digraph = AdjacencyMap::biclique(2, 2);
+        let mut johnson = Johnson75::new(&digraph);
+
+        johnson.find_circuits();
+
+        assert!(johnson.result.eq(&[
+            vec![0, 2],
+            vec![0, 2, 1, 3],
+            vec![0, 3],
+            vec![0, 3, 1, 2],
+            vec![1, 2],
+            vec![1, 3]
+        ]));
+    }
+
+    #[test]
+    fn biclique_2_3() {
+        let digraph = AdjacencyMap::biclique(2, 3);
+        let mut johnson = Johnson75::new(&digraph);
+
+        johnson.find_circuits();
+
+        assert!(johnson.result.eq(&[
+            vec![0, 2],
+            vec![0, 2, 1, 3],
+            vec![0, 2, 1, 4],
+            vec![0, 3],
+            vec![0, 3, 1, 2],
+            vec![0, 3, 1, 4],
+            vec![0, 4],
+            vec![0, 4, 1, 2],
+            vec![0, 4, 1, 3],
+            vec![1, 2],
+            vec![1, 3],
+            vec![1, 4]
+        ]));
+    }
+
+    #[test]
+    fn circuit_3() {
+        let digraph = AdjacencyMap::circuit(3);
+        let mut johnson = Johnson75::new(&digraph);
+
+        johnson.find_circuits();
+
+        assert!(johnson.result.eq(&[vec![0, 1, 2]]));
+    }
+
+    #[test]
+    fn circuit_4() {
+        let digraph = AdjacencyMap::circuit(4);
+        let mut johnson = Johnson75::new(&digraph);
+
+        johnson.find_circuits();
+
+        assert!(johnson.result.eq(&[vec![0, 1, 2, 3]]));
+    }
+
+    #[test]
+    fn circuit_5() {
+        let digraph = AdjacencyMap::circuit(5);
+        let mut johnson = Johnson75::new(&digraph);
+
+        johnson.find_circuits();
+
+        assert!(johnson.result.eq(&[vec![0, 1, 2, 3, 4]]));
+    }
+
+    #[test]
     fn cycle_3() {
         let digraph = AdjacencyMap::cycle(3);
         let mut johnson = Johnson75::new(&digraph);
@@ -170,79 +240,6 @@ mod tests {
             vec![1, 2],
             vec![2, 3],
             vec![3, 4]
-        ]));
-    }
-
-    #[test]
-    fn circuit_3() {
-        let digraph = AdjacencyMap::circuit(3);
-        let mut johnson = Johnson75::new(&digraph);
-
-        johnson.find_circuits();
-
-        assert!(johnson.result.eq(&[vec![0, 1, 2]]));
-    }
-
-    #[test]
-    fn circuit_4() {
-        let digraph = AdjacencyMap::circuit(4);
-        let mut johnson = Johnson75::new(&digraph);
-
-        johnson.find_circuits();
-
-        assert!(johnson.result.eq(&[vec![0, 1, 2, 3]]));
-    }
-
-    #[test]
-    fn circuit_5() {
-        let digraph = AdjacencyMap::circuit(5);
-        let mut johnson = Johnson75::new(&digraph);
-
-        johnson.find_circuits();
-
-        assert!(johnson.result.eq(&[vec![0, 1, 2, 3, 4]]));
-    }
-
-    #[test]
-    fn biclique_2_2() {
-        let digraph = AdjacencyMap::biclique(2, 2);
-        let mut johnson = Johnson75::new(&digraph);
-
-        johnson.find_circuits();
-
-        assert!(johnson.result.eq(&[
-            vec![0, 2],
-            vec![0, 2, 1, 3],
-            vec![0, 3],
-            vec![0, 3, 1, 2],
-            vec![1, 2],
-            vec![1, 3]
-        ]));
-    }
-
-    #[test]
-    fn biclique_2_3() {
-        use crate::Arcs;
-
-        let digraph = AdjacencyMap::biclique(2, 3);
-        let mut johnson = Johnson75::new(&digraph);
-
-        println!("{:?}", digraph.arcs().collect::<Vec<_>>());
-        johnson.find_circuits();
-
-        assert!(johnson.result.eq(&[
-            vec![0, 2],
-            vec![0, 2, 1, 3],
-            vec![0, 2, 1, 4],
-            vec![0, 3],
-            vec![0, 3, 1, 2],
-            vec![0, 3, 1, 4],
-            vec![0, 4],
-            vec![0, 4, 1, 2],
-            vec![0, 4, 1, 3],
-            vec![1, 2],
-            vec![1, 3],
-            vec![1, 4]
         ]));
     }
 }

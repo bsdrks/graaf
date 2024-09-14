@@ -177,7 +177,7 @@ impl<W> DistanceMatrix<W> {
     ///
     /// Red marks the center of the digraph.
     ///
-    /// ![eccentricities](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_center_1-0.87.4.svg?)
+    /// ![Eccentricities](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_center_1-0.87.4.svg?)
     ///
     /// ```
     /// use graaf::{
@@ -246,7 +246,7 @@ impl<W> DistanceMatrix<W> {
     /// Red marks the longest shortest path in the digraph between vertices `4`
     /// and `5`.
     ///
-    /// ![eccentricities](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_diameter_1-0.87.4.svg?)
+    /// ![Eccentricities](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_diameter_1-0.87.4.svg?)
     ///
     /// ```
     /// use graaf::{
@@ -298,7 +298,7 @@ impl<W> DistanceMatrix<W> {
     ///
     /// # Examples
     ///
-    /// ![eccentricities](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_eccentricities_1-0.87.4.svg?)
+    /// ![Eccentricities](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_eccentricities_1-0.87.4.svg?)
     ///
     /// ```
     /// use graaf::{

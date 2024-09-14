@@ -7,7 +7,7 @@
 //!
 //! A valid digraph of order `5` and size `8`.
 //!
-//! ![digraph of order `5` and size `8`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/edge_list_1.svg?)
+//! ![Digraph of order `5` and size `8`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/edge_list_1.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -45,7 +45,7 @@
 //! A self-loop is not allowed. The following pseudograph can not be
 //! represented. The self-loop is red:
 //!
-//! ![self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/edge_list_self_loop.svg?)
+//! ![Self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/edge_list_self_loop.svg?)
 //!
 //! Adding a self-loop will panic:
 //!
@@ -71,7 +71,7 @@
 //! Parallel arcs are not allowed. The following multigraph can not be
 //! represented. The parallel arc is red:
 //!
-//! ![parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/edge_list_parallel_arcs.svg?)
+//! ![Parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/edge_list_parallel_arcs.svg?)
 //!
 //! Adding a parallel arc does not change the digraph:
 //!
@@ -134,7 +134,7 @@ use {
 ///
 /// A valid digraph of order `5` and size `8`.
 ///
-/// ![digraph of order `5` and size `8`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/edge_list_1.svg?)
+/// ![Digraph of order `5` and size `8`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/edge_list_1.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -172,7 +172,7 @@ use {
 /// A self-loop is not allowed. The following pseudograph can not be
 /// represented. The self-loop is red:
 ///
-/// ![self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/edge_list_self_loop.svg?)
+/// ![Self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/edge_list_self_loop.svg?)
 ///
 /// Adding a self-loop will panic:
 ///
@@ -198,7 +198,7 @@ use {
 /// Parallel arcs are not allowed. The following multigraph can not be
 /// represented. The parallel arc is red:
 ///
-/// ![parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/edge_list_parallel_arcs.svg?)
+/// ![Parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/edge_list_parallel_arcs.svg?)
 ///
 /// Adding a parallel arc does not change the digraph:
 ///

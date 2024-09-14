@@ -130,8 +130,8 @@ pub trait Outdegree {
     ///
     /// # Examples
     ///
-    /// The maximum outdegree of the following digraph is `3`. The vertex with
-    /// the maximum outdegree is red.
+    /// The maximum outdegree of this digraph is `3`. The vertex with the
+    /// maximum outdegree is red.
     ///
     /// ![Maximum outdegree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/max_outdegree-0.88.5.svg?)
     ///
@@ -170,8 +170,8 @@ pub trait Outdegree {
     ///
     /// # Examples
     ///
-    /// The minimum outdegree of the following digraph is `1`. The vertices
-    /// with the minimum outdegree are red.
+    /// The minimum outdegree of this digraph is `1`. The vertices with the
+    /// minimum outdegree are red.
     ///
     /// ![Minimum outdegree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/min_outdegree-0.88.5.svg?)
     ///

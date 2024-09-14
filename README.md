@@ -25,11 +25,11 @@ Rust-powered directed graphs.
 
 ## Installation
 
-Add the following to your `Cargo.toml`:
+Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.89.1"
+graaf = "0.89.2"
 ```
 
 ## Representations

@@ -4,7 +4,7 @@
 //!
 //! # Examples
 //!
-//! There are three strongly connected components in the following digraph:
+//! There are three strongly connected components in this digraph:
 //!
 //! ![Tarjan](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/tarjan_1-0.87.4.svg?)
 //!
@@ -68,7 +68,7 @@ use {
 ///
 /// # Examples
 ///
-/// There are three strongly connected components in the following digraph:
+/// There are three strongly connected components in this digraph:
 ///
 /// ![Tarjan](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/tarjan_1-0.87.4.svg?)
 ///

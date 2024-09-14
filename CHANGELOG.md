@@ -22,6 +22,12 @@
 - Mention the order of traversal in the `Dfs` documentation.
 - Mention the order of traversal in the `Dijkstra` documentation.
 
+## [0.89.2] - 2024-09-14
+
+Changed
+
+- Improve `RandomTournament` documentation.
+
 ## [0.89.1] - 2024-09-13
 
 Changed

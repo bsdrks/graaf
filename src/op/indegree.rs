@@ -130,8 +130,8 @@ pub trait Indegree {
     ///
     /// # Examples
     ///
-    /// The maximum indegree of the following digraph is `3`. The vertex with
-    /// the maximum indegree is red.
+    /// The maximum indegree of this digraph is `3`. The vertex with the
+    /// maximum indegree is red.
     ///
     /// ![Maximum indegree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/max_indegree-0.88.5.svg?)
     ///
@@ -167,8 +167,8 @@ pub trait Indegree {
     ///
     /// # Examples
     ///
-    /// The minimum indegree of the following digraph is `1`. The vertices with
-    /// the minimum indegree are red.
+    /// The minimum indegree of this digraph is `1`. The vertices with the
+    /// minimum indegree are red.
     ///
     /// ![Minimum indegree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/min_indegree-0.88.5.svg?)
     ///

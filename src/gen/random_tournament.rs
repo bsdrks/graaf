@@ -5,28 +5,36 @@
 //!
 //! # Examples
 //!
+//! `T::random_tournament(6, 0)` gives this tournament:
+//!
+//! ![Random tournament of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/random_tournament_1-0.89.2.svg?)
+//!
 //! ```
 //! use graaf::{
 //!     AdjacencyList,
-//!     Degree,
-//!     Indegree,
-//!     Order,
-//!     Outdegree,
+//!     Arcs,
 //!     RandomTournament,
-//!     Size,
-//!     Vertices,
 //! };
 //!
-//! let tournament = AdjacencyList::random_tournament(4, 0);
+//! let tournament = AdjacencyList::random_tournament(6, 0);
 //!
-//! assert_eq!(tournament.size(), 6);
-//! assert_eq!(tournament.order(), 4);
-//!
-//! for s in tournament.vertices() {
-//!     assert_eq!(tournament.degree(s), 3);
-//!     assert!((0..=3).contains(&tournament.outdegree(s)));
-//!     assert!((0..=3).contains(&tournament.indegree(s)));
-//! }
+//! assert!(tournament.arcs().eq([
+//!     (0, 5),
+//!     (1, 0),
+//!     (1, 4),
+//!     (1, 5),
+//!     (2, 0),
+//!     (2, 1),
+//!     (2, 3),
+//!     (2, 5),
+//!     (3, 0),
+//!     (3, 1),
+//!     (3, 5),
+//!     (4, 0),
+//!     (4, 2),
+//!     (4, 3),
+//!     (5, 4)
+//! ]));
 //! ```
 
 use crate::{
@@ -138,28 +146,36 @@ pub trait RandomTournament {
     ///
     /// # Examples
     ///
+    /// `T::random_tournament(6, 0)` gives this tournament:
+    ///
+    /// ![Random tournament of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/random_tournament_1-0.89.2.svg?)
+    ///
     /// ```
     /// use graaf::{
     ///     AdjacencyList,
-    ///     Degree,
-    ///     Indegree,
-    ///     Order,
-    ///     Outdegree,
+    ///     Arcs,
     ///     RandomTournament,
-    ///     Size,
-    ///     Vertices,
     /// };
     ///
-    /// let tournament = AdjacencyList::random_tournament(4, 0);
+    /// let tournament = AdjacencyList::random_tournament(6, 0);
     ///
-    /// assert_eq!(tournament.size(), 6);
-    /// assert_eq!(tournament.order(), 4);
-    ///
-    /// for s in tournament.vertices() {
-    ///     assert_eq!(tournament.degree(s), 3);
-    ///     assert!((0..=3).contains(&tournament.outdegree(s)));
-    ///     assert!((0..=3).contains(&tournament.indegree(s)));
-    /// }
+    /// assert!(tournament.arcs().eq([
+    ///     (0, 5),
+    ///     (1, 0),
+    ///     (1, 4),
+    ///     (1, 5),
+    ///     (2, 0),
+    ///     (2, 1),
+    ///     (2, 3),
+    ///     (2, 5),
+    ///     (3, 0),
+    ///     (3, 1),
+    ///     (3, 5),
+    ///     (4, 0),
+    ///     (4, 2),
+    ///     (4, 3),
+    ///     (5, 4)
+    /// ]));
     /// ```
     #[must_use]
     fn random_tournament(order: usize, seed: u64) -> Self;
