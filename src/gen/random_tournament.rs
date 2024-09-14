@@ -110,32 +110,6 @@ use crate::{
 ///     assert!((0..3).contains(&tournament.arcs[u].len()));
 /// }
 /// ```
-///
-/// # Examples
-///
-/// ```
-/// use graaf::{
-///     AdjacencyList,
-///     Degree,
-///     Indegree,
-///     Order,
-///     Outdegree,
-///     RandomTournament,
-///     Size,
-///     Vertices,
-/// };
-///
-/// let tournament = AdjacencyList::random_tournament(4, 0);
-///
-/// assert_eq!(tournament.size(), 6);
-/// assert_eq!(tournament.order(), 4);
-///
-/// for s in tournament.vertices() {
-///     assert_eq!(tournament.degree(s), 3);
-///     assert!((0..=3).contains(&tournament.outdegree(s)));
-///     assert!((0..=3).contains(&tournament.indegree(s)));
-/// }
-/// ```
 pub trait RandomTournament {
     /// Generate a random tournament.
     ///

@@ -24,8 +24,14 @@
 
 ## [0.89.2] - 2024-09-14
 
+Added
+
+- Add `ErdosRenyi` image to `gen/mod` documentation.
+- Add `RandomTournament` image to `gen/mod` documentation.
+
 Changed
 
+- Improve `ErdosRenyi` documentation.
 - Improve `RandomTournament` documentation.
 
 ## [0.89.1] - 2024-09-13
