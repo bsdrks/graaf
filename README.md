@@ -181,6 +181,7 @@ Tarjan's algorithm finds strongly connected components in a digraph.
 - [`tarjan::strongly_connected_components`] finds strongly connected components.
 
 [`AdjacencyList`]: https://docs.rs/graaf/latest/graaf/repr/adjacency_list/struct.AdjacencyList.html
+[`AdjacencyMap`]: https://docs.rs/graaf/latest/graaf/repr/adjacency_map/struct.AdjacencyMap.html
 [`AdjacencyMatrix`]: https://docs.rs/graaf/latest/graaf/repr/adjacency_matrix/struct.AdjacencyMatrix.html
 [`AdjacencyListWeighted`]: https://docs.rs/graaf/latest/graaf/repr/adjacency_list_weighted/struct.AdjacencyListWeighted.html
 [`EdgeList`]: https://docs.rs/graaf/latest/graaf/repr/edge_list/struct.EdgeList.html
