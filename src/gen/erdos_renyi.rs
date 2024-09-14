@@ -57,8 +57,8 @@ use crate::{
 /// # Implementing [`ErdosRenyi`] for a custom type
 ///
 /// Provide an implementation of [`erdos_renyi`](ErdosRenyi::erdos_renyi) that
-/// generates an Erdős-Rényi digraph of a given `order` and `p` OR implement
-/// `AddArc` and `Empty`.
+/// generates an Erdős-Rényi digraph of a given `order` with probability `p` OR
+/// implement `AddArc` and `Empty`.
 ///
 /// ```
 /// use {
