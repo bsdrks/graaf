@@ -43,6 +43,7 @@
 //! - [`Cycle`] generates a bidirectional circuit.
 //! - [`Empty`] generates a digraph with no arcs.
 //! - [`ErdosRenyi`] generates a random digraph.
+//! - [`GrowingNetwork`] generates a growing network.
 //! - [`RandomTournament`] generates a random tournament.
 //! - [`Star`] generates a star digraph.
 //! - [`Path`] generates a path digraph.
@@ -299,6 +300,7 @@ pub use gen::{
     Cycle,
     Empty,
     ErdosRenyi,
+    GrowingNetwork,
     Path,
     RandomTournament,
     Star,

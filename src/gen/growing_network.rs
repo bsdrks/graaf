@@ -1,91 +1,56 @@
-//! Generate growing network digraphs.
+//! Generate growing network.
 //!
-//! A growing network digraph is a digraph that starts with a single vertex and
-//! adds a new vertex with a directed edge to an existing vertex at each step.
+//! A growing network is a digraph that starts with a single vertex and adds a
+//! new vertex with a directed edge to an existing vertex at each step.
 //!
 //! # Examples
 //!
-//! ## Order 2
+//! Generate a growing network of order `6`.
 //!
-//! Generate a star digraph of order `2`.
-//!
-//! ![Star digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_2.svg)
+//! ![Growing network of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/growing_network_1-0.89.3.svg)
 //!
 //! ```
 //! use graaf::{
 //!     AdjacencyList,
 //!     Arcs,
-//!     Star,
+//!     GrowingNetwork,
 //! };
 //!
-//! assert!(AdjacencyList::star(2).arcs().eq([(0, 1), (1, 0)]));
-//! ```
-//!
-//! ## Order 3
-//!
-//! Generate a star digraph of order `3`.
-//!
-//! ![Star digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_3.svg)
-//!
-//! ```
-//! use graaf::{
-//!     AdjacencyList,
-//!     Arcs,
-//!     Star,
-//! };
-//!
-//! assert!(AdjacencyList::star(3).arcs().eq([
-//!     (0, 1),
-//!     (0, 2),
-//!     (1, 0),
-//!     (2, 0)
-//! ]));
-//! ```
-//!
-//! ## Order 4
-//!
-//! Generate a star digraph of order `4`.
-//!
-//! ![Star digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_4.svg)
-//!
-//! ```
-//! use graaf::{
-//!     AdjacencyList,
-//!     Arcs,
-//!     Star,
-//! };
-//!
-//! assert!(AdjacencyList::star(4).arcs().eq([
-//!     (0, 1),
-//!     (0, 2),
-//!     (0, 3),
+//! assert!(AdjacencyList::growing_network(6, 0).arcs().eq([
 //!     (1, 0),
 //!     (2, 0),
-//!     (3, 0)
+//!     (3, 1),
+//!     (4, 0),
+//!     (5, 2)
 //! ]));
 //! ```
 
-use crate::{
-    AddArc,
-    Empty,
+use {
+    super::prng::Xoshiro256StarStar,
+    crate::{
+        AddArc,
+        Empty,
+    },
 };
 
-/// Generate star digraphs.
+/// Generate growing network.
 ///
-/// A star digraph is a digraph with a single vertex that is connected to all
-/// other vertices.
+/// A growing network is a digraph that starts with a single vertex and adds a
+/// new vertex with a directed edge to an existing vertex at each step.
 ///
-/// # Implementing [`Star`] for a custom type
+/// # Implementing [`GrowingNetwork`] for a custom type
 ///
-/// Provide an implementation of [`star`](Star::star) that generates a star
-/// digraph of a given `order` OR implement `AddArc` and `Empty`.
+/// Provide an implementation of
+/// [`growing_network`](GrowingNetwork::growing_network) that generates a
+/// growing network of a given `order` from a given `seed` OR implement
+/// `AddArc` and `Empty`.
 ///
 /// ```
 /// use {
 ///     graaf::{
 ///         AddArc,
 ///         Empty,
-///         Star,
+///         GrowingNetwork,
 ///     },
 ///     std::collections::BTreeSet,
 /// };
@@ -108,99 +73,68 @@ use crate::{
 ///     }
 /// }
 ///
-/// let digraph = AdjacencyList::star(3);
+/// let digraph = AdjacencyList::growing_network(6, 0);
 ///
 /// assert!(digraph.arcs.iter().eq(&[
-///     BTreeSet::from([1, 2]),
+///     BTreeSet::new(),
 ///     BTreeSet::from([0]),
-///     BTreeSet::from([0])
+///     BTreeSet::from([0]),
+///     BTreeSet::from([1]),
+///     BTreeSet::from([0]),
+///     BTreeSet::from([2]),
 /// ]));
 /// ```
-pub trait Star {
-    /// Generate a star digraph.
+pub trait GrowingNetwork {
+    /// Generate a growing network.
     ///
     /// # Arguments
     ///
     /// * `order` - The number of vertices in the digraph.
+    /// * `seed` - The seed for the random number generator.
     ///
     /// # Examples
     ///
-    /// ## Order 2
+    /// Generate a growing network of order `6`.
     ///
-    /// Generate a star digraph of order `2`.
-    ///
-    /// ![Star digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_2.svg)
+    /// ![Growing network of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/growing_network_1-0.89.3.svg)
     ///
     /// ```
     /// use graaf::{
     ///     AdjacencyList,
     ///     Arcs,
-    ///     Star,
+    ///     GrowingNetwork,
     /// };
     ///
-    /// assert!(AdjacencyList::star(2).arcs().eq([(0, 1), (1, 0)]));
-    /// ```
-    ///
-    /// ## Order 3
-    ///
-    /// Generate a star digraph of order `3`.
-    ///
-    /// ![Star digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_3.svg)
-    ///
-    /// ```
-    /// use graaf::{
-    ///     AdjacencyList,
-    ///     Arcs,
-    ///     Star,
-    /// };
-    ///
-    /// assert!(AdjacencyList::star(3).arcs().eq([
-    ///     (0, 1),
-    ///     (0, 2),
-    ///     (1, 0),
-    ///     (2, 0)
-    /// ]));
-    /// ```
-    ///
-    /// ## Order 4
-    ///
-    /// Generate a star digraph of order `4`.
-    ///
-    /// ![Star digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_4.svg)
-    ///
-    /// ```
-    /// use graaf::{
-    ///     AdjacencyList,
-    ///     Arcs,
-    ///     Star,
-    /// };
-    ///
-    /// assert!(AdjacencyList::star(4).arcs().eq([
-    ///     (0, 1),
-    ///     (0, 2),
-    ///     (0, 3),
+    /// assert!(AdjacencyList::growing_network(6, 0).arcs().eq([
     ///     (1, 0),
     ///     (2, 0),
-    ///     (3, 0)
+    ///     (3, 1),
+    ///     (4, 0),
+    ///     (5, 2)
     /// ]));
     /// ```
     #[must_use]
-    fn star(order: usize) -> Self;
+    fn growing_network(order: usize, seed: u64) -> Self;
 }
 
-impl<D> Star for D
+impl<D> GrowingNetwork for D
 where
     D: AddArc + Empty,
 {
     /// # Panics
     ///
-    /// Panics if `order` is zero.
-    fn star(order: usize) -> Self {
+    /// * Panics if `order` is zero.
+    /// * Panics if the random number generator fails.
+    /// * Panics if conversion from `u64` to `usize` fails.
+    fn growing_network(order: usize, seed: u64) -> Self {
         let mut digraph = D::empty(order);
+        let mut rng = Xoshiro256StarStar::new(seed);
 
         for u in 1..order {
-            digraph.add_arc(0, u);
-            digraph.add_arc(u, 0);
+            let v = rng.next().expect("RNG failed");
+            let v = usize::try_from(v).expect("conversion failed") % u;
+
+            digraph.add_arc(u, v);
         }
 
         digraph

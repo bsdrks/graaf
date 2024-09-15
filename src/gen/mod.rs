@@ -158,6 +158,28 @@
 //! ]));
 //! ```
 //!
+//! ## Growing network
+//!
+//! Generate a [`growing network`](GrowingNetwork) digraph of order `6`.
+//!
+//! ![Growing network of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/growing_network_1-0.89.3.svg?)
+//!
+//! ```
+//! use graaf::{
+//!     AdjacencyList,
+//!     Arcs,
+//!     GrowingNetwork,
+//! };
+//!
+//! assert!(AdjacencyList::growing_network(6, 0).arcs().eq([
+//!     (1, 0),
+//!     (2, 0),
+//!     (3, 1),
+//!     (4, 0),
+//!     (5, 2)
+//! ]));
+//! ```
+//!
 //! ## Path digraph
 //!
 //! Generate a [`path`](Path) digraph of order `4`.
@@ -266,7 +288,7 @@ pub mod complete;
 pub mod cycle;
 pub mod empty;
 pub mod erdos_renyi;
-// pub mod growing_network;
+pub mod growing_network;
 pub mod path;
 pub mod prng;
 pub mod random_tournament;
@@ -280,7 +302,7 @@ pub use {
     cycle::Cycle,
     empty::Empty,
     erdos_renyi::ErdosRenyi,
-    // growing_network::GrowingNetwork,
+    growing_network::GrowingNetwork,
     path::Path,
     random_tournament::RandomTournament,
     star::Star,

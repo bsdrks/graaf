@@ -29,7 +29,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.89.2"
+graaf = "0.89.3"
 ```
 
 ## Representations
@@ -56,6 +56,7 @@ graaf = "0.89.2"
 - [`Cycle`] generates a bidirectional circuit.
 - [`Empty`] generates a digraph with no arcs.
 - [`ErdosRenyi`] generates a random digraph.
+- [`GrowingNetwork`] generates a growing network digraph.
 - [`Path`] generates a path digraph.
 - [`RandomTournament`] generates a random tournament.
 - [`Star`] generates a star digraph.
@@ -224,6 +225,7 @@ Tarjan's algorithm finds strongly connected components in a digraph.
 [`Empty`]: https://docs.rs/graaf/latest/graaf/gen/empty/trait.Empty.html
 [`ErdosRenyi`]: https://docs.rs/graaf/latest/graaf/gen/erdos_renyi/trait.ErdosRenyi.html
 [`FilterVertices`]: https://docs.rs/graag/latest/graaf/op/filter_vertices/trait.FilterVertices.html
+[`GrowingNetwork`]: https://docs.rs/graaf/latest/graaf/gen/growing_network/trait.GrowingNetwork.html
 [`HasArc`]: https://docs.rs/graaf/latest/graaf/op/has_arc/trait.HasArc.html
 [`HasEdge`]: https://docs.rs/graaf/latest/graaf/op/has_edge/trait.HasEdge.html
 [`HasWalk`]: https://docs.rs/graaf/latest/graaf/op/has_walk/trait.HasWalk.html

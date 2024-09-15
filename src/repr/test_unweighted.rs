@@ -27,6 +27,7 @@ macro_rules! test_unweighted {
                 Degree,
                 DegreeSequence,
                 ErdosRenyi,
+                GrowingNetwork,
                 HasEdge,
                 HasWalk,
                 InNeighbors,
@@ -1703,6 +1704,153 @@ macro_rules! test_unweighted {
                     $type::erdos_renyi(order, 1.0, seed).size(),
                     order * (order - 1)
                 );
+            }
+
+            #[test]
+            fn growing_network_degree(
+                order in 1..25_usize,
+                seed in 0..1000_u64
+            ) {
+                let digraph = $type::growing_network(order, seed);
+
+                assert!(digraph.vertices().all(|u| {
+                    digraph.degree(u) <= order - u
+                }));
+            }
+
+            #[test]
+            fn growing_network_degree_sequence(
+                order in 1..25_usize,
+                seed in 0..1000_u64
+            ) {
+                let digraph = $type::growing_network(order, seed);
+                let degree_sequence = &mut digraph.degree_sequence();
+
+                assert!(degree_sequence.all(|d| d < order));
+            }
+
+            #[test]
+            fn growing_network_degree_sum_equals_2size(
+                order in 1..25_usize,
+                seed in 0..1000_u64
+            ) {
+                let digraph = $type::growing_network(order, seed);
+
+                assert_eq!(
+                    digraph
+                        .vertices()
+                        .fold(0, |acc, u| acc + digraph.degree(u)),
+                    2 * digraph.size()
+                );
+            }
+
+            #[test]
+            fn growing_network_even_number_odd_degrees(
+                order in 1..25_usize,
+                seed in 0..1000_u64
+            ) {
+                let digraph = $type::growing_network(order, seed);
+
+                assert_eq!(
+                    digraph
+                        .vertices()
+                        .filter(|&u| digraph.degree(u) % 2 == 1)
+                        .count()
+                        % 2,
+                    0
+                );
+            }
+
+            #[test]
+            fn growing_network_has_edge(
+                order in 1..25_usize,
+                seed in 0..1000_u64
+            ) {
+                let digraph = $type::growing_network(order, seed);
+
+                assert!(digraph.vertices().all(|u| {
+                    digraph.vertices().all(|v| !digraph.has_edge(u, v))
+                }));
+            }
+
+            #[test]
+            fn growing_network_indegree(
+                order in 1..25_usize,
+                seed in 0..1000_u64
+            ) {
+                let digraph = $type::growing_network(order, seed);
+
+                assert!(digraph.vertices().all(|v| {
+                    digraph.indegree(v) <= order - v
+                }));
+            }
+
+            #[test]
+            fn growing_network_indegree_sequence(
+                order in 1..25_usize,
+                seed in 0..1000_u64
+            ) {
+                let digraph = $type::growing_network(order, seed);
+                let indegree_sequence = &mut digraph.indegree_sequence();
+
+                assert!(indegree_sequence.all(|d| d < order));
+            }
+
+            #[test]
+            fn growing_network_is_complete(order in 1..25_usize, seed: u64) {
+                assert!((order == 1) == $type::growing_network(order, seed).is_complete());
+            }
+
+            #[test]
+            fn growing_network_is_simple(order in 1..25_usize, seed: u64) {
+                assert!($type::growing_network(order, seed).is_simple());
+            }
+
+            #[test]
+            fn growing_network_is_subdigraph(order in 1..25_usize, seed: u64) {
+                let digraph = $type::growing_network(order, seed);
+
+                assert!(digraph.is_subdigraph(&digraph));
+            }
+
+            #[test]
+            fn growing_network_is_superdigraph(order in 1..25_usize, seed: u64) {
+                let digraph = $type::growing_network(order, seed);
+
+                assert!(digraph.is_superdigraph(&digraph));
+            }
+
+            #[test]
+            fn growing_network_order(order in 1..25_usize, seed: u64) {
+                assert_eq!($type::growing_network(order, seed).order(), order);
+            }
+
+            #[test]
+            fn growing_network_outdegree(
+                order in 1..25_usize,
+                seed in 0..1000_u64
+            ) {
+                let digraph = $type::growing_network(order, seed);
+
+                assert!(digraph.vertices().all(|u| {
+                    digraph.outdegree(u) <= order - u
+                }));
+            }
+
+            #[test]
+            fn growing_network_outdegree_sequence(
+                order in 1..25_usize,
+                seed in 0..1000_u64
+            ) {
+                let digraph = $type::growing_network(order, seed);
+                let outdegree_sequence = &mut digraph.outdegree_sequence();
+
+                assert!(outdegree_sequence.all(|d| d < order));
+            }
+
+            #[test]
+            fn growing_network_size(order in 1..25_usize, seed: u64) {
+                assert_eq!($type::growing_network(order, seed).size(), order - 1);
             }
 
             #[test]
