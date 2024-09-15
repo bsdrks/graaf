@@ -4,9 +4,9 @@
 //!
 //! ```
 //! use graaf::{
+//!     johnson_75::Johnson75,
 //!     AdjacencyMap,
 //!     Cycle,
-//!     Johnson75,
 //! };
 //!
 //! let digraph = AdjacencyMap::cycle(5);
@@ -105,9 +105,9 @@ where
     ///
     /// ```
     /// use graaf::{
+    ///     johnson_75::Johnson75,
     ///     AdjacencyMap,
     ///     Cycle,
-    ///     Johnson75,
     /// };
     ///
     /// let digraph = AdjacencyMap::cycle(5);

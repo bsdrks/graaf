@@ -27,6 +27,7 @@
 Added
 
 - Add doctests for `Johnson75`.
+- Export `Johnson75` from `lib.rs`.
 
 Changed
 
