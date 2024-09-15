@@ -29,7 +29,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.89.3"
+graaf = "0.90.0"
 ```
 
 ## Representations
@@ -166,7 +166,7 @@ The Floyd-Warshall algorithm finds the distance between each pair of vertices in
 
 Johnson's circuit-finding algorithm finds all circuits in a digraph.
 
-- [`Johnson75::find_circuits`] finds all circuits.
+- [`Johnson75::circuits`] finds all circuits.
 
 ### Predecessor Tree
 
@@ -245,7 +245,7 @@ Tarjan's algorithm finds strongly connected components in a digraph.
 [`IsSuperdigraph`]: https://docs.rs/graaf/latest/graaf/op/is_superdigraph/trait.IsSuperdigraph.html
 [`IsSymmetric`]: https://docs.rs/graaf/latest/graaf/op/is_symmetric/trait.IsSymmetric.html
 [`IsTournament`]: https://docs.rs/graaf/latest/graaf/op/is_tournament/trait.IsTournament.html
-[`Johnson75::find_circuits`]: https://docs.rs/graaf/latest/graaf/algo/johnson_75/struct.Johnson75.html#method.find_circuits
+[`Johnson75::circuits`]: https://docs.rs/graaf/latest/graaf/algo/johnson_75/struct.Johnson75.html#method.circuits
 [`Order`]: https://docs.rs/graaf/latest/graaf/op/order/trait.Order.html
 [`OutNeighborsWeighted`]: https://docs.rs/graaf/latest/graaf/op/out_neighbors_weighted/trait.OutNeighborsWeighted.html
 [`OutNeighbors`]: https://docs.rs/graaf/latest/graaf/op/out_neighbors/trait.OutNeighbors.html

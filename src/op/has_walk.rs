@@ -29,10 +29,10 @@ use crate::HasArc;
 
 /// Check whether a digraph contains a walk.
 ///
-/// # How do I implement `HasWalk`
+/// # Implementing [`HasWalk`] for a custom type
 ///
-/// Provide an implementation of `has_walk` that returns whether the sequence
-/// is a walk in the digraph OR implement [`HasArc`].
+/// Provide an implementation of [`has_walk`](HasWalk::has_walk) that returns
+/// whether the sequence is a walk in the digraph OR implement [`HasArc`].
 ///
 /// ```
 /// use {

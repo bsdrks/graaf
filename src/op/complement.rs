@@ -38,10 +38,10 @@ use crate::{
 
 /// Return a digraph's complement.
 ///
-/// # How do I implement `Complement`
+/// # Implementing [`Complement`] for a custom type
 ///
-/// Provide an implementation of `complement` that returns a digraph with all
-/// arcs not present in the original digraph.
+/// Provide an implementation of [`complement`](Complement::complement) that
+/// returns a digraph with all arcs not present in the original digraph.
 ///
 /// ```
 /// use {

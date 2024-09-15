@@ -22,6 +22,16 @@
 - Mention the order of traversal in the `Dfs` documentation.
 - Mention the order of traversal in the `Dijkstra` documentation.
 
+## [0.90.0] - 2024-09-15
+
+Added
+
+- Add doctests for `Johnson75`.
+
+Changed
+
+- Breaking: `Johnson75::new()::find_circuits()` is replaced by `Johnson75::circuits()`.
+
 ## [0.89.3] - 2024-09-15
 
 Added
