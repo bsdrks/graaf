@@ -34,7 +34,8 @@ use crate::{
 ///
 /// Provide an implementation of
 /// [`indegree_sequence`](IndegreeSequence::indegree_sequence) that returns the
-/// indegree sequence of the digraph OR implement `Indegree` and `Vertices`.
+/// indegree sequence of the digraph OR implement [`Indegree`] and
+/// [`Vertices`].
 ///
 /// ```
 /// use {

@@ -32,7 +32,7 @@ use crate::{
 ///
 /// Provide an implementation of
 /// [`is_semicomplete`](IsSemicomplete::is_semicomplete) that returns whether
-/// the digraph is semicomplete OR implement `HasArc` and `Order`.
+/// the digraph is semicomplete OR implement [`HasArc`] and [`Order`].
 ///
 /// ```
 /// use {

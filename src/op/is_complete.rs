@@ -31,7 +31,8 @@ use crate::{
 /// # Implementing [`IsComplete`] for a custom type
 ///
 /// Provide an implementation of [`is_complete`](IsComplete::is_complete) that
-/// returns whether the digraph is complete OR implement `HasEdge` and `Order`.
+/// returns whether the digraph is complete OR implement [`HasEdge`] and
+/// [`Order`].
 ///
 /// ```
 /// use {

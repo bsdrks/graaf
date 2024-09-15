@@ -57,7 +57,7 @@ use crate::IsSubdigraph;
 /// Provide an implementation of
 /// [`is_superdigraph`](IsSuperdigraph::is_superdigraph) that returns whether
 /// the digraph is a superdigraph of the given digraph OR implement
-/// `IsSubAdjacencyList`.
+/// [`IsSubdigraph`].
 ///
 /// ```
 /// use {

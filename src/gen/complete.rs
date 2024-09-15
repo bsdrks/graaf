@@ -84,8 +84,8 @@ use crate::{
 /// # Implementing [`Complete`] for a custom type
 ///
 /// Provide an implementation of [`complete`](Complete::complete) that
-/// generates a complete digraph of a given `order` OR implement `AddArc` and
-/// `Empty`.
+/// generates a complete digraph of a given `order` OR implement [`AddArc`] and
+/// [`Empty`].
 ///
 /// ```
 /// use {

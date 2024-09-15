@@ -41,8 +41,8 @@ use crate::{
 /// # Implementing [`IsBalanced`] for a custom type
 ///
 /// Provide an implementation of [`is_balanced`](IsBalanced::is_balanced) that
-/// returns whether the digraph is balanced OR implement `Indegree`,
-/// `Outdegree`, and `Vertices`.
+/// returns whether the digraph is balanced OR implement [`Indegree`],
+/// [`Outdegree`], and [`Vertices`].
 ///
 /// ```
 /// use {

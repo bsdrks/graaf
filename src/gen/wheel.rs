@@ -129,7 +129,7 @@ use crate::{
 /// # Implementing [`Wheel`] for a custom type
 ///
 /// Provide an implementation of [`wheel`](Wheel::wheel) that generates a wheel
-/// digraph of a given `order` OR implement `AddArc` and `Empty`.
+/// digraph of a given `order` OR implement [`AddArc`] and [`Empty`].
 ///
 /// ```
 /// use {

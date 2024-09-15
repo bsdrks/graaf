@@ -25,7 +25,8 @@ use crate::{
 /// # Implementing [`IsOriented`] for a custom type
 ///
 /// Provide an implementation of [`is_oriented`](IsOriented::is_oriented) that
-/// returns whether the digraph is oriented OR implement `Arcs` and `HasArc`.
+/// returns whether the digraph is oriented OR implement [`Arcs`] and
+/// [`HasArc`].
 ///
 /// ```
 /// use {

@@ -138,7 +138,7 @@ use crate::{
 /// Provide an implementation of
 /// [`is_spanning_subdigraph`](IsSpanningSubdigraph::is_spanning_subdigraph)
 /// that returns whether the digraph is a spanning subdigraph of the given
-/// digraph OR implement `HasArc`, `Arcs`, and `Vertices`.
+/// digraph OR implement [`HasArc`], [`Arcs`], and [`Vertices`].
 ///
 /// ```
 /// use {

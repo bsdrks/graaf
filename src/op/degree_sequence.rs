@@ -34,7 +34,7 @@ use crate::{
 ///
 /// Provide an implementation of
 /// [`degree_sequence`](DegreeSequence::degree_sequence) that returns the
-/// degree sequence of the digraph OR implement `Degree` and `Vertices`.
+/// degree sequence of the digraph OR implement [`Degree`] and [`Vertices`].
 ///
 /// ```
 /// use {

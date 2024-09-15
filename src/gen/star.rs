@@ -78,7 +78,7 @@ use crate::{
 /// # Implementing [`Star`] for a custom type
 ///
 /// Provide an implementation of [`star`](Star::star) that generates a star
-/// digraph of a given `order` OR implement `AddArc` and `Empty`.
+/// digraph of a given `order` OR implement [`AddArc`] and [`Empty`].
 ///
 /// ```
 /// use {

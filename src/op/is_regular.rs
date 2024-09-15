@@ -33,8 +33,8 @@ use crate::{
 /// # Implementing [`IsRegular`] for a custom type
 ///
 /// Provide an implementation of [`is_regular`](IsRegular::is_regular) that
-/// returns whether the digraph is regular OR implement `Indegree`, `Vertices`,
-/// and `Outdegree`.
+/// returns whether the digraph is regular OR implement [`Indegree`],
+/// [`Vertices`], and [`Outdegree`].
 ///
 /// ```
 /// use {

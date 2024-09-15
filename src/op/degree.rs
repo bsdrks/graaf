@@ -38,7 +38,7 @@ use crate::{
 /// # Implementing [`Degree`] for a custom type
 ///
 /// Provide an implementation of [`degree`](Degree::degree) that returns the
-/// degree of the vertex OR implement `Indegree` and `Outdegree`.
+/// degree of the vertex OR implement [`Indegree`] and [`Outdegree`].
 ///
 /// ```
 /// use {

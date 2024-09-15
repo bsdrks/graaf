@@ -123,7 +123,7 @@ use {
 ///
 /// Provide an implementation of [`is_subdigraph`](IsSubdigraph::is_subdigraph)
 /// that returns whether the digraph is a subdigraph of the given digraph OR
-/// implement `HasArc`, `Arcs`, and `Vertices`.
+/// implement [`HasArc`], [`Arcs`], and [`Vertices`].
 ///
 /// ```
 /// use {

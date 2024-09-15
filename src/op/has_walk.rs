@@ -32,7 +32,7 @@ use crate::HasArc;
 /// # How do I implement `HasWalk`
 ///
 /// Provide an implementation of `has_walk` that returns whether the sequence
-/// is a walk in the digraph OR implement `HasArc`.
+/// is a walk in the digraph OR implement [`HasArc`].
 ///
 /// ```
 /// use {

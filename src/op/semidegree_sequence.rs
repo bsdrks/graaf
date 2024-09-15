@@ -35,8 +35,8 @@ use crate::{
 ///
 /// Provide an implementation of
 /// [`semidegree_sequence`](SemidegreeSequence::semidegree_sequence) that
-/// returns the semidegree sequence of the digraph OR implement `Indegree`,
-/// `Outdegree`, and `Vertices`.
+/// returns the semidegree sequence of the digraph OR implement [`Indegree`],
+/// [`Outdegree`], and [`Vertices`].
 ///
 /// ```
 /// use {

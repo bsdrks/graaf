@@ -66,7 +66,7 @@ use crate::{
 /// # Implementing [`Path`] for a custom type
 ///
 /// Provide an implementation of [`path`](Path::path) that generates a path
-/// digraph of a given `order` OR implement `AddArc` and `Empty`.
+/// digraph of a given `order` OR implement [`AddArc`] and [`Empty`].
 ///
 /// ```
 /// use {

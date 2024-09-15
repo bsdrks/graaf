@@ -43,7 +43,7 @@ use {
 /// Provide an implementation of
 /// [`growing_network`](GrowingNetwork::growing_network) that generates a
 /// growing network of a given `order` from a given `seed` OR implement
-/// `AddArc` and `Empty`.
+/// [`AddArc`] and [`Empty`].
 ///
 /// ```
 /// use {

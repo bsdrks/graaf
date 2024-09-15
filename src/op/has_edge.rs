@@ -49,7 +49,7 @@ use crate::HasArc;
 /// # Implementing [`HasEdge`] for a custom type
 ///
 /// Provide an implementation of [`has_edge`](HasEdge::has_edge) that returns
-/// `true` if the digraph contains the arc OR implement `HasArc`.
+/// `true` if the digraph contains the arc OR implement [`HasArc`].
 ///
 /// ```
 /// use {

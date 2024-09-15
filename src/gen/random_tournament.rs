@@ -52,7 +52,7 @@ use crate::{
 ///
 /// Provide an implementation of
 /// [`random_tournament`](RandomTournament::random_tournament) that generates a
-/// random tournament of a given `order` OR implement `AddArc` and `Empty`.
+/// random tournament of a given `order` OR implement [`AddArc`] and [`Empty`].
 ///
 /// ```
 /// use {

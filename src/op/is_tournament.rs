@@ -34,8 +34,8 @@ use crate::{
 /// # Implementing [`IsTournament`] for a custom type
 ///
 /// Provide an implementation of [`is_tournament`](IsTournament::is_tournament)
-/// that returns whether the digraph is a tournament OR implement `HasArc` and
-/// `Order`.
+/// that returns whether the digraph is a tournament OR implement [`HasArc`]
+/// and [`Order`].
 ///
 /// ```
 /// use {

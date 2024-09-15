@@ -34,8 +34,8 @@ use crate::{
 /// # Implementing [`IsIsolated`] for a custom type
 ///
 /// Provide an implementation of [`is_isolated`](IsIsolated::is_isolated) that
-/// returns whether the vertex is isolated OR implement `Indegree` and
-/// `Outdegree`.
+/// returns whether the vertex is isolated OR implement [`Indegree`] and
+/// [`Outdegree`].
 ///
 /// ```
 /// use {

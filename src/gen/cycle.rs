@@ -80,7 +80,7 @@ use crate::{
 /// # Implementing [`Cycle`] for a custom type
 ///
 /// Provide an implementation of [`cycle`](Cycle::cycle) that generates a cycle
-/// digraph of a given `order` OR implement `AddArc` and `Empty`.
+/// digraph of a given `order` OR implement [`AddArc`] and [`Empty`].
 ///
 /// ```
 /// use {

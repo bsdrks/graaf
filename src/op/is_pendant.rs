@@ -32,7 +32,7 @@ use crate::Degree;
 /// # Implementing [`IsPendant`] for a custom type
 ///
 /// Provide an implementation of [`is_pendant`](IsPendant::is_pendant) that
-/// returns whether the vertex is pendant OR implement `Degree`.
+/// returns whether the vertex is pendant OR implement [`Degree`].
 ///
 /// ```
 /// use {

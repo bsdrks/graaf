@@ -31,8 +31,8 @@ use crate::{
 /// # Implementing [`Sources`] for a custom type
 ///
 /// Provide an implementation of [`sources`](Sources::sources) that returns an
-/// iterator over the sources in the digraph OR implement `Indegree` and
-/// `Vertices`.
+/// iterator over the sources in the digraph OR implement [`Indegree`] and
+/// [`Vertices`].
 ///
 /// ```
 /// use {

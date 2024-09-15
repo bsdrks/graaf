@@ -45,8 +45,8 @@ use crate::{
 /// # Implementing [`IsSymmetric`] for a custom type
 ///
 /// Provide an implementation of [`is_symmetric`](IsSymmetric::is_symmetric)
-/// that returns whether the digraph is symmetric OR implement `Arcs` and
-/// `HasArc`.
+/// that returns whether the digraph is symmetric OR implement [`Arcs`] and
+/// [`HasArc`].
 ///
 /// ```
 /// use {

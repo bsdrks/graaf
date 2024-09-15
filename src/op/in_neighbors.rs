@@ -35,7 +35,7 @@ use crate::Arcs;
 ///
 /// Provide an implementation of [`in_neighbors`](InNeighbors::in_neighbors)
 /// that returns an iterator over the in-neighbors of a vertex in the digraph
-/// OR implement `Arcs`.
+/// OR implement [`Arcs`].
 ///
 /// ```
 /// use {

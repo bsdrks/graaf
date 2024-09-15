@@ -34,8 +34,8 @@ use crate::{
 ///
 /// Provide an implementation of
 /// [`outdegree_sequence`](OutdegreeSequence::outdegree_sequence) that returns
-/// the outdegree sequence of the digraph OR implement `Outdegree` and
-/// `Vertices`.
+/// the outdegree sequence of the digraph OR implement [`Outdegree`] and
+/// [`Vertices`].
 ///
 /// ```
 /// use {

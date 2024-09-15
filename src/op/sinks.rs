@@ -31,8 +31,8 @@ use crate::{
 /// # Implementing [`Sinks`] for a custom type
 ///
 /// Provide an implementation of [`sinks`](Sinks::sinks) that returns an
-/// iterator over the sinks in the digraph OR implement `Outdegree` and
-/// `Vertices`.
+/// iterator over the sinks in the digraph OR implement [`Outdegree`] and
+/// [`Vertices`].
 ///
 /// ```
 /// use {
