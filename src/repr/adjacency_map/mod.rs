@@ -317,7 +317,7 @@ impl Circuit for AdjacencyMap {
 impl Converse for AdjacencyMap {
     /// # Panics
     ///
-    /// Panics if the order of the digraph is zero.
+    /// Panics if the digraph's order is zero.
     fn converse(&self) -> Self {
         let order = self.order();
         let mut converse = Self::empty(order);

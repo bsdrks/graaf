@@ -41,7 +41,7 @@
 //! - [`Circuit`] generates a circuit digraph.
 //! - [`Complete`] generates a complete digraph.
 //! - [`Cycle`] generates a bidirectional circuit.
-//! - [`Empty`] generates a digraph with no arcs.
+//! - [`Empty`] generates a digraph without arcs.
 //! - [`ErdosRenyi`] generates a random digraph.
 //! - [`GrowingNetwork`] generates a growing network.
 //! - [`RandomTournament`] generates a random tournament.
@@ -105,8 +105,8 @@
 //!
 //! ## Breadth-First Search
 //!
-//! A breadth-first search explores the vertices of an unweighted digraph in
-//! order of their distance from a source.
+//! A breadth-first search explores an unweighted digraph's vertices in order
+//! of their distance from a source.
 //!
 //! - [`Bfs`](bfs::Bfs) iterates the vertices.
 //! - [`BfsDist`](bfs_dist::BfsDist) iterates the vertices and their distance
@@ -124,8 +124,8 @@
 //!
 //! ## Depth-First Search
 //!
-//! A depth-first search explores the vertices of an unweighted digraph in
-//! order of their distance from a source.
+//! A depth-first search explores an unweighted digraph's vertices in order of
+//! their distance from a source.
 //!
 //! - [`Dfs`](dfs::Dfs) iterates the vertices.
 //! - [`DfsDist`](dfs_dist::DfsDist) iterates the vertices and their distance
@@ -153,24 +153,24 @@
 //!
 //! ## Distance Matrix
 //!
-//! A [`DistanceMatrix`] contains the shortest distances between all pairs of
-//! vertices in a digraph.
+//! A [`DistanceMatrix`] contains the shortest distances between all vertex
+//! pairs in a digraph.
 //!
-//! - [`DistanceMatrix::center`](DistanceMatrix::center) finds the center of
-//!   the digraph.
-//! - [`DistanceMatrix::diameter`](DistanceMatrix::diameter) finds the diameter
-//!   of the digraph.
-//! - [`DistanceMatrix::eccentricities`](DistanceMatrix::eccentricities)
-//!   returns the eccentricities of the vertices.
-//! - [`DistanceMatrix::is_connected`](DistanceMatrix::is_connected) checks if
-//!   the digraph is connected.
+//! - [`DistanceMatrix::center`](DistanceMatrix::center) finds the digraph's
+//!   center.
+//! - [`DistanceMatrix::diameter`](DistanceMatrix::diameter) finds the
+//!   digraph's diameter.
+//! - [`DistanceMatrix::eccentricities`](DistanceMatrix::eccentricities) the
+//!   vertices' eccentricities.
+//! - [`DistanceMatrix::is_connected`](DistanceMatrix::is_connected) checks the
+//!   digraph's connectedness.
 //! - [`DistanceMatrix::periphery`](DistanceMatrix::periphery) finds the
-//!   periphery of the digraph.
+//!   digraph's periphery.
 //!
 //! ## Floyd-Warshall
 //!
-//! The Floyd-Warshall algorithm finds the distance between each pair
-//! of vertices in an arc-weighted digraph.
+//! The Floyd-Warshall algorithm finds the distance between each vertex pair in
+//! an arc-weighted digraph.
 //!
 //! - [`floyd_warshall::distances`] finds the shortest distances.
 //!
@@ -183,8 +183,8 @@
 //!
 //! ## Predecessor Tree
 //!
-//! A [`PredecessorTree`] is the result of a search and contains the
-//! predecessors of the vertices.
+//! A [`PredecessorTree`] is the result of a search and contains the vertices'
+//! predecessors.
 //!
 //! - [`PredecessorTree::search`] finds a vertex by value.
 //! - [`PredecessorTree::search_by`] finds a vertex by predicate.

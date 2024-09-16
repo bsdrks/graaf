@@ -1,7 +1,7 @@
 //! Return a digraph's semidegree sequence.
 //!
-//! The semidegree sequence is an iterator over the indegree and outdegree
-//! pairs of the vertices of a digraph.
+//! The semidegree sequence iterates over a digraph's indegree and outdegree
+//! pairs.
 //!
 //! # Examples
 //!
@@ -35,7 +35,7 @@ use crate::{
 ///
 /// Provide an implementation of
 /// [`semidegree_sequence`](SemidegreeSequence::semidegree_sequence) that
-/// returns the semidegree sequence of the digraph OR implement [`Indegree`],
+/// returns a digraph's semidegree sequence OR implement [`Indegree`],
 /// [`Outdegree`], and [`Vertices`].
 ///
 /// ```

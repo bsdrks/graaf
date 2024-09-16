@@ -31,7 +31,7 @@ use crate::Vertices;
 /// # Implementing [`Outdegree`] for a custom type
 ///
 /// Provide an implementation of [`outdegree`](Outdegree::outdegree) that
-/// returns the outdegree of the vertex.
+/// returns a vertex's outdegree.
 ///
 /// ```
 /// use {
@@ -62,7 +62,7 @@ use crate::Vertices;
 /// assert_eq!(digraph.outdegree(2), 1);
 /// ```
 pub trait Outdegree {
-    /// Return the outdegree of a vertex in the digraph.
+    /// Return a vertex's outdegree.
     ///
     /// # Arguments
     ///
@@ -93,9 +93,9 @@ pub trait Outdegree {
     #[must_use]
     fn outdegree(&self, u: usize) -> usize;
 
-    /// Check whether a vertex is a sink of the digraph.
+    /// Check whether a vertex is a digraph's sink.
     ///
-    /// A sink is a vertex with no out-neighbors.
+    /// A sink is a vertex without out-neighbors.
     ///
     /// # Arguments
     ///
@@ -126,7 +126,7 @@ pub trait Outdegree {
         self.outdegree(u) == 0
     }
 
-    /// Return the maximum outdegree of the digraph.
+    /// Return the digraph's maximum outdegree.
     ///
     /// # Examples
     ///
@@ -166,7 +166,7 @@ pub trait Outdegree {
             .unwrap_or(0)
     }
 
-    /// Return the minimum outdegree of the digraph.
+    /// Return the digraph's minimum outdegree.
     ///
     /// # Examples
     ///

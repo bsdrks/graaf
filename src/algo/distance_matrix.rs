@@ -1,7 +1,7 @@
 //! A distance matrix
 //!
-//! A [`DistanceMatrix`] contains the distance between each pair of vertices in
-//! a digraph.
+//! A [`DistanceMatrix`] contains the distance between each vertex pair in a
+//! digraph.
 //!
 //! # Examples
 //!
@@ -168,14 +168,14 @@ impl<W> DistanceMatrix<W> {
         }
     }
 
-    /// Return the center of the digraph.
+    /// Return a digraph's center.
     ///
-    /// The center of a digraph is the set of vertices with the smallest
+    /// A digraph's center is the set of vertices with the smallest
     /// eccentricity. The center is also known as the Jordan center.
     ///
     /// # Examples
     ///
-    /// Red marks the center of the digraph.
+    /// Red marks the digraph's center.
     ///
     /// ![Eccentricities](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_center_1-0.87.4.svg?)
     ///
@@ -237,9 +237,9 @@ impl<W> DistanceMatrix<W> {
         center
     }
 
-    /// Return the diameter of the digraph.
+    /// Return a digraph's diameter.
     ///
-    /// The diameter of a digraph is the maximum eccentricity of any vertex.
+    /// A digraph's diameter is its maximum eccentricity.
     ///
     /// # Examples
     ///
@@ -291,10 +291,9 @@ impl<W> DistanceMatrix<W> {
             .unwrap_or(self.infinity)
     }
 
-    /// Return the eccentricities of the vertices.
+    /// Return the digraph's eccentricities.
     ///
-    /// The eccentricity of a vertex is the maximum distance to any other
-    /// vertex.
+    /// A vertex's eccentricity is the maximum distance to any other vertex.
     ///
     /// # Examples
     ///
@@ -393,10 +392,10 @@ impl<W> DistanceMatrix<W> {
         self.eccentricities().iter().all(|&e| e != self.infinity)
     }
 
-    /// Return the periphery of the digraph.
+    /// Return a digraph's periphery.
     ///
-    /// The periphery of a digraph is the set of vertices with an eccentricity
-    /// equal to the diameter.
+    /// A digraph's periphery is the set of vertices with an eccentricity equal
+    /// to its diameter.
     ///
     /// # Examples
     ///

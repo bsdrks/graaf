@@ -1,6 +1,6 @@
-//! Iterate a digraph's sources.
+//! Iterate over a digraph's sources.
 //!
-//! A source is a vertex with no in-neighbors.
+//! A source is a vertex without in-neighbors.
 //!
 //! # Examples
 //!
@@ -26,12 +26,12 @@ use crate::{
     Vertices,
 };
 
-/// Iterate a digraph's sources.
+/// Iterate over a digraph's sources.
 ///
 /// # Implementing [`Sources`] for a custom type
 ///
 /// Provide an implementation of [`sources`](Sources::sources) that returns an
-/// iterator over the sources in the digraph OR implement [`Indegree`] and
+/// iterator over a digraph's sources OR implement [`Indegree`] and
 /// [`Vertices`].
 ///
 /// ```

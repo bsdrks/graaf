@@ -318,7 +318,7 @@ impl Circuit for AdjacencyList {
 impl Converse for AdjacencyList {
     /// # Panics
     ///
-    /// Panics if the order of the digraph is zero.
+    /// Panics if the digraphs' order is zero.
     fn converse(&self) -> Self {
         let order = self.order();
         let mut converse = Self::empty(order);

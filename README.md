@@ -29,7 +29,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.90.0"
+graaf = "0.90.1"
 ```
 
 ## Representations
@@ -54,7 +54,7 @@ graaf = "0.90.0"
 - [`Circuit`] generates a circuit digraph.
 - [`Complete`] generates a complete digraph.
 - [`Cycle`] generates a bidirectional circuit.
-- [`Empty`] generates a digraph with no arcs.
+- [`Empty`] generates a digraph without arcs.
 - [`ErdosRenyi`] generates a random digraph.
 - [`GrowingNetwork`] generates a growing network digraph.
 - [`Path`] generates a path digraph.
@@ -116,7 +116,7 @@ The Bellman-Ford-Moore algorithm finds the shortest distances from a source vert
 
 ### Breadth-First Search
 
-A breadth-first search explores the vertices of an unweighted digraph in order of their distance from a source.
+A breadth-first search explores an unweighted digraph's vertices in order of their distance from a source.
 
 - [`Bfs`] iterates the vertices.
 - [`BfsDist`] iterates the vertices and their distance from the source.
@@ -128,7 +128,7 @@ A breadth-first search explores the vertices of an unweighted digraph in order o
 
 ### Depth-First Search
 
-A depth-first search explores the vertices of an unweighted digraph in order of their depth from a source.
+A depth-first search explores an unweighted digraph's vertices in order of their depth from a source.
 
 - [`Dfs`] iterates the vertices.
 - [`DfsDist`] iterates the vertices and their distance from the source.
@@ -148,17 +148,17 @@ Dijkstra's algorithm finds the shortest paths in an arc-weighted digraph.
 
 ### Distance Matrix
 
-A [`DistanceMatrix`] contains the shortest distances between all pairs of vertices in a digraph.
+A [`DistanceMatrix`] contains the shortest distances between all vertex pairs in a digraph.
 
-- [`DistanceMatrix::center`] finds the center of the digraph.
-- [`DistanceMatrix::diameter`] finds the diameter of the digraph.
-- [`DistanceMatrix::eccentricities`] returns the eccentricities of the vertices.
-- [`DistanceMatrix::is_connected`] checks if the digraph is connected.
-- [`DistanceMatrix::periphery`] finds the periphery of the digraph.
+- [`DistanceMatrix::center`] finds the digraph's center.
+- [`DistanceMatrix::diameter`] finds the digraph's diameter.
+- [`DistanceMatrix::eccentricities`] returns the vertices' eccentricities.
+- [`DistanceMatrix::is_connected`] checks the digraph's connectedness.
+- [`DistanceMatrix::periphery`] finds the digraph's periphery.
 
 ### Floyd-Warshall
 
-The Floyd-Warshall algorithm finds the distance between each pair of vertices in an arc-weighted digraph.
+The Floyd-Warshall algorithm finds the distance between each vertex pair in an arc-weighted digraph.
 
 - [`floyd_warshall::distances`] finds the shortest distances.
 
@@ -170,7 +170,7 @@ Johnson's circuit-finding algorithm finds all circuits in a digraph.
 
 ### Predecessor Tree
 
-A [`PredecessorTree`] is the result of a search and contains the predecessors of the vertices.
+A [`PredecessorTree`] contains the vertex predecessors.
 
 - [`PredecessorTree::search`] finds a vertex by value.
 - [`PredecessorTree::search_by`] finds a vertex by predicate.

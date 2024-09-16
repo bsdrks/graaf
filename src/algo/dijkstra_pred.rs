@@ -106,8 +106,8 @@ use {
 /// A step in Dijkstra's algorithm.
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct Step {
-    /// The predecessor vertex of the current vertex, if any. The source
-    /// vertices have no predecessor.
+    /// The current vertex's predecessor, if any. The source vertices have no
+    /// predecessor.
     pub u: Option<usize>,
     /// The current vertex.
     pub v: usize,

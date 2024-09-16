@@ -1,7 +1,6 @@
 //! Return a digraph's degree sequence.
 //!
-//! The degree sequence is an iterator over the degrees of the vertices of
-//! a digraph.
+//! The degree sequence iterates over a digraph's degrees.
 //!
 //! # Examples
 //!
@@ -33,8 +32,8 @@ use crate::{
 /// # Implementing [`DegreeSequence`] for a custom type
 ///
 /// Provide an implementation of
-/// [`degree_sequence`](DegreeSequence::degree_sequence) that returns the
-/// degree sequence of the digraph OR implement [`Degree`] and [`Vertices`].
+/// [`degree_sequence`](DegreeSequence::degree_sequence) that returns a
+/// digraph's degree sequence OR implement [`Degree`] and [`Vertices`].
 ///
 /// ```
 /// use {
@@ -74,7 +73,7 @@ use crate::{
 /// assert!(digraph.degree_sequence().eq([3, 2, 3]));
 /// ```
 pub trait DegreeSequence {
-    /// Return the degree sequence of the digraph.
+    /// Return a digrap's degree sequence.
     ///
     /// # Examples
     ///

@@ -66,7 +66,7 @@ pub trait AddArcWeighted<W> {
     ///
     /// * `u`: The tail vertex.
     /// * `v`: The head vertex.
-    /// * `w`: The weight of the arc.
+    /// * `w`: The arc's weight.
     ///
     /// # Panics
     ///

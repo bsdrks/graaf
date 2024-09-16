@@ -34,8 +34,8 @@ use crate::Arcs;
 /// # Implementing [`InNeighbors`] for a custom type
 ///
 /// Provide an implementation of [`in_neighbors`](InNeighbors::in_neighbors)
-/// that returns an iterator over the in-neighbors of a vertex in the digraph
-/// OR implement [`Arcs`].
+/// that returns an iterator over a vertex's in-neighbors OR implement
+/// [`Arcs`].
 ///
 /// ```
 /// use {
@@ -71,7 +71,7 @@ use crate::Arcs;
 /// ```
 #[doc(alias = "InNeighbours")]
 pub trait InNeighbors {
-    /// Return an iterator over the in-neighbors of a vertex in the digraph.
+    /// Return an iterator over a vertex's in-neighbors.
     ///
     /// # Arguments
     ///

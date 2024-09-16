@@ -1,7 +1,6 @@
 //! Generate path digraphs.
 //!
-//! A path digraph is a chain of arcs that connect vertices in a linear
-//! sequence.
+//! A path digraph is an arc chain that connects vertices in a linear sequence.
 //!
 //! # Examples
 //!
@@ -60,8 +59,7 @@ use crate::{
 
 /// Generate path digraphs.
 ///
-/// A path digraph is a chain of arcs that connect vertices in a linear
-/// sequence.
+/// A path digraph is an arcs chain that connect vertices in a linear sequence.
 ///
 /// # Implementing [`Path`] for a custom type
 ///

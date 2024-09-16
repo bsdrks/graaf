@@ -42,8 +42,7 @@
 ///
 /// Provide an implementation of
 /// [`out_neighbors_weighted`](OutNeighborsWeighted::out_neighbors_weighted)
-/// that returns an iterator over the weighted out-neighbours of a vertex in
-/// the digraph.
+/// that returns an iterator over a vertex's weighted out-neighbours.
 ///
 /// ```
 /// use {
@@ -69,8 +68,7 @@
 /// ```
 #[doc(alias = "OutNeighboursWeighted")]
 pub trait OutNeighborsWeighted<W> {
-    /// Return an iterator over the weighted out-neighbours of a vertex in the
-    /// digraph.
+    /// Return an iterator over a vertex's weighted out-neighbours.
     ///
     /// # Arguments
     ///

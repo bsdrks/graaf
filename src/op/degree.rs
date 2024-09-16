@@ -1,6 +1,6 @@
 //! Return a vertex's degree.
 //!
-//! The degree of a vertex is the sum of its indegree and outdegree.
+//! A vertex's degree is the sum of its indegree and outdegree.
 //!
 //! # Examples
 //!
@@ -37,8 +37,8 @@ use crate::{
 ///
 /// # Implementing [`Degree`] for a custom type
 ///
-/// Provide an implementation of [`degree`](Degree::degree) that returns the
-/// degree of the vertex OR implement [`Indegree`] and [`Outdegree`].
+/// Provide an implementation of [`degree`](Degree::degree) that returns a
+/// vertex's degree OR implement [`Indegree`] and [`Outdegree`].
 ///
 /// ```
 /// use {
@@ -117,7 +117,7 @@ pub trait Degree {
     #[must_use]
     fn degree(&self, u: usize) -> usize;
 
-    /// Return the maximum degree of the digraph.
+    /// Return a digraph's maximum degree.
     ///
     /// # Examples
     ///
@@ -154,7 +154,7 @@ pub trait Degree {
         self.vertices().map(|u| self.degree(u)).max().unwrap_or(0)
     }
 
-    /// Return the minimum degree of the digraph.
+    /// Return a digraph's minimum degree.
     ///
     /// # Examples
     ///

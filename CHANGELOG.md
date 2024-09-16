@@ -22,12 +22,17 @@
 - Mention the order of traversal in the `Dfs` documentation.
 - Mention the order of traversal in the `Dijkstra` documentation.
 
+## [0.90.1] - 2024-09-16
+
+Changed
+
+- Improved API documentation's wording.
+
 ## [0.90.0] - 2024-09-15
 
 Added
 
 - Add doctests for `Johnson75`.
-- Export `Johnson75` from `lib.rs`.
 
 Changed
 

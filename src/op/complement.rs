@@ -1,7 +1,6 @@
 //! Return a digraph's complement.
 //!
-//! The complement of a digraph contains all arcs not present in the original
-//! digraph.
+//! A digraph's complement contains all arcs not in the original digraph.
 //!
 //! # Examples
 //!
@@ -96,7 +95,7 @@ use crate::{
 /// );
 /// ```
 pub trait Complement {
-    /// Generate the complement of the digraph.
+    /// Generate the digraph's complement.
     ///
     /// # Examples
     ///

@@ -1,7 +1,7 @@
 //! Breadth-first search with predecessors.
 //!
-//! Breadth-first search explores the vertices of an unweighted digraph in
-//! order of their distance from a source.
+//! Breadth-first search explores an unweighted digraph's vertices in order of
+//! their distance from a source.
 //!
 //! Runs in **O(v + a)** time, where **v** is the number of vertices and **a**
 //! the number of arcs.
@@ -102,8 +102,8 @@ use {
 /// A step in the breadth-first search.
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct Step {
-    /// The predecessor vertex of the current vertex, if any. The source
-    /// vertices have no predecessor.
+    /// The current vertex's predecessor, if any. The source vertices have no
+    /// predecessor.
     pub u: Option<usize>,
     /// The current vertex.
     pub v: usize,
@@ -111,8 +111,8 @@ pub struct Step {
 
 /// Breadth-first search with predecessors.
 ///
-/// Breadth-first search explores the vertices of an unweighted digraph in
-/// order of their distance from a source.
+/// Breadth-first search explores an unweighted digraph's vertices in order of
+/// their distance from a source.
 ///
 /// Runs in **O(v + a)** time, where **v** is the number of vertices and **a**
 /// the number of arcs.

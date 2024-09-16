@@ -1,4 +1,4 @@
-//! Iterate a digraph's arcs.
+//! Iterate over a digraph's arcs.
 //!
 //! # Examples
 //!
@@ -15,12 +15,12 @@
 //! assert!(digraph.arcs().eq([(0, 1), (1, 2), (2, 0)]));
 //! ```
 
-/// Iterate a digraph's arcs.
+/// Iterate over a digraph's arcs.
 ///
 /// # Implementing [`Arcs`] for a custom type
 ///
 /// Provide an implementation of [`arcs`](Arcs::arcs) that returns an iterator
-/// over the arcs in a digraph.
+/// over a digraph's arcs.
 ///
 /// ```
 /// use graaf::Arcs;
@@ -36,7 +36,7 @@
 /// }
 /// ```
 pub trait Arcs {
-    /// Return an iterator over the arcs in the digraph.
+    /// Return an iterator over a digraph's arcs.
     ///
     /// # Examples
     ///

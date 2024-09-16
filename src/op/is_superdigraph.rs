@@ -1,4 +1,4 @@
-//! Check whether a digraph is a superdigraph of another digraph.
+//! Check whether a digraph is another digraph's superdigraph.
 //!
 //! If digraph `H` is a subdigraph of digraph `D`, then `D` is a superdigraph
 //! of `H`; the vertex set of `H` is a subset of the vertex set of `D` and the
@@ -45,7 +45,7 @@
 
 use crate::IsSubdigraph;
 
-/// Check whether a digraph is a superdigraph of another digraph.
+/// Check whether a digraph is another digraph's superdigraph.
 ///
 /// If digraph `H` is a subdigraph of digraph `D`, then `D` is a superdigraph
 /// of `H`; the vertex set of `H` is a subset of the vertex set of `D` and the
@@ -115,7 +115,7 @@ use crate::IsSubdigraph;
 /// assert!(!d.is_superdigraph(&h));
 /// ```
 pub trait IsSuperdigraph {
-    /// Check whether the digraph is a superdigraph of another digraph.
+    /// Check whether the digraph is another digraph's superdigraph.
     ///
     /// # Arguments
     ///

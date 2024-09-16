@@ -1,6 +1,6 @@
 //! Return a digraph's converse.
 //!
-//! The converse of a digraph is a digraph with all arcs reversed.
+//! A digraph's converse is the digraph with all arcs reversed.
 //!
 //! # Examples
 //!
@@ -24,7 +24,7 @@
 /// # Implementing [`Converse`] for a digraph type
 ///
 /// Provide an implementation of [`converse`](Converse::converse) that returns
-/// a digraph with all arcs reversed.
+/// the digraph with all arcs reversed.
 ///
 /// ```
 /// use {
@@ -73,7 +73,7 @@
 /// );
 /// ```
 pub trait Converse {
-    /// Generate the converse of the digraph.
+    /// Generate a digraph's converse.
     ///
     /// # Examples
     ///

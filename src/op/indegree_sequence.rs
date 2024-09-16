@@ -1,7 +1,6 @@
 //! Return a digraph's indegree sequence.
 //!
-//! The indegree sequence is an iterator over the indegrees of the vertices of
-//! a digraph.
+//! The indegree sequence iterates over a digraph's indegrees.
 //!
 //! # Examples
 //!
@@ -33,9 +32,8 @@ use crate::{
 /// # Implementing [`IndegreeSequence`] for a custom type
 ///
 /// Provide an implementation of
-/// [`indegree_sequence`](IndegreeSequence::indegree_sequence) that returns the
-/// indegree sequence of the digraph OR implement [`Indegree`] and
-/// [`Vertices`].
+/// [`indegree_sequence`](IndegreeSequence::indegree_sequence) that returns a
+/// digraph's indegree sequence OR implement [`Indegree`] and [`Vertices`].
 ///
 /// ```
 /// use {
@@ -74,7 +72,7 @@ use crate::{
 /// assert!(digraph.indegree_sequence().eq([1, 1, 2]));
 /// ```
 pub trait IndegreeSequence {
-    /// Return the indegree sequence of the digraph.
+    /// Return a digraph's indegree sequence.
     ///
     /// # Examples
     ///

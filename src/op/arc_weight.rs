@@ -33,7 +33,7 @@
 /// # Implementing [`ArcWeight`] for a custom type
 ///
 /// Provide an implementation of [`arc_weight`](ArcWeight::arc_weight) that
-/// returns the weight of the arc.
+/// returns an arc's weight.
 ///
 /// ```
 /// use {

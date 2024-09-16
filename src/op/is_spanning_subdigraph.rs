@@ -1,4 +1,4 @@
-//! Check whether a digraph is a spanning subdigraph of another digraph.
+//! Check whether a digraph is another digraph's spanning subdigraph.
 //!
 //! A digraph `H` is a spanning subdigraph of a digraph `D` if the vertex set
 //! of `H` equals the vertex set of `D` and the arc set of `H` is a subset of
@@ -24,7 +24,7 @@
 //! assert!(h.is_spanning_subdigraph(&d));
 //! ```
 //!
-//! Every digraph is a spanning subdigraph of itself.
+//! Every digraph is its own spanning subdigraph.
 //!
 //! ```
 //! use graaf::{
@@ -131,14 +131,14 @@ use crate::{
     Vertices,
 };
 
-/// Check whether a digraph is a spanning subdigraph of another digraph.
+/// Check whether a digraph is another digraph's spanning subdigraph.
 ///
 /// # Implementing [`IsSpanningSubdigraph`] for a custom type
 ///
 /// Provide an implementation of
 /// [`is_spanning_subdigraph`](IsSpanningSubdigraph::is_spanning_subdigraph)
-/// that returns whether the digraph is a spanning subdigraph of the given
-/// digraph OR implement [`HasArc`], [`Arcs`], and [`Vertices`].
+/// that returns whether the digraph is the given digraph's spanning subdigraph
+/// OR implement [`HasArc`], [`Arcs`], and [`Vertices`].
 ///
 /// ```
 /// use {
@@ -191,8 +191,7 @@ use crate::{
 /// assert!(h.is_spanning_subdigraph(&d));
 /// ```
 pub trait IsSpanningSubdigraph {
-    /// Check whether the digraph is a spanning subdigraph of another
-    /// digraph.
+    /// Check whether the digraph is another digraph's spanning subdigraph.
     ///
     /// # Arguments
     ///

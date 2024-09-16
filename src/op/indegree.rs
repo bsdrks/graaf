@@ -31,7 +31,7 @@ use crate::Vertices;
 /// # Implementing [`Indegree`] for a custom type
 ///
 /// Provide an implementation of [`indegree`](Indegree::indegree) that returns
-/// the indegree of the vertex.
+/// a vertex's indegree.
 ///
 /// ```
 /// use {
@@ -63,7 +63,7 @@ use crate::Vertices;
 /// ```
 #[doc(alias = "InDegree")]
 pub trait Indegree {
-    /// Return the indegree of a vertex in the digraph.
+    /// Return a vertex's indegree.
     ///
     /// # Arguments
     ///
@@ -93,7 +93,7 @@ pub trait Indegree {
     #[must_use]
     fn indegree(&self, v: usize) -> usize;
 
-    /// Check whether a vertex is a source of the digraph.
+    /// Check whether a vertex is a digraph's source.
     ///
     /// A source is a vertex with an indegree of 0.
     ///
@@ -126,7 +126,7 @@ pub trait Indegree {
         self.indegree(v) == 0
     }
 
-    /// Return the maximum indegree of the digraph.
+    /// Return a digraph's maximum indegree.
     ///
     /// # Examples
     ///
@@ -163,7 +163,7 @@ pub trait Indegree {
         self.vertices().map(|u| self.indegree(u)).max().unwrap_or(0)
     }
 
-    /// Return the minimum indegree of the digraph.
+    /// Return a digraph's minimum indegree.
     ///
     /// # Examples
     ///

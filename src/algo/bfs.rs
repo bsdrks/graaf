@@ -1,7 +1,7 @@
 //! Breadth-first search.
 //!
-//! Breadth-first search explores the vertices of an unweighted digraph in
-//! order of their distance from a source.
+//! Breadth-first search explores an unweighted digraph's vertices in the order
+//! of their distance from a source.
 //!
 //! Runs in **O(v + a)** time, where **v** is the number of vertices and **a**
 //! the number of arcs.
@@ -75,8 +75,8 @@ use {
 
 /// Breadth-first search.
 ///
-/// Breadth-first search explores the vertices of an unweighted digraph in
-/// order of their distance from a source.
+/// Breadth-first search explores an unweighted digraph's vertices in the order
+/// of their distance from a source.
 ///
 /// Runs in **O(v + a)** time, where **v** is the number of vertices and **a**
 /// the number of arcs.

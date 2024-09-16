@@ -1,7 +1,6 @@
 //! Return a digraph's outdegree sequence.
 //!
-//! The outdegree sequence is an iterator over the outdegrees of the vertices
-//! of a digraph.
+//! The outdegree sequence iterates over a digraph's outdegrees.
 //!
 //! # Examples
 //!
@@ -34,7 +33,7 @@ use crate::{
 ///
 /// Provide an implementation of
 /// [`outdegree_sequence`](OutdegreeSequence::outdegree_sequence) that returns
-/// the outdegree sequence of the digraph OR implement [`Outdegree`] and
+/// the digraph's outdegree sequence OR implement [`Outdegree`] and
 /// [`Vertices`].
 ///
 /// ```
@@ -74,7 +73,7 @@ use crate::{
 /// assert!(digraph.outdegree_sequence().eq([2, 1, 1]));
 /// ```
 pub trait OutdegreeSequence {
-    /// Return the outdegree sequence of the digraph.
+    /// Return a digraph's outdegree sequence.
     ///
     /// # Examples
     ///
