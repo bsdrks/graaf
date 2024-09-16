@@ -1,4 +1,4 @@
-//! Digrpah representations.
+//! Digraph representations.
 
 pub mod adjacency_list;
 pub mod adjacency_list_weighted;

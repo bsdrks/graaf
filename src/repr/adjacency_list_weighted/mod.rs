@@ -1,4 +1,6 @@
-//! A representation of an arc-weighted digraph.
+//! Represent sparse arc-weighted digraphs.
+//!
+//! An [`AdjacencyListWeighted`] is a vector of maps.
 //!
 //! # Examples
 //!
@@ -47,7 +49,7 @@ use {
     std::collections::BTreeMap,
 };
 
-/// An representation of an arc-weighted digraph.
+/// A representation of an arc-weighted digraph.
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct AdjacencyListWeighted<W> {
     arcs: Vec<BTreeMap<usize, W>>,

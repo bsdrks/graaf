@@ -1,5 +1,6 @@
-#![macro_use]
-//! A representation of an unweighted digraph.
+//! Represent sparse unweighted digraphs.
+//!
+//! An [`EdgeList`] is a vector of tuples.
 //!
 //! # Example
 //!

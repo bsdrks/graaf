@@ -29,7 +29,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.90.2"
+graaf = "0.90.3"
 ```
 
 ## Representations
@@ -67,18 +67,18 @@ graaf = "0.90.2"
 - [`AddArcWeighted`] adds an arc to an arc-weighted digraph.
 - [`AddArc`] adds an arc to an unweighted digraph.
 - [`ArcWeight`] returns an arc's weight.
-- [`ArcsWeighted`] iterates a digraph's weighted arcs.
-- [`Arcs`] iterates a digraph's arcs.
+- [`ArcsWeighted`] iterates over a digraph's weighted arcs.
+- [`Arcs`] iterates over a digraph's arcs.
 - [`Complement`] returns a digraph's complement.
 - [`Converse`] returns a digraph's converse.
-- [`DegreeSequence`] iterates a digraph's degrees.
+- [`DegreeSequence`] iterates over a digraph's degrees.
 - [`Degree`] returns a vertex's degree.
 - [`FilterVertices`] filters a digraph's vertices.
 - [`HasArc`] checks whether a digraph contains an arc.
 - [`HasEdge`] checks whether a digraph contains an edge.
 - [`HasWalk`] checks whether a digraph contains a walk.
-- [`InNeighbors`] iterates a vertex's in-neighbors.
-- [`IndegreeSequence`] iterates a digraph's indegrees.
+- [`InNeighbors`] iterates over a vertex's in-neighbors.
+- [`IndegreeSequence`] iterates over a digraph's indegrees.
 - [`Indegree`] returns a vertex's indegree.
 - [`IsBalanced`] checks whether a digraph is balanced.
 - [`IsComplete`] checks whether a digraph is complete.
@@ -94,17 +94,17 @@ graaf = "0.90.2"
 - [`IsSymmetric`] checks whether a digraph is symmetric.
 - [`IsTournament`] checks whether a digraph is a tournament.
 - [`Order`] returns the number of vertices in a digraph.
-- [`OutNeighborsWeighted`] iterates a vertex's weighted out-neighbors.
-- [`OutNeighbors`] iterates a vertex's out-neighbors.
-- [`OutdegreeSequence`] iterates a digraph's outdegrees.
+- [`OutNeighborsWeighted`] iterates over a vertex's weighted out-neighbors.
+- [`OutNeighbors`] iterates over a vertex's out-neighbors.
+- [`OutdegreeSequence`] iterates over a digraph's outdegrees.
 - [`Outdegree`] returns a vertex's outdegree.
 - [`RemoveArc`] removes an arc from a digraph.
-- [`SemidegreeSequence`] iterates a digraph's semidegrees.
-- [`Sinks`] iterates a digraph's sinks.
+- [`SemidegreeSequence`] iterates over a digraph's semidegrees.
+- [`Sinks`] iterates over a digraph's sinks.
 - [`Size`] returns the number of arcs in a digraph.
-- [`Sources`] iterates a digraph's sources.
+- [`Sources`] iterates over a digraph's sources.
 - [`Union`] returns the union of two digraphs.
-- [`Vertices`] iterates a digraph's vertices.
+- [`Vertices`] iterates over a digraph's vertices.
 
 ## Algorithms
 

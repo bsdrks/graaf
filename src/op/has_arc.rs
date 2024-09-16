@@ -77,7 +77,7 @@ pub trait HasArc {
     ///
     /// # Panics
     ///
-    /// `has_arc` may not panic if `u` and `v` are out of bounds.
+    /// `has_arc` may not panic if `u` and `v` are not in the digraph.
     ///
     /// # Examples
     ///

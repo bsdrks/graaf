@@ -1,4 +1,6 @@
-//! A representation of an unweighted digraph.
+//! Represent dense unweighted digraphs.
+//!
+//! An [`AdjacencyMatrix`] is a vector of 64-bit blocks.
 //!
 //! An adjacency matrix is a symmetric binary matrix where a value of `1` at
 //! row `u` and column `v` indicates an arc from vertex `u` to vertex `v`. The

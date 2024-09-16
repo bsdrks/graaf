@@ -1,4 +1,6 @@
-//! A representation of an unweighted digraph.
+//! Represent sparse unweighted digraphs.
+//!
+//! An [`AdjacencyList`] is a vector of sets.
 //!
 //! # Examples
 //!

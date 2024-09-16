@@ -21,6 +21,12 @@
 - Mention the order of traversal in the `Dfs` documentation.
 - Mention the order of traversal in the `Dijkstra` documentation.
 
+## [0.90.3] - 2024-09-16
+
+Changed
+
+- Improve documentation.
+
 ## [0.90.2] - 2024-09-16
 
 Added
