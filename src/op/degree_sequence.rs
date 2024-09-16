@@ -73,7 +73,7 @@ use crate::{
 /// assert!(digraph.degree_sequence().eq([3, 2, 3]));
 /// ```
 pub trait DegreeSequence {
-    /// Return a digrap's degree sequence.
+    /// Return a digraph's degree sequence.
     ///
     /// # Examples
     ///

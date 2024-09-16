@@ -38,7 +38,7 @@
 //! assert!(tournament.is_subdigraph(&tournament));
 //! ```
 //!
-//! A digraph `H` with arcs not in the arc set of a digraph `D` is not a
+//! A digraph `H` with arcs not in the arc set of a digraph `D` isn't a
 //! subdigraph of `D`.
 //!
 //! ```
@@ -61,7 +61,7 @@
 //! assert!(!h.is_subdigraph(&d));
 //! ```
 //!
-//! A digraph `H` with vertices not in the vertex set of a digraph `D` is not a
+//! A digraph `H` with vertices not in the vertex set of a digraph `D` isn't a
 //! subdigraph of `D`.
 //!
 //! ```
@@ -81,8 +81,8 @@
 //! assert!(!h.is_subdigraph(&d));
 //! ```
 //!
-//! A digraph `H` with arcs whose end-vertices are not in the vertex set of `H`
-//! is not a subdigraph of a digraph `D`.
+//! A digraph `H` with arcs whose end-vertices aren't in the vertex set of `H`
+//! isn't a subdigraph of a digraph `D`.
 //!
 //! ```
 //! use graaf::{
@@ -92,7 +92,7 @@
 //!     IsSubdigraph,
 //! };
 //!
-//! // The arc (0, 2) has end-vertex `2` which is not in the vertex set of `H`.
+//! // The arc (0, 2) has end-vertex `2` which isn't in the vertex set of `H`.
 //!
 //! let mut h = AdjacencyList::empty(3);
 //!
@@ -216,7 +216,7 @@ pub trait IsSubdigraph {
     /// assert!(tournament.is_subdigraph(&tournament));
     /// ```
     ///
-    /// A digraph `H` with arcs not in the arc set of a digraph `D` is not a
+    /// A digraph `H` with arcs not in the arc set of a digraph `D` isn't a
     /// subdigraph of `D`.
     ///
     /// ```
@@ -259,8 +259,8 @@ pub trait IsSubdigraph {
     /// assert!(!h.is_subdigraph(&d));
     /// ```
     ///
-    /// A digraph `H` with arcs whose end-vertices are not in the vertex set of
-    /// `H` is not a subdigraph of a digraph `D`.
+    /// A digraph `H` with arcs whose end-vertices aren't in the vertex set of
+    /// `H` isn't a subdigraph of a digraph `D`.
     ///
     /// ```
     /// use graaf::{
@@ -270,7 +270,7 @@ pub trait IsSubdigraph {
     ///     IsSubdigraph,
     /// };
     ///
-    /// // The arc (0, 2) has end-vertex `2` which is not in the vertex set of `H`.
+    /// // The arc (0, 2) has end-vertex `2` which isn't in the vertex set of `H`.
     ///
     /// let mut h = AdjacencyList::empty(3);
     ///

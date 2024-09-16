@@ -1,4 +1,4 @@
-//! Dijkstra's algorithm
+//! Dijkstra's algorithm.
 //!
 //! Dijkstra's algorithm with binary heap finds the shortest path in an
 //! arc-weighted digraph.[^1]
@@ -10,8 +10,7 @@
 //!
 //! ## Single source
 //!
-//! Red marks the path starting at vertex `0` and `t` denotes the iteration
-//! index.
+//! The path from vertex `0` is red. `t` denotes the iteration indices.
 //!
 //! ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_1-0.87.4.svg?)
 //!
@@ -40,8 +39,7 @@
 //!
 //! ## Multiple sources
 //!
-//! Red marks the path starting at vertex `0` and blue the path starting at
-//! vertex `3`.
+//! The path from vertex `0` is red. The path from vertex `3` is blue.
 //!
 //! ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_multi_source_1-0.87.4.svg?)
 //!
@@ -69,8 +67,8 @@
 //! assert!(dijkstra.eq([3, 0, 5, 1, 2, 4, 6]));
 //! ```
 //!
-//! [^1]: Edsger Wybe Dijkstra. 1959. A note on two problems in connexion
-//!   with graphs. Numer. Math. 1, 1 (December 1959), 269–271.
+//! [^1]: Edsger Wybe Dijkstra. 1959. A note on two problems in connexion with
+//!   graphs. Numer. Math. 1, 1 (December 1959), 269–271.
 //!   <https://doi.org/10.1007/BF01386390>
 
 use {
@@ -88,8 +86,7 @@ use {
 ///
 /// ## Single source
 ///
-/// Red marks the path starting at vertex `0` and `t` denotes the iteration
-/// index.
+/// The path from vertex `0` is red. `t` denotes the iteration indices.
 ///
 /// ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_1-0.87.4.svg?)
 ///
@@ -118,8 +115,7 @@ use {
 ///
 /// ## Multiple sources
 ///
-/// Red marks the path starting at vertex `0` and blue the path starting at
-/// vertex `3`.
+/// The path from vertex `0` is red. The path from vertex `3` is blue.
 ///
 /// ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_multi_source_1-0.87.4.svg?)
 ///
@@ -157,7 +153,7 @@ impl<'a, D> Dijkstra<'a, D>
 where
     D: Order,
 {
-    /// Initialize Dijsktra's algorithm.
+    /// Initialize Dijkstra's algorithm.
     ///
     /// # Arguments
     ///

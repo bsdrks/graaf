@@ -21,6 +21,12 @@
 - Mention the order of traversal in the `Dfs` documentation.
 - Mention the order of traversal in the `Dijkstra` documentation.
 
+## [0.90.4] - 2024-09-16
+
+Changed
+
+- Improve documentation.
+
 ## [0.90.3] - 2024-09-16
 
 Changed
@@ -421,7 +427,7 @@ Added
 - Add module `edge_list::digraph`.
 - Add module `edge_list::fixture`.
 - Add module `edge_list`.
-- Add struct `edge_list::Digraph`.
+- Add type `edge_list::Digraph`.
 - Add time complexity warnings to `Indegree::indegree` for `adjacency_matrix`.
 - Add time complexity warnings to `OutNeighbors::out_neighbors` for `adjacency_matrix`.
 - Add time complexity warnings to `OutNeighborsWeighted::out_neighbors_weighted` for `adjacency_matrix`.
@@ -2624,7 +2630,7 @@ Changed
 
 Added
 
-- Add documentation alias `asps` for `flyod_warshall::distances`.
+- Add documentation alias `asps` for `floyd_warshall::distances`.
 
 ## [0.53.5] - 2024-06-02
 
@@ -3691,8 +3697,8 @@ Added
 
 - Add `gen::Empty` generator.
 - Add `publish` script.
-- Add documentation alias "circular" for `gen::cyle_const`.
-- Add documentation alias "circular" for `gen::cyle`.
+- Add documentation alias "circular" for `gen::cycle_const`.
+- Add documentation alias "circular" for `gen::cycle`.
 
 Changed
 
@@ -4324,7 +4330,7 @@ Changed
 
 Changed
 
-- Breaking: `repr::AdjacenyMatrix` is a feature.
+- Breaking: `repr::AdjacencyMatrix` is a feature.
 
 ## [0.17.2] - 2024-04-19
 
@@ -4623,7 +4629,7 @@ Added back the `op` implementations for `Vec` and arrays to simplify use cases.
 Added
 
 - Implement `AddArc` for `Vec<HashSet<usize>>`.
-- Implement `AddArc` for `Vec<Vec<usizee>>`.
+- Implement `AddArc` for `Vec<Vec<usize>>`.
 - Implement `AddArc` for `[HashSet<usize>; V]`.
 - Implement `AddArc` for `[Vec<usize>; V]`.
 - Implement `AddWeightedArc` for `Vec<HashMap<usize, W>>`.

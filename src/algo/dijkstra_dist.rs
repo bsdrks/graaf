@@ -1,4 +1,4 @@
-//! Dijkstra's algorithm with distances
+//! Dijkstra's algorithm with distances.
 //!
 //! Dijkstra's algorithm with binary heap finds the shortest path in an
 //! arc-weighted digraph.[^1]
@@ -10,7 +10,7 @@
 //!
 //! ## Single source
 //!
-//! Red marks the path starting at vertex `0` and `d` denotes the distance.
+//! The path from vertex `0` is red. `t` denotes the distances.
 //!
 //! ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_1-0.87.4.svg?)
 //!
@@ -49,8 +49,7 @@
 //!
 //! ## Multiple sources
 //!
-//! Red marks the path starting at vertex `0` and blue the path starting at
-//! vertex `3`.
+//! The path from vertex `0` is red. The path from vertex `3` is blue.
 //!
 //! ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_multi_source_1-0.87.4.svg?)
 //!
@@ -89,8 +88,8 @@
 //! ]));
 //! ```
 //!
-//! [^1]: Edsger Wybe Dijkstra. 1959. A note on two problems in connexion
-//!   with graphs. Numer. Math. 1, 1 (December 1959), 269–271.
+//! [^1]: Edsger Wybe Dijkstra. 1959. A note on two problems in connexion with
+//!   graphs. Numer. Math. 1, 1 (December 1959), 269–271.
 //!   <https://doi.org/10.1007/BF01386390>
 
 use {
@@ -111,7 +110,7 @@ use {
 ///
 /// ## Single source
 ///
-/// Red marks the path starting at vertex `0` and `d` denotes the distance.
+/// The path from vertex `0` is red. `d` denotes the distances.
 ///
 /// ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_1-0.87.4.svg?)
 ///
@@ -150,8 +149,7 @@ use {
 ///
 /// ## Multiple sources
 ///
-/// Red marks the path starting at vertex `0` and blue the path starting at
-/// vertex `3`.
+/// The path from vertex `0` is red. The path from vertex `3` is blue.
 ///
 /// ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_multi_source_1-0.87.4.svg?)
 ///
@@ -190,8 +188,8 @@ use {
 /// ]));
 /// ```
 ///
-/// [^1]: Edsger Wybe Dijkstra. 1959. A note on two problems in connexion
-///   with graphs. Numer. Math. 1, 1 (December 1959), 269–271.
+/// [^1]: Edsger Wybe Dijkstra. 1959. A note on two problems in connexion with
+///   graphs. Numer. Math. 1, 1 (December 1959), 269–271.
 ///   <https://doi.org/10.1007/BF01386390>
 #[derive(Clone, Debug)]
 pub struct DijkstraDist<'a, D> {
@@ -234,8 +232,8 @@ where
     /// # Panics
     ///
     /// * Panics if `self.next` panics.
-    /// * Panics if a source vertex is not in `self.digraph`.
-    /// * Panics if a successor vertex is not in `self.digraph`.
+    /// * Panics if a source vertex isn't in `self.digraph`.
+    /// * Panics if a successor vertex isn't in `self.digraph`.
     ///
     /// # Examples
     ///

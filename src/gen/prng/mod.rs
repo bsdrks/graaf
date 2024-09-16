@@ -12,8 +12,8 @@
 
 mod split_mix64;
 
-pub mod xoshiro256_starstar;
+pub mod xoshiro256_star_star;
 
 use split_mix64::SplitMix64;
 
-pub use xoshiro256_starstar::Xoshiro256StarStar;
+pub use xoshiro256_star_star::Xoshiro256StarStar;

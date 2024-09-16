@@ -52,12 +52,12 @@
 //!
 //! ## Self-loop
 //!
-//! A self-loop is not allowed. The following pseudograph can not be
-//! represented. The self-loop is red:
+//! A self-loop isn't allowed. [`AdjacencyMatrix`] can't represent this
+//! pseudograph. The self-loop is red.
 //!
 //! ![Self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_self_loop-0.87.4.svg?)
 //!
-//! Adding a self-loop will panic:
+//! Adding a self-loop panics.
 //!
 //! ```should_panic
 //! use graaf::{
@@ -72,18 +72,18 @@
 //! digraph.add_arc(1, 2);
 //! digraph.add_arc(3, 2);
 //!
-//! // This will panic.
+//! // This panics.
 //! digraph.add_arc(2, 2);
 //! ```
 //!
 //! ## Parallel arcs
 //!
-//! Parallel arcs are not allowed. The following multigraph can not be
-//! represented. The parallel arc is red:
+//! Parallel arcs aren't allowed. [`AdjacencyMatrix`] can't represent this
+//! multigraph. The parallel arc is red.
 //!
 //! ![Parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_parallel_arcs-0.87.4.svg?)
 //!
-//! Adding a parallel arc does not change the digraph:
+//! Adding a parallel arc doesn't change the digraph.
 //!
 //! ```
 //! use graaf::{
@@ -101,7 +101,7 @@
 //!
 //! assert!(digraph.arcs().eq([(0, 1), (1, 2), (3, 2)]));
 //!
-//! // This does not change the digraph.
+//! // This doesn't change the digraph.
 //! digraph.add_arc(0, 1);
 //!
 //! assert!(digraph.arcs().eq([(0, 1), (1, 2), (3, 2)]));
@@ -184,12 +184,12 @@ use crate::{
 ///
 /// ## Self-loop
 ///
-/// A self-loop is not allowed. The following pseudograph can not be
-/// represented. The self-loop is red:
+/// A self-loop isn't allowed. [`AdjacencyMatrix`] can't represent this
+/// pseudograph. The self-loop is red.
 ///
 /// ![Self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_self_loop-0.87.4.svg?)
 ///
-/// Adding a self-loop will panic:
+/// Adding a self-loop panics.
 ///
 /// ```should_panic
 /// use graaf::{
@@ -204,18 +204,18 @@ use crate::{
 /// digraph.add_arc(1, 2);
 /// digraph.add_arc(3, 2);
 ///
-/// // This will panic.
+/// // This panics.
 /// digraph.add_arc(2, 2);
 /// ```
 ///
 /// ## Parallel arcs
 ///
-/// Parallel arcs are not allowed. The following multigraph can not be
-/// represented. The parallel arc is red:
+/// Parallel arcs aren't allowed. [`AdjacencyMatrix`] can't represent this
+/// multigraph. The parallel arc is red.
 ///
 /// ![Parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_parallel_arcs-0.87.4.svg?)
 ///
-/// Adding a parallel arc does not change the digraph:
+/// Adding a parallel arc doesn't change the digraph.
 ///
 /// ```
 /// use graaf::{
@@ -233,7 +233,7 @@ use crate::{
 ///
 /// assert!(digraph.arcs().eq([(0, 1), (1, 2), (3, 2)]));
 ///
-/// // This does not change the digraph.
+/// // This doesn't change the digraph.
 /// digraph.add_arc(0, 1);
 ///
 /// assert!(digraph.arcs().eq([(0, 1), (1, 2), (3, 2)]));
@@ -262,8 +262,8 @@ impl AdjacencyMatrix {
     ///
     /// # Panics
     ///
-    /// * Panics if `u` is not in the digraph.
-    /// * Panics if `v` is not in the digraph.
+    /// * Panics if `u` isn't in the digraph.
+    /// * Panics if `v` isn't in the digraph.
     /// * Panics if `u` equals `v`.
     ///
     /// # Examples
@@ -284,8 +284,8 @@ impl AdjacencyMatrix {
     /// assert!(digraph.has_arc(0, 1));
     /// ```
     pub fn toggle(&mut self, u: usize, v: usize) {
-        assert!(u < self.order, "u = {u} is not in the digraph.");
-        assert!(v < self.order, "v = {v} is not in the digraph.");
+        assert!(u < self.order, "u = {u} isn't in the digraph.");
+        assert!(v < self.order, "v = {v} isn't in the digraph.");
         assert_ne!(u, v, "u = {u} equals v = {v}.");
 
         let i = self.index(u, v);
@@ -298,12 +298,12 @@ impl AddArc for AdjacencyMatrix {
     /// # Panics
     ///
     /// * Panics if `u` equals `v`.
-    /// * Panics if `u` is not in the digraph.
-    /// * Panics if `v` is not in the digraph.
+    /// * Panics if `u` isn't in the digraph.
+    /// * Panics if `v` isn't in the digraph.
     fn add_arc(&mut self, u: usize, v: usize) {
         assert_ne!(u, v, "u = {u} equals v = {v}.");
-        assert!(u < self.order, "u = {u} is not in the digraph.");
-        assert!(v < self.order, "v = {v} is not in the digraph.");
+        assert!(u < self.order, "u = {u} isn't in the digraph.");
+        assert!(v < self.order, "v = {v} isn't in the digraph.");
 
         let i = self.index(u, v);
 
@@ -429,7 +429,7 @@ where
     /// # Panics
     ///
     /// * Panics if for any arc `u -> v` in `arcs`, `u` equals `v`.
-    /// * Panics if for any arc `u -> v` in `arcs`, `v` is not in the digraph.
+    /// * Panics if for any arc `u -> v` in `arcs`, `v` isn't in the digraph.
     fn from(vec: I) -> Self {
         let mut order = 0;
         let mut arcs = Vec::new();
@@ -469,16 +469,16 @@ impl Indegree for AdjacencyMatrix {
     ///
     /// # Panics
     ///
-    /// Panics if `v` is not in the digraph.
+    /// Panics if `v` isn't in the digraph.
     fn indegree(&self, v: usize) -> usize {
-        assert!(v < self.order, "v = {v} is not in the digraph.");
+        assert!(v < self.order, "v = {v} isn't in the digraph.");
 
         self.vertices().filter(|&u| self.has_arc(u, v)).count()
     }
 }
 
 impl IsSimple for AdjacencyMatrix {
-    // We only check for self-loops. Parallel arcs can not exist in this
+    // We only check for self-loops. Parallel arcs can't exist in this
     // representation.
     fn is_simple(&self) -> bool {
         self.vertices().all(|u| !self.has_arc(u, u))
@@ -496,9 +496,9 @@ impl OutNeighbors for AdjacencyMatrix {
     ///
     /// # Panics
     ///
-    /// Panics if `u` is not in the digraph.
+    /// Panics if `u` isn't in the digraph.
     fn out_neighbors(&self, u: usize) -> impl Iterator<Item = usize> {
-        assert!(u < self.order, "u = {u} is not in the digraph.");
+        assert!(u < self.order, "u = {u} isn't in the digraph.");
 
         self.vertices().filter(move |&v| self.has_arc(u, v))
     }
@@ -509,7 +509,7 @@ impl OutNeighborsWeighted<usize> for AdjacencyMatrix {
     ///
     /// # Panics
     ///
-    /// Panics if `u` is not in the digraph.
+    /// Panics if `u` isn't in the digraph.
     fn out_neighbors_weighted<'a>(
         &'a self,
         u: usize,
@@ -526,9 +526,9 @@ impl Outdegree for AdjacencyMatrix {
     ///
     /// # Panics
     ///
-    /// Panics if `u` is not in the digraph.
+    /// Panics if `u` isn't in the digraph.
     fn outdegree(&self, u: usize) -> usize {
-        assert!(u < self.order, "u = {u} is not in the digraph.");
+        assert!(u < self.order, "u = {u} isn't in the digraph.");
 
         self.vertices().filter(|&v| self.has_arc(u, v)).count()
     }
@@ -593,13 +593,13 @@ mod tests {
     test_unweighted!(AdjacencyMatrix, repr::adjacency_matrix::fixture);
 
     #[test]
-    #[should_panic(expected = "v = 1 is not in the digraph")]
+    #[should_panic(expected = "v = 1 isn't in the digraph")]
     fn add_arc_out_of_bounds_u() {
         AdjacencyMatrix::trivial().add_arc(0, 1);
     }
 
     #[test]
-    #[should_panic(expected = "u = 1 is not in the digraph")]
+    #[should_panic(expected = "u = 1 isn't in the digraph")]
     fn add_arc_out_of_bounds_v() {
         AdjacencyMatrix::trivial().add_arc(1, 0);
     }
@@ -623,7 +623,7 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "u = 1 is not in the digraph.")]
+    #[should_panic(expected = "u = 1 isn't in the digraph.")]
     fn toggle_out_of_bounds_u() {
         let mut digraph = AdjacencyMatrix::trivial();
 
@@ -631,7 +631,7 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "v = 1 is not in the digraph.")]
+    #[should_panic(expected = "v = 1 isn't in the digraph.")]
     fn toggle_out_of_bounds_v() {
         let mut digraph = AdjacencyMatrix::trivial();
 

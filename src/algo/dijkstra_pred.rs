@@ -1,4 +1,4 @@
-//! Dijkstra's algorithm with predecessors
+//! Dijkstra's algorithm with predecessors.
 //!
 //! Dijkstra's algorithm with binary heap finds the shortest path in an
 //! arc-weighted digraph.[^1]
@@ -10,7 +10,7 @@
 //!
 //! ## Single source
 //!
-//! Red marks the path starting at vertex `0`.
+//! The path from vertex `0` is red.
 //!
 //! ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_pred_1-0.87.4.svg?)
 //!
@@ -49,8 +49,7 @@
 //!
 //! ## Multiple sources
 //!
-//! Red marks the path starting at vertex `0` and blue the path starting at
-//! vertex `3`.
+//! The path from vertex `0` is red. The path from vertex `3` is blue.
 //!
 //! ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_pred_multi_source_1-0.87.4.svg?)
 //!
@@ -89,8 +88,8 @@
 //! ]));
 //! ```
 //!
-//! [^1]: Edsger Wybe Dijkstra. 1959. A note on two problems in connexion
-//!   with graphs. Numer. Math. 1, 1 (December 1959), 269–271.
+//! [^1]: Edsger Wybe Dijkstra. 1959. A note on two problems in connexion with
+//!   graphs. Numer. Math. 1, 1 (December 1959), 269–271.
 //!   <https://doi.org/10.1007/BF01386390>
 
 use {
@@ -119,7 +118,7 @@ pub struct Step {
 ///
 /// ## Single source
 ///
-/// Red marks the path starting at vertex `0`.
+/// The path from vertex `0` is red.
 ///
 /// ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_pred_1-0.87.4.svg?)
 ///
@@ -158,8 +157,7 @@ pub struct Step {
 ///
 /// ## Multiple sources
 ///
-/// Red marks the path starting at vertex `0` and blue the path starting at
-/// vertex `3`.
+/// The path from vertex `0` is red. The path from vertex `3` is blue.
 ///
 /// ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_pred_multi_source_1-0.87.4.svg?)
 ///
@@ -198,8 +196,8 @@ pub struct Step {
 /// ]));
 /// ```
 ///
-/// [^1]: Edsger Wybe Dijkstra. 1959. A note on two problems in connexion
-///   with graphs. Numer. Math. 1, 1 (December 1959), 269–271.
+/// [^1]: Edsger Wybe Dijkstra. 1959. A note on two problems in connexion with
+///   graphs. Numer. Math. 1, 1 (December 1959), 269–271.
 ///   <https://doi.org/10.1007/BF01386390>
 #[derive(Clone, Debug)]
 pub struct DijkstraPred<'a, D> {
@@ -212,7 +210,7 @@ impl<'a, D> DijkstraPred<'a, D>
 where
     D: Order,
 {
-    /// Initialize Dijsktra's algorithm.
+    /// Initialize Dijkstra's algorithm.
     ///
     /// # Arguments
     ///
@@ -242,8 +240,8 @@ where
     /// # Panics
     ///
     /// * Panics if `self.next` panics.
-    /// * Panics if a source vertex is not in `self.digraph`.
-    /// * Panics if a successor vertex is not in `self.digraph`.
+    /// * Panics if a source vertex isn't in `self.digraph`.
+    /// * Panics if a successor vertex isn't in `self.digraph`.
     ///
     /// # Examples
     ///
@@ -299,8 +297,8 @@ where
     /// # Panics
     ///
     /// * Panics if `is_target` panics.
-    /// * Panics if a source vertices is not in `self.digraph`.
-    /// * Panics if a successor vertex is not in `self.digraph`.
+    /// * Panics if a source vertices isn't in `self.digraph`.
+    /// * Panics if a successor vertex isn't in `self.digraph`.
     ///
     /// # Examples
     ///

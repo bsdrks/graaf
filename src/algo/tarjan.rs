@@ -1,6 +1,6 @@
 //! Tarjan's algorithm.
 //!
-//! Tarjan's algorithm finds strongly connected components in a digraph.
+//! Tarjan's algorithm finds a digraph's strongly connected components.
 //!
 //! # Examples
 //!
@@ -60,7 +60,7 @@ use {
 
 /// Tarjan's algorithm.
 ///
-/// Tarjan's algorithm finds strongly connected components in a digraph.
+/// Tarjan's algorithm finds a digraph's strongly connected components.
 ///
 /// # Arguments
 ///

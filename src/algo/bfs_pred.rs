@@ -10,9 +10,9 @@
 //!
 //! ## Single source
 //!
-//! Red marks the path starting at vertex `0` and `p` denotes the predecessor.
-//! Note that, in the digraph, vertex `3` preceeds vertex `0`, but
-//! the BFS algorithm starts at vertex `0`.
+//! The path from vertex `0` is red. `p` denotes the predecessors. Note that,
+//! in the digraph, vertex `3` precedes `0`, but the BFS algorithm starts at
+//! `0`.
 //!
 //! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_1-0.87.4.svg?)
 //!
@@ -46,8 +46,7 @@
 //!
 //! ## Multiple sources
 //!
-//! Red marks the path starting at vertex `3` and blue the path starting at
-//! vertex `7`.
+//! The path from vertex `3` is red. The path from vertex `7` is blue.
 //!
 //! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_multi_source_1-0.87.4.svg?)
 //!
@@ -121,9 +120,9 @@ pub struct Step {
 ///
 /// ## Single source
 ///
-/// Red marks the path starting at vertex `0` and `p` denotes the predecessor.
-/// Note that, in the digraph, vertex `3` preceeds vertex `0`, but
-/// the BFS algorithm starts at vertex `0`.
+/// The path from vertex `0` is red. `p` denotes the predecessors. Note that,
+/// in the digraph, vertex `3` precedes `0`, but the BFS algorithm starts at
+/// `0`.
 ///
 /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_1-0.87.4.svg?)
 ///
@@ -157,8 +156,7 @@ pub struct Step {
 ///
 /// ## Multiple sources
 ///
-/// Red marks the path starting at vertex `3` and blue the path starting at
-/// vertex `7`.
+/// The path from vertex `3` is red. The path from vertex `7` is blue.
 ///
 /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_multi_source_1-0.87.4.svg?)
 ///
@@ -233,14 +231,14 @@ impl<'a, D> BfsPred<'a, D> {
 
     /// Return cycles along the shortest path.
     ///
-    /// Warning: This method does not find all cycles sharing a vertex with
+    /// Warning: This method doesn't find all cycles sharing a vertex with
     /// multiple predecessors.
     ///
     /// # Panics
     ///
     /// * Panics if `self.next` panics.
-    /// * Panics if a source vertex is not in `self.digraph`.
-    /// * Panics if a successor vertex is not in `self.digraph`.
+    /// * Panics if a source vertex isn't in `self.digraph`.
+    /// * Panics if a successor vertex isn't in `self.digraph`.
     ///
     /// # Examples
     ///
@@ -370,15 +368,15 @@ impl<'a, D> BfsPred<'a, D> {
     /// # Panics
     ///
     /// * Panics if `self.next` panics.
-    /// * Panics if a source vertex is not in `self.digraph`.
-    /// * Panics if a successor vertex is not in `self.digraph`.
+    /// * Panics if a source vertex isn't in `self.digraph`.
+    /// * Panics if a successor vertex isn't in `self.digraph`.
     ///
     /// # Examples
     ///
     /// ## Single source
     ///
-    /// Red marks the traversal starting at vertex `0` and the dashed arcs mark
-    /// the predecessor tree.
+    /// The traversal from vertex `0` is red. The dashed arcs mark the
+    /// predecessor tree.
     ///
     /// ![BFS and the predecessor tree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_predecessors_1-0.87.4.svg?)
     ///
@@ -409,9 +407,8 @@ impl<'a, D> BfsPred<'a, D> {
     ///
     /// ## Multiple sources
     ///
-    /// Red marks the traversal starting at vertex `3` and blue marks the
-    /// traversal starting at vertex `7`. The dashed arcs mark the predecessor
-    /// tree.
+    /// The traversal from vertex `3` is red. The traversal from vertex `7`
+    /// is blue. The dashed arcs mark the predecessor tree.
     ///
     /// ![BFS and the predecessor tree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_predecessors_multi_source_1-0.87.4.svg?)
     ///
@@ -471,20 +468,20 @@ impl<'a, D> BfsPred<'a, D> {
     ///
     /// # Returns
     ///
-    /// If it finds a target vertex, the function returns the shortest path
-    /// to this target vertex. Otherwise, it returns `None`.
+    /// If it finds a target vertex, the function returns the shortest path to
+    /// this target vertex. Otherwise, it returns `None`.
     ///
     /// # Panics
     ///
     /// * Panics if `is_target` panics.
-    /// * Panics if a source vertices is not in `self.digraph`.
-    /// * Panics if a successor vertex is not in `self.digraph`.
+    /// * Panics if a source vertices isn't in `self.digraph`.
+    /// * Panics if a successor vertex isn't in `self.digraph`.
     ///
     /// # Examples
     ///
     /// ## Single source
     ///
-    /// Red marks the path matching `v > 4`.
+    /// The path matching `v > 4` is red.
     ///
     /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_shortest_path_1-0.87.4.svg?)
     ///
@@ -512,8 +509,8 @@ impl<'a, D> BfsPred<'a, D> {
     ///
     /// ## Multiple sources
     ///
-    /// Red marks the path starting at vertex `3` matching `v == 2` and blue
-    /// marks the path starting at vertex `7`  matching `v == 5`.
+    /// The path from vertex `3` matching `v == 2` is red. The path from
+    /// vertex `7` matching `v == 5` is blue.
     ///
     /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_shortest_path_multi_source_1-0.87.4.svg?)
     ///

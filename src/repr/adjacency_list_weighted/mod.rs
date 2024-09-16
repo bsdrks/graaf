@@ -59,15 +59,15 @@ impl<W> AddArcWeighted<W> for AdjacencyListWeighted<W> {
     /// # Panics
     ///
     /// * Panics if `u` equals `v`.
-    /// * Panics if `u` is not in the digraph.
-    /// * Panics if `v` is not in the digraph.
+    /// * Panics if `u` isn't in the digraph.
+    /// * Panics if `v` isn't in the digraph.
     fn add_arc_weighted(&mut self, u: usize, v: usize, w: W) {
         assert_ne!(u, v, "u = {u} equals v = {v}");
 
         let order = self.order();
 
-        assert!(u < order, "u = {u} is not in the digraph");
-        assert!(v < order, "v = {v} is not in the digraph");
+        assert!(u < order, "u = {u} isn't in the digraph");
+        assert!(v < order, "v = {v} isn't in the digraph");
 
         let _ = self.arcs[u].insert(v, w);
     }
@@ -189,7 +189,7 @@ where
     /// # Panics
     ///
     /// * Panics if, for any arc `u -> v` in `arcs`, `u` equals `v`.
-    /// * Panics if, for any arc `u -> v` in `arcs`, `v` is not in the digraph.
+    /// * Panics if, for any arc `u -> v` in `arcs`, `v` isn't in the digraph.
     fn from(iter: I) -> Self {
         let digraph = Self {
             arcs: iter.into_iter().collect(),
@@ -197,7 +197,7 @@ where
 
         for (u, v) in digraph.arcs() {
             assert_ne!(u, v, "u = {u} equals v = {v}");
-            assert!(v < digraph.order(), "v = {v} is not in the digraph");
+            assert!(v < digraph.order(), "v = {v} isn't in the digraph");
         }
 
         digraph
@@ -213,9 +213,9 @@ impl<W> HasArc for AdjacencyListWeighted<W> {
 impl<W> Indegree for AdjacencyListWeighted<W> {
     /// # Panics
     ///
-    /// Panics if `v` is not in the digraph.
+    /// Panics if `v` isn't in the digraph.
     fn indegree(&self, v: usize) -> usize {
-        assert!(v < self.order(), "v = {v} is not in the digraph");
+        assert!(v < self.order(), "v = {v} isn't in the digraph");
 
         self.arcs
             .iter()
@@ -236,7 +236,7 @@ impl<W> IsSimple for AdjacencyListWeighted<W> {
 impl<W> OutNeighbors for AdjacencyListWeighted<W> {
     /// # Panics
     ///
-    /// Panics if `u` is not in the digraph.
+    /// Panics if `u` isn't in the digraph.
     fn out_neighbors(&self, u: usize) -> impl Iterator<Item = usize> {
         self.arcs[u].keys().copied()
     }
@@ -245,7 +245,7 @@ impl<W> OutNeighbors for AdjacencyListWeighted<W> {
 impl<W> OutNeighborsWeighted<W> for AdjacencyListWeighted<W> {
     /// # Panics
     ///
-    /// Panics if `u` is not in the digraph.
+    /// Panics if `u` isn't in the digraph.
     fn out_neighbors_weighted<'a>(
         &'a self,
         u: usize,
@@ -266,7 +266,7 @@ impl<W> Order for AdjacencyListWeighted<W> {
 impl<W> Outdegree for AdjacencyListWeighted<W> {
     /// # Panics
     ///
-    /// Panics if `u` is not in the digraph.
+    /// Panics if `u` isn't in the digraph.
     fn outdegree(&self, u: usize) -> usize {
         self.arcs[u].len()
     }
@@ -588,13 +588,13 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "v = 1 is not in the digraph")]
+    #[should_panic(expected = "v = 1 isn't in the digraph")]
     fn add_arc_weighted_out_of_bounds_u() {
         AdjacencyListWeighted::trivial().add_arc_weighted(0, 1, 1);
     }
 
     #[test]
-    #[should_panic(expected = "u = 1 is not in the digraph")]
+    #[should_panic(expected = "u = 1 isn't in the digraph")]
     fn add_arc_weighted_out_of_bounds_v() {
         AdjacencyListWeighted::trivial().add_arc_weighted(1, 0, 1);
     }
@@ -1341,7 +1341,7 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "v = 1 is not in the digraph")]
+    #[should_panic(expected = "v = 1 isn't in the digraph")]
     fn from_vec_out_of_bounds_v() {
         let vec = vec![BTreeMap::from([(1, -1)])];
         let _ = AdjacencyListWeighted::from(vec);
@@ -1543,7 +1543,7 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "v = 1 is not in the digraph")]
+    #[should_panic(expected = "v = 1 isn't in the digraph")]
     fn indegree_out_of_bounds() {
         let _ = AdjacencyListWeighted::<usize>::trivial().indegree(1);
     }

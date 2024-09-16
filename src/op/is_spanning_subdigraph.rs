@@ -38,7 +38,7 @@
 //! assert!(tournament.is_spanning_subdigraph(&tournament));
 //! ```
 //!
-//! A digraph `H` with arcs not in the arc set of a digraph `D` is not a
+//! A digraph `H` with arcs not in the arc set of a digraph `D` isn't a
 //! spanning subdigraph of `D`.
 //!
 //! ```
@@ -61,7 +61,7 @@
 //! assert!(!h.is_spanning_subdigraph(&d));
 //! ```
 //!
-//! A digraph `H` with vertices not in the vertex set of a digraph `D` is not a
+//! A digraph `H` with vertices not in the vertex set of a digraph `D` isn't a
 //! spanning subdigraph of `D`.
 //!
 //! ```
@@ -81,8 +81,8 @@
 //! assert!(!h.is_spanning_subdigraph(&d));
 //! ```
 //!
-//! A digraph `H` with arcs whose end-vertices are not in the vertex set of `H`
-//! is not a spanning subdigraph of a digraph `D`.
+//! A digraph `H` with arcs whose end-vertices aren't in the vertex set of `H`
+//! isn't a spanning subdigraph of a digraph `D`.
 //!
 //! ```
 //! use graaf::{
@@ -92,7 +92,7 @@
 //!     IsSpanningSubdigraph,
 //! };
 //!
-//! // The arc (0, 2) has end-vertex `2` which is not in the vertex set of `H`.
+//! // The arc (0, 2) has end-vertex `2` which isn't in the vertex set of `H`.
 //!
 //! let mut h = AdjacencyList::empty(3);
 //!
@@ -108,8 +108,8 @@
 //! assert!(!h.is_spanning_subdigraph(&d));
 //! ```
 //!
-//! A digraph `H` is not a spanning subdigraph of a digraph `D` if the vertex
-//! set of `H` is not equal to the vertex set of `D`.
+//! A digraph `H` isn't a spanning subdigraph of a digraph `D` if the vertex
+//! set of `H` isn't equal to the vertex set of `D`.
 //!
 //! ```
 //! use graaf::{
@@ -231,7 +231,7 @@ pub trait IsSpanningSubdigraph {
     /// assert!(tournament.is_spanning_subdigraph(&tournament));
     /// ```
     ///
-    /// A digraph `H` with arcs not in the arc set of a digraph `D` is not a
+    /// A digraph `H` with arcs not in the arc set of a digraph `D` isn't a
     /// spanning subdigraph of `D`.
     ///
     /// ```
@@ -274,8 +274,8 @@ pub trait IsSpanningSubdigraph {
     /// assert!(!h.is_spanning_subdigraph(&d));
     /// ```
     ///
-    /// A digraph `H` with arcs whose end-vertices are not in the vertex set of
-    /// `H` is not a spanning subdigraph of a digraph `D`.
+    /// A digraph `H` with arcs whose end-vertices aren't in the vertex set of
+    /// `H` isn't a spanning subdigraph of a digraph `D`.
     ///
     /// ```
     /// use graaf::{
@@ -285,7 +285,7 @@ pub trait IsSpanningSubdigraph {
     ///     IsSpanningSubdigraph,
     /// };
     ///
-    /// // The arc (0, 2) has end-vertex `2` which is not in the vertex set of `H`.
+    /// // The arc (0, 2) has end-vertex `2` which isn't in the vertex set of `H`.
     ///
     /// let mut h = AdjacencyList::empty(3);
     ///
@@ -301,8 +301,8 @@ pub trait IsSpanningSubdigraph {
     /// assert!(!h.is_spanning_subdigraph(&d));
     /// ```
     ///
-    /// A digraph `H` is not a spanning subdigraph of a digraph `D` if the
-    /// vertex set of `H` is not equal to the vertex set of `D`.
+    /// A digraph `H` isn't a spanning subdigraph of a digraph `D` if the
+    /// vertex set of `H` isn't equal to the vertex set of `D`.
     ///
     /// ```
     /// use graaf::{

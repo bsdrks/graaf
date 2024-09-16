@@ -67,8 +67,8 @@ pub trait AddArc {
     /// # Panics
     ///
     /// * Should panic if `u` equals `v`.
-    /// * Should panic if `u` is not in the digraph.
-    /// * Should panic if `v` is not in the digraph.
+    /// * Should panic if `u` isn't in the digraph.
+    /// * Should panic if `v` isn't in the digraph.
     ///
     /// # Examples
     ///

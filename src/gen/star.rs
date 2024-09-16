@@ -1,7 +1,6 @@
 //! Generate star digraphs.
 //!
-//! A star digraph is a digraph with a single vertex that is connected to all
-//! other vertices.
+//! A star digraph is a digraph with a single vertex connected to all others.
 //!
 //! # Examples
 //!
@@ -72,8 +71,7 @@ use crate::{
 
 /// Generate star digraphs.
 ///
-/// A star digraph is a digraph with a single vertex that is connected to all
-/// other vertices.
+/// A star digraph is a digraph with a single vertex connected to all others.
 ///
 /// # Implementing [`Star`] for a custom type
 ///

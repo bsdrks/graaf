@@ -4370,7 +4370,7 @@ macro_rules! test_unweighted {
         }
 
         #[test]
-        fn in_neighbors_kattis_canitnaofbabel_2() {
+        fn in_neighbors_kattis_cantinaofbabel_2() {
             let digraph = kattis_cantinaofbabel_2();
 
             assert!(digraph.in_neighbors(0).eq([1, 2]));
@@ -4607,7 +4607,7 @@ macro_rules! test_unweighted {
         }
 
         #[test]
-        #[should_panic(expected = "v = 1 is not in the digraph")]
+        #[should_panic(expected = "v = 1 isn't in the digraph")]
         fn indegree_out_of_bounds() {
             let _ = $type::trivial().indegree(1);
         }
@@ -6035,7 +6035,7 @@ macro_rules! test_unweighted {
         }
 
         #[test]
-        #[should_panic(expected = "u = 1 is not in the digraph")]
+        #[should_panic(expected = "u = 1 isn't in the digraph")]
         fn out_neighbors_out_of_bounds() {
             let _ = $type::trivial().out_neighbors(1);
         }
@@ -6264,7 +6264,7 @@ macro_rules! test_unweighted {
         }
 
         #[test]
-        #[should_panic(expected = "u = 1 is not in the digraph")]
+        #[should_panic(expected = "u = 1 isn't in the digraph")]
         fn out_neighbors_weighted_out_of_bounds() {
             let _ = $type::trivial().out_neighbors_weighted(1);
         }
@@ -6486,7 +6486,7 @@ macro_rules! test_unweighted {
         }
 
         #[test]
-        #[should_panic(expected = "u = 1 is not in the digraph")]
+        #[should_panic(expected = "u = 1 isn't in the digraph")]
         fn outdegree_out_of_bounds() {
             let _ = $type::trivial().outdegree(1);
         }

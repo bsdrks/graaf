@@ -50,13 +50,13 @@ impl Xoshiro256StarStar {
     /// This function never panics.
     #[must_use]
     pub fn new(seed: u64) -> Self {
-        let mut splitmix64 = SplitMix64::new(seed);
+        let mut split_mix64 = SplitMix64::new(seed);
 
         let state = [
-            splitmix64.next().unwrap(),
-            splitmix64.next().unwrap(),
-            splitmix64.next().unwrap(),
-            splitmix64.next().unwrap(),
+            split_mix64.next().unwrap(),
+            split_mix64.next().unwrap(),
+            split_mix64.next().unwrap(),
+            split_mix64.next().unwrap(),
         ];
 
         Self { state }

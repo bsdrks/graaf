@@ -1,4 +1,4 @@
-//! A distance matrix
+//! A distance matrix.
 //!
 //! A [`DistanceMatrix`] contains the distance between each vertex pair in a
 //! digraph.
@@ -175,7 +175,7 @@ impl<W> DistanceMatrix<W> {
     ///
     /// # Examples
     ///
-    /// Red marks the digraph's center.
+    /// The digraph's center is red.
     ///
     /// ![Eccentricities](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_center_1-0.87.4.svg?)
     ///
@@ -243,8 +243,7 @@ impl<W> DistanceMatrix<W> {
     ///
     /// # Examples
     ///
-    /// Red marks the longest shortest path in the digraph between vertices `4`
-    /// and `5`.
+    /// The longest shortest path between vertices `4` and `5` is red.
     ///
     /// ![Eccentricities](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_diameter_1-0.87.4.svg?)
     ///

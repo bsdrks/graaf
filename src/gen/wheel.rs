@@ -1,7 +1,7 @@
 //! Generate wheel digraphs.
 //!
-//! A wheel digraph is a wheel digraph with an additional vertex that is
-//! connected to all other vertices. A wheel digraph has `4` or more vertices.
+//! A wheel digraph is a circuit digraph with an additional vertex connected to
+//! all others. A wheel digraph has `4` or more vertices.
 //!
 //! # Examples
 //!
@@ -124,7 +124,8 @@ use crate::{
 
 /// Generate wheel digraphs.
 ///
-/// A wheel is a digraph with a single bidirectional wheel.
+/// A wheel digraph is a circuit digraph with an additional vertex connected to
+/// all others. A wheel digraph has `4` or more vertices.
 ///
 /// # Implementing [`Wheel`] for a custom type
 ///

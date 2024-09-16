@@ -1,4 +1,4 @@
-//! Depth-first search with predecessors
+//! Depth-first search with predecessors.
 //!
 //! Depth-first search is a digraph traversal algorithm that explores a digraph
 //! by following a path as far as possible before backtracking.
@@ -10,7 +10,7 @@
 //!
 //! ## Single source
 //!
-//! Red marks the path starting at vertex `0` and `p` denotes the predecessor.
+//! The path from vertex `0` is red. `p` denotes the predecessors.
 //!
 //! ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_pred_1-0.87.4.svg?)
 //!
@@ -44,8 +44,7 @@
 //!
 //! ## Multiple sources
 //!
-//! Red marks the path starting at vertex `3` and blue the path starting at
-//! vertex `7`.
+//! The path from vertex `3` is red. The path from vertex `7` is blue.
 //!
 //! ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_pred_multi_source_1-0.87.4.svg?)
 //!
@@ -108,7 +107,7 @@ pub struct Step {
 ///
 /// ## Single source
 ///
-/// Red marks the path starting at vertex `0` and `p` denotes the predecessor.
+/// The path from vertex `0` is red. `p` denotes the predecessors.
 ///
 /// ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_pred_1-0.87.4.svg?)
 ///
@@ -142,8 +141,7 @@ pub struct Step {
 ///
 /// ## Multiple sources
 ///
-/// Red marks the path starting at vertex `3` and blue the path starting at
-/// vertex `7`.
+/// The path from vertex `3` is red. The path from vertex `7` is blue.
 ///
 /// ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_pred_multi_source_1-0.87.4.svg?)
 ///
@@ -216,15 +214,15 @@ impl<'a, D> DfsPred<'a, D> {
     /// # Panics
     ///
     /// * Panics if the `self.next` panics.
-    /// * Panics if a source vertex is not in `self.digraph`.
-    /// * Panics if a successor vertex is not in `self.digraph`.
+    /// * Panics if a source vertex isn't in `self.digraph`.
+    /// * Panics if a successor vertex isn't in `self.digraph`.
     ///
     /// # Examples
     ///
     /// ## Single source
     ///
-    /// Red marks the traversal starting at vertex `0` and the dashed arcs mark
-    /// the predecessor tree.
+    /// The path from vertex `0` is red. The dashed arcs mark the predecessor
+    /// tree.
     ///
     /// ![DFS and the predecessor tree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_pred_predecessors_1-0.87.4.svg?)
     ///
@@ -256,9 +254,8 @@ impl<'a, D> DfsPred<'a, D> {
     ///
     /// ## Multiple sources
     ///
-    /// Red marks the traversal starting at vertex `3` and blue marks the
-    /// traversal starting at vertex `7`. The dashed arcs mark the predecessor
-    /// tree.
+    /// The path from vertex `3` is red. The path from vertex `7` is blue. The
+    /// dashed arcs mark the predecessor tree.
     ///
     /// ![DFS and the predecessor tree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_pred_predecessors_multi_source_1-0.87.4.svg?)
     ///

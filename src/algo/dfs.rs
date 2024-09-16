@@ -1,4 +1,4 @@
-//! Depth-first search
+//! Depth-first search.
 //!
 //! Depth-first search is a digraph traversal algorithm that explores a digraph
 //! by following a path as far as possible before backtracking.
@@ -10,8 +10,7 @@
 //!
 //! ## Single source
 //!
-//! Red marks the path starting at vertex `0` and `t` denotes the iteration
-//! index.
+//! The path from vertex `0` is red. `t` denotes the iteration indices.
 //!
 //! ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_1-0.87.4.svg?)
 //!
@@ -36,8 +35,7 @@
 //!
 //! ## Multiple sources
 //!
-//! Red marks the path starting at vertex `3` and blue the path starting at
-//! vertex `7`.
+//! The path from vertex `3` is red. The path from vertex `7` is blue.
 //!
 //! ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_multi_source_1-0.87.4.svg?)
 //!
@@ -75,8 +73,7 @@ use {
 ///
 /// ## Single source
 ///
-/// Red marks the path starting at vertex `0` and `t` denotes the iteration
-/// index.
+/// The path from vertex `0` is red. `t` denotes the iteration indices.
 ///
 /// ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_1-0.87.4.svg?)
 ///
@@ -101,8 +98,7 @@ use {
 ///
 /// ## Multiple sources
 ///
-/// Red marks the path starting at vertex `3` and blue the path starting at
-/// vertex `7`.
+/// The path from vertex `3` is red. The path from vertex `7` is blue.
 ///
 /// ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_multi_source_1-0.87.4.svg?)
 ///

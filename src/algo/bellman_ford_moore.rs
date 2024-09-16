@@ -10,8 +10,8 @@
 //!
 //! ## Shortest distances
 //!
-//! Red marks the shortest path between vertices `0` and `4`. The dashed arcs
-//! represent the other shortest distances.
+//! The shortest path from vertex `0` to `4` is red. The dashed arcs represent
+//! the other shortest distances.
 //!
 //! ![Bellman-Ford-Moore](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_1-0.87.4.svg?)
 //!
@@ -91,8 +91,8 @@ use crate::{
 ///
 /// ## Shortest distances
 ///
-/// Red marks the shortest path between vertices `0` and `4`. The dashed arcs
-/// represent the other shortest distances.
+/// The shortest path from vertex `0` to `4` is red. The dashed arcs represent
+/// the other shortest distances.
 ///
 /// ![Bellman-Ford-Moore](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_1-0.87.4.svg?)
 ///

@@ -1,7 +1,7 @@
 //! Generate growing network.
 //!
 //! A growing network is a digraph that starts with a single vertex and adds a
-//! new vertex with a directed edge to an existing vertex at each step.
+//! new vertex with an arc to an existing vertex at each step.
 //!
 //! # Examples
 //!
@@ -36,7 +36,7 @@ use {
 /// Generate growing network.
 ///
 /// A growing network is a digraph that starts with a single vertex and adds a
-/// new vertex with a directed edge to an existing vertex at each step.
+/// new vertex with an arc to an existing vertex at each step.
 ///
 /// # Implementing [`GrowingNetwork`] for a custom type
 ///

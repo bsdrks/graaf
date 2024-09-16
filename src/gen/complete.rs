@@ -1,6 +1,6 @@
 //! Generate complete digraphs.
 //!
-//! In a complete digraph, an arc connects every ordered pair of vertices.
+//! In a complete digraph, an arc connects every ordered vertex pair.
 //!
 //! # Examples
 //!
@@ -79,7 +79,7 @@ use crate::{
 
 /// Generate complete digraphs.
 ///
-/// In a complete digraph, an arc connects every ordered pair of vertices.
+/// In a complete digraph, an arc connects every ordered vertex pair.
 ///
 /// # Implementing [`Complete`] for a custom type
 ///

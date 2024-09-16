@@ -38,7 +38,7 @@
 /// # Implementing [`RemoveArc`] for a custom type
 ///
 /// Provide an implementation of [`remove_arc`](RemoveArc::remove_arc) that
-/// removes the arc from a digraph. Check whether the arc was removed.
+/// removes the arc from a digraph and returns whether the arc was removed.
 ///
 /// ```
 /// use {
@@ -57,7 +57,7 @@
 /// }
 /// ```
 pub trait RemoveArc {
-    /// Remove the arc from `u` to `v` from the digraph. Check whether the
+    /// Remove the arc from `u` to `v` from the digraph. Return whether the
     /// arc was removed.
     ///
     /// # Arguments

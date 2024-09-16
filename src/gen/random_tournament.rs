@@ -5,7 +5,7 @@
 //!
 //! # Examples
 //!
-//! `T::random_tournament(6, 0)` gives this tournament:
+//! Generate a random tournament of order `6`.
 //!
 //! ![Random tournament of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/random_tournament_1-0.89.2.svg?)
 //!
@@ -120,7 +120,7 @@ pub trait RandomTournament {
     ///
     /// # Examples
     ///
-    /// `T::random_tournament(6, 0)` gives this tournament:
+    /// Generate a random tournament of order `6`.
     ///
     /// ![Random tournament of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/random_tournament_1-0.89.2.svg?)
     ///

@@ -187,7 +187,7 @@ pub fn kattis_cantinaofbabel_1() -> EdgeList {
 /// 7: Ian
 /// 8: Spanish
 /// 9: Spencer
-/// 10: Portugese
+/// 10: Portuguese
 /// 11: Polly
 /// ```
 ///
@@ -196,8 +196,8 @@ pub fn kattis_cantinaofbabel_1() -> EdgeList {
 /// Enid English German
 /// George German Italian
 /// Ian Italian French Spanish
-/// Spencer Spanish Portugese
-/// Polly Portugese Spanish
+/// Spencer Spanish Portuguese
+/// Polly Portuguese Spanish
 /// ```
 ///
 /// ```text

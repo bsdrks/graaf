@@ -10,7 +10,7 @@
 //!
 //! ## Single source
 //!
-//! Red marks the path starting at vertex `0` and `d` denotes the distance.
+//! The path from vertex `0` is red. `d` denotes the distances.
 //!
 //! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_1-0.87.4.svg?)
 //!
@@ -44,8 +44,7 @@
 //!
 //! ## Multiple sources
 //!
-//! Red marks the path starting at vertex `3` and blue the path starting at
-//! vertex `7`.
+//! The path from vertex `3` is red. The path from vertex `7` is blue.
 //!
 //! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_multi_source_1-0.87.4.svg?)
 //!
@@ -108,7 +107,7 @@ use {
 ///
 /// ## Single source
 ///
-/// Red marks the path starting at vertex `0` and `d` denotes the distance.
+/// The path from vertex `0` is red. `d` denotes the distances.
 ///
 /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_1-0.87.4.svg?)
 ///
@@ -142,8 +141,7 @@ use {
 ///
 /// ## Multiple sources
 ///
-/// Red marks the path starting at vertex `3` and blue the path starting at
-/// vertex `7`.
+/// The path from vertex `3` is red. The path from vertex `7` is blue.
 ///
 /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_multi_source_1-0.87.4.svg?)
 ///
@@ -230,8 +228,8 @@ impl<'a, D> BfsDist<'a, D> {
     /// # Panics
     ///
     /// * Panics if `self.next` panics.
-    /// * Panics if a source vertex is not in `self.digraph`.
-    /// * Panics if a successor vertex is not in `self.digraph`.
+    /// * Panics if a source vertex isn't in `self.digraph`.
+    /// * Panics if a successor vertex isn't in `self.digraph`.
     ///
     /// # Examples
     ///

@@ -1,7 +1,7 @@
 //! The Floyd-Warshall algorithm.
 //!
 //! The Floyd[^1]-Warshall algorithm finds the shortest paths between all
-//! pairs of vertices in an arc-weighted digraph.
+//! vertex pairs in an arc-weighted digraph.
 //!
 //! Runs in **O(v³)** time, where **v** is the number of vertices.
 //!
@@ -67,7 +67,7 @@ use crate::{
     Vertices,
 };
 
-/// Compute the distances between all pairs of vertices in an arc-weighted
+/// Compute the distances between all vertex pairs in an arc-weighted
 /// digraph.[^1]
 ///
 /// # Arguments
