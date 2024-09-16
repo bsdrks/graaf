@@ -8,7 +8,6 @@
 - Add the `IsIsomorphic` trait.
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
-- Check examples for `op::*`.
 - Implement `DfsDist::distances`.
 - Improve doctest and add image to `BfsDist::distances`.
 - Improve doctest and add image to `DijkstraDist::distances`.
@@ -21,6 +20,12 @@
 - Mention the order of traversal in the `Bfs` documentation.
 - Mention the order of traversal in the `Dfs` documentation.
 - Mention the order of traversal in the `Dijkstra` documentation.
+
+## [0.90.2] - 2024-09-16
+
+Added
+
+- Add and expand `Union` tests.
 
 ## [0.90.1] - 2024-09-16
 

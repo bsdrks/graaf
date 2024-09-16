@@ -10,7 +10,7 @@
 //!
 //! ## Single source
 //!
-//! Red marks the path starting at vertex `0` and `d` denotes the distance.
+//! The path starting at vertex `0` is red. `d` denotes the distance.
 //!
 //! ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_dist_1-0.87.4.svg?)
 //!

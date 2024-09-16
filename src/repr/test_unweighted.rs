@@ -2721,93 +2721,146 @@ macro_rules! test_unweighted {
             }
 
             #[test]
+            fn union_biclique_commutative(
+                m in 1..25_usize,
+                n in 1..25_usize
+            ) {
+                let biclique = $type::biclique(m, n);
+                let other = $type::biclique(n, m);
+
+                assert_eq!(biclique.union(&other), other.union(&biclique));
+            }
+
+            #[test]
             fn union_biclique_complement_is_complete(
                 m in 1..25_usize,
                 n in 1..25_usize
             ) {
                 let biclique = $type::biclique(m, n);
+                let complement = biclique.complement();
 
-                assert!(biclique.union(&biclique.complement()).is_complete());
+                assert!(biclique.union(&complement).is_complete());
+                assert!(complement.union(&biclique).is_complete());
             }
 
             #[test]
             fn union_circuit_complement_is_complete(order in 3..25_usize) {
                 let circuit = $type::circuit(order);
+                let complement = circuit.complement();
 
-                assert!(circuit.union(&circuit.complement()).is_complete());
+                assert!(circuit.union(&complement).is_complete());
+                assert!(complement.union(&circuit).is_complete());
+            }
+
+            #[test]
+            fn union_complete_commutative(order in 1..25_usize) {
+                let complete = $type::complete(order);
+                let other = $type::complete(order);
+
+                assert_eq!(complete.union(&other), other.union(&complete));
             }
 
             #[test]
             fn union_complete_complement_is_complete(order in 1..25_usize) {
                 let complete = $type::complete(order);
+                let complement = complete.complement();
 
-                assert!(complete.union(&complete.complement()).is_complete());
+                assert!(complete.union(&complement).is_complete());
+                assert!(complement.union(&complete).is_complete());
+            }
+
+            #[test]
+            fn union_circuit_cycle(order in 1..25_usize) {
+                let circuit = $type::circuit(order);
+                let converse = circuit.converse();
+                let cycle = $type::cycle(order);
+
+                assert!(circuit.union(&converse).arcs().eq(cycle.arcs()));
+                assert!(converse.union(&circuit).arcs().eq(cycle.arcs()));
+            }
+
+            #[test]
+            fn union_circuit_path(order in 1..25_usize) {
+                let circuit = $type::circuit(order);
+                let path = $type::path(order);
+                let mut bridge = $type::empty(order);
+
+                if order > 1 {
+                    bridge.add_arc(order - 1, 0);
+                }
+
+                assert!(bridge.union(&path).arcs().eq(circuit.arcs()));
+                assert!(path.union(&bridge).arcs().eq(circuit.arcs()));
+            }
+
+            #[test]
+            fn union_cycle_commutative(order in 1..25_usize) {
+                let cycle = $type::cycle(order);
+                let other = $type::cycle(order);
+
+                assert_eq!(cycle.union(&other), other.union(&cycle));
             }
 
             #[test]
             fn union_cycle_complement_is_complete(order in 1..25_usize) {
                 let cycle = $type::cycle(order);
+                let complement = cycle.complement();
 
-                assert!(cycle.union(&cycle.complement()).is_complete());
+                assert!(cycle.union(&complement).is_complete());
+                assert!(complement.union(&cycle).is_complete());
+            }
+
+            #[test]
+            fn union_empty_commutative(order in 1..25_usize) {
+                let empty = $type::empty(order);
+                let other = $type::empty(order);
+
+                assert_eq!(empty.union(&other), other.union(&empty));
             }
 
             #[test]
             fn union_empty_complement_is_complete(order in 1..25_usize) {
                 let empty = $type::empty(order);
+                let complement = empty.complement();
 
-                assert!(empty.union(&empty.complement()).is_complete());
+                assert!(empty.union(&complement).is_complete());
+                assert!(complement.union(&empty).is_complete());
             }
 
             #[test]
             fn union_empty_id_biclique(m in 1..25_usize, n in 1..25_usize) {
                 let digraph = $type::biclique(m, n);
+                let empty = $type::empty(m + n);
 
-                assert!($type::union(&$type::empty(m + n), &digraph)
-                    .arcs()
-                    .eq(digraph.arcs()));
-
-                assert!($type::union(&digraph, &$type::empty(m + n))
-                    .arcs()
-                    .eq(digraph.arcs()));
+                assert!(empty.union(&digraph).arcs().eq(digraph.arcs()));
+                assert!(digraph.union(&empty).arcs().eq(digraph.arcs()));
             }
 
             #[test]
             fn union_empty_id_circuit(order in 3..25_usize) {
                 let digraph = $type::circuit(order);
+                let empty = $type::empty(order);
 
-                assert!($type::union(&digraph, &$type::empty(order))
-                    .arcs()
-                    .eq(digraph.arcs()));
-
-                assert!($type::union(&$type::empty(order), &digraph)
-                    .arcs()
-                    .eq(digraph.arcs()));
+                assert!(empty.union(&digraph).arcs().eq(digraph.arcs()));
+                assert!(digraph.union(&empty).arcs().eq(digraph.arcs()));
             }
 
             #[test]
             fn union_empty_id_cycle(order in 1..25_usize) {
                 let digraph = $type::cycle(order);
+                let empty = $type::empty(order);
 
-                assert!($type::union(&$type::empty(order), &digraph)
-                    .arcs()
-                    .eq(digraph.arcs()));
-
-                assert!($type::union(&digraph, &$type::empty(order))
-                    .arcs()
-                    .eq(digraph.arcs()));
+                assert!(empty.union(&digraph).arcs().eq(digraph.arcs()));
+                assert!(digraph.union(&empty).arcs().eq(digraph.arcs()));
             }
 
             #[test]
             fn union_empty_id_empty(order in 1..25_usize) {
                 let digraph = $type::empty(order);
+                let empty = $type::empty(order);
 
-                assert!($type::union(&$type::empty(order), &digraph)
-                    .arcs()
-                    .eq(digraph.arcs()));
-
-                assert!($type::union(&digraph, &$type::empty(order))
-                    .arcs()
-                    .eq(digraph.arcs()));
+                assert!(empty.union(&digraph).arcs().eq(digraph.arcs()));
+                assert!(digraph.union(&empty).arcs().eq(digraph.arcs()));
             }
 
             #[test]
@@ -2817,27 +2870,19 @@ macro_rules! test_unweighted {
                 seed in 0..1000_u64
             ) {
                 let digraph = $type::erdos_renyi(order, p, seed);
+                let empty = $type::empty(order);
 
-                assert!($type::union(&$type::empty(order), &digraph)
-                    .arcs()
-                    .eq(digraph.arcs()));
-
-                assert!($type::union(&digraph, &$type::empty(order))
-                    .arcs()
-                    .eq(digraph.arcs()));
+                assert!(empty.union(&digraph).arcs().eq(digraph.arcs()));
+                assert!(digraph.union(&empty).arcs().eq(digraph.arcs()));
             }
 
             #[test]
             fn union_empty_id_path(order in 1..25_usize) {
                 let digraph = $type::path(order);
+                let empty = $type::empty(order);
 
-                assert!($type::union(&$type::empty(order), &digraph)
-                    .arcs()
-                    .eq(digraph.arcs()));
-
-                assert!($type::union(&digraph, &$type::empty(order))
-                    .arcs()
-                    .eq(digraph.arcs()));
+                assert!(empty.union(&digraph).arcs().eq(digraph.arcs()));
+                assert!(digraph.union(&empty).arcs().eq(digraph.arcs()));
             }
 
             #[test]
@@ -2846,40 +2891,28 @@ macro_rules! test_unweighted {
                 seed in 0..1000_u64
             ) {
                 let digraph = $type::random_tournament(order, seed);
+                let empty = $type::empty(order);
 
-                assert!($type::union(&$type::empty(order), &digraph)
-                    .arcs()
-                    .eq(digraph.arcs()));
-
-                assert!($type::union(&digraph, &$type::empty(order))
-                    .arcs()
-                    .eq(digraph.arcs()));
+                assert!(empty.union(&digraph).arcs().eq(digraph.arcs()));
+                assert!(digraph.union(&empty).arcs().eq(digraph.arcs()));
             }
 
             #[test]
             fn union_empty_id_star(order in 1..25_usize) {
-                let star = $type::star(order);
+                let digraph = $type::star(order);
+                let empty = $type::empty(order);
 
-                assert!($type::union(&$type::empty(order), &star)
-                    .arcs()
-                    .eq(star.arcs()));
-
-                assert!($type::union(&star, &$type::empty(order))
-                    .arcs()
-                    .eq(star.arcs()));
+                assert!(empty.union(&digraph).arcs().eq(digraph.arcs()));
+                assert!(digraph.union(&empty).arcs().eq(digraph.arcs()));
             }
 
             #[test]
             fn union_empty_id_wheel(order in 4..25_usize) {
-                let wheel = $type::wheel(order);
+                let digraph = $type::wheel(order);
+                let empty = $type::empty(order);
 
-                assert!($type::union(&$type::empty(order), &wheel)
-                    .arcs()
-                    .eq(wheel.arcs()));
-
-                assert!($type::union(&wheel, &$type::empty(order))
-                    .arcs()
-                    .eq(wheel.arcs()));
+                assert!(empty.union(&digraph).arcs().eq(digraph.arcs()));
+                assert!(digraph.union(&empty).arcs().eq(digraph.arcs()));
             }
 
             #[test]
@@ -2902,11 +2935,11 @@ macro_rules! test_unweighted {
                 p in 0.0..1.0,
                 seed in 0..1000_u64
             ) {
-                let erdos_renyi = $type::erdos_renyi(order, p, seed);
+                let digraph = $type::erdos_renyi(order, p, seed);
+                let complement = digraph.complement();
 
-                assert!(
-                    erdos_renyi.union(&erdos_renyi.complement()).is_complete()
-                );
+                assert!(digraph.union(&complement).is_complete());
+                assert!(complement.union(&digraph).is_complete());
             }
 
             #[test]
@@ -2925,10 +2958,62 @@ macro_rules! test_unweighted {
             }
 
             #[test]
-            fn union_path_complement_is_complete(order in 1..25_usize) {
-                let path = $type::path(order);
+            fn union_growing_network_commutative(
+                order_1 in 1..25_usize,
+                order_2 in 1..25_usize,
+                seed_1 in 0..1000_u64,
+                seed_2 in 0..1000_u64
+            ) {
+                let digraph = $type::growing_network(order_1, seed_1);
+                let other = $type::growing_network(order_2, seed_2);
 
-                assert!(path.union(&path.complement()).is_complete());
+                assert_eq!(digraph.union(&other), other.union(&digraph));
+            }
+
+            #[test]
+            fn union_growing_network_complement_is_complete(
+                order in 1..25_usize,
+                seed in 0..1000_u64
+            ) {
+                let digraph = $type::growing_network(order, seed);
+                let complement = digraph.complement();
+
+                assert!(digraph.union(&complement).is_complete());
+                assert!(complement.union(&digraph).is_complete());
+            }
+
+            #[test]
+            fn union_path_commutative(
+                order_1 in 1..25_usize,
+                order_2 in 1..25_usize
+            ) {
+                let digraph = $type::path(order_1);
+                let other = $type::path(order_2);
+
+                assert_eq!(digraph.union(&other), other.union(&digraph));
+            }
+
+            #[test]
+            fn union_path_complement_is_complete(order in 1..25_usize) {
+                let digraph = $type::path(order);
+                let complement = digraph.complement();
+
+                assert!(digraph.union(&complement).is_complete());
+                assert!(complement.union(&digraph).is_complete());
+
+            }
+
+            #[test]
+            fn union_random_tournament_commutative(
+                order_1 in 1..25_usize,
+                order_2 in 1..25_usize,
+                seed_1 in 0..1000_u64,
+                seed_2 in 0..1000_u64
+            ) {
+                let digraph = $type::random_tournament(order_1, seed_1);
+                let other = $type::random_tournament(order_2, seed_2);
+
+                assert_eq!(digraph.union(&other), other.union(&digraph));
             }
 
             #[test]
@@ -2946,42 +3031,55 @@ macro_rules! test_unweighted {
             }
 
             #[test]
-            fn union_random_tournament_commutative(
-                order_1 in 1..25_usize,
-                order_2 in 1..25_usize,
-                seed_1 in 0..1000_u64,
-                seed_2 in 0..1000_u64
+            fn union_random_tournament_complement_is_complete(
+                order in 1..25_usize,
+                seed in 0..1000_u64
             ) {
-                let digraph = $type::random_tournament(order_1, seed_1);
-                let other = $type::random_tournament(order_2, seed_2);
+                let digraph = $type::random_tournament(order, seed);
+                let complement = digraph.complement();
+
+                assert!(digraph.union(&complement).is_complete());
+                assert!(complement.union(&digraph).is_complete());
+            }
+
+            #[test]
+            fn union_star_commutative(
+                order_1 in 1..25_usize,
+                order_2 in 1..25_usize
+            ) {
+                let digraph = $type::star(order_1);
+                let other = $type::star(order_2);
 
                 assert_eq!(digraph.union(&other), other.union(&digraph));
             }
 
             #[test]
-            fn union_random_tournament_complement_is_complete(
-                order in 1..25_usize,
-                seed in 0..1000_u64
-            ) {
-                let random_tournament = $type::random_tournament(order, seed);
+            fn union_star_complement_is_complete(order in 1..25_usize) {
+                let digraph = $type::star(order);
+                let complement = digraph.complement();
 
-                assert!(random_tournament
-                    .union(&random_tournament.complement())
-                    .is_complete());
+                assert!(digraph.union(&complement).is_complete());
+                assert!(complement.union(&digraph).is_complete());
             }
 
             #[test]
-            fn union_star_complement_is_complete(order in 1..25_usize) {
-                let star = $type::star(order);
+            fn union_wheel_commutative(
+                order_1 in 4..25_usize,
+                order_2 in 4..25_usize
+            ) {
+                let digraph = $type::wheel(order_1);
+                let other = $type::wheel(order_2);
 
-                assert!(star.union(&star.complement()).is_complete());
+                assert_eq!(digraph.union(&other), other.union(&digraph));
             }
 
             #[test]
             fn union_wheel_complement_is_complete(order in 4..25_usize) {
-                let wheel = $type::wheel(order);
+                let digraph = $type::wheel(order);
+                let complement = digraph.complement();
 
-                assert!(wheel.union(&wheel.complement()).is_complete());
+                assert!(digraph.union(&complement).is_complete());
+                assert!(complement.union(&digraph).is_complete());
             }
 
             #[test]

@@ -44,9 +44,9 @@
 //! - [`Empty`] generates a digraph without arcs.
 //! - [`ErdosRenyi`] generates a random digraph.
 //! - [`GrowingNetwork`] generates a growing network.
+//! - [`Path`] generates a path digraph.
 //! - [`RandomTournament`] generates a random tournament.
 //! - [`Star`] generates a star digraph.
-//! - [`Path`] generates a path digraph.
 //! - [`Wheel`] generates a wheel digraph.
 //!
 //! # Operations
