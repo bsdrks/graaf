@@ -20,6 +20,8 @@
 - Mention the order of traversal in the `Bfs` documentation.
 - Mention the order of traversal in the `Dfs` documentation.
 - Mention the order of traversal in the `Dijkstra` documentation.
+- Panic in `From<I>` implementations if the order is zero.
+- Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 
 ## [0.90.4] - 2024-09-16
 
