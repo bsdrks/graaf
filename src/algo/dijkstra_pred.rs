@@ -16,12 +16,9 @@
 //!
 //! ```
 //! use graaf::{
-//!     dijkstra_pred::{
-//!         DijkstraPred,
-//!         Step,
-//!     },
 //!     AddArcWeighted,
 //!     AdjacencyListWeighted,
+//!     DijkstraPred,
 //!     Empty,
 //! };
 //!
@@ -38,12 +35,12 @@
 //! let mut dijkstra = DijkstraPred::new(&digraph, &[0]);
 //!
 //! assert!(dijkstra.eq([
-//!     Step { u: None, v: 0 },
-//!     Step { u: Some(0), v: 1 },
-//!     Step { u: Some(1), v: 2 },
-//!     Step { u: Some(2), v: 4 },
-//!     Step { u: Some(4), v: 5 },
-//!     Step { u: Some(5), v: 6 },
+//!     (None, 0),
+//!     (Some(0), 1),
+//!     (Some(1), 2),
+//!     (Some(2), 4),
+//!     (Some(4), 5),
+//!     (Some(5), 6),
 //! ]));
 //! ```
 //!
@@ -55,12 +52,9 @@
 //!
 //! ```
 //! use graaf::{
-//!     dijkstra_pred::{
-//!         DijkstraPred,
-//!         Step,
-//!     },
 //!     AddArcWeighted,
 //!     AdjacencyListWeighted,
+//!     DijkstraPred,
 //!     Empty,
 //! };
 //!
@@ -78,13 +72,13 @@
 //! let mut dijkstra = DijkstraPred::new(&digraph, &[0, 3]);
 //!
 //! assert!(dijkstra.eq([
-//!     Step { u: None, v: 3 },
-//!     Step { u: None, v: 0 },
-//!     Step { u: Some(3), v: 5 },
-//!     Step { u: Some(0), v: 1 },
-//!     Step { u: Some(1), v: 2 },
-//!     Step { u: Some(2), v: 4 },
-//!     Step { u: Some(5), v: 6 },
+//!     (None, 3),
+//!     (None, 0),
+//!     (Some(3), 5),
+//!     (Some(0), 1),
+//!     (Some(1), 2),
+//!     (Some(2), 4),
+//!     (Some(5), 6),
 //! ]));
 //! ```
 //!
@@ -102,15 +96,7 @@ use {
     std::collections::BinaryHeap,
 };
 
-/// A step in Dijkstra's algorithm.
-#[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
-pub struct Step {
-    /// The current vertex's predecessor, if any. The source vertices have no
-    /// predecessor.
-    pub u: Option<usize>,
-    /// The current vertex.
-    pub v: usize,
-}
+type Step = (Option<usize>, usize);
 
 /// Dijkstra's algorithm with predecessors.
 ///
@@ -124,12 +110,9 @@ pub struct Step {
 ///
 /// ```
 /// use graaf::{
-///     dijkstra_pred::{
-///         DijkstraPred,
-///         Step,
-///     },
 ///     AddArcWeighted,
 ///     AdjacencyListWeighted,
+///     DijkstraPred,
 ///     Empty,
 /// };
 ///
@@ -146,12 +129,12 @@ pub struct Step {
 /// let mut dijkstra = DijkstraPred::new(&digraph, &[0]);
 ///
 /// assert!(dijkstra.eq([
-///     Step { u: None, v: 0 },
-///     Step { u: Some(0), v: 1 },
-///     Step { u: Some(1), v: 2 },
-///     Step { u: Some(2), v: 4 },
-///     Step { u: Some(4), v: 5 },
-///     Step { u: Some(5), v: 6 },
+///     (None, 0),
+///     (Some(0), 1),
+///     (Some(1), 2),
+///     (Some(2), 4),
+///     (Some(4), 5),
+///     (Some(5), 6),
 /// ]));
 /// ```
 ///
@@ -163,12 +146,9 @@ pub struct Step {
 ///
 /// ```
 /// use graaf::{
-///     dijkstra_pred::{
-///         DijkstraPred,
-///         Step,
-///     },
 ///     AddArcWeighted,
 ///     AdjacencyListWeighted,
+///     DijkstraPred,
 ///     Empty,
 /// };
 ///
@@ -186,13 +166,13 @@ pub struct Step {
 /// let mut dijkstra = DijkstraPred::new(&digraph, &[0, 3]);
 ///
 /// assert!(dijkstra.eq([
-///     Step { u: None, v: 3 },
-///     Step { u: None, v: 0 },
-///     Step { u: Some(3), v: 5 },
-///     Step { u: Some(0), v: 1 },
-///     Step { u: Some(1), v: 2 },
-///     Step { u: Some(2), v: 4 },
-///     Step { u: Some(5), v: 6 },
+///     (None, 3),
+///     (None, 0),
+///     (Some(3), 5),
+///     (Some(0), 1),
+///     (Some(1), 2),
+///     (Some(2), 4),
+///     (Some(5), 6),
 /// ]));
 /// ```
 ///
@@ -225,7 +205,8 @@ where
 
         for &u in sources {
             dist[u] = 0;
-            heap.push((Reverse(0), Step { u: None, v: u }));
+
+            heap.push((Reverse(0), (None, u)));
         }
 
         Self {
@@ -247,12 +228,9 @@ where
     ///
     /// ```
     /// use graaf::{
-    ///     dijkstra_pred::{
-    ///         DijkstraPred,
-    ///         Step,
-    ///     },
     ///     AddArcWeighted,
     ///     AdjacencyListWeighted,
+    ///     DijkstraPred,
     ///     Empty,
     /// };
     ///
@@ -281,7 +259,7 @@ where
     {
         let mut pred = PredecessorTree::new(self.digraph.order());
 
-        for Step { u, v } in self {
+        for (u, v) in self {
             pred[v] = u;
         }
 
@@ -304,12 +282,9 @@ where
     ///
     /// ```
     /// use graaf::{
-    ///     dijkstra_pred::{
-    ///         DijkstraPred,
-    ///         Step,
-    ///     },
     ///     AddArcWeighted,
     ///     AdjacencyListWeighted,
+    ///     DijkstraPred,
     ///     Empty,
     /// };
     ///
@@ -334,7 +309,7 @@ where
     {
         let mut pred = PredecessorTree::new(self.digraph.order());
 
-        for Step { u, v } in self {
+        for (u, v) in self {
             pred[v] = u;
 
             if is_target(v) {
@@ -360,15 +335,14 @@ where
 
     fn next(&mut self) -> Option<Self::Item> {
         if let Some((Reverse(distance), step)) = self.heap.pop() {
-            let Step { v, .. } = step;
+            let (_, v) = step;
 
             for (x, w) in self.digraph.out_neighbors_weighted(v) {
                 let distance = distance + w;
 
                 if distance < self.dist[x] {
                     self.dist[x] = distance;
-                    self.heap
-                        .push((Reverse(distance), Step { u: Some(v), v: x }));
+                    self.heap.push((Reverse(distance), (Some(v), x)));
                 }
             }
 
@@ -401,13 +375,13 @@ mod tests {
         let digraph = bang_jensen_94_usize();
 
         assert!(DijkstraPred::new(&digraph, &[0]).eq([
-            Step { u: None, v: 0 },
-            Step { u: Some(0), v: 2 },
-            Step { u: Some(0), v: 1 },
-            Step { u: Some(2), v: 5 },
-            Step { u: Some(2), v: 4 },
-            Step { u: Some(2), v: 3 },
-            Step { u: Some(4), v: 6 },
+            (None, 0),
+            (Some(0), 2),
+            (Some(0), 1),
+            (Some(2), 5),
+            (Some(2), 4),
+            (Some(2), 3),
+            (Some(4), 6),
         ]));
     }
 
@@ -416,12 +390,12 @@ mod tests {
         let digraph = bang_jensen_96_usize();
 
         assert!(DijkstraPred::new(&digraph, &[0]).eq([
-            Step { u: None, v: 0 },
-            Step { u: Some(0), v: 2 },
-            Step { u: Some(2), v: 4 },
-            Step { u: Some(2), v: 1 },
-            Step { u: Some(4), v: 3 },
-            Step { u: Some(3), v: 5 }
+            (None, 0),
+            (Some(0), 2),
+            (Some(2), 4),
+            (Some(2), 1),
+            (Some(4), 3),
+            (Some(3), 5)
         ]));
     }
 
@@ -430,9 +404,9 @@ mod tests {
         let digraph = kattis_bryr_1_usize();
 
         assert!(DijkstraPred::new(&digraph, &[0]).eq([
-            Step { u: None, v: 0 },
-            Step { u: Some(0), v: 2 },
-            Step { u: Some(0), v: 1 },
+            (None, 0),
+            (Some(0), 2),
+            (Some(0), 1),
         ]));
     }
 
@@ -441,12 +415,12 @@ mod tests {
         let digraph = kattis_bryr_2_usize();
 
         assert!(DijkstraPred::new(&digraph, &[0]).eq([
-            Step { u: None, v: 0 },
-            Step { u: Some(0), v: 3 },
-            Step { u: Some(0), v: 1 },
-            Step { u: Some(3), v: 4 },
-            Step { u: Some(3), v: 2 },
-            Step { u: Some(4), v: 5 },
+            (None, 0),
+            (Some(0), 3),
+            (Some(0), 1),
+            (Some(3), 4),
+            (Some(3), 2),
+            (Some(4), 5),
         ]));
     }
 
@@ -455,16 +429,16 @@ mod tests {
         let digraph = kattis_bryr_3_usize();
 
         assert!(DijkstraPred::new(&digraph, &[0]).eq([
-            Step { u: None, v: 0 },
-            Step { u: Some(0), v: 3 },
-            Step { u: Some(3), v: 7 },
-            Step { u: Some(7), v: 1 },
-            Step { u: Some(3), v: 5 },
-            Step { u: Some(5), v: 8 },
-            Step { u: Some(3), v: 4 },
-            Step { u: Some(5), v: 6 },
-            Step { u: Some(6), v: 2 },
-            Step { u: Some(1), v: 9 }
+            (None, 0),
+            (Some(0), 3),
+            (Some(3), 7),
+            (Some(7), 1),
+            (Some(3), 5),
+            (Some(5), 8),
+            (Some(3), 4),
+            (Some(5), 6),
+            (Some(6), 2),
+            (Some(1), 9)
         ]));
     }
 
@@ -473,10 +447,10 @@ mod tests {
         let digraph = kattis_crosscountry_usize();
 
         assert!(DijkstraPred::new(&digraph, &[0]).eq([
-            Step { u: None, v: 0 },
-            Step { u: Some(0), v: 1 },
-            Step { u: Some(0), v: 2 },
-            Step { u: Some(2), v: 3 },
+            (None, 0),
+            (Some(0), 1),
+            (Some(0), 2),
+            (Some(2), 3),
         ]));
     }
 
@@ -485,9 +459,9 @@ mod tests {
         let digraph = kattis_shortestpath1_usize();
 
         assert!(DijkstraPred::new(&digraph, &[0]).eq([
-            Step { u: None, v: 0 },
-            Step { u: Some(0), v: 1 },
-            Step { u: Some(1), v: 2 },
+            (None, 0),
+            (Some(0), 1),
+            (Some(1), 2),
         ]));
     }
 

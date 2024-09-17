@@ -23,17 +23,17 @@
 //!
 //! ## Arc-Weighted Sparse Digraphs
 //!
-//! - [`AdjacencyListWeighted`] represents digraphs as a vector of maps.
+//! - [`AdjacencyListWeighted`] represents a digraph as a vector of maps.
 //!
 //! ## Unweighted Dense Digraphs
 //!
-//! - [`AdjacencyMatrix`] represents digraphs as a matrix using a bit vector.
+//! - [`AdjacencyMatrix`] represents a digraph as a matrix using a bit vector.
 //!
 //! ## Unweighted Sparse Digraphs
 //!
-//! - [`AdjacencyList`] represents digraphs as a vector of sets.
-//! - [`AdjacencyMap`] represents digraphs as a map of sets.
-//! - [`EdgeList`] represents digraphs as a vector of tuples.
+//! - [`AdjacencyList`] represents a digraph as a vector of sets.
+//! - [`AdjacencyMap`] represents a digraph as a map of sets.
+//! - [`EdgeList`] represents a digraph as a vector of tuples.
 //!
 //! # Generators
 //!
@@ -108,48 +108,41 @@
 //! A breadth-first search explores an unweighted digraph's vertices in order
 //! of their distance from a source.
 //!
-//! - [`Bfs`](bfs::Bfs) iterates the vertices.
-//! - [`BfsDist`](bfs_dist::BfsDist) iterates the vertices and their distance
-//!   from the source.
-//! - [`BfsPred`](bfs_pred::BfsPred) iterates the vertices and their
-//!   predecessors.
-//! - [`BfsDist::distances`](bfs_dist::BfsDist::distances) finds the shortest
-//!   distances.
-//! - [`BfsPred::cycles`](bfs_pred::BfsPred::predecessors) returns the cycles
-//!   along the shortest path.
-//! - [`BfsPred::predecessors`](bfs_pred::BfsPred::predecessors) finds the
-//!   predecessors.
-//! - [`BfsPred::shortest_path`](bfs_pred::BfsPred::shortest_path) finds the
+//! - [`Bfs`] iterates the vertices.
+//! - [`BfsDist`] iterates the vertices and their distance from the source.
+//! - [`BfsPred`] iterates the vertices and their predecessors.
+//! - [`BfsDist::distances`](BfsDist::distances) finds the shortest distances.
+//! - [`BfsPred::cycles`](BfsPred::predecessors) returns the cycles along the
 //!   shortest path.
+//! - [`BfsPred::predecessors`](BfsPred::predecessors) finds the predecessors.
+//! - [`BfsPred::shortest_path`](BfsPred::shortest_path) finds the shortest
+//!   path.
 //!
 //! ## Depth-First Search
 //!
 //! A depth-first search explores an unweighted digraph's vertices in order of
 //! their distance from a source.
 //!
-//! - [`Dfs`](dfs::Dfs) iterates the vertices.
-//! - [`DfsDist`](dfs_dist::DfsDist) iterates the vertices and their distance
-//!   from the source.
-//! - [`DfsPred`](dfs_pred::DfsPred) iterates the vertices and their
-//!   predecessors.
-//! - [`DfsPred::predecessors`](dfs_pred::DfsPred::predecessors) finds the
-//!   predecessors.
+//! - [`Dfs`] iterates the vertices.
+//! - [`DfsDist`] iterates the vertices and their distance from the source.
+//! - [`DfsPred`] iterates the vertices and their predecessors.
+//! - [`DfsPred::predecessors`](DfsPred::predecessors) finds the predecessors.
 //!
 //! ## Dijkstra
 //!
 //! Dijkstra's algorithm finds the shortest paths from one or more source
 //! vertices in an arc-weighted digraph.
 //!
-//! - [`Dijkstra`](dijkstra::Dijkstra) iterates the vertices.
-//! - [`DijkstraDist`](dijkstra_dist::DijkstraDist) iterates the vertices and
-//!   their distance from the source.
-//! - [`DijkstraPred`](dijkstra_pred::DijkstraPred) iterates the vertices and
-//!   their predecessors.
-//! - [`DijkstraDist::distances`](dijkstra_dist::DijkstraDist::distances) finds
-//!   the shortest distances.
-//! - [`DijkstraPred::predecessors`](dijkstra_pred::DijkstraPred::predecessors)
-//!   finds the predecessors.
-//! - [`DijkstraPred::shortest_path`](dijkstra_pred::DijkstraPred::shortest_path) finds the shortest path.
+//! - [`Dijkstra`] iterates the vertices.
+//! - [`DijkstraDist`] iterates the vertices and their distance from the
+//!   source.
+//! - [`DijkstraPred`] iterates the vertices and their predecessors.
+//! - [`DijkstraDist::distances`](DijkstraDist::distances) finds the shortest
+//!   distances.
+//! - [`DijkstraPred::predecessors`](DijkstraPred::predecessors) finds the
+//!   predecessors.
+//! - [`DijkstraPred::shortest_path`](DijkstraPred::shortest_path) finds the
+//!   shortest path.
 //!
 //! ## Distance Matrix
 //!
@@ -178,8 +171,7 @@
 //!
 //! Johnson's circuit-finding algorithm finds all circuits in a digraph.
 //!
-//! - [`Johnson75::circuits`](johnson_75::Johnson75::circuits) finds all
-//!   circuits.
+//! - [`Johnson75::circuits`] finds all circuits.
 //!
 //! ## Predecessor Tree
 //!
@@ -309,23 +301,18 @@ pub use gen::{
 
 pub use algo::{
     bellman_ford_moore,
-    bfs,
-    bfs_dist,
-    bfs_pred,
-    dfs,
-    dfs_dist,
-    dfs_pred,
-    dijkstra,
-    dijkstra_dist,
-    dijkstra_pred,
-    distance_matrix,
-    floyd_warshall,
-    johnson_75,
-    predecessor_tree,
-    tarjan,
-};
-
-pub use {
+    bfs::Bfs,
+    bfs_dist::BfsDist,
+    bfs_pred::BfsPred,
+    dfs::Dfs,
+    dfs_dist::DfsDist,
+    dfs_pred::DfsPred,
+    dijkstra::Dijkstra,
+    dijkstra_dist::DijkstraDist,
+    dijkstra_pred::DijkstraPred,
     distance_matrix::DistanceMatrix,
+    floyd_warshall,
+    johnson_75::Johnson75,
     predecessor_tree::PredecessorTree,
+    tarjan,
 };

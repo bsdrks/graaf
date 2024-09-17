@@ -16,12 +16,9 @@
 //!
 //! ```
 //! use graaf::{
-//!     dfs_dist::{
-//!         DfsDist,
-//!         Step,
-//!     },
 //!     AddArc,
 //!     AdjacencyList,
+//!     DfsDist,
 //!     Empty,
 //! };
 //!
@@ -34,11 +31,11 @@
 //! digraph.add_arc(3, 0);
 //!
 //! assert!(DfsDist::new(&digraph, &[0]).eq([
-//!     Step { u: 0, dist: 0 },
-//!     Step { u: 1, dist: 1 },
-//!     Step { u: 4, dist: 2 },
-//!     Step { u: 2, dist: 2 },
-//!     Step { u: 5, dist: 3 },
+//!     (0, 0),
+//!     (1, 1),
+//!     (4, 2),
+//!     (2, 2),
+//!     (5, 3),
 //! ]));
 //! ```
 //!
@@ -50,12 +47,9 @@
 //!
 //! ```
 //! use graaf::{
-//!     dfs_dist::{
-//!         DfsDist,
-//!         Step,
-//!     },
 //!     AddArc,
 //!     AdjacencyList,
+//!     DfsDist,
 //!     Empty,
 //! };
 //!
@@ -72,13 +66,13 @@
 //! digraph.add_arc(7, 6);
 //!
 //! assert!(DfsDist::new(&digraph, &[3, 7]).eq([
-//!     Step { u: 7, dist: 0 },
-//!     Step { u: 6, dist: 1 },
-//!     Step { u: 5, dist: 2 },
-//!     Step { u: 3, dist: 0 },
-//!     Step { u: 0, dist: 1 },
-//!     Step { u: 1, dist: 2 },
-//!     Step { u: 4, dist: 3 },
+//!     (7, 0),
+//!     (6, 1),
+//!     (5, 2),
+//!     (3, 0),
+//!     (0, 1),
+//!     (1, 2),
+//!     (4, 3),
 //! ]));
 //! ```
 
@@ -86,6 +80,8 @@ use {
     crate::OutNeighbors,
     std::collections::HashSet,
 };
+
+type Step = (usize, usize);
 
 /// Depth-first search with distances.
 ///
@@ -99,12 +95,9 @@ use {
 ///
 /// ```
 /// use graaf::{
-///     dfs_dist::{
-///         DfsDist,
-///         Step,
-///     },
 ///     AddArc,
 ///     AdjacencyList,
+///     DfsDist,
 ///     Empty,
 /// };
 ///
@@ -117,11 +110,11 @@ use {
 /// digraph.add_arc(3, 0);
 ///
 /// assert!(DfsDist::new(&digraph, &[0]).eq([
-///     Step { u: 0, dist: 0 },
-///     Step { u: 1, dist: 1 },
-///     Step { u: 4, dist: 2 },
-///     Step { u: 2, dist: 2 },
-///     Step { u: 5, dist: 3 },
+///     (0, 0),
+///     (1, 1),
+///     (4, 2),
+///     (2, 2),
+///     (5, 3),
 /// ]));
 /// ```
 ///
@@ -133,12 +126,9 @@ use {
 ///
 /// ```
 /// use graaf::{
-///     dfs_dist::{
-///         DfsDist,
-///         Step,
-///     },
 ///     AddArc,
 ///     AdjacencyList,
+///     DfsDist,
 ///     Empty,
 /// };
 ///
@@ -155,29 +145,20 @@ use {
 /// digraph.add_arc(7, 6);
 ///
 /// assert!(DfsDist::new(&digraph, &[3, 7]).eq([
-///     Step { u: 7, dist: 0 },
-///     Step { u: 6, dist: 1 },
-///     Step { u: 5, dist: 2 },
-///     Step { u: 3, dist: 0 },
-///     Step { u: 0, dist: 1 },
-///     Step { u: 1, dist: 2 },
-///     Step { u: 4, dist: 3 },
+///     (7, 0),
+///     (6, 1),
+///     (5, 2),
+///     (3, 0),
+///     (0, 1),
+///     (1, 2),
+///     (4, 3),
 /// ]));
 /// ```
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct DfsDist<'a, D> {
     digraph: &'a D,
-    stack: Vec<(usize, usize)>,
+    stack: Vec<Step>,
     visited: HashSet<usize>,
-}
-
-/// A step in the depth-first search.
-#[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
-pub struct Step {
-    /// The current vertex.
-    pub u: usize,
-    /// The dist of `u` from the source vertex.
-    pub dist: usize,
 }
 
 impl<'a, D> DfsDist<'a, D> {
@@ -220,7 +201,7 @@ where
                     }
                 }
 
-                return Some(Step { u, dist });
+                return Some((u, dist));
             }
         }
 
@@ -250,14 +231,14 @@ mod tests {
         let digraph = bang_jensen_196();
 
         assert!(DfsDist::new(&digraph, &[0]).eq([
-            Step { u: 0, dist: 0 },
-            Step { u: 7, dist: 1 },
-            Step { u: 5, dist: 2 },
-            Step { u: 6, dist: 3 },
-            Step { u: 4, dist: 1 },
-            Step { u: 2, dist: 2 },
-            Step { u: 3, dist: 3 },
-            Step { u: 1, dist: 1 }
+            (0, 0),
+            (7, 1),
+            (5, 2),
+            (6, 3),
+            (4, 1),
+            (2, 2),
+            (3, 3),
+            (1, 1)
         ]));
     }
 
@@ -265,8 +246,7 @@ mod tests {
     fn iter_bang_jensen_34() {
         let digraph = bang_jensen_34();
 
-        assert!(DfsDist::new(&digraph, &[0])
-            .eq([Step { u: 0, dist: 0 }, Step { u: 4, dist: 1 }]));
+        assert!(DfsDist::new(&digraph, &[0]).eq([(0, 0), (4, 1)]));
     }
 
     #[test]
@@ -274,13 +254,13 @@ mod tests {
         let digraph = bang_jensen_94();
 
         assert!(DfsDist::new(&digraph, &[0]).eq([
-            Step { u: 0, dist: 0 },
-            Step { u: 2, dist: 1 },
-            Step { u: 5, dist: 2 },
-            Step { u: 4, dist: 2 },
-            Step { u: 6, dist: 3 },
-            Step { u: 3, dist: 2 },
-            Step { u: 1, dist: 2 }
+            (0, 0),
+            (2, 1),
+            (5, 2),
+            (4, 2),
+            (6, 3),
+            (3, 2),
+            (1, 2)
         ]));
     }
 
@@ -289,10 +269,10 @@ mod tests {
         let digraph = kattis_builddeps();
 
         assert!(DfsDist::new(&digraph, &[0]).eq([
-            Step { u: 0, dist: 0 },
-            Step { u: 4, dist: 1 },
-            Step { u: 1, dist: 2 },
-            Step { u: 3, dist: 1 }
+            (0, 0),
+            (4, 1),
+            (1, 2),
+            (3, 1)
         ]));
     }
 
@@ -301,16 +281,16 @@ mod tests {
         let digraph = kattis_cantinaofbabel_1();
 
         assert!(DfsDist::new(&digraph, &[0]).eq([
-            Step { u: 0, dist: 0 },
-            Step { u: 1, dist: 1 },
-            Step { u: 4, dist: 2 },
-            Step { u: 3, dist: 3 },
-            Step { u: 11, dist: 4 },
-            Step { u: 9, dist: 5 },
-            Step { u: 7, dist: 6 },
-            Step { u: 10, dist: 4 },
-            Step { u: 6, dist: 5 },
-            Step { u: 5, dist: 6 }
+            (0, 0),
+            (1, 1),
+            (4, 2),
+            (3, 3),
+            (11, 4),
+            (9, 5),
+            (7, 6),
+            (10, 4),
+            (6, 5),
+            (5, 6)
         ]));
     }
 
@@ -319,14 +299,14 @@ mod tests {
         let digraph = kattis_cantinaofbabel_2();
 
         assert!(DfsDist::new(&digraph, &[0]).eq([
-            Step { u: 0, dist: 0 },
-            Step { u: 1, dist: 1 },
-            Step { u: 7, dist: 2 },
-            Step { u: 2, dist: 3 },
-            Step { u: 5, dist: 4 },
-            Step { u: 6, dist: 5 },
-            Step { u: 3, dist: 5 },
-            Step { u: 4, dist: 6 }
+            (0, 0),
+            (1, 1),
+            (7, 2),
+            (2, 3),
+            (5, 4),
+            (6, 5),
+            (3, 5),
+            (4, 6)
         ]));
     }
 
@@ -335,11 +315,11 @@ mod tests {
         let digraph = kattis_escapewallmaria_1();
 
         assert!(DfsDist::new(&digraph, &[5]).eq([
-            Step { u: 5, dist: 0 },
-            Step { u: 9, dist: 1 },
-            Step { u: 13, dist: 2 },
-            Step { u: 12, dist: 3 },
-            Step { u: 6, dist: 1 }
+            (5, 0),
+            (9, 1),
+            (13, 2),
+            (12, 3),
+            (6, 1)
         ]));
     }
 
@@ -347,11 +327,7 @@ mod tests {
     fn iter_kattis_escapewallmaria_2() {
         let digraph = kattis_escapewallmaria_2();
 
-        assert!(DfsDist::new(&digraph, &[5]).eq([
-            Step { u: 5, dist: 0 },
-            Step { u: 9, dist: 1 },
-            Step { u: 6, dist: 1 }
-        ]));
+        assert!(DfsDist::new(&digraph, &[5]).eq([(5, 0), (9, 1), (6, 1)]));
     }
 
     #[test]
@@ -359,13 +335,13 @@ mod tests {
         let digraph = kattis_escapewallmaria_3();
 
         assert!(DfsDist::new(&digraph, &[5]).eq([
-            Step { u: 5, dist: 0 },
-            Step { u: 9, dist: 1 },
-            Step { u: 13, dist: 2 },
-            Step { u: 12, dist: 3 },
-            Step { u: 6, dist: 1 },
-            Step { u: 2, dist: 2 },
-            Step { u: 1, dist: 3 }
+            (5, 0),
+            (9, 1),
+            (13, 2),
+            (12, 3),
+            (6, 1),
+            (2, 2),
+            (1, 3)
         ]));
     }
 }

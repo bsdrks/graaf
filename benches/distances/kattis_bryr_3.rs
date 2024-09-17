@@ -2,12 +2,12 @@ use {
     divan::Bencher,
     graaf::{
         bellman_ford_moore,
-        dijkstra_dist::DijkstraDist,
         floyd_warshall,
         repr::adjacency_list_weighted::fixture::{
             kattis_bryr_3_isize,
             kattis_bryr_3_usize,
         },
+        DijkstraDist,
     },
 };
 

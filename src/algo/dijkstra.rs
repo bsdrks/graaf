@@ -16,9 +16,9 @@
 //!
 //! ```
 //! use graaf::{
-//!     dijkstra::Dijkstra,
 //!     AddArcWeighted,
 //!     AdjacencyListWeighted,
+//!     Dijkstra,
 //!     Empty,
 //! };
 //!
@@ -45,9 +45,9 @@
 //!
 //! ```
 //! use graaf::{
-//!     dijkstra::Dijkstra,
 //!     AddArcWeighted,
 //!     AdjacencyListWeighted,
+//!     Dijkstra,
 //!     Empty,
 //! };
 //!
@@ -92,9 +92,9 @@ use {
 ///
 /// ```
 /// use graaf::{
-///     dijkstra::Dijkstra,
 ///     AddArcWeighted,
 ///     AdjacencyListWeighted,
+///     Dijkstra,
 ///     Empty,
 /// };
 ///
@@ -121,9 +121,9 @@ use {
 ///
 /// ```
 /// use graaf::{
-///     dijkstra::Dijkstra,
 ///     AddArcWeighted,
 ///     AdjacencyListWeighted,
+///     Dijkstra,
 ///     Empty,
 /// };
 ///

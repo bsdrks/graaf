@@ -23,7 +23,30 @@
 - Panic in `From<I>` implementations if the order is zero.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 
-## [0.90.4] - 2024-09-16
+## [0.91.0] - 2024-09-17
+
+Added
+
+- Export `BfsDist`.
+- Export `BfsPred`.
+- Export `Bfs`.
+- Export `DfsDist`.
+- Export `DfsPred`.
+- Export `Dfs`.
+- Export `DijkstraDist`.
+- Export `DijkstraPred`.
+- Export `Johnson75`.
+
+Changed
+
+- Breaking: `bfs_dist::Step` is replaced by `(usize, usize)`.
+- Breaking: `bfs_pred::Step` is replaced by `(Option<usize>, usize)`.
+- Breaking: `dfs_dist::Step` is replaced by `(usize, usize)`.
+- Breaking: `dfs_pred::Step` is replaced by `(Option<usize>, usize)`.
+- Breaking: `dijkstra_dist::Step` is replaced by `(usize, usize)`.
+- Breaking: `dijkstra_pred::Step` is replaced by `(Option<usize>, usize)`.
+
+## [0.90.4] - 2024-09-17
 
 Changed
 

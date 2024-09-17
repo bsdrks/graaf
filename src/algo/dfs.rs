@@ -16,9 +16,9 @@
 //!
 //! ```
 //! use graaf::{
-//!     dfs::Dfs,
 //!     AddArc,
 //!     AdjacencyList,
+//!     Dfs,
 //!     Empty,
 //! };
 //!
@@ -41,9 +41,9 @@
 //!
 //! ```
 //! use graaf::{
-//!     dfs::Dfs,
 //!     AddArc,
 //!     AdjacencyList,
+//!     Dfs,
 //!     Empty,
 //! };
 //!
@@ -79,9 +79,9 @@ use {
 ///
 /// ```
 /// use graaf::{
-///     dfs::Dfs,
 ///     AddArc,
 ///     AdjacencyList,
+///     Dfs,
 ///     Empty,
 /// };
 ///
@@ -104,9 +104,9 @@ use {
 ///
 /// ```
 /// use graaf::{
-///     dfs::Dfs,
 ///     AddArc,
 ///     AdjacencyList,
+///     Dfs,
 ///     Empty,
 /// };
 ///

@@ -2,8 +2,6 @@ use {
     divan::Bencher,
     graaf::{
         bellman_ford_moore,
-        bfs_dist::BfsDist,
-        dijkstra_dist::DijkstraDist,
         floyd_warshall,
         repr::{
             adjacency_list::fixture::bang_jensen_94,
@@ -13,6 +11,8 @@ use {
             },
         },
         AdjacencyMatrix,
+        BfsDist,
+        DijkstraDist,
     },
 };
 

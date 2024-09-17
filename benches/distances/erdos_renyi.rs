@@ -2,11 +2,11 @@ use {
     divan::Bencher,
     graaf::{
         bellman_ford_moore,
-        bfs_dist::BfsDist,
-        dijkstra_dist::DijkstraDist,
         AdjacencyList,
         AdjacencyListWeighted,
         AdjacencyMatrix,
+        BfsDist,
+        DijkstraDist,
         ErdosRenyi,
     },
 };
