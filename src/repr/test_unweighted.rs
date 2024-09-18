@@ -6547,6 +6547,7 @@ macro_rules! test_unweighted {
                 (7, 5)
             ]));
 
+            assert!(!digraph.remove_arc(8, 0));
             assert!(!digraph.remove_arc(0, 3));
 
             assert!(digraph.remove_arc(0, 1));

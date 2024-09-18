@@ -23,6 +23,16 @@
 - Panic in `From<I>` implementations if the order is zero.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 
+## [0.91.1] - 2024-09-18
+
+Added
+
+- Cover missing scenario in `IsSimple for AdjacencyList`.
+- Cover missing scenario in `IsSimple for AdjacencyMap`.
+- Cover missing scenario in `IsSimple for AdjacencyMatrix`.
+- Cover missing scenario in `IsSimple for EdgeList`.
+- Cover missing scenario in `RemoveArc for AdjacencyMatrix`.
+
 ## [0.91.0] - 2024-09-17
 
 Added

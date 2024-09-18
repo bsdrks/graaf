@@ -545,4 +545,14 @@ mod tests {
         assert_eq!(digraph.order(), 3);
         assert!(digraph.arcs().eq([(0, 1), (1, 2)]));
     }
+
+    #[test]
+    fn is_simple_false() {
+        let digraph = EdgeList {
+            arcs: BTreeSet::from([(0, 0)]),
+            order: 1,
+        };
+
+        assert!(!digraph.is_simple());
+    }
 }

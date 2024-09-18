@@ -517,4 +517,13 @@ mod tests {
         let vec = vec![BTreeSet::from([0])];
         let _ = AdjacencyList::from(vec);
     }
+
+    #[test]
+    fn is_simple_false() {
+        let digraph = AdjacencyList {
+            arcs: vec![BTreeSet::from([0])],
+        };
+
+        assert!(!digraph.is_simple());
+    }
 }

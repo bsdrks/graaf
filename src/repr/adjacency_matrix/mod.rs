@@ -637,4 +637,14 @@ mod tests {
 
         digraph.toggle(0, 1);
     }
+
+    #[test]
+    fn is_simple_false() {
+        let digraph = AdjacencyMatrix {
+            blocks: vec![0b1],
+            order: 1,
+        };
+
+        assert!(!digraph.is_simple());
+    }
 }
