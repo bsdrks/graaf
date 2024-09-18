@@ -5,3 +5,5 @@
 Cargo.lock
 coverage
 priv
+mutants.out
+mutants.out.old
