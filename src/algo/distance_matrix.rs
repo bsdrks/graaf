@@ -635,10 +635,8 @@ mod tests {
         let mut digraph = kattis_bryr_1_isize();
 
         assert!(distances(&digraph).is_connected());
-
-        let _ = digraph.remove_arc(1, 0);
-        let _ = digraph.remove_arc(2, 0);
-
+        assert!(digraph.remove_arc(1, 0));
+        assert!(digraph.remove_arc(2, 0));
         assert!(!distances(&digraph).is_connected());
     }
 
@@ -647,9 +645,7 @@ mod tests {
         let mut digraph = kattis_bryr_2_isize();
 
         assert!(distances(&digraph).is_connected());
-
-        let _ = digraph.remove_arc(3, 4);
-
+        assert!(digraph.remove_arc(3, 4));
         assert!(!distances(&digraph).is_connected());
     }
 
@@ -658,9 +654,8 @@ mod tests {
         let mut digraph = kattis_bryr_3_isize();
 
         assert!(distances(&digraph).is_connected());
-
-        let _ = digraph.remove_arc(3, 7);
-
+        assert!(digraph.remove_arc(0, 3));
+        assert!(digraph.remove_arc(0, 0));
         assert!(!distances(&digraph).is_connected());
     }
 
@@ -669,11 +664,9 @@ mod tests {
         let mut digraph = kattis_crosscountry_isize();
 
         assert!(distances(&digraph).is_connected());
-
-        let _ = digraph.remove_arc(0, 1);
-        let _ = digraph.remove_arc(2, 1);
-        let _ = digraph.remove_arc(3, 1);
-
+        assert!(digraph.remove_arc(0, 1));
+        assert!(digraph.remove_arc(2, 1));
+        assert!(digraph.remove_arc(3, 1));
         assert!(!distances(&digraph).is_connected());
     }
 
