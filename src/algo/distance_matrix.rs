@@ -655,7 +655,7 @@ mod tests {
 
         assert!(distances(&digraph).is_connected());
         assert!(digraph.remove_arc(0, 3));
-        assert!(digraph.remove_arc(0, 0));
+        assert!(digraph.remove_arc(3, 0));
         assert!(!distances(&digraph).is_connected());
     }
 
