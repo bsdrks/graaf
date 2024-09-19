@@ -23,6 +23,12 @@
 - Panic in `From<I>` implementations if the order is zero.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 
+## [0.91.2] - 2024-09-19
+
+- Catch mutant: `src/algo/distance_matrix.rs:391:9`: replace `DistanceMatrix<W>::is_connected -> bool` with `true`.
+- Catch mutant: `src/repr/adjacency_list_weighted/mod.rs:229:9`: replace `<impl IsSimple for AdjacencyListWeighted<W>>::is_simple -> bool` with `true`.
+- Catch mutant: `src/repr/adjacency_matrix/mod.rs:293:29`: replace `^=` with `|=` in `AdjacencyMatrix::toggle`.
+
 ## [0.91.1] - 2024-09-18
 
 Added

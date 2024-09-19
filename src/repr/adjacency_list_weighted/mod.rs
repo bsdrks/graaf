@@ -1977,6 +1977,15 @@ mod tests {
     }
 
     #[test]
+    fn is_simple_self_loop() {
+        let digraph = AdjacencyListWeighted {
+            arcs: vec![BTreeMap::from([(0, 1)])],
+        };
+
+        assert!(!digraph.is_simple());
+    }
+
+    #[test]
     fn is_symmetric_bang_jensen_94_weighted() {
         assert!(!bang_jensen_94_usize().is_symmetric());
     }

@@ -102,7 +102,6 @@ pub mod fixture;
 
 use {
     crate::{
-        op::Union,
         AddArc,
         ArcWeight,
         Arcs,
@@ -121,6 +120,7 @@ use {
         Outdegree,
         RemoveArc,
         Size,
+        Union,
         Vertices,
     },
     std::collections::{
@@ -528,7 +528,7 @@ mod tests {
     }
 
     #[test]
-    fn is_simple_false() {
+    fn is_simple_self_loop() {
         let digraph = AdjacencyMap {
             arcs: BTreeMap::from([(0, BTreeSet::from([0]))]),
         };

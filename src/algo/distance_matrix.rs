@@ -472,6 +472,7 @@ mod tests {
             },
             AdjacencyListWeighted,
             Empty,
+            RemoveArc,
         },
     };
 
@@ -581,32 +582,6 @@ mod tests {
     }
 
     #[test]
-    fn is_connected_kattis_bryr_1() {
-        assert!(distances(&kattis_bryr_1_isize()).is_connected());
-    }
-
-    #[test]
-    fn is_connected_kattis_bryr_2() {
-        assert!(distances(&kattis_bryr_2_isize()).is_connected());
-    }
-
-    #[test]
-    fn is_connected_kattis_bryr_3() {
-        assert!(distances(&kattis_bryr_3_isize()).is_connected());
-    }
-
-    #[test]
-    fn is_connected_kattis_crosscountry() {
-        assert!(distances(&kattis_crosscountry_isize()).is_connected());
-    }
-
-    #[test]
-    fn is_connected_trivial() {
-        assert!(distances(&AdjacencyListWeighted::<isize>::trivial())
-            .is_connected());
-    }
-
-    #[test]
     fn index() {
         let dist = DistanceMatrix::new(4, isize::MAX);
 
@@ -653,6 +628,59 @@ mod tests {
         assert!(dist[1].iter().eq(&[5, 6, 7, 8]));
         assert!(dist[2].iter().eq(&[9, 10, 11, 12]));
         assert!(dist[3].iter().eq(&[13, 14, 15, 16]));
+    }
+
+    #[test]
+    fn is_connected_kattis_bryr_1() {
+        let mut digraph = kattis_bryr_1_isize();
+
+        assert!(distances(&digraph).is_connected());
+
+        let _ = digraph.remove_arc(1, 0);
+        let _ = digraph.remove_arc(2, 0);
+
+        assert!(!distances(&digraph).is_connected());
+    }
+
+    #[test]
+    fn is_connected_kattis_bryr_2() {
+        let mut digraph = kattis_bryr_2_isize();
+
+        assert!(distances(&digraph).is_connected());
+
+        let _ = digraph.remove_arc(3, 4);
+
+        assert!(!distances(&digraph).is_connected());
+    }
+
+    #[test]
+    fn is_connected_kattis_bryr_3() {
+        let mut digraph = kattis_bryr_3_isize();
+
+        assert!(distances(&digraph).is_connected());
+
+        let _ = digraph.remove_arc(3, 7);
+
+        assert!(!distances(&digraph).is_connected());
+    }
+
+    #[test]
+    fn is_connected_kattis_crosscountry() {
+        let mut digraph = kattis_crosscountry_isize();
+
+        assert!(distances(&digraph).is_connected());
+
+        let _ = digraph.remove_arc(0, 1);
+        let _ = digraph.remove_arc(2, 1);
+        let _ = digraph.remove_arc(3, 1);
+
+        assert!(!distances(&digraph).is_connected());
+    }
+
+    #[test]
+    fn is_connected_trivial() {
+        assert!(distances(&AdjacencyListWeighted::<isize>::trivial())
+            .is_connected());
     }
 
     #[test]

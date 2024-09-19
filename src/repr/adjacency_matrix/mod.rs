@@ -614,12 +614,14 @@ mod tests {
 
     #[test]
     fn toggle() {
-        let mut digraph = AdjacencyMatrix::empty(3);
+        let mut digraph = AdjacencyMatrix::empty(5);
 
         digraph.toggle(0, 1);
         digraph.toggle(0, 2);
+        digraph.toggle(3, 1);
+        digraph.toggle(3, 4);
 
-        assert_eq!(digraph.blocks, [0b110]);
+        assert_eq!(digraph.blocks, [0b00000_10010_00000_00000_00110]);
     }
 
     #[test]
@@ -639,7 +641,7 @@ mod tests {
     }
 
     #[test]
-    fn is_simple_false() {
+    fn is_simple_self_loop() {
         let digraph = AdjacencyMatrix {
             blocks: vec![0b1],
             order: 1,

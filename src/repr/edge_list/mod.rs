@@ -547,7 +547,7 @@ mod tests {
     }
 
     #[test]
-    fn is_simple_false() {
+    fn is_simple_self_loop() {
         let digraph = EdgeList {
             arcs: BTreeSet::from([(0, 0)]),
             order: 1,
