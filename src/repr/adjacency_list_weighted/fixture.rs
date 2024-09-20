@@ -13,16 +13,6 @@ use {
 /// <https://doi.org/10.1007/978-1-84800-998-1>
 ///
 /// ![Bang-Jensen, 94](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bang_jensen_94.svg)
-///
-/// ```text
-/// 0 -> {1 (1), 2 (1)}
-/// 1 -> {3 (1)}
-/// 2 -> {1 (1), 3 (1), 4 (1), 5 (1)}
-/// 3 -> {5 (1)}
-/// 4 -> {6 (1)}
-/// 5 -> {}
-/// 6 -> {}
-/// ```
 #[must_use]
 pub fn bang_jensen_94_usize() -> AdjacencyListWeighted<usize> {
     AdjacencyListWeighted::from(bang_jensen_94())
@@ -33,16 +23,6 @@ pub fn bang_jensen_94_usize() -> AdjacencyListWeighted<usize> {
 /// <https://doi.org/10.1007/978-1-84800-998-1>
 ///
 /// ![Bang-Jensen, 94](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bang_jensen_94.svg)
-///
-/// ```text
-/// 0 -> {1 (1), 2 (1)}
-/// 1 -> {3 (1)}
-/// 2 -> {1 (1), 3 (1), 4 (1), 5 (1)}
-/// 3 -> {5 (1)}
-/// 4 -> {6 (1)}
-/// 5 -> {}
-/// 6 -> {}
-/// ```
 #[must_use]
 pub fn bang_jensen_94_isize() -> AdjacencyListWeighted<isize> {
     AdjacencyListWeighted::from(bang_jensen_94())
@@ -53,15 +33,6 @@ pub fn bang_jensen_94_isize() -> AdjacencyListWeighted<isize> {
 /// <https://doi.org/10.1007/978-1-84800-998-1>
 ///
 /// ![Bang-Jensen, 96](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bang_jensen_96.svg)
-///
-/// ```text
-/// 0 -> {1 (9), 2 (3)}
-/// 1 -> {2 (6), 3 (2)}
-/// 2 -> {1 (2), 4 (1)}
-/// 3 -> {5 (1)}
-/// 4 -> {2 (2), 3 (2), 5 (7)}
-/// 5 -> {3 (2)}
-/// ```
 #[must_use]
 pub fn bang_jensen_96_usize() -> AdjacencyListWeighted<usize> {
     AdjacencyListWeighted::from(vec![
@@ -79,15 +50,6 @@ pub fn bang_jensen_96_usize() -> AdjacencyListWeighted<usize> {
 /// <https://doi.org/10.1007/978-1-84800-998-1>
 ///
 /// ![Bang-Jensen, 96](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bang_jensen_96.svg)
-///
-/// ```text
-/// 0 -> {1 (9), 2 (3)}
-/// 1 -> {2 (6), 3 (2)}
-/// 2 -> {1 (2), 4 (1)}
-/// 3 -> {5 (1)}
-/// 4 -> {2 (2), 3 (2), 5 (7)}
-/// 5 -> {3 (2)}
-/// ```
 #[must_use]
 pub fn bang_jensen_96_isize() -> AdjacencyListWeighted<isize> {
     AdjacencyListWeighted::from(vec![
@@ -105,15 +67,6 @@ pub fn bang_jensen_96_isize() -> AdjacencyListWeighted<isize> {
 /// <https://doi.org/10.1007/978-1-84800-998-1>
 ///
 /// ![Bang-Jensen, 99](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bang_jensen_99.svg)
-///
-/// ```text
-/// 0 -> {1 (8), 2 (4)}
-/// 1 -> {2 (-5)}
-/// 2 -> {3 (-2), 4 (4)}
-/// 3 -> {5 (-2)}
-/// 4 -> {3 (10), 5 (9)}
-/// 5 -> {3 (5), 4 (-3)}
-/// ```
 #[must_use]
 pub fn bang_jensen_99() -> AdjacencyListWeighted<isize> {
     AdjacencyListWeighted::from(vec![
@@ -130,12 +83,6 @@ pub fn bang_jensen_99() -> AdjacencyListWeighted<isize> {
 /// Input 1). Kattis. <https://open.kattis.com/problems/bryr>
 ///
 /// ![Kattis, bryr, sample 1](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_bryr_1.svg)
-///
-/// ```text
-/// 0 -> {1 (1), 2 (1)}
-/// 1 -> {0 (1), 2 (1)}
-/// 2 -> {0 (1), 1 (1)}
-/// ```
 #[must_use]
 pub fn kattis_bryr_1_usize() -> AdjacencyListWeighted<usize> {
     AdjacencyListWeighted::from(vec![
@@ -149,12 +96,6 @@ pub fn kattis_bryr_1_usize() -> AdjacencyListWeighted<usize> {
 /// Input 1). Kattis. <https://open.kattis.com/problems/bryr>
 ///
 /// ![Kattis, bryr, sample 1](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_bryr_1.svg)
-///
-/// ```text
-/// 0 -> {1 (1), 2 (1)}
-/// 1 -> {0 (1), 2 (1)}
-/// 2 -> {0 (1), 1 (1)}
-/// ```
 #[must_use]
 pub fn kattis_bryr_1_isize() -> AdjacencyListWeighted<isize> {
     AdjacencyListWeighted::from(vec![
@@ -168,15 +109,6 @@ pub fn kattis_bryr_1_isize() -> AdjacencyListWeighted<isize> {
 /// Input 2). Kattis. <https://open.kattis.com/problems/bryr>
 ///
 /// ![Kattis, bryr, sample 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_bryr_2.svg)
-///
-/// ```text
-/// 0 -> {1 (1), 3 (1)}
-/// 1 -> {0 (1), 2 (1)}
-/// 2 -> {1 (1), 3 (1)}
-/// 3 -> {0 (1), 2 (1), 4 (1)}
-/// 4 -> {3 (1), 5 (1)}
-/// 5 -> {4 (1)}
-/// ```
 #[must_use]
 pub fn kattis_bryr_2_usize() -> AdjacencyListWeighted<usize> {
     AdjacencyListWeighted::from(vec![
@@ -193,15 +125,6 @@ pub fn kattis_bryr_2_usize() -> AdjacencyListWeighted<usize> {
 /// Input 2). Kattis. <https://open.kattis.com/problems/bryr>
 ///
 /// ![Kattis, bryr, sample 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_bryr_2.svg)
-///
-/// ```text
-/// 0 -> {1 (1), 3 (1)}
-/// 1 -> {0 (1), 2 (1)}
-/// 2 -> {1 (1), 3 (1)}
-/// 3 -> {0 (1), 2 (1), 4 (1)}
-/// 4 -> {3 (1), 5 (1)}
-/// 5 -> {4 (1)}
-/// ```
 #[must_use]
 pub fn kattis_bryr_2_isize() -> AdjacencyListWeighted<isize> {
     AdjacencyListWeighted::from(vec![
@@ -218,19 +141,6 @@ pub fn kattis_bryr_2_isize() -> AdjacencyListWeighted<isize> {
 /// Input 3). Kattis. <https://open.kattis.com/problems/bryr>
 ///
 /// ![Kattis, bryr, sample 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_bryr_3.svg)
-///
-/// ```text
-/// 0 -> {3 (0)}
-/// 1 -> {7 (0), 9 (1)}
-/// 2 -> {6 (0)}
-/// 3 -> {0 (0), 4 (0), 5 (0), 7 (0)}
-/// 4 -> {3 (0), 6 (1), 8 (1)}
-/// 5 -> {3 (0), 6 (1), 8 (0)}
-/// 6 -> {2 (0), 4 (1), 5 (1), 9 (1)}
-/// 7 -> {1 (0), 3 (0)}
-/// 8 -> {4 (1), 5 (0)}
-/// 9 -> {1 (1), 2 (0), 6 (1)}
-/// ```
 #[must_use]
 pub fn kattis_bryr_3_usize() -> AdjacencyListWeighted<usize> {
     AdjacencyListWeighted::from(vec![
@@ -251,19 +161,6 @@ pub fn kattis_bryr_3_usize() -> AdjacencyListWeighted<usize> {
 /// Input 3). Kattis. <https://open.kattis.com/problems/bryr>
 ///
 /// ![Kattis, bryr, sample 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_bryr_3.svg)
-///
-/// ```text
-/// 0 -> {3 (0)}
-/// 1 -> {7 (0), 9 (1)}
-/// 2 -> {6 (0)}
-/// 3 -> {0 (0), 4 (0), 5 (0), 7 (0)}
-/// 4 -> {3 (0), 6 (1), 8 (1)}
-/// 5 -> {3 (0), 6 (1), 8 (0)}
-/// 6 -> {2 (0), 4 (1), 5 (1), 9 (1)}
-/// 7 -> {1 (0), 3 (0)}
-/// 8 -> {4 (1), 5 (0)}
-/// 9 -> {1 (1), 2 (0), 6 (1)}
-/// ```
 #[must_use]
 pub fn kattis_bryr_3_isize() -> AdjacencyListWeighted<isize> {
     AdjacencyListWeighted::from(vec![
@@ -284,13 +181,6 @@ pub fn kattis_bryr_3_isize() -> AdjacencyListWeighted<isize> {
 /// <https://open.kattis.com/problems/crosscountry>
 ///
 /// ![Kattis, crosscountry, sample](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_crosscountry.svg)
-///
-/// ```text
-/// 0 -> {1 (1), 2 (3), 3 (14)}
-/// 1 -> {0 (2), 2 (4), 3 (22)}
-/// 2 -> {0 (3), 1 (10), 3 (7)}
-/// 3 -> {0 (13), 1 (8), 2 (2)}
-/// ```
 #[must_use]
 pub fn kattis_crosscountry_usize() -> AdjacencyListWeighted<usize> {
     AdjacencyListWeighted::from(vec![
@@ -305,13 +195,6 @@ pub fn kattis_crosscountry_usize() -> AdjacencyListWeighted<usize> {
 /// <https://open.kattis.com/problems/crosscountry>
 ///
 /// ![Kattis, crosscountry, sample](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_crosscountry.svg)
-///
-/// ```text
-/// 0 -> {1 (1), 2 (3), 3 (14)}
-/// 1 -> {0 (2), 2 (4), 3 (22)}
-/// 2 -> {0 (3), 1 (10), 3 (7)}
-/// 3 -> {0 (13), 1 (8), 2 (2)}
-/// ```
 #[must_use]
 pub fn kattis_crosscountry_isize() -> AdjacencyListWeighted<isize> {
     AdjacencyListWeighted::from(vec![
@@ -326,13 +209,6 @@ pub fn kattis_crosscountry_isize() -> AdjacencyListWeighted<isize> {
 /// Kattis. <https://open.kattis.com/problems/shortestpath1>
 ///
 /// ![Kattis, shortestpath1, sample](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_shortestpath1.svg)
-///
-/// ```text
-/// 0 -> {1 (2)}
-/// 1 -> {2 (2)}
-/// 2 -> {}
-/// 3 -> {0 (2)}
-/// ```
 #[must_use]
 pub fn kattis_shortestpath1_usize() -> AdjacencyListWeighted<usize> {
     AdjacencyListWeighted::from(vec![
@@ -347,13 +223,6 @@ pub fn kattis_shortestpath1_usize() -> AdjacencyListWeighted<usize> {
 /// Kattis. <https://open.kattis.com/problems/shortestpath1>
 ///
 /// ![Kattis, shortestpath1, sample](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_shortestpath1.svg)
-///
-/// ```text
-/// 0 -> {1 (2)}
-/// 1 -> {2 (2)}
-/// 2 -> {}
-/// 3 -> {0 (2)}
-/// ```
 #[must_use]
 pub fn kattis_shortestpath1_isize() -> AdjacencyListWeighted<isize> {
     AdjacencyListWeighted::from(vec![
@@ -368,12 +237,6 @@ pub fn kattis_shortestpath1_isize() -> AdjacencyListWeighted<isize> {
 /// Kattis. <https://open.kattis.com/problems/shortestpath3>
 ///
 /// ![Kattis, shortestpath3, sample](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_shortestpath3.svg)
-///
-/// ```text
-/// 0 -> {1 (999), 3 (2)}
-/// 1 -> {2 (-2)}
-/// 2 -> {1 (1)}
-/// ```
 #[must_use]
 pub fn kattis_shortestpath3() -> AdjacencyListWeighted<isize> {
     AdjacencyListWeighted::from(vec![

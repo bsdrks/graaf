@@ -175,10 +175,6 @@ impl PredecessorTree {
     ///     .search_by(0, |&v, _| v > 1)
     ///     .into_iter()
     ///     .eq(Some(vec![0, 1, 2])));
-    /// ```
-    ///
-    /// ```
-    /// use graaf::PredecessorTree;
     ///
     /// let pred =
     ///     PredecessorTree::from(vec![Some(1), Some(2), Some(3), None, Some(0)]);
