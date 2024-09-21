@@ -1,8 +1,6 @@
 use {
     divan::Bencher,
     graaf::{
-        bellman_ford_moore,
-        floyd_warshall,
         repr::{
             adjacency_list::fixture::bang_jensen_94,
             adjacency_list_weighted::fixture::{
@@ -11,8 +9,10 @@ use {
             },
         },
         AdjacencyMatrix,
+        BellmanFordMoore,
         BfsDist,
         DijkstraDist,
+        FloydWarshall,
     },
 };
 
@@ -25,7 +25,8 @@ fn bellman_ford_moore(bencher: Bencher<'_, '_>) {
     let digraph = bang_jensen_94_isize();
 
     bencher.bench_local(|| {
-        let _ = bellman_ford_moore::single_source_distances(&digraph, 0);
+        let mut bellman_ford_moore = BellmanFordMoore::new(&digraph, 0);
+        let _ = bellman_ford_moore.distances();
     });
 }
 
@@ -64,6 +65,7 @@ fn floyd_warshall(bencher: Bencher<'_, '_>) {
     let digraph = bang_jensen_94_isize();
 
     bencher.bench_local(|| {
-        let _ = floyd_warshall::distances(&digraph);
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let _ = floyd_warshall.distances();
     });
 }

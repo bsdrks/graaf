@@ -1,10 +1,10 @@
 use {
     divan::Bencher,
     graaf::{
-        bellman_ford_moore,
         AdjacencyList,
         AdjacencyListWeighted,
         AdjacencyMatrix,
+        BellmanFordMoore,
         BfsDist,
         DijkstraDist,
         ErdosRenyi,
@@ -58,8 +58,8 @@ fn bellman_ford_moore(bencher: Bencher<'_, '_>) {
     ));
 
     bencher.bench_local(|| {
-        let dist =
-            bellman_ford_moore::single_source_distances(&digraph, 0).unwrap();
+        let mut bellman_ford_moore = BellmanFordMoore::new(&digraph, 0);
+        let dist = bellman_ford_moore.distances().unwrap();
 
         assert_eq!(dist[0], 0);
         assert_eq!(dist[999], 6);
