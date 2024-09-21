@@ -23,7 +23,13 @@
 - Panic in `From<I>` implementations if the order is zero.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 
-## [0.91.3] - 2024-09-20
+## [0.91.4] - 2024-09-21
+
+Changed
+
+- Improve wording in the `BfsDist::distances` documentation.
+
+## [0.91.3] - 2024-09-21
 
 Add
 
