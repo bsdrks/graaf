@@ -22,6 +22,21 @@
 - Panic in `From<I>` implementations if the order is zero.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 
+## [0.92.0] - 2024-09-21
+
+Added
+
+- Add the `BellmanFordMoore` struct.
+- Add the `FloydWarshall` struct.
+- Add the `Johnson75::new` constructor.
+- Add the `Tarjan` struct.
+
+Removed
+
+- Breaking: remove the top-level `bellman_ford_moore` export.
+- Breaking: remove the top-level `floyd_warshall` export.
+- Breaking: remove the top-level `tarjan` export.
+
 ## [0.91.5] - 2024-09-21
 
 Changed

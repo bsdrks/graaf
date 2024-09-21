@@ -100,8 +100,7 @@
 //! Find the shortest distances from a source vertex to all other vertices in
 //! an arc-weighted digraph with negative weights.
 
-//! - [`bellman_ford_moore::single_source_distances`] finds the shortest
-//!   distances.
+//! - [`BellmanFordMoore::distances`] finds the shortest distances.
 //!
 //! ## Breadth-First Search
 //!
@@ -165,7 +164,7 @@
 //! The Floyd-Warshall algorithm finds the distance between each vertex pair in
 //! an arc-weighted digraph.
 //!
-//! - [`floyd_warshall::distances`] finds the shortest distances.
+//! - [`FloydWarshall::distances`] finds the shortest distances.
 //!
 //! ## Johnson's Circuit-Finding Algorithm
 //!
@@ -185,8 +184,7 @@
 //!
 //! Tarjan's algorithm finds strongly connected components in a digraph.
 //!
-//! - [`tarjan::strongly_connected_components`] finds strongly connected
-//!   components.
+//! - [`Tarjan::components`] finds strongly connected components.
 
 // Clippy lint groups
 #![deny(clippy::all, clippy::cargo, clippy::pedantic, clippy::nursery)]
@@ -300,7 +298,7 @@ pub use gen::{
 };
 
 pub use algo::{
-    bellman_ford_moore,
+    bellman_ford_moore::BellmanFordMoore,
     bfs::Bfs,
     bfs_dist::BfsDist,
     bfs_pred::BfsPred,
@@ -311,8 +309,8 @@ pub use algo::{
     dijkstra_dist::DijkstraDist,
     dijkstra_pred::DijkstraPred,
     distance_matrix::DistanceMatrix,
-    floyd_warshall,
+    floyd_warshall::FloydWarshall,
     johnson_75::Johnson75,
     predecessor_tree::PredecessorTree,
-    tarjan,
+    tarjan::Tarjan,
 };

@@ -14,17 +14,17 @@
 //! ### The distance matrix
 //!
 //! The corresponding [`DistanceMatrix`] by
-//! [`floyd_warshall::distances`](crate::floyd_warshall::distances).
+//! [`FloydWarshall::distances`](crate::FloydWarshall::distances).
 //!
 //! ![The distance matrix](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_matrix_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
-//!     floyd_warshall::distances,
 //!     AddArcWeighted,
 //!     AdjacencyListWeighted,
 //!     DistanceMatrix,
 //!     Empty,
+//!     FloydWarshall,
 //! };
 //!
 //! let mut digraph = AdjacencyListWeighted::<isize>::empty(7);
@@ -45,7 +45,8 @@
 //! digraph.add_arc_weighted(6, 1, 8);
 //! digraph.add_arc_weighted(6, 2, 5);
 //!
-//! let dist = distances(&digraph);
+//! let mut floyd_warshall = FloydWarshall::new(&digraph);
+//! let dist = floyd_warshall.distances();
 //!
 //! assert!(dist[0].eq(&[0, 5, 3, 2, 3, 3, 4]));
 //! assert!(dist[1].eq(&[3, 0, 5, 1, 2, 2, 3]));
@@ -82,17 +83,17 @@ use std::{
 /// ### The distance matrix
 ///
 /// The corresponding [`DistanceMatrix`] by
-/// [`floyd_warshall::distances`](crate::floyd_warshall::distances).
+/// [`FloydWarshall::distances`](crate::FloydWarshall::distances).
 ///
 /// ![The distance matrix](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/distance_matrix_matrix_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
-///     floyd_warshall::distances,
 ///     AddArcWeighted,
 ///     AdjacencyListWeighted,
 ///     DistanceMatrix,
 ///     Empty,
+///     FloydWarshall,
 /// };
 ///
 /// let mut digraph = AdjacencyListWeighted::<isize>::empty(7);
@@ -113,7 +114,8 @@ use std::{
 /// digraph.add_arc_weighted(6, 1, 8);
 /// digraph.add_arc_weighted(6, 2, 5);
 ///
-/// let dist = distances(&digraph);
+/// let mut floyd_warshall = FloydWarshall::new(&digraph);
+/// let dist = floyd_warshall.distances();
 ///
 /// assert!(dist[0].eq(&[0, 5, 3, 2, 3, 3, 4]));
 /// assert!(dist[1].eq(&[3, 0, 5, 1, 2, 2, 3]));
@@ -181,11 +183,11 @@ impl<W> DistanceMatrix<W> {
     ///
     /// ```
     /// use graaf::{
-    ///     floyd_warshall::distances,
     ///     AddArcWeighted,
     ///     AdjacencyListWeighted,
     ///     DistanceMatrix,
     ///     Empty,
+    ///     FloydWarshall,
     /// };
     ///
     /// let mut digraph = AdjacencyListWeighted::<isize>::empty(7);
@@ -206,7 +208,8 @@ impl<W> DistanceMatrix<W> {
     /// digraph.add_arc_weighted(6, 1, 8);
     /// digraph.add_arc_weighted(6, 2, 5);
     ///
-    /// let dist = distances(&digraph);
+    /// let mut floyd_warshall = FloydWarshall::new(&digraph);
+    /// let dist = floyd_warshall.distances();
     ///
     /// assert!(dist.center().iter().eq(&[0, 1]));
     /// ```
@@ -249,11 +252,11 @@ impl<W> DistanceMatrix<W> {
     ///
     /// ```
     /// use graaf::{
-    ///     floyd_warshall::distances,
     ///     AddArcWeighted,
     ///     AdjacencyListWeighted,
     ///     DistanceMatrix,
     ///     Empty,
+    ///     FloydWarshall,
     /// };
     ///
     /// let mut digraph = AdjacencyListWeighted::<isize>::empty(7);
@@ -274,7 +277,8 @@ impl<W> DistanceMatrix<W> {
     /// digraph.add_arc_weighted(6, 1, 8);
     /// digraph.add_arc_weighted(6, 2, 5);
     ///
-    /// let dist = distances(&digraph);
+    /// let mut floyd_warshall = FloydWarshall::new(&digraph);
+    /// let dist = floyd_warshall.distances();
     ///
     /// assert_eq!(dist.diameter(), 17);
     /// ```
@@ -300,11 +304,11 @@ impl<W> DistanceMatrix<W> {
     ///
     /// ```
     /// use graaf::{
-    ///     floyd_warshall::distances,
     ///     AddArcWeighted,
     ///     AdjacencyListWeighted,
     ///     DistanceMatrix,
     ///     Empty,
+    ///     FloydWarshall,
     /// };
     ///
     /// let mut digraph = AdjacencyListWeighted::<isize>::empty(7);
@@ -325,7 +329,8 @@ impl<W> DistanceMatrix<W> {
     /// digraph.add_arc_weighted(6, 1, 8);
     /// digraph.add_arc_weighted(6, 2, 5);
     ///
-    /// let dist = distances(&digraph);
+    /// let mut floyd_warshall = FloydWarshall::new(&digraph);
+    /// let dist = floyd_warshall.distances();
     ///
     /// assert!(dist.eccentricities().iter().eq(&[5, 5, 14, 11, 17, 11, 10]));
     /// ```
@@ -354,11 +359,11 @@ impl<W> DistanceMatrix<W> {
     ///
     /// ```
     /// use graaf::{
-    ///     floyd_warshall::distances,
     ///     AddArcWeighted,
     ///     AdjacencyListWeighted,
     ///     DistanceMatrix,
     ///     Empty,
+    ///     FloydWarshall,
     /// };
     ///
     /// let mut digraph = AdjacencyListWeighted::<isize>::empty(7);
@@ -379,7 +384,8 @@ impl<W> DistanceMatrix<W> {
     /// digraph.add_arc_weighted(6, 1, 8);
     /// digraph.add_arc_weighted(6, 2, 5);
     ///
-    /// let dist = distances(&digraph);
+    /// let mut floyd_warshall = FloydWarshall::new(&digraph);
+    /// let dist = floyd_warshall.distances();
     ///
     /// assert!(dist.is_connected());
     /// ```
@@ -400,11 +406,11 @@ impl<W> DistanceMatrix<W> {
     ///
     /// ```
     /// use graaf::{
-    ///     floyd_warshall::distances,
     ///     AddArcWeighted,
     ///     AdjacencyListWeighted,
     ///     DistanceMatrix,
     ///     Empty,
+    ///     FloydWarshall,
     /// };
     ///
     /// let mut digraph = AdjacencyListWeighted::<isize>::empty(7);
@@ -425,7 +431,8 @@ impl<W> DistanceMatrix<W> {
     /// digraph.add_arc_weighted(6, 1, 8);
     /// digraph.add_arc_weighted(6, 2, 5);
     ///
-    /// let dist = distances(&digraph);
+    /// let mut floyd_warshall = FloydWarshall::new(&digraph);
+    /// let dist = floyd_warshall.distances();
     ///
     /// assert!(dist.periphery().iter().eq(&[4]));
     /// ```
@@ -463,7 +470,6 @@ mod tests {
     use {
         super::*,
         crate::{
-            floyd_warshall::distances,
             repr::adjacency_list_weighted::fixture::{
                 kattis_bryr_1_isize,
                 kattis_bryr_2_isize,
@@ -472,94 +478,126 @@ mod tests {
             },
             AdjacencyListWeighted,
             Empty,
+            FloydWarshall,
             RemoveArc,
         },
     };
 
     #[test]
     fn center_kattis_bryr_1() {
-        assert!(distances(&kattis_bryr_1_isize())
-            .center()
-            .iter()
-            .eq(&[0, 1, 2]));
+        let digraph = kattis_bryr_1_isize();
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
+
+        assert!(dist.center().iter().eq(&[0, 1, 2]));
     }
 
     #[test]
     fn center_kattis_bryr_2() {
-        assert!(distances(&kattis_bryr_2_isize()).center().iter().eq(&[3]));
+        let digraph = kattis_bryr_2_isize();
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
+
+        assert!(dist.center().iter().eq(&[3]));
     }
 
     #[test]
     fn center_kattis_bryr_3() {
-        assert!(distances(&kattis_bryr_3_isize())
-            .center()
-            .iter()
-            .eq(&[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
+        let digraph = kattis_bryr_3_isize();
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
+
+        assert!(dist.center().iter().eq(&[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
     }
 
     #[test]
     fn center_kattis_crosscountry() {
-        assert!(distances(&kattis_crosscountry_isize())
-            .center()
-            .iter()
-            .eq(&[3]));
+        let digraph = kattis_crosscountry_isize();
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
+
+        assert!(dist.center().iter().eq(&[3]));
     }
 
     #[test]
     fn center_trivial() {
-        assert!(distances(&AdjacencyListWeighted::<isize>::trivial())
-            .center()
-            .iter()
-            .eq(&[0]));
+        let digraph = AdjacencyListWeighted::<isize>::trivial();
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
+
+        assert!(dist.center().iter().eq(&[0]));
     }
 
     #[test]
     fn diameter_kattis_bryr_1() {
-        assert_eq!(distances(&kattis_bryr_1_isize()).diameter(), 1);
+        let digraph = kattis_bryr_1_isize();
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
+
+        assert_eq!(dist.diameter(), 1);
     }
 
     #[test]
     fn diameter_kattis_bryr_2() {
-        assert_eq!(distances(&kattis_bryr_2_isize()).diameter(), 4);
+        let digraph = kattis_bryr_2_isize();
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
+
+        assert_eq!(dist.diameter(), 4);
     }
 
     #[test]
     fn diameter_kattis_bryr_3() {
-        assert_eq!(distances(&kattis_bryr_3_isize()).diameter(), 1);
+        let digraph = kattis_bryr_3_isize();
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
+
+        assert_eq!(dist.diameter(), 1);
     }
 
     #[test]
     fn diameter_kattis_crosscountry() {
-        assert_eq!(distances(&kattis_crosscountry_isize()).diameter(), 11);
+        let digraph = kattis_crosscountry_isize();
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
+
+        assert_eq!(dist.diameter(), 11);
     }
 
     #[test]
     fn diameter_trivial() {
-        assert_eq!(
-            distances(&AdjacencyListWeighted::<isize>::trivial()).diameter(),
-            0
-        );
+        let digraph = AdjacencyListWeighted::<isize>::trivial();
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
+
+        assert_eq!(dist.diameter(), 0);
     }
 
     #[test]
     fn eccentricities_kattis_bryr_1() {
-        assert!(distances(&kattis_bryr_1_isize())
-            .eccentricities()
-            .iter()
-            .eq(&[1, 1, 1]));
+        let digraph = kattis_bryr_1_isize();
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
+
+        assert!(dist.eccentricities().iter().eq(&[1, 1, 1]));
     }
 
     #[test]
     fn eccentricities_kattis_bryr_2() {
-        assert!(distances(&kattis_bryr_2_isize())
-            .eccentricities()
-            .iter()
-            .eq(&[3, 4, 3, 2, 3, 4]));
+        let digraph = kattis_bryr_2_isize();
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
+
+        assert!(dist.eccentricities().iter().eq(&[3, 4, 3, 2, 3, 4]));
     }
 
     #[test]
     fn eccentricities_kattis_bryr_3() {
-        assert!(distances(&kattis_bryr_3_isize())
+        let digraph = kattis_bryr_3_isize();
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
+
+        assert!(dist
             .eccentricities()
             .iter()
             .eq(&[1, 1, 1, 1, 1, 1, 1, 1, 1, 1]));
@@ -567,18 +605,20 @@ mod tests {
 
     #[test]
     fn eccentricities_kattis_crosscountry() {
-        assert!(distances(&kattis_crosscountry_isize())
-            .eccentricities()
-            .iter()
-            .eq(&[10, 11, 7, 6]));
+        let digraph = kattis_crosscountry_isize();
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
+
+        assert!(dist.eccentricities().iter().eq(&[10, 11, 7, 6]));
     }
 
     #[test]
     fn eccentricities_trivial() {
-        assert!(distances(&AdjacencyListWeighted::<isize>::trivial())
-            .eccentricities()
-            .iter()
-            .eq(&[0]));
+        let digraph = AdjacencyListWeighted::<isize>::trivial();
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
+
+        assert!(dist.eccentricities().iter().eq(&[0]));
     }
 
     #[test]
@@ -633,47 +673,74 @@ mod tests {
     #[test]
     fn is_connected_kattis_bryr_1() {
         let mut digraph = kattis_bryr_1_isize();
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
 
-        assert!(distances(&digraph).is_connected());
+        assert!(dist.is_connected());
         assert!(digraph.remove_arc(1, 0));
         assert!(digraph.remove_arc(2, 0));
-        assert!(!distances(&digraph).is_connected());
+
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
+
+        assert!(!dist.is_connected());
     }
 
     #[test]
     fn is_connected_kattis_bryr_2() {
         let mut digraph = kattis_bryr_2_isize();
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
 
-        assert!(distances(&digraph).is_connected());
+        assert!(dist.is_connected());
         assert!(digraph.remove_arc(3, 4));
-        assert!(!distances(&digraph).is_connected());
+
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
+
+        assert!(!dist.is_connected());
     }
 
     #[test]
     fn is_connected_kattis_bryr_3() {
         let mut digraph = kattis_bryr_3_isize();
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
 
-        assert!(distances(&digraph).is_connected());
+        assert!(dist.is_connected());
         assert!(digraph.remove_arc(0, 3));
         assert!(digraph.remove_arc(3, 0));
-        assert!(!distances(&digraph).is_connected());
+
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
+
+        assert!(!dist.is_connected());
     }
 
     #[test]
     fn is_connected_kattis_crosscountry() {
         let mut digraph = kattis_crosscountry_isize();
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
 
-        assert!(distances(&digraph).is_connected());
+        assert!(dist.is_connected());
         assert!(digraph.remove_arc(0, 1));
         assert!(digraph.remove_arc(2, 1));
         assert!(digraph.remove_arc(3, 1));
-        assert!(!distances(&digraph).is_connected());
+
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
+
+        assert!(!dist.is_connected());
     }
 
     #[test]
     fn is_connected_trivial() {
-        assert!(distances(&AdjacencyListWeighted::<isize>::trivial())
-            .is_connected());
+        let digraph = AdjacencyListWeighted::<isize>::trivial();
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
+
+        assert!(dist.is_connected());
     }
 
     #[test]
@@ -695,41 +762,46 @@ mod tests {
 
     #[test]
     fn periphery_kattis_bryr_1() {
-        assert!(distances(&kattis_bryr_1_isize())
-            .periphery()
-            .iter()
-            .eq(&[0, 1, 2]));
+        let digraph = kattis_bryr_1_isize();
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
+
+        assert!(dist.periphery().iter().eq(&[0, 1, 2]));
     }
 
     #[test]
     fn periphery_kattis_bryr_2() {
-        assert!(distances(&kattis_bryr_2_isize())
-            .periphery()
-            .iter()
-            .eq(&[1, 5]));
+        let digraph = kattis_bryr_2_isize();
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
+
+        assert!(dist.periphery().iter().eq(&[1, 5]));
     }
 
     #[test]
     fn periphery_kattis_bryr_3() {
-        assert!(distances(&kattis_bryr_3_isize())
-            .periphery()
-            .iter()
-            .eq(&[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
+        let digraph = kattis_bryr_3_isize();
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
+
+        assert!(dist.periphery().iter().eq(&[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
     }
 
     #[test]
     fn periphery_kattis_crosscountry() {
-        assert!(distances(&kattis_crosscountry_isize())
-            .periphery()
-            .iter()
-            .eq(&[1]));
+        let digraph = kattis_crosscountry_isize();
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
+
+        assert!(dist.periphery().iter().eq(&[1]));
     }
 
     #[test]
     fn periphery_trivial() {
-        assert!(distances(&AdjacencyListWeighted::<isize>::trivial())
-            .periphery()
-            .iter()
-            .eq(&[0]));
+        let digraph = AdjacencyListWeighted::<isize>::trivial();
+        let mut floyd_warshall = FloydWarshall::new(&digraph);
+        let dist = floyd_warshall.distances();
+
+        assert!(dist.periphery().iter().eq(&[0]));
     }
 }

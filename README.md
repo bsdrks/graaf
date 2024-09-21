@@ -29,7 +29,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.91.5"
+graaf = "0.92.0"
 ```
 
 ## Representations
@@ -112,7 +112,7 @@ graaf = "0.91.5"
 
 The Bellman-Ford-Moore algorithm finds the shortest distances from a source vertex to all other vertices in an arc-weighted digraph with negative weights.
 
-- [`bellman_ford_moore::single_source_distances`] finds the shortest distances.
+- [`BellmanFordMoore::distances`] finds the shortest distances.
 
 ### Breadth-First Search
 
@@ -160,7 +160,7 @@ A [`DistanceMatrix`] contains the shortest distances between all vertex pairs in
 
 The Floyd-Warshall algorithm finds the distance between each vertex pair in an arc-weighted digraph.
 
-- [`floyd_warshall::distances`] finds the shortest distances.
+- [`FloydWarshall::distances`] finds the shortest distances.
 
 ### Johnson's Circuit-Finding Algorithm
 
@@ -179,18 +179,18 @@ A [`PredecessorTree`] contains the vertex predecessors.
 
 Tarjan's algorithm finds strongly connected components in a digraph.
 
-- [`tarjan::strongly_connected_components`] finds strongly connected components.
+- [`Tarjan::components`] finds strongly connected components.
 
+[`AddArcWeighted`]: https://docs.rs/graaf/latest/graaf/op/add_arc_weighted/trait.AddArcWeighted.html
+[`AddArc`]: https://docs.rs/graaf/latest/graaf/op/add_arc/trait.AddArc.html
+[`AdjacencyListWeighted`]: https://docs.rs/graaf/latest/graaf/repr/adjacency_list_weighted/struct.AdjacencyListWeighted.html
 [`AdjacencyList`]: https://docs.rs/graaf/latest/graaf/repr/adjacency_list/struct.AdjacencyList.html
 [`AdjacencyMap`]: https://docs.rs/graaf/latest/graaf/repr/adjacency_map/struct.AdjacencyMap.html
 [`AdjacencyMatrix`]: https://docs.rs/graaf/latest/graaf/repr/adjacency_matrix/struct.AdjacencyMatrix.html
-[`AdjacencyListWeighted`]: https://docs.rs/graaf/latest/graaf/repr/adjacency_list_weighted/struct.AdjacencyListWeighted.html
-[`EdgeList`]: https://docs.rs/graaf/latest/graaf/repr/edge_list/struct.EdgeList.html
-[`AddArcWeighted`]: https://docs.rs/graaf/latest/graaf/op/add_arc_weighted/trait.AddArcWeighted.html
-[`AddArc`]: https://docs.rs/graaf/latest/graaf/op/add_arc/trait.AddArc.html
 [`ArcWeight`]: https://docs.rs/graaf/latest/graaf/op/arc_weight/trait.ArcWeight.html
 [`ArcsWeighted`]: https://docs.rs/graaf/latest/graaf/op/arcs_weighted/trait.ArcsWeighted.html
 [`Arcs`]: https://docs.rs/graaf/latest/graaf/op/arcs/trait.Arcs.html
+[`BellmanFordMoore::distances`]: https://docs.rs/graaf/latest/graaf/algo/bellman_ford_moore/struct.BellmanFordMoore#method.distances
 [`BfsDist::distances`]: https://docs.rs/graaf/latest/graaf/algo/bfs_dist/struct.BfsDist.html#method.distances
 [`BfsDist`]: https://docs.rs/graaf/latest/graaf/algo/bfs_dist/struct.BfsDist.html
 [`BfsPred::cycles`]: https://docs.rs/graaf/latest/graaf/algo/bfs_pred/struct.BfsPred.html#method.cycles
@@ -222,9 +222,11 @@ Tarjan's algorithm finds strongly connected components in a digraph.
 [`DistanceMatrix::is_connected`]: https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.is_connected
 [`DistanceMatrix::periphery`]: https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html#method.periphery
 [`DistanceMatrix`]: https://docs.rs/graaf/latest/graaf/algo/distance_matrix/struct.DistanceMatrix.html
+[`EdgeList`]: https://docs.rs/graaf/latest/graaf/repr/edge_list/struct.EdgeList.html
 [`Empty`]: https://docs.rs/graaf/latest/graaf/gen/empty/trait.Empty.html
 [`ErdosRenyi`]: https://docs.rs/graaf/latest/graaf/gen/erdos_renyi/trait.ErdosRenyi.html
 [`FilterVertices`]: https://docs.rs/graag/latest/graaf/op/filter_vertices/trait.FilterVertices.html
+[`FloydWarshall::distances`]: https://docs.rs/graaf/latest/graaf/algo/floyd_warshall/struct.FloydWarshall.html#method.distances
 [`GrowingNetwork`]: https://docs.rs/graaf/latest/graaf/gen/growing_network/trait.GrowingNetwork.html
 [`HasArc`]: https://docs.rs/graaf/latest/graaf/op/has_arc/trait.HasArc.html
 [`HasEdge`]: https://docs.rs/graaf/latest/graaf/op/has_edge/trait.HasEdge.html
@@ -262,12 +264,10 @@ Tarjan's algorithm finds strongly connected components in a digraph.
 [`Size`]: https://docs.rs/graaf/latest/graaf/op/size/trait.Size.html
 [`Sources`]: https://docs.rs/graaf/latest/graaf/op/sources/trait.Sources.html
 [`Star`]: https://docs.rs/graaf/latest/graaf/gen/star/trait.Star.html
-[`Vertices`]: https://docs.rs/graaf/latest/graaf/op/vertices/trait.Vertices.html
+[`Tarjan::components`]: https://docs.rs/graaf/latest/graaf/algo/tarjan/struct.Tarjan.html#method.components
 [`Union`]: https://docs.rs/graaf/latest/graaf/op/union/trait.Union.html
+[`Vertices`]: https://docs.rs/graaf/latest/graaf/op/vertices/trait.Vertices.html
 [`Wheel`]: https://docs.rs/graaf/latest/graaf/gen/wheel/trait.Wheel.html
-[`bellman_ford_moore::single_source_distances`]: https://docs.rs/graaf/latest/graaf/algo/bellman_ford_moore/fn.single_source_distances.html
-[`floyd_warshall::distances`]: https://docs.rs/graaf/latest/graaf/algo/floyd_warshall/fn.distances.html
-[`tarjan::strongly_connected_components`]: https://docs.rs/graaf/latest/graaf/algo/tarjan/fn.strongly_connected_components.html
 
 ## Changelog
 

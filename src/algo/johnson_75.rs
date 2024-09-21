@@ -10,8 +10,9 @@
 //! };
 //!
 //! let digraph = AdjacencyMap::cycle(5);
+//! let mut johnson = Johnson75::new(&digraph);
 //!
-//! assert!(Johnson75::circuits(&digraph).eq(&[
+//! assert!(johnson.circuits().eq(&[
 //!     vec![0, 1],
 //!     vec![0, 1, 2, 3, 4],
 //!     vec![0, 4],
@@ -24,17 +25,17 @@
 
 use {
     crate::{
-        tarjan::strongly_connected_components,
         FilterVertices,
         Order,
         OutNeighbors,
+        Tarjan,
         Vertices,
     },
     std::collections::BTreeSet,
 };
 
 /// Johnson's circuit-finding algorithm.
-#[derive(Debug)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Johnson75<'a, D> {
     a: &'a D,
     b: Vec<BTreeSet<usize>>,
@@ -42,10 +43,24 @@ pub struct Johnson75<'a, D> {
     stack: Vec<usize>,
 }
 
-impl<'a, D> Johnson75<'a, D>
-where
-    D: FilterVertices + Order + OutNeighbors + Vertices,
-{
+impl<'a, D> Johnson75<'a, D> {
+    /// Construct a new instance of Johnson's circuit-finding algorithm.
+    ///
+    /// # Arguments
+    ///
+    /// * `a`: The digraph.
+    pub fn new(a: &'a D) -> Self
+    where
+        D: Order,
+    {
+        Self {
+            a,
+            b: vec![BTreeSet::new(); a.order()],
+            blocked: BTreeSet::new(),
+            stack: Vec::new(),
+        }
+    }
+
     fn is_blocked(&self, u: usize) -> bool {
         self.blocked.contains(&u)
     }
@@ -66,7 +81,10 @@ where
         s: usize,
         scc: &D,
         result: &mut Vec<Vec<usize>>,
-    ) -> bool {
+    ) -> bool
+    where
+        D: OutNeighbors,
+    {
         self.stack.push(v);
 
         let mut f = false;
@@ -99,7 +117,7 @@ where
     ///
     /// # Panics
     ///
-    /// Panics if there is a bug in `strongly_connected_components`.
+    /// Panics if there is a bug in [`Tarjan::components`].
     ///
     /// # Examples
     ///
@@ -112,7 +130,7 @@ where
     ///
     /// let digraph = AdjacencyMap::cycle(5);
     ///
-    /// assert!(Johnson75::circuits(&digraph).eq(&[
+    /// assert!(Johnson75::new(&digraph).circuits().eq(&[
     ///     vec![0, 1],
     ///     vec![0, 1, 2, 3, 4],
     ///     vec![0, 4],
@@ -122,35 +140,34 @@ where
     ///     vec![3, 4]
     /// ]));
     /// ```
-    pub fn circuits(a: &'a D) -> Vec<Vec<usize>> {
-        let state: &mut Johnson75<'a, D> = &mut Self {
-            a,
-            b: vec![BTreeSet::new(); a.order()],
-            blocked: BTreeSet::new(),
-            stack: Vec::new(),
-        };
-
+    pub fn circuits(&mut self) -> Vec<Vec<usize>>
+    where
+        D: FilterVertices + Order + OutNeighbors + Vertices,
+    {
         let mut result = Vec::new();
 
-        for s in state.a.vertices() {
-            let subgraph = state.a.filter_vertices(|u| u >= s);
-            let sccs = strongly_connected_components(&subgraph);
+        for s in self.a.vertices() {
+            let subgraph = self.a.filter_vertices(|u| u >= s);
+            let mut tarjan = Tarjan::new(&subgraph);
+            let components = tarjan.components();
 
             if let Some(min_scc) =
-                sccs.iter().min_by_key(|scc| scc.iter().min())
+                components.iter().min_by_key(|scc| scc.iter().min())
             {
-                let scc = state.a.filter_vertices(|u| min_scc.contains(&u));
+                let component =
+                    self.a.filter_vertices(|u| min_scc.contains(&u));
 
-                if scc.order() > 0 {
+                if component.order() > 0 {
                     let &start = min_scc.iter().min().unwrap();
 
-                    for vertex in scc.vertices() {
-                        let _ = state.blocked.remove(&vertex);
+                    for vertex in component.vertices() {
+                        let _ = self.blocked.remove(&vertex);
 
-                        state.b[vertex].clear();
+                        self.b[vertex].clear();
                     }
 
-                    let _ = state.circuit(start, start, &scc, &mut result);
+                    let _ =
+                        self.circuit(start, start, &component, &mut result);
                 }
             }
         }
@@ -175,7 +192,7 @@ mod tests {
     fn biclique_2_2() {
         let digraph = AdjacencyMap::biclique(2, 2);
 
-        assert!(Johnson75::circuits(&digraph).eq(&[
+        assert!(Johnson75::new(&digraph).circuits().eq(&[
             vec![0, 2],
             vec![0, 2, 1, 3],
             vec![0, 3],
@@ -189,7 +206,7 @@ mod tests {
     fn biclique_2_3() {
         let digraph = AdjacencyMap::biclique(2, 3);
 
-        assert!(Johnson75::circuits(&digraph).eq(&[
+        assert!(Johnson75::new(&digraph).circuits().eq(&[
             vec![0, 2],
             vec![0, 2, 1, 3],
             vec![0, 2, 1, 4],
@@ -209,28 +226,30 @@ mod tests {
     fn circuit_3() {
         let digraph = AdjacencyMap::circuit(3);
 
-        assert!(Johnson75::circuits(&digraph).eq(&[vec![0, 1, 2]]));
+        assert!(Johnson75::new(&digraph).circuits().eq(&[vec![0, 1, 2]]));
     }
 
     #[test]
     fn circuit_4() {
         let digraph = AdjacencyMap::circuit(4);
 
-        assert!(Johnson75::circuits(&digraph).eq(&[vec![0, 1, 2, 3]]));
+        assert!(Johnson75::new(&digraph).circuits().eq(&[vec![0, 1, 2, 3]]));
     }
 
     #[test]
     fn circuit_5() {
         let digraph = AdjacencyMap::circuit(5);
 
-        assert!(Johnson75::circuits(&digraph).eq(&[vec![0, 1, 2, 3, 4]]));
+        assert!(Johnson75::new(&digraph)
+            .circuits()
+            .eq(&[vec![0, 1, 2, 3, 4]]));
     }
 
     #[test]
     fn cycle_3() {
         let digraph = AdjacencyMap::cycle(3);
 
-        assert!(Johnson75::circuits(&digraph).eq(&[
+        assert!(Johnson75::new(&digraph).circuits().eq(&[
             vec![0, 1],
             vec![0, 1, 2],
             vec![0, 2],
@@ -243,7 +262,7 @@ mod tests {
     fn cycle_4() {
         let digraph = AdjacencyMap::cycle(4);
 
-        assert!(Johnson75::circuits(&digraph).eq(&[
+        assert!(Johnson75::new(&digraph).circuits().eq(&[
             vec![0, 1],
             vec![0, 1, 2, 3],
             vec![0, 3],
@@ -257,7 +276,7 @@ mod tests {
     fn cycle_5() {
         let digraph = AdjacencyMap::cycle(5);
 
-        assert!(Johnson75::circuits(&digraph).eq(&[
+        assert!(Johnson75::new(&digraph).circuits().eq(&[
             vec![0, 1],
             vec![0, 1, 2, 3, 4],
             vec![0, 4],

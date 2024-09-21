@@ -11,10 +11,10 @@
 //! ```
 //! use {
 //!     graaf::{
-//!         tarjan::strongly_connected_components,
 //!         AddArc,
 //!         AdjacencyList,
 //!         Empty,
+//!         Tarjan,
 //!     },
 //!     std::collections::BTreeSet,
 //! };
@@ -36,8 +36,10 @@
 //! digraph.add_arc(7, 6);
 //!
 //! assert_eq!(
-//!     strongly_connected_components(&digraph)
-//!         .into_iter()
+//!     Tarjan::new(&digraph)
+//!         .components()
+//!         .iter()
+//!         .cloned()
 //!         .collect::<BTreeSet<BTreeSet<usize>>>(),
 //!     BTreeSet::from([
 //!         BTreeSet::from([4, 1, 0]),
@@ -62,10 +64,6 @@ use {
 ///
 /// Tarjan's algorithm finds a digraph's strongly connected components.
 ///
-/// # Arguments
-///
-/// * `digraph`: The digraph.
-///
 /// # Examples
 ///
 /// There are three strongly connected components in this digraph:
@@ -75,10 +73,10 @@ use {
 /// ```
 /// use {
 ///     graaf::{
-///         tarjan::strongly_connected_components,
 ///         AddArc,
 ///         AdjacencyList,
 ///         Empty,
+///         Tarjan,
 ///     },
 ///     std::collections::BTreeSet,
 /// };
@@ -100,8 +98,10 @@ use {
 /// digraph.add_arc(7, 6);
 ///
 /// assert_eq!(
-///     strongly_connected_components(&digraph)
-///         .into_iter()
+///     Tarjan::new(&digraph)
+///         .components()
+///         .iter()
+///         .cloned()
 ///         .collect::<BTreeSet<BTreeSet<usize>>>(),
 ///     BTreeSet::from([
 ///         BTreeSet::from([4, 1, 0]),
@@ -110,83 +110,139 @@ use {
 ///     ])
 /// );
 /// ```
-#[doc(alias = "scc")]
-#[must_use]
-pub fn strongly_connected_components<D>(digraph: &D) -> Vec<BTreeSet<usize>>
-where
-    D: OutNeighbors + Vertices,
-{
-    let mut i = 0;
-    let mut stack = Vec::new();
-    let mut on_stack = BTreeSet::new();
-    let mut index = BTreeMap::new();
-    let mut low_link = BTreeMap::new();
-    let mut components = Vec::new();
-
-    for u in digraph.vertices() {
-        if !index.contains_key(&u) {
-            connect(
-                digraph,
-                u,
-                &mut i,
-                &mut stack,
-                &mut on_stack,
-                &mut index,
-                &mut low_link,
-                &mut components,
-            );
-        }
-    }
-
-    components
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct Tarjan<'a, D> {
+    digraph: &'a D,
+    i: usize,
+    stack: Vec<usize>,
+    on_stack: BTreeSet<usize>,
+    index: BTreeMap<usize, usize>,
+    low_link: BTreeMap<usize, usize>,
+    components: Vec<BTreeSet<usize>>,
 }
 
-#[allow(clippy::too_many_arguments)]
-fn connect<D>(
-    digraph: &D,
-    u: usize,
-    i: &mut usize,
-    stack: &mut Vec<usize>,
-    on_stack: &mut BTreeSet<usize>,
-    index: &mut BTreeMap<usize, usize>,
-    low_link: &mut BTreeMap<usize, usize>,
-    scc: &mut Vec<BTreeSet<usize>>,
-) where
-    D: OutNeighbors,
-{
-    let _ = index.insert(u, *i);
-    let _ = low_link.insert(u, *i);
-    let _ = on_stack.insert(u);
-
-    stack.push(u);
-
-    *i += 1;
-
-    for v in digraph.out_neighbors(u) {
-        if let Some(&w) = index.get(&v) {
-            if on_stack.contains(&v) {
-                let _ = low_link.insert(u, low_link[&u].min(w));
-            }
-        } else {
-            connect(digraph, v, i, stack, on_stack, index, low_link, scc);
-
-            let _ = low_link.insert(u, low_link[&u].min(low_link[&v]));
+impl<'a, D> Tarjan<'a, D> {
+    /// Construct a new instance of Tarjan's algorithm.
+    ///
+    /// # Arguments
+    ///
+    /// * `digraph`: The digraph.
+    pub const fn new(digraph: &'a D) -> Self
+    where
+        D: OutNeighbors + Vertices,
+    {
+        Self {
+            digraph,
+            i: 0,
+            stack: Vec::new(),
+            on_stack: BTreeSet::new(),
+            index: BTreeMap::new(),
+            low_link: BTreeMap::new(),
+            components: Vec::new(),
         }
     }
 
-    if index.get(&u) == low_link.get(&u) {
-        let mut component = BTreeSet::new();
-
-        while let Some(v) = stack.pop() {
-            let _ = on_stack.remove(&v);
-            let _ = component.insert(v);
-
-            if u == v {
-                break;
+    /// Find a digraph's strongly connected components.
+    ///
+    /// # Examples
+    ///
+    /// There are three strongly connected components in this digraph:
+    ///
+    /// ![Tarjan](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/tarjan_1-0.87.4.svg?)
+    ///
+    /// ```
+    /// use {
+    ///     graaf::{
+    ///         AddArc,
+    ///         AdjacencyList,
+    ///         Empty,
+    ///         Tarjan,
+    ///     },
+    ///     std::collections::BTreeSet,
+    /// };
+    ///
+    /// let mut digraph = AdjacencyList::empty(8);
+    ///
+    /// digraph.add_arc(0, 1);
+    /// digraph.add_arc(1, 2);
+    /// digraph.add_arc(1, 4);
+    /// digraph.add_arc(2, 3);
+    /// digraph.add_arc(2, 6);
+    /// digraph.add_arc(3, 2);
+    /// digraph.add_arc(3, 7);
+    /// digraph.add_arc(4, 0);
+    /// digraph.add_arc(4, 5);
+    /// digraph.add_arc(5, 6);
+    /// digraph.add_arc(6, 5);
+    /// digraph.add_arc(7, 3);
+    /// digraph.add_arc(7, 6);
+    ///
+    /// assert_eq!(
+    ///     Tarjan::new(&digraph)
+    ///         .components()
+    ///         .iter()
+    ///         .cloned()
+    ///         .collect::<BTreeSet<BTreeSet<usize>>>(),
+    ///     BTreeSet::from([
+    ///         BTreeSet::from([4, 1, 0]),
+    ///         BTreeSet::from([5, 6]),
+    ///         BTreeSet::from([7, 3, 2])
+    ///     ])
+    /// );
+    /// ```
+    pub fn components(&mut self) -> &Vec<BTreeSet<usize>>
+    where
+        D: OutNeighbors + Vertices,
+    {
+        for u in self.digraph.vertices() {
+            if !self.index.contains_key(&u) {
+                self.connect(u);
             }
         }
 
-        scc.push(component);
+        &self.components
+    }
+
+    fn connect(&mut self, u: usize)
+    where
+        D: OutNeighbors,
+    {
+        let _ = self.index.insert(u, self.i);
+        let _ = self.low_link.insert(u, self.i);
+        let _ = self.on_stack.insert(u);
+
+        self.stack.push(u);
+
+        self.i += 1;
+
+        for v in self.digraph.out_neighbors(u) {
+            if let Some(&w) = self.index.get(&v) {
+                if self.on_stack.contains(&v) {
+                    let _ = self.low_link.insert(u, self.low_link[&u].min(w));
+                }
+            } else {
+                self.connect(v);
+
+                let _ = self
+                    .low_link
+                    .insert(u, self.low_link[&u].min(self.low_link[&v]));
+            }
+        }
+
+        if self.index.get(&u) == self.low_link.get(&u) {
+            let mut component = BTreeSet::new();
+
+            while let Some(v) = self.stack.pop() {
+                let _ = self.on_stack.remove(&v);
+                let _ = component.insert(v);
+
+                if u == v {
+                    break;
+                }
+            }
+
+            self.components.push(component);
+        }
     }
 }
 
@@ -212,10 +268,12 @@ mod tests {
     };
 
     #[test]
-    fn strongly_connected_components_bang_jensen_196() {
+    fn components_bang_jensen_196() {
         assert_eq!(
-            strongly_connected_components(&bang_jensen_196())
-                .into_iter()
+            Tarjan::new(&bang_jensen_196())
+                .components()
+                .iter()
+                .cloned()
                 .collect::<BTreeSet<BTreeSet<_>>>(),
             BTreeSet::from([
                 BTreeSet::from([0, 1]),
@@ -226,51 +284,46 @@ mod tests {
     }
 
     #[test]
-    fn strongly_connected_components_bang_jensen_34() {
-        assert!(strongly_connected_components(&bang_jensen_34()).iter().eq(
-            &[
-                BTreeSet::from([4]),
-                BTreeSet::from([0]),
-                BTreeSet::from([1]),
-                BTreeSet::from([3]),
-                BTreeSet::from([5]),
-                BTreeSet::from([2]),
-            ]
-        ));
+    fn components_bang_jensen_34() {
+        assert!(Tarjan::new(&bang_jensen_34()).components().iter().eq(&[
+            BTreeSet::from([4]),
+            BTreeSet::from([0]),
+            BTreeSet::from([1]),
+            BTreeSet::from([3]),
+            BTreeSet::from([5]),
+            BTreeSet::from([2]),
+        ]));
     }
 
     #[test]
-    fn strongly_connected_components_bang_jensen_94() {
-        assert!(strongly_connected_components(&bang_jensen_94()).iter().eq(
-            &[
-                BTreeSet::from([5]),
-                BTreeSet::from([3]),
-                BTreeSet::from([1]),
-                BTreeSet::from([6]),
-                BTreeSet::from([4]),
-                BTreeSet::from([2]),
-                BTreeSet::from([0]),
-            ]
-        ));
+    fn components_bang_jensen_94() {
+        assert!(Tarjan::new(&bang_jensen_94()).components().iter().eq(&[
+            BTreeSet::from([5]),
+            BTreeSet::from([3]),
+            BTreeSet::from([1]),
+            BTreeSet::from([6]),
+            BTreeSet::from([4]),
+            BTreeSet::from([2]),
+            BTreeSet::from([0]),
+        ]));
     }
 
     #[test]
-    fn strongly_connected_components_kattis_builddeps() {
-        assert!(strongly_connected_components(&kattis_builddeps())
-            .iter()
-            .eq(&[
-                BTreeSet::from([1]),
-                BTreeSet::from([3]),
-                BTreeSet::from([4]),
-                BTreeSet::from([0]),
-                BTreeSet::from([5]),
-                BTreeSet::from([2]),
-            ]));
+    fn components_kattis_builddeps() {
+        assert!(Tarjan::new(&kattis_builddeps()).components().iter().eq(&[
+            BTreeSet::from([1]),
+            BTreeSet::from([3]),
+            BTreeSet::from([4]),
+            BTreeSet::from([0]),
+            BTreeSet::from([5]),
+            BTreeSet::from([2]),
+        ]));
     }
 
     #[test]
-    fn strongly_connected_components_kattis_cantinaofbabel_1() {
-        assert!(strongly_connected_components(&kattis_cantinaofbabel_1())
+    fn components_kattis_cantinaofbabel_1() {
+        assert!(Tarjan::new(&kattis_cantinaofbabel_1())
+            .components()
             .iter()
             .eq(&[
                 BTreeSet::from([5, 6, 10]),
@@ -280,8 +333,9 @@ mod tests {
     }
 
     #[test]
-    fn strongly_connected_components_kattis_cantinaofbabel_2() {
-        assert!(strongly_connected_components(&kattis_cantinaofbabel_2())
+    fn components_kattis_cantinaofbabel_2() {
+        assert!(Tarjan::new(&kattis_cantinaofbabel_2())
+            .components()
             .iter()
             .eq(&[
                 BTreeSet::from([3, 4]),
@@ -292,8 +346,9 @@ mod tests {
     }
 
     #[test]
-    fn strongly_connected_components_kattis_escapewallmaria_1() {
-        assert!(strongly_connected_components(&kattis_escapewallmaria_1())
+    fn components_kattis_escapewallmaria_1() {
+        assert!(Tarjan::new(&kattis_escapewallmaria_1())
+            .components()
             .iter()
             .eq(&[
                 BTreeSet::from([0]),
@@ -313,8 +368,9 @@ mod tests {
     }
 
     #[test]
-    fn strongly_connected_components_kattis_escapewallmaria_2() {
-        assert!(strongly_connected_components(&kattis_escapewallmaria_2())
+    fn components_kattis_escapewallmaria_2() {
+        assert!(Tarjan::new(&kattis_escapewallmaria_2())
+            .components()
             .iter()
             .eq(&[
                 BTreeSet::from([0]),
@@ -334,8 +390,9 @@ mod tests {
     }
 
     #[test]
-    fn strongly_connected_components_kattis_escapewallmaria_3() {
-        assert!(strongly_connected_components(&kattis_escapewallmaria_3())
+    fn components_kattis_escapewallmaria_3() {
+        assert!(Tarjan::new(&kattis_escapewallmaria_3())
+            .components()
             .iter()
             .eq(&[
                 BTreeSet::from([0]),
@@ -352,8 +409,9 @@ mod tests {
     }
 
     #[test]
-    fn strongly_connected_components_trivial() {
-        assert!(strongly_connected_components(&AdjacencyList::trivial())
+    fn components_trivial() {
+        assert!(Tarjan::new(&AdjacencyList::trivial())
+            .components()
             .iter()
             .eq(&[BTreeSet::from([0])]));
     }
