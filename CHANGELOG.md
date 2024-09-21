@@ -9,7 +9,6 @@
 - Benchmark against popular graph libraries in other languages.
 - Benchmark trait implementations.
 - Implement `DfsDist::distances`.
-- Improve doctest and add image to `BfsDist::distances`.
 - Improve doctest and add image to `DijkstraDist::distances`.
 - Improve doctest and add image to `DijkstraPred::predecessors`.
 - Improve doctest and add image to `DijkstraPred::shortest_path`.
@@ -22,6 +21,12 @@
 - Mention the order of traversal in the `Dijkstra` documentation.
 - Panic in `From<I>` implementations if the order is zero.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
+
+## [0.91.5] - 2024-09-21
+
+Changed
+
+- Improve wording in the documentation.
 
 ## [0.91.4] - 2024-09-21
 

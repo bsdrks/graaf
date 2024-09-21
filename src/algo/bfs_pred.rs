@@ -217,8 +217,8 @@ impl<'a, D> BfsPred<'a, D> {
     /// # Panics
     ///
     /// * Panics if `self.next` panics.
-    /// * Panics if a source vertex isn't in `self.digraph`.
-    /// * Panics if a successor vertex isn't in `self.digraph`.
+    /// * Panics if a source vertex isn't in the digraph.
+    /// * Panics if a successor vertex isn't in the digraph.
     ///
     /// # Examples
     ///
@@ -348,8 +348,8 @@ impl<'a, D> BfsPred<'a, D> {
     /// # Panics
     ///
     /// * Panics if `self.next` panics.
-    /// * Panics if a source vertex isn't in `self.digraph`.
-    /// * Panics if a successor vertex isn't in `self.digraph`.
+    /// * Panics if a source vertex isn't in the digraph.
+    /// * Panics if a successor vertex isn't in the digraph.
     ///
     /// # Examples
     ///
@@ -454,8 +454,8 @@ impl<'a, D> BfsPred<'a, D> {
     /// # Panics
     ///
     /// * Panics if `is_target` panics.
-    /// * Panics if a source vertices isn't in `self.digraph`.
-    /// * Panics if a successor vertex isn't in `self.digraph`.
+    /// * Panics if a source vertices isn't in the digraph.
+    /// * Panics if a successor vertex isn't in the digraph.
     ///
     /// # Examples
     ///

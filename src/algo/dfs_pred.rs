@@ -194,8 +194,8 @@ impl<'a, D> DfsPred<'a, D> {
     /// # Panics
     ///
     /// * Panics if the `self.next` panics.
-    /// * Panics if a source vertex isn't in `self.digraph`.
-    /// * Panics if a successor vertex isn't in `self.digraph`.
+    /// * Panics if a source vertex isn't in the digraph.
+    /// * Panics if a successor vertex isn't in the digraph.
     ///
     /// # Examples
     ///

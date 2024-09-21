@@ -208,8 +208,8 @@ where
     /// # Panics
     ///
     /// * Panics if `self.next` panics.
-    /// * Panics if a source vertex isn't in `self.digraph`.
-    /// * Panics if a successor vertex isn't in `self.digraph`.
+    /// * Panics if a source vertex isn't in the digraph.
+    /// * Panics if a successor vertex isn't in the digraph.
     ///
     /// # Examples
     ///

@@ -216,8 +216,7 @@ impl<'a, D> BfsDist<'a, D> {
     /// ## Single source
     ///
     /// The path from vertex `0` is red. The dashed arcs represent the shortest
-    /// distances from the source. The gray arcs are not part of the
-    /// shortest path.
+    /// distances from the source. The gray arcs are not traversed.
     ///
     /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_distances_1-0.91.3.svg?)
     ///
@@ -251,7 +250,7 @@ impl<'a, D> BfsDist<'a, D> {
     ///
     /// The path from vertex `3` is red. The path from vertex `7` is blue. The
     /// dashed arcs represent the shortest distances from the sources. The gray
-    /// arcs are not part of the shortest paths.
+    /// arcs are not traversed.
     ///
     /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_distances_multi_source_1-0.91.3.svg?)
     ///
