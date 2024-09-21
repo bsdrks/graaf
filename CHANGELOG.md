@@ -30,6 +30,9 @@ Added
 - Add the `FloydWarshall` struct.
 - Add the `Johnson75::new` constructor.
 - Add the `Tarjan` struct.
+- Derive `Clone` for `Johnson75`.
+- Derive `Eq` for `Johnson75`.
+- Derive `PartialEq` for `Johnson75`.
 
 Removed
 
