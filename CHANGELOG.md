@@ -25,6 +25,10 @@
 
 ## [0.91.3] - 2024-09-20
 
+Add
+
+- Add images to `BfsDist::distances` documentation.
+
 Changed
 
 - Clean up fixture documentation.

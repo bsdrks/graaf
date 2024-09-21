@@ -214,6 +214,12 @@ impl<'a, D> BfsDist<'a, D> {
     ///
     /// # Examples
     ///
+    /// ## Single source
+    ///
+    /// The path from vertex `0` is red. `d` denotes the distances.
+    ///
+    /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_distances_1-0.91.3.svg?)
+    ///
     /// ```
     /// use graaf::{
     ///     AddArc,
@@ -222,18 +228,54 @@ impl<'a, D> BfsDist<'a, D> {
     ///     Empty,
     /// };
     ///
-    /// let mut digraph = AdjacencyList::empty(4);
+    /// let mut digraph = AdjacencyList::empty(6);
     ///
     /// digraph.add_arc(0, 1);
     /// digraph.add_arc(1, 2);
+    /// digraph.add_arc(1, 4);
+    /// digraph.add_arc(2, 5);
     /// digraph.add_arc(3, 0);
     ///
     /// assert!(BfsDist::new(&digraph, &[0]).distances().eq(&[
     ///     0,
     ///     1,
     ///     2,
-    ///     usize::MAX
+    ///     usize::MAX,
+    ///     2,
+    ///     3
     /// ]));
+    /// ```
+    ///
+    /// ## Multiple sources
+    ///
+    /// The path from vertex `3` is red. The path from vertex `7` is blue.
+    ///
+    /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_distances_multi_source_1-0.91.3.svg?)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     AddArc,
+    ///     AdjacencyList,
+    ///     BfsDist,
+    ///     Empty,
+    /// };
+    ///
+    /// let mut digraph = AdjacencyList::empty(8);
+    ///
+    /// digraph.add_arc(0, 1);
+    /// digraph.add_arc(1, 2);
+    /// digraph.add_arc(1, 4);
+    /// digraph.add_arc(2, 3);
+    /// digraph.add_arc(2, 5);
+    /// digraph.add_arc(2, 6);
+    /// digraph.add_arc(3, 0);
+    /// digraph.add_arc(6, 5);
+    /// digraph.add_arc(6, 7);
+    /// digraph.add_arc(7, 6);
+    ///
+    /// assert!(BfsDist::new(&digraph, &[3, 7])
+    ///     .distances()
+    ///     .eq(&[1, 2, 3, 0, 3, 2, 1, 0]));
     /// ```
     #[must_use]
     pub fn distances(&mut self) -> Vec<usize>
