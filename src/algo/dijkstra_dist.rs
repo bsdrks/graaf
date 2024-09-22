@@ -85,10 +85,7 @@ use {
         OutNeighborsWeighted,
     },
     core::cmp::Reverse,
-    std::collections::{
-        BTreeMap,
-        BinaryHeap,
-    },
+    std::collections::BinaryHeap,
 };
 
 type Step = (usize, usize);
@@ -227,7 +224,7 @@ where
     ///     Empty,
     /// };
     ///
-    /// let mut digraph = AdjacencyListWeighted::empty(6);
+    /// let mut digraph = AdjacencyListWeighted::empty(7);
     ///
     /// digraph.add_arc_weighted(0, 1, 1);
     /// digraph.add_arc_weighted(1, 2, 1);
@@ -250,7 +247,7 @@ where
     ///
     /// ## Multiple sources
     ///
-    /// The path from vertex `3` is red. The path from vertex `7` is blue. The
+    /// The path from vertex `0` is red. The path from vertex `3` is blue. The
     /// dashed arcs represent the shortest distances from the sources. The gray
     /// arcs are not traversed.
     ///
@@ -258,28 +255,26 @@ where
     ///
     /// ```
     /// use graaf::{
-    ///     AddArc,
-    ///     AdjacencyList,
-    ///     BfsDist,
+    ///     AddArcWeighted,
+    ///     AdjacencyListWeighted,
+    ///     DijkstraDist,
     ///     Empty,
     /// };
     ///
-    /// let mut digraph = AdjacencyList::empty(8);
+    /// let mut digraph = AdjacencyListWeighted::empty(7);
     ///
-    /// digraph.add_arc(0, 1);
-    /// digraph.add_arc(1, 2);
-    /// digraph.add_arc(1, 4);
-    /// digraph.add_arc(2, 3);
-    /// digraph.add_arc(2, 5);
-    /// digraph.add_arc(2, 6);
-    /// digraph.add_arc(3, 0);
-    /// digraph.add_arc(6, 5);
-    /// digraph.add_arc(6, 7);
-    /// digraph.add_arc(7, 6);
+    /// digraph.add_arc_weighted(0, 1, 1);
+    /// digraph.add_arc_weighted(1, 2, 1);
+    /// digraph.add_arc_weighted(1, 6, 6);
+    /// digraph.add_arc_weighted(2, 4, 1);
+    /// digraph.add_arc_weighted(3, 0, 2);
+    /// digraph.add_arc_weighted(3, 5, 1);
+    /// digraph.add_arc_weighted(4, 5, 1);
+    /// digraph.add_arc_weighted(5, 6, 3);
     ///
-    /// assert!(BfsDist::new(&digraph, &[3, 7])
+    /// assert!(DijkstraDist::new(&digraph, &[0, 3])
     ///     .distances()
-    ///     .eq(&[1, 2, 3, 0, 3, 2, 1, 0]));
+    ///     .eq(&[0, 1, 2, 0, 3, 1, 4]));
     /// ```
     /// Find the distances from the source vertices to all other vertices.
     ///
@@ -310,19 +305,20 @@ where
     ///
     /// let mut dijkstra = DijkstraDist::new(&digraph, &[0]);
     ///
-    /// assert!(dijkstra.distances().into_iter().eq([
-    ///     (0, 0),
-    ///     (1, 2),
-    ///     (2, 3),
-    ///     (3, 2),
-    /// ]));
+    /// assert!(dijkstra.distances().into_iter().eq([0, 2, 3, 2,]));
     /// ```
     #[must_use]
-    pub fn distances(&mut self) -> BTreeMap<usize, usize>
+    pub fn distances(&mut self) -> Vec<usize>
     where
         D: OutNeighborsWeighted<Weight = usize>,
     {
-        self.collect()
+        let mut distances = vec![usize::MAX; self.digraph.order()];
+
+        for (u, dist) in self {
+            distances[u] = dist;
+        }
+
+        distances
     }
 }
 
@@ -468,7 +464,7 @@ mod tests {
 
         assert!(DijkstraDist::new(&digraph, &[0])
             .distances()
-            .values()
+            .iter()
             .eq(&[0, 1, 1, 2, 2, 2, 3]));
     }
 
@@ -478,7 +474,7 @@ mod tests {
 
         assert!(DijkstraDist::new(&digraph, &[0])
             .distances()
-            .values()
+            .iter()
             .eq(&[0, 5, 3, 6, 4, 7]));
     }
 
@@ -488,7 +484,7 @@ mod tests {
 
         assert!(DijkstraDist::new(&digraph, &[0])
             .distances()
-            .values()
+            .iter()
             .eq(&[0, 1, 1]));
     }
 
@@ -498,7 +494,7 @@ mod tests {
 
         assert!(DijkstraDist::new(&digraph, &[0])
             .distances()
-            .values()
+            .iter()
             .eq(&[0, 1, 2, 1, 2, 3]));
     }
 
@@ -508,7 +504,7 @@ mod tests {
 
         assert!(DijkstraDist::new(&digraph, &[0])
             .distances()
-            .values()
+            .iter()
             .eq(&[0, 0, 1, 0, 0, 0, 1, 0, 0, 1]));
     }
 
@@ -518,7 +514,7 @@ mod tests {
 
         assert!(DijkstraDist::new(&digraph, &[0])
             .distances()
-            .values()
+            .iter()
             .eq(&[0, 1, 3, 10]));
     }
 
@@ -528,7 +524,7 @@ mod tests {
 
         assert!(DijkstraDist::new(&digraph, &[0])
             .distances()
-            .values()
+            .iter()
             .eq(&[0, 2, 4]));
     }
 }
