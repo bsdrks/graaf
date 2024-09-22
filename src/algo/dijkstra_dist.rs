@@ -522,9 +522,11 @@ mod tests {
     fn distances_kattis_shortestpath1() {
         let digraph = kattis_shortestpath1_usize();
 
-        assert!(DijkstraDist::new(&digraph, &[0])
-            .distances()
-            .iter()
-            .eq(&[0, 2, 4]));
+        assert!(DijkstraDist::new(&digraph, &[0]).distances().iter().eq(&[
+            0,
+            2,
+            4,
+            usize::MAX
+        ]));
     }
 }

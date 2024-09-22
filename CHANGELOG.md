@@ -21,7 +21,7 @@
 
 ## [0.93.1] - 2024-09-22
 
-Changed
+Added
 
 - Improve doctest and add image to `DijkstraDist::distances`.
 
