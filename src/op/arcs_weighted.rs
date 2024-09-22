@@ -35,18 +35,20 @@
 ///     arcs: Vec<(usize, usize, usize)>,
 /// }
 ///
-/// impl ArcsWeighted<usize> for AdjacencyListWeighted {
-///     fn arcs_weighted<'a>(
-///         &'a self,
-///     ) -> impl Iterator<Item = (usize, usize, &'a usize)>
-///     where
-///         usize: 'a,
-///     {
+/// impl ArcsWeighted for AdjacencyListWeighted {
+///     type Weight = usize;
+///
+///     fn arcs_weighted(
+///         &self,
+///     ) -> impl Iterator<Item = (usize, usize, &Self::Weight)> {
 ///         self.arcs.iter().map(|&(u, v, ref w)| (u, v, w))
 ///     }
 /// }
 /// ```
-pub trait ArcsWeighted<W> {
+pub trait ArcsWeighted {
+    /// The weight of an arc.
+    type Weight;
+
     /// Return an iterator over a digraphs' weighted arcs.
     ///
     /// # Examples
@@ -70,9 +72,7 @@ pub trait ArcsWeighted<W> {
     ///     .eq([(0, 1, &2), (1, 2, &3), (2, 0, &4)]));
     /// ```
     #[must_use]
-    fn arcs_weighted<'a>(
-        &'a self,
-    ) -> impl Iterator<Item = (usize, usize, &'a W)>
-    where
-        W: 'a;
+    fn arcs_weighted(
+        &self,
+    ) -> impl Iterator<Item = (usize, usize, &Self::Weight)>;
 }

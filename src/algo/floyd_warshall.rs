@@ -216,7 +216,7 @@ impl<'a, D> FloydWarshall<'a, D> {
     #[must_use]
     pub fn distances(&mut self) -> &DistanceMatrix<isize>
     where
-        D: ArcsWeighted<isize> + Order + Vertices,
+        D: ArcsWeighted<Weight = isize> + Order + Vertices,
     {
         for (u, v, &w) in self.digraph.arcs_weighted() {
             self.dist[u][v] = w;

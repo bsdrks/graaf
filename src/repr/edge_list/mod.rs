@@ -248,7 +248,9 @@ impl AddArc for EdgeList {
 }
 
 impl ArcWeight<usize> for EdgeList {
-    fn arc_weight(&self, u: usize, v: usize) -> Option<&usize> {
+    type Weight = usize;
+
+    fn arc_weight(&self, u: usize, v: usize) -> Option<&Self::Weight> {
         self.has_arc(u, v).then_some(&1)
     }
 }
@@ -259,13 +261,12 @@ impl Arcs for EdgeList {
     }
 }
 
-impl ArcsWeighted<usize> for EdgeList {
-    fn arcs_weighted<'a>(
-        &'a self,
-    ) -> impl Iterator<Item = (usize, usize, &'a usize)>
-    where
-        usize: 'a,
-    {
+impl ArcsWeighted for EdgeList {
+    type Weight = usize;
+
+    fn arcs_weighted(
+        &self,
+    ) -> impl Iterator<Item = (usize, usize, &Self::Weight)> {
         self.arcs.iter().map(|&(u, v)| (u, v, &1))
     }
 }
@@ -437,20 +438,19 @@ impl OutNeighbors for EdgeList {
     }
 }
 
-impl OutNeighborsWeighted<usize> for EdgeList {
+impl OutNeighborsWeighted for EdgeList {
+    type Weight = usize;
+
     /// Warning: runs in **O(a)**, where **a** is the number of arcs,
     /// compared to **O(1)** for `AdjacencyList` and `AdjacencyListWeighted`.
     ///
     /// # Panics
     ///
     /// Panics if `u` isn't in the digraph.
-    fn out_neighbors_weighted<'a>(
-        &'a self,
+    fn out_neighbors_weighted(
+        &self,
         u: usize,
-    ) -> impl Iterator<Item = (usize, &'a usize)>
-    where
-        usize: 'a,
-    {
+    ) -> impl Iterator<Item = (usize, &Self::Weight)> {
         assert!(u < self.order, "u = {u} isn't in the digraph");
 
         self.arcs

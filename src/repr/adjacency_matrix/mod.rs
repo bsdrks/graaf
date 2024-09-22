@@ -312,7 +312,9 @@ impl AddArc for AdjacencyMatrix {
 }
 
 impl ArcWeight<usize> for AdjacencyMatrix {
-    fn arc_weight(&self, u: usize, v: usize) -> Option<&usize> {
+    type Weight = usize;
+
+    fn arc_weight(&self, u: usize, v: usize) -> Option<&Self::Weight> {
         self.has_arc(u, v).then_some(&1)
     }
 }
@@ -326,13 +328,12 @@ impl Arcs for AdjacencyMatrix {
     }
 }
 
-impl ArcsWeighted<usize> for AdjacencyMatrix {
-    fn arcs_weighted<'a>(
-        &'a self,
-    ) -> impl Iterator<Item = (usize, usize, &'a usize)>
-    where
-        usize: 'a,
-    {
+impl ArcsWeighted for AdjacencyMatrix {
+    type Weight = usize;
+
+    fn arcs_weighted(
+        &self,
+    ) -> impl Iterator<Item = (usize, usize, &Self::Weight)> {
         self.arcs().map(|(u, v)| (u, v, &1))
     }
 }
@@ -504,19 +505,18 @@ impl OutNeighbors for AdjacencyMatrix {
     }
 }
 
-impl OutNeighborsWeighted<usize> for AdjacencyMatrix {
+impl OutNeighborsWeighted for AdjacencyMatrix {
+    type Weight = usize;
+
     /// Warning: this implementation runs in **O(v)**.
     ///
     /// # Panics
     ///
     /// Panics if `u` isn't in the digraph.
-    fn out_neighbors_weighted<'a>(
-        &'a self,
+    fn out_neighbors_weighted(
+        &self,
         u: usize,
-    ) -> impl Iterator<Item = (usize, &'a usize)>
-    where
-        usize: 'a,
-    {
+    ) -> impl Iterator<Item = (usize, &Self::Weight)> {
         self.out_neighbors(u).map(move |v| (v, &1))
     }
 }

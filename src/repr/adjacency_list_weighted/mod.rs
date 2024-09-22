@@ -55,13 +55,15 @@ pub struct AdjacencyListWeighted<W> {
     arcs: Vec<BTreeMap<usize, W>>,
 }
 
-impl<W> AddArcWeighted<W> for AdjacencyListWeighted<W> {
+impl<W> AddArcWeighted for AdjacencyListWeighted<W> {
+    type Weight = W;
+
     /// # Panics
     ///
     /// * Panics if `u` equals `v`.
     /// * Panics if `u` isn't in the digraph.
     /// * Panics if `v` isn't in the digraph.
-    fn add_arc_weighted(&mut self, u: usize, v: usize, w: W) {
+    fn add_arc_weighted(&mut self, u: usize, v: usize, w: Self::Weight) {
         assert_ne!(u, v, "u = {u} equals v = {v}");
 
         let order = self.order();
@@ -73,8 +75,10 @@ impl<W> AddArcWeighted<W> for AdjacencyListWeighted<W> {
     }
 }
 
-impl<W> ArcWeight<W> for AdjacencyListWeighted<W> {
-    fn arc_weight(&self, u: usize, v: usize) -> Option<&W> {
+impl<W> ArcWeight<usize> for AdjacencyListWeighted<W> {
+    type Weight = W;
+
+    fn arc_weight(&self, u: usize, v: usize) -> Option<&Self::Weight> {
         self.arcs.get(u).and_then(|arcs| arcs.get(&v))
     }
 }
@@ -88,13 +92,10 @@ impl<W> Arcs for AdjacencyListWeighted<W> {
     }
 }
 
-impl<W> ArcsWeighted<W> for AdjacencyListWeighted<W> {
-    fn arcs_weighted<'a>(
-        &'a self,
-    ) -> impl Iterator<Item = (usize, usize, &'a W)>
-    where
-        W: 'a,
-    {
+impl<W> ArcsWeighted for AdjacencyListWeighted<W> {
+    type Weight = W;
+
+    fn arcs_weighted(&self) -> impl Iterator<Item = (usize, usize, &W)> {
         self.arcs
             .iter()
             .enumerate()
@@ -242,17 +243,16 @@ impl<W> OutNeighbors for AdjacencyListWeighted<W> {
     }
 }
 
-impl<W> OutNeighborsWeighted<W> for AdjacencyListWeighted<W> {
+impl<W> OutNeighborsWeighted for AdjacencyListWeighted<W> {
+    type Weight = W;
+
     /// # Panics
     ///
     /// Panics if `u` isn't in the digraph.
-    fn out_neighbors_weighted<'a>(
-        &'a self,
+    fn out_neighbors_weighted(
+        &self,
         u: usize,
-    ) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a,
-    {
+    ) -> impl Iterator<Item = (usize, &Self::Weight)> {
         self.arcs[u].iter().map(|(v, w)| (*v, w))
     }
 }

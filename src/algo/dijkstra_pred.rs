@@ -255,7 +255,7 @@ where
     #[must_use]
     pub fn predecessors(&mut self) -> PredecessorTree
     where
-        D: Order + OutNeighborsWeighted<usize>,
+        D: Order + OutNeighborsWeighted<Weight = usize>,
     {
         let mut pred = PredecessorTree::new(self.digraph.order());
 
@@ -304,7 +304,7 @@ where
     #[must_use]
     pub fn shortest_path<P>(&mut self, is_target: P) -> Option<Vec<usize>>
     where
-        D: Order + OutNeighborsWeighted<usize>,
+        D: Order + OutNeighborsWeighted<Weight = usize>,
         P: Fn(usize) -> bool,
     {
         let mut pred = PredecessorTree::new(self.digraph.order());
@@ -329,7 +329,7 @@ where
 
 impl<'a, D> Iterator for DijkstraPred<'a, D>
 where
-    D: Order + OutNeighborsWeighted<usize>,
+    D: Order + OutNeighborsWeighted<Weight = usize>,
 {
     type Item = Step;
 

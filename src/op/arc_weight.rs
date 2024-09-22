@@ -46,12 +46,17 @@
 /// }
 ///
 /// impl ArcWeight<usize> for AdjacencyListWeighted {
-///     fn arc_weight(&self, u: usize, v: usize) -> Option<&usize> {
+///     type Weight = usize;
+///
+///     fn arc_weight(&self, u: usize, v: usize) -> Option<&Self::Weight> {
 ///         self.arcs.get(u).and_then(|m| m.get(&v))
 ///     }
 /// }
 /// ```
-pub trait ArcWeight<W> {
+pub trait ArcWeight<Idx> {
+    /// The weight of an arc.
+    type Weight;
+
     /// Return the weight of the arc from `u` to `v` if it exists in the
     /// digraph.
     ///
@@ -88,5 +93,5 @@ pub trait ArcWeight<W> {
     /// assert_eq!(digraph.arc_weight(2, 2), None);
     /// ```
     #[must_use]
-    fn arc_weight(&self, u: usize, v: usize) -> Option<&W>;
+    fn arc_weight(&self, u: Idx, v: Idx) -> Option<&Self::Weight>;
 }

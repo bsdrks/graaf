@@ -249,7 +249,7 @@ impl<'a, D> BellmanFordMoore<'a, D> {
     #[must_use]
     pub fn distances(&mut self) -> Option<&[isize]>
     where
-        D: ArcsWeighted<isize> + Order,
+        D: ArcsWeighted<Weight = isize> + Order,
     {
         for _ in 1..self.digraph.order() {
             for (u, v, &w) in self.digraph.arcs_weighted() {

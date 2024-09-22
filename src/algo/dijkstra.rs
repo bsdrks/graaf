@@ -181,7 +181,7 @@ where
 
 impl<'a, D> Iterator for Dijkstra<'a, D>
 where
-    D: Order + OutNeighborsWeighted<usize>,
+    D: Order + OutNeighborsWeighted<Weight = usize>,
 {
     type Item = usize;
 

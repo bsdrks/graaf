@@ -20,6 +20,15 @@
 - Standardize the input type for search algorithms.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 
+## [0.93.0] - 2024-09-22
+
+Changed
+
+- Breaking: The weight in `AddArcWeighted` is now an associated type.
+- Breaking: The weight in `ArcWeight` is now an associated type.
+- Breaking: The weight in `ArcsWeighted` is now an associated type.
+- Breaking: The weight in `OutNeighbors_Weighted` is now an associated type.
+
 ## [0.92.1] - 2024-09-22
 
 Added

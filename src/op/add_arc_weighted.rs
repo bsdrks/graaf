@@ -39,8 +39,10 @@
 ///     arcs: Vec<BTreeMap<usize, isize>>,
 /// }
 ///
-/// impl AddArcWeighted<isize> for AdjacencyListWeighted {
-///     fn add_arc_weighted(&mut self, u: usize, v: usize, w: isize) {
+/// impl AddArcWeighted for AdjacencyListWeighted {
+///     type Weight = isize;
+///
+///     fn add_arc_weighted(&mut self, u: usize, v: usize, w: Self::Weight) {
 ///         self.arcs[u].insert(v, w);
 ///     }
 /// }
@@ -59,7 +61,10 @@
 ///     BTreeMap::new(),
 /// ]));
 /// ```
-pub trait AddArcWeighted<W> {
+pub trait AddArcWeighted {
+    /// The weight of an arc.
+    type Weight;
+
     /// Add an arc from `u` to `v` with weight `w` to the digraph.
     ///
     /// # Arguments
@@ -94,5 +99,5 @@ pub trait AddArcWeighted<W> {
     ///     .arcs_weighted()
     ///     .eq([(0, 1, &2), (0, 2, &1), (1, 2, &-3)]));
     /// ```
-    fn add_arc_weighted(&mut self, u: usize, v: usize, w: W);
+    fn add_arc_weighted(&mut self, u: usize, v: usize, w: Self::Weight);
 }

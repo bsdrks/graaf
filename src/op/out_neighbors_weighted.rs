@@ -54,20 +54,22 @@
 ///     arcs: Vec<BTreeMap<usize, usize>>,
 /// }
 ///
-/// impl OutNeighborsWeighted<usize> for AdjacencyListWeighted {
-///     fn out_neighbors_weighted<'a>(
-///         &'a self,
+/// impl OutNeighborsWeighted for AdjacencyListWeighted {
+///     type Weight = usize;
+///
+///     fn out_neighbors_weighted(
+///         &self,
 ///         u: usize,
-///     ) -> impl Iterator<Item = (usize, &'a usize)>
-///     where
-///         usize: 'a,
-///     {
+///     ) -> impl Iterator<Item = (usize, &Self::Weight)> {
 ///         self.arcs[u].iter().map(|(v, w)| (*v, w))
 ///     }
 /// }
 /// ```
 #[doc(alias = "OutNeighboursWeighted")]
-pub trait OutNeighborsWeighted<W> {
+pub trait OutNeighborsWeighted {
+    /// The weight of an arc.
+    type Weight;
+
     /// Return an iterator over a vertex's weighted out-neighbours.
     ///
     /// # Arguments
@@ -110,10 +112,8 @@ pub trait OutNeighborsWeighted<W> {
     /// ```
     #[doc(alias = "out_neighbours_weighted")]
     #[must_use]
-    fn out_neighbors_weighted<'a>(
-        &'a self,
+    fn out_neighbors_weighted(
+        &self,
         u: usize,
-    ) -> impl Iterator<Item = (usize, &'a W)>
-    where
-        W: 'a;
+    ) -> impl Iterator<Item = (usize, &Self::Weight)>;
 }

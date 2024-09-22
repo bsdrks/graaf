@@ -242,7 +242,7 @@ where
     #[must_use]
     pub fn distances(&mut self) -> BTreeMap<usize, usize>
     where
-        D: OutNeighborsWeighted<usize>,
+        D: OutNeighborsWeighted<Weight = usize>,
     {
         self.collect()
     }
@@ -250,7 +250,7 @@ where
 
 impl<'a, D> Iterator for DijkstraDist<'a, D>
 where
-    D: Order + OutNeighborsWeighted<usize>,
+    D: Order + OutNeighborsWeighted<Weight = usize>,
 {
     type Item = Step;
 
