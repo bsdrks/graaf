@@ -114,8 +114,8 @@ fn dijkstra(bencher: Bencher<'_, '_>) {
         let mut dijkstra = DijkstraDist::new(&digraph, &[0]);
         let dist = dijkstra.distances();
 
-        assert_eq!(dist[&0], 0);
-        assert_eq!(dist[&999], 6);
+        assert_eq!(dist[0], 0);
+        assert_eq!(dist[999], 6);
     });
 }
 

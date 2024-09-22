@@ -38,7 +38,7 @@ fn dijkstra(bencher: Bencher<'_, '_>) {
     let mut dijkstra = DijkstraDist::new(&digraph, &[0]);
     let dist = dijkstra.distances();
 
-    assert!(dist.values().eq(&DISTANCES_USIZE));
+    assert!(dist.eq(&DISTANCES_USIZE));
 
     bencher.bench_local(|| {
         let mut dijkstra = DijkstraDist::new(&digraph, &[0]);
