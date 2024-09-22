@@ -6,7 +6,6 @@
 - Benchmark trait implementations.
 - Explain the pros and cons of each digraph representation.
 - Implement `DfsDist::distances`.
-- Improve doctest and add image to `DijkstraDist::distances`.
 - Improve doctest and add image to `DijkstraPred::predecessors`.
 - Improve doctest and add image to `DijkstraPred::shortest_path`.
 - Improve doctest and add image to `DistanceMatrix::is_connected`.
@@ -19,6 +18,12 @@
 - Panic in `From<I>` implementations if the order is zero.
 - Standardize the input type for search algorithms.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
+
+## [0.93.1] - 2024-09-22
+
+Changed
+
+- Improve doctest and add image to `DijkstraDist::distances`.
 
 ## [0.93.0] - 2024-09-22
 

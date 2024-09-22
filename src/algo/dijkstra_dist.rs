@@ -207,6 +207,84 @@ where
     ///
     /// # Panics
     ///
+    /// * Panics if a source vertex isn't in the digraph.
+    /// * Panics if a successor vertex isn't in the digraph.
+    ///
+    /// # Examples
+    ///
+    /// ## Single source
+    ///
+    /// The path from vertex `0` is red. The dashed arcs represent the shortest
+    /// distances from the source. The gray arcs are not traversed.
+    ///
+    /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_distances_1-0.93.1.svg?)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     AddArcWeighted,
+    ///     AdjacencyListWeighted,
+    ///     DijkstraDist,
+    ///     Empty,
+    /// };
+    ///
+    /// let mut digraph = AdjacencyListWeighted::empty(6);
+    ///
+    /// digraph.add_arc_weighted(0, 1, 1);
+    /// digraph.add_arc_weighted(1, 2, 1);
+    /// digraph.add_arc_weighted(1, 6, 6);
+    /// digraph.add_arc_weighted(2, 4, 1);
+    /// digraph.add_arc_weighted(3, 0, 2);
+    /// digraph.add_arc_weighted(4, 5, 2);
+    /// digraph.add_arc_weighted(5, 6, 1);
+    ///
+    /// assert!(DijkstraDist::new(&digraph, &[0]).distances().eq(&[
+    ///     0,
+    ///     1,
+    ///     2,
+    ///     usize::MAX,
+    ///     3,
+    ///     5,
+    ///     6
+    /// ]));
+    /// ```
+    ///
+    /// ## Multiple sources
+    ///
+    /// The path from vertex `3` is red. The path from vertex `7` is blue. The
+    /// dashed arcs represent the shortest distances from the sources. The gray
+    /// arcs are not traversed.
+    ///
+    /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_distances_multi_source_1-0.93.1.svg?)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     AddArc,
+    ///     AdjacencyList,
+    ///     BfsDist,
+    ///     Empty,
+    /// };
+    ///
+    /// let mut digraph = AdjacencyList::empty(8);
+    ///
+    /// digraph.add_arc(0, 1);
+    /// digraph.add_arc(1, 2);
+    /// digraph.add_arc(1, 4);
+    /// digraph.add_arc(2, 3);
+    /// digraph.add_arc(2, 5);
+    /// digraph.add_arc(2, 6);
+    /// digraph.add_arc(3, 0);
+    /// digraph.add_arc(6, 5);
+    /// digraph.add_arc(6, 7);
+    /// digraph.add_arc(7, 6);
+    ///
+    /// assert!(BfsDist::new(&digraph, &[3, 7])
+    ///     .distances()
+    ///     .eq(&[1, 2, 3, 0, 3, 2, 1, 0]));
+    /// ```
+    /// Find the distances from the source vertices to all other vertices.
+    ///
+    /// # Panics
+    ///
     /// * Panics if `self.next` panics.
     /// * Panics if a source vertex isn't in the digraph.
     /// * Panics if a successor vertex isn't in the digraph.
