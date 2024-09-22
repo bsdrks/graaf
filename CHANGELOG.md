@@ -2,12 +2,9 @@
 
 ## Provisional roadmap
 
-- Add a trait for path contraction.
-- Add a trait for set contraction.
-- Add the `Barabási–Albert` generator.
-- Add the `IsIsomorphic` trait.
-- Benchmark against popular graph libraries in other languages.
+- Benchmark against other Rust graph libraries.
 - Benchmark trait implementations.
+- Explain the pros and cons of each digraph representation.
 - Implement `DfsDist::distances`.
 - Improve doctest and add image to `DijkstraDist::distances`.
 - Improve doctest and add image to `DijkstraPred::predecessors`.
@@ -20,7 +17,15 @@
 - Mention the order of traversal in the `Dfs` documentation.
 - Mention the order of traversal in the `Dijkstra` documentation.
 - Panic in `From<I>` implementations if the order is zero.
+- Standardize the input type for search algorithms.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
+
+## [0.92.1] - 2024-09-22
+
+Added
+
+- Add `AdjacencyMap` benchmarks.
+- Add `EdgeList` benchmarks.
 
 ## [0.92.0] - 2024-09-21
 
