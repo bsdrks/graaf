@@ -104,6 +104,7 @@ use {
     crate::{
         AddArc,
         AdjacencyList,
+        AdjacencyMap,
         AdjacencyMatrix,
         ArcWeight,
         Arcs,
@@ -341,10 +342,46 @@ impl Empty for EdgeList {
     }
 }
 
+macro_rules! impl_from_arcs_order {
+    ($type:ty) => {
+        /// # Panics
+        ///
+        /// * Panics if `digraph` is empty.
+        /// * Panics if, for any arc `u -> v` in `digraph`, `u` equals `v`.
+        /// * Panics if, for any arc `u -> v` in `digraph`, `v` isn't in the
+        ///   digraph.
+        impl From<$type> for EdgeList {
+            fn from(digraph: $type) -> Self {
+                let order = digraph.order();
+
+                assert!(order > 0, "a digraph has at least one vertex");
+
+                let mut h = Self::empty(order);
+
+                for (u, v) in digraph.arcs() {
+                    assert_ne!(u, v, "u = {u} equals v = {v}");
+                    assert!(v < order, "v = {v} isn't in the digraph");
+
+                    h.add_arc(u, v);
+                }
+
+                h
+            }
+        }
+    };
+}
+
+impl_from_arcs_order!(AdjacencyList);
+impl_from_arcs_order!(AdjacencyMap);
+impl_from_arcs_order!(AdjacencyMatrix);
+
 impl<I> From<I> for EdgeList
 where
     I: IntoIterator<Item = (usize, usize)>,
 {
+    /// # Panics
+    ///
+    /// * Panics if, for any arc `u -> v` in `iter`, `u` equals `v`.
     fn from(iter: I) -> Self {
         let mut order = 0;
         let mut arcs = BTreeSet::new();
@@ -360,32 +397,6 @@ where
             arcs,
             order: order + 1,
         }
-    }
-}
-
-impl From<AdjacencyList> for EdgeList {
-    fn from(adjacency_list: AdjacencyList) -> Self {
-        let order = adjacency_list.order();
-        let mut edge_list = Self::empty(order);
-
-        for (u, v) in adjacency_list.arcs() {
-            edge_list.add_arc(u, v);
-        }
-
-        edge_list
-    }
-}
-
-impl From<AdjacencyMatrix> for EdgeList {
-    fn from(adjacency_matrix: AdjacencyMatrix) -> Self {
-        let order = adjacency_matrix.order();
-        let mut edge_list = Self::empty(order);
-
-        for (u, v) in adjacency_matrix.arcs() {
-            edge_list.add_arc(u, v);
-        }
-
-        edge_list
     }
 }
 
@@ -529,9 +540,28 @@ mod tests {
     }
 
     #[test]
-    fn from_btree_set() {
-        let arcs = BTreeSet::from([(0, 1), (1, 2)]);
-        let digraph = EdgeList::from(arcs);
+    fn from_adjacency_list() {
+        let digraph = AdjacencyList::from([
+            BTreeSet::from([1]),
+            BTreeSet::from([2]),
+            BTreeSet::new(),
+        ]);
+
+        let digraph = EdgeList::from(digraph);
+
+        assert_eq!(digraph.order(), 3);
+        assert!(digraph.arcs().eq([(0, 1), (1, 2)]));
+    }
+
+    #[test]
+    fn from_adjacency_map() {
+        let digraph = AdjacencyMap::from([
+            BTreeSet::from([1]),
+            BTreeSet::from([2]),
+            BTreeSet::new(),
+        ]);
+
+        let digraph = EdgeList::from(digraph);
 
         assert_eq!(digraph.order(), 3);
         assert!(digraph.arcs().eq([(0, 1), (1, 2)]));
@@ -544,6 +574,21 @@ mod tests {
 
         assert_eq!(digraph.order(), 3);
         assert!(digraph.arcs().eq([(0, 1), (1, 2)]));
+    }
+
+    #[test]
+    fn from_iter() {
+        let arcs = BTreeSet::from([(0, 1), (1, 2)]);
+        let digraph = EdgeList::from(arcs);
+
+        assert_eq!(digraph.order(), 3);
+        assert!(digraph.arcs().eq([(0, 1), (1, 2)]));
+    }
+
+    #[test]
+    #[should_panic(expected = "u = 1 equals v = 1")]
+    fn from_iter_self_loop() {
+        let _ = EdgeList::from(BTreeSet::from([(0, 1), (1, 1)]));
     }
 
     #[test]

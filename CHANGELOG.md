@@ -19,6 +19,28 @@
 - Standardize the input type for search algorithms.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 
+## [0.94.0] - 2024-09-24
+
+Added
+
+- Implement `From<AdjacencyList> for EdgeList`.
+- Implement `From<AdjacencyMap> for AdjacencyListWeighted<isize>`.
+- Implement `From<AdjacencyMap> for AdjacencyListWeighted<usize>`.
+- Implement `From<AdjacencyMap> for AdjacencyList`.
+- Implement `From<AdjacencyMap> for AdjacencyMap`.
+- Implement `From<AdjacencyMap> for AdjacencyMatrix`.
+- Implement `From<AdjacencyMap> for EdgeList`.
+- Implement `From<AdjacencyMatrix> for AdjacencyList`.
+- Implement `From<AdjacencyMatrix> for AdjacencyMap`.
+- Implement `From<AdjacencyMatrix> for EdgeList`.
+- Implement `From<EdgeList> for AdjacencyListWeighted<isize>`.
+- Implement `From<EdgeList> for AdjacencyListWeighted<usize>`.
+- Implement `From<EdgeList> for AdjacencyMap`.
+
+Changed
+
+- Breaking: `From<I> for AdjacencyList` now panics if the order is zero.
+
 ## [0.93.1] - 2024-09-22
 
 Added

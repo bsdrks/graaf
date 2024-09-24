@@ -112,12 +112,14 @@ pub mod fixture;
 use crate::{
     AddArc,
     AdjacencyList,
+    AdjacencyMap,
     ArcWeight,
     Arcs,
     ArcsWeighted,
     Biclique,
     Circuit,
     Converse,
+    EdgeList,
     Empty,
     HasArc,
     Indegree,
@@ -284,9 +286,9 @@ impl AdjacencyMatrix {
     /// assert!(digraph.has_arc(0, 1));
     /// ```
     pub fn toggle(&mut self, u: usize, v: usize) {
-        assert!(u < self.order, "u = {u} isn't in the digraph.");
-        assert!(v < self.order, "v = {v} isn't in the digraph.");
-        assert_ne!(u, v, "u = {u} equals v = {v}.");
+        assert_ne!(u, v, "u = {u} equals v = {v}");
+        assert!(u < self.order, "u = {u} isn't in the digraph");
+        assert!(v < self.order, "v = {v} isn't in the digraph");
 
         let i = self.index(u, v);
 
@@ -301,9 +303,9 @@ impl AddArc for AdjacencyMatrix {
     /// * Panics if `u` isn't in the digraph.
     /// * Panics if `v` isn't in the digraph.
     fn add_arc(&mut self, u: usize, v: usize) {
-        assert_ne!(u, v, "u = {u} equals v = {v}.");
-        assert!(u < self.order, "u = {u} isn't in the digraph.");
-        assert!(v < self.order, "v = {v} isn't in the digraph.");
+        assert_ne!(u, v, "u = {u} equals v = {v}");
+        assert!(u < self.order, "u = {u} isn't in the digraph");
+        assert!(v < self.order, "v = {v} isn't in the digraph");
 
         let i = self.index(u, v);
 
@@ -410,18 +412,38 @@ impl Empty for AdjacencyMatrix {
     }
 }
 
-impl From<AdjacencyList> for AdjacencyMatrix {
-    fn from(d: AdjacencyList) -> Self {
-        let order = d.order();
-        let mut h = Self::empty(order);
+macro_rules! impl_from_arcs_order {
+    ($type:ty) => {
+        /// # Panics
+        ///
+        /// * Panics if `digraph` is empty.
+        /// * Panics if, for any arc `u -> v` in `digraph`, `u` equals `v`.
+        /// * Panics if, for any arc `u -> v` in `digraph`, `v` isn't in the
+        ///   digraph.
+        impl From<$type> for AdjacencyMatrix {
+            fn from(digraph: $type) -> Self {
+                let order = digraph.order();
 
-        for (u, v) in d.arcs() {
-            h.add_arc(u, v);
+                assert!(order > 0, "a digraph has at least one vertex");
+
+                let mut h = Self::empty(order);
+
+                for (u, v) in digraph.arcs() {
+                    assert_ne!(u, v, "u = {u} equals v = {v}");
+                    assert!(v < order, "v = {v} isn't in the digraph");
+
+                    h.add_arc(u, v);
+                }
+
+                h
+            }
         }
-
-        h
-    }
+    };
 }
+
+impl_from_arcs_order!(AdjacencyList);
+impl_from_arcs_order!(AdjacencyMap);
+impl_from_arcs_order!(EdgeList);
 
 impl<I> From<I> for AdjacencyMatrix
 where
@@ -429,21 +451,25 @@ where
 {
     /// # Panics
     ///
-    /// * Panics if for any arc `u -> v` in `arcs`, `u` equals `v`.
-    /// * Panics if for any arc `u -> v` in `arcs`, `v` isn't in the digraph.
-    fn from(vec: I) -> Self {
+    /// * Panics if `iter` is empty.
+    /// * Panics if for any arc `u -> v` in `iter`, `u` equals `v`.
+    fn from(iter: I) -> Self {
         let mut order = 0;
         let mut arcs = Vec::new();
 
-        for (u, v) in vec {
-            assert_ne!(u, v, "u = {u} equals v = {v}.");
+        for (u, v) in iter {
+            assert_ne!(u, v, "u = {u} equals v = {v}");
 
             order = order.max(u).max(v);
 
             arcs.push((u, v));
         }
 
-        let mut digraph = Self::empty(order + 1);
+        order += 1;
+
+        assert!(!arcs.is_empty(), "a digraph has at least one vertex");
+
+        let mut digraph = Self::empty(order);
 
         for (u, v) in arcs {
             digraph.add_arc(u, v);
@@ -588,6 +614,7 @@ mod tests {
     use {
         super::*,
         crate::test_unweighted,
+        std::collections::BTreeSet,
     };
 
     test_unweighted!(AdjacencyMatrix, repr::adjacency_matrix::fixture);
@@ -605,11 +632,60 @@ mod tests {
     }
 
     #[test]
-    fn from_vec() {
+    fn from_adjacency_list() {
+        let digraph = AdjacencyList::from([
+            BTreeSet::from([1]),
+            BTreeSet::from([2]),
+            BTreeSet::new(),
+        ]);
+
+        let digraph = AdjacencyMatrix::from(digraph);
+
+        assert_eq!(digraph.order(), 3);
+        assert!(digraph.arcs().eq([(0, 1), (1, 2)]));
+    }
+
+    #[test]
+    fn from_adjacency_map() {
+        let digraph = AdjacencyMap::from([
+            BTreeSet::from([1]),
+            BTreeSet::from([2]),
+            BTreeSet::new(),
+        ]);
+
+        let digraph = AdjacencyMatrix::from(digraph);
+
+        assert_eq!(digraph.order(), 3);
+        assert!(digraph.arcs().eq([(0, 1), (1, 2)]));
+    }
+
+    #[test]
+    fn from_edge_list() {
+        let digraph = EdgeList::from([(0, 1), (1, 2)]);
+        let digraph = AdjacencyMatrix::from(digraph);
+
+        assert_eq!(digraph.order(), 3);
+        assert!(digraph.arcs().eq([(0, 1), (1, 2)]));
+    }
+
+    #[test]
+    fn from_iter() {
         let digraph = AdjacencyMatrix::from([(0, 1), (1, 2)]);
 
         assert_eq!(digraph.order(), 3);
         assert!(digraph.arcs().eq([(0, 1), (1, 2)]));
+    }
+
+    #[test]
+    #[should_panic(expected = "a digraph has at least one vertex")]
+    fn from_iter_empty() {
+        let _ = AdjacencyMatrix::from(Vec::<(usize, usize)>::new());
+    }
+
+    #[test]
+    #[should_panic(expected = "u = 1 equals v = 1")]
+    fn from_iter_self_loop() {
+        let _ = AdjacencyMatrix::from([(0, 1), (1, 1)]);
     }
 
     #[test]
@@ -625,7 +701,7 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "u = 1 isn't in the digraph.")]
+    #[should_panic(expected = "u = 1 isn't in the digraph")]
     fn toggle_out_of_bounds_u() {
         let mut digraph = AdjacencyMatrix::trivial();
 
@@ -633,7 +709,7 @@ mod tests {
     }
 
     #[test]
-    #[should_panic(expected = "v = 1 isn't in the digraph.")]
+    #[should_panic(expected = "v = 1 isn't in the digraph")]
     fn toggle_out_of_bounds_v() {
         let mut digraph = AdjacencyMatrix::trivial();
 

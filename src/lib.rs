@@ -168,9 +168,9 @@
 //!
 //! ## Johnson's Circuit-Finding Algorithm
 //!
-//! Johnson's circuit-finding algorithm finds all circuits in a digraph.
+//! Johnson's circuit-finding algorithm finds a digraph's circuits.
 //!
-//! - [`Johnson75::circuits`] finds all circuits.
+//! - [`Johnson75::circuits`] finds a digraph's circuits.
 //!
 //! ## Predecessor Tree
 //!

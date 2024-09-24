@@ -103,12 +103,15 @@ pub mod fixture;
 use {
     crate::{
         AddArc,
+        AdjacencyMap,
+        AdjacencyMatrix,
         ArcWeight,
         Arcs,
         ArcsWeighted,
         Biclique,
         Circuit,
         Converse,
+        EdgeList,
         Empty,
         HasArc,
         Indegree,
@@ -345,12 +348,45 @@ impl Empty for AdjacencyList {
     }
 }
 
+macro_rules! impl_from_arcs_order {
+    ($type:ty) => {
+        /// # Panics
+        ///
+        /// * Panics if `digraph` is empty.
+        /// * Panics if, for any arc `u -> v` in `digraph`, `u` equals `v`.
+        /// * Panics if, for any arc `u -> v` in `digraph`, `v` isn't in the
+        ///   digraph.
+        impl From<$type> for AdjacencyList {
+            fn from(digraph: $type) -> Self {
+                let order = digraph.order();
+
+                assert!(order > 0, "a digraph has at least one vertex");
+
+                let mut h = Self::empty(order);
+
+                for (u, v) in digraph.arcs() {
+                    assert_ne!(u, v, "u = {u} equals v = {v}");
+                    assert!(v < order, "v = {v} isn't in the digraph");
+                    h.add_arc(u, v);
+                }
+
+                h
+            }
+        }
+    };
+}
+
+impl_from_arcs_order!(AdjacencyMap);
+impl_from_arcs_order!(AdjacencyMatrix);
+impl_from_arcs_order!(EdgeList);
+
 impl<I> From<I> for AdjacencyList
 where
     I: IntoIterator<Item = BTreeSet<usize>>,
 {
     /// # Panics
     ///
+    /// * Panics if `iter` is empty.
     /// * Panics if, for any arc `u -> v` in `arcs`, `u` equals `v`.
     /// * Panics if, for any arc `u -> v` in `arcs`, `v` isn't in the digraph.
     fn from(iter: I) -> Self {
@@ -358,9 +394,13 @@ where
             arcs: iter.into_iter().collect(),
         };
 
+        let order = digraph.order();
+
+        assert!(order > 0, "a digraph has at least one vertex");
+
         for (u, v) in digraph.arcs() {
             assert_ne!(u, v, "u = {u} equals v = {v}");
-            assert!(v < digraph.order(), "v = {v} isn't in the digraph");
+            assert!(v < order, "v = {v} isn't in the digraph");
         }
 
         digraph
@@ -493,8 +533,40 @@ mod tests {
     }
 
     #[test]
-    fn from_vec() {
-        let digraph = AdjacencyList::from(vec![
+    fn from_adjacency_map() {
+        let digraph = AdjacencyMap::from([
+            BTreeSet::from([1]),
+            BTreeSet::from([2]),
+            BTreeSet::new(),
+        ]);
+
+        let digraph = AdjacencyList::from(digraph);
+
+        assert_eq!(digraph.order(), 3);
+        assert!(digraph.arcs().eq([(0, 1), (1, 2)]));
+    }
+
+    #[test]
+    fn from_adjacency_matrix() {
+        let digraph = AdjacencyMatrix::from([(0, 1), (1, 2)]);
+        let digraph = AdjacencyList::from(digraph);
+
+        assert_eq!(digraph.order(), 3);
+        assert!(digraph.arcs().eq([(0, 1), (1, 2)]));
+    }
+
+    #[test]
+    fn from_edge_list() {
+        let digraph = EdgeList::from([(0, 1), (1, 2)]);
+        let digraph = AdjacencyList::from(digraph);
+
+        assert_eq!(digraph.order(), 3);
+        assert!(digraph.arcs().eq([(0, 1), (1, 2)]));
+    }
+
+    #[test]
+    fn from_iter() {
+        let digraph = AdjacencyList::from([
             BTreeSet::from([1]),
             BTreeSet::from([2]),
             BTreeSet::new(),
@@ -505,17 +577,21 @@ mod tests {
     }
 
     #[test]
+    #[should_panic(expected = "a digraph has at least one vertex")]
+    fn from_iter_empty() {
+        let _ = AdjacencyList::from(Vec::<BTreeSet<usize>>::new());
+    }
+
+    #[test]
     #[should_panic(expected = "v = 1 isn't in the digraph")]
-    fn from_vec_out_of_bounds_v() {
-        let vec = vec![BTreeSet::from([1])];
-        let _ = AdjacencyList::from(vec);
+    fn from_iter_out_of_bounds_v() {
+        let _ = AdjacencyList::from([BTreeSet::from([1])]);
     }
 
     #[test]
     #[should_panic(expected = "u = 0 equals v = 0")]
-    fn from_vec_u_equals_v() {
-        let vec = vec![BTreeSet::from([0])];
-        let _ = AdjacencyList::from(vec);
+    fn from_iter_u_equals_v() {
+        let _ = AdjacencyList::from([BTreeSet::from([0])]);
     }
 
     #[test]
