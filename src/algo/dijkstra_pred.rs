@@ -220,11 +220,17 @@ where
     ///
     /// # Panics
     ///
-    /// * Panics if `self.next` panics.
     /// * Panics if a source vertex isn't in the digraph.
     /// * Panics if a successor vertex isn't in the digraph.
     ///
     /// # Examples
+    ///
+    /// ## Single source
+    ///
+    /// The traversal from vertex `0` is red. The dashed arcs mark the
+    /// predecessor tree.
+    ///
+    /// ![Dijkstra's algorithm and the predecessor tree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_pred_predecessors_1-0.94.1.svg?)
     ///
     /// ```
     /// use graaf::{
@@ -234,22 +240,65 @@ where
     ///     Empty,
     /// };
     ///
-    /// let mut digraph = AdjacencyListWeighted::<usize>::empty(4);
+    /// let mut digraph = AdjacencyListWeighted::<usize>::empty(7);
     ///
-    /// digraph.add_arc_weighted(0, 1, 2);
-    /// digraph.add_arc_weighted(0, 2, 3);
-    /// digraph.add_arc_weighted(0, 3, 4);
-    /// digraph.add_arc_weighted(1, 2, 5);
-    /// digraph.add_arc_weighted(1, 3, 0);
-    /// digraph.add_arc_weighted(2, 3, 1);
+    /// digraph.add_arc_weighted(0, 1, 1);
+    /// digraph.add_arc_weighted(1, 2, 1);
+    /// digraph.add_arc_weighted(1, 6, 6);
+    /// digraph.add_arc_weighted(2, 4, 1);
+    /// digraph.add_arc_weighted(3, 0, 2);
+    /// digraph.add_arc_weighted(4, 5, 2);
+    /// digraph.add_arc_weighted(5, 6, 1);
     ///
     /// let mut dijkstra = DijkstraPred::new(&digraph, &[0]);
     ///
     /// assert!(dijkstra.predecessors().into_iter().eq([
     ///     None,
     ///     Some(0),
+    ///     Some(1),
+    ///     None,
+    ///     Some(2),
+    ///     Some(4),
+    ///     Some(5),
+    /// ]));
+    /// ```
+    ///
+    /// ## Multiple sources
+    ///
+    /// The traversal from vertex `3` is red. The traversal from vertex `7`
+    /// is blue. The dashed arcs mark the predecessor trees.
+    ///
+    /// ![Dijkstra's algorithm and the predecessor trees](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_pred_predecessors_multi_source_1-0.94.1.svg?)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     AddArcWeighted,
+    ///     AdjacencyListWeighted,
+    ///     DijkstraPred,
+    ///     Empty,
+    /// };
+    ///
+    /// let mut digraph = AdjacencyListWeighted::<usize>::empty(7);
+    ///
+    /// digraph.add_arc_weighted(0, 1, 1);
+    /// digraph.add_arc_weighted(1, 2, 1);
+    /// digraph.add_arc_weighted(1, 6, 5);
+    /// digraph.add_arc_weighted(2, 4, 1);
+    /// digraph.add_arc_weighted(3, 0, 2);
+    /// digraph.add_arc_weighted(3, 5, 1);
+    /// digraph.add_arc_weighted(4, 5, 1);
+    /// digraph.add_arc_weighted(5, 6, 3);
+    ///
+    /// let mut dijkstra = DijkstraPred::new(&digraph, &[0, 3]);
+    ///
+    /// assert!(dijkstra.predecessors().into_iter().eq([
+    ///     None,
     ///     Some(0),
     ///     Some(1),
+    ///     None,
+    ///     Some(2),
+    ///     Some(3),
+    ///     Some(5),
     /// ]));
     /// ```
     #[must_use]
@@ -272,6 +321,11 @@ where
     ///
     /// * `is_target`: The function determining if the vertex is a target.
     ///
+    /// # Returns
+    ///
+    /// If `is_target` is `true`, the function returns the shortest path to
+    /// this target vertex. Otherwise, it returns `None`.
+    ///
     /// # Panics
     ///
     /// * Panics if `is_target` panics.
@@ -279,6 +333,12 @@ where
     /// * Panics if a successor vertex isn't in the digraph.
     ///
     /// # Examples
+    ///
+    /// ## Single source
+    ///
+    /// The path from vertex `0` to the first vertex matching `v > 4` is red.
+    ///
+    /// ![Dijkstra's algorithm and the shortest path](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_pred_shortest_path_1-0.94.1.svg?)
     ///
     /// ```
     /// use graaf::{
@@ -288,18 +348,59 @@ where
     ///     Empty,
     /// };
     ///
-    /// let mut digraph = AdjacencyListWeighted::<usize>::empty(4);
+    /// let mut digraph = AdjacencyListWeighted::<usize>::empty(7);
     ///
-    /// digraph.add_arc_weighted(0, 1, 2);
-    /// digraph.add_arc_weighted(0, 2, 3);
-    /// digraph.add_arc_weighted(0, 3, 4);
-    /// digraph.add_arc_weighted(1, 2, 5);
-    /// digraph.add_arc_weighted(1, 3, 0);
-    /// digraph.add_arc_weighted(2, 3, 1);
+    /// digraph.add_arc_weighted(0, 1, 1);
+    /// digraph.add_arc_weighted(1, 2, 1);
+    /// digraph.add_arc_weighted(1, 6, 6);
+    /// digraph.add_arc_weighted(2, 4, 1);
+    /// digraph.add_arc_weighted(3, 0, 2);
+    /// digraph.add_arc_weighted(4, 5, 2);
+    /// digraph.add_arc_weighted(5, 6, 1);
     ///
     /// let mut dijkstra = DijkstraPred::new(&digraph, &[0]);
     ///
-    /// assert!(dijkstra.shortest_path(|v| v == 3).unwrap().eq(&[0, 1, 3]));
+    /// assert!(dijkstra
+    ///     .shortest_path(|v| v > 4)
+    ///     .unwrap()
+    ///     .eq(&[0, 1, 2, 4, 5]));
+    /// ```
+    ///
+    /// ## Multiple sources
+    ///
+    /// The path from vertex `0` to the first vertex matching `v > 1` is red.
+    /// The path from vertex `3` to the first vertex matching `v > 5` is blue.
+    ///
+    /// ![Dijkstra's algorithm and the shortest path](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_pred_shortest_path_multi_source_1-0.94.1.svg?)
+    ///
+    /// ```
+    /// use graaf::{
+    ///     AddArcWeighted,
+    ///     AdjacencyListWeighted,
+    ///     DijkstraPred,
+    ///     Empty,
+    /// };
+    ///
+    /// let mut digraph = AdjacencyListWeighted::<usize>::empty(7);
+    ///
+    /// digraph.add_arc_weighted(0, 1, 1);
+    /// digraph.add_arc_weighted(1, 2, 1);
+    /// digraph.add_arc_weighted(1, 6, 5);
+    /// digraph.add_arc_weighted(2, 4, 1);
+    /// digraph.add_arc_weighted(3, 0, 2);
+    /// digraph.add_arc_weighted(3, 5, 1);
+    /// digraph.add_arc_weighted(4, 5, 1);
+    /// digraph.add_arc_weighted(5, 6, 3);
+    ///
+    /// assert!(DijkstraPred::new(&digraph, &[0])
+    ///     .shortest_path(|v| v > 1)
+    ///     .unwrap()
+    ///     .eq(&[0, 1, 2]));
+    ///
+    /// assert!(DijkstraPred::new(&digraph, &[3])
+    ///     .shortest_path(|v| v > 5)
+    ///     .unwrap()
+    ///     .eq(&[3, 5, 6]));
     /// ```
     #[must_use]
     pub fn shortest_path<P>(&mut self, is_target: P) -> Option<Vec<usize>>

@@ -216,7 +216,6 @@ impl<'a, D> BfsPred<'a, D> {
     ///
     /// # Panics
     ///
-    /// * Panics if `self.next` panics.
     /// * Panics if a source vertex isn't in the digraph.
     /// * Panics if a successor vertex isn't in the digraph.
     ///
@@ -347,7 +346,6 @@ impl<'a, D> BfsPred<'a, D> {
     ///
     /// # Panics
     ///
-    /// * Panics if `self.next` panics.
     /// * Panics if a source vertex isn't in the digraph.
     /// * Panics if a successor vertex isn't in the digraph.
     ///
@@ -388,9 +386,9 @@ impl<'a, D> BfsPred<'a, D> {
     /// ## Multiple sources
     ///
     /// The traversal from vertex `3` is red. The traversal from vertex `7`
-    /// is blue. The dashed arcs mark the predecessor tree.
+    /// is blue. The dashed arcs mark the predecessor trees.
     ///
-    /// ![BFS and the predecessor tree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_predecessors_multi_source_1-0.87.4.svg?)
+    /// ![BFS and the predecessor trees](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_predecessors_multi_source_1-0.87.4.svg?)
     ///
     /// ```
     /// use graaf::{
@@ -448,7 +446,7 @@ impl<'a, D> BfsPred<'a, D> {
     ///
     /// # Returns
     ///
-    /// If it finds a target vertex, the function returns the shortest path to
+    /// If `is_target` is `true`, the function returns the shortest path to
     /// this target vertex. Otherwise, it returns `None`.
     ///
     /// # Panics
@@ -461,7 +459,7 @@ impl<'a, D> BfsPred<'a, D> {
     ///
     /// ## Single source
     ///
-    /// The path matching `v > 4` is red.
+    /// The path from vertex `0` to the first vertex matching `v > 4` is red.
     ///
     /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_shortest_path_1-0.87.4.svg?)
     ///
@@ -489,8 +487,8 @@ impl<'a, D> BfsPred<'a, D> {
     ///
     /// ## Multiple sources
     ///
-    /// The path from vertex `3` matching `v == 2` is red. The path from
-    /// vertex `7` matching `v == 5` is blue.
+    /// The path from vertex `3` to the vertex matching `v == 2` is red. The
+    /// path from vertex `7` to the vertex matching `v == 5` is blue.
     ///
     /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_pred_shortest_path_multi_source_1-0.87.4.svg?)
     ///

@@ -2,22 +2,29 @@
 
 ## Provisional roadmap
 
+- Add explicit colors to diagrams.
 - Benchmark against other Rust graph libraries.
 - Benchmark trait implementations.
 - Explain the pros and cons of each digraph representation.
 - Implement `DfsDist::distances`.
-- Improve doctest and add image to `DijkstraPred::predecessors`.
 - Improve doctest and add image to `DijkstraPred::shortest_path`.
 - Improve doctest and add image to `DistanceMatrix::is_connected`.
 - Improve doctest and add image to `DistanceMatrix::periphery`.
 - Improve doctest and add image to `PredecessorTree::search_by`.
 - Improve doctest and add image to `PredecessorTree::search`.
+- Improve image alt texts.
 - Mention the order of traversal in the `Bfs` documentation.
 - Mention the order of traversal in the `Dfs` documentation.
 - Mention the order of traversal in the `Dijkstra` documentation.
-- Panic in `From<I>` implementations if the order is zero.
 - Standardize the input type for search algorithms.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
+
+## [0.94.1] - 2024-09-25
+
+Added
+
+- Improve doctest and add image to `DijkstraPred::predecessors`.
+- Improve doctest and add image to `DijkstraPred::shortest_path`.
 
 ## [0.94.0] - 2024-09-24
 

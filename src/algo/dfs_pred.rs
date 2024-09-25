@@ -202,9 +202,9 @@ impl<'a, D> DfsPred<'a, D> {
     /// ## Single source
     ///
     /// The path from vertex `0` is red. The dashed arcs mark the predecessor
-    /// tree.
+    /// trees.
     ///
-    /// ![DFS and the predecessor tree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_pred_predecessors_1-0.87.4.svg?)
+    /// ![DFS and the predecessor trees](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_pred_predecessors_1-0.87.4.svg?)
     ///
     /// ```
     /// use graaf::{
