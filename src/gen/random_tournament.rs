@@ -97,7 +97,8 @@
 /// }
 /// ```
 ///
-/// Implementations can be built with the [`AddArc`] and [`Empty`] traits.
+/// Implementations can be built with the [`AddArc`](crate::AddArc) and
+/// [`Empty`](crate::Empty) traits.
 ///
 /// ```
 /// use {
