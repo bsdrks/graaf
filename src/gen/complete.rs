@@ -72,11 +72,6 @@
 //! ]));
 //! ```
 
-use crate::{
-    AddArc,
-    Empty,
-};
-
 /// Generate complete digraphs.
 ///
 /// In a complete digraph, an arc connects every ordered vertex pair.
@@ -84,8 +79,38 @@ use crate::{
 /// # Implementing [`Complete`] for a custom type
 ///
 /// Provide an implementation of [`complete`](Complete::complete) that
-/// generates a complete digraph of a given `order` OR implement [`AddArc`] and
-/// [`Empty`].
+/// generates a complete digraph of a given `order`.
+///
+/// ```
+/// use {
+///     graaf::Complete,
+///     std::collections::BTreeSet,
+/// };
+///
+/// struct AdjacencyList {
+///     arcs: Vec<BTreeSet<usize>>,
+/// }
+///
+/// impl Complete for AdjacencyList {
+///     fn complete(order: usize) -> Self {
+///         Self {
+///             arcs: (0..order)
+///                 .map(|u| (0..order).filter(|&v| u != v).collect())
+///                 .collect(),
+///         }
+///     }
+/// }
+///
+/// let digraph = AdjacencyList::complete(3);
+///
+/// assert!(digraph.arcs.iter().eq(&[
+///     BTreeSet::from([1, 2]),
+///     BTreeSet::from([0, 2]),
+///     BTreeSet::from([0, 1]),
+/// ]));
+/// ```
+///
+/// Implementations can be built with the [`AddArc`] and [`Empty`] traits.
 ///
 /// ```
 /// use {
@@ -112,6 +137,21 @@ use crate::{
 ///         AdjacencyList {
 ///             arcs: vec![BTreeSet::new(); order],
 ///         }
+///     }
+/// }
+///
+/// impl Complete for AdjacencyList {
+///     fn complete(order: usize) -> Self {
+///         let mut digraph = Self::empty(order);
+///
+///         for u in 0..order {
+///             for v in (u + 1)..order {
+///                 digraph.add_arc(u, v);
+///                 digraph.add_arc(v, u);
+///             }
+///         }
+///
+///         digraph
 ///     }
 /// }
 ///
@@ -201,25 +241,4 @@ pub trait Complete {
     /// ```
     #[must_use]
     fn complete(order: usize) -> Self;
-}
-
-impl<D> Complete for D
-where
-    D: AddArc + Empty,
-{
-    /// # Panics
-    ///
-    /// Panics if `order` is zero.
-    fn complete(order: usize) -> Self {
-        let mut digraph = D::empty(order);
-
-        for u in 0..order {
-            for v in (u + 1)..order {
-                digraph.add_arc(u, v);
-                digraph.add_arc(v, u);
-            }
-        }
-
-        digraph
-    }
 }

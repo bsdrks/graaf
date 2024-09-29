@@ -37,12 +37,6 @@
 //! ]));
 //! ```
 
-use crate::{
-    gen::prng::Xoshiro256StarStar,
-    AddArc,
-    Empty,
-};
-
 /// Generate random tournaments.
 ///
 /// A tournament is a digraph in which an arc connects every unordered pair of
@@ -52,21 +46,13 @@ use crate::{
 ///
 /// Provide an implementation of
 /// [`random_tournament`](RandomTournament::random_tournament) that generates a
-/// random tournament of a given `order` OR implement [`AddArc`] and [`Empty`].
+/// random tournament of a given `order`.
 ///
 /// ```
 /// use {
 ///     graaf::{
 ///         gen::prng::Xoshiro256StarStar,
-///         AddArc,
-///         Degree,
-///         Empty,
-///         Indegree,
-///         Order,
-///         Outdegree,
 ///         RandomTournament,
-///         Size,
-///         Vertices,
 ///     },
 ///     std::collections::BTreeSet,
 /// };
@@ -89,6 +75,71 @@ use crate::{
 ///                     tournament.arcs[u].insert(v);
 ///                 } else {
 ///                     tournament.arcs[v].insert(u);
+///                 }
+///             }
+///         }
+///
+///         tournament
+///     }
+/// }
+///
+/// let tournament = Tournament::random_tournament(4, 0);
+///
+/// assert_eq!(tournament.arcs.len(), 4);
+///
+/// assert_eq!(
+///     tournament.arcs.iter().map(|set| set.len()).sum::<usize>(),
+///     6
+/// );
+///
+/// for u in 0..tournament.arcs.len() {
+///     assert!((0..3).contains(&tournament.arcs[u].len()));
+/// }
+/// ```
+///
+/// Implementations can be built with the [`AddArc`] and [`Empty`] traits.
+///
+/// ```
+/// use {
+///     graaf::{
+///         gen::prng::Xoshiro256StarStar,
+///         AddArc,
+///         Empty,
+///         RandomTournament,
+///     },
+///     std::collections::BTreeSet,
+/// };
+///
+/// pub struct Tournament {
+///     arcs: Vec<BTreeSet<usize>>,
+/// }
+///
+/// impl Empty for Tournament {
+///     fn empty(order: usize) -> Self {
+///         Self {
+///             arcs: vec![BTreeSet::new(); order],
+///         }
+///     }
+/// }
+///
+/// impl AddArc for Tournament {
+///     fn add_arc(&mut self, u: usize, v: usize) {
+///         self.arcs[u].insert(v);
+///     }
+/// }
+///
+/// impl RandomTournament for Tournament {
+///     fn random_tournament(order: usize, seed: u64) -> Self {
+///         let mut rng = Xoshiro256StarStar::new(seed);
+///
+///         let mut tournament = Self::empty(order);
+///
+///         for u in 0..order {
+///             for v in (u + 1)..order {
+///                 if rng.next_bool() {
+///                     tournament.add_arc(u, v);
+///                 } else {
+///                     tournament.add_arc(v, u);
 ///                 }
 ///             }
 ///         }
@@ -153,26 +204,4 @@ pub trait RandomTournament {
     /// ```
     #[must_use]
     fn random_tournament(order: usize, seed: u64) -> Self;
-}
-
-impl<D> RandomTournament for D
-where
-    D: AddArc + Empty,
-{
-    fn random_tournament(order: usize, seed: u64) -> Self {
-        let mut digraph = Self::empty(order);
-        let mut rng = Xoshiro256StarStar::new(seed);
-
-        for u in 0..order {
-            for v in (u + 1)..order {
-                if rng.next_bool() {
-                    digraph.add_arc(u, v);
-                } else {
-                    digraph.add_arc(v, u);
-                }
-            }
-        }
-
-        digraph
-    }
 }

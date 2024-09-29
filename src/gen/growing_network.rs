@@ -25,14 +25,6 @@
 //! ]));
 //! ```
 
-use {
-    super::prng::Xoshiro256StarStar,
-    crate::{
-        AddArc,
-        Empty,
-    },
-};
-
 /// Generate growing network.
 ///
 /// A growing network is a digraph that starts with a single vertex and adds a
@@ -42,12 +34,56 @@ use {
 ///
 /// Provide an implementation of
 /// [`growing_network`](GrowingNetwork::growing_network) that generates a
-/// growing network of a given `order` from a given `seed` OR implement
-/// [`AddArc`] and [`Empty`].
+/// growing network of a given `order` from a given `seed`.
 ///
 /// ```
 /// use {
 ///     graaf::{
+///         gen::prng::Xoshiro256StarStar,
+///         GrowingNetwork,
+///     },
+///     std::collections::BTreeSet,
+/// };
+///
+/// struct AdjacencyList {
+///     arcs: Vec<BTreeSet<usize>>,
+/// }
+///
+/// impl GrowingNetwork for AdjacencyList {
+///     fn growing_network(order: usize, seed: u64) -> Self {
+///         let mut arcs = Vec::with_capacity(order);
+///         let mut rng = Xoshiro256StarStar::new(seed);
+///
+///         arcs.push(BTreeSet::new());
+///
+///         for (u, v) in (1..order).zip(rng) {
+///             arcs.push(BTreeSet::from([usize::try_from(v)
+///                 .expect("conversion failed")
+///                 % u]));
+///         }
+///
+///         Self { arcs }
+///     }
+/// }
+///
+/// let digraph = AdjacencyList::growing_network(6, 0);
+///
+/// assert!(digraph.arcs.iter().eq(&[
+///     BTreeSet::new(),
+///     BTreeSet::from([0]),
+///     BTreeSet::from([0]),
+///     BTreeSet::from([1]),
+///     BTreeSet::from([0]),
+///     BTreeSet::from([2]),
+/// ]));
+/// ```
+///         
+/// Implementations can be built with the [`AddArc`] and [`Empty`] traits.
+///
+/// ```
+/// use {
+///     graaf::{
+///         gen::prng::Xoshiro256StarStar,
 ///         AddArc,
 ///         Empty,
 ///         GrowingNetwork,
@@ -70,6 +106,22 @@ use {
 ///         Self {
 ///             arcs: vec![BTreeSet::new(); order],
 ///         }
+///     }
+/// }
+///
+/// impl GrowingNetwork for AdjacencyList {
+///     fn growing_network(order: usize, seed: u64) -> Self {
+///         let mut digraph = Self::empty(order);
+///         let rng = Xoshiro256StarStar::new(seed);
+///
+///         for (u, v) in (1..order).zip(rng) {
+///             digraph.add_arc(
+///                 u,
+///                 usize::try_from(v).expect("conversion failed") % u,
+///             );
+///         }
+///
+///         digraph
 ///     }
 /// }
 ///
@@ -115,28 +167,4 @@ pub trait GrowingNetwork {
     /// ```
     #[must_use]
     fn growing_network(order: usize, seed: u64) -> Self;
-}
-
-impl<D> GrowingNetwork for D
-where
-    D: AddArc + Empty,
-{
-    /// # Panics
-    ///
-    /// * Panics if `order` is zero.
-    /// * Panics if the random number generator fails.
-    /// * Panics if conversion from `u64` to `usize` fails.
-    fn growing_network(order: usize, seed: u64) -> Self {
-        let mut digraph = D::empty(order);
-        let mut rng = Xoshiro256StarStar::new(seed);
-
-        for u in 1..order {
-            let v = rng.next().expect("RNG failed");
-            let v = usize::try_from(v).expect("conversion failed") % u;
-
-            digraph.add_arc(u, v);
-        }
-
-        digraph
-    }
 }

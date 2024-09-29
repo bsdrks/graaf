@@ -4,11 +4,16 @@ use {
     graaf::{
         AddArc,
         AdjacencyList,
+        AdjacencyMap,
         AdjacencyMatrix,
         Circuit,
+        EdgeList,
         Empty,
     },
-    std::collections::HashSet,
+    std::collections::{
+        BTreeSet,
+        HashSet,
+    },
 };
 
 fn main() {
@@ -19,10 +24,15 @@ pub struct AdjacencyListHashSet {
     pub arcs: Vec<HashSet<usize>>,
 }
 
+pub struct EdgeListBTreeSet {
+    pub arcs: BTreeSet<(usize, usize)>,
+    pub order: usize,
+}
+
 /// # Panics
 ///
 /// Panics if `order` is zero.
-fn circuit_adjacency_list_naive(order: usize) -> AdjacencyList {
+fn circuit_adjacency_list_add_arc_empty(order: usize) -> AdjacencyList {
     let mut digraph = AdjacencyList::empty(order);
 
     if order == 1 {
@@ -41,7 +51,9 @@ fn circuit_adjacency_list_naive(order: usize) -> AdjacencyList {
 /// # Panics
 ///
 /// Panics if `order` is zero.
-fn circuit_adjacency_list_hash_set(order: usize) -> AdjacencyListHashSet {
+fn circuit_adjacency_list_hash_set_collect(
+    order: usize,
+) -> AdjacencyListHashSet {
     assert!(order > 0, "a digraph has at least one vertex");
 
     if order == 1 {
@@ -57,22 +69,83 @@ fn circuit_adjacency_list_hash_set(order: usize) -> AdjacencyListHashSet {
     }
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
-fn adjacency_list_naive(order: usize) {
-    let _ = circuit_adjacency_list_naive(order);
+/// # Panics
+///
+/// Panics if `order` is zero.
+fn circuit_edge_list_btree_set_insert(order: usize) -> EdgeListBTreeSet {
+    assert!(order > 0, "a digraph has at least one vertex");
+
+    if order == 1 {
+        return EdgeListBTreeSet {
+            arcs: BTreeSet::new(),
+            order,
+        };
+    }
+
+    let mut arcs = BTreeSet::new();
+
+    for u in 0..order {
+        arcs.insert((u, (u + 1) % order));
+    }
+
+    EdgeListBTreeSet { arcs, order }
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
-fn adjacency_list_hash_set(order: usize) {
-    let _ = circuit_adjacency_list_hash_set(order);
+/// # Panics
+///
+/// Panics if `order` is zero.
+fn circuit_edge_list_btree_set_collect(order: usize) -> EdgeListBTreeSet {
+    assert!(order > 0, "a digraph has at least one vertex");
+
+    if order == 1 {
+        return EdgeListBTreeSet {
+            arcs: BTreeSet::new(),
+            order,
+        };
+    }
+
+    EdgeListBTreeSet {
+        arcs: (0..order).map(|u| (u, (u + 1) % order)).collect(),
+        order,
+    }
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+#[divan::bench(args = [10, 100, 1000, 10000, 100000, 1000000])]
+fn adjacency_list_add_arc_empty(order: usize) {
+    let _ = circuit_adjacency_list_add_arc_empty(order);
+}
+
+#[divan::bench(args = [10, 100, 1000, 10000, 100000, 1000000])]
+fn adjacency_list_hash_set_collect(order: usize) {
+    let _ = circuit_adjacency_list_hash_set_collect(order);
+}
+
+#[divan::bench(args = [10, 100, 1000, 10000, 100000, 1000000])]
 fn adjacency_list(n: usize) {
     let _ = AdjacencyList::circuit(n);
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+#[divan::bench(args = [10, 100, 1000, 10000, 100000, 1000000])]
+fn adjacency_map(n: usize) {
+    let _ = AdjacencyMap::circuit(n);
+}
+
+#[divan::bench(args = [10, 100, 1000, 10000, 100000, 1000000])]
 fn adjacency_matrix(n: usize) {
     let _ = AdjacencyMatrix::circuit(n);
+}
+
+#[divan::bench(args = [10, 100, 1000, 10000, 100000, 1000000])]
+fn edge_list(n: usize) {
+    let _ = EdgeList::circuit(n);
+}
+
+#[divan::bench(args = [10, 100, 1000, 10000, 100000, 1000000])]
+fn edge_list_btree_set_insert(n: usize) {
+    let _ = circuit_edge_list_btree_set_insert(n);
+}
+
+#[divan::bench(args = [10, 100, 1000, 10000, 100000, 1000000])]
+fn edge_list_btree_set_collect(n: usize) {
+    let _ = circuit_edge_list_btree_set_collect(n);
 }

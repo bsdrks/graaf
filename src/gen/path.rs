@@ -52,11 +52,6 @@
 //! assert!(AdjacencyList::path(4).arcs().eq([(0, 1), (1, 2), (2, 3)]));
 //! ```
 
-use crate::{
-    AddArc,
-    Empty,
-};
-
 /// Generate path digraphs.
 ///
 /// A path digraph is an arc chain that connects vertices in a linear sequence.
@@ -64,7 +59,42 @@ use crate::{
 /// # Implementing [`Path`] for a custom type
 ///
 /// Provide an implementation of [`path`](Path::path) that generates a path
-/// digraph of a given `order` OR implement [`AddArc`] and [`Empty`].
+/// digraph of a given `order`.
+///
+/// ```
+/// use {
+///     graaf::Path,
+///     std::{
+///         collections::BTreeSet,
+///         iter::once,
+///     },
+/// };
+///
+/// struct AdjacencyList {
+///     arcs: Vec<BTreeSet<usize>>,
+/// }
+///
+/// impl Path for AdjacencyList {
+///     fn path(order: usize) -> Self {
+///         Self {
+///             arcs: (0..order - 1)
+///                 .map(|u| BTreeSet::from([u + 1]))
+///                 .chain(once(BTreeSet::new()))
+///                 .collect(),
+///         }
+///     }
+/// }
+///
+/// let digraph = AdjacencyList::path(3);
+///
+/// assert!(digraph.arcs.iter().eq(&[
+///     BTreeSet::from([1]),
+///     BTreeSet::from([2]),
+///     BTreeSet::new()
+/// ]));
+/// ```
+///
+/// Implementations can be built with the [`AddArc`] and [`Empty`] traits.
 ///
 /// ```
 /// use {
@@ -91,6 +121,18 @@ use crate::{
 ///         Self {
 ///             arcs: vec![BTreeSet::new(); order],
 ///         }
+///     }
+/// }
+///
+/// impl Path for AdjacencyList {
+///     fn path(order: usize) -> Self {
+///         let mut digraph = Self::empty(order);
+///
+///         for u in 0..order - 1 {
+///             digraph.add_arc(u, u + 1);
+///         }
+///
+///         digraph
 ///     }
 /// }
 ///
@@ -160,28 +202,4 @@ pub trait Path {
     /// ```
     #[must_use]
     fn path(order: usize) -> Self;
-}
-
-impl<D> Path for D
-where
-    D: AddArc + Empty,
-{
-    /// # Panics
-    ///
-    /// Panics if `order` is zero.
-    fn path(order: usize) -> Self {
-        let mut digraph = D::empty(order);
-
-        if order == 1 {
-            return digraph;
-        }
-
-        for u in 0..order - 1 {
-            let v = u + 1;
-
-            digraph.add_arc(u, v);
-        }
-
-        digraph
-    }
 }

@@ -2,7 +2,7 @@
 
 ## Provisional roadmap
 
-- Add explicit colors to diagrams.
+- Check #[must_use] for all functions.
 - Benchmark against other Rust graph libraries.
 - Benchmark trait implementations.
 - Explain the pros and cons of each digraph representation.
@@ -18,6 +18,63 @@
 - Mention the order of traversal in the `Dijkstra` documentation.
 - Standardize the input type for search algorithms.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
+- Replace the blanket implementations with macro implementations for the types in `repr`. In the documentation, describe examples of both the direct and the trait-based implementation of the traits.
+
+## [0.95.0] - 2024-09-29
+
+Added
+
+- Add cases for all representations in the `gen/biclique` benchmark.
+- Add cases for all representations in the `gen/circuit` benchmark.
+- Add cases for all representations in the `gen/complete` benchmark.
+- Add cases for all representations in the `gen/cycle` benchmark.
+- Add cases for all representations in the `gen/erdos_renyi` benchmark.
+- Add cases for all representations in the `gen/path` benchmark.
+- Add cases for all representations in the `gen/random_tournament` benchmark.
+- Add cases for all representations in the `gen/star` benchmark.
+- Add benchmark `erdos_renyi`.
+- Add benchmark `growing_network`.
+- Add benchmark `wheel`.
+
+Changed
+
+- Breaking: `ErdosRenyi::erdos_renyi` panics if `p` is not in the range `[0, 1]`.
+- Breaking: replace `impl<D> Complete for D where D: AddArc + Empty` with `impl Complete for [AdjacencyList, AdjacencyMap, AdjacencyMatrix, EdgeList]`.
+- Breaking: replace `impl<D> Cycle for D where D: AddArc + Empty` with `impl ErdosRenyi for [AdjacencyList, AdjacencyMap, AdjacencyMatrix, EdgeList]`.
+- Breaking: replace `impl<D> ErdosRenyi for D where D: AddArc + Empty` with `impl ErdosRenyi for [AdjacencyList, AdjacencyMap, AdjacencyMatrix, EdgeList]`.
+- Breaking: replace `impl<D> GrowingNetwork for D where D: AddArc + Empty` with `impl GrowingNetwork for [AdjacencyList, AdjacencyMap, AdjacencyMatrix, EdgeList]`.
+- Breaking: replace `impl<D> Path for D where D: AddArc + Empty` with `impl Path for [AdjacencyList, AdjacencyMap, AdjacencyMatrix, EdgeList]`.
+- Breaking: replace `impl<D> RandomTournament for D where D: AddArc + Empty` with `impl RandomTournament for [AdjacencyList, AdjacencyMap, AdjacencyMatrix, EdgeList]`.
+- Breaking: replace `impl<D> Star for D where D: AddArc + Empty` with `impl Star for [AdjacencyList, AdjacencyMap, AdjacencyMatrix, EdgeList]`.
+- Breaking: replace `impl<D> Wheel for D where D: AddArc + Empty` with `impl Wheel for [AdjacencyList, AdjacencyMap, AdjacencyMatrix, EdgeList]`.
+- Speed up `AdjacencyList::biclique`.
+- Speed up `AdjacencyList::complete`.
+- Speed up `AdjacencyList::cycle`.
+- Speed up `AdjacencyList::erdos_renyi`.
+- Speed up `AdjacencyList::growing_network`.
+- Speed up `AdjacencyList::path`.
+- Speed up `AdjacencyList::random_tournament`.
+- Speed up `AdjacencyList::star`.
+- Speed up `AdjacencyList::wheel`.
+- Speed up `AdjacencyMap::biclique`.
+- Speed up `AdjacencyMap::complete`.
+- Speed up `AdjacencyMap::cycle`.
+- Speed up `AdjacencyMap::erdos_renyi`.
+- Speed up `AdjacencyMap::growing_network`.
+- Speed up `AdjacencyMap::path`.
+- Speed up `AdjacencyMap::random_tournament`.
+- Speed up `AdjacencyMap::star`.
+- Speed up `AdjacencyMap::wheel`.
+- Speed up `EdgeList::biclique`.
+- Speed up `EdgeList::circuit`.
+- Speed up `EdgeList::complete`.
+- Speed up `EdgeList::cycle`.
+- Speed up `EdgeList::erdos_renyi`.
+- Speed up `EdgeList::growing_network`.
+- Speed up `EdgeList::path`.
+- Speed up `EdgeList::random_tournament`.
+- Speed up `EdgeList::star`.
+- Speed up `EdgeList::wheel`.
 
 ## [0.94.1] - 2024-09-25
 

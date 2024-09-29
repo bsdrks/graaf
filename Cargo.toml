@@ -46,6 +46,16 @@ path = "benches/gen/empty.rs"
 harness = false
 
 [[bench]]
+name = "erdos_renyi"
+path = "benches/gen/erdos_renyi.rs"
+harness = false
+
+[[bench]]
+name = "growing_network"
+path = "benches/gen/growing_network.rs"
+harness = false
+
+[[bench]]
 name = "path"
 path = "benches/gen/path.rs"
 harness = false
@@ -58,6 +68,11 @@ harness = false
 [[bench]]
 name = "star"
 path = "benches/gen/star.rs"
+harness = false
+
+[[bench]]
+name = "wheel"
+path = "benches/gen/wheel.rs"
 harness = false
 
 [[bench]]
@@ -76,7 +91,7 @@ path = "benches/distances/bang_jensen_99.rs"
 harness = false
 
 [[bench]]
-name = "erdos_renyi"
+name = "distances_erdos_renyi"
 path = "benches/distances/erdos_renyi.rs"
 harness = false
 

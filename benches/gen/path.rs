@@ -2,45 +2,196 @@
 
 use {
     graaf::{
+        AddArc,
         AdjacencyList,
+        AdjacencyMap,
         AdjacencyMatrix,
+        EdgeList,
+        Empty,
         Path,
     },
-    std::collections::HashSet,
+    std::{
+        collections::{
+            BTreeSet,
+            HashSet,
+        },
+        iter::once,
+    },
 };
 
 fn main() {
     divan::main();
 }
 
+pub struct AdjacencyListBTreeSet {
+    pub arcs: Vec<BTreeSet<usize>>,
+}
+
 pub struct AdjacencyListHashSet {
     pub arcs: Vec<HashSet<usize>>,
 }
 
-fn path_adjacency_list_hash_set(order: usize) -> AdjacencyListHashSet {
-    let mut arcs = vec![HashSet::new(); order];
-
-    for u in 0..order - 1 {
-        let v = u + 1;
-
-        arcs[u].insert(v);
-        arcs[v].insert(u);
-    }
-
-    AdjacencyListHashSet { arcs }
+pub struct AdjacencyMapBTreeSet {
+    pub arcs: BTreeSet<(usize, BTreeSet<usize>)>,
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000])]
+pub struct EdgeListBTreeSet {
+    pub arcs: BTreeSet<(usize, usize)>,
+    pub order: usize,
+}
+
+/// # Panics
+///
+/// Panics if `order` is zero.
+fn path_adjacency_list_add_arc_empty(order: usize) -> AdjacencyList {
+    assert!(order > 0, "a digraph has at least one vertex");
+
+    let mut digraph = AdjacencyList::empty(order);
+
+    for u in 0..order - 1 {
+        digraph.add_arc(u, u + 1);
+    }
+
+    digraph
+}
+
+/// # Panics
+///
+/// Panics if `order` is zero.
+fn path_adjacency_list_btree_set_collect(
+    order: usize,
+) -> AdjacencyListBTreeSet {
+    assert!(order > 0, "a digraph has at least one vertex");
+
+    AdjacencyListBTreeSet {
+        arcs: (0..order - 1)
+            .map(|u| BTreeSet::from([u + 1]))
+            .chain(once(BTreeSet::new()))
+            .collect(),
+    }
+}
+
+/// # Panics
+///
+/// Panics if `order` is zero.
+fn path_adjacency_list_hash_set_collect(order: usize) -> AdjacencyListHashSet {
+    assert!(order > 0, "a digraph has at least one vertex");
+
+    AdjacencyListHashSet {
+        arcs: (0..order - 1)
+            .map(|u| HashSet::from([u + 1]))
+            .chain(once(HashSet::new()))
+            .collect(),
+    }
+}
+
+/// # Panics
+///
+/// Panics if `order` is zero.
+fn path_adjacency_map_add_arc_empty(order: usize) -> AdjacencyMap {
+    assert!(order > 0, "a digraph has at least one vertex");
+
+    let mut digraph = AdjacencyMap::empty(order);
+
+    for u in 0..order - 1 {
+        digraph.add_arc(u, u + 1);
+    }
+
+    digraph
+}
+
+/// # Panics
+///
+/// Panics if `order` is zero.
+fn path_adjacency_map_collect(order: usize) -> AdjacencyMapBTreeSet {
+    assert!(order > 0, "a digraph has at least one vertex");
+
+    AdjacencyMapBTreeSet {
+        arcs: (0..order - 1)
+            .map(|u| (u, BTreeSet::from([u + 1])))
+            .chain(once((order - 1, BTreeSet::new())))
+            .collect(),
+    }
+}
+
+/// # Panics
+///
+/// Panics if `order` is zero.
+fn path_edge_list_add_arc_empty(order: usize) -> EdgeList {
+    assert!(order > 0, "a digraph has at least one vertex");
+
+    let mut digraph = EdgeList::empty(order);
+
+    for u in 0..order - 1 {
+        digraph.add_arc(u, u + 1);
+    }
+
+    digraph
+}
+
+/// # Panics
+///
+/// Panics if `order` is zero.
+fn path_edge_list_btree_set_collect(order: usize) -> EdgeListBTreeSet {
+    assert!(order > 0, "a digraph has at least one vertex");
+
+    EdgeListBTreeSet {
+        arcs: (0..order - 1).map(|u| (u, u + 1)).collect(),
+        order,
+    }
+}
+
+#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
 fn adjacency_list(n: usize) {
     let _ = AdjacencyList::path(n);
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000])]
-fn adjacency_list_hash_set(n: usize) {
-    let _ = path_adjacency_list_hash_set(n);
+#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+fn adjacency_list_btree_set_collect(n: usize) {
+    let _ = path_adjacency_list_btree_set_collect(n);
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000])]
+#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+fn adjacency_list_add_arc_empty(n: usize) {
+    let _ = path_adjacency_list_add_arc_empty(n);
+}
+
+#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+fn adjacency_list_hash_set_collect(n: usize) {
+    let _ = path_adjacency_list_hash_set_collect(n);
+}
+
+#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+fn adjacency_map(n: usize) {
+    let _ = AdjacencyMap::path(n);
+}
+
+#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+fn adjacency_map_add_arc_empty(n: usize) {
+    let _ = path_adjacency_map_add_arc_empty(n);
+}
+
+#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+fn adjacency_map_collect(n: usize) {
+    let _ = path_adjacency_map_collect(n);
+}
+
+#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
 fn adjacency_matrix(n: usize) {
     let _ = AdjacencyMatrix::path(n);
+}
+
+#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+fn edge_list(n: usize) {
+    let _ = EdgeList::path(n);
+}
+
+#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+fn edge_list_add_arc_empty(n: usize) {
+    let _ = path_edge_list_add_arc_empty(n);
+}
+
+#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+fn edge_list_btree_list_collect(n: usize) {
+    let _ = path_edge_list_btree_set_collect(n);
 }

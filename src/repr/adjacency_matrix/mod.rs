@@ -110,6 +110,7 @@
 pub mod fixture;
 
 use crate::{
+    gen::prng::Xoshiro256StarStar,
     AddArc,
     AdjacencyList,
     AdjacencyMap,
@@ -118,9 +119,13 @@ use crate::{
     ArcsWeighted,
     Biclique,
     Circuit,
+    Complete,
     Converse,
+    Cycle,
     EdgeList,
     Empty,
+    ErdosRenyi,
+    GrowingNetwork,
     HasArc,
     Indegree,
     IsSimple,
@@ -128,10 +133,14 @@ use crate::{
     OutNeighbors,
     OutNeighborsWeighted,
     Outdegree,
+    Path,
+    RandomTournament,
     RemoveArc,
     Size,
+    Star,
     Union,
     Vertices,
+    Wheel,
 };
 
 /// A representation of an unweighted digraph.
@@ -384,6 +393,24 @@ impl Circuit for AdjacencyMatrix {
     }
 }
 
+impl Complete for AdjacencyMatrix {
+    /// # Panics
+    ///
+    /// Panics if `order` is zero.
+    fn complete(order: usize) -> Self {
+        let mut digraph = Self::empty(order);
+
+        for u in 0..order {
+            for v in (u + 1)..order {
+                digraph.add_arc(u, v);
+                digraph.add_arc(v, u);
+            }
+        }
+
+        digraph
+    }
+}
+
 impl Converse for AdjacencyMatrix {
     fn converse(&self) -> Self {
         let mut converse = Self::empty(self.order);
@@ -396,6 +423,32 @@ impl Converse for AdjacencyMatrix {
     }
 }
 
+impl Cycle for AdjacencyMatrix {
+    /// # Panics
+    ///
+    /// Panics if `order` is zero.
+    fn cycle(order: usize) -> Self {
+        let mut digraph = Self::empty(order);
+
+        if order == 1 {
+            return digraph;
+        }
+
+        for u in 0..order - 1 {
+            let v = u + 1;
+
+            digraph.add_arc(u, v);
+            digraph.add_arc(v, u);
+        }
+
+        let u = order - 1;
+
+        digraph.add_arc(u, 0);
+        digraph.add_arc(0, u);
+
+        digraph
+    }
+}
 impl Empty for AdjacencyMatrix {
     /// # Panics
     ///
@@ -409,6 +462,29 @@ impl Empty for AdjacencyMatrix {
             blocks: vec![0; n],
             order,
         }
+    }
+}
+
+impl ErdosRenyi for AdjacencyMatrix {
+    /// # Panics
+    ///
+    /// * Panics if `order` is zero.
+    /// * Panics if `p` isn't in `[0, 1]`.
+    fn erdos_renyi(order: usize, p: f64, seed: u64) -> Self {
+        assert!((0.0..=1.0).contains(&p), "p = {p} must be in [0, 1]");
+
+        let mut digraph = Self::empty(order);
+        let mut rng = Xoshiro256StarStar::new(seed);
+
+        for u in 0..order {
+            for v in (0..order).filter(|&v| u != v) {
+                if rng.next_f64() < p {
+                    digraph.add_arc(u, v);
+                }
+            }
+        }
+
+        digraph
     }
 }
 
@@ -473,6 +549,27 @@ where
 
         for (u, v) in arcs {
             digraph.add_arc(u, v);
+        }
+
+        digraph
+    }
+}
+
+impl GrowingNetwork for AdjacencyMatrix {
+    /// # Panics
+    ///
+    /// * Panics if `order` is zero.
+    /// * Panics if the random number generator fails.
+    /// * Panics if conversion from `u64` to `usize` fails.
+    fn growing_network(order: usize, seed: u64) -> Self {
+        let mut digraph = Self::empty(order);
+        let rng = Xoshiro256StarStar::new(seed);
+
+        for (u, v) in (1..order).zip(rng) {
+            digraph.add_arc(
+                u,
+                usize::try_from(v).expect("conversion failed") % u,
+            );
         }
 
         digraph
@@ -560,6 +657,47 @@ impl Outdegree for AdjacencyMatrix {
     }
 }
 
+impl Path for AdjacencyMatrix {
+    /// # Panics
+    ///
+    /// Panics if `order` is zero.
+    fn path(order: usize) -> Self {
+        let mut digraph = Self::empty(order);
+
+        if order == 1 {
+            return digraph;
+        }
+
+        for u in 0..order - 1 {
+            digraph.add_arc(u, u + 1);
+        }
+
+        digraph
+    }
+}
+
+impl RandomTournament for AdjacencyMatrix {
+    /// # Panics
+    ///
+    /// Panics if `order` is zero.
+    fn random_tournament(order: usize, seed: u64) -> Self {
+        let mut digraph = Self::empty(order);
+        let mut rng = Xoshiro256StarStar::new(seed);
+
+        for u in 0..order {
+            for v in (u + 1)..order {
+                if rng.next_bool() {
+                    digraph.add_arc(u, v);
+                } else {
+                    digraph.add_arc(v, u);
+                }
+            }
+        }
+
+        digraph
+    }
+}
+
 impl RemoveArc for AdjacencyMatrix {
     fn remove_arc(&mut self, u: usize, v: usize) -> bool {
         if u >= self.order || v >= self.order {
@@ -587,6 +725,22 @@ impl Size for AdjacencyMatrix {
     }
 }
 
+impl Star for AdjacencyMatrix {
+    /// # Panics
+    ///
+    /// Panics if `order` is zero.
+    fn star(order: usize) -> Self {
+        let mut digraph = Self::empty(order);
+
+        for u in 1..order {
+            digraph.add_arc(u, 0);
+            digraph.add_arc(0, u);
+        }
+
+        digraph
+    }
+}
+
 impl Union for AdjacencyMatrix {
     fn union(&self, other: &Self) -> Self {
         let (mut union, other) = if self.order() > other.order() {
@@ -606,6 +760,36 @@ impl Union for AdjacencyMatrix {
 impl Vertices for AdjacencyMatrix {
     fn vertices(&self) -> impl Iterator<Item = usize> {
         0..self.order
+    }
+}
+
+impl Wheel for AdjacencyMatrix {
+    /// # Panics
+    ///
+    /// Panics if `order` is less than `4`.
+    fn wheel(order: usize) -> Self {
+        assert!(order >= 4, "a wheel digraph has at least four vertices");
+
+        let mut digraph = Self::empty(order);
+
+        for u in 1..order - 1 {
+            let v = u + 1;
+
+            digraph.add_arc(u, v);
+            digraph.add_arc(v, u);
+        }
+
+        let u = order - 1;
+
+        digraph.add_arc(u, 1);
+        digraph.add_arc(1, u);
+
+        for u in 1..order {
+            digraph.add_arc(0, u);
+            digraph.add_arc(u, 0);
+        }
+
+        digraph
     }
 }
 

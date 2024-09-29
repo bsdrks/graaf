@@ -51,6 +51,7 @@
 //! use graaf::{
 //!     AdjacencyList,
 //!     Arcs,
+//!     Empty,
 //!     Star,
 //! };
 //!
@@ -64,11 +65,6 @@
 //! ]));
 //! ```
 
-use crate::{
-    AddArc,
-    Empty,
-};
-
 /// Generate star digraphs.
 ///
 /// A star digraph is a digraph with a single vertex connected to all others.
@@ -76,7 +72,42 @@ use crate::{
 /// # Implementing [`Star`] for a custom type
 ///
 /// Provide an implementation of [`star`](Star::star) that generates a star
-/// digraph of a given `order` OR implement [`AddArc`] and [`Empty`].
+/// digraph of a given `order`.
+///
+/// ```
+/// use {
+///     graaf::Star,
+///     std::collections::BTreeSet,
+/// };
+///
+/// struct AdjacencyList {
+///     arcs: Vec<BTreeSet<usize>>,
+/// }
+///
+/// impl Star for AdjacencyList {
+///     fn star(order: usize) -> Self {
+///         let mut arcs = Vec::with_capacity(order);
+///
+///         arcs.push((1..order).collect());
+///
+///         for _ in 1..order {
+///             arcs.push(BTreeSet::from([0]));
+///         }
+///
+///         Self { arcs }
+///     }
+/// }
+///
+/// let digraph = AdjacencyList::star(3);
+///
+/// assert!(digraph.arcs.iter().eq(&[
+///     BTreeSet::from([1, 2]),
+///     BTreeSet::from([0]),
+///     BTreeSet::from([0])
+/// ]));
+/// ```
+///
+/// Implementations can be built with the [`AddArc`] and [`Empty`] traits.
 ///
 /// ```
 /// use {
@@ -92,17 +123,30 @@ use crate::{
 ///     arcs: Vec<BTreeSet<usize>>,
 /// }
 ///
+/// impl Empty for AdjacencyList {
+///     fn empty(order: usize) -> Self {
+///         Self {
+///             arcs: vec![BTreeSet::new(); order],
+///         }
+///     }
+/// }
+///
 /// impl AddArc for AdjacencyList {
 ///     fn add_arc(&mut self, u: usize, v: usize) {
 ///         self.arcs[u].insert(v);
 ///     }
 /// }
 ///
-/// impl Empty for AdjacencyList {
-///     fn empty(order: usize) -> Self {
-///         Self {
-///             arcs: vec![BTreeSet::new(); order],
+/// impl Star for AdjacencyList {
+///     fn star(order: usize) -> Self {
+///         let mut digraph = Self::empty(order);
+///
+///         for u in 1..order {
+///             digraph.add_arc(u, 0);
+///             digraph.add_arc(0, u);
 ///         }
+///
+///         digraph
 ///     }
 /// }
 ///
@@ -184,23 +228,4 @@ pub trait Star {
     /// ```
     #[must_use]
     fn star(order: usize) -> Self;
-}
-
-impl<D> Star for D
-where
-    D: AddArc + Empty,
-{
-    /// # Panics
-    ///
-    /// Panics if `order` is zero.
-    fn star(order: usize) -> Self {
-        let mut digraph = D::empty(order);
-
-        for u in 1..order {
-            digraph.add_arc(0, u);
-            digraph.add_arc(u, 0);
-        }
-
-        digraph
-    }
 }

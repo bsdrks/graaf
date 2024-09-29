@@ -102,6 +102,7 @@ pub mod fixture;
 
 use {
     crate::{
+        gen::prng::Xoshiro256StarStar,
         AddArc,
         AdjacencyList,
         AdjacencyMatrix,
@@ -110,10 +111,14 @@ use {
         ArcsWeighted,
         Biclique,
         Circuit,
+        Complete,
         Converse,
+        Cycle,
         EdgeList,
         Empty,
+        ErdosRenyi,
         FilterVertices,
+        GrowingNetwork,
         HasArc,
         Indegree,
         IsSimple,
@@ -121,14 +126,24 @@ use {
         OutNeighbors,
         OutNeighborsWeighted,
         Outdegree,
+        Path,
+        RandomTournament,
         RemoveArc,
         Size,
+        Star,
         Union,
         Vertices,
+        Wheel,
     },
-    std::collections::{
-        BTreeMap,
-        BTreeSet,
+    std::{
+        collections::{
+            BTreeMap,
+            BTreeSet,
+        },
+        iter::{
+            once,
+            repeat,
+        },
     },
 };
 
@@ -287,17 +302,14 @@ impl Biclique for AdjacencyMap {
         let order = m + n;
         let clique_1 = (0..m).collect::<BTreeSet<_>>();
         let clique_2 = (m..order).collect::<BTreeSet<_>>();
-        let mut digraph = Self::empty(order);
 
-        for u in 0..m {
-            let _ = digraph.arcs.insert(u, clique_2.clone());
+        Self {
+            arcs: repeat(clique_2)
+                .take(m)
+                .chain(repeat(clique_1).take(n))
+                .enumerate()
+                .collect(),
         }
-
-        for u in m..order {
-            let _ = digraph.arcs.insert(u, clique_1.clone());
-        }
-
-        digraph
     }
 }
 
@@ -336,6 +348,48 @@ impl Converse for AdjacencyMap {
     }
 }
 
+impl Complete for AdjacencyMap {
+    /// # Panics
+    ///
+    /// Panics if `order` is zero.
+    fn complete(order: usize) -> Self {
+        assert!(order > 0, "a digraph has at least one vertex");
+
+        Self {
+            arcs: (0..order)
+                .map(|u| (u, (0..u).chain((u + 1)..order).collect()))
+                .collect(),
+        }
+    }
+}
+
+impl Cycle for AdjacencyMap {
+    /// # Panics
+    ///
+    /// Panics if `order` is zero.
+    fn cycle(order: usize) -> Self {
+        assert!(order > 0, "a digraph has at least one vertex");
+
+        if order == 1 {
+            return Self::trivial();
+        }
+
+        Self {
+            arcs: (0..order)
+                .map(|u| {
+                    (
+                        u,
+                        BTreeSet::from([
+                            (u + order - 1) % order,
+                            (u + 1) % order,
+                        ]),
+                    )
+                })
+                .collect(),
+        }
+    }
+}
+
 impl Empty for AdjacencyMap {
     /// # Panics
     ///
@@ -344,6 +398,33 @@ impl Empty for AdjacencyMap {
         assert!(order > 0, "a digraph has at least one vertex");
 
         Self::from(vec![BTreeSet::new(); order])
+    }
+}
+
+impl ErdosRenyi for AdjacencyMap {
+    /// # Panics
+    ///
+    /// * Panics if `order` is zero.
+    /// * Panics if `p` isn't in `[0, 1]`.
+    fn erdos_renyi(order: usize, p: f64, seed: u64) -> Self {
+        assert!(order > 0, "a digraph has at least one vertex");
+        assert!((0.0..=1.0).contains(&p), "p = {p} must be in [0, 1]");
+
+        let mut rng = Xoshiro256StarStar::new(seed);
+
+        Self {
+            arcs: (0..order)
+                .map(|u| {
+                    (
+                        u,
+                        (0..u)
+                            .chain((u + 1)..order)
+                            .filter(|_| rng.next_f64() < p)
+                            .collect(),
+                    )
+                })
+                .collect(),
+        }
     }
 }
 
@@ -431,6 +512,28 @@ impl FilterVertices for AdjacencyMap {
     }
 }
 
+impl GrowingNetwork for AdjacencyMap {
+    /// # Panics
+    ///
+    /// Panics if `order` is zero.
+    fn growing_network(order: usize, seed: u64) -> Self {
+        let mut rng = Xoshiro256StarStar::new(seed);
+
+        Self {
+            arcs: once((0, BTreeSet::new()))
+                .chain((1..order).map(|u| {
+                    (
+                        u,
+                        BTreeSet::from([usize::try_from(rng.next().unwrap())
+                            .expect("conversion failed")
+                            % u]),
+                    )
+                }))
+                .collect(),
+        }
+    }
+}
+
 impl HasArc for AdjacencyMap {
     fn has_arc(&self, u: usize, v: usize) -> bool {
         self.arcs.get(&u).map_or(false, |set| set.contains(&v))
@@ -498,6 +601,50 @@ impl Outdegree for AdjacencyMap {
     }
 }
 
+impl Path for AdjacencyMap {
+    /// # Panics
+    ///
+    /// Panics if `order` is zero.
+    fn path(order: usize) -> Self {
+        assert!(order > 0, "a digraph has at least one vertex");
+
+        if order == 1 {
+            return Self::trivial();
+        }
+
+        let last = order - 1;
+
+        Self {
+            arcs: (0..last)
+                .map(|u| (u, BTreeSet::from([u + 1])))
+                .chain(once((last, BTreeSet::new())))
+                .collect(),
+        }
+    }
+}
+
+impl RandomTournament for AdjacencyMap {
+    /// # Panics
+    ///
+    /// Panics if `order` is zero.
+    fn random_tournament(order: usize, seed: u64) -> Self {
+        let mut digraph = Self::empty(order);
+        let mut rng = Xoshiro256StarStar::new(seed);
+
+        for u in 0..order {
+            for v in (u + 1)..order {
+                if rng.next_bool() {
+                    digraph.add_arc(u, v);
+                } else {
+                    digraph.add_arc(v, u);
+                }
+            }
+        }
+
+        digraph
+    }
+}
+
 impl RemoveArc for AdjacencyMap {
     fn remove_arc(&mut self, u: usize, v: usize) -> bool {
         self.arcs.get_mut(&u).map_or(false, |set| set.remove(&v))
@@ -507,6 +654,21 @@ impl RemoveArc for AdjacencyMap {
 impl Size for AdjacencyMap {
     fn size(&self) -> usize {
         self.arcs.values().map(BTreeSet::len).sum()
+    }
+}
+
+impl Star for AdjacencyMap {
+    /// # Panics
+    ///
+    /// Panics if `order` is zero.
+    fn star(order: usize) -> Self {
+        assert!(order > 0, "a digraph has at least one vertex");
+
+        Self {
+            arcs: once((0, (1..order).collect()))
+                .chain((1..order).map(|u| (u, BTreeSet::from([0]))))
+                .collect(),
+        }
     }
 }
 
@@ -529,6 +691,32 @@ impl Union for AdjacencyMap {
 impl Vertices for AdjacencyMap {
     fn vertices(&self) -> impl Iterator<Item = usize> {
         self.arcs.keys().copied()
+    }
+}
+
+impl Wheel for AdjacencyMap {
+    /// # Panics
+    ///
+    /// Panics if `order` is less than `4`.
+    fn wheel(order: usize) -> Self {
+        assert!(order >= 4, "a wheel digraph has at least four vertices");
+
+        Self {
+            arcs: once((0, (1..order).collect()))
+                .chain((1..order).map(|u| {
+                    let last = order - 1;
+
+                    (
+                        u,
+                        BTreeSet::from([
+                            0,
+                            if u == 1 { last } else { u - 1 },
+                            if u == last { 1 } else { u + 1 },
+                        ]),
+                    )
+                }))
+                .collect(),
+        }
     }
 }
 

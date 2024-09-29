@@ -68,11 +68,6 @@
 //! ]));
 //! ```
 
-use crate::{
-    AddArc,
-    Empty,
-};
-
 /// Generate cycle digraphs.
 ///
 /// A cycle is a digraph with a single bidirectional cycle.
@@ -80,7 +75,54 @@ use crate::{
 /// # Implementing [`Cycle`] for a custom type
 ///
 /// Provide an implementation of [`cycle`](Cycle::cycle) that generates a cycle
-/// digraph of a given `order` OR implement [`AddArc`] and [`Empty`].
+/// digraph of a given `order`.
+///
+/// ```
+/// use {
+///     graaf::Cycle,
+///     std::collections::BTreeSet,
+/// };
+///
+/// struct AdjacencyList {
+///     arcs: Vec<BTreeSet<usize>>,
+/// }
+///
+/// impl Cycle for AdjacencyList {
+///     /// # Panics
+///     ///
+///     /// Panics if `order` is zero.
+///     fn cycle(order: usize) -> Self {
+///         assert!(order > 0, "a digraph must have at least one vertex");
+///
+///         if order == 1 {
+///             return Self {
+///                 arcs: vec![BTreeSet::new()],
+///             };
+///         }
+///
+///         Self {
+///             arcs: (0..order)
+///                 .map(|u| {
+///                     BTreeSet::from([
+///                         (u + order - 1) % order,
+///                         (u + 1) % order,
+///                     ])
+///                 })
+///                 .collect(),
+///         }
+///     }
+/// }
+///
+/// let digraph = AdjacencyList::cycle(3);
+///
+/// assert!(digraph.arcs.iter().eq(&[
+///     BTreeSet::from([2, 1]),
+///     BTreeSet::from([0, 2]),
+///     BTreeSet::from([1, 0]),
+/// ]));
+/// ```
+///
+/// Implementations can be built with the [`AddArc`] and [`Empty`] traits.
 ///
 /// ```
 /// use {
@@ -107,6 +149,22 @@ use crate::{
 ///         Self {
 ///             arcs: vec![BTreeSet::new(); order],
 ///         }
+///     }
+/// }
+///
+/// impl Cycle for AdjacencyList {
+///     /// # Panics
+///     ///
+///     /// Panics if `order` is zero.
+///     fn cycle(order: usize) -> Self {
+///         let mut digraph = Self::empty(order);
+///
+///         for u in 0..order {
+///             digraph.add_arc(u, (u + 1) % order);
+///             digraph.add_arc(u, (u + order - 1) % order);
+///         }
+///
+///         digraph
 ///     }
 /// }
 ///
@@ -214,34 +272,4 @@ pub trait Cycle {
     /// ```
     #[must_use]
     fn cycle(order: usize) -> Self;
-}
-
-impl<D> Cycle for D
-where
-    D: AddArc + Empty,
-{
-    /// # Panics
-    ///
-    /// Panics if `order` is zero.
-    fn cycle(order: usize) -> Self {
-        let mut digraph = D::empty(order);
-
-        if order == 1 {
-            return digraph;
-        }
-
-        for u in 0..order - 1 {
-            let v = u + 1;
-
-            digraph.add_arc(u, v);
-            digraph.add_arc(v, u);
-        }
-
-        let u = order - 1;
-
-        digraph.add_arc(u, 0);
-        digraph.add_arc(0, u);
-
-        digraph
-    }
 }

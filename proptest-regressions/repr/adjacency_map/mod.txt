@@ -5,3 +5,6 @@
 # It is recommended to check this file in to source control so that
 # everyone who runs the test benefits from these saved cases.
 cc e0c54eb69d2443e47faf2577b9939043b72bd83daf51953a51b7d815545e7977 # shrinks to (u, v) = (1, 2)
+cc 2920ae2bc23a5b89485d6d3dbac41a53705586ab335986b93c14c34af8c84e90 # shrinks to order = 2, seed = 793
+cc 71cc13c9219f5853d251240cfba30ba52ee96d7d907443095abd3653a6fe52bb # shrinks to order = 3, seed = 440
+cc d58d13b446b47fb310d6d218f0ae8c83a97ca74745ccc025477972e971acb384 # shrinks to order = 4

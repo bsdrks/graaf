@@ -7,3 +7,8 @@
 cc 8b58a95ead6886590d472bb8c24f0e9c6ee74851602024a90682f8548387a863 # shrinks to order = 1
 cc efd2228b0dceeade36db0e85fc69be3d3a6087e731bdd5c599acf4eb0b8059f7 # shrinks to order = 1, seed_1 = 0, seed_2 = 0
 cc ddc17bf1e57ddb7d97a6942590badfac9da9f0ec3a91e0a53041cb0d3ac57f94 # shrinks to order = 2
+cc e93a55574160333bc02025b99cf6eccc8e4a756cc110b11155272eb2cd0ecd39 # shrinks to order = 3
+cc 6b979a1df2894c7417f481b30578b889fc98732d493231d376f430e2e04ae8f8 # shrinks to order_1 = 17, order_2 = 17
+cc ef3715208240cc043bede2b5dcf506bf1a91c0d008eda2ea01fb54c7c5596af8 # shrinks to order = 3, seed = 352
+cc deb36b4e59daac48e3066154b01bebf07e1ec4ae8930823a8e74e907963fdfa8 # shrinks to order = 2, seed = 3
+cc 557dc4cb55fff02450dba1839bbc424970f4c0254dd0ba67de1a4e7ca4e157a8 # shrinks to order = 2, seed = 10

@@ -102,6 +102,7 @@ pub mod fixture;
 
 use {
     crate::{
+        gen::prng::Xoshiro256StarStar,
         AddArc,
         AdjacencyList,
         AdjacencyMap,
@@ -111,8 +112,12 @@ use {
         ArcsWeighted,
         Biclique,
         Circuit,
+        Complete,
         Converse,
+        Cycle,
         Empty,
+        ErdosRenyi,
+        GrowingNetwork,
         HasArc,
         Indegree,
         IsSimple,
@@ -120,12 +125,19 @@ use {
         OutNeighbors,
         OutNeighborsWeighted,
         Outdegree,
+        Path,
+        RandomTournament,
         RemoveArc,
         Size,
+        Star,
         Union,
         Vertices,
+        Wheel,
     },
-    std::collections::BTreeSet,
+    std::{
+        collections::BTreeSet,
+        iter::once,
+    },
 };
 
 /// A representation of an unweighted digraph.
@@ -282,16 +294,14 @@ impl Biclique for EdgeList {
         assert!(n > 0, "n = {n} must be greater than zero");
 
         let order = m + n;
-        let mut digraph = Self::empty(order);
 
-        for u in 0..m {
-            for v in m..order {
-                digraph.add_arc(u, v);
-                digraph.add_arc(v, u);
-            }
+        Self {
+            arcs: (0..m)
+                .flat_map(|u| (m..order).map(move |v| (u, v)))
+                .chain((m..order).flat_map(|u| (0..m).map(move |v| (u, v))))
+                .collect(),
+            order,
         }
-
-        digraph
     }
 }
 
@@ -300,19 +310,44 @@ impl Circuit for EdgeList {
     ///
     /// Panics if `order` is zero.
     fn circuit(order: usize) -> Self {
-        let mut digraph = Self::empty(order);
+        assert!(order > 0, "a digraph has at least one vertex");
 
         if order == 1 {
-            return digraph;
+            return Self {
+                arcs: BTreeSet::new(),
+                order,
+            };
         }
 
-        for u in 0..order - 1 {
-            digraph.add_arc(u, u + 1);
+        Self {
+            arcs: (0..order).map(|u| (u, (u + 1) % order)).collect(),
+            order,
+        }
+    }
+}
+
+impl Complete for EdgeList {
+    /// # Panics
+    ///
+    /// * Panics if `order` is zero.
+    fn complete(order: usize) -> Self {
+        assert!(order > 0, "a digraph has at least one vertex");
+
+        if order == 1 {
+            return Self {
+                arcs: BTreeSet::new(),
+                order,
+            };
         }
 
-        digraph.add_arc(order - 1, 0);
-
-        digraph
+        Self {
+            arcs: (0..order)
+                .flat_map(|u| {
+                    (0..u).chain((u + 1)..order).map(move |v| (u, v))
+                })
+                .collect(),
+            order,
+        }
     }
 }
 
@@ -328,6 +363,33 @@ impl Converse for EdgeList {
     }
 }
 
+impl Cycle for EdgeList {
+    /// # Panics
+    ///
+    /// Panics if `order` is zero.
+    fn cycle(order: usize) -> Self {
+        assert!(order > 0, "a digraph has at least one vertex");
+
+        if order == 1 {
+            return Self {
+                arcs: BTreeSet::new(),
+                order,
+            };
+        }
+
+        Self {
+            arcs: (0..order)
+                .flat_map(|u| {
+                    once((u + order - 1) % order)
+                        .chain(once((u + 1) % order))
+                        .map(move |v| (u, v))
+                })
+                .collect(),
+            order,
+        }
+    }
+}
+
 impl Empty for EdgeList {
     /// # Panics
     ///
@@ -337,6 +399,32 @@ impl Empty for EdgeList {
 
         Self {
             arcs: BTreeSet::new(),
+            order,
+        }
+    }
+}
+
+impl ErdosRenyi for EdgeList {
+    /// # Panics
+    ///
+    /// * Panics if `order` is zero.
+    /// * Panics if `p` isn't in `[0, 1]`.
+    fn erdos_renyi(order: usize, p: f64, seed: u64) -> Self {
+        assert!(order > 0, "a digraph has at least one vertex");
+        assert!((0.0..=1.0).contains(&p), "p = {p} must be in [0, 1]");
+
+        let mut rng = Xoshiro256StarStar::new(seed);
+
+        Self {
+            arcs: (0..order)
+                .flat_map(|u| {
+                    (0..u)
+                        .chain((u + 1)..order)
+                        .filter(|_| rng.next_f64() < p)
+                        .map(|v| (u, v))
+                        .collect::<Vec<_>>()
+                })
+                .collect(),
             order,
         }
     }
@@ -396,6 +484,31 @@ where
         Self {
             arcs,
             order: order + 1,
+        }
+    }
+}
+
+impl GrowingNetwork for EdgeList {
+    /// # Panics
+    ///
+    /// * Panics if `order` is zero.
+    fn growing_network(order: usize, seed: u64) -> Self {
+        assert!(order > 0, "a digraph has at least one vertex");
+
+        let mut rng = Xoshiro256StarStar::new(seed);
+
+        Self {
+            arcs: (1..order)
+                .map(|u| {
+                    (
+                        u,
+                        usize::try_from(rng.next().unwrap())
+                            .expect("conversion failed")
+                            % u,
+                    )
+                })
+                .collect(),
+            order,
         }
     }
 }
@@ -484,6 +597,49 @@ impl Outdegree for EdgeList {
     }
 }
 
+impl Path for EdgeList {
+    /// # Panics
+    ///
+    /// Panics if `order` is zero.
+    fn path(order: usize) -> Self {
+        assert!(order > 0, "a digraph has at least one vertex");
+
+        if order == 1 {
+            return Self {
+                arcs: BTreeSet::new(),
+                order,
+            };
+        }
+
+        Self {
+            arcs: (0..order - 1).map(|u| (u, u + 1)).collect(),
+            order,
+        }
+    }
+}
+
+impl RandomTournament for EdgeList {
+    /// # Panics
+    ///
+    /// * Panics if `order` is zero.
+    fn random_tournament(order: usize, seed: u64) -> Self {
+        let mut digraph = Self::empty(order);
+        let mut rng = Xoshiro256StarStar::new(seed);
+
+        for u in 0..order {
+            for v in (u + 1)..order {
+                if rng.next_bool() {
+                    digraph.add_arc(u, v);
+                } else {
+                    digraph.add_arc(v, u);
+                }
+            }
+        }
+
+        digraph
+    }
+}
+
 impl RemoveArc for EdgeList {
     fn remove_arc(&mut self, u: usize, v: usize) -> bool {
         self.arcs.remove(&(u, v))
@@ -493,6 +649,23 @@ impl RemoveArc for EdgeList {
 impl Size for EdgeList {
     fn size(&self) -> usize {
         self.arcs.len()
+    }
+}
+
+impl Star for EdgeList {
+    /// # Panics
+    ///
+    /// * Panics if `order` is zero.
+    fn star(order: usize) -> Self {
+        assert!(order > 0, "a digraph has at least one vertex");
+
+        Self {
+            arcs: (1..order)
+                .map(|v| (0, v))
+                .chain((1..order).map(|u| (u, 0)))
+                .collect(),
+            order,
+        }
     }
 }
 
@@ -515,6 +688,30 @@ impl Union for EdgeList {
 impl Vertices for EdgeList {
     fn vertices(&self) -> impl Iterator<Item = usize> {
         0..self.order
+    }
+}
+
+impl Wheel for EdgeList {
+    /// # Panics
+    ///
+    /// * Panics if `order` is less than `4`.
+    fn wheel(order: usize) -> Self {
+        assert!(order >= 4, "a wheel digraph has at least four vertices");
+
+        Self {
+            arcs: (1..order)
+                .map(|v| (0, v))
+                .chain((1..order).flat_map(|u| {
+                    let last = order - 1;
+
+                    once(0)
+                        .chain(once(if u == 1 { last } else { u - 1 }))
+                        .chain(once(if u == last { 1 } else { u + 1 }))
+                        .map(move |v| (u, v))
+                }))
+                .collect(),
+            order,
+        }
     }
 }
 
