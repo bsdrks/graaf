@@ -93,7 +93,7 @@
 /// assert!(digraph.arcs.len() <= 12);
 /// ```
 ///
-/// Implementations can be build with the [`AddArc`](crate::AddArc) and
+/// Implementations can be built with the [`AddArc`](crate::AddArc) and
 /// [`Empty`](crate::Empty) traits.
 ///
 /// ```
