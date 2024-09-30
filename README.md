@@ -29,7 +29,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.96.0"
+graaf = "0.97.0"
 ```
 
 ## Representations

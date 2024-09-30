@@ -111,6 +111,7 @@ use {
         ArcsWeighted,
         Biclique,
         Circuit,
+        Complement,
         Complete,
         Converse,
         Cycle,
@@ -328,6 +329,32 @@ impl Circuit for AdjacencyList {
             arcs: (0..order)
                 .map(|u| BTreeSet::from([(u + 1) % order]))
                 .collect::<Vec<_>>(),
+        }
+    }
+}
+
+impl Complement for AdjacencyList {
+    fn complement(&self) -> Self {
+        let order = self.order();
+        let vertices = (0..order).collect::<BTreeSet<_>>();
+
+        Self {
+            arcs: self
+                .arcs
+                .iter()
+                .enumerate()
+                .map(|(u, out_neighbors)| {
+                    let mut out_neighbors = vertices
+                        .clone()
+                        .difference(out_neighbors)
+                        .copied()
+                        .collect::<BTreeSet<usize>>();
+
+                    let _ = out_neighbors.remove(&u);
+
+                    out_neighbors
+                })
+                .collect(),
         }
     }
 }

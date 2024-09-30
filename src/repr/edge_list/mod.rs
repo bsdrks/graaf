@@ -112,6 +112,7 @@ use {
         ArcsWeighted,
         Biclique,
         Circuit,
+        Complement,
         Complete,
         Converse,
         Cycle,
@@ -321,6 +322,22 @@ impl Circuit for EdgeList {
 
         Self {
             arcs: (0..order).map(|u| (u, (u + 1) % order)).collect(),
+            order,
+        }
+    }
+}
+
+impl Complement for EdgeList {
+    fn complement(&self) -> Self {
+        let order = self.order();
+
+        Self {
+            arcs: (0..order)
+                .flat_map(|u| (0..u).chain(u + 1..order).map(move |v| (u, v)))
+                .collect::<BTreeSet<(usize, usize)>>()
+                .difference(&self.arcs)
+                .copied()
+                .collect(),
             order,
         }
     }

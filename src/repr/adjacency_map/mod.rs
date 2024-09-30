@@ -111,6 +111,7 @@ use {
         ArcsWeighted,
         Biclique,
         Circuit,
+        Complement,
         Complete,
         Converse,
         Cycle,
@@ -332,6 +333,46 @@ impl Circuit for AdjacencyMap {
     }
 }
 
+impl Complete for AdjacencyMap {
+    /// # Panics
+    ///
+    /// Panics if `order` is zero.
+    fn complete(order: usize) -> Self {
+        assert!(order > 0, "a digraph has at least one vertex");
+
+        Self {
+            arcs: (0..order)
+                .map(|u| (u, (0..u).chain((u + 1)..order).collect()))
+                .collect(),
+        }
+    }
+}
+
+impl Complement for AdjacencyMap {
+    fn complement(&self) -> Self {
+        let order = self.order();
+        let vertices = (0..order).collect::<BTreeSet<_>>();
+
+        Self {
+            arcs: self
+                .arcs
+                .iter()
+                .map(|(u, out_neighbors)| {
+                    let mut out_neighbors = vertices
+                        .clone()
+                        .difference(out_neighbors)
+                        .copied()
+                        .collect::<BTreeSet<_>>();
+
+                    let _ = out_neighbors.remove(u);
+
+                    (*u, out_neighbors)
+                })
+                .collect(),
+        }
+    }
+}
+
 impl Converse for AdjacencyMap {
     /// # Panics
     ///
@@ -345,21 +386,6 @@ impl Converse for AdjacencyMap {
         }
 
         converse
-    }
-}
-
-impl Complete for AdjacencyMap {
-    /// # Panics
-    ///
-    /// Panics if `order` is zero.
-    fn complete(order: usize) -> Self {
-        assert!(order > 0, "a digraph has at least one vertex");
-
-        Self {
-            arcs: (0..order)
-                .map(|u| (u, (0..u).chain((u + 1)..order).collect()))
-                .collect(),
-        }
     }
 }
 

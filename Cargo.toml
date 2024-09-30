@@ -1,6 +1,6 @@
 [package]
 name = "graaf"
-version = "0.96.0"
+version = "0.97.0"
 edition = "2021"
 authors = ["Bas Dirks <bas.dirks@protonmail.com>"]
 categories = ["algorithms", "data-structures", "mathematics"]
@@ -21,73 +21,43 @@ proptest = "1.5.0"
 opt-level = 3
 
 [[bench]]
-name = "biclique"
-path = "benches/gen/biclique.rs"
-harness = false
-
-[[bench]]
-name = "circuit"
-path = "benches/gen/circuit.rs"
-harness = false
-
-[[bench]]
-name = "complete"
-path = "benches/gen/complete.rs"
-harness = false
-
-[[bench]]
-name = "cycle"
-path = "benches/gen/cycle.rs"
-harness = false
-
-[[bench]]
-name = "empty"
-path = "benches/gen/empty.rs"
-harness = false
-
-[[bench]]
-name = "erdos_renyi"
-path = "benches/gen/erdos_renyi.rs"
-harness = false
-
-[[bench]]
-name = "growing_network"
-path = "benches/gen/growing_network.rs"
-harness = false
-
-[[bench]]
-name = "path"
-path = "benches/gen/path.rs"
-harness = false
-
-[[bench]]
-name = "random_tournament"
-path = "benches/gen/random_tournament.rs"
-harness = false
-
-[[bench]]
-name = "star"
-path = "benches/gen/star.rs"
-harness = false
-
-[[bench]]
-name = "wheel"
-path = "benches/gen/wheel.rs"
-harness = false
-
-[[bench]]
-name = "bang_jensen_94"
+name = "distances_bang_jensen_94"
 path = "benches/distances/bang_jensen_94.rs"
 harness = false
 
 [[bench]]
-name = "bang_jensen_96"
+name = "distances_bang_jensen_96"
 path = "benches/distances/bang_jensen_96.rs"
 harness = false
 
 [[bench]]
-name = "bang_jensen_99"
+name = "distances_bang_jensen_99"
 path = "benches/distances/bang_jensen_99.rs"
+harness = false
+
+[[bench]]
+name = "distances_kattis_bryr_1"
+path = "benches/distances/kattis_bryr_1.rs"
+harness = false
+
+[[bench]]
+name = "distances_kattis_bryr_2"
+path = "benches/distances/kattis_bryr_2.rs"
+harness = false
+
+[[bench]]
+name = "distances_kattis_bryr_3"
+path = "benches/distances/kattis_bryr_3.rs"
+harness = false
+
+[[bench]]
+name = "distances_kattis_crosscountry"
+path = "benches/distances/kattis_crosscountry.rs"
+harness = false
+
+[[bench]]
+name = "distances_kattis_shortestpath1"
+path = "benches/distances/kattis_shortestpath1.rs"
 harness = false
 
 [[bench]]
@@ -96,26 +66,61 @@ path = "benches/distances/erdos_renyi.rs"
 harness = false
 
 [[bench]]
-name = "kattis_bryr_1"
-path = "benches/distances/kattis_bryr_1.rs"
+name = "gen_biclique"
+path = "benches/gen/biclique.rs"
 harness = false
 
 [[bench]]
-name = "kattis_bryr_2"
-path = "benches/distances/kattis_bryr_2.rs"
+name = "gen_circuit"
+path = "benches/gen/circuit.rs"
 harness = false
 
 [[bench]]
-name = "kattis_bryr_3"
-path = "benches/distances/kattis_bryr_3.rs"
+name = "gen_complete"
+path = "benches/gen/complete.rs"
 harness = false
 
 [[bench]]
-name = "kattis_crosscountry"
-path = "benches/distances/kattis_crosscountry.rs"
+name = "gen_cycle"
+path = "benches/gen/cycle.rs"
 harness = false
 
 [[bench]]
-name = "kattis_shortestpath1"
-path = "benches/distances/kattis_shortestpath1.rs"
+name = "gen_empty"
+path = "benches/gen/empty.rs"
+harness = false
+
+[[bench]]
+name = "gen_erdos_renyi"
+path = "benches/gen/erdos_renyi.rs"
+harness = false
+
+[[bench]]
+name = "gen_growing_network"
+path = "benches/gen/growing_network.rs"
+harness = false
+
+[[bench]]
+name = "gen_path"
+path = "benches/gen/path.rs"
+harness = false
+
+[[bench]]
+name = "gen_random_tournament"
+path = "benches/gen/random_tournament.rs"
+harness = false
+
+[[bench]]
+name = "gen_star"
+path = "benches/gen/star.rs"
+harness = false
+
+[[bench]]
+name = "gen_wheel"
+path = "benches/gen/wheel.rs"
+harness = false
+
+[[bench]]
+name = "op_complement"
+path = "benches/op/complement.rs"
 harness = false

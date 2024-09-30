@@ -2,7 +2,6 @@
 
 ## Provisional roadmap
 
-- Check #[must_use] for all functions.
 - Benchmark against other Rust graph libraries.
 - Benchmark trait implementations.
 - Explain the pros and cons of each digraph representation.
@@ -19,6 +18,19 @@
 - Standardize the input type for search algorithms.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 - Replace the blanket implementations with macro implementations for the types in `repr`. In the documentation, describe examples of both the direct and the trait-based implementation of the traits.
+
+## [0.97.0] - 2024-09-30
+
+Added
+
+- Add benchmark `op/complement`.
+
+Changed
+
+- Breaking: replace `impl<D> Complement for D where D: AddArc + Empty + HasArc + Order` with `impl Complement for [AdjacencyList, AdjacencyMap, AdjacencyMatrix, EdgeList]`.
+- Speed up `AdjacencyList::complement`.
+- Speed up `AdjacencyMap::complement`.
+- Speed up `EdgeList::complement`.
 
 ## [0.96.0] - 2024-09-30
 

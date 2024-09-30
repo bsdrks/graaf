@@ -119,6 +119,7 @@ use crate::{
     ArcsWeighted,
     Biclique,
     Circuit,
+    Complement,
     Complete,
     Converse,
     Cycle,
@@ -395,6 +396,27 @@ impl Circuit for AdjacencyMatrix {
     }
 }
 
+impl Complement for AdjacencyMatrix {
+    fn complement(&self) -> Self {
+        let order = self.order();
+        let mut digraph = Self::empty(order);
+
+        for u in 0..order {
+            for v in u + 1..order {
+                if !self.has_arc(u, v) {
+                    digraph.add_arc(u, v);
+                }
+
+                if !self.has_arc(v, u) {
+                    digraph.add_arc(v, u);
+                }
+            }
+        }
+
+        digraph
+    }
+}
+
 impl Complete for AdjacencyMatrix {
     /// # Panics
     ///
@@ -451,6 +473,7 @@ impl Cycle for AdjacencyMatrix {
         digraph
     }
 }
+
 impl Empty for AdjacencyMatrix {
     /// # Panics
     ///

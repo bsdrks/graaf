@@ -28,13 +28,6 @@
 //! ]));
 //! ```
 
-use crate::{
-    AddArc,
-    Empty,
-    HasArc,
-    Order,
-};
-
 /// Return a digraph's complement.
 ///
 /// # Implementing [`Complement`] for a custom type
@@ -124,28 +117,4 @@ pub trait Complement {
     /// ```
     #[must_use]
     fn complement(&self) -> Self;
-}
-
-impl<D> Complement for D
-where
-    D: AddArc + Empty + HasArc + Order,
-{
-    fn complement(&self) -> Self {
-        let order = self.order();
-        let mut digraph = D::empty(order);
-
-        for u in 0..order {
-            for v in u + 1..order {
-                if !self.has_arc(u, v) {
-                    digraph.add_arc(u, v);
-                }
-
-                if !self.has_arc(v, u) {
-                    digraph.add_arc(v, u);
-                }
-            }
-        }
-
-        digraph
-    }
 }
