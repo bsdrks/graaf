@@ -20,6 +20,28 @@
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 - Replace the blanket implementations with macro implementations for the types in `repr`. In the documentation, describe examples of both the direct and the trait-based implementation of the traits.
 
+## [0.96.0] - 2024-09-30
+
+Changed
+
+- Breaking: mark `Bfs::new` as `must_use`.
+- Breaking: mark `BfsDist::new` as `must_use`.
+- Breaking: mark `BfsPred::new` as `must_use`.
+- Breaking: mark `BfsPred::predecessors` as `must_use`.
+- Breaking: mark `Dfs::new` as `must_use`.
+- Breaking: mark `DfsDist::new` as `must_use`.
+- Breaking: mark `DfsPred::new` as `must_use`.
+- Breaking: mark `DfsPred::predecessors` as `must_use`.
+- Breaking: mark `Dijkstra::new` as `must_use`.
+- Breaking: mark `DijkstraDist::new` as `must_use`.
+- Breaking: mark `DijkstraPred::new` as `must_use`.
+- Breaking: mark `Johnson75::circuits` as `must_use`.
+- Breaking: mark `Johnson75::new` as `must_use`.
+- Breaking: mark `Sinks::sinks` as `must_use`.
+- Breaking: mark `Sources::sources` as `must_use`.
+- Breaking: mark `Tarjan::components` as `must_use`.
+- Breaking: mark `Tarjan::new` as `must_use`.
+
 ## [0.95.0] - 2024-09-29
 
 Added

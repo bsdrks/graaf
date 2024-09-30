@@ -131,6 +131,23 @@ pub struct Dfs<'a, D> {
     visited: HashSet<usize>,
 }
 
+impl<'a, D> Dfs<'a, D> {
+    /// Construct a new depth-first search.
+    ///
+    /// # Arguments
+    ///
+    /// * `digraph`: The digraph.
+    /// * `sources`: The source vertices.
+    #[must_use]
+    pub fn new(digraph: &'a D, sources: Vec<usize>) -> Self {
+        Self {
+            digraph,
+            stack: sources,
+            visited: HashSet::new(),
+        }
+    }
+}
+
 impl<'a, D> Iterator for Dfs<'a, D>
 where
     D: OutNeighbors,
@@ -153,22 +170,6 @@ where
         }
 
         None
-    }
-}
-
-impl<'a, D> Dfs<'a, D> {
-    /// Construct a new depth-first search.
-    ///
-    /// # Arguments
-    ///
-    /// * `digraph`: The digraph.
-    /// * `sources`: The source vertices.
-    pub fn new(digraph: &'a D, sources: Vec<usize>) -> Self {
-        Self {
-            digraph,
-            stack: sources,
-            visited: HashSet::new(),
-        }
     }
 }
 

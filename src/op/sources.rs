@@ -92,6 +92,7 @@ pub trait Sources {
     ///
     /// assert!(digraph.sources().eq([0, 3]));
     /// ```
+    #[must_use]
     fn sources(&self) -> impl Iterator<Item = usize>;
 }
 

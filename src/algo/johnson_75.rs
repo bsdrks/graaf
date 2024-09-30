@@ -49,6 +49,7 @@ impl<'a, D> Johnson75<'a, D> {
     /// # Arguments
     ///
     /// * `a`: The digraph.
+    #[must_use]
     pub fn new(a: &'a D) -> Self
     where
         D: Order,
@@ -61,6 +62,7 @@ impl<'a, D> Johnson75<'a, D> {
         }
     }
 
+    #[must_use]
     fn is_blocked(&self, u: usize) -> bool {
         self.blocked.contains(&u)
     }
@@ -75,6 +77,7 @@ impl<'a, D> Johnson75<'a, D> {
         }
     }
 
+    #[must_use]
     fn circuit(
         &mut self,
         v: usize,
@@ -140,6 +143,7 @@ impl<'a, D> Johnson75<'a, D> {
     ///     vec![3, 4]
     /// ]));
     /// ```
+    #[must_use]
     pub fn circuits(&mut self) -> Vec<Vec<usize>>
     where
         D: FilterVertices + Order + OutNeighbors + Vertices,

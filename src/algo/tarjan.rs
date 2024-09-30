@@ -127,6 +127,7 @@ impl<'a, D> Tarjan<'a, D> {
     /// # Arguments
     ///
     /// * `digraph`: The digraph.
+    #[must_use]
     pub const fn new(digraph: &'a D) -> Self
     where
         D: OutNeighbors + Vertices,
@@ -190,6 +191,7 @@ impl<'a, D> Tarjan<'a, D> {
     ///     ])
     /// );
     /// ```
+    #[must_use]
     pub fn components(&mut self) -> &Vec<BTreeSet<usize>>
     where
         D: OutNeighbors + Vertices,

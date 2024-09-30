@@ -147,6 +147,7 @@ impl<'a, D> Bfs<'a, D> {
     ///
     /// * `digraph`: The digraph.
     /// * `sources`: The source vertices.
+    #[must_use]
     pub fn new<'b, T>(digraph: &'a D, sources: T) -> Self
     where
         T: IntoIterator<Item = &'b usize>,

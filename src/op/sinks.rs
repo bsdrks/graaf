@@ -91,6 +91,7 @@ pub trait Sinks {
     ///
     /// assert!(digraph.sinks().eq([2, 3]));
     /// ```
+    #[must_use]
     fn sinks(&self) -> impl Iterator<Item = usize>;
 }
 

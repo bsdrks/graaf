@@ -256,10 +256,12 @@ pub struct AdjacencyMatrix {
 }
 
 impl AdjacencyMatrix {
+    #[must_use]
     const fn mask(u: usize) -> usize {
         1 << (u & 63)
     }
 
+    #[must_use]
     const fn index(&self, u: usize, v: usize) -> usize {
         u * self.order + v
     }
