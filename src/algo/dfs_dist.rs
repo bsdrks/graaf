@@ -12,7 +12,7 @@
 //!
 //! The path from vertex `0` is red. `d` denotes the distances.
 //!
-//! ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_dist_1-0.87.4.svg?)
+//! ![A digraph and the distances between the source vertex and the other vertices along the depth-first traversal](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_dist_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -43,7 +43,7 @@
 //!
 //! The path from vertex `3` is red. The path from vertex `7` is blue.
 //!
-//! ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_dist_multi_source_1-0.87.4.svg?)
+//! ![A digraph and the distances between the source vertices and the other vertices along the depth-first traversal](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_dist_multi_source_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -91,7 +91,7 @@ type Step = (usize, usize);
 ///
 /// The path from vertex `0` is red. `d` denotes the distances.
 ///
-/// ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_dist_1-0.87.4.svg?)
+/// ![A digraph and the distances between the source vertex and the other vertices along the depth-first traversal](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_dist_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -122,7 +122,7 @@ type Step = (usize, usize);
 ///
 /// The path from vertex `3` is red. The path from vertex `7` is blue.
 ///
-/// ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_dist_multi_source_1-0.87.4.svg?)
+/// ![A digraph and the distances between the source vertices and the other vertices along the depth-first traversal](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_dist_multi_source_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -168,6 +168,7 @@ impl<'a, D> DfsDist<'a, D> {
     ///
     /// * `digraph`: The digraph.
     /// * `sources`: The source vertices.
+    #[must_use]
     pub fn new<'b, T>(digraph: &'a D, sources: T) -> Self
     where
         T: IntoIterator<Item = &'b usize>,

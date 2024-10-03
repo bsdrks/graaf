@@ -12,7 +12,7 @@
 //!
 //! The path from vertex `0` is red. `t` denotes the distances.
 //!
-//! ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_1-0.87.4.svg?)
+//! ![A digraph and the distances between the source vertex and the other vertices obtained by Dijkstra's algorithm](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -41,7 +41,7 @@
 //!
 //! The path from vertex `0` is red. The path from vertex `3` is blue.
 //!
-//! ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_multi_source_1-0.87.4.svg?)
+//! ![A digraph and the distances between the source vertices and the other vertices obtained by Dijkstra's algorithm](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_multi_source_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -98,7 +98,7 @@ type Step = (usize, usize);
 ///
 /// The path from vertex `0` is red. `d` denotes the distances.
 ///
-/// ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_1-0.87.4.svg?)
+/// ![A digraph and the distances between the source vertex and the other vertices obtained by Dijkstra's algorithm](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -127,7 +127,7 @@ type Step = (usize, usize);
 ///
 /// The path from vertex `0` is red. The path from vertex `3` is blue.
 ///
-/// ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_multi_source_1-0.87.4.svg?)
+/// ![A digraph and the distances between the source vertices and the other vertices obtained by Dijkstra's algorithm](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_multi_source_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -215,7 +215,7 @@ where
     /// The path from vertex `0` is red. The dashed arcs represent the shortest
     /// distances from the source. The gray arcs are not traversed.
     ///
-    /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_distances_1-0.93.1.svg?)
+    /// ![A digraph and the distances between the source vertex and the other vertices obtained by Dijkstra's algorithm](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_distances_1-0.93.1.svg?)
     ///
     /// ```
     /// use graaf::{
@@ -252,7 +252,7 @@ where
     /// dashed arcs represent the shortest distances from the sources. The gray
     /// arcs are not traversed.
     ///
-    /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_distances_multi_source_1-0.93.1.svg?)
+    /// ![A digraph and the distances between the source vertex and the other vertices obtained by Dijkstra's algorithm](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_distances_multi_source_1-0.93.1.svg?)
     ///
     /// ```
     /// use graaf::{

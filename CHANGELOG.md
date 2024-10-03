@@ -11,13 +11,16 @@
 - Improve doctest and add image to `DistanceMatrix::periphery`.
 - Improve doctest and add image to `PredecessorTree::search_by`.
 - Improve doctest and add image to `PredecessorTree::search`.
-- Improve image alt texts.
 - Mention the order of traversal in the `Bfs` documentation.
 - Mention the order of traversal in the `Dfs` documentation.
 - Mention the order of traversal in the `Dijkstra` documentation.
 - Standardize the input type for search algorithms.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
-- Replace the blanket implementations with macro implementations for the types in `repr`. In the documentation, describe examples of both the direct and the trait-based implementation of the traits.
+- Replace the blanket implementations in `op` with custom implementations for the types in `repr`. In the documentation, describe examples of both the direct and the trait-based implementation of the traits.
+
+## [0.97.1] - 2024-10-03
+
+- Improve image alt texts.
 
 ## [0.97.0] - 2024-09-30
 

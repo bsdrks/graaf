@@ -22,7 +22,7 @@
 //!
 //! Generate a wheel digraph of order `4`.
 //!
-//! ![Wheel digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/wheel_4-0.87.5.svg)
+//! ![A wheel digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/wheel_4-0.87.5.svg)
 //!
 //! ```
 //! use graaf::{
@@ -51,7 +51,7 @@
 //!
 //! Generate a wheel digraph of order `5`.
 //!
-//! ![Wheel digraph of order `5`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/wheel_5-0.87.5.svg)
+//! ![A wheel digraph of order `5`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/wheel_5-0.87.5.svg)
 //!
 //! ```
 //! use graaf::{
@@ -84,7 +84,7 @@
 //!
 //! Generate a wheel digraph of order `6`.
 //!
-//! ![Wheel digraph of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/wheel_6-0.87.5.svg)
+//! ![A wheel digraph of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/wheel_6-0.87.5.svg)
 //!
 //! ```
 //! use graaf::{
@@ -253,7 +253,7 @@ pub trait Wheel {
     ///
     /// Generate a wheel digraph of order `4`.
     ///
-    /// ![Wheel digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/wheel_4-0.87.5.svg)
+    /// ![A wheel digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/wheel_4-0.87.5.svg)
     ///
     /// ```
     /// use graaf::{
@@ -282,7 +282,7 @@ pub trait Wheel {
     ///
     /// Generate a wheel digraph of order `5`.
     ///
-    /// ![Wheel digraph of order `5`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/wheel_5-0.87.5.svg)
+    /// ![A wheel digraph of order `5`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/wheel_5-0.87.5.svg)
     ///
     /// ```
     /// use graaf::{
@@ -315,7 +315,7 @@ pub trait Wheel {
     ///
     /// Generate a wheel digraph of order `6`.
     ///
-    /// ![Wheel digraph of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/wheel_6-0.87.5.svg)
+    /// ![A wheel digraph of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/wheel_6-0.87.5.svg)
     ///
     /// ```
     /// use graaf::{

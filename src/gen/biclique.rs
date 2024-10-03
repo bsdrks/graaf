@@ -8,7 +8,7 @@
 //!
 //! Generate a biclique digraph with `m = 2` and `n = 3`.
 //!
-//! ![Biclique digraph with m = 2 and n = 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/biclique_2_3.svg?)
+//! ![A biclique digraph with m = 2 and n = 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/biclique_2_3.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -37,7 +37,7 @@
 //!
 //! Generate a biclique digraph with `m = 4` and `n = 2`.
 //!
-//! ![Biclique digraph with m = 4 and n = 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/biclique_4_2.svg?)
+//! ![A biclique digraph with m = 4 and n = 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/biclique_4_2.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -135,7 +135,7 @@ pub trait Biclique {
     ///
     /// Generate a biclique digraph with `m = 2` and `n = 3`.
     ///
-    /// ![Biclique digraph with m = 2 and n = 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/biclique_2_3.svg?)
+    /// ![A biclique digraph with m = 2 and n = 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/biclique_2_3.svg?)
     ///
     /// ```
     /// use graaf::{
@@ -164,7 +164,7 @@ pub trait Biclique {
     ///
     /// Generate a biclique digraph with `m = 4` and `n = 2`.
     ///
-    /// ![Biclique digraph with m = 4 and n = 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/biclique_4_2.svg?)
+    /// ![A biclique digraph with m = 4 and n = 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/biclique_4_2.svg?)
     ///
     /// ```
     /// use graaf::{
@@ -200,7 +200,7 @@ pub trait Biclique {
     ///
     /// The claw digraph is also known as K{1, 3}.
     ///
-    /// ![Claw digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/biclique_claw.svg)
+    /// ![The claw digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/biclique_claw.svg)
     ///
     /// # Examples
     ///
@@ -232,7 +232,7 @@ pub trait Biclique {
     ///
     /// The utility digraph is also known as K{3, 3}.
     ///
-    /// ![Utility digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/biclique_utility.svg)
+    /// ![The utility digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/biclique_utility.svg)
     ///
     /// # Examples
     ///

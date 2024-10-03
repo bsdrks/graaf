@@ -12,7 +12,7 @@
 //!
 //! The path from vertex `0` is red. `t` denotes the iteration indices.
 //!
-//! ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_1-0.87.4.svg?)
+//! ![A digraph and the distances between the source vertex and the vertices along the depth-first traversal](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -37,7 +37,7 @@
 //!
 //! The path from vertex `3` is red. The path from vertex `7` is blue.
 //!
-//! ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_multi_source_1-0.87.4.svg?)
+//! ![A digraph and the distances between the source vertices and the other vertices along the depth-first traversal](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_multi_source_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -75,7 +75,7 @@ use {
 ///
 /// The path from vertex `0` is red. `t` denotes the iteration indices.
 ///
-/// ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_1-0.87.4.svg?)
+/// ![A digraph and the distances between the source vertex and the vertices along the depth-first traversal](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -100,7 +100,7 @@ use {
 ///
 /// The path from vertex `3` is red. The path from vertex `7` is blue.
 ///
-/// ![DFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_multi_source_1-0.87.4.svg?)
+/// ![A digraph and the distances between the source vertices and the other vertices along the depth-first traversal](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_multi_source_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{

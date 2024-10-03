@@ -124,7 +124,7 @@ pub trait Degree {
     /// The maximum degree of this digraph is `6`. The vertex with the maximum
     /// degree is red.
     ///
-    /// ![Maximum degree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/max_degree-0.88.4.svg?)
+    /// ![A digraph and its maximum degree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/max_degree-0.88.4.svg?)
     ///
     /// ```
     /// use graaf::{
@@ -161,7 +161,7 @@ pub trait Degree {
     /// The minimum degree of this digraph is `2`. The vertex with the minimum
     /// degree is red.
     ///
-    /// ![Minimum degree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/min_degree-0.88.4.svg?)
+    /// ![A digraph and its minimum degree](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/min_degree-0.88.4.svg?)
     ///
     /// ```
     /// use graaf::{

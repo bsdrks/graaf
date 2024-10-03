@@ -13,7 +13,7 @@
 //!
 //! A valid digraph of order `5` and size `8`.
 //!
-//! ![Digraph of order `5` and size `8`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_1-0.87.4.svg?)
+//! ![A digraph of order `5` and size `8`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_1-0.87.4.svg?)
 //!
 //! Represented as a matrix.
 //!
@@ -55,7 +55,7 @@
 //! A self-loop isn't allowed. [`AdjacencyMatrix`] can't represent this
 //! pseudograph. The self-loop is red.
 //!
-//! ![Self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_self_loop-0.87.4.svg?)
+//! ![A pseudograph with a self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_self_loop-0.87.4.svg?)
 //!
 //! Adding a self-loop panics.
 //!
@@ -81,7 +81,7 @@
 //! Parallel arcs aren't allowed. [`AdjacencyMatrix`] can't represent this
 //! multigraph. The parallel arc is red.
 //!
-//! ![Parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_parallel_arcs-0.87.4.svg?)
+//! ![A multigraph with a parallel arc](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_parallel_arcs-0.87.4.svg?)
 //!
 //! Adding a parallel arc doesn't change the digraph.
 //!
@@ -157,11 +157,11 @@ use crate::{
 ///
 /// A valid digraph of order `5` and size `8`.
 ///
-/// ![Digraph of order `5` and size `8`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_1-0.87.4.svg?)
+/// ![A digraph of order `5` and size `8`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_1-0.87.4.svg?)
 ///
 /// Represented as a matrix.
 ///
-/// ![The matrix for the above digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_matrix_1-0.87.4.svg?)
+/// ![The matrix representation of the digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_matrix_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -199,7 +199,7 @@ use crate::{
 /// A self-loop isn't allowed. [`AdjacencyMatrix`] can't represent this
 /// pseudograph. The self-loop is red.
 ///
-/// ![Self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_self_loop-0.87.4.svg?)
+/// ![A pseudograph with a self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_self_loop-0.87.4.svg?)
 ///
 /// Adding a self-loop panics.
 ///
@@ -225,7 +225,7 @@ use crate::{
 /// Parallel arcs aren't allowed. [`AdjacencyMatrix`] can't represent this
 /// multigraph. The parallel arc is red.
 ///
-/// ![Parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_parallel_arcs-0.87.4.svg?)
+/// ![A multigraph with a parallel arc](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_matrix_parallel_arcs-0.87.4.svg?)
 ///
 /// Adding a parallel arc doesn't change the digraph.
 ///

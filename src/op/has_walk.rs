@@ -100,8 +100,10 @@ where
     D: HasArc,
 {
     fn has_walk(&self, walk: &[usize]) -> bool {
-        let mut arcs = walk.iter().zip(walk.iter().skip(1));
-
-        arcs.clone().count() > 0 && arcs.all(|(&u, &v)| self.has_arc(u, v))
+        walk.len() > 1
+            && walk
+                .iter()
+                .zip(walk.iter().skip(1))
+                .all(|(&u, &v)| self.has_arc(u, v))
     }
 }

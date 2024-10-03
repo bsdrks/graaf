@@ -7,7 +7,7 @@
 //!
 //! Generate a growing network of order `6`.
 //!
-//! ![Growing network of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/growing_network_1-0.89.3.svg)
+//! ![A growing network of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/growing_network_1-0.89.3.svg)
 //!
 //! ```
 //! use graaf::{
@@ -149,7 +149,7 @@ pub trait GrowingNetwork {
     ///
     /// Generate a growing network of order `6`.
     ///
-    /// ![Growing network of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/growing_network_1-0.89.3.svg)
+    /// ![A growing network of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/growing_network_1-0.89.3.svg)
     ///
     /// ```
     /// use graaf::{

@@ -7,7 +7,7 @@
 //!
 //! Generate a random tournament of order `6`.
 //!
-//! ![Random tournament of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/random_tournament_1-0.89.2.svg?)
+//! ![A random tournament of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/random_tournament_1-0.89.2.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -174,7 +174,7 @@ pub trait RandomTournament {
     ///
     /// Generate a random tournament of order `6`.
     ///
-    /// ![Random tournament of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/random_tournament_1-0.89.2.svg?)
+    /// ![A random tournament of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/random_tournament_1-0.89.2.svg?)
     ///
     /// ```
     /// use graaf::{

@@ -6,15 +6,15 @@
 //!
 //! The cycle digraph:
 //!
-//! ![Cycle digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/union_cycle_1-0.88.4.svg?)
+//! ![A cycle digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/union_cycle_1-0.88.4.svg?)
 //!
 //! The star digraph:
 //!
-//! ![Star digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/union_star_1-0.88.4.svg?)
+//! ![A star digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/union_star_1-0.88.4.svg?)
 //!
 //! The union, a wheel digraph:
 //!
-//! ![Wheel digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/union_union_1-0.88.4.svg?)
+//! ![The union forms a wheel digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/union_union_1-0.88.4.svg?)
 //!
 //! ```
 //! use {
@@ -129,15 +129,15 @@ pub trait Union {
     ///
     /// The cycle digraph:
     ///
-    /// ![Cycle digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/union_cycle_1-0.88.4.svg?)
+    /// ![A cycle digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/union_cycle_1-0.88.4.svg?)
     ///
     /// The star digraph:
     ///
-    /// ![Star digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/union_star_1-0.88.4.svg?)
+    /// ![A star digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/union_star_1-0.88.4.svg?)
     ///
     /// The union, a wheel digraph:
     ///
-    /// ![Wheel digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/union_union_1-0.88.4.svg?)
+    /// ![The union forms a Wheel digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/union_union_1-0.88.4.svg?)
     ///
     /// ```
     /// use {

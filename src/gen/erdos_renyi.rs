@@ -10,7 +10,7 @@
 //! Generate a random Erdős-Rényi digraph of order `6` with a probability of
 //! `0.5`.
 //!
-//! ![Random Erdős-Rényi digraph of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/erdos_renyi_1-0.89.2.svg?)
+//! ![A random Erdős-Rényi digraph of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/erdos_renyi_1-0.89.2.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -169,7 +169,7 @@ pub trait ErdosRenyi {
     /// Generate a random Erdős-Rényi digraph of order `6` with a probability
     /// of `0.5`.
     ///
-    /// ![Random Erdős-Rényi digraph of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/erdos_renyi_1-0.89.2.svg?)
+    /// ![A random Erdős-Rényi digraph of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/erdos_renyi_1-0.89.2.svg?)
     ///
     /// ```
     /// use graaf::{

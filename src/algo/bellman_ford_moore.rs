@@ -13,7 +13,7 @@
 //! The shortest path from vertex `0` to `4` is red. The dashed arcs represent
 //! the other shortest distances.
 //!
-//! ![Bellman-Ford-Moore](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_1-0.87.4.svg?)
+//! ![A digraph and the shortest distances between the source vertex and the other vertices](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -47,7 +47,7 @@
 //! There is no shortest path between vertices `0` and the other vertices due
 //! to the negative cycle.
 //!
-//! ![Bellman-Ford-Moore](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_2-0.87.4.svg)
+//! ![A digraph with a negative cycle](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_2-0.87.4.svg)
 //!
 //! ```
 //! use graaf::{
@@ -95,7 +95,7 @@ use crate::{
 /// The shortest path from vertex `0` to `4` is red. The dashed arcs represent
 /// the other shortest distances.
 ///
-/// ![Bellman-Ford-Moore](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_1-0.87.4.svg?)
+/// ![A digraph and the shortest distances between the source vertex and the other vertices](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -129,7 +129,7 @@ use crate::{
 /// There is no shortest path between vertices `0` and the other vertices due
 /// to the negative cycle.
 ///
-/// ![Bellman-Ford-Moore](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_2-0.87.4.svg)
+/// ![A digraph with a negative cycle](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_2-0.87.4.svg)
 ///
 /// ```
 /// use graaf::{
@@ -191,7 +191,7 @@ impl<'a, D> BellmanFordMoore<'a, D> {
     /// The shortest path from vertex `0` to `4` is red. The dashed arcs
     /// represent the other shortest distances.
     ///
-    /// ![Bellman-Ford-Moore](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_1-0.87.4.svg?)
+    /// ![A digraph and the shortest distances between the source vertex and the other vertices](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_1-0.87.4.svg?)
     ///
     /// ```
     /// use graaf::{
@@ -225,7 +225,7 @@ impl<'a, D> BellmanFordMoore<'a, D> {
     /// There is no shortest path between vertices `0` and the other vertices
     /// due to the negative cycle.
     ///
-    /// ![Bellman-Ford-Moore](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_2-0.87.4.svg)
+    /// ![A digraph with a negative cycle](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bellman_ford_moore_2-0.87.4.svg)
     ///
     /// ```
     /// use graaf::{

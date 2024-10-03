@@ -12,7 +12,7 @@
 //!
 //! The path from vertex `0` is red. `t` denotes the iteration indices.
 //!
-//! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_1-0.87.4.svg?)
+//! ![A digraph and the breadth-first search from vertex `0`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -37,7 +37,7 @@
 //!
 //! The path from vertex `0` is red. The path from vertex `1` is blue.
 //!
-//! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_multi_source_1-0.87.4.svg?)
+//! ![A digraph and a breadth-first traversal from two source vertices](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_multi_source_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -83,7 +83,7 @@ use {
 ///
 /// The path from vertex `0` is red. `t` denotes the iteration indices.
 ///
-/// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_1-0.87.4.svg?)
+/// ![A digraph and the breadth-first search from vertex `0`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -108,7 +108,7 @@ use {
 ///
 /// The path from vertex `0` is red. The path from vertex `1` is blue.
 ///
-/// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_multi_source_1-0.87.4.svg?)
+/// ![A digraph and a breadth-first traversal from two source vertices](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_multi_source_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{

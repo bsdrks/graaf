@@ -6,7 +6,7 @@
 //!
 //! There are three strongly connected components in this digraph:
 //!
-//! ![Tarjan](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/tarjan_1-0.87.4.svg?)
+//! ![A digraph and its strongly connected components](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/tarjan_1-0.87.4.svg?)
 //!
 //! ```
 //! use {
@@ -68,7 +68,7 @@ use {
 ///
 /// There are three strongly connected components in this digraph:
 ///
-/// ![Tarjan](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/tarjan_1-0.87.4.svg?)
+/// ![A digraph and its strongly connected components](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/tarjan_1-0.87.4.svg?)
 ///
 /// ```
 /// use {
@@ -149,7 +149,7 @@ impl<'a, D> Tarjan<'a, D> {
     ///
     /// There are three strongly connected components in this digraph:
     ///
-    /// ![Tarjan](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/tarjan_1-0.87.4.svg?)
+    /// ![A digraph and its strongly connected components](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/tarjan_1-0.87.4.svg?)
     ///
     /// ```
     /// use {

@@ -6,7 +6,7 @@
 //!
 //! Generate a [`biclique`](Biclique] digraph with `m = 2` and `n = 3`.
 //!
-//! ![Biclique digraph with m = 2 and n = 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/biclique_2_3.svg?)
+//! ![A biclique digraph with m = 2 and n = 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/biclique_2_3.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -35,7 +35,7 @@
 //!
 //! Generate a [`circuit`](Circuit) digraph of order `4`.
 //!
-//! ![Circuit digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_4.svg?)
+//! ![A circuit digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -56,7 +56,7 @@
 //!
 //! Generate a [`complete`](Complete) digraph of order `4`.
 //!
-//! ![Complete digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_4.svg?)
+//! ![A complete digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -85,7 +85,7 @@
 //!
 //! Generate a [`cycle`](Cycle) digraph of order `4`.
 //!
-//! ![Cycle digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_4.svg?)
+//! ![A cycle digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -110,7 +110,7 @@
 //!
 //! Generate an [`empty`](Empty) digraph of order `4`.
 //!
-//! ![Empty digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_4.svg?)
+//! ![An empty digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -127,7 +127,7 @@
 //! Generate a random [`Erdős-Rényi`](ErdosRenyi) digraph of order `6` with a
 //! probability of `0.5`.
 //!
-//! ![Random Erdős-Rényi digraph of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/erdos_renyi_1-0.89.2.svg?)
+//! ![A random Erdős-Rényi digraph of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/erdos_renyi_1-0.89.2.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -162,7 +162,7 @@
 //!
 //! Generate a [`growing network`](GrowingNetwork) digraph of order `6`.
 //!
-//! ![Growing network of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/growing_network_1-0.89.3.svg?)
+//! ![A growing network of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/growing_network_1-0.89.3.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -184,7 +184,7 @@
 //!
 //! Generate a [`path`](Path) digraph of order `4`.
 //!
-//! ![Path digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/path_4.svg?)
+//! ![A path digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/path_4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -200,7 +200,7 @@
 //!
 //! Generate a [`random tournament`](RandomTournament) digraph of order `6`.
 //!
-//! ![Random tournament of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/random_tournament_1-0.89.2.svg?)
+//! ![A random tournament of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/random_tournament_1-0.89.2.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -234,7 +234,7 @@
 //!
 //! Generate a [`star`](Star) digraph of order `4`.
 //!
-//! ![Star digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_4.svg?)
+//! ![A star digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -257,7 +257,7 @@
 //!
 //! Generate a [`wheel`](Wheel) digraph of order `4`.
 //!
-//! ![Wheel digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/wheel_4-0.87.5.svg?)
+//! ![A wheel digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/wheel_4-0.87.5.svg?)
 //!
 //! ```
 //! use graaf::{

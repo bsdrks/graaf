@@ -8,7 +8,7 @@
 //!
 //! Generate a cycle digraph of order `2`.
 //!
-//! ![Cycle digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_2.svg)
+//! ![A cycle digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_2.svg)
 //!
 //! ```
 //! use graaf::{
@@ -24,7 +24,7 @@
 //!
 //! Generate a cycle digraph of order `3`.
 //!
-//! ![Cycle digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_3.svg)
+//! ![A cycle digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_3.svg)
 //!
 //! ```
 //! use graaf::{
@@ -47,7 +47,7 @@
 //!
 //! Generate a cycle digraph of order `4`.
 //!
-//! ![Cycle digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_4.svg)
+//! ![A cycle digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_4.svg)
 //!
 //! ```
 //! use graaf::{
@@ -212,7 +212,7 @@ pub trait Cycle {
     ///
     /// Generate a cycle digraph of order `2`.
     ///
-    /// ![Cycle digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_2.svg)
+    /// ![A cycle digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_2.svg)
     ///
     /// ```
     /// use graaf::{
@@ -228,7 +228,7 @@ pub trait Cycle {
     ///
     /// Generate a cycle digraph of order `3`.
     ///
-    /// ![Cycle digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_3.svg)
+    /// ![A cycle digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_3.svg)
     ///
     /// ```
     /// use graaf::{
@@ -251,7 +251,7 @@ pub trait Cycle {
     ///
     /// Generate a cycle digraph of order `4`.
     ///
-    /// ![Cycle digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_4.svg)
+    /// ![A cycle digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/cycle_4.svg)
     ///
     /// ```
     /// use graaf::{

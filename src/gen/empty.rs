@@ -8,7 +8,7 @@
 //!
 //! Generate an empty digraph of order `2`.
 //!
-//! ![Empty digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_2.svg)
+//! ![An empty digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_2.svg)
 //!
 //! ```
 //! use graaf::{
@@ -24,7 +24,7 @@
 //!
 //! Generate an empty digraph of order `3`.
 //!
-//! ![Empty digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_3.svg)
+//! ![An empty digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_3.svg)
 //!
 //! ```
 //! use graaf::{
@@ -40,7 +40,7 @@
 //!
 //! Generate an empty digraph of order `4`.
 //!
-//! ![Empty digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_4.svg)
+//! ![An empty digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_4.svg)
 //!
 //! ```
 //! use graaf::{
@@ -105,7 +105,7 @@ pub trait Empty {
     ///
     /// Generate an empty digraph of order `2`.
     ///
-    /// ![Empty digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_2.svg)
+    /// ![An empty digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_2.svg)
     ///
     /// ```
     /// use graaf::{
@@ -121,7 +121,7 @@ pub trait Empty {
     ///
     /// Generate an empty digraph of order `3`.
     ///
-    /// ![Empty digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_3.svg)
+    /// ![An empty digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_3.svg)
     ///
     /// ```
     /// use graaf::{
@@ -137,7 +137,7 @@ pub trait Empty {
     ///
     /// Generate an empty digraph of order `4`.
     ///
-    /// ![Empty digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_4.svg)
+    /// ![An empty digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/empty_4.svg)
     ///
     /// ```
     /// use graaf::{

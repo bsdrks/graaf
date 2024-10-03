@@ -8,7 +8,7 @@
 //!
 //! A valid digraph of order `5` and size `8`.
 //!
-//! ![Digraph of order `5` and size `8`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_1.svg?)
+//! ![A digraph of order `5` and size `8`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_1.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -46,7 +46,7 @@
 //! A self-loop isn't allowed. [`AdjacencyMap`] can't represent this
 //! pseudograph. The self-loop is red.
 //!
-//! ![Self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_self_loop.svg?)
+//! ![A pseudograph with a self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_self_loop.svg?)
 //!
 //! Adding a self-loop panics.
 //!
@@ -72,7 +72,7 @@
 //! Parallel arcs aren't allowed. [`AdjacencyMap`] can't represent this
 //! multigraph. The parallel arc is red.
 //!
-//! ![Parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_parallel_arcs.svg?)
+//! ![A multigraph with a parallel arc](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_parallel_arcs.svg?)
 //!
 //! Adding a parallel arc doesn't change the digraph.
 //!
@@ -156,7 +156,7 @@ use {
 ///
 /// A valid digraph of order `5` and size `8`.
 ///
-/// ![Digraph of order `5` and size `8`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_1.svg?)
+/// ![A digraph of order `5` and size `8`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_1.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -194,7 +194,7 @@ use {
 /// A self-loop isn't allowed. [`AdjacencyMap`] can't represent this
 /// pseudograph. The self-loop is red.
 ///
-/// ![Self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_self_loop.svg?)
+/// ![A pseudograph with a self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_self_loop.svg?)
 ///
 /// Adding a self-loop panics.
 ///
@@ -220,7 +220,7 @@ use {
 /// Parallel arcs aren't allowed. [`AdjacencyMap`] can't represent this
 /// multigraph. The parallel arc is red.
 ///
-/// ![Parallel arcs](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_parallel_arcs.svg?)
+/// ![A multigraph with a parallel arc](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_parallel_arcs.svg?)
 ///
 /// Adding a parallel arc doesn't change the digraph.
 ///

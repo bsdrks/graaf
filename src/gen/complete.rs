@@ -8,7 +8,7 @@
 //!
 //! Generate a complete digraph of order `2`.
 //!
-//! ![Complete digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_2.svg)
+//! ![A complete digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_2.svg)
 //!
 //! ```
 //! use graaf::{
@@ -24,7 +24,7 @@
 //!
 //! Generate a complete digraph of order `3`.
 //!
-//! ![Complete digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_3.svg)
+//! ![A complete digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_3.svg)
 //!
 //! ```
 //! use graaf::{
@@ -47,7 +47,7 @@
 //!
 //! Generate a complete digraph of order `4`.
 //!
-//! ![Complete digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_4.svg)
+//! ![A complete digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_4.svg)
 //!
 //! ```
 //! use graaf::{
@@ -177,7 +177,7 @@ pub trait Complete {
     ///
     /// Generate a complete digraph of order `2`.
     ///
-    /// ![Complete digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_2.svg)
+    /// ![A complete digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_2.svg)
     ///
     /// ```
     /// use graaf::{
@@ -193,7 +193,7 @@ pub trait Complete {
     ///
     /// Generate a complete digraph of order `3`.
     ///
-    /// ![Complete digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_3.svg)
+    /// ![A complete digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_3.svg)
     ///
     /// ```
     /// use graaf::{
@@ -216,7 +216,7 @@ pub trait Complete {
     ///
     /// Generate a complete digraph of order `4`.
     ///
-    /// ![Complete digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_4.svg)
+    /// ![A complete digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/complete_4.svg)
     ///
     /// ```
     /// use graaf::{

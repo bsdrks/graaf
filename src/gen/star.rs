@@ -8,7 +8,7 @@
 //!
 //! Generate a star digraph of order `2`.
 //!
-//! ![Star digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_2.svg)
+//! ![A star digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_2.svg)
 //!
 //! ```
 //! use graaf::{
@@ -24,7 +24,7 @@
 //!
 //! Generate a star digraph of order `3`.
 //!
-//! ![Star digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_3.svg)
+//! ![A star digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_3.svg)
 //!
 //! ```
 //! use graaf::{
@@ -45,7 +45,7 @@
 //!
 //! Generate a star digraph of order `4`.
 //!
-//! ![Star digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_4.svg)
+//! ![A star digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_4.svg)
 //!
 //! ```
 //! use graaf::{
@@ -172,7 +172,7 @@ pub trait Star {
     ///
     /// Generate a star digraph of order `2`.
     ///
-    /// ![Star digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_2.svg)
+    /// ![A star digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_2.svg)
     ///
     /// ```
     /// use graaf::{
@@ -188,7 +188,7 @@ pub trait Star {
     ///
     /// Generate a star digraph of order `3`.
     ///
-    /// ![Star digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_3.svg)
+    /// ![A star digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_3.svg)
     ///
     /// ```
     /// use graaf::{
@@ -209,7 +209,7 @@ pub trait Star {
     ///
     /// Generate a star digraph of order `4`.
     ///
-    /// ![Star digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_4.svg)
+    /// ![A star digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/star_4.svg)
     ///
     /// ```
     /// use graaf::{

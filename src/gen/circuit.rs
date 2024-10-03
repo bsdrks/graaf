@@ -8,7 +8,7 @@
 //!
 //! Generate a circuit digraph of order `2`.
 //!
-//! ![Circuit digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_2.svg)
+//! ![A circuit digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_2.svg)
 //!
 //! ```
 //! use graaf::{
@@ -24,7 +24,7 @@
 //!
 //! Generate a circuit digraph of order `3`.
 //!
-//! ![Circuit digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_3.svg)
+//! ![A circuit digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_3.svg)
 //!
 //! ```
 //! use graaf::{
@@ -42,7 +42,7 @@
 //!
 //! Generate a circuit digraph of order `4`.
 //!
-//! ![Circuit digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_4.svg)
+//! ![A circuit digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_4.svg)
 //!
 //! ```
 //! use graaf::{
@@ -134,7 +134,7 @@ pub trait Circuit {
     ///
     /// Generate a circuit digraph of order `2`.
     ///
-    /// ![Circuit digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_2.svg)
+    /// ![A circuit digraph of order `2`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_2.svg)
     ///
     /// ```
     /// use graaf::{
@@ -150,7 +150,7 @@ pub trait Circuit {
     ///
     /// Generate a circuit digraph of order `3`.
     ///
-    /// ![Circuit digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_3.svg)
+    /// ![A circuit digraph of order `3`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_3.svg)
     ///
     /// ```
     /// use graaf::{
@@ -168,7 +168,7 @@ pub trait Circuit {
     ///
     /// Generate a circuit digraph of order `4`.
     ///
-    /// ![Circuit digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_4.svg)
+    /// ![A circuit digraph of order `4`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/circuit_4.svg)
     ///
     /// ```
     /// use graaf::{

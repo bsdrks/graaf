@@ -12,7 +12,7 @@
 //!
 //! The path from vertex `0` is red. `t` denotes the iteration indices.
 //!
-//! ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_1-0.87.4.svg?)
+//! ![A digraph and the shortest path from source vertex `0` obtained by Dijkstra's algorithm](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -41,7 +41,7 @@
 //!
 //! The path from vertex `0` is red. The path from vertex `3` is blue.
 //!
-//! ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_multi_source_1-0.87.4.svg?)
+//! ![A digraph and the shortest path from two source vertices obtained by Dijkstra's algorithm](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_multi_source_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -88,7 +88,7 @@ use {
 ///
 /// The path from vertex `0` is red. `t` denotes the iteration indices.
 ///
-/// ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_1-0.87.4.svg?)
+/// ![A digraph and the shortest path from source vertex `0` obtained by Dijkstra's algorithm](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -117,7 +117,7 @@ use {
 ///
 /// The path from vertex `0` is red. The path from vertex `3` is blue.
 ///
-/// ![Dijkstra](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_multi_source_1-0.87.4.svg?)
+/// ![A digraph and the shortest path from two source vertices obtained by Dijkstra's algorithm](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_multi_source_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{

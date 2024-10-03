@@ -12,7 +12,7 @@
 //!
 //! The path from vertex `0` is red. `d` denotes the distances.
 //!
-//! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_1-0.87.4.svg?)
+//! ![A digraph and the distances between the source vertex and the other vertices along the breadth-first tranversal](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -43,7 +43,7 @@
 //!
 //! The path from vertex `3` is red. The path from vertex `7` is blue.
 //!
-//! ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_multi_source_1-0.87.4.svg?)
+//! ![A digraph and the distances between the source vertices and the other vertices along the breadth-first traversal](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_multi_source_1-0.87.4.svg?)
 //!
 //! ```
 //! use graaf::{
@@ -105,7 +105,7 @@ type Step = (usize, usize);
 ///
 /// The path from vertex `0` is red. `d` denotes the distances.
 ///
-/// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_1-0.87.4.svg?)
+/// ![A digraph and the distances between the source vertex and the other vertices along the breadth-first tranversal](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -136,7 +136,7 @@ type Step = (usize, usize);
 ///
 /// The path from vertex `3` is red. The path from vertex `7` is blue.
 ///
-/// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_multi_source_1-0.87.4.svg?)
+/// ![A digraph and the distances between the source vertices and the other vertices along the breadth-first traversal](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_multi_source_1-0.87.4.svg?)
 ///
 /// ```
 /// use graaf::{
@@ -219,7 +219,7 @@ impl<'a, D> BfsDist<'a, D> {
     /// The path from vertex `0` is red. The dashed arcs represent the shortest
     /// distances from the source. The gray arcs are not traversed.
     ///
-    /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_distances_1-0.91.3.svg?)
+    /// ![A digraph and the distances between the source vertex and the other vertices along the breadth-first traversal](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_distances_1-0.91.3.svg?)
     ///
     /// ```
     /// use graaf::{
@@ -253,7 +253,7 @@ impl<'a, D> BfsDist<'a, D> {
     /// dashed arcs represent the shortest distances from the sources. The gray
     /// arcs are not traversed.
     ///
-    /// ![BFS](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_distances_multi_source_1-0.91.3.svg?)
+    /// ![A digraph and the distances between the source vertices and the other vertices along the breadth-first traversal](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_distances_multi_source_1-0.91.3.svg?)
     ///
     /// ```
     /// use graaf::{
