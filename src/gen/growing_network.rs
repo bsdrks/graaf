@@ -145,6 +145,10 @@ pub trait GrowingNetwork {
     /// * `order` - The number of vertices in the digraph.
     /// * `seed` - The seed for the random number generator.
     ///
+    /// # Panics
+    ///
+    /// * Panics if `order` is zero.
+    ///
     /// # Examples
     ///
     /// Generate a growing network of order `6`.

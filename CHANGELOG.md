@@ -18,7 +18,23 @@
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 - Replace the blanket implementations in `op` with custom implementations for the types in `repr`. In the documentation, describe examples of both the direct and the trait-based implementation of the traits.
 
+## [0.98.0] - 2024-10-03
+
+Added
+
+- Add panic tests for generator implementations when `order == 0`.
+- Add benchmark `op_converse`.
+
+Changed
+
+- Breaking: panic if `order == 0` in `AdjacencyMap::growing_network`.
+- Speed up `AdjacencyList::converse`.
+- Speed up `AdjacencyMap::converse`.
+- Speed up `EdgeList::converse`.
+
 ## [0.97.1] - 2024-10-03
+
+Changed
 
 - Improve image alt texts.
 

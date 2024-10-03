@@ -3662,53 +3662,59 @@ macro_rules! test_unweighted {
 
         #[test]
         fn biclique_1_1() {
-            assert!($type::biclique(1, 1).arcs().eq([(0, 1), (1, 0)]));
+            let digraph = $type::biclique(1, 1);
+
+            assert_eq!(digraph.order(), 2);
+            assert!(digraph.arcs().eq([(0, 1), (1, 0)]));
         }
 
         #[test]
         fn biclique_1_1_complement() {
-            assert!($type::biclique(1, 1).complement().arcs().eq([]));
+            let digraph = $type::biclique(1, 1).complement();
+
+            assert_eq!(digraph.order(), 2);
+            assert!(digraph.arcs().eq([]));
         }
 
         #[test]
         fn biclique_1_2() {
-            assert!($type::biclique(1, 2).arcs().eq([
-                (0, 1),
-                (0, 2),
-                (1, 0),
-                (2, 0)
-            ]));
+            let digraph = $type::biclique(1, 2);
+
+            assert_eq!(digraph.order(), 3);
+            assert!(digraph.arcs().eq([(0, 1), (0, 2), (1, 0), (2, 0)]));
         }
 
         #[test]
         fn biclique_1_2_complement() {
-            assert!($type::biclique(1, 2)
-                .complement()
-                .arcs()
-                .eq([(1, 2), (2, 1)]));
+            let digraph = $type::biclique(1, 2).complement();
+
+            assert_eq!(digraph.order(), 3);
+            assert!(digraph.arcs().eq([(1, 2), (2, 1)]));
         }
 
         #[test]
         fn biclique_2_1() {
-            assert!($type::biclique(2, 1).arcs().eq([
-                (0, 2),
-                (1, 2),
-                (2, 0),
-                (2, 1)
-            ]));
+            let digraph = $type::biclique(2, 1);
+
+            assert_eq!(digraph.order(), 3);
+            assert!(digraph.arcs().eq([(0, 2), (1, 2), (2, 0), (2, 1)]));
         }
 
         #[test]
         fn biclique_2_1_complement() {
-            assert!($type::biclique(2, 1)
-                .complement()
-                .arcs()
-                .eq([(0, 1), (1, 0)]));
+            let digraph = $type::biclique(2, 1).complement();
+
+            assert_eq!(digraph.order(), 3);
+            assert!(digraph.arcs().eq([(0, 1), (1, 0)]));
         }
 
         #[test]
         fn biclique_2_2() {
-            assert!($type::biclique(2, 2).arcs().eq([
+            let digraph = $type::biclique(2, 2);
+
+            assert_eq!(digraph.order(), 4);
+
+            assert!(digraph.arcs().eq([
                 (0, 2),
                 (0, 3),
                 (1, 2),
@@ -3722,17 +3728,19 @@ macro_rules! test_unweighted {
 
         #[test]
         fn biclique_2_2_complement() {
-            assert!($type::biclique(2, 2).complement().arcs().eq([
-                (0, 1),
-                (1, 0),
-                (2, 3),
-                (3, 2),
-            ]));
+            let digraph = $type::biclique(2, 2).complement();
+
+            assert_eq!(digraph.order(), 4);
+            assert!(digraph.arcs().eq([(0, 1), (1, 0), (2, 3), (3, 2)]));
         }
 
         #[test]
         fn biclique_claw() {
-            assert!($type::claw().arcs().eq([
+            let digraph = $type::claw();
+
+            assert_eq!(digraph.order(), 4);
+
+            assert!(digraph.arcs().eq([
                 (0, 1),
                 (0, 2),
                 (0, 3),
@@ -3744,6 +3752,10 @@ macro_rules! test_unweighted {
 
         #[test]
         fn biclique_utility() {
+            let digraph = $type::utility();
+
+            assert_eq!(digraph.order(), 6);
+
             assert!($type::utility().arcs().eq([
                 (0, 3),
                 (0, 4),
@@ -3774,63 +3786,97 @@ macro_rules! test_unweighted {
 
         #[test]
         fn circuit_1() {
-            assert!($type::circuit(1).arcs().eq([]));
+            let digraph = $type::circuit(1);
+
+            assert_eq!(digraph.order(), 1);
+            assert!(digraph.arcs().eq([]));
         }
 
         #[test]
         fn circuit_1_complement() {
-            assert!($type::circuit(1).complement().arcs().eq([]));
+            let digraph = $type::circuit(1).complement();
+
+            assert_eq!(digraph.order(), 1);
+            assert!(digraph.arcs().eq([]));
         }
 
         #[test]
         fn circuit_2() {
-            assert!($type::circuit(2).arcs().eq([(0, 1), (1, 0)]));
+            let digraph = $type::circuit(2);
+
+            assert_eq!(digraph.order(), 2);
+            assert!(digraph.arcs().eq([(0, 1), (1, 0)]));
         }
 
         #[test]
         fn circuit_2_complement() {
-            assert!($type::circuit(2).complement().arcs().eq([]));
+            let digraph = $type::circuit(2).complement();
+
+            assert_eq!(digraph.order(), 2);
+            assert!(digraph.arcs().eq([]));
         }
 
         #[test]
         fn circuit_3() {
-            assert!($type::circuit(3)
-                .arcs()
-                .eq([(0, 1), (1, 2), (2, 0)]));
+            let digraph = $type::circuit(3);
+
+            assert_eq!(digraph.order(), 3);
+            assert!(digraph.arcs().eq([(0, 1), (1, 2), (2, 0)]));
         }
 
         #[test]
         fn circuit_3_complement() {
-            assert!($type::circuit(3).complement().arcs().eq([
-                (0, 2),
-                (1, 0),
-                (2, 1)
-            ]));
+            let digraph = $type::circuit(3).complement();
+
+            assert_eq!(digraph.order(), 3);
+            assert!(digraph.arcs().eq([(0, 2), (1, 0), (2, 1)]));
+        }
+
+        #[test]
+        #[should_panic(expected = "a digraph has at least one vertex")]
+        fn complete_0() {
+            let _ = $type::complete(0);
         }
 
         #[test]
         fn complete_1() {
-            assert!($type::complete(1).arcs().eq([]));
+            let digraph = $type::complete(1);
+
+            assert_eq!(digraph.order(), 1);
+            assert!(digraph.arcs().eq([]));
         }
 
         #[test]
         fn complete_1_complement() {
-            assert!($type::complete(1).complement().arcs().eq([]));
+            let digraph = $type::complete(1).complement();
+
+            assert_eq!(digraph.order(), 1);
+            assert!(digraph.arcs().eq([]));
         }
 
         #[test]
         fn complete_2() {
-            assert!($type::complete(2).arcs().eq([(0, 1), (1, 0)]));
+            let digraph = $type::complete(2);
+
+            assert_eq!(digraph.order(), 2);
+            assert!(digraph.arcs().eq([(0, 1), (1, 0)]));
         }
 
         #[test]
         fn complete_2_complement() {
-            assert!($type::complete(2).complement().arcs().eq([]));
+            let digraph = $type::complete(2).complement();
+
+            assert_eq!(digraph.order(), 2);
+            assert!(digraph.arcs().eq([]));
         }
 
         #[test]
         fn complete_3() {
-            assert!($type::complete(3).arcs().eq([
+            let digraph = $type::complete(3);
+
+            assert_eq!(digraph.order(), 3);
+
+            assert!(digraph.arcs().eq([
                 (0, 1),
                 (0, 2),
                 (1, 0),
@@ -3842,12 +3888,20 @@ macro_rules! test_unweighted {
 
         #[test]
         fn complete_3_complement() {
-            assert!($type::complete(3).complement().arcs().eq([]));
+            let digraph = $type::complete(3).complement();
+
+            assert_eq!(digraph.order(), 3);
+            assert!(digraph.arcs().eq([]));
         }
 
         #[test]
         fn converse_bang_jensen_196() {
-            assert!(bang_jensen_196().converse().arcs().eq([
+            let digraph = bang_jensen_196();
+            let converse = digraph.converse();
+
+            assert_eq!(digraph.order(), converse.order());
+
+            assert!(converse.arcs().eq([
                 (0, 1),
                 (1, 0),
                 (2, 1),
@@ -3866,7 +3920,12 @@ macro_rules! test_unweighted {
 
         #[test]
         fn converse_bang_jensen_34() {
-            assert!(bang_jensen_34().converse().arcs().eq([
+            let digraph = bang_jensen_34();
+            let converse = digraph.converse();
+
+            assert_eq!(digraph.order(), converse.order());
+
+            assert!(converse.arcs().eq([
                 (0, 1),
                 (1, 2),
                 (3, 2),
@@ -3878,7 +3937,12 @@ macro_rules! test_unweighted {
 
         #[test]
         fn converse_bang_jensen_94() {
-            assert!(bang_jensen_94().converse().arcs().eq([
+            let digraph = bang_jensen_94();
+            let converse = digraph.converse();
+
+            assert_eq!(digraph.order(), converse.order());
+
+            assert!(converse.arcs().eq([
                 (1, 0),
                 (1, 2),
                 (2, 0),
@@ -3893,7 +3957,10 @@ macro_rules! test_unweighted {
 
         #[test]
         fn converse_kattis_builddeps() {
-            assert!(kattis_builddeps().converse().arcs().eq([
+            let digraph = kattis_builddeps();
+            let converse = digraph.converse();
+
+            assert!(converse.arcs().eq([
                 (1, 3),
                 (1, 4),
                 (1, 5),
@@ -3907,7 +3974,10 @@ macro_rules! test_unweighted {
 
         #[test]
         fn converse_kattis_cantinaofbabel_1() {
-            assert!(kattis_cantinaofbabel_1().converse().arcs().eq([
+            let digraph = kattis_cantinaofbabel_1();
+            let converse = digraph.converse();
+
+            assert!(converse.arcs().eq([
                 (0, 1),
                 (1, 0),
                 (1, 2),
@@ -3935,7 +4005,12 @@ macro_rules! test_unweighted {
 
         #[test]
         fn converse_kattis_cantinaofbabel_2() {
-            assert!(kattis_cantinaofbabel_2().converse().arcs().eq([
+            let digraph = kattis_cantinaofbabel_2();
+            let converse = digraph.converse();
+
+            assert_eq!(digraph.order(), converse.order());
+
+            assert!(converse.arcs().eq([
                 (0, 1),
                 (0, 2),
                 (1, 0),
@@ -3960,7 +4035,12 @@ macro_rules! test_unweighted {
 
         #[test]
         fn converse_kattis_escapewallmaria_1() {
-            assert!(kattis_escapewallmaria_1().converse().arcs().eq([
+            let digraph = kattis_escapewallmaria_1();
+            let converse = digraph.converse();
+
+            assert_eq!(digraph.order(), converse.order());
+
+            assert!(converse.arcs().eq([
                 (5, 6),
                 (5, 9),
                 (6, 5),
@@ -3973,7 +4053,12 @@ macro_rules! test_unweighted {
 
         #[test]
         fn converse_kattis_escapewallmaria_2() {
-            assert!(kattis_escapewallmaria_2().converse().arcs().eq([
+            let digraph = kattis_escapewallmaria_2();
+            let converse = digraph.converse();
+
+            assert_eq!(digraph.order(), converse.order());
+
+            assert!(converse.arcs().eq([
                 (5, 6),
                 (5, 9),
                 (6, 5),
@@ -3986,7 +4071,12 @@ macro_rules! test_unweighted {
 
         #[test]
         fn converse_kattis_escapewallmaria_3() {
-            assert!(kattis_escapewallmaria_3().converse().arcs().eq([
+            let digraph = kattis_escapewallmaria_3();
+            let converse = digraph.converse();
+
+            assert_eq!(digraph.order(), converse.order());
+
+            assert!(converse.arcs().eq([
                 (1, 2),
                 (1, 5),
                 (2, 1),
@@ -4005,28 +4095,50 @@ macro_rules! test_unweighted {
         }
 
         #[test]
+        #[should_panic(expected = "a digraph has at least one vertex")]
+        fn cycle_0() {
+            let _ = $type::cycle(0);
+        }
+
+        #[test]
         fn cycle_1() {
-            assert!($type::cycle(1).arcs().eq([]));
+            let digraph = $type::cycle(1);
+
+            assert_eq!(digraph.order(), 1);
+            assert!(digraph.arcs().eq([]));
         }
 
         #[test]
         fn cycle_1_complement() {
-            assert!($type::cycle(1).complement().arcs().eq([]));
+            let digraph = $type::cycle(1).complement();
+
+            assert_eq!(digraph.order(), 1);
+            assert!(digraph.arcs().eq([]));
         }
 
         #[test]
         fn cycle_2() {
-            assert!($type::cycle(2).arcs().eq([(0, 1), (1, 0)]));
+            let digraph = $type::cycle(2);
+
+            assert_eq!(digraph.order(), 2);
+            assert!(digraph.arcs().eq([(0, 1), (1, 0)]));
         }
 
         #[test]
         fn cycle_2_complement() {
-            assert!($type::cycle(2).complement().arcs().eq([]));
+            let digraph = $type::cycle(2).complement();
+
+            assert_eq!(digraph.order(), 2);
+            assert!(digraph.arcs().eq([]));
         }
 
         #[test]
         fn cycle_3() {
-            assert!($type::cycle(3).arcs().eq([
+            let digraph = $type::cycle(3);
+
+            assert_eq!(digraph.order(), 3);
+
+            assert!(digraph.arcs().eq([
                 (0, 1),
                 (0, 2),
                 (1, 0),
@@ -4038,7 +4150,10 @@ macro_rules! test_unweighted {
 
         #[test]
         fn cycle_3_complement() {
-            assert!($type::cycle(3).complement().arcs().eq([]));
+            let digraph = $type::cycle(3).complement();
+
+            assert_eq!(digraph.order(), 3);
+            assert!(digraph.arcs().eq([]));
         }
 
         #[test]
@@ -4257,35 +4372,51 @@ macro_rules! test_unweighted {
 
         #[test]
         fn empty_1() {
-            assert!($type::empty(1).arcs().eq([]));
+            let digraph = $type::empty(1);
+
+            assert_eq!(digraph.order(), 1);
+            assert!(digraph.arcs().eq([]));
         }
 
         #[test]
         fn empty_1_complement() {
-            assert!($type::empty(1).complement().arcs().eq([]));
+            let digraph = $type::empty(1).complement();
+
+            assert_eq!(digraph.order(), 1);
+            assert!(digraph.arcs().eq([]));
         }
 
         #[test]
         fn empty_2() {
-            assert!($type::empty(2).arcs().eq([]));
+            let digraph = $type::empty(2);
+
+            assert_eq!(digraph.order(), 2);
+            assert!(digraph.arcs().eq([]));
         }
 
         #[test]
         fn empty_2_complement() {
-            assert!($type::empty(2)
-                .complement()
-                .arcs()
-                .eq([(0, 1), (1, 0)]));
+            let digraph = $type::empty(2).complement();
+
+            assert_eq!(digraph.order(), 2);
+            assert!(digraph.arcs().eq([(0, 1), (1, 0)]));
         }
 
         #[test]
         fn empty_3() {
-            assert!($type::empty(3).arcs().eq([]));
+            let digraph = $type::empty(3);
+
+            assert_eq!(digraph.order(), 3);
+            assert!(digraph.arcs().eq([]));
         }
 
         #[test]
         fn empty_3_complement() {
-            assert!($type::empty(3).complement().arcs().eq([
+            let digraph = $type::empty(3).complement();
+
+            assert_eq!(digraph.order(), 3);
+
+            assert!(digraph.arcs().eq([
                 (0, 1),
                 (0, 2),
                 (1, 0),
@@ -4297,7 +4428,16 @@ macro_rules! test_unweighted {
 
         #[test]
         fn empty_trivial() {
-            assert!($type::trivial().arcs().eq([]));
+            let digraph = $type::trivial();
+
+            assert_eq!(digraph.order(), 1);
+            assert!(digraph.arcs().eq([]));
+        }
+
+        #[test]
+        #[should_panic(expected = "a digraph has at least one vertex")]
+        fn erdos_renyi_0() {
+            let _ = $type::erdos_renyi(0, 0.5, 0);
         }
 
         #[test]
@@ -4310,6 +4450,12 @@ macro_rules! test_unweighted {
         #[should_panic(expected = "p = 1.1 must be in [0, 1]")]
         fn erdos_renyi_p_gt_1() {
             let _ = $type::erdos_renyi(2, 1.1, 0);
+        }
+
+        #[test]
+        #[should_panic(expected = "a digraph has at least one vertex")]
+        fn growing_network_0() {
+            let _ = $type::growing_network(0, 0);
         }
 
         #[test]
@@ -6504,38 +6650,63 @@ macro_rules! test_unweighted {
         }
 
         #[test]
+        #[should_panic(expected = "a digraph has at least one vertex")]
+        fn path_0() {
+            assert!($type::path(0).arcs().eq([]));
+        }
+
+        #[test]
         fn path_1() {
-            assert!($type::path(1).arcs().eq([]));
+            let digraph = $type::path(1);
+
+            assert_eq!(digraph.order(), 1);
+            assert!(digraph.arcs().eq([]));
         }
 
         #[test]
         fn path_1_complement() {
-            assert!($type::path(1).complement().arcs().eq([]));
+            let digraph = $type::path(1).complement();
+
+            assert_eq!(digraph.order(), 1);
+            assert!(digraph.arcs().eq([]));
         }
 
         #[test]
         fn path_2() {
-            assert!($type::path(2).arcs().eq([(0, 1)]));
+            let digraph = $type::path(2);
+
+            assert_eq!(digraph.order(), 2);
+            assert!(digraph.arcs().eq([(0, 1)]));
         }
 
         #[test]
         fn path_2_complement() {
-            assert!($type::path(2).complement().arcs().eq([(1, 0)]));
+            let digraph = $type::path(2).complement();
+
+            assert_eq!(digraph.order(), 2);
+            assert!(digraph.arcs().eq([(1, 0)]));
         }
 
         #[test]
         fn path_3() {
-            assert!($type::path(3).arcs().eq([(0, 1), (1, 2)]));
+            let digraph = $type::path(3);
+
+            assert_eq!(digraph.order(), 3);
+            assert!(digraph.arcs().eq([(0, 1), (1, 2)]));
         }
 
         #[test]
         fn path_3_complement() {
-            assert!($type::path(3).complement().arcs().eq([
-                (0, 2),
-                (1, 0),
-                (2, 0),
-                (2, 1)
-            ]));
+            let digraph = $type::path(3).complement();
+
+            assert_eq!(digraph.order(), 3);
+            assert!(digraph.arcs().eq([(0, 2), (1, 0), (2, 0), (2, 1)]));
+        }
+
+        #[test]
+        #[should_panic(expected = "a digraph has at least one vertex")]
+        fn random_tournament_0() {
+            let _ = $type::random_tournament(0, 0);
         }
 
         #[test]
@@ -7291,46 +7462,90 @@ macro_rules! test_unweighted {
         }
 
         #[test]
+        #[should_panic(expected = "a digraph has at least one vertex")]
+        fn star_0() {
+            let _ = $type::star(0);
+        }
+
+        #[test]
         fn star_1() {
-            assert!($type::star(1).arcs().eq([]));
+            let digraph = $type::star(1);
+
+            assert_eq!(digraph.order(), 1);
+            assert!(digraph.arcs().eq([]));
         }
 
         #[test]
         fn star_1_complement() {
-            assert!($type::star(1).complement().arcs().eq([]));
+            let digraph = $type::star(1).complement();
+
+            assert_eq!(digraph.order(), 1);
+            assert!(digraph.arcs().eq([]));
         }
 
         #[test]
         fn star_2() {
-            assert!($type::star(2).arcs().eq([(0, 1), (1, 0)]));
+            let digraph = $type::star(2);
+
+            assert_eq!(digraph.order(), 2);
+            assert!(digraph.arcs().eq([(0, 1), (1, 0)]));
         }
 
         #[test]
         fn star_2_complement() {
-            assert!($type::star(2).complement().arcs().eq([]));
+            let digraph = $type::star(2).complement();
+
+            assert_eq!(digraph.order(), 2);
+            assert!(digraph.arcs().eq([]));
         }
 
         #[test]
         fn star_3() {
-            assert!($type::star(3).arcs().eq([
-                (0, 1),
-                (0, 2),
-                (1, 0),
-                (2, 0)
-            ]));
+            let digraph = $type::star(3);
+
+            assert_eq!(digraph.order(), 3);
+            assert!(digraph.arcs().eq([(0, 1), (0, 2), (1, 0), (2, 0)]));
         }
 
         #[test]
         fn star_3_complement() {
-            assert!($type::star(3)
-                .complement()
-                .arcs()
-                .eq([(1, 2), (2, 1)]));
+            let digraph = $type::star(3).complement();
+
+            assert_eq!(digraph.order(), 3);
+            assert!(digraph.arcs().eq([(1, 2), (2, 1)]));
+        }
+
+        #[test]
+        #[should_panic(expected = "a wheel digraph has at least four vertices")]
+        fn wheel_0() {
+            let _ = $type::wheel(0);
+        }
+
+        #[test]
+        #[should_panic(expected = "a wheel digraph has at least four vertices")]
+        fn wheel_1() {
+            let _ = $type::wheel(1);
+        }
+
+        #[test]
+        #[should_panic(expected = "a wheel digraph has at least four vertices")]
+        fn wheel_2() {
+            let _ = $type::wheel(2);
+        }
+
+        #[test]
+        #[should_panic(expected = "a wheel digraph has at least four vertices")]
+        fn wheel_3() {
+            let _ = $type::wheel(3);
         }
 
         #[test]
         fn wheel_4() {
-            assert!($type::wheel(4).arcs().eq([
+            let digraph = $type::wheel(4);
+
+            assert_eq!(digraph.order(), 4);
+
+            assert!(digraph.arcs().eq([
                 (0, 1),
                 (0, 2),
                 (0, 3),
@@ -7348,12 +7563,19 @@ macro_rules! test_unweighted {
 
         #[test]
         fn wheel_4_complement() {
-            assert_eq!($type::wheel(4).complement().size(), 0);
+            let digraph = $type::wheel(4).complement();
+
+            assert_eq!(digraph.order(), 4);
+            assert!(digraph.arcs().eq([]));
         }
 
         #[test]
         fn wheel_5() {
-            assert!($type::wheel(5).arcs().eq([
+            let digraph = $type::wheel(5);
+
+            assert_eq!(digraph.order(), 5);
+
+            assert!(digraph.arcs().eq([
                 (0, 1),
                 (0, 2),
                 (0, 3),
@@ -7375,17 +7597,19 @@ macro_rules! test_unweighted {
 
         #[test]
         fn wheel_5_complement() {
-            assert!($type::wheel(5).complement().arcs().eq([
-                (1, 3),
-                (2, 4),
-                (3, 1),
-                (4, 2)
-            ]));
+            let digraph = $type::wheel(5).complement();
+
+            assert_eq!(digraph.order(), 5);
+            assert!(digraph.arcs().eq([(1, 3), (2, 4), (3, 1), (4, 2)]));
         }
 
         #[test]
         fn wheel_6() {
-            assert!($type::wheel(6).arcs().eq([
+            let digraph = $type::wheel(6);
+
+            assert_eq!(digraph.order(), 6);
+
+            assert!(digraph.arcs().eq([
                 (0, 1),
                 (0, 2),
                 (0, 3),
@@ -7411,7 +7635,11 @@ macro_rules! test_unweighted {
 
         #[test]
         fn wheel_6_complement() {
-            assert!($type::wheel(6).complement().arcs().eq([
+            let digraph = $type::wheel(6).complement();
+
+            assert_eq!(digraph.order(), 6);
+
+            assert!(digraph.arcs().eq([
                 (1, 3),
                 (1, 4),
                 (2, 4),

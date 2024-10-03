@@ -1,6 +1,6 @@
 [package]
 name = "graaf"
-version = "0.97.1"
+version = "0.98.0"
 edition = "2021"
 authors = ["Bas Dirks <bas.dirks@protonmail.com>"]
 categories = ["algorithms", "data-structures", "mathematics"]
@@ -123,4 +123,9 @@ harness = false
 [[bench]]
 name = "op_complement"
 path = "benches/op/complement.rs"
+harness = false
+
+[[bench]]
+name = "op_converse"
+path = "benches/op/converse.rs"
 harness = false

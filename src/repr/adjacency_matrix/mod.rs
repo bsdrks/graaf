@@ -513,7 +513,7 @@ impl ErdosRenyi for AdjacencyMatrix {
     }
 }
 
-macro_rules! impl_from_arcs_order {
+macro_rules! impl_from_arcs_empty_order {
     ($type:ty) => {
         /// # Panics
         ///
@@ -542,9 +542,9 @@ macro_rules! impl_from_arcs_order {
     };
 }
 
-impl_from_arcs_order!(AdjacencyList);
-impl_from_arcs_order!(AdjacencyMap);
-impl_from_arcs_order!(EdgeList);
+impl_from_arcs_empty_order!(AdjacencyList);
+impl_from_arcs_empty_order!(AdjacencyMap);
+impl_from_arcs_empty_order!(EdgeList);
 
 impl<I> From<I> for AdjacencyMatrix
 where

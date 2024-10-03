@@ -156,6 +156,7 @@ macro_rules! impl_from_arcs_order {
                 for (u, v) in digraph.arcs() {
                     assert_ne!(u, v, "u = {u} equals v = {v}");
                     assert!(v < order, "v = {v} isn't in the digraph");
+
                     h.add_arc_weighted(u, v, 1);
                 }
 

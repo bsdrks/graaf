@@ -378,14 +378,19 @@ impl Converse for AdjacencyMap {
     ///
     /// Panics if the digraph's order is zero.
     fn converse(&self) -> Self {
-        let order = self.order();
-        let mut converse = Self::empty(order);
+        let mut arcs = self
+            .arcs
+            .keys()
+            .map(|u| (*u, BTreeSet::new()))
+            .collect::<BTreeMap<usize, BTreeSet<usize>>>();
 
-        for (u, v) in self.arcs() {
-            converse.add_arc(v, u);
+        for (u, v) in &self.arcs {
+            for v in v {
+                let _ = arcs.get_mut(v).unwrap().insert(*u);
+            }
         }
 
-        converse
+        Self { arcs }
     }
 }
 
@@ -543,6 +548,8 @@ impl GrowingNetwork for AdjacencyMap {
     ///
     /// Panics if `order` is zero.
     fn growing_network(order: usize, seed: u64) -> Self {
+        assert!(order > 0, "a digraph has at least one vertex");
+
         let mut rng = Xoshiro256StarStar::new(seed);
 
         Self {

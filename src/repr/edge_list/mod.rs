@@ -370,13 +370,10 @@ impl Complete for EdgeList {
 
 impl Converse for EdgeList {
     fn converse(&self) -> Self {
-        let mut converse = Self::empty(self.order);
-
-        for &(u, v) in &self.arcs {
-            converse.add_arc(v, u);
+        Self {
+            arcs: self.arcs.iter().map(|&(u, v)| (v, u)).collect(),
+            order: self.order,
         }
-
-        converse
     }
 }
 

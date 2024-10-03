@@ -92,7 +92,7 @@
 ///     ///
 ///     /// Panics if `order` is zero.
 ///     fn cycle(order: usize) -> Self {
-///         assert!(order > 0, "a digraph must have at least one vertex");
+///         assert!(order > 0, "a digraph has at least one vertex");
 ///
 ///         if order == 1 {
 ///             return Self {

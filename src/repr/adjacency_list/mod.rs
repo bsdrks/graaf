@@ -451,7 +451,7 @@ impl ErdosRenyi for AdjacencyList {
     }
 }
 
-macro_rules! impl_from_arcs_order {
+macro_rules! impl_from_arcs_empty_order {
     ($type:ty) => {
         impl From<$type> for AdjacencyList {
             /// # Panics
@@ -470,6 +470,7 @@ macro_rules! impl_from_arcs_order {
                 for (u, v) in digraph.arcs() {
                     assert_ne!(u, v, "u = {u} equals v = {v}");
                     assert!(v < order, "v = {v} isn't in the digraph");
+
                     h.add_arc(u, v);
                 }
 
@@ -479,9 +480,9 @@ macro_rules! impl_from_arcs_order {
     };
 }
 
-impl_from_arcs_order!(AdjacencyMap);
-impl_from_arcs_order!(AdjacencyMatrix);
-impl_from_arcs_order!(EdgeList);
+impl_from_arcs_empty_order!(AdjacencyMap);
+impl_from_arcs_empty_order!(AdjacencyMatrix);
+impl_from_arcs_empty_order!(EdgeList);
 
 impl<I> From<I> for AdjacencyList
 where
