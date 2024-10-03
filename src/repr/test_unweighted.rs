@@ -6652,7 +6652,7 @@ macro_rules! test_unweighted {
         #[test]
         #[should_panic(expected = "a digraph has at least one vertex")]
         fn path_0() {
-            assert!($type::path(0).arcs().eq([]));
+            let _ = $type::path(0);
         }
 
         #[test]

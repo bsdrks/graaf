@@ -1,4 +1,39 @@
-//! Benchmark the `Empty::empty` implementation for different types.
+// Clippy lint groups
+#![deny(clippy::all, clippy::cargo, clippy::pedantic, clippy::nursery)]
+// Clippy restriction lints
+#![deny(
+    clippy::get_unwrap,
+    clippy::if_then_some_else_none,
+    clippy::impl_trait_in_params,
+    clippy::missing_assert_message,
+    clippy::multiple_inherent_impl,
+    clippy::panic_in_result_fn,
+    clippy::redundant_type_annotations,
+    clippy::renamed_function_params,
+    clippy::rest_pat_in_fully_bound_structs,
+    clippy::self_named_module_files,
+    clippy::unnecessary_self_imports,
+    clippy::unneeded_field_pattern,
+    clippy::unseparated_literal_suffix,
+    clippy::unwrap_in_result
+)]
+// Rustc lint groups
+#![deny(rust_2018_idioms)]
+// Rustc lints
+#![deny(
+    missing_copy_implementations,
+    missing_debug_implementations,
+    trivial_casts,
+    trivial_numeric_casts,
+    unused_extern_crates,
+    unused_import_braces,
+    unused_results,
+    variant_size_differences
+)]
+// Rustdoc lints
+#![deny(rustdoc::all)]
+// Overwrites
+#![allow(clippy::large_stack_frames)]
 
 use {
     graaf::{
@@ -18,10 +53,12 @@ fn main() {
     divan::main();
 }
 
+#[derive(Debug)]
 pub struct AdjacencyMapBTreeSet {
     pub arcs: BTreeMap<usize, BTreeSet<usize>>,
 }
 
+#[derive(Debug)]
 pub struct AdjacencyListHashSet {
     pub arcs: Vec<HashSet<usize>>,
 }
@@ -45,8 +82,8 @@ fn empty_adjacency_map_from_vec(order: usize) -> AdjacencyMapBTreeSet {
         "a digraph has at least one vertex"
     );
 
-    for (u, vv) in digraph.arcs.iter() {
-        for v in vv {
+    for (u, v) in &digraph.arcs {
+        for v in v {
             assert_ne!(u, v, "u = {u} equals v = {v}");
 
             assert!(
@@ -59,27 +96,27 @@ fn empty_adjacency_map_from_vec(order: usize) -> AdjacencyMapBTreeSet {
     digraph
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+#[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list(n: usize) {
     let _ = AdjacencyList::empty(n);
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+#[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list_hash_set(n: usize) {
     let _ = empty_adjacency_list_hash_set(n);
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+#[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_map(n: usize) {
     let _ = AdjacencyMap::empty(n);
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+#[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_map_from_vec(n: usize) {
     let _ = empty_adjacency_map_from_vec(n);
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+#[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_matrix(n: usize) {
     let _ = AdjacencyMatrix::empty(n);
 }

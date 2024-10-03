@@ -1,4 +1,39 @@
-//! Benchmark the `Biclique::biclique` implementation for different types.
+// Clippy lint groups
+#![deny(clippy::all, clippy::cargo, clippy::pedantic, clippy::nursery)]
+// Clippy restriction lints
+#![deny(
+    clippy::get_unwrap,
+    clippy::if_then_some_else_none,
+    clippy::impl_trait_in_params,
+    clippy::missing_assert_message,
+    clippy::multiple_inherent_impl,
+    clippy::panic_in_result_fn,
+    clippy::redundant_type_annotations,
+    clippy::renamed_function_params,
+    clippy::rest_pat_in_fully_bound_structs,
+    clippy::self_named_module_files,
+    clippy::unnecessary_self_imports,
+    clippy::unneeded_field_pattern,
+    clippy::unseparated_literal_suffix,
+    clippy::unwrap_in_result
+)]
+// Rustc lint groups
+#![deny(rust_2018_idioms)]
+// Rustc lints
+#![deny(
+    missing_copy_implementations,
+    missing_debug_implementations,
+    trivial_casts,
+    trivial_numeric_casts,
+    unused_extern_crates,
+    unused_import_braces,
+    unused_results,
+    variant_size_differences
+)]
+// Rustdoc lints
+#![deny(rustdoc::all)]
+// Overwrites
+#![allow(clippy::large_stack_frames)]
 
 use {
     graaf::{
@@ -24,18 +59,22 @@ fn main() {
     divan::main();
 }
 
+#[derive(Debug)]
 pub struct AdjacencyListBTreeSet {
     pub arcs: Vec<BTreeSet<usize>>,
 }
 
+#[derive(Debug)]
 pub struct AdjacencyListHashSet {
     pub arcs: Vec<HashSet<usize>>,
 }
 
+#[derive(Debug)]
 pub struct AdjacencyMapBTreeSet {
     pub arcs: BTreeMap<usize, BTreeSet<usize>>,
 }
 
+#[derive(Debug)]
 pub struct EdgeListBTreeSet {
     pub arcs: Vec<(usize, usize)>,
 }
@@ -206,11 +245,11 @@ fn biclique_adjacency_map_btree_set_clone_from(
     let mut arcs = BTreeMap::new();
 
     for u in 0..m {
-        arcs.insert(u, clique_2.clone());
+        let _ = arcs.insert(u, clique_2.clone());
     }
 
     for u in m..order {
-        arcs.insert(u, clique_1.clone());
+        let _ = arcs.insert(u, clique_1.clone());
     }
 
     AdjacencyMapBTreeSet { arcs }

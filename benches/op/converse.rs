@@ -1,3 +1,40 @@
+// Clippy lint groups
+#![deny(clippy::all, clippy::cargo, clippy::pedantic, clippy::nursery)]
+// Clippy restriction lints
+#![deny(
+    clippy::get_unwrap,
+    clippy::if_then_some_else_none,
+    clippy::impl_trait_in_params,
+    clippy::missing_assert_message,
+    clippy::multiple_inherent_impl,
+    clippy::panic_in_result_fn,
+    clippy::redundant_type_annotations,
+    clippy::renamed_function_params,
+    clippy::rest_pat_in_fully_bound_structs,
+    clippy::self_named_module_files,
+    clippy::unnecessary_self_imports,
+    clippy::unneeded_field_pattern,
+    clippy::unseparated_literal_suffix,
+    clippy::unwrap_in_result
+)]
+// Rustc lint groups
+#![deny(rust_2018_idioms)]
+// Rustc lints
+#![deny(
+    missing_copy_implementations,
+    missing_debug_implementations,
+    trivial_casts,
+    trivial_numeric_casts,
+    unused_extern_crates,
+    unused_import_braces,
+    unused_results,
+    variant_size_differences
+)]
+// Rustdoc lints
+#![deny(rustdoc::all)]
+// Overwrites
+#![allow(clippy::large_stack_frames)]
+
 use {
     divan::Bencher,
     graaf::{
@@ -23,18 +60,22 @@ fn main() {
     divan::main();
 }
 
+#[derive(Debug)]
 pub struct AdjacencyListBTreeSet {
     pub arcs: Vec<BTreeSet<usize>>,
 }
 
+#[derive(Debug)]
 pub struct AdjacencyListWeightedBTreeMap<W> {
     pub arcs: Vec<BTreeMap<usize, W>>,
 }
 
+#[derive(Debug)]
 pub struct AdjacencyMapBTreeSet {
     pub arcs: BTreeMap<usize, BTreeSet<usize>>,
 }
 
+#[derive(Debug)]
 pub struct EdgeListBTreeSet {
     pub arcs: BTreeSet<(usize, usize)>,
     pub order: usize,
@@ -67,7 +108,29 @@ fn converse_adjacency_list_btree_set_for_for(
     AdjacencyListBTreeSet { arcs }
 }
 
-fn converse_adjacency_list_weighted_add_arc_empty_has_arc_order(
+fn converse_adjacency_list_btree_set_fold(
+    digraph: &AdjacencyListBTreeSet,
+) -> AdjacencyListBTreeSet {
+    assert!(
+        !digraph.arcs.is_empty(),
+        "a digraph has at least one vertex"
+    );
+
+    AdjacencyListBTreeSet {
+        arcs: digraph.arcs.iter().enumerate().fold(
+            vec![BTreeSet::new(); digraph.arcs.len()],
+            |mut arcs, (u, v)| {
+                for v in v {
+                    let _ = arcs[*v].insert(u);
+                }
+
+                arcs
+            },
+        ),
+    }
+}
+
+fn converse_adjacency_list_weighted_btree_map_for_for(
     digraph: &AdjacencyListWeightedBTreeMap<usize>,
 ) -> AdjacencyListWeightedBTreeMap<usize> {
     let order = digraph.arcs.len();
@@ -78,7 +141,7 @@ fn converse_adjacency_list_weighted_add_arc_empty_has_arc_order(
 
     for (u, v) in digraph.arcs.iter().enumerate() {
         for (v, w) in v {
-            converse.arcs[*v].insert(u, *w);
+            let _ = converse.arcs[*v].insert(u, *w);
         }
     }
 
@@ -97,7 +160,7 @@ where
         vec![BTreeMap::new(); order],
         |mut arcs, (u, v)| {
             for (v, w) in v {
-                arcs[*v].insert(u, *w);
+                let _ = arcs[*v].insert(u, *w);
             }
 
             arcs
@@ -198,13 +261,33 @@ fn adjacency_list_btree_set_for_for(bencher: Bencher<'_, '_>, order: usize) {
     let mut arcs = vec![BTreeSet::new(); order];
 
     for (u, v) in AdjacencyList::erdos_renyi(order, 0.5, 0).arcs() {
-        arcs[v].insert(u);
+        let _ = arcs[v].insert(u);
     }
 
     let erdos_renyi = AdjacencyListBTreeSet { arcs };
 
     bencher.bench(|| {
         let _ = converse_adjacency_list_btree_set_for_for(&erdos_renyi);
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn adjacency_list_btree_set_fold(bencher: Bencher<'_, '_>, order: usize) {
+    let erdos_renyi = AdjacencyList::erdos_renyi(order, 0.5, 0);
+
+    let erdos_renyi = AdjacencyListBTreeSet {
+        arcs: erdos_renyi.arcs().fold(
+            vec![BTreeSet::new(); order],
+            |mut arcs, (u, v)| {
+                let _ = arcs[v].insert(u);
+
+                arcs
+            },
+        ),
+    };
+
+    bencher.bench(|| {
+        let _ = converse_adjacency_list_btree_set_fold(&erdos_renyi);
     });
 }
 
@@ -219,7 +302,7 @@ fn adjacency_list_weighted(bencher: Bencher<'_, '_>, order: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn adjacency_list_weighted_btree_map_add_arc_empty_has_arc_order(
+fn adjacency_list_weighted_btree_map_for_for(
     bencher: Bencher<'_, '_>,
     order: usize,
 ) {
@@ -229,7 +312,7 @@ fn adjacency_list_weighted_btree_map_add_arc_empty_has_arc_order(
         arcs: erdos_renyi.arcs().fold(
             vec![BTreeMap::new(); order],
             |mut arcs, (u, v)| {
-                arcs[v].insert(u, 0);
+                let _ = arcs[v].insert(u, 0);
 
                 arcs
             },
@@ -237,9 +320,8 @@ fn adjacency_list_weighted_btree_map_add_arc_empty_has_arc_order(
     };
 
     bencher.bench(|| {
-        let _ = converse_adjacency_list_weighted_add_arc_empty_has_arc_order(
-            &erdos_renyi,
-        );
+        let _ =
+            converse_adjacency_list_weighted_btree_map_for_for(&erdos_renyi);
     });
 }
 
@@ -254,7 +336,7 @@ fn adjacency_list_weighted_btree_map_fold(
         arcs: erdos_renyi.arcs().fold(
             vec![BTreeMap::new(); order],
             |mut arcs, (u, v)| {
-                arcs[v].insert(u, 0);
+                let _ = arcs[v].insert(u, 0);
 
                 arcs
             },
@@ -293,7 +375,7 @@ fn adjacency_map_btree_set_for_for(bencher: Bencher<'_, '_>, order: usize) {
     let mut arcs = BTreeMap::<usize, BTreeSet<usize>>::new();
 
     for (u, v) in AdjacencyMap::erdos_renyi(order, 0.5, 0).arcs() {
-        arcs.entry(v).or_default().insert(u);
+        let _ = arcs.entry(v).or_default().insert(u);
     }
 
     let erdos_renyi = AdjacencyMapBTreeSet { arcs };
@@ -352,7 +434,7 @@ fn edge_list_btree_set_collect(bencher: Bencher<'_, '_>, order: usize) {
     let mut arcs = BTreeSet::new();
 
     for (u, v) in EdgeList::erdos_renyi(order, 0.5, 0).arcs() {
-        arcs.insert((v, u));
+        let _ = arcs.insert((v, u));
     }
 
     let erdos_renyi = EdgeListBTreeSet { arcs, order };

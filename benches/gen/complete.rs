@@ -1,4 +1,39 @@
-//! Benchmark the `Complete::complete` implementation for different types.
+// Clippy lint groups
+#![deny(clippy::all, clippy::cargo, clippy::pedantic, clippy::nursery)]
+// Clippy restriction lints
+#![deny(
+    clippy::get_unwrap,
+    clippy::if_then_some_else_none,
+    clippy::impl_trait_in_params,
+    clippy::missing_assert_message,
+    clippy::multiple_inherent_impl,
+    clippy::panic_in_result_fn,
+    clippy::redundant_type_annotations,
+    clippy::renamed_function_params,
+    clippy::rest_pat_in_fully_bound_structs,
+    clippy::self_named_module_files,
+    clippy::unnecessary_self_imports,
+    clippy::unneeded_field_pattern,
+    clippy::unseparated_literal_suffix,
+    clippy::unwrap_in_result
+)]
+// Rustc lint groups
+#![deny(rust_2018_idioms)]
+// Rustc lints
+#![deny(
+    missing_copy_implementations,
+    missing_debug_implementations,
+    trivial_casts,
+    trivial_numeric_casts,
+    unused_extern_crates,
+    unused_import_braces,
+    unused_results,
+    variant_size_differences
+)]
+// Rustdoc lints
+#![deny(rustdoc::all)]
+// Overwrites
+#![allow(clippy::large_stack_frames)]
 
 use {
     graaf::{
@@ -21,18 +56,22 @@ fn main() {
     divan::main();
 }
 
+#[derive(Debug)]
 pub struct AdjacencyListBTreeSet {
     pub arcs: Vec<BTreeSet<usize>>,
 }
 
+#[derive(Debug)]
 pub struct AdjacencyListHashSet {
     pub arcs: Vec<HashSet<usize>>,
 }
 
+#[derive(Debug)]
 pub struct AdjacencyMapTreeSet {
     pub arcs: BTreeMap<usize, BTreeSet<usize>>,
 }
 
+#[derive(Debug)]
 pub struct EdgeListBTreeSet {
     pub arcs: BTreeSet<(usize, usize)>,
     pub order: usize,
@@ -82,8 +121,8 @@ fn complete_adjacency_list_btree_set_insert(
 
     for u in 0..order {
         for v in (u + 1)..order {
-            arcs[u].insert(v);
-            arcs[v].insert(u);
+            let _ = arcs[u].insert(v);
+            let _ = arcs[v].insert(u);
         }
     }
 
@@ -102,7 +141,7 @@ fn complete_adjacency_list_btree_set_remove(
     let mut arcs = vec![neighbors; order];
 
     for (u, neighbors) in arcs.iter_mut().enumerate().take(order) {
-        neighbors.remove(&u);
+        let _ = neighbors.remove(&u);
     }
 
     AdjacencyListBTreeSet { arcs }
@@ -152,8 +191,8 @@ fn complete_adjacency_list_hash_set_insert(
 
     for u in 0..order {
         for v in (u + 1)..order {
-            arcs[u].insert(v);
-            arcs[v].insert(u);
+            let _ = arcs[u].insert(v);
+            let _ = arcs[v].insert(u);
         }
     }
 

@@ -1,4 +1,39 @@
-//! Benchmark the `Wheel::wheel` implementation for different types.
+// Clippy lint groups
+#![deny(clippy::all, clippy::cargo, clippy::pedantic, clippy::nursery)]
+// Clippy restriction lints
+#![deny(
+    clippy::get_unwrap,
+    clippy::if_then_some_else_none,
+    clippy::impl_trait_in_params,
+    clippy::missing_assert_message,
+    clippy::multiple_inherent_impl,
+    clippy::panic_in_result_fn,
+    clippy::redundant_type_annotations,
+    clippy::renamed_function_params,
+    clippy::rest_pat_in_fully_bound_structs,
+    clippy::self_named_module_files,
+    clippy::unnecessary_self_imports,
+    clippy::unneeded_field_pattern,
+    clippy::unseparated_literal_suffix,
+    clippy::unwrap_in_result
+)]
+// Rustc lint groups
+#![deny(rust_2018_idioms)]
+// Rustc lints
+#![deny(
+    missing_copy_implementations,
+    missing_debug_implementations,
+    trivial_casts,
+    trivial_numeric_casts,
+    unused_extern_crates,
+    unused_import_braces,
+    unused_results,
+    variant_size_differences
+)]
+// Rustdoc lints
+#![deny(rustdoc::all)]
+// Overwrites
+#![allow(clippy::large_stack_frames)]
 
 use {
     graaf::{
@@ -23,14 +58,17 @@ fn main() {
     divan::main();
 }
 
+#[derive(Debug)]
 pub struct AdjacencyListBTreeSet {
     pub arcs: Vec<BTreeSet<usize>>,
 }
 
+#[derive(Debug)]
 pub struct AdjacencyMapBTreeSet {
     pub arcs: BTreeMap<usize, BTreeSet<usize>>,
 }
 
+#[derive(Debug)]
 pub struct EdgeListBTreeSet {
     pub arcs: BTreeSet<(usize, usize)>,
     pub order: usize,
@@ -263,67 +301,67 @@ fn wheel_edge_list_btree_set_collect_map(order: usize) -> EdgeListBTreeSet {
     }
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+#[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list(n: usize) {
     let _ = AdjacencyList::wheel(n);
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+#[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list_add_arc_empty(n: usize) {
     let _ = wheel_adjacency_list_add_arc_empty(n);
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+#[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list_btree_set_collect(n: usize) {
     let _ = wheel_adjacency_list_btree_set_collect(n);
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+#[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_map(n: usize) {
     let _ = AdjacencyMap::wheel(n);
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+#[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_map_add_arc_empty(n: usize) {
     let _ = wheel_adjacency_map_add_arc_empty(n);
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+#[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_map_btree_set_collect_from(n: usize) {
     let _ = wheel_adjacency_map_btree_set_collect_from(n);
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+#[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_map_btree_set_collect_collect(n: usize) {
     let _ = wheel_adjacency_map_btree_set_collect_collect(n);
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+#[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_matrix(n: usize) {
     let _ = AdjacencyMatrix::wheel(n);
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+#[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_matrix_add_arc_empty(n: usize) {
     let _ = wheel_adjacency_matrix_add_arc_empty(n);
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+#[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn edge_list(n: usize) {
     let _ = EdgeList::wheel(n);
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+#[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn edge_list_add_arc_empty(n: usize) {
     let _ = wheel_edge_list_add_arc_empty(n);
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+#[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn edge_list_btree_set_collect(n: usize) {
     let _ = wheel_edge_list_btree_set_collect(n);
 }
 
-#[divan::bench(args = [10, 100, 1000, 10000, 100000])]
+#[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn edge_list_btree_set_collect_map(n: usize) {
     let _ = wheel_edge_list_btree_set_collect_map(n);
 }

@@ -382,14 +382,20 @@ impl Converse for AdjacencyList {
     ///
     /// Panics if the digraphs' order is zero.
     fn converse(&self) -> Self {
-        let order = self.order();
-        let mut converse = Self::empty(order);
+        assert!(self.order() > 0, "a digraph has at least one vertex");
 
-        for (u, v) in self.arcs() {
-            converse.add_arc(v, u);
+        Self {
+            arcs: self.arcs.iter().enumerate().fold(
+                vec![BTreeSet::new(); self.order()],
+                |mut converse, (u, set)| {
+                    for &v in set {
+                        let _ = converse[v].insert(u);
+                    }
+
+                    converse
+                },
+            ),
         }
-
-        converse
     }
 }
 

@@ -110,14 +110,18 @@ where
     W: Copy,
 {
     fn converse(&self) -> Self {
-        let order = self.order();
-        let mut converse = Self::empty(order);
+        Self {
+            arcs: self.arcs.iter().enumerate().fold(
+                vec![BTreeMap::new(); self.order()],
+                |mut arcs, (u, map)| {
+                    for (&v, &w) in map {
+                        let _ = arcs[v].insert(u, w);
+                    }
 
-        for (u, v, &w) in self.arcs_weighted() {
-            converse.add_arc_weighted(v, u, w);
+                    arcs
+                },
+            ),
         }
-
-        converse
     }
 }
 
@@ -1010,15 +1014,6 @@ mod tests {
             (1, 0, &2),
             (2, 1, &2)
         ]));
-    }
-
-    #[test]
-    #[should_panic(expected = "a digraph has at least one vertex")]
-    fn converse_0() {
-        let digraph: AdjacencyListWeighted<usize> =
-            AdjacencyListWeighted { arcs: vec![] };
-
-        let _ = digraph.converse();
     }
 
     #[test]

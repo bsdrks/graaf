@@ -18,11 +18,19 @@
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 - Replace the blanket implementations in `op` with custom implementations for the types in `repr`. In the documentation, describe examples of both the direct and the trait-based implementation of the traits.
 
+## [0.98.1] - 2024-10-03
+
+Changed
+
+- Set benchmark clippy rules to those used for the library.
+- Speed up `AdjacencyListWeighted::converse`.
+
 ## [0.98.0] - 2024-10-03
 
 Added
 
 - Add panic tests for generator implementations when `order == 0`.
+- Verify order in generator tests.
 - Add benchmark `op_converse`.
 
 Changed
@@ -42,7 +50,7 @@ Changed
 
 Added
 
-- Add benchmark `op/complement`.
+- Add benchmark `op_complement`.
 
 Changed
 
