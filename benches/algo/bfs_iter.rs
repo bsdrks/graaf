@@ -96,7 +96,7 @@ impl<'a, D> BfsPushBack<'a, D> {
     }
 }
 
-impl<'a, D> Iterator for BfsPushBack<'a, D>
+impl<D> Iterator for BfsPushBack<'_, D>
 where
     D: OutNeighbors,
 {
@@ -140,7 +140,7 @@ impl<'a, D> BfsExtend<'a, D> {
     }
 }
 
-impl<'a, D> Iterator for BfsExtend<'a, D>
+impl<D> Iterator for BfsExtend<'_, D>
 where
     D: OutNeighbors,
 {
