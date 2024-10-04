@@ -170,7 +170,7 @@ impl<'a, D> Bfs<'a, D> {
     }
 }
 
-impl<'a, D> Iterator for Bfs<'a, D>
+impl<D> Iterator for Bfs<'_, D>
 where
     D: OutNeighbors,
 {

@@ -157,7 +157,7 @@ impl<'a, D> Dfs<'a, D> {
     }
 }
 
-impl<'a, D> Iterator for Dfs<'a, D>
+impl<D> Iterator for Dfs<'_, D>
 where
     D: OutNeighbors,
 {

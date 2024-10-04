@@ -445,7 +445,7 @@ where
     }
 }
 
-impl<'a, D> Iterator for DijkstraPred<'a, D>
+impl<D> Iterator for DijkstraPred<'_, D>
 where
     D: Order + OutNeighborsWeighted<Weight = usize>,
 {

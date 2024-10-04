@@ -185,7 +185,7 @@ where
     }
 }
 
-impl<'a, D> Iterator for Dijkstra<'a, D>
+impl<D> Iterator for Dijkstra<'_, D>
 where
     D: Order + OutNeighborsWeighted<Weight = usize>,
 {

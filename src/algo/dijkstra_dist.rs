@@ -334,7 +334,7 @@ where
     }
 }
 
-impl<'a, D> Iterator for DijkstraDist<'a, D>
+impl<D> Iterator for DijkstraDist<'_, D>
 where
     D: Order + OutNeighborsWeighted<Weight = usize>,
 {

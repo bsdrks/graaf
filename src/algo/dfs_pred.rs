@@ -291,7 +291,7 @@ impl<'a, D> DfsPred<'a, D> {
     }
 }
 
-impl<'a, D> Iterator for DfsPred<'a, D>
+impl<D> Iterator for DfsPred<'_, D>
 where
     D: OutNeighbors,
 {
