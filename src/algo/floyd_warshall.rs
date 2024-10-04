@@ -147,11 +147,9 @@ impl<'a, D> FloydWarshall<'a, D> {
     where
         D: Order,
     {
-        let order = digraph.order();
-
         Self {
             digraph,
-            dist: DistanceMatrix::<isize>::new(order, isize::MAX),
+            dist: DistanceMatrix::<isize>::new(digraph.order(), isize::MAX),
         }
     }
 

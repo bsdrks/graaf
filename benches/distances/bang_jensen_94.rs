@@ -53,6 +53,7 @@ use {
         DijkstraDist,
         FloydWarshall,
     },
+    std::iter::once,
 };
 
 fn main() {
@@ -85,7 +86,7 @@ fn bellman_ford_moore(bencher: Bencher<'_, '_>) {
 #[divan::bench]
 fn bfs_adjacency_list(bencher: Bencher<'_, '_>) {
     let digraph = fixture_adjacency_list();
-    let mut bfs = BfsDist::new(&digraph, &[0]);
+    let mut bfs = BfsDist::new(&digraph, once(0));
 
     assert!(
         bfs.distances().iter().eq(&DISTANCES_USIZE),
@@ -93,7 +94,7 @@ fn bfs_adjacency_list(bencher: Bencher<'_, '_>) {
     );
 
     bencher.bench_local(|| {
-        let mut bfs = BfsDist::new(&digraph, &[0]);
+        let mut bfs = BfsDist::new(&digraph, once(0));
         let _ = bfs.distances();
     });
 }
@@ -101,7 +102,7 @@ fn bfs_adjacency_list(bencher: Bencher<'_, '_>) {
 #[divan::bench]
 fn bfs_adjacency_matrix(bencher: Bencher<'_, '_>) {
     let digraph = fixture_adjacency_matrix();
-    let mut bfs = BfsDist::new(&digraph, &[0]);
+    let mut bfs = BfsDist::new(&digraph, once(0));
 
     assert!(
         bfs.distances().iter().eq(&DISTANCES_USIZE),
@@ -109,7 +110,7 @@ fn bfs_adjacency_matrix(bencher: Bencher<'_, '_>) {
     );
 
     bencher.bench_local(|| {
-        let mut bfs = BfsDist::new(&digraph, &[0]);
+        let mut bfs = BfsDist::new(&digraph, once(0));
         let _ = bfs.distances();
     });
 }
@@ -117,7 +118,7 @@ fn bfs_adjacency_matrix(bencher: Bencher<'_, '_>) {
 #[divan::bench]
 fn bfs_adjacency_map(bencher: Bencher<'_, '_>) {
     let digraph = fixture_adjacency_map();
-    let mut bfs = BfsDist::new(&digraph, &[0]);
+    let mut bfs = BfsDist::new(&digraph, once(0));
 
     assert!(
         bfs.distances().iter().eq(&DISTANCES_USIZE),
@@ -125,7 +126,7 @@ fn bfs_adjacency_map(bencher: Bencher<'_, '_>) {
     );
 
     bencher.bench_local(|| {
-        let mut bfs = BfsDist::new(&digraph, &[0]);
+        let mut bfs = BfsDist::new(&digraph, once(0));
         let _ = bfs.distances();
     });
 }
@@ -133,7 +134,7 @@ fn bfs_adjacency_map(bencher: Bencher<'_, '_>) {
 #[divan::bench]
 fn bfs_edge_list(bencher: Bencher<'_, '_>) {
     let digraph = fixture_edge_list();
-    let mut bfs = BfsDist::new(&digraph, &[0]);
+    let mut bfs = BfsDist::new(&digraph, once(0));
 
     assert!(
         bfs.distances().iter().eq(&DISTANCES_USIZE),
@@ -141,7 +142,7 @@ fn bfs_edge_list(bencher: Bencher<'_, '_>) {
     );
 
     bencher.bench_local(|| {
-        let mut bfs = BfsDist::new(&digraph, &[0]);
+        let mut bfs = BfsDist::new(&digraph, once(0));
         let _ = bfs.distances();
     });
 }
@@ -149,7 +150,7 @@ fn bfs_edge_list(bencher: Bencher<'_, '_>) {
 #[divan::bench]
 fn dijkstra(bencher: Bencher<'_, '_>) {
     let digraph = fixture_adjacency_list_weighted_usize();
-    let mut dijkstra = DijkstraDist::new(&digraph, &[0]);
+    let mut dijkstra = DijkstraDist::new(&digraph, once(0));
 
     assert!(
         dijkstra.distances().eq(&DISTANCES_USIZE),
@@ -157,7 +158,7 @@ fn dijkstra(bencher: Bencher<'_, '_>) {
     );
 
     bencher.bench_local(|| {
-        let mut dijkstra = DijkstraDist::new(&digraph, &[0]);
+        let mut dijkstra = DijkstraDist::new(&digraph, once(0));
         let _ = dijkstra.distances();
     });
 }

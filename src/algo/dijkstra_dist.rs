@@ -15,11 +15,14 @@
 //! ![A digraph and the distances between the source vertex and the other vertices obtained by Dijkstra's algorithm](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_1-0.87.4.svg?)
 //!
 //! ```
-//! use graaf::{
-//!     AddArcWeighted,
-//!     AdjacencyListWeighted,
-//!     DijkstraDist,
-//!     Empty,
+//! use {
+//!     graaf::{
+//!         AddArcWeighted,
+//!         AdjacencyListWeighted,
+//!         DijkstraDist,
+//!         Empty,
+//!     },
+//!     std::iter::once,
 //! };
 //!
 //! let mut digraph = AdjacencyListWeighted::<usize>::empty(7);
@@ -32,9 +35,9 @@
 //! digraph.add_arc_weighted(4, 5, 2);
 //! digraph.add_arc_weighted(5, 6, 1);
 //!
-//! let mut dijkstra = DijkstraDist::new(&digraph, &[0]);
+//! let mut dijkstra = DijkstraDist::new(&digraph, once(0));
 //!
-//! assert!(dijkstra.eq([(0, 0), (1, 1), (2, 2), (4, 3), (5, 5), (6, 6),]));
+//! assert!(dijkstra.eq([(0, 0), (1, 1), (2, 2), (4, 3), (5, 5), (6, 6)]));
 //! ```
 //!
 //! ## Multiple sources
@@ -62,7 +65,7 @@
 //! digraph.add_arc_weighted(4, 5, 1);
 //! digraph.add_arc_weighted(5, 6, 3);
 //!
-//! let mut dijkstra = DijkstraDist::new(&digraph, &[0, 3]);
+//! let mut dijkstra = DijkstraDist::new(&digraph, [0, 3].into_iter());
 //!
 //! assert!(dijkstra.eq([
 //!     (3, 0),
@@ -101,11 +104,14 @@ type Step = (usize, usize);
 /// ![A digraph and the distances between the source vertex and the other vertices obtained by Dijkstra's algorithm](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_1-0.87.4.svg?)
 ///
 /// ```
-/// use graaf::{
-///     AddArcWeighted,
-///     AdjacencyListWeighted,
-///     DijkstraDist,
-///     Empty,
+/// use {
+///     graaf::{
+///         AddArcWeighted,
+///         AdjacencyListWeighted,
+///         DijkstraDist,
+///         Empty,
+///     },
+///     std::iter::once,
 /// };
 ///
 /// let mut digraph = AdjacencyListWeighted::<usize>::empty(7);
@@ -118,9 +124,9 @@ type Step = (usize, usize);
 /// digraph.add_arc_weighted(4, 5, 2);
 /// digraph.add_arc_weighted(5, 6, 1);
 ///
-/// let mut dijkstra = DijkstraDist::new(&digraph, &[0]);
+/// let mut dijkstra = DijkstraDist::new(&digraph, once(0));
 ///
-/// assert!(dijkstra.eq([(0, 0), (1, 1), (2, 2), (4, 3), (5, 5), (6, 6),]));
+/// assert!(dijkstra.eq([(0, 0), (1, 1), (2, 2), (4, 3), (5, 5), (6, 6)]));
 /// ```
 ///
 /// ## Multiple sources
@@ -148,7 +154,7 @@ type Step = (usize, usize);
 /// digraph.add_arc_weighted(4, 5, 1);
 /// digraph.add_arc_weighted(5, 6, 3);
 ///
-/// let mut dijkstra = DijkstraDist::new(&digraph, &[0, 3]);
+/// let mut dijkstra = DijkstraDist::new(&digraph, [0, 3].into_iter());
 ///
 /// assert!(dijkstra.eq([
 ///     (3, 0),
@@ -182,22 +188,21 @@ where
     /// * `digraph`: The digraph.
     /// * `sources`: The source vertices.
     #[must_use]
-    pub fn new<'b, T>(digraph: &'a D, sources: T) -> Self
+    pub fn new<T>(digraph: &'a D, sources: T) -> Self
     where
-        T: IntoIterator<Item = &'b usize>,
+        T: Iterator<Item = usize> + Clone,
     {
-        let mut dist = vec![usize::MAX; digraph.order()];
-        let mut heap = BinaryHeap::new();
-
-        for &u in sources {
-            dist[u] = 0;
-            heap.push((Reverse(0), u));
-        }
-
         Self {
             digraph,
-            dist,
-            heap,
+            dist: sources.clone().fold(
+                vec![usize::MAX; digraph.order()],
+                |mut dist, u| {
+                    dist[u] = 0;
+
+                    dist
+                },
+            ),
+            heap: sources.map(|u| (Reverse(0), u)).collect(),
         }
     }
 
@@ -218,11 +223,14 @@ where
     /// ![A digraph and the distances between the source vertex and the other vertices obtained by Dijkstra's algorithm](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_dist_distances_1-0.93.1.svg?)
     ///
     /// ```
-    /// use graaf::{
-    ///     AddArcWeighted,
-    ///     AdjacencyListWeighted,
-    ///     DijkstraDist,
-    ///     Empty,
+    /// use {
+    ///     graaf::{
+    ///         AddArcWeighted,
+    ///         AdjacencyListWeighted,
+    ///         DijkstraDist,
+    ///         Empty,
+    ///     },
+    ///     std::iter::once,
     /// };
     ///
     /// let mut digraph = AdjacencyListWeighted::empty(7);
@@ -235,7 +243,7 @@ where
     /// digraph.add_arc_weighted(4, 5, 2);
     /// digraph.add_arc_weighted(5, 6, 1);
     ///
-    /// assert!(DijkstraDist::new(&digraph, &[0]).distances().eq(&[
+    /// assert!(DijkstraDist::new(&digraph, once(0)).distances().eq(&[
     ///     0,
     ///     1,
     ///     2,
@@ -273,7 +281,7 @@ where
     /// digraph.add_arc_weighted(4, 5, 1);
     /// digraph.add_arc_weighted(5, 6, 3);
     ///
-    /// assert!(DijkstraDist::new(&digraph, &[0, 3])
+    /// assert!(DijkstraDist::new(&digraph, [0, 3].into_iter())
     ///     .distances()
     ///     .eq(&[0, 1, 2, 0, 3, 1, 4]));
     /// ```
@@ -287,11 +295,14 @@ where
     /// # Examples
     ///
     /// ```
-    /// use graaf::{
-    ///     AddArcWeighted,
-    ///     AdjacencyListWeighted,
-    ///     DijkstraDist,
-    ///     Empty,
+    /// use {
+    ///     graaf::{
+    ///         AddArcWeighted,
+    ///         AdjacencyListWeighted,
+    ///         DijkstraDist,
+    ///         Empty,
+    ///     },
+    ///     std::iter::once,
     /// };
     ///
     /// let mut digraph = AdjacencyListWeighted::<usize>::empty(4);
@@ -303,22 +314,23 @@ where
     /// digraph.add_arc_weighted(1, 3, 0);
     /// digraph.add_arc_weighted(2, 3, 1);
     ///
-    /// let mut dijkstra = DijkstraDist::new(&digraph, &[0]);
+    /// let mut dijkstra = DijkstraDist::new(&digraph, once(0));
     ///
-    /// assert!(dijkstra.distances().into_iter().eq([0, 2, 3, 2,]));
+    /// assert!(dijkstra.distances().into_iter().eq([0, 2, 3, 2]));
     /// ```
     #[must_use]
     pub fn distances(&mut self) -> Vec<usize>
     where
         D: OutNeighborsWeighted<Weight = usize>,
     {
-        let mut distances = vec![usize::MAX; self.digraph.order()];
+        self.fold(
+            vec![usize::MAX; self.digraph.order()],
+            |mut distances, (u, dist)| {
+                distances[u] = dist;
 
-        for (u, dist) in self {
-            distances[u] = dist;
-        }
-
-        distances
+                distances
+            },
+        )
     }
 }
 
@@ -329,19 +341,19 @@ where
     type Item = Step;
 
     fn next(&mut self) -> Option<Self::Item> {
-        if let Some((Reverse(dist), u)) = self.heap.pop() {
-            for (v, w) in self.digraph.out_neighbors_weighted(u) {
-                let dist = dist + w;
+        let (Reverse(dist), u) = self.heap.pop()?;
 
-                if dist < self.dist[v] {
-                    self.dist[v] = dist;
-                    self.heap.push((Reverse(dist), v));
-                }
-            }
+        for (v, w) in self.digraph.out_neighbors_weighted(u) {
+            let dist = dist + w;
 
-            if dist == self.dist[u] {
-                return Some((u, dist));
+            if dist < self.dist[v] {
+                self.dist[v] = dist;
+                self.heap.push((Reverse(dist), v));
             }
+        }
+
+        if dist == self.dist[u] {
+            return Some((u, dist));
         }
 
         None
@@ -361,13 +373,14 @@ mod tests {
             kattis_crosscountry_usize,
             kattis_shortestpath1_usize,
         },
+        std::iter::once,
     };
 
     #[test]
     fn iter_bang_jensen_94() {
         let digraph = bang_jensen_94_usize();
 
-        assert!(DijkstraDist::new(&digraph, &[0]).eq([
+        assert!(DijkstraDist::new(&digraph, once(0)).eq([
             (0, 0),
             (2, 1),
             (1, 1),
@@ -382,7 +395,7 @@ mod tests {
     fn iter_bang_jensen_96() {
         let digraph = bang_jensen_96_usize();
 
-        assert!(DijkstraDist::new(&digraph, &[0]).eq([
+        assert!(DijkstraDist::new(&digraph, once(0)).eq([
             (0, 0),
             (2, 3),
             (4, 4),
@@ -396,7 +409,7 @@ mod tests {
     fn iter_kattis_bryr_1() {
         let digraph = kattis_bryr_1_usize();
 
-        assert!(DijkstraDist::new(&digraph, &[0]).eq([
+        assert!(DijkstraDist::new(&digraph, once(0)).eq([
             (0, 0),
             (2, 1),
             (1, 1),
@@ -407,7 +420,7 @@ mod tests {
     fn iter_kattis_bryr_2() {
         let digraph = kattis_bryr_2_usize();
 
-        assert!(DijkstraDist::new(&digraph, &[0]).eq([
+        assert!(DijkstraDist::new(&digraph, once(0)).eq([
             (0, 0),
             (3, 1),
             (1, 1),
@@ -421,7 +434,7 @@ mod tests {
     fn iter_kattis_bryr_3() {
         let digraph = kattis_bryr_3_usize();
 
-        assert!(DijkstraDist::new(&digraph, &[0]).eq([
+        assert!(DijkstraDist::new(&digraph, once(0)).eq([
             (0, 0),
             (3, 0),
             (7, 0),
@@ -439,7 +452,7 @@ mod tests {
     fn iter_kattis_crosscountry() {
         let digraph = kattis_crosscountry_usize();
 
-        assert!(DijkstraDist::new(&digraph, &[0]).eq([
+        assert!(DijkstraDist::new(&digraph, once(0)).eq([
             (0, 0),
             (1, 1),
             (2, 3),
@@ -451,7 +464,7 @@ mod tests {
     fn iter_kattis_shortestpath1() {
         let digraph = kattis_shortestpath1_usize();
 
-        assert!(DijkstraDist::new(&digraph, &[0]).eq([
+        assert!(DijkstraDist::new(&digraph, once(0)).eq([
             (0, 0),
             (1, 2),
             (2, 4)
@@ -462,7 +475,7 @@ mod tests {
     fn distances_bang_jensen_94() {
         let digraph = bang_jensen_94_usize();
 
-        assert!(DijkstraDist::new(&digraph, &[0])
+        assert!(DijkstraDist::new(&digraph, once(0))
             .distances()
             .iter()
             .eq(&[0, 1, 1, 2, 2, 2, 3]));
@@ -472,7 +485,7 @@ mod tests {
     fn distances_bang_jensen_96() {
         let digraph = bang_jensen_96_usize();
 
-        assert!(DijkstraDist::new(&digraph, &[0])
+        assert!(DijkstraDist::new(&digraph, once(0))
             .distances()
             .iter()
             .eq(&[0, 5, 3, 6, 4, 7]));
@@ -482,7 +495,7 @@ mod tests {
     fn distances_kattis_bryr_1() {
         let digraph = kattis_bryr_1_usize();
 
-        assert!(DijkstraDist::new(&digraph, &[0])
+        assert!(DijkstraDist::new(&digraph, once(0))
             .distances()
             .iter()
             .eq(&[0, 1, 1]));
@@ -492,7 +505,7 @@ mod tests {
     fn distances_kattis_bryr_2() {
         let digraph = kattis_bryr_2_usize();
 
-        assert!(DijkstraDist::new(&digraph, &[0])
+        assert!(DijkstraDist::new(&digraph, once(0))
             .distances()
             .iter()
             .eq(&[0, 1, 2, 1, 2, 3]));
@@ -502,7 +515,7 @@ mod tests {
     fn distances_kattis_bryr_3() {
         let digraph = kattis_bryr_3_usize();
 
-        assert!(DijkstraDist::new(&digraph, &[0])
+        assert!(DijkstraDist::new(&digraph, once(0))
             .distances()
             .iter()
             .eq(&[0, 0, 1, 0, 0, 0, 1, 0, 0, 1]));
@@ -512,7 +525,7 @@ mod tests {
     fn distances_kattis_crosscountry() {
         let digraph = kattis_crosscountry_usize();
 
-        assert!(DijkstraDist::new(&digraph, &[0])
+        assert!(DijkstraDist::new(&digraph, once(0))
             .distances()
             .iter()
             .eq(&[0, 1, 3, 10]));
@@ -522,11 +535,9 @@ mod tests {
     fn distances_kattis_shortestpath1() {
         let digraph = kattis_shortestpath1_usize();
 
-        assert!(DijkstraDist::new(&digraph, &[0]).distances().iter().eq(&[
-            0,
-            2,
-            4,
-            usize::MAX
-        ]));
+        assert!(DijkstraDist::new(&digraph, once(0))
+            .distances()
+            .iter()
+            .eq(&[0, 2, 4, usize::MAX]));
     }
 }

@@ -129,3 +129,13 @@ harness = false
 name = "op_converse"
 path = "benches/op/converse.rs"
 harness = false
+
+[[bench]]
+name = "algo_bfs_iter"
+path = "benches/algo/bfs_iter.rs"
+harness = false
+
+[[bench]]
+name = "algo_bfs_new"
+path = "benches/algo/bfs_new.rs"
+harness = false

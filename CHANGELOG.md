@@ -18,6 +18,35 @@
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 - Replace the blanket implementations in `op` with custom implementations for the types in `repr`. In the documentation, describe examples of both the direct and the trait-based implementation of the traits.
 
+## [0.99.0] - 2024-10-04
+
+Added
+
+- Add benchmark `algo_bfs_iter`.
+- Add benchmark `algo_bfs_new`.
+
+Changed
+
+- Breaking: `Bfs::new` now takes an `Iterator<Item = usize>` as `sources`.
+- Breaking: `BfsDist::new` now takes an `Iterator<Item = usize>` as `sources`.
+- Breaking: `BfsPred::new` now takes an `Iterator<Item = usize>` as `sources`.
+- Breaking: `Dfs::new` now takes an `Iterator<Item = usize>` as `sources`.
+- Breaking: `DfsDist::new` now takes an `Iterator<Item = usize>` as `sources`.
+- Breaking: `DfsPred::new` now takes an `Iterator<Item = usize>` as `sources`.
+- Breaking: `Dijkstra::new` now takes an `Iterator<Item = usize>` as `sources`.
+- Breaking: `DijkstraDist::new` now takes an `Iterator<Item = usize>` as `sources`.
+- Breaking: `DijkstraPred::new` now takes an `Iterator<Item = usize>` as `sources`.
+- Embrace the `?` operator in functions that return `Result`.
+- Speed up `Bfs::new`.
+- Speed up `BfsDist::new`.
+- Speed up `BfsPred::new`.
+- Speed up `Dfs::new`.
+- Speed up `DfsDist::new`.
+- Speed up `DfsPred::new`.
+- Speed up `Dijkstra::new`.
+- Speed up `DijkstraDist::new`.
+- Speed up `DijkstraPred::new`.
+
 ## [0.98.1] - 2024-10-03
 
 Changed

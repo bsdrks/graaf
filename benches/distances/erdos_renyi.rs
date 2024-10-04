@@ -49,6 +49,7 @@ use {
         ErdosRenyi,
         FloydWarshall,
     },
+    std::iter::once,
 };
 
 fn main() {
@@ -82,14 +83,14 @@ fn bellman_ford_moore(bencher: Bencher<'_, '_>) {
 #[divan::bench]
 fn bfs_adjacency_list(bencher: Bencher<'_, '_>) {
     let digraph = AdjacencyList::erdos_renyi(ORDER, PROBABILITY, SEED);
-    let mut bfs = BfsDist::new(&digraph, &[0]);
+    let mut bfs = BfsDist::new(&digraph, once(0));
     let dist = bfs.distances();
 
     assert_eq!(dist[0], 0, "expected 0, got {}", dist[0]);
     assert_eq!(dist[999], 6, "expected 6, got {}", dist[999]);
 
     bencher.bench_local(|| {
-        let mut bfs = BfsDist::new(&digraph, &[0]);
+        let mut bfs = BfsDist::new(&digraph, once(0));
         let _ = bfs.distances();
     });
 }
@@ -97,14 +98,14 @@ fn bfs_adjacency_list(bencher: Bencher<'_, '_>) {
 #[divan::bench]
 fn bfs_adjacency_map(bencher: Bencher<'_, '_>) {
     let digraph = AdjacencyMap::erdos_renyi(ORDER, PROBABILITY, SEED);
-    let mut bfs = BfsDist::new(&digraph, &[0]);
+    let mut bfs = BfsDist::new(&digraph, once(0));
     let dist = bfs.distances();
 
     assert_eq!(dist[0], 0, "expected 0, got {}", dist[0]);
     assert_eq!(dist[999], 6, "expected 6, got {}", dist[999]);
 
     bencher.bench_local(|| {
-        let mut bfs = BfsDist::new(&digraph, &[0]);
+        let mut bfs = BfsDist::new(&digraph, once(0));
         let _ = bfs.distances();
     });
 }
@@ -112,14 +113,14 @@ fn bfs_adjacency_map(bencher: Bencher<'_, '_>) {
 #[divan::bench]
 fn bfs_adjacency_matrix(bencher: Bencher<'_, '_>) {
     let digraph = AdjacencyMatrix::erdos_renyi(ORDER, PROBABILITY, SEED);
-    let mut bfs = BfsDist::new(&digraph, &[0]);
+    let mut bfs = BfsDist::new(&digraph, once(0));
     let dist = bfs.distances();
 
     assert_eq!(dist[0], 0, "expected 0, got {}", dist[0]);
     assert_eq!(dist[999], 6, "expected 6, got {}", dist[999]);
 
     bencher.bench_local(|| {
-        let mut bfs = BfsDist::new(&digraph, &[0]);
+        let mut bfs = BfsDist::new(&digraph, once(0));
         let _ = bfs.distances();
     });
 }
@@ -127,14 +128,14 @@ fn bfs_adjacency_matrix(bencher: Bencher<'_, '_>) {
 #[divan::bench]
 fn bfs_edge_list(bencher: Bencher<'_, '_>) {
     let digraph = EdgeList::erdos_renyi(ORDER, PROBABILITY, SEED);
-    let mut bfs = BfsDist::new(&digraph, &[0]);
+    let mut bfs = BfsDist::new(&digraph, once(0));
     let dist = bfs.distances();
 
     assert_eq!(dist[0], 0, "expected 0, got {}", dist[0]);
     assert_eq!(dist[999], 6, "expected 6, got {}", dist[999]);
 
     bencher.bench_local(|| {
-        let mut bfs = BfsDist::new(&digraph, &[0]);
+        let mut bfs = BfsDist::new(&digraph, once(0));
         let _ = bfs.distances();
     });
 }
@@ -147,14 +148,14 @@ fn dijkstra(bencher: Bencher<'_, '_>) {
         SEED,
     ));
 
-    let mut dijkstra = DijkstraDist::new(&digraph, &[0]);
+    let mut dijkstra = DijkstraDist::new(&digraph, once(0));
     let dist = dijkstra.distances();
 
     assert_eq!(dist[0], 0, "expected 0, got {}", dist[0]);
     assert_eq!(dist[999], 6, "expected 6, got {}", dist[999]);
 
     bencher.bench_local(|| {
-        let mut dijkstra = DijkstraDist::new(&digraph, &[0]);
+        let mut dijkstra = DijkstraDist::new(&digraph, once(0));
         let _ = dijkstra.distances();
     });
 }

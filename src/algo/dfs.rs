@@ -15,11 +15,14 @@
 //! ![A digraph and the distances between the source vertex and the vertices along the depth-first traversal](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_1-0.87.4.svg?)
 //!
 //! ```
-//! use graaf::{
-//!     AddArc,
-//!     AdjacencyList,
-//!     Dfs,
-//!     Empty,
+//! use {
+//!     graaf::{
+//!         AddArc,
+//!         AdjacencyList,
+//!         Dfs,
+//!         Empty,
+//!     },
+//!     std::iter::once,
 //! };
 //!
 //! let mut digraph = AdjacencyList::empty(6);
@@ -30,7 +33,7 @@
 //! digraph.add_arc(2, 5);
 //! digraph.add_arc(3, 0);
 //!
-//! assert!(Dfs::new(&digraph, vec![0]).eq([0, 1, 4, 2, 5]));
+//! assert!(Dfs::new(&digraph, once(0)).eq([0, 1, 4, 2, 5]));
 //! ```
 //!
 //! ## Multiple sources
@@ -59,7 +62,7 @@
 //! digraph.add_arc(6, 7);
 //! digraph.add_arc(7, 6);
 //!
-//! assert!(Dfs::new(&digraph, vec![3, 7]).eq([7, 6, 5, 3, 0, 1, 4]));
+//! assert!(Dfs::new(&digraph, [3, 7].into_iter()).eq([7, 6, 5, 3, 0, 1, 4]));
 //! ```
 
 use {
@@ -78,11 +81,14 @@ use {
 /// ![A digraph and the distances between the source vertex and the vertices along the depth-first traversal](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dfs_1-0.87.4.svg?)
 ///
 /// ```
-/// use graaf::{
-///     AddArc,
-///     AdjacencyList,
-///     Dfs,
-///     Empty,
+/// use {
+///     graaf::{
+///         AddArc,
+///         AdjacencyList,
+///         Dfs,
+///         Empty,
+///     },
+///     std::iter::once,
 /// };
 ///
 /// let mut digraph = AdjacencyList::empty(6);
@@ -93,7 +99,7 @@ use {
 /// digraph.add_arc(2, 5);
 /// digraph.add_arc(3, 0);
 ///
-/// assert!(Dfs::new(&digraph, vec![0]).eq([0, 1, 4, 2, 5]));
+/// assert!(Dfs::new(&digraph, once(0)).eq([0, 1, 4, 2, 5]));
 /// ```
 ///
 /// ## Multiple sources
@@ -122,7 +128,7 @@ use {
 /// digraph.add_arc(6, 7);
 /// digraph.add_arc(7, 6);
 ///
-/// assert!(Dfs::new(&digraph, vec![3, 7]).eq([7, 6, 5, 3, 0, 1, 4]));
+/// assert!(Dfs::new(&digraph, [3, 7].into_iter()).eq([7, 6, 5, 3, 0, 1, 4]));
 /// ```
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Dfs<'a, D> {
@@ -139,10 +145,13 @@ impl<'a, D> Dfs<'a, D> {
     /// * `digraph`: The digraph.
     /// * `sources`: The source vertices.
     #[must_use]
-    pub fn new(digraph: &'a D, sources: Vec<usize>) -> Self {
+    pub fn new<T>(digraph: &'a D, sources: T) -> Self
+    where
+        T: Iterator<Item = usize>,
+    {
         Self {
             digraph,
-            stack: sources,
+            stack: sources.collect(),
             visited: HashSet::new(),
         }
     }
@@ -155,18 +164,16 @@ where
     type Item = usize;
 
     fn next(&mut self) -> Option<Self::Item> {
-        if let Some(u) = self.stack.pop() {
-            if self.visited.insert(u) {
-                for v in self
-                    .digraph
-                    .out_neighbors(u)
-                    .filter(|v| !self.visited.contains(v))
-                {
-                    self.stack.push(v);
-                }
+        let u = self.stack.pop()?;
 
-                return Some(u);
-            }
+        if self.visited.insert(u) {
+            self.stack.extend(
+                self.digraph
+                    .out_neighbors(u)
+                    .filter(|v| !self.visited.contains(v)),
+            );
+
+            return Some(u);
         }
 
         None
@@ -188,34 +195,35 @@ mod tests {
             kattis_escapewallmaria_2,
             kattis_escapewallmaria_3,
         },
+        std::iter::once,
     };
 
     #[test]
     fn iter_bang_jensen_196() {
         let digraph = bang_jensen_196();
 
-        assert!(Dfs::new(&digraph, vec![0]).eq([0, 7, 5, 6, 4, 2, 3, 1]));
+        assert!(Dfs::new(&digraph, once(0)).eq([0, 7, 5, 6, 4, 2, 3, 1]));
     }
 
     #[test]
     fn iter_bang_jensen_34() {
         let digraph = bang_jensen_34();
 
-        assert!(Dfs::new(&digraph, vec![0]).eq([0, 4]));
+        assert!(Dfs::new(&digraph, once(0)).eq([0, 4]));
     }
 
     #[test]
     fn iter_bang_jensen_94() {
         let digraph = bang_jensen_94();
 
-        assert!(Dfs::new(&digraph, vec![0]).eq([0, 2, 5, 4, 6, 3, 1]));
+        assert!(Dfs::new(&digraph, once(0)).eq([0, 2, 5, 4, 6, 3, 1]));
     }
 
     #[test]
     fn iter_kattis_builddeps() {
         let digraph = kattis_builddeps();
 
-        assert!(Dfs::new(&digraph, vec![0]).eq([0, 4, 1, 3]));
+        assert!(Dfs::new(&digraph, once(0)).eq([0, 4, 1, 3]));
     }
 
     #[test]
@@ -223,7 +231,7 @@ mod tests {
         let digraph = kattis_cantinaofbabel_1();
 
         assert!(
-            Dfs::new(&digraph, vec![0]).eq([0, 1, 4, 3, 11, 9, 7, 10, 6, 5])
+            Dfs::new(&digraph, once(0)).eq([0, 1, 4, 3, 11, 9, 7, 10, 6, 5])
         );
     }
 
@@ -231,27 +239,27 @@ mod tests {
     fn iter_kattis_cantinaofbabel_2() {
         let digraph = kattis_cantinaofbabel_2();
 
-        assert!(Dfs::new(&digraph, vec![0]).eq([0, 1, 7, 2, 5, 6, 3, 4]));
+        assert!(Dfs::new(&digraph, once(0)).eq([0, 1, 7, 2, 5, 6, 3, 4]));
     }
 
     #[test]
     fn iter_kattis_escapewallmaria_1() {
         let digraph = kattis_escapewallmaria_1();
 
-        assert!(Dfs::new(&digraph, vec![5]).eq([5, 9, 13, 12, 6]));
+        assert!(Dfs::new(&digraph, once(5)).eq([5, 9, 13, 12, 6]));
     }
 
     #[test]
     fn iter_kattis_escapewallmaria_2() {
         let digraph = kattis_escapewallmaria_2();
 
-        assert!(Dfs::new(&digraph, vec![5]).eq([5, 9, 6]));
+        assert!(Dfs::new(&digraph, once(5)).eq([5, 9, 6]));
     }
 
     #[test]
     fn iter_kattis_escapewallmaria_3() {
         let digraph = kattis_escapewallmaria_3();
 
-        assert!(Dfs::new(&digraph, vec![1]).eq([1, 5, 9, 13, 12, 6, 2]));
+        assert!(Dfs::new(&digraph, once(1)).eq([1, 5, 9, 13, 12, 6, 2]));
     }
 }

@@ -46,6 +46,7 @@ use {
         DijkstraDist,
         FloydWarshall,
     },
+    std::iter::once,
 };
 
 fn main() {
@@ -75,13 +76,13 @@ fn bellman_ford_moore(bencher: Bencher<'_, '_>) {
 #[divan::bench]
 fn dijkstra(bencher: Bencher<'_, '_>) {
     let digraph = kattis_bryr_3_usize();
-    let mut dijkstra = DijkstraDist::new(&digraph, &[0]);
+    let mut dijkstra = DijkstraDist::new(&digraph, once(0));
     let dist = dijkstra.distances();
 
     assert!(dist.eq(&DISTANCES_USIZE), "distances are incorrect");
 
     bencher.bench_local(|| {
-        let mut dijkstra = DijkstraDist::new(&digraph, &[0]);
+        let mut dijkstra = DijkstraDist::new(&digraph, once(0));
         let _ = dijkstra.distances();
     });
 }

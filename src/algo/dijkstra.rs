@@ -15,11 +15,14 @@
 //! ![A digraph and the shortest path from source vertex `0` obtained by Dijkstra's algorithm](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_1-0.87.4.svg?)
 //!
 //! ```
-//! use graaf::{
-//!     AddArcWeighted,
-//!     AdjacencyListWeighted,
-//!     Dijkstra,
-//!     Empty,
+//! use {
+//!     graaf::{
+//!         AddArcWeighted,
+//!         AdjacencyListWeighted,
+//!         Dijkstra,
+//!         Empty,
+//!     },
+//!     std::iter::once,
 //! };
 //!
 //! let mut digraph = AdjacencyListWeighted::<usize>::empty(7);
@@ -32,7 +35,7 @@
 //! digraph.add_arc_weighted(4, 5, 2);
 //! digraph.add_arc_weighted(5, 6, 1);
 //!
-//! let mut dijkstra = Dijkstra::new(&digraph, &[0]);
+//! let mut dijkstra = Dijkstra::new(&digraph, once(0));
 //!
 //! assert!(dijkstra.eq([0, 1, 2, 4, 5, 6]));
 //! ```
@@ -62,7 +65,7 @@
 //! digraph.add_arc_weighted(4, 5, 1);
 //! digraph.add_arc_weighted(5, 6, 3);
 //!
-//! let mut dijkstra = Dijkstra::new(&digraph, &[0, 3]);
+//! let mut dijkstra = Dijkstra::new(&digraph, [0, 3].into_iter());
 //!
 //! assert!(dijkstra.eq([3, 0, 5, 1, 2, 4, 6]));
 //! ```
@@ -91,11 +94,14 @@ use {
 /// ![A digraph and the shortest path from source vertex `0` obtained by Dijkstra's algorithm](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/dijkstra_1-0.87.4.svg?)
 ///
 /// ```
-/// use graaf::{
-///     AddArcWeighted,
-///     AdjacencyListWeighted,
-///     Dijkstra,
-///     Empty,
+/// use {
+///     graaf::{
+///         AddArcWeighted,
+///         AdjacencyListWeighted,
+///         Dijkstra,
+///         Empty,
+///     },
+///     std::iter::once,
 /// };
 ///
 /// let mut digraph = AdjacencyListWeighted::<usize>::empty(7);
@@ -108,7 +114,7 @@ use {
 /// digraph.add_arc_weighted(4, 5, 2);
 /// digraph.add_arc_weighted(5, 6, 1);
 ///
-/// let mut dijkstra = Dijkstra::new(&digraph, &[0]);
+/// let mut dijkstra = Dijkstra::new(&digraph, once(0));
 ///
 /// assert!(dijkstra.eq([0, 1, 2, 4, 5, 6]));
 /// ```
@@ -138,7 +144,7 @@ use {
 /// digraph.add_arc_weighted(4, 5, 1);
 /// digraph.add_arc_weighted(5, 6, 1);
 ///
-/// let mut dijkstra = Dijkstra::new(&digraph, &[0, 3]);
+/// let mut dijkstra = Dijkstra::new(&digraph, [0, 3].into_iter());
 ///
 /// assert!(dijkstra.eq([3, 0, 5, 1, 6, 2, 4]));
 /// ```
@@ -160,22 +166,21 @@ where
     /// * `digraph`: The digraph.
     /// * `sources`: The source vertices.
     #[must_use]
-    pub fn new<'b, T>(digraph: &'a D, sources: T) -> Self
+    pub fn new<T>(digraph: &'a D, sources: T) -> Self
     where
-        T: IntoIterator<Item = &'b usize>,
+        T: Iterator<Item = usize> + Clone,
     {
-        let mut dist = vec![usize::MAX; digraph.order()];
-        let mut heap = BinaryHeap::new();
-
-        for &u in sources {
-            dist[u] = 0;
-            heap.push((Reverse(0), u));
-        }
-
         Self {
             digraph,
-            dist,
-            heap,
+            dist: sources.clone().fold(
+                vec![usize::MAX; digraph.order()],
+                |mut dist, u| {
+                    dist[u] = 0;
+
+                    dist
+                },
+            ),
+            heap: sources.into_iter().map(|u| (Reverse(0), u)).collect(),
         }
     }
 }
@@ -187,19 +192,19 @@ where
     type Item = usize;
 
     fn next(&mut self) -> Option<Self::Item> {
-        if let Some((Reverse(distance), u)) = self.heap.pop() {
-            for (v, w) in self.digraph.out_neighbors_weighted(u) {
-                let distance = distance + w;
+        let (Reverse(distance), u) = self.heap.pop()?;
 
-                if distance < self.dist[v] {
-                    self.dist[v] = distance;
-                    self.heap.push((Reverse(distance), v));
-                }
-            }
+        for (v, w) in self.digraph.out_neighbors_weighted(u) {
+            let distance = distance + w;
 
-            if distance == self.dist[u] {
-                return Some(u);
+            if distance < self.dist[v] {
+                self.dist[v] = distance;
+                self.heap.push((Reverse(distance), v));
             }
+        }
+
+        if distance == self.dist[u] {
+            return Some(u);
         }
 
         None
@@ -219,56 +224,56 @@ mod tests {
             kattis_crosscountry_usize,
             kattis_shortestpath1_usize,
         },
+        std::iter::once,
     };
 
     #[test]
     fn iter_bang_jensen_94() {
         let digraph = bang_jensen_94_usize();
 
-        assert!(Dijkstra::new(&digraph, &[0]).eq([0, 2, 1, 5, 4, 3, 6]));
+        assert!(Dijkstra::new(&digraph, once(0)).eq([0, 2, 1, 5, 4, 3, 6]));
     }
 
     #[test]
     fn iter_bang_jensen_96() {
         let digraph = bang_jensen_96_usize();
 
-        assert!(Dijkstra::new(&digraph, &[0]).eq([0, 2, 4, 1, 3, 5]));
+        assert!(Dijkstra::new(&digraph, once(0)).eq([0, 2, 4, 1, 3, 5]));
     }
 
     #[test]
     fn iter_kattis_bryr_1() {
         let digraph = kattis_bryr_1_usize();
 
-        assert!(Dijkstra::new(&digraph, &[0]).eq([0, 2, 1]));
+        assert!(Dijkstra::new(&digraph, once(0)).eq([0, 2, 1]));
     }
 
     #[test]
     fn iter_kattis_bryr_2() {
         let digraph = kattis_bryr_2_usize();
 
-        assert!(Dijkstra::new(&digraph, &[0]).eq([0, 3, 1, 4, 2, 5]));
+        assert!(Dijkstra::new(&digraph, once(0)).eq([0, 3, 1, 4, 2, 5]));
     }
 
     #[test]
     fn iter_kattis_bryr_3() {
         let digraph = kattis_bryr_3_usize();
 
-        assert!(
-            Dijkstra::new(&digraph, &[0]).eq([0, 3, 7, 5, 8, 4, 1, 9, 6, 2])
-        );
+        assert!(Dijkstra::new(&digraph, once(0))
+            .eq([0, 3, 7, 5, 8, 4, 1, 9, 6, 2]));
     }
 
     #[test]
     fn iter_kattis_crosscountry() {
         let digraph = kattis_crosscountry_usize();
 
-        assert!(Dijkstra::new(&digraph, &[0]).eq([0, 1, 2, 3]));
+        assert!(Dijkstra::new(&digraph, once(0)).eq([0, 1, 2, 3]));
     }
 
     #[test]
     fn iter_kattis_shortestpath1() {
         let digraph = kattis_shortestpath1_usize();
 
-        assert!(Dijkstra::new(&digraph, &[0]).eq([0, 1, 2]));
+        assert!(Dijkstra::new(&digraph, once(0)).eq([0, 1, 2]));
     }
 }
