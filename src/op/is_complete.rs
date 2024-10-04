@@ -75,14 +75,14 @@
 /// ```
 ///
 /// Implementations can be built with the [`AddArc`](crate::AddArc) and
-/// [`HasEdge`](crate::HasEdge) traits.
+/// [`HasArc`](crate::HasArc) or [`HasEdge`](crate::HasEdge) traits.
 ///
 /// ```
 /// use {
 ///     graaf::{
 ///         Circuit,
 ///         Empty,
-///         HasEdge,
+///         HasArc,
 ///         IsComplete,
 ///         Order,
 ///         RandomTournament,
@@ -110,7 +110,10 @@
 ///     fn is_complete(&self) -> bool {
 ///         let order = self.order();
 ///
-///         (0..order).all(|u| (u + 1..order).all(|v| self.has_edge(u, v)))
+///         (0..order).all(|u| {
+///             (u + 1..order)
+///                 .all(|v| self.has_arc(u, v) && self.has_arc(v, u))
+///         })
 ///     }
 /// }
 ///
