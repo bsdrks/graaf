@@ -38,7 +38,9 @@ use {
         EdgeList,
         Empty,
         HasArc,
+        HasEdge,
         Indegree,
+        IsComplete,
         IsSimple,
         Order,
         OutNeighbors,
@@ -223,6 +225,14 @@ impl<W> Indegree for AdjacencyListWeighted<W> {
             .iter()
             .filter(|arcs| arcs.contains_key(&v))
             .count()
+    }
+}
+
+impl<W> IsComplete for AdjacencyListWeighted<W> {
+    fn is_complete(&self) -> bool {
+        let order = self.order();
+
+        (0..order).all(|u| (u + 1..order).all(|v| self.has_edge(u, v)))
     }
 }
 

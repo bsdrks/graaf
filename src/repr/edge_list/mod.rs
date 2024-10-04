@@ -121,6 +121,7 @@ use {
         GrowingNetwork,
         HasArc,
         Indegree,
+        IsComplete,
         IsSimple,
         Order,
         OutNeighbors,
@@ -543,6 +544,12 @@ impl Indegree for EdgeList {
         assert!(v < self.order, "v = {v} isn't in the digraph");
 
         self.arcs.iter().filter(|(_, y)| v == *y).count()
+    }
+}
+
+impl IsComplete for EdgeList {
+    fn is_complete(&self) -> bool {
+        *self == Self::complete(self.order())
     }
 }
 

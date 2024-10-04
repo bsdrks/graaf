@@ -6,7 +6,6 @@
 //!
 //! ```
 //! use graaf::{
-//!     AddArc,
 //!     AdjacencyList,
 //!     Arcs,
 //!     Circuit,
@@ -94,7 +93,6 @@ pub trait Complement {
     ///
     /// ```
     /// use graaf::{
-    ///     AddArc,
     ///     AdjacencyList,
     ///     Arcs,
     ///     Circuit,

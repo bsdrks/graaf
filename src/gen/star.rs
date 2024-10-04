@@ -51,7 +51,6 @@
 //! use graaf::{
 //!     AdjacencyList,
 //!     Arcs,
-//!     Empty,
 //!     Star,
 //! };
 //!

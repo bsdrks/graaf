@@ -4,7 +4,6 @@
 //!
 //! ```
 //! use graaf::{
-//!     AddArc,
 //!     AdjacencyList,
 //!     Arcs,
 //!     Circuit,

@@ -121,6 +121,7 @@ use {
         GrowingNetwork,
         HasArc,
         Indegree,
+        IsComplete,
         IsSimple,
         Order,
         OutNeighbors,
@@ -552,6 +553,12 @@ impl Indegree for AdjacencyList {
         assert!(v < self.order(), "v = {v} isn't in the digraph");
 
         self.arcs.iter().filter(|set| set.contains(&v)).count()
+    }
+}
+
+impl IsComplete for AdjacencyList {
+    fn is_complete(&self) -> bool {
+        *self == Self::complete(self.order())
     }
 }
 

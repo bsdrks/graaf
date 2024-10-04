@@ -122,6 +122,7 @@ use {
         GrowingNetwork,
         HasArc,
         Indegree,
+        IsComplete,
         IsSimple,
         Order,
         OutNeighbors,
@@ -581,6 +582,12 @@ impl Indegree for AdjacencyMap {
         assert!(self.arcs.contains_key(&v), "v = {v} isn't in the digraph");
 
         self.arcs.values().filter(|set| set.contains(&v)).count()
+    }
+}
+
+impl IsComplete for AdjacencyMap {
+    fn is_complete(&self) -> bool {
+        *self == Self::complete(self.order())
     }
 }
 

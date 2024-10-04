@@ -129,6 +129,7 @@ use crate::{
     GrowingNetwork,
     HasArc,
     Indegree,
+    IsComplete,
     IsSimple,
     Order,
     OutNeighbors,
@@ -623,6 +624,12 @@ impl Indegree for AdjacencyMatrix {
         assert!(v < self.order, "v = {v} isn't in the digraph.");
 
         self.vertices().filter(|&u| self.has_arc(u, v)).count()
+    }
+}
+
+impl IsComplete for AdjacencyMatrix {
+    fn is_complete(&self) -> bool {
+        *self == Self::complete(self.order())
     }
 }
 

@@ -165,12 +165,12 @@ impl<'a, D> BellmanFordMoore<'a, D> {
     where
         D: Order,
     {
-        let order = digraph.order();
-        let mut dist = vec![isize::MAX; order];
-
-        dist[s] = 0;
-
-        Self { digraph, dist }
+        Self {
+            digraph,
+            dist: (0..digraph.order())
+                .map(|u| if u == s { 0 } else { isize::MAX })
+                .collect(),
+        }
     }
 
     /// Find the shortest distances from a source vertex to all other vertices

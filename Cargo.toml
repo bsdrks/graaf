@@ -131,6 +131,11 @@ path = "benches/op/converse.rs"
 harness = false
 
 [[bench]]
+name = "op_is_complete"
+path = "benches/op/is_complete.rs"
+harness = false
+
+[[bench]]
 name = "algo_bfs_iter"
 path = "benches/algo/bfs_iter.rs"
 harness = false
@@ -138,4 +143,9 @@ harness = false
 [[bench]]
 name = "algo_bfs_new"
 path = "benches/algo/bfs_new.rs"
+harness = false
+
+[[bench]]
+name = "algo_bellman_ford_moore_new"
+path = "benches/algo/bellman_ford_moore_new.rs"
 harness = false

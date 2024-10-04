@@ -6,7 +6,6 @@
 //!
 //! ```
 //! use graaf::{
-//!     AddArc,
 //!     AdjacencyList,
 //!     Arcs,
 //!     Circuit,
@@ -79,7 +78,6 @@ pub trait Converse {
     ///
     /// ```
     /// use graaf::{
-    ///     AddArc,
     ///     AdjacencyList,
     ///     Arcs,
     ///     Circuit,

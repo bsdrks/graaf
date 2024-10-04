@@ -21,26 +21,68 @@
 //! assert!(!AdjacencyList::random_tournament(3, 0).is_complete());
 //! ```
 
-use crate::{
-    HasEdge,
-    Order,
-};
-
 /// Check whether a digraph is complete.
 ///
 /// # Implementing [`IsComplete`] for a custom type
 ///
 /// Provide an implementation of [`is_complete`](IsComplete::is_complete) that
-/// returns whether the digraph is complete OR implement [`HasEdge`] and
-/// [`Order`].
+/// returns whether the digraph is complete.
+///
+/// ```
+/// use {
+///     graaf::IsComplete,
+///     std::collections::BTreeSet,
+/// };
+///
+/// struct AdjacencyList {
+///     pub arcs: Vec<BTreeSet<usize>>,
+/// }
+///
+/// impl IsComplete for AdjacencyList {
+///     fn is_complete(&self) -> bool {
+///         let order = self.arcs.len();
+///
+///         (0..order).all(|u| {
+///             (u + 1..order).all(|v| {
+///                 self.arcs[u].contains(&v) && self.arcs[v].contains(&u)
+///             })
+///         })
+///     }
+/// }
+///
+/// assert!(AdjacencyList {
+///     arcs: vec![
+///         BTreeSet::from([1, 2]),
+///         BTreeSet::from([0, 2]),
+///         BTreeSet::from([0, 1])
+///     ]
+/// }
+/// .is_complete());
+///
+/// assert!(!AdjacencyList {
+///     arcs: vec![
+///         BTreeSet::from([1]),
+///         BTreeSet::from([2]),
+///         BTreeSet::from([0])
+///     ]
+/// }
+/// .is_complete());
+///
+/// assert!(!AdjacencyList {
+///     arcs: vec![BTreeSet::new(); 3]
+/// }
+/// .is_complete());
+/// ```
+///
+/// Implementations can be built with the [`AddArc`](crate::AddArc) and
+/// [`HasEdge`](crate::HasEdge) traits.
 ///
 /// ```
 /// use {
 ///     graaf::{
 ///         Circuit,
-///         Complete,
 ///         Empty,
-///         HasArc,
+///         HasEdge,
 ///         IsComplete,
 ///         Order,
 ///         RandomTournament,
@@ -61,6 +103,14 @@ use crate::{
 /// impl Order for AdjacencyList {
 ///     fn order(&self) -> usize {
 ///         self.arcs.len()
+///     }
+/// }
+///
+/// impl IsComplete for AdjacencyList {
+///     fn is_complete(&self) -> bool {
+///         let order = self.order();
+///
+///         (0..order).all(|u| (u + 1..order).all(|v| self.has_edge(u, v)))
 ///     }
 /// }
 ///
@@ -109,23 +159,4 @@ pub trait IsComplete {
     /// ```
     #[must_use]
     fn is_complete(&self) -> bool;
-}
-
-impl<D> IsComplete for D
-where
-    D: HasEdge + Order,
-{
-    fn is_complete(&self) -> bool {
-        let order = self.order();
-
-        for u in 0..order {
-            for v in (u + 1)..order {
-                if !self.has_edge(u, v) {
-                    return false;
-                }
-            }
-        }
-
-        true
-    }
 }

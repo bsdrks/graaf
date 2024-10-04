@@ -17,8 +17,6 @@
 //!     AdjacencyList,
 //!     Arcs,
 //!     ErdosRenyi,
-//!     Order,
-//!     Size,
 //! };
 //!
 //! let digraph = AdjacencyList::erdos_renyi(6, 0.5, 0);
@@ -176,8 +174,6 @@ pub trait ErdosRenyi {
     ///     AdjacencyList,
     ///     Arcs,
     ///     ErdosRenyi,
-    ///     Order,
-    ///     Size,
     /// };
     ///
     /// let digraph = AdjacencyList::erdos_renyi(6, 0.5, 0);
