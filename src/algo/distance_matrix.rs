@@ -412,7 +412,7 @@ impl<W> DistanceMatrix<W> {
     ///
     /// assert!(FloydWarshall::new(&digraph).distances().periphery().eq([4]));
     /// ```
-    pub fn periphery(&'_ self) -> impl Iterator<Item = usize> + use<'_, W>
+    pub fn periphery(&self) -> impl Iterator<Item = usize> + '_
     where
         W: Copy + Ord,
     {

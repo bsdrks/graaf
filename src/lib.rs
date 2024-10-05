@@ -223,8 +223,6 @@
 #![deny(rustdoc::all)]
 // Overwrites
 #![allow(clippy::large_stack_frames)]
-#![allow(stable_features)]
-#![feature(precise_capturing)]
 
 pub mod algo;
 pub mod gen;

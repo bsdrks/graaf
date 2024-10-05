@@ -24,7 +24,7 @@
 
 Fixed
 
-- Enable `precise_capturing` feature.
+- Fix `DistanceMatrix::periphery` return type.
 
 ## [0.101.0] - 2024-10-05
 
