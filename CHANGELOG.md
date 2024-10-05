@@ -6,6 +6,7 @@
 - Benchmark trait implementations.
 - Explain the pros and cons of each digraph representation.
 - Implement `DfsDist::distances`.
+- Implement `size_hint` on iterators.
 - Improve doctest and add image to `DijkstraPred::shortest_path`.
 - Improve doctest and add image to `DistanceMatrix::is_connected`.
 - Improve doctest and add image to `DistanceMatrix::periphery`.
@@ -14,11 +15,18 @@
 - Mention the order of traversal in the `Bfs` documentation.
 - Mention the order of traversal in the `Dfs` documentation.
 - Mention the order of traversal in the `Dijkstra` documentation.
-- Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 - Replace the blanket implementations in `op` with custom implementations for the types in `repr`. In the documentation, describe examples of both the direct and the trait-based implementation of the traits.
-- Implement `size_hint` on iterators.
-- Return iterators instead of vectors.
 - Research: create iterator structs for eccentricities, periphery, and center.
+- Return iterators instead of vectors.
+- Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
+
+## [0.102.0] - 2024-10-05
+
+Changed
+
+- Breaking: replace `impl<D> IsTournament for D where D: HasEdge + Order` with `impl IsTournament for [AdjacencyList, AdjacencyListWeighted, AdjacencyMap, AdjacencyMatrix, EdgeList]`.
+- Speed up `AdjacencyList::is_tournament`.
+- Speed up `AdjacencyMatrix::is_tournament`.
 
 ## [0.101.2] - 2024-10-05
 

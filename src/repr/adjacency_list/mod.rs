@@ -123,6 +123,7 @@ use {
         Indegree,
         IsComplete,
         IsSimple,
+        IsTournament,
         Order,
         OutNeighbors,
         OutNeighborsWeighted,
@@ -574,6 +575,20 @@ impl IsSimple for AdjacencyList {
             .iter()
             .enumerate()
             .all(|(u, set)| !set.contains(&u))
+    }
+}
+
+impl IsTournament for AdjacencyList {
+    fn is_tournament(&self) -> bool {
+        let order = self.order();
+
+        if self.size() != order * (order - 1) / 2 {
+            return false;
+        }
+
+        (0..order).all(|u| {
+            (u + 1..order).all(|v| self.has_arc(u, v) ^ self.has_arc(v, u))
+        })
     }
 }
 

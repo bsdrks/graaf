@@ -29,7 +29,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.101.2"
+graaf = "0.102.0"
 ```
 
 ## Representations

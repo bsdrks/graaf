@@ -124,6 +124,7 @@ use {
         Indegree,
         IsComplete,
         IsSimple,
+        IsTournament,
         Order,
         OutNeighbors,
         OutNeighborsWeighted,
@@ -600,6 +601,20 @@ impl IsSimple for AdjacencyMap {
         // We only check for self-loops. [`AdjacencyMap`] can't represent
         // parallel arcs.
         self.arcs.iter().all(|(u, set)| !set.contains(u))
+    }
+}
+
+impl IsTournament for AdjacencyMap {
+    fn is_tournament(&self) -> bool {
+        let order = self.order();
+
+        if self.size() != order * (order - 1) / 2 {
+            return false;
+        }
+
+        (0..order).all(|u| {
+            (u + 1..order).all(|v| self.has_arc(u, v) ^ self.has_arc(v, u))
+        })
     }
 }
 

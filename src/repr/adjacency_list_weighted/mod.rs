@@ -42,6 +42,7 @@ use {
         Indegree,
         IsComplete,
         IsSimple,
+        IsTournament,
         Order,
         OutNeighbors,
         OutNeighborsWeighted,
@@ -247,6 +248,20 @@ impl<W> IsSimple for AdjacencyListWeighted<W> {
             .iter()
             .enumerate()
             .all(|(u, map)| !map.contains_key(&u))
+    }
+}
+
+impl<W> IsTournament for AdjacencyListWeighted<W> {
+    fn is_tournament(&self) -> bool {
+        let order = self.order();
+
+        if self.size() != order * (order - 1) / 2 {
+            return false;
+        }
+
+        (0..order).all(|u| {
+            (u + 1..order).all(|v| self.has_arc(u, v) ^ self.has_arc(v, u))
+        })
     }
 }
 

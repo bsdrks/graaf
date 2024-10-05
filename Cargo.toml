@@ -1,6 +1,6 @@
 [package]
 name = "graaf"
-version = "0.101.2"
+version = "0.102.0"
 edition = "2021"
 authors = ["Bas Dirks <bas.dirks@protonmail.com>"]
 categories = ["algorithms", "data-structures", "mathematics"]
@@ -135,6 +135,11 @@ harness = false
 [[bench]]
 name = "op_is_complete"
 path = "benches/op/is_complete.rs"
+harness = false
+
+[[bench]]
+name = "op_is_tournament"
+path = "benches/op/is_tournament.rs"
 harness = false
 
 [[bench]]
