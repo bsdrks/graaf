@@ -141,6 +141,11 @@ path = "benches/op/is_complete.rs"
 harness = false
 
 [[bench]]
+name = "op_outdegree_is_sink"
+path = "benches/op/outdegree_is_sink.rs"
+harness = false
+
+[[bench]]
 name = "algo_bfs_iter"
 path = "benches/algo/bfs_iter.rs"
 harness = false

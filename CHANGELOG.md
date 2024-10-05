@@ -32,7 +32,7 @@ Changed
 
 - Breaking: return `&W` instead of `W` in `DistanceMatrix::diameter`.
 - Breaking: return `impl Iterator<Item = &'_ W>` instead of `Vec<W>` in `DistanceMatrix::eccentricities`.
-- Breaking: return `impl Iterator<Item = W> + use<'_, W>` instead of `Vec<W>` in `DistanceMatrix::periphery`.
+- Breaking: return `impl Iterator<Item = W> + '_` instead of `Vec<W>` in `DistanceMatrix::periphery`.
 
 ## [0.100.1] - 2024-10-05
 

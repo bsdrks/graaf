@@ -47,7 +47,7 @@ use {
         EdgeList,
         Empty,
         ErdosRenyi,
-        Indegree,
+        Outdegree,
     },
     std::collections::{
         BTreeMap,
@@ -79,69 +79,62 @@ pub struct EdgeListBTreeSet {
     arcs: BTreeSet<(usize, usize)>,
 }
 
-fn is_source_indegree<D>(digraph: &D, v: usize) -> bool
+fn is_sink_outdegree<D>(digraph: &D, u: usize) -> bool
 where
-    D: Indegree,
+    D: Outdegree,
 {
-    digraph.indegree(v) == 0
+    digraph.outdegree(u) == 0
 }
 
-fn is_source_adjacency_all_contains(
+fn is_sink_adjacency_is_empty(
     digraph: &AdjacencyListBTreeSet,
-    v: usize,
+    u: usize,
 ) -> bool {
-    digraph.arcs.iter().all(|set| !set.contains(&v))
+    digraph.arcs[u].is_empty()
 }
 
-fn is_source_adjacency_list_weighted_all_contains(
+fn is_sink_adjacency_list_weighted_is_empty(
     digraph: &AdjacencyListWeightedBTreeMap,
-    v: usize,
+    u: usize,
 ) -> bool {
-    digraph.arcs.iter().all(|map| !map.contains_key(&v))
+    digraph.arcs[u].is_empty()
 }
 
-fn is_source_adjacency_map_all_contains(
+fn is_sink_adjacency_map_is_empty(
     digraph: &AdjacencyMapBTreeSet,
-    v: usize,
+    u: usize,
 ) -> bool {
-    digraph.arcs.iter().all(|set| !set.contains(&v))
+    digraph.arcs[u].is_empty()
 }
 
-fn is_source_adjacency_matrix_all_contains(
-    digraph: &AdjacencyMatrix,
-    v: usize,
-) -> bool {
-    digraph.arcs().all(|(_, y)| v != y)
+fn is_sink_edge_list_all_ne(digraph: &EdgeListBTreeSet, u: usize) -> bool {
+    digraph.arcs.iter().all(|(x, _)| *x != u)
 }
 
-fn is_source_edge_list_all_ne(digraph: &EdgeListBTreeSet, v: usize) -> bool {
-    digraph.arcs.iter().all(|(_, y)| *y != v)
-}
-
-#[divan::bench(args = [10, 100, 1000])]
+#[divan::bench(args = [10, 100, 1000, 10000])]
 fn adjacency_list(bencher: Bencher<'_, '_>, order: usize) {
     let digraph = AdjacencyList::erdos_renyi(order, 0.05, 0);
 
     bencher.bench(|| {
         for u in 0..order {
-            let _ = digraph.is_source(u);
+            let _ = digraph.is_sink(u);
         }
     });
 }
 
-#[divan::bench(args = [10, 100, 1000])]
-fn adjacency_list_indegree(bencher: Bencher<'_, '_>, order: usize) {
+#[divan::bench(args = [10, 100, 1000, 10000])]
+fn adjacency_list_outdegree(bencher: Bencher<'_, '_>, order: usize) {
     let digraph = AdjacencyList::erdos_renyi(order, 0.05, 0);
 
     bencher.bench(|| {
         for u in 0..order {
-            let _ = is_source_indegree(&digraph, u);
+            let _ = is_sink_outdegree(&digraph, u);
         }
     });
 }
 
-#[divan::bench(args = [10, 100, 1000])]
-fn adjacency_list_all_contains(bencher: Bencher<'_, '_>, order: usize) {
+#[divan::bench(args = [10, 100, 1000, 10000])]
+fn adjacency_list_is_empty(bencher: Bencher<'_, '_>, order: usize) {
     let mut digraph = AdjacencyListBTreeSet {
         arcs: vec![BTreeSet::new(); order],
     };
@@ -152,12 +145,12 @@ fn adjacency_list_all_contains(bencher: Bencher<'_, '_>, order: usize) {
 
     bencher.bench(|| {
         for u in 0..order {
-            let _ = is_source_adjacency_all_contains(&digraph, u);
+            let _ = is_sink_adjacency_is_empty(&digraph, u);
         }
     });
 }
 
-#[divan::bench(args = [10, 100, 1000])]
+#[divan::bench(args = [10, 100, 1000, 10000])]
 fn adjacency_list_weighted(bencher: Bencher<'_, '_>, order: usize) {
     let mut digraph = AdjacencyListWeighted::empty(order);
 
@@ -167,13 +160,13 @@ fn adjacency_list_weighted(bencher: Bencher<'_, '_>, order: usize) {
 
     bencher.bench(|| {
         for u in 0..order {
-            let _ = digraph.is_source(u);
+            let _ = digraph.is_sink(u);
         }
     });
 }
 
-#[divan::bench(args = [10, 100, 1000])]
-fn adjacency_list_weighted_indegree(bencher: Bencher<'_, '_>, order: usize) {
+#[divan::bench(args = [10, 100, 1000, 10000])]
+fn adjacency_list_weighted_outdegree(bencher: Bencher<'_, '_>, order: usize) {
     let mut digraph = AdjacencyListWeighted::empty(order);
 
     for (u, v) in AdjacencyList::erdos_renyi(order, 0.05, 0).arcs() {
@@ -182,16 +175,13 @@ fn adjacency_list_weighted_indegree(bencher: Bencher<'_, '_>, order: usize) {
 
     bencher.bench(|| {
         for u in 0..order {
-            let _ = is_source_indegree(&digraph, u);
+            let _ = is_sink_outdegree(&digraph, u);
         }
     });
 }
 
-#[divan::bench(args = [10, 100, 1000])]
-fn adjacency_list_weighted_all_contains(
-    bencher: Bencher<'_, '_>,
-    order: usize,
-) {
+#[divan::bench(args = [10, 100, 1000, 10000])]
+fn adjacency_list_weighted_is_empty(bencher: Bencher<'_, '_>, order: usize) {
     let mut digraph = AdjacencyListWeightedBTreeMap {
         arcs: vec![BTreeMap::new(); order],
     };
@@ -202,36 +192,35 @@ fn adjacency_list_weighted_all_contains(
 
     bencher.bench(|| {
         for u in 0..order {
-            let _ =
-                is_source_adjacency_list_weighted_all_contains(&digraph, u);
+            let _ = is_sink_adjacency_list_weighted_is_empty(&digraph, u);
         }
     });
 }
 
-#[divan::bench(args = [10, 100, 1000])]
+#[divan::bench(args = [10, 100, 1000, 10000])]
 fn adjacency_map(bencher: Bencher<'_, '_>, order: usize) {
     let digraph = AdjacencyMap::erdos_renyi(order, 0.05, 0);
 
     bencher.bench(|| {
         for u in 0..order {
-            let _ = digraph.is_source(u);
+            let _ = digraph.is_sink(u);
         }
     });
 }
 
-#[divan::bench(args = [10, 100, 1000])]
-fn adjacency_map_indegree(bencher: Bencher<'_, '_>, order: usize) {
+#[divan::bench(args = [10, 100, 1000, 10000])]
+fn adjacency_map_outdegree(bencher: Bencher<'_, '_>, order: usize) {
     let digraph = AdjacencyMap::erdos_renyi(order, 0.05, 0);
 
     bencher.bench(|| {
         for u in 0..order {
-            let _ = is_source_indegree(&digraph, u);
+            let _ = is_sink_outdegree(&digraph, u);
         }
     });
 }
 
-#[divan::bench(args = [10, 100, 1000])]
-fn adjacency_map_all_contains(bencher: Bencher<'_, '_>, order: usize) {
+#[divan::bench(args = [10, 100, 1000, 10000])]
+fn adjacency_map_is_empty(bencher: Bencher<'_, '_>, order: usize) {
     let mut digraph = AdjacencyMapBTreeSet {
         arcs: vec![BTreeSet::new(); order],
     };
@@ -242,40 +231,29 @@ fn adjacency_map_all_contains(bencher: Bencher<'_, '_>, order: usize) {
 
     bencher.bench(|| {
         for u in 0..order {
-            let _ = is_source_adjacency_map_all_contains(&digraph, u);
+            let _ = is_sink_adjacency_map_is_empty(&digraph, u);
         }
     });
 }
 
-#[divan::bench(args = [10, 100, 1000])]
+#[divan::bench(args = [10, 100, 1000, 10000])]
 fn adjacency_matrix(bencher: Bencher<'_, '_>, order: usize) {
     let digraph = AdjacencyMatrix::erdos_renyi(order, 0.05, 0);
 
     bencher.bench(|| {
         for u in 0..order {
-            let _ = digraph.is_source(u);
+            let _ = digraph.is_sink(u);
         }
     });
 }
 
-#[divan::bench(args = [10, 100, 1000])]
-fn adjacency_matrix_indegree(bencher: Bencher<'_, '_>, order: usize) {
+#[divan::bench(args = [10, 100, 1000, 10000])]
+fn adjacency_matrix_outdegree(bencher: Bencher<'_, '_>, order: usize) {
     let digraph = AdjacencyMatrix::erdos_renyi(order, 0.05, 0);
 
     bencher.bench(|| {
         for u in 0..order {
-            let _ = is_source_indegree(&digraph, u);
-        }
-    });
-}
-
-#[divan::bench(args = [10, 100, 1000])]
-fn adjacency_matrix_all_contains(bencher: Bencher<'_, '_>, order: usize) {
-    let digraph = AdjacencyMatrix::erdos_renyi(order, 0.05, 0);
-
-    bencher.bench(|| {
-        for u in 0..order {
-            let _ = is_source_adjacency_matrix_all_contains(&digraph, u);
+            let _ = is_sink_outdegree(&digraph, u);
         }
     });
 }
@@ -286,18 +264,18 @@ fn edge_list(bencher: Bencher<'_, '_>, order: usize) {
 
     bencher.bench(|| {
         for u in 0..order {
-            let _ = digraph.is_source(u);
+            let _ = digraph.is_sink(u);
         }
     });
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn edge_list_indegree(bencher: Bencher<'_, '_>, order: usize) {
+fn edge_list_outdegree(bencher: Bencher<'_, '_>, order: usize) {
     let digraph = EdgeList::erdos_renyi(order, 0.05, 0);
 
     bencher.bench(|| {
         for u in 0..order {
-            let _ = is_source_indegree(&digraph, u);
+            let _ = is_sink_outdegree(&digraph, u);
         }
     });
 }
@@ -314,7 +292,7 @@ fn edge_list_btree_set_all_ne(bencher: Bencher<'_, '_>, order: usize) {
 
     bencher.bench(|| {
         for u in 0..order {
-            let _ = is_source_edge_list_all_ne(&digraph, u);
+            let _ = is_sink_edge_list_all_ne(&digraph, u);
         }
     });
 }

@@ -58,8 +58,15 @@
 //! ```
 
 use std::{
-    cmp::Ordering::{Equal, Greater, Less},
-    ops::{Index, IndexMut},
+    cmp::Ordering::{
+        Equal,
+        Greater,
+        Less,
+    },
+    ops::{
+        Index,
+        IndexMut,
+    },
 };
 
 /// A distance matrix
@@ -444,10 +451,15 @@ mod tests {
         super::*,
         crate::{
             repr::adjacency_list_weighted::fixture::{
-                kattis_bryr_1_isize, kattis_bryr_2_isize, kattis_bryr_3_isize,
+                kattis_bryr_1_isize,
+                kattis_bryr_2_isize,
+                kattis_bryr_3_isize,
                 kattis_crosscountry_isize,
             },
-            AdjacencyListWeighted, Empty, FloydWarshall, RemoveArc,
+            AdjacencyListWeighted,
+            Empty,
+            FloydWarshall,
+            RemoveArc,
         },
     };
 
