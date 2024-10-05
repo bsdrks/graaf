@@ -208,10 +208,11 @@ impl<W> DistanceMatrix<W> {
     /// digraph.add_arc_weighted(6, 1, 8);
     /// digraph.add_arc_weighted(6, 2, 5);
     ///
-    /// let mut floyd_warshall = FloydWarshall::new(&digraph);
-    /// let dist = floyd_warshall.distances();
-    ///
-    /// assert!(dist.center().iter().eq(&[0, 1]));
+    /// assert!(FloydWarshall::new(&digraph)
+    ///     .distances()
+    ///     .center()
+    ///     .iter()
+    ///     .eq(&[0, 1]));
     /// ```
     #[doc(alias = "centre")]
     #[doc(alias = "jordan_center")]
@@ -225,7 +226,7 @@ impl<W> DistanceMatrix<W> {
         let mut center = Vec::new();
         let mut min = self.infinity;
 
-        for (i, &e) in ecc.iter().enumerate() {
+        for (i, &e) in ecc.enumerate() {
             match e.cmp(&min) {
                 Less => {
                     center.clear();
@@ -277,21 +278,14 @@ impl<W> DistanceMatrix<W> {
     /// digraph.add_arc_weighted(6, 1, 8);
     /// digraph.add_arc_weighted(6, 2, 5);
     ///
-    /// let mut floyd_warshall = FloydWarshall::new(&digraph);
-    /// let dist = floyd_warshall.distances();
-    ///
-    /// assert_eq!(dist.diameter(), 17);
+    /// assert_eq!(FloydWarshall::new(&digraph).distances().diameter(), &17);
     /// ```
     #[must_use]
-    pub fn diameter(&self) -> W
+    pub fn diameter(&self) -> &W
     where
         W: Copy + Ord,
     {
-        self.eccentricities()
-            .iter()
-            .copied()
-            .max()
-            .unwrap_or(self.infinity)
+        self.eccentricities().max().unwrap_or(&self.infinity)
     }
 
     /// Return the digraph's eccentricities.
@@ -329,25 +323,20 @@ impl<W> DistanceMatrix<W> {
     /// digraph.add_arc_weighted(6, 1, 8);
     /// digraph.add_arc_weighted(6, 2, 5);
     ///
-    /// let mut floyd_warshall = FloydWarshall::new(&digraph);
-    /// let dist = floyd_warshall.distances();
-    ///
-    /// assert!(dist.eccentricities().iter().eq(&[5, 5, 14, 11, 17, 11, 10]));
+    /// assert!(FloydWarshall::new(&digraph)
+    ///     .distances()
+    ///     .eccentricities()
+    ///     .eq(&[5, 5, 14, 11, 17, 11, 10]));
     /// ```
-    #[must_use]
-    pub fn eccentricities(&self) -> Vec<W>
+    pub fn eccentricities(&self) -> impl Iterator<Item = &'_ W>
     where
-        W: Copy + Ord,
+        W: Ord,
     {
-        self.dist
-            .iter()
-            .map(|row| {
-                row.iter()
-                    .reduce(|acc, x| acc.max(x))
-                    .unwrap_or(&self.infinity)
-            })
-            .copied()
-            .collect()
+        self.dist.iter().map(|row| {
+            row.iter()
+                .reduce(|acc, x| acc.max(x))
+                .unwrap_or(&self.infinity)
+        })
     }
 
     /// Check whether the distance matrix is connected.
@@ -384,17 +373,14 @@ impl<W> DistanceMatrix<W> {
     /// digraph.add_arc_weighted(6, 1, 8);
     /// digraph.add_arc_weighted(6, 2, 5);
     ///
-    /// let mut floyd_warshall = FloydWarshall::new(&digraph);
-    /// let dist = floyd_warshall.distances();
-    ///
-    /// assert!(dist.is_connected());
+    /// assert!(FloydWarshall::new(&digraph).distances().is_connected());
     /// ```
     #[must_use]
     pub fn is_connected(&self) -> bool
     where
-        W: Copy + Ord,
+        W: Ord,
     {
-        self.eccentricities().iter().all(|&e| e != self.infinity)
+        self.eccentricities().all(|e| e != &self.infinity)
     }
 
     /// Return a digraph's periphery.
@@ -431,23 +417,17 @@ impl<W> DistanceMatrix<W> {
     /// digraph.add_arc_weighted(6, 1, 8);
     /// digraph.add_arc_weighted(6, 2, 5);
     ///
-    /// let mut floyd_warshall = FloydWarshall::new(&digraph);
-    /// let dist = floyd_warshall.distances();
-    ///
-    /// assert!(dist.periphery().iter().eq(&[4]));
+    /// assert!(FloydWarshall::new(&digraph).distances().periphery().eq([4]));
     /// ```
-    #[must_use]
-    pub fn periphery(&self) -> Vec<usize>
+    pub fn periphery(&self) -> impl Iterator<Item = usize> + use<'_, W>
     where
         W: Copy + Ord,
     {
         let ecc = self.eccentricities();
-        let diameter = ecc.iter().max().unwrap_or(&self.infinity);
+        let diameter = self.diameter();
 
-        ecc.iter()
-            .enumerate()
-            .filter_map(|(i, &e)| (e == *diameter).then_some(i))
-            .collect()
+        ecc.enumerate()
+            .filter_map(move |(i, &e)| (e == *diameter).then_some(i))
     }
 }
 
@@ -534,7 +514,7 @@ mod tests {
         let mut floyd_warshall = FloydWarshall::new(&digraph);
         let dist = floyd_warshall.distances();
 
-        assert_eq!(dist.diameter(), 1);
+        assert_eq!(dist.diameter(), &1);
     }
 
     #[test]
@@ -543,7 +523,7 @@ mod tests {
         let mut floyd_warshall = FloydWarshall::new(&digraph);
         let dist = floyd_warshall.distances();
 
-        assert_eq!(dist.diameter(), 4);
+        assert_eq!(dist.diameter(), &4);
     }
 
     #[test]
@@ -552,7 +532,7 @@ mod tests {
         let mut floyd_warshall = FloydWarshall::new(&digraph);
         let dist = floyd_warshall.distances();
 
-        assert_eq!(dist.diameter(), 1);
+        assert_eq!(dist.diameter(), &1);
     }
 
     #[test]
@@ -561,7 +541,7 @@ mod tests {
         let mut floyd_warshall = FloydWarshall::new(&digraph);
         let dist = floyd_warshall.distances();
 
-        assert_eq!(dist.diameter(), 11);
+        assert_eq!(dist.diameter(), &11);
     }
 
     #[test]
@@ -570,7 +550,7 @@ mod tests {
         let mut floyd_warshall = FloydWarshall::new(&digraph);
         let dist = floyd_warshall.distances();
 
-        assert_eq!(dist.diameter(), 0);
+        assert_eq!(dist.diameter(), &0);
     }
 
     #[test]
@@ -579,7 +559,7 @@ mod tests {
         let mut floyd_warshall = FloydWarshall::new(&digraph);
         let dist = floyd_warshall.distances();
 
-        assert!(dist.eccentricities().iter().eq(&[1, 1, 1]));
+        assert!(dist.eccentricities().eq(&[1, 1, 1]));
     }
 
     #[test]
@@ -588,7 +568,7 @@ mod tests {
         let mut floyd_warshall = FloydWarshall::new(&digraph);
         let dist = floyd_warshall.distances();
 
-        assert!(dist.eccentricities().iter().eq(&[3, 4, 3, 2, 3, 4]));
+        assert!(dist.eccentricities().eq(&[3, 4, 3, 2, 3, 4]));
     }
 
     #[test]
@@ -597,10 +577,7 @@ mod tests {
         let mut floyd_warshall = FloydWarshall::new(&digraph);
         let dist = floyd_warshall.distances();
 
-        assert!(dist
-            .eccentricities()
-            .iter()
-            .eq(&[1, 1, 1, 1, 1, 1, 1, 1, 1, 1]));
+        assert!(dist.eccentricities().eq(&[1, 1, 1, 1, 1, 1, 1, 1, 1, 1]));
     }
 
     #[test]
@@ -609,7 +586,7 @@ mod tests {
         let mut floyd_warshall = FloydWarshall::new(&digraph);
         let dist = floyd_warshall.distances();
 
-        assert!(dist.eccentricities().iter().eq(&[10, 11, 7, 6]));
+        assert!(dist.eccentricities().eq(&[10, 11, 7, 6]));
     }
 
     #[test]
@@ -618,7 +595,7 @@ mod tests {
         let mut floyd_warshall = FloydWarshall::new(&digraph);
         let dist = floyd_warshall.distances();
 
-        assert!(dist.eccentricities().iter().eq(&[0]));
+        assert!(dist.eccentricities().eq(&[0]));
     }
 
     #[test]
@@ -766,7 +743,7 @@ mod tests {
         let mut floyd_warshall = FloydWarshall::new(&digraph);
         let dist = floyd_warshall.distances();
 
-        assert!(dist.periphery().iter().eq(&[0, 1, 2]));
+        assert!(dist.periphery().eq([0, 1, 2]));
     }
 
     #[test]
@@ -775,7 +752,7 @@ mod tests {
         let mut floyd_warshall = FloydWarshall::new(&digraph);
         let dist = floyd_warshall.distances();
 
-        assert!(dist.periphery().iter().eq(&[1, 5]));
+        assert!(dist.periphery().eq([1, 5]));
     }
 
     #[test]
@@ -784,7 +761,7 @@ mod tests {
         let mut floyd_warshall = FloydWarshall::new(&digraph);
         let dist = floyd_warshall.distances();
 
-        assert!(dist.periphery().iter().eq(&[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
+        assert!(dist.periphery().eq([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
     }
 
     #[test]
@@ -793,7 +770,7 @@ mod tests {
         let mut floyd_warshall = FloydWarshall::new(&digraph);
         let dist = floyd_warshall.distances();
 
-        assert!(dist.periphery().iter().eq(&[1]));
+        assert!(dist.periphery().eq([1]));
     }
 
     #[test]
@@ -802,6 +779,6 @@ mod tests {
         let mut floyd_warshall = FloydWarshall::new(&digraph);
         let dist = floyd_warshall.distances();
 
-        assert!(dist.periphery().iter().eq(&[0]));
+        assert!(dist.periphery().eq([0]));
     }
 }

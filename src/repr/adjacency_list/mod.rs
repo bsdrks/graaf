@@ -556,7 +556,7 @@ impl Indegree for AdjacencyList {
     }
 
     fn is_source(&self, v: usize) -> bool {
-        self.indegree(v) == 0
+        self.arcs.iter().all(|set| !set.contains(&v))
     }
 }
 

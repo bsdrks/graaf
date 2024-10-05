@@ -17,6 +17,16 @@
 - Standardize the input type for search algorithms.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 - Replace the blanket implementations in `op` with custom implementations for the types in `repr`. In the documentation, describe examples of both the direct and the trait-based implementation of the traits.
+- Implement `size_hint` on iterators.
+- Return iterators instead of vectors.
+
+## [0.101.0] - 2024-10-05
+
+Changed
+
+- Breaking: return `&W` instead of `W` in `DistanceMatrix::diameter`.
+- Breaking: return `impl Iterator<Item = &'_ W>` instead of `Vec<W>` in `DistanceMatrix::eccentricities`.
+- Breaking: return `impl Iterator<Item = W> + use<'_, W>` instead of `Vec<W>` in `DistanceMatrix::periphery`.
 
 ## [0.100.1] - 2024-10-05
 

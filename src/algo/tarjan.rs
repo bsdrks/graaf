@@ -35,18 +35,11 @@
 //! digraph.add_arc(7, 3);
 //! digraph.add_arc(7, 6);
 //!
-//! assert_eq!(
-//!     Tarjan::new(&digraph)
-//!         .components()
-//!         .iter()
-//!         .cloned()
-//!         .collect::<BTreeSet<BTreeSet<usize>>>(),
-//!     BTreeSet::from([
-//!         BTreeSet::from([4, 1, 0]),
-//!         BTreeSet::from([5, 6]),
-//!         BTreeSet::from([7, 3, 2])
-//!     ])
-//! );
+//! assert!(Tarjan::new(&digraph).components().iter().eq(&[
+//!     BTreeSet::from([5, 6]),
+//!     BTreeSet::from([7, 3, 2]),
+//!     BTreeSet::from([4, 1, 0])
+//! ]));
 //! ```
 
 use {
@@ -97,18 +90,11 @@ use {
 /// digraph.add_arc(7, 3);
 /// digraph.add_arc(7, 6);
 ///
-/// assert_eq!(
-///     Tarjan::new(&digraph)
-///         .components()
-///         .iter()
-///         .cloned()
-///         .collect::<BTreeSet<BTreeSet<usize>>>(),
-///     BTreeSet::from([
-///         BTreeSet::from([4, 1, 0]),
-///         BTreeSet::from([5, 6]),
-///         BTreeSet::from([7, 3, 2])
-///     ])
-/// );
+/// assert!(Tarjan::new(&digraph).components().iter().eq(&[
+///     BTreeSet::from([5, 6]),
+///     BTreeSet::from([7, 3, 2]),
+///     BTreeSet::from([4, 1, 0]),
+/// ]));
 /// ```
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Tarjan<'a, D> {
@@ -178,18 +164,11 @@ impl<'a, D> Tarjan<'a, D> {
     /// digraph.add_arc(7, 3);
     /// digraph.add_arc(7, 6);
     ///
-    /// assert_eq!(
-    ///     Tarjan::new(&digraph)
-    ///         .components()
-    ///         .iter()
-    ///         .cloned()
-    ///         .collect::<BTreeSet<BTreeSet<usize>>>(),
-    ///     BTreeSet::from([
-    ///         BTreeSet::from([4, 1, 0]),
-    ///         BTreeSet::from([5, 6]),
-    ///         BTreeSet::from([7, 3, 2])
-    ///     ])
-    /// );
+    /// assert!(Tarjan::new(&digraph).components().iter().eq(&[
+    ///     BTreeSet::from([5, 6]),
+    ///     BTreeSet::from([7, 3, 2]),
+    ///     BTreeSet::from([4, 1, 0])
+    /// ]));
     /// ```
     #[must_use]
     pub fn components(&mut self) -> &Vec<BTreeSet<usize>>
@@ -271,18 +250,11 @@ mod tests {
 
     #[test]
     fn components_bang_jensen_196() {
-        assert_eq!(
-            Tarjan::new(&bang_jensen_196())
-                .components()
-                .iter()
-                .cloned()
-                .collect::<BTreeSet<BTreeSet<_>>>(),
-            BTreeSet::from([
-                BTreeSet::from([0, 1]),
-                BTreeSet::from([2, 3, 4]),
-                BTreeSet::from([5, 6, 7]),
-            ])
-        );
+        assert!(Tarjan::new(&bang_jensen_196()).components().iter().eq(&[
+            BTreeSet::from([2, 3, 4]),
+            BTreeSet::from([5, 6, 7]),
+            BTreeSet::from([0, 1]),
+        ]));
     }
 
     #[test]
