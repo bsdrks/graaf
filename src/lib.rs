@@ -223,6 +223,8 @@
 #![deny(rustdoc::all)]
 // Overwrites
 #![allow(clippy::large_stack_frames)]
+#![allow(stable_features)]
+#![feature(precise_capturing)]
 
 pub mod algo;
 pub mod gen;
@@ -232,85 +234,31 @@ pub mod proptest_strategy;
 pub mod repr;
 
 pub use repr::{
-    AdjacencyList,
-    AdjacencyListWeighted,
-    AdjacencyMap,
-    AdjacencyMatrix,
+    AdjacencyList, AdjacencyListWeighted, AdjacencyMap, AdjacencyMatrix,
     EdgeList,
 };
 
 pub use op::{
-    AddArc,
-    AddArcWeighted,
-    ArcWeight,
-    Arcs,
-    ArcsWeighted,
-    Complement,
-    Converse,
-    Degree,
-    DegreeSequence,
-    FilterVertices,
-    HasArc,
-    HasEdge,
-    HasWalk,
-    InNeighbors,
-    Indegree,
-    IndegreeSequence,
-    IsBalanced,
-    IsComplete,
-    IsIsolated,
-    IsOriented,
-    IsPendant,
-    IsRegular,
-    IsSemicomplete,
-    IsSimple,
-    IsSpanningSubdigraph,
-    IsSubdigraph,
-    IsSuperdigraph,
-    IsSymmetric,
-    IsTournament,
-    Order,
-    OutNeighbors,
-    OutNeighborsWeighted,
-    Outdegree,
-    OutdegreeSequence,
-    RemoveArc,
-    SemidegreeSequence,
-    Sinks,
-    Size,
-    Sources,
-    Union,
-    Vertices,
+    AddArc, AddArcWeighted, ArcWeight, Arcs, ArcsWeighted, Complement,
+    Converse, Degree, DegreeSequence, FilterVertices, HasArc, HasEdge,
+    HasWalk, InNeighbors, Indegree, IndegreeSequence, IsBalanced, IsComplete,
+    IsIsolated, IsOriented, IsPendant, IsRegular, IsSemicomplete, IsSimple,
+    IsSpanningSubdigraph, IsSubdigraph, IsSuperdigraph, IsSymmetric,
+    IsTournament, Order, OutNeighbors, OutNeighborsWeighted, Outdegree,
+    OutdegreeSequence, RemoveArc, SemidegreeSequence, Sinks, Size, Sources,
+    Union, Vertices,
 };
 
 pub use gen::{
-    Biclique,
-    Circuit,
-    Complete,
-    Cycle,
-    Empty,
-    ErdosRenyi,
-    GrowingNetwork,
-    Path,
-    RandomTournament,
-    Star,
-    Wheel,
+    Biclique, Circuit, Complete, Cycle, Empty, ErdosRenyi, GrowingNetwork,
+    Path, RandomTournament, Star, Wheel,
 };
 
 pub use algo::{
-    bellman_ford_moore::BellmanFordMoore,
-    bfs::Bfs,
-    bfs_dist::BfsDist,
-    bfs_pred::BfsPred,
-    dfs::Dfs,
-    dfs_dist::DfsDist,
-    dfs_pred::DfsPred,
-    dijkstra::Dijkstra,
-    dijkstra_dist::DijkstraDist,
-    dijkstra_pred::DijkstraPred,
-    distance_matrix::DistanceMatrix,
-    floyd_warshall::FloydWarshall,
-    johnson_75::Johnson75,
-    predecessor_tree::PredecessorTree,
-    tarjan::Tarjan,
+    bellman_ford_moore::BellmanFordMoore, bfs::Bfs, bfs_dist::BfsDist,
+    bfs_pred::BfsPred, dfs::Dfs, dfs_dist::DfsDist, dfs_pred::DfsPred,
+    dijkstra::Dijkstra, dijkstra_dist::DijkstraDist,
+    dijkstra_pred::DijkstraPred, distance_matrix::DistanceMatrix,
+    floyd_warshall::FloydWarshall, johnson_75::Johnson75,
+    predecessor_tree::PredecessorTree, tarjan::Tarjan,
 };

@@ -58,15 +58,8 @@
 //! ```
 
 use std::{
-    cmp::Ordering::{
-        Equal,
-        Greater,
-        Less,
-    },
-    ops::{
-        Index,
-        IndexMut,
-    },
+    cmp::Ordering::{Equal, Greater, Less},
+    ops::{Index, IndexMut},
 };
 
 /// A distance matrix
@@ -419,7 +412,7 @@ impl<W> DistanceMatrix<W> {
     ///
     /// assert!(FloydWarshall::new(&digraph).distances().periphery().eq([4]));
     /// ```
-    pub fn periphery(&self) -> impl Iterator<Item = usize> + use<'_, W>
+    pub fn periphery(&'_ self) -> impl Iterator<Item = usize> + use<'_, W>
     where
         W: Copy + Ord,
     {
@@ -427,7 +420,7 @@ impl<W> DistanceMatrix<W> {
         let diameter = self.diameter();
 
         ecc.enumerate()
-            .filter_map(move |(i, &e)| (e == *diameter).then_some(i))
+            .filter_map(move |(i, e)| (e == diameter).then_some(i))
     }
 }
 
@@ -451,15 +444,10 @@ mod tests {
         super::*,
         crate::{
             repr::adjacency_list_weighted::fixture::{
-                kattis_bryr_1_isize,
-                kattis_bryr_2_isize,
-                kattis_bryr_3_isize,
+                kattis_bryr_1_isize, kattis_bryr_2_isize, kattis_bryr_3_isize,
                 kattis_crosscountry_isize,
             },
-            AdjacencyListWeighted,
-            Empty,
-            FloydWarshall,
-            RemoveArc,
+            AdjacencyListWeighted, Empty, FloydWarshall, RemoveArc,
         },
     };
 

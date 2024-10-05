@@ -20,6 +20,12 @@
 - Implement `size_hint` on iterators.
 - Return iterators instead of vectors.
 
+## [0.101.1] - 2024-10-05
+
+Fixed
+
+- Enable `precise_capturing` feature.
+
 ## [0.101.0] - 2024-10-05
 
 Changed
