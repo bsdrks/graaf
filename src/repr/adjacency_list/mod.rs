@@ -554,6 +554,10 @@ impl Indegree for AdjacencyList {
 
         self.arcs.iter().filter(|set| set.contains(&v)).count()
     }
+
+    fn is_source(&self, v: usize) -> bool {
+        self.indegree(v) == 0
+    }
 }
 
 impl IsComplete for AdjacencyList {

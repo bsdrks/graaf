@@ -18,6 +18,24 @@
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 - Replace the blanket implementations in `op` with custom implementations for the types in `repr`. In the documentation, describe examples of both the direct and the trait-based implementation of the traits.
 
+## [0.100.1] - 2024-10-05
+
+Added
+
+- Add benchmark `indegree_is_source`.
+
+Changed
+
+- Speed up `AdjacencyList::is_source`.
+- Speed up `AdjacencyListWeighted::is_source`.
+- Speed up `AdjacencyMap::is_source`.
+- Speed up `EdgeList::is_source`.
+- Speed up `AdjacencyList::is_complete`.
+- Speed up `AdjacencyListWeighted::is_complete`.
+- Speed up `AdjacencyMap::is_complete`.
+- Speed up `AdjacencyMatrix::is_complete`.
+- Speed up `EdgeList::is_complete`.
+
 ## [0.100.0] - 2024-10-04
 
 Added

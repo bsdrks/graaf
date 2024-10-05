@@ -131,6 +131,11 @@ path = "benches/op/converse.rs"
 harness = false
 
 [[bench]]
+name = "op_indegree_is_source"
+path = "benches/op/indegree_is_source.rs"
+harness = false
+
+[[bench]]
 name = "op_is_complete"
 path = "benches/op/is_complete.rs"
 harness = false

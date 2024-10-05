@@ -226,13 +226,18 @@ impl<W> Indegree for AdjacencyListWeighted<W> {
             .filter(|arcs| arcs.contains_key(&v))
             .count()
     }
+
+    fn is_source(&self, v: usize) -> bool {
+        self.arcs.iter().all(|map| !map.contains_key(&v))
+    }
 }
 
 impl<W> IsComplete for AdjacencyListWeighted<W> {
     fn is_complete(&self) -> bool {
         let order = self.order();
 
-        (0..order).all(|u| (u + 1..order).all(|v| self.has_edge(u, v)))
+        self.size() == order * (order - 1)
+            && (0..order).all(|u| (u + 1..order).all(|v| self.has_edge(u, v)))
     }
 }
 

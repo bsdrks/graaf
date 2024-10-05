@@ -545,6 +545,10 @@ impl Indegree for EdgeList {
 
         self.arcs.iter().filter(|(_, y)| v == *y).count()
     }
+
+    fn is_source(&self, v: usize) -> bool {
+        self.arcs.iter().all(|&(_, y)| y != v)
+    }
 }
 
 impl IsComplete for EdgeList {

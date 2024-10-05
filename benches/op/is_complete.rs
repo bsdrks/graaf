@@ -43,9 +43,11 @@ use {
         AdjacencyMatrix,
         Complete,
         EdgeList,
+        ErdosRenyi,
         HasEdge,
         IsComplete,
         Order,
+        Size,
     },
 };
 
@@ -55,9 +57,13 @@ fn main() {
 
 fn is_complete_has_edge_order<D>(digraph: &D) -> bool
 where
-    D: Order + HasEdge,
+    D: HasEdge + Order + Size,
 {
     let order = digraph.order();
+
+    if digraph.size() != order * (order - 1) {
+        return false;
+    }
 
     for u in 0..order {
         for v in (u + 1)..order {
@@ -72,27 +78,40 @@ where
 
 fn is_complete_iter_1<D>(digraph: &D) -> bool
 where
-    D: Order + HasEdge,
+    D: HasEdge + Order + Size,
 {
     let order = digraph.order();
+
+    if digraph.size() != order * (order - 1) {
+        return false;
+    }
 
     (0..order).all(|u| (u + 1..order).all(|v| digraph.has_edge(u, v)))
 }
 
 fn is_complete_iter_2<D>(digraph: &D) -> bool
 where
-    D: Order + HasEdge,
+    D: HasEdge + Order + Size,
 {
     let order = digraph.order();
+
+    if digraph.size() != order * (order - 1) {
+        return false;
+    }
 
     (0..order).all(|u| ((u + 1)..order).all(|v| digraph.has_edge(u, v)))
 }
 
 fn is_complete_iter_3<D>(digraph: &D) -> bool
 where
-    D: Order + HasEdge,
+    D: HasEdge + Order + Size,
 {
     let order = digraph.order();
+
+    if digraph.size() != order * (order - 1) {
+        return false;
+    }
+
     let vertices = 0..order;
 
     (vertices.clone()).all(|u| {
@@ -105,13 +124,261 @@ where
 
 fn is_complete_eq_complete<D>(digraph: &D) -> bool
 where
-    D: Complete + Order + PartialEq,
+    D: Complete + Order + Size + PartialEq,
 {
-    digraph == &D::complete(digraph.order())
+    let order = digraph.order();
+
+    digraph.size() == order * (order - 1) && digraph == &D::complete(order)
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn adjacency_list(bencher: Bencher<'_, '_>, order: usize) {
+fn adjacency_list_erdos_renyi(bencher: Bencher<'_, '_>, order: usize) {
+    let digraph = AdjacencyList::erdos_renyi(order, 0.5, 0);
+
+    bencher.bench(|| {
+        let _ = digraph.is_complete();
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn adjacency_list_erdos_renyi_iter_1(bencher: Bencher<'_, '_>, order: usize) {
+    let digraph = AdjacencyList::erdos_renyi(order, 0.5, 0);
+
+    bencher.bench(|| {
+        let _ = is_complete_iter_1(&digraph);
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn adjacency_list_erdos_renyi_iter_2(bencher: Bencher<'_, '_>, order: usize) {
+    let digraph = AdjacencyList::erdos_renyi(order, 0.5, 0);
+
+    bencher.bench(|| {
+        let _ = is_complete_iter_2(&digraph);
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn adjacency_list_erdos_renyi_iter_3(bencher: Bencher<'_, '_>, order: usize) {
+    let digraph = AdjacencyList::erdos_renyi(order, 0.5, 0);
+
+    bencher.bench(|| {
+        let _ = is_complete_iter_3(&digraph);
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn adjacency_list_erdos_renyi_has_edge_order(
+    bencher: Bencher<'_, '_>,
+    order: usize,
+) {
+    let digraph = AdjacencyList::erdos_renyi(order, 0.5, 0);
+
+    bencher.bench(|| {
+        let _ = is_complete_has_edge_order(&digraph);
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn adjacency_list_erdos_renyi_eq_complete(
+    bencher: Bencher<'_, '_>,
+    order: usize,
+) {
+    let digraph = AdjacencyList::erdos_renyi(order, 0.5, 0);
+
+    bencher.bench(|| {
+        let _ = is_complete_eq_complete(&digraph);
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn adjacency_map_erdos_renyi(bencher: Bencher<'_, '_>, order: usize) {
+    let digraph = AdjacencyMap::erdos_renyi(order, 0.5, 0);
+
+    bencher.bench(|| {
+        let _ = digraph.is_complete();
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn adjacency_map_erdos_renyi_has_edge_order(
+    bencher: Bencher<'_, '_>,
+    order: usize,
+) {
+    let digraph = AdjacencyMap::erdos_renyi(order, 0.5, 0);
+
+    bencher.bench(|| {
+        let _ = is_complete_has_edge_order(&digraph);
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn adjacency_map_erdos_renyi_iter_1(bencher: Bencher<'_, '_>, order: usize) {
+    let digraph = AdjacencyMap::erdos_renyi(order, 0.5, 0);
+
+    bencher.bench(|| {
+        let _ = is_complete_iter_1(&digraph);
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn adjacency_map_erdos_renyi_iter_2(bencher: Bencher<'_, '_>, order: usize) {
+    let digraph = AdjacencyMap::erdos_renyi(order, 0.5, 0);
+
+    bencher.bench(|| {
+        let _ = is_complete_iter_2(&digraph);
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn adjacency_map_erdos_renyi_iter_3(bencher: Bencher<'_, '_>, order: usize) {
+    let digraph = AdjacencyMap::erdos_renyi(order, 0.5, 0);
+
+    bencher.bench(|| {
+        let _ = is_complete_iter_3(&digraph);
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn adjacency_map_erdos_renyi_eq_complete(
+    bencher: Bencher<'_, '_>,
+    order: usize,
+) {
+    let digraph = AdjacencyMap::erdos_renyi(order, 0.5, 0);
+
+    bencher.bench(|| {
+        let _ = is_complete_eq_complete(&digraph);
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn adjacency_matrix_erdos_renyi(bencher: Bencher<'_, '_>, order: usize) {
+    let digraph = AdjacencyMatrix::erdos_renyi(order, 0.5, 0);
+
+    bencher.bench(|| {
+        let _ = digraph.is_complete();
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn adjacency_matrix_erdos_renyi_has_edge_order(
+    bencher: Bencher<'_, '_>,
+    order: usize,
+) {
+    let digraph = AdjacencyMatrix::erdos_renyi(order, 0.5, 0);
+
+    bencher.bench(|| {
+        let _ = is_complete_has_edge_order(&digraph);
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn adjacency_matrix_erdos_renyi_iter_1(
+    bencher: Bencher<'_, '_>,
+    order: usize,
+) {
+    let digraph = AdjacencyMatrix::erdos_renyi(order, 0.5, 0);
+
+    bencher.bench(|| {
+        let _ = is_complete_iter_1(&digraph);
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn adjacency_matrix_erdos_renyi_iter_2(
+    bencher: Bencher<'_, '_>,
+    order: usize,
+) {
+    let digraph = AdjacencyMatrix::erdos_renyi(order, 0.5, 0);
+
+    bencher.bench(|| {
+        let _ = is_complete_iter_2(&digraph);
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn adjacency_matrix_erdos_renyi_iter_3(
+    bencher: Bencher<'_, '_>,
+    order: usize,
+) {
+    let digraph = AdjacencyMatrix::erdos_renyi(order, 0.5, 0);
+
+    bencher.bench(|| {
+        let _ = is_complete_iter_3(&digraph);
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn adjacency_matrix_erdos_renyi_eq_complete(
+    bencher: Bencher<'_, '_>,
+    order: usize,
+) {
+    let digraph = AdjacencyMatrix::erdos_renyi(order, 0.5, 0);
+
+    bencher.bench(|| {
+        let _ = is_complete_eq_complete(&digraph);
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn edge_list_erdos_renyi(bencher: Bencher<'_, '_>, order: usize) {
+    let digraph = EdgeList::erdos_renyi(order, 0.5, 0);
+
+    bencher.bench(|| {
+        let _ = digraph.is_complete();
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn edge_list_erdos_renyi_has_edge_order(
+    bencher: Bencher<'_, '_>,
+    order: usize,
+) {
+    let digraph = EdgeList::erdos_renyi(order, 0.5, 0);
+
+    bencher.bench(|| {
+        let _ = is_complete_has_edge_order(&digraph);
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn edge_list_erdos_renyi_iter_1(bencher: Bencher<'_, '_>, order: usize) {
+    let digraph = EdgeList::erdos_renyi(order, 0.5, 0);
+
+    bencher.bench(|| {
+        let _ = is_complete_iter_1(&digraph);
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn edge_list_erdos_renyi_iter_2(bencher: Bencher<'_, '_>, order: usize) {
+    let digraph = EdgeList::erdos_renyi(order, 0.5, 0);
+
+    bencher.bench(|| {
+        let _ = is_complete_iter_2(&digraph);
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn edge_list_erdos_renyi_iter_3(bencher: Bencher<'_, '_>, order: usize) {
+    let digraph = EdgeList::erdos_renyi(order, 0.5, 0);
+
+    bencher.bench(|| {
+        let _ = is_complete_iter_3(&digraph);
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn edge_list_erdos_renyi_eq_complete(bencher: Bencher<'_, '_>, order: usize) {
+    let digraph = EdgeList::erdos_renyi(order, 0.5, 0);
+
+    bencher.bench(|| {
+        let _ = is_complete_eq_complete(&digraph);
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn adjacency_list_complete(bencher: Bencher<'_, '_>, order: usize) {
     let digraph = AdjacencyList::complete(order);
 
     bencher.bench(|| {
@@ -120,7 +387,7 @@ fn adjacency_list(bencher: Bencher<'_, '_>, order: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn adjacency_list_iter_1(bencher: Bencher<'_, '_>, order: usize) {
+fn adjacency_list_complete_iter_1(bencher: Bencher<'_, '_>, order: usize) {
     let digraph = AdjacencyList::complete(order);
 
     bencher.bench(|| {
@@ -129,7 +396,7 @@ fn adjacency_list_iter_1(bencher: Bencher<'_, '_>, order: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn adjacency_list_iter_2(bencher: Bencher<'_, '_>, order: usize) {
+fn adjacency_list_complete_iter_2(bencher: Bencher<'_, '_>, order: usize) {
     let digraph = AdjacencyList::complete(order);
 
     bencher.bench(|| {
@@ -138,7 +405,7 @@ fn adjacency_list_iter_2(bencher: Bencher<'_, '_>, order: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn adjacency_list_iter_3(bencher: Bencher<'_, '_>, order: usize) {
+fn adjacency_list_complete_iter_3(bencher: Bencher<'_, '_>, order: usize) {
     let digraph = AdjacencyList::complete(order);
 
     bencher.bench(|| {
@@ -147,7 +414,10 @@ fn adjacency_list_iter_3(bencher: Bencher<'_, '_>, order: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn adjacency_list_has_edge_order(bencher: Bencher<'_, '_>, order: usize) {
+fn adjacency_list_complete_has_edge_order(
+    bencher: Bencher<'_, '_>,
+    order: usize,
+) {
     let digraph = AdjacencyList::complete(order);
 
     bencher.bench(|| {
@@ -156,7 +426,10 @@ fn adjacency_list_has_edge_order(bencher: Bencher<'_, '_>, order: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn adjacency_list_eq_complete(bencher: Bencher<'_, '_>, order: usize) {
+fn adjacency_list_complete_eq_complete(
+    bencher: Bencher<'_, '_>,
+    order: usize,
+) {
     let digraph = AdjacencyList::complete(order);
 
     bencher.bench(|| {
@@ -165,7 +438,7 @@ fn adjacency_list_eq_complete(bencher: Bencher<'_, '_>, order: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn adjacency_map(bencher: Bencher<'_, '_>, order: usize) {
+fn adjacency_map_complete(bencher: Bencher<'_, '_>, order: usize) {
     let digraph = AdjacencyMap::complete(order);
 
     bencher.bench(|| {
@@ -174,7 +447,10 @@ fn adjacency_map(bencher: Bencher<'_, '_>, order: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn adjacency_map_has_edge_order(bencher: Bencher<'_, '_>, order: usize) {
+fn adjacency_map_complete_has_edge_order(
+    bencher: Bencher<'_, '_>,
+    order: usize,
+) {
     let digraph = AdjacencyMap::complete(order);
 
     bencher.bench(|| {
@@ -183,7 +459,7 @@ fn adjacency_map_has_edge_order(bencher: Bencher<'_, '_>, order: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn adjacency_map_iter_1(bencher: Bencher<'_, '_>, order: usize) {
+fn adjacency_map_complete_iter_1(bencher: Bencher<'_, '_>, order: usize) {
     let digraph = AdjacencyMap::complete(order);
 
     bencher.bench(|| {
@@ -192,7 +468,7 @@ fn adjacency_map_iter_1(bencher: Bencher<'_, '_>, order: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn adjacency_map_iter_2(bencher: Bencher<'_, '_>, order: usize) {
+fn adjacency_map_complete_iter_2(bencher: Bencher<'_, '_>, order: usize) {
     let digraph = AdjacencyMap::complete(order);
 
     bencher.bench(|| {
@@ -201,7 +477,7 @@ fn adjacency_map_iter_2(bencher: Bencher<'_, '_>, order: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn adjacency_map_iter_3(bencher: Bencher<'_, '_>, order: usize) {
+fn adjacency_map_complete_iter_3(bencher: Bencher<'_, '_>, order: usize) {
     let digraph = AdjacencyMap::complete(order);
 
     bencher.bench(|| {
@@ -210,7 +486,7 @@ fn adjacency_map_iter_3(bencher: Bencher<'_, '_>, order: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn adjacency_map_eq_complete(bencher: Bencher<'_, '_>, order: usize) {
+fn adjacency_map_complete_eq_complete(bencher: Bencher<'_, '_>, order: usize) {
     let digraph = AdjacencyMap::complete(order);
 
     bencher.bench(|| {
@@ -219,7 +495,7 @@ fn adjacency_map_eq_complete(bencher: Bencher<'_, '_>, order: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn adjacency_matrix(bencher: Bencher<'_, '_>, order: usize) {
+fn adjacency_matrix_complete(bencher: Bencher<'_, '_>, order: usize) {
     let digraph = AdjacencyMatrix::complete(order);
 
     bencher.bench(|| {
@@ -228,7 +504,10 @@ fn adjacency_matrix(bencher: Bencher<'_, '_>, order: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn adjacency_matrix_has_edge_order(bencher: Bencher<'_, '_>, order: usize) {
+fn adjacency_matrix_complete_has_edge_order(
+    bencher: Bencher<'_, '_>,
+    order: usize,
+) {
     let digraph = AdjacencyMatrix::complete(order);
 
     bencher.bench(|| {
@@ -237,7 +516,7 @@ fn adjacency_matrix_has_edge_order(bencher: Bencher<'_, '_>, order: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn adjacency_matrix_iter_1(bencher: Bencher<'_, '_>, order: usize) {
+fn adjacency_matrix_complete_iter_1(bencher: Bencher<'_, '_>, order: usize) {
     let digraph = AdjacencyMatrix::complete(order);
 
     bencher.bench(|| {
@@ -246,7 +525,7 @@ fn adjacency_matrix_iter_1(bencher: Bencher<'_, '_>, order: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn adjacency_matrix_iter_2(bencher: Bencher<'_, '_>, order: usize) {
+fn adjacency_matrix_complete_iter_2(bencher: Bencher<'_, '_>, order: usize) {
     let digraph = AdjacencyMatrix::complete(order);
 
     bencher.bench(|| {
@@ -255,7 +534,7 @@ fn adjacency_matrix_iter_2(bencher: Bencher<'_, '_>, order: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn adjacency_matrix_iter_3(bencher: Bencher<'_, '_>, order: usize) {
+fn adjacency_matrix_complete_iter_3(bencher: Bencher<'_, '_>, order: usize) {
     let digraph = AdjacencyMatrix::complete(order);
 
     bencher.bench(|| {
@@ -264,7 +543,10 @@ fn adjacency_matrix_iter_3(bencher: Bencher<'_, '_>, order: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn adjacency_matrix_eq_complete(bencher: Bencher<'_, '_>, order: usize) {
+fn adjacency_matrix_complete_eq_complete(
+    bencher: Bencher<'_, '_>,
+    order: usize,
+) {
     let digraph = AdjacencyMatrix::complete(order);
 
     bencher.bench(|| {
@@ -273,7 +555,7 @@ fn adjacency_matrix_eq_complete(bencher: Bencher<'_, '_>, order: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn edge_list(bencher: Bencher<'_, '_>, order: usize) {
+fn edge_list_complete(bencher: Bencher<'_, '_>, order: usize) {
     let digraph = EdgeList::complete(order);
 
     bencher.bench(|| {
@@ -282,7 +564,7 @@ fn edge_list(bencher: Bencher<'_, '_>, order: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn edge_list_has_edge_order(bencher: Bencher<'_, '_>, order: usize) {
+fn edge_list_complete_has_edge_order(bencher: Bencher<'_, '_>, order: usize) {
     let digraph = EdgeList::complete(order);
 
     bencher.bench(|| {
@@ -291,7 +573,7 @@ fn edge_list_has_edge_order(bencher: Bencher<'_, '_>, order: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn edge_list_iter_1(bencher: Bencher<'_, '_>, order: usize) {
+fn edge_list_complete_iter_1(bencher: Bencher<'_, '_>, order: usize) {
     let digraph = EdgeList::complete(order);
 
     bencher.bench(|| {
@@ -300,7 +582,7 @@ fn edge_list_iter_1(bencher: Bencher<'_, '_>, order: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn edge_list_iter_2(bencher: Bencher<'_, '_>, order: usize) {
+fn edge_list_complete_iter_2(bencher: Bencher<'_, '_>, order: usize) {
     let digraph = EdgeList::complete(order);
 
     bencher.bench(|| {
@@ -309,7 +591,7 @@ fn edge_list_iter_2(bencher: Bencher<'_, '_>, order: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn edge_list_iter_3(bencher: Bencher<'_, '_>, order: usize) {
+fn edge_list_complete_iter_3(bencher: Bencher<'_, '_>, order: usize) {
     let digraph = EdgeList::complete(order);
 
     bencher.bench(|| {
@@ -318,7 +600,7 @@ fn edge_list_iter_3(bencher: Bencher<'_, '_>, order: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn edge_list_eq_complete(bencher: Bencher<'_, '_>, order: usize) {
+fn edge_list_complete_eq_complete(bencher: Bencher<'_, '_>, order: usize) {
     let digraph = EdgeList::complete(order);
 
     bencher.bench(|| {

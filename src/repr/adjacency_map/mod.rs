@@ -583,6 +583,10 @@ impl Indegree for AdjacencyMap {
 
         self.arcs.values().filter(|set| set.contains(&v)).count()
     }
+
+    fn is_source(&self, v: usize) -> bool {
+        self.arcs.values().all(|set| !set.contains(&v))
+    }
 }
 
 impl IsComplete for AdjacencyMap {

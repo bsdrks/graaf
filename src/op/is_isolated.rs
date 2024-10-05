@@ -112,6 +112,6 @@ where
     D: Indegree + Outdegree,
 {
     fn is_isolated(&self, u: usize) -> bool {
-        self.indegree(u) == 0 && self.outdegree(u) == 0
+        self.is_sink(u) && self.is_source(u)
     }
 }
