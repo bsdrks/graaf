@@ -286,6 +286,10 @@ impl<W> Outdegree for AdjacencyListWeighted<W> {
     fn outdegree(&self, u: usize) -> usize {
         self.arcs[u].len()
     }
+
+    fn is_sink(&self, u: usize) -> bool {
+        self.arcs[u].is_empty()
+    }
 }
 
 impl<W> RemoveArc for AdjacencyListWeighted<W> {

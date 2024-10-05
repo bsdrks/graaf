@@ -625,6 +625,10 @@ impl Indegree for AdjacencyMatrix {
 
         self.vertices().filter(|&u| self.has_arc(u, v)).count()
     }
+
+    fn is_source(&self, v: usize) -> bool {
+        self.vertices().all(|u| !self.has_arc(u, v))
+    }
 }
 
 impl IsComplete for AdjacencyMatrix {
@@ -686,6 +690,10 @@ impl Outdegree for AdjacencyMatrix {
         assert!(u < self.order, "u = {u} isn't in the digraph.");
 
         self.vertices().filter(|&v| self.has_arc(u, v)).count()
+    }
+
+    fn is_sink(&self, u: usize) -> bool {
+        self.vertices().all(|v| !self.has_arc(u, v))
     }
 }
 

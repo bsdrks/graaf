@@ -1,6 +1,6 @@
 [package]
 name = "graaf"
-version = "0.101.1"
+version = "0.101.2"
 edition = "2021"
 authors = ["Bas Dirks <bas.dirks@protonmail.com>"]
 categories = ["algorithms", "data-structures", "mathematics"]
@@ -16,9 +16,6 @@ repository = "https://github.com/bsdrks/graaf"
 [dev-dependencies]
 divan = "0.1.14"
 proptest = "1.5.0"
-
-[profile.test.package.proptest]
-opt-level = 3
 
 [[bench]]
 name = "distances_bang_jensen_94"

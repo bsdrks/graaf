@@ -200,3 +200,38 @@ pub trait Indegree {
         self.vertices().map(|u| self.indegree(u)).min().unwrap_or(0)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use {
+        super::*,
+        std::collections::BTreeSet,
+    };
+
+    #[test]
+    fn is_sink() {
+        struct AdjacencyList {
+            arcs: Vec<BTreeSet<usize>>,
+        }
+
+        impl Indegree for AdjacencyList {
+            fn indegree(&self, v: usize) -> usize {
+                self.arcs.iter().filter(|set| set.contains(&v)).count()
+            }
+        }
+
+        let digraph = AdjacencyList {
+            arcs: vec![
+                BTreeSet::from([1, 2]),
+                BTreeSet::new(),
+                BTreeSet::new(),
+                BTreeSet::from([1]),
+            ],
+        };
+
+        assert!(digraph.is_source(0));
+        assert!(!digraph.is_source(1));
+        assert!(!digraph.is_source(2));
+        assert!(digraph.is_source(3));
+    }
+}

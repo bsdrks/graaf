@@ -617,6 +617,10 @@ impl Outdegree for AdjacencyList {
 
         self.arcs[u].len()
     }
+
+    fn is_sink(&self, u: usize) -> bool {
+        self.arcs[u].is_empty()
+    }
 }
 
 impl Path for AdjacencyList {

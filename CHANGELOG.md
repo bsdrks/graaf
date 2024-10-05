@@ -14,11 +14,22 @@
 - Mention the order of traversal in the `Bfs` documentation.
 - Mention the order of traversal in the `Dfs` documentation.
 - Mention the order of traversal in the `Dijkstra` documentation.
-- Standardize the input type for search algorithms.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 - Replace the blanket implementations in `op` with custom implementations for the types in `repr`. In the documentation, describe examples of both the direct and the trait-based implementation of the traits.
 - Implement `size_hint` on iterators.
 - Return iterators instead of vectors.
+- Research: create iterator structs for eccentricities, periphery, and center.
+
+## [0.101.2] - 2024-10-05
+
+Changed
+
+- Speed up `AdjacencyList::is_sink`.
+- Speed up `AdjacencyListWeighted::is_sink`.
+- Speed up `AdjacencyMap::is_sink`.
+- Speed up `AdjacencyMatrix::is_sink`.
+- Speed up `AdjacencyMatrix::is_source`.
+- Speed up `EdgeList::is_sink`.
 
 ## [0.101.1] - 2024-10-05
 

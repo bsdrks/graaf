@@ -620,6 +620,10 @@ impl Outdegree for EdgeList {
 
         self.arcs.iter().filter(|&(x, _)| u == *x).count()
     }
+
+    fn is_sink(&self, u: usize) -> bool {
+        self.arcs.iter().all(|&(x, _)| x != u)
+    }
 }
 
 impl Path for EdgeList {

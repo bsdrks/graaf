@@ -206,3 +206,38 @@ pub trait Outdegree {
             .unwrap_or(0)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use {
+        super::*,
+        std::collections::BTreeSet,
+    };
+
+    #[test]
+    fn is_sink() {
+        struct AdjacencyList {
+            arcs: Vec<BTreeSet<usize>>,
+        }
+
+        impl Outdegree for AdjacencyList {
+            fn outdegree(&self, u: usize) -> usize {
+                self.arcs.get(u).map_or(0, BTreeSet::len)
+            }
+        }
+
+        let digraph = AdjacencyList {
+            arcs: vec![
+                BTreeSet::from([1, 2]),
+                BTreeSet::new(),
+                BTreeSet::new(),
+                BTreeSet::from([0]),
+            ],
+        };
+
+        assert!(!digraph.is_sink(0));
+        assert!(digraph.is_sink(1));
+        assert!(digraph.is_sink(2));
+        assert!(!digraph.is_sink(3));
+    }
+}

@@ -47,7 +47,9 @@ use {
         EdgeList,
         Empty,
         ErdosRenyi,
+        HasArc,
         Outdegree,
+        Vertices,
     },
     std::collections::{
         BTreeMap,
@@ -105,6 +107,13 @@ fn is_sink_adjacency_map_is_empty(
     u: usize,
 ) -> bool {
     digraph.arcs[u].is_empty()
+}
+
+fn is_sink_adjacency_matrix_all_has_arc(
+    digraph: &AdjacencyMatrix,
+    u: usize,
+) -> bool {
+    digraph.vertices().all(|v| !digraph.has_arc(u, v))
 }
 
 fn is_sink_edge_list_all_ne(digraph: &EdgeListBTreeSet, u: usize) -> bool {
@@ -254,6 +263,17 @@ fn adjacency_matrix_outdegree(bencher: Bencher<'_, '_>, order: usize) {
     bencher.bench(|| {
         for u in 0..order {
             let _ = is_sink_outdegree(&digraph, u);
+        }
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000, 10000])]
+fn adjacency_matrix_all_has_arc(bencher: Bencher<'_, '_>, order: usize) {
+    let digraph = AdjacencyMatrix::erdos_renyi(order, 0.05, 0);
+
+    bencher.bench(|| {
+        for u in 0..order {
+            let _ = is_sink_adjacency_matrix_all_has_arc(&digraph, u);
         }
     });
 }
