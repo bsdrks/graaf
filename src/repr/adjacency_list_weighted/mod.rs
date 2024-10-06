@@ -814,7 +814,7 @@ mod tests {
     fn arcs_weighted_bang_jensen_99() {
         assert!(bang_jensen_99().arcs_weighted().eq([
             (0, 1, &8),
-            (0, 2, &4),
+            (0, 2, &3),
             (1, 2, &-5),
             (2, 3, &-2),
             (2, 4, &4),
@@ -950,7 +950,7 @@ mod tests {
     fn converse_bang_jensen_99() {
         assert!(bang_jensen_99().converse().arcs_weighted().eq([
             (1, 0, &8),
-            (2, 0, &4),
+            (2, 0, &3),
             (2, 1, &-5),
             (3, 2, &-2),
             (3, 4, &10),

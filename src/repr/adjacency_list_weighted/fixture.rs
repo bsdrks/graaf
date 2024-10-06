@@ -70,7 +70,7 @@ pub fn bang_jensen_96_isize() -> AdjacencyListWeighted<isize> {
 #[must_use]
 pub fn bang_jensen_99() -> AdjacencyListWeighted<isize> {
     AdjacencyListWeighted::from(vec![
-        BTreeMap::from([(1, 8), (2, 4)]),
+        BTreeMap::from([(1, 8), (2, 3)]),
         BTreeMap::from([(2, -5)]),
         BTreeMap::from([(3, -2), (4, 4)]),
         BTreeMap::from([(5, -2)]),

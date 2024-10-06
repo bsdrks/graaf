@@ -20,6 +20,21 @@
 - Return iterators instead of vectors.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 
+## [0.102.1] - 2024-10-06
+
+Fixed
+
+- Fix edge case in `BellmanFordMoore::distances`.
+- Fix `repr::adjacency_list_weighted::fixture::bang_jensen_99`.
+
+Changed
+
+- Speed up `BellmanFordMoore::distances`.
+
+Added
+
+- Add benchmark `algo_bellman_ford_moore_distances`.
+
 ## [0.102.0] - 2024-10-05
 
 Changed

@@ -1,6 +1,6 @@
 [package]
 name = "graaf"
-version = "0.102.0"
+version = "0.102.1"
 edition = "2021"
 authors = ["Bas Dirks <bas.dirks@protonmail.com>"]
 categories = ["algorithms", "data-structures", "mathematics"]
@@ -148,6 +148,16 @@ path = "benches/op/outdegree_is_sink.rs"
 harness = false
 
 [[bench]]
+name = "algo_bellman_ford_moore_distances"
+path = "benches/algo/bellman_ford_moore_distances.rs"
+harness = false
+
+[[bench]]
+name = "algo_bellman_ford_moore_new"
+path = "benches/algo/bellman_ford_moore_new.rs"
+harness = false
+
+[[bench]]
 name = "algo_bfs_iter"
 path = "benches/algo/bfs_iter.rs"
 harness = false
@@ -155,9 +165,4 @@ harness = false
 [[bench]]
 name = "algo_bfs_new"
 path = "benches/algo/bfs_new.rs"
-harness = false
-
-[[bench]]
-name = "algo_bellman_ford_moore_new"
-path = "benches/algo/bellman_ford_moore_new.rs"
 harness = false

@@ -165,9 +165,11 @@ impl<'a, D> BellmanFordMoore<'a, D> {
     where
         D: Order,
     {
+        let order = digraph.order();
+
         Self {
             digraph,
-            dist: (0..digraph.order())
+            dist: (0..order)
                 .map(|u| if u == s { 0 } else { isize::MAX })
                 .collect(),
         }
@@ -252,19 +254,38 @@ impl<'a, D> BellmanFordMoore<'a, D> {
         D: ArcsWeighted<Weight = isize> + Order,
     {
         for _ in 1..self.digraph.order() {
+            let mut updated = false;
+
             for (u, v, &w) in self.digraph.arcs_weighted() {
-                self.dist[v] =
-                    self.dist[v].min(self.dist[u].saturating_add(w));
+                let u = self.dist[u];
+
+                if u == isize::MAX {
+                    continue;
+                }
+
+                let w = u + w;
+
+                if self.dist[v] > w {
+                    self.dist[v] = w;
+
+                    updated = true;
+                }
+            }
+
+            if !updated {
+                break;
             }
         }
 
-        for (u, v, &w) in self.digraph.arcs_weighted() {
-            if self.dist[v] > self.dist[u].saturating_add(w) {
-                return None;
-            }
-        }
+        self.digraph
+            .arcs_weighted()
+            .all(|(u, v, &w)| {
+                let u = self.dist[u];
 
-        Some(&self.dist)
+                u == isize::MAX || self.dist[v] <= u + w
+            })
+            .then_some(&self.dist)
+            .map(|v| &**v)
     }
 }
 
@@ -291,7 +312,7 @@ mod tests {
     };
 
     #[test]
-    fn single_source_distances_trivial() {
+    fn distances_trivial() {
         assert!(BellmanFordMoore::new(
             &AdjacencyListWeighted::<isize>::trivial(),
             0
@@ -303,7 +324,7 @@ mod tests {
     }
 
     #[test]
-    fn single_source_distances_bang_jensen_94_weighted() {
+    fn distances_bang_jensen_94_weighted_0() {
         assert!(BellmanFordMoore::new(&bang_jensen_94_isize(), 0)
             .distances()
             .unwrap()
@@ -311,7 +332,87 @@ mod tests {
     }
 
     #[test]
-    fn single_source_distances_bang_jensen_96() {
+    fn distances_bang_jensen_94_weighted_1() {
+        assert!(BellmanFordMoore::new(&bang_jensen_94_isize(), 1)
+            .distances()
+            .unwrap()
+            .eq(&[isize::MAX, 0, isize::MAX, 1, isize::MAX, 2, isize::MAX]));
+    }
+
+    #[test]
+    fn distances_bang_jensen_94_weighted_2() {
+        assert!(BellmanFordMoore::new(&bang_jensen_94_isize(), 2)
+            .distances()
+            .unwrap()
+            .eq(&[isize::MAX, 1, 0, 1, 1, 1, 2]));
+    }
+
+    #[test]
+    fn distances_bang_jensen_94_weighted_3() {
+        assert!(BellmanFordMoore::new(&bang_jensen_94_isize(), 3)
+            .distances()
+            .unwrap()
+            .eq(&[
+                isize::MAX,
+                isize::MAX,
+                isize::MAX,
+                0,
+                isize::MAX,
+                1,
+                isize::MAX
+            ]));
+    }
+
+    #[test]
+    fn distances_bang_jensen_94_weighted_4() {
+        assert!(BellmanFordMoore::new(&bang_jensen_94_isize(), 4)
+            .distances()
+            .unwrap()
+            .eq(&[
+                isize::MAX,
+                isize::MAX,
+                isize::MAX,
+                isize::MAX,
+                0,
+                isize::MAX,
+                1
+            ]));
+    }
+
+    #[test]
+    fn distances_bang_jensen_94_weighted_5() {
+        assert!(BellmanFordMoore::new(&bang_jensen_94_isize(), 5)
+            .distances()
+            .unwrap()
+            .eq(&[
+                isize::MAX,
+                isize::MAX,
+                isize::MAX,
+                isize::MAX,
+                isize::MAX,
+                0,
+                isize::MAX
+            ]));
+    }
+
+    #[test]
+    fn distances_bang_jensen_94_weighted_6() {
+        assert!(BellmanFordMoore::new(&bang_jensen_94_isize(), 6)
+            .distances()
+            .unwrap()
+            .eq(&[
+                isize::MAX,
+                isize::MAX,
+                isize::MAX,
+                isize::MAX,
+                isize::MAX,
+                isize::MAX,
+                0
+            ]));
+    }
+
+    #[test]
+    fn distances_bang_jensen_96_0() {
         assert!(BellmanFordMoore::new(&bang_jensen_96_isize(), 0)
             .distances()
             .unwrap()
@@ -319,7 +420,47 @@ mod tests {
     }
 
     #[test]
-    fn single_source_distances_bang_jensen_99() {
+    fn distances_bang_jensen_96_1() {
+        assert!(BellmanFordMoore::new(&bang_jensen_96_isize(), 1)
+            .distances()
+            .unwrap()
+            .eq(&[isize::MAX, 0, 6, 2, 7, 3]));
+    }
+
+    #[test]
+    fn distances_bang_jensen_96_2() {
+        assert!(BellmanFordMoore::new(&bang_jensen_96_isize(), 2)
+            .distances()
+            .unwrap()
+            .eq(&[isize::MAX, 2, 0, 3, 1, 4]));
+    }
+
+    #[test]
+    fn distances_bang_jensen_96_3() {
+        assert!(BellmanFordMoore::new(&bang_jensen_96_isize(), 3)
+            .distances()
+            .unwrap()
+            .eq(&[isize::MAX, isize::MAX, isize::MAX, 0, isize::MAX, 1]));
+    }
+
+    #[test]
+    fn distances_bang_jensen_96_4() {
+        assert!(BellmanFordMoore::new(&bang_jensen_96_isize(), 4)
+            .distances()
+            .unwrap()
+            .eq(&[isize::MAX, 4, 2, 2, 0, 3]));
+    }
+
+    #[test]
+    fn distances_bang_jensen_96_5() {
+        assert!(BellmanFordMoore::new(&bang_jensen_96_isize(), 5)
+            .distances()
+            .unwrap()
+            .eq(&[isize::MAX, isize::MAX, isize::MAX, 2, isize::MAX, 0]));
+    }
+
+    #[test]
+    fn distances_bang_jensen_99_0() {
         assert!(BellmanFordMoore::new(&bang_jensen_99(), 0)
             .distances()
             .unwrap()
@@ -327,7 +468,47 @@ mod tests {
     }
 
     #[test]
-    fn single_source_distances_kattis_bryr_1() {
+    fn distances_bang_jensen_99_1() {
+        assert!(BellmanFordMoore::new(&bang_jensen_99(), 1)
+            .distances()
+            .unwrap()
+            .eq(&[isize::MAX, 0, -5, -7, -12, -9]));
+    }
+
+    #[test]
+    fn distances_bang_jensen_99_2() {
+        assert!(BellmanFordMoore::new(&bang_jensen_99(), 2)
+            .distances()
+            .unwrap()
+            .eq(&[isize::MAX, isize::MAX, 0, -2, -7, -4]));
+    }
+
+    #[test]
+    fn distances_bang_jensen_99_3() {
+        assert!(BellmanFordMoore::new(&bang_jensen_99(), 3)
+            .distances()
+            .unwrap()
+            .eq(&[isize::MAX, isize::MAX, isize::MAX, 0, -5, -2]));
+    }
+
+    #[test]
+    fn distances_bang_jensen_99_4() {
+        assert!(BellmanFordMoore::new(&bang_jensen_99(), 4)
+            .distances()
+            .unwrap()
+            .eq(&[isize::MAX, isize::MAX, isize::MAX, 10, 0, 8]));
+    }
+
+    #[test]
+    fn distances_bang_jensen_99_5() {
+        assert!(BellmanFordMoore::new(&bang_jensen_99(), 5)
+            .distances()
+            .unwrap()
+            .eq(&[isize::MAX, isize::MAX, isize::MAX, 5, -3, 0]));
+    }
+
+    #[test]
+    fn distances_kattis_bryr_1() {
         assert!(BellmanFordMoore::new(&kattis_bryr_1_isize(), 0)
             .distances()
             .unwrap()
@@ -335,7 +516,7 @@ mod tests {
     }
 
     #[test]
-    fn single_source_distances_kattis_bryr_2() {
+    fn distances_kattis_bryr_2() {
         assert!(BellmanFordMoore::new(&kattis_bryr_2_isize(), 0)
             .distances()
             .unwrap()
@@ -343,7 +524,7 @@ mod tests {
     }
 
     #[test]
-    fn single_source_distances_kattis_bryr_3() {
+    fn distances_kattis_bryr_3() {
         assert!(BellmanFordMoore::new(&kattis_bryr_3_isize(), 0)
             .distances()
             .unwrap()
@@ -351,7 +532,7 @@ mod tests {
     }
 
     #[test]
-    fn single_source_distances_kattis_crosscountry() {
+    fn distances_kattis_crosscountry() {
         assert!(BellmanFordMoore::new(&kattis_crosscountry_isize(), 0)
             .distances()
             .unwrap()
@@ -359,7 +540,7 @@ mod tests {
     }
 
     #[test]
-    fn single_source_distances_kattis_shortestpath1() {
+    fn distances_kattis_shortestpath1() {
         assert!(BellmanFordMoore::new(&kattis_shortestpath1_isize(), 0)
             .distances()
             .unwrap()
@@ -367,7 +548,7 @@ mod tests {
     }
 
     #[test]
-    fn single_source_distances_kattis_shortestpath3() {
+    fn distances_kattis_shortestpath3() {
         assert_eq!(
             BellmanFordMoore::new(&kattis_shortestpath3(), 0).distances(),
             None
