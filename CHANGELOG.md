@@ -20,6 +20,17 @@
 - Return iterators instead of vectors.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 
+## [0.103.0] - 2024-10-07
+
+Changed
+
+- Breaking: replace `impl<D> IsSemicomplete for D where D: HasEdge + Order` with `impl IsSemicomplete for [AdjacencyList, AdjacencyListWeighted, AdjacencyMap, AdjacencyMatrix, EdgeList]`.
+- Speed up `AdjacencyList::is_semicomplete`.
+- Speed up `AdjacencyListWeighted::is_semicomplete`.
+- Speed up `AdjacencyMap::is_semicomplete`.
+- Speed up `AdjacencyMatrix::is_semicomplete`.
+- Speed up `EdgeList::is_semicomplete`.
+
 ## [0.102.2] - 2024-10-07
 
 Changed

@@ -123,6 +123,7 @@ use {
         HasArc,
         Indegree,
         IsComplete,
+        IsSemicomplete,
         IsSimple,
         IsTournament,
         Order,
@@ -605,6 +606,18 @@ impl Indegree for AdjacencyMap {
 impl IsComplete for AdjacencyMap {
     fn is_complete(&self) -> bool {
         *self == Self::complete(self.order())
+    }
+}
+
+impl IsSemicomplete for AdjacencyMap {
+    fn is_semicomplete(&self) -> bool {
+        let order = self.order();
+
+        self.size() >= order * (order - 1) / 2
+            && (0..order).all(|u| {
+                (u + 1..order)
+                    .all(|v| self.has_arc(u, v) || self.has_arc(v, u))
+            })
     }
 }
 

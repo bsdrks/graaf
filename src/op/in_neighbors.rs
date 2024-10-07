@@ -50,7 +50,7 @@ use crate::Arcs;
 /// impl InNeighbors for AdjacencyList {
 ///     fn in_neighbors(&self, v: usize) -> impl Iterator<Item = usize> {
 ///         self.arcs.iter().enumerate().filter_map(move |(u, set)| {
-///             set.iter().find(|&&v_| v_ == v).map(move |_| u)
+///             set.iter().find(|&&y| y == v).map(move |_| u)
 ///         })
 ///     }
 /// }
@@ -112,7 +112,6 @@ where
     D: Arcs,
 {
     fn in_neighbors(&self, v: usize) -> impl Iterator<Item = usize> {
-        self.arcs()
-            .filter_map(move |(u, v_)| (v == v_).then_some(u))
+        self.arcs().filter_map(move |(x, y)| (v == y).then_some(x))
     }
 }

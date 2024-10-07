@@ -138,6 +138,11 @@ path = "benches/op/is_complete.rs"
 harness = false
 
 [[bench]]
+name = "op_is_semicomplete"
+path = "benches/op/is_semicomplete.rs"
+harness = false
+
+[[bench]]
 name = "op_is_tournament"
 path = "benches/op/is_tournament.rs"
 harness = false
