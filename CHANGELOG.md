@@ -20,6 +20,13 @@
 - Return iterators instead of vectors.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 
+## [0.102.2] - 2024-10-07
+
+Changed
+
+- Clean up fixtures.
+- Return early if `order == 1` in `gen::*` implementations for `AdjacencyList`.
+
 ## [0.102.1] - 2024-10-06
 
 Fixed

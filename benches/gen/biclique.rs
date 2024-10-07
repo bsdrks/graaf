@@ -318,6 +318,25 @@ fn biclique_edge_list_flat_map(m: usize, n: usize) -> EdgeListBTreeSet {
     }
 }
 
+/// # Panics
+///
+/// * Panics if `m` is zero.
+/// * Panics if `n` is zero.
+fn biclique_edge_list_flat_map_clone(m: usize, n: usize) -> EdgeListBTreeSet {
+    assert!(m > 0, "m = {m} must be greater than zero");
+    assert!(n > 0, "n = {n} must be greater than zero");
+
+    let order = m + n;
+    let clique_2 = m..order;
+
+    EdgeListBTreeSet {
+        arcs: (0..m)
+            .flat_map(|u| clique_2.clone().map(move |v| (u, v)))
+            .chain(clique_2.clone().flat_map(|u| (0..m).map(move |v| (u, v))))
+            .collect(),
+    }
+}
+
 #[divan::bench(args = [
     (10, 10),
     (10, 100),
@@ -498,4 +517,17 @@ fn edge_list_add_arc_empty((m, n): (usize, usize)) {
 ])]
 fn edge_list_flat_map((m, n): (usize, usize)) {
     let _ = biclique_edge_list_flat_map(m, n);
+}
+
+#[divan::bench(args = [
+    (10, 10),
+    (10, 100),
+    (10, 1000),
+    (10, 10000),
+    (100, 100),
+    (100, 1000),
+    (100, 10000),
+])]
+fn edge_list_flat_map_clone((m, n): (usize, usize)) {
+    let _ = biclique_edge_list_flat_map_clone(m, n);
 }

@@ -382,11 +382,11 @@ impl Circuit for AdjacencyMatrix {
     ///
     /// Panics if `order` is zero.
     fn circuit(order: usize) -> Self {
-        let mut digraph = Self::empty(order);
-
         if order == 1 {
-            return digraph;
+            return Self::trivial();
         }
+
+        let mut digraph = Self::empty(order);
 
         for u in 0..order - 1 {
             digraph.add_arc(u, u + 1);
@@ -424,6 +424,10 @@ impl Complete for AdjacencyMatrix {
     ///
     /// Panics if `order` is zero.
     fn complete(order: usize) -> Self {
+        if order == 1 {
+            return Self::trivial();
+        }
+
         let mut digraph = Self::empty(order);
 
         for u in 0..order {
@@ -454,11 +458,11 @@ impl Cycle for AdjacencyMatrix {
     ///
     /// Panics if `order` is zero.
     fn cycle(order: usize) -> Self {
-        let mut digraph = Self::empty(order);
-
         if order == 1 {
-            return digraph;
+            return Self::trivial();
         }
+
+        let mut digraph = Self::empty(order);
 
         for u in 0..order - 1 {
             let v = u + 1;
@@ -499,6 +503,10 @@ impl ErdosRenyi for AdjacencyMatrix {
     /// * Panics if `p` isn't in `[0, 1]`.
     fn erdos_renyi(order: usize, p: f64, seed: u64) -> Self {
         assert!((0.0..=1.0).contains(&p), "p = {p} must be in [0, 1]");
+
+        if order == 1 {
+            return Self::trivial();
+        }
 
         let mut digraph = Self::empty(order);
         let mut rng = Xoshiro256StarStar::new(seed);
@@ -586,9 +594,12 @@ impl GrowingNetwork for AdjacencyMatrix {
     /// # Panics
     ///
     /// * Panics if `order` is zero.
-    /// * Panics if the random number generator fails.
     /// * Panics if conversion from `u64` to `usize` fails.
     fn growing_network(order: usize, seed: u64) -> Self {
+        if order == 1 {
+            return Self::trivial();
+        }
+
         let mut digraph = Self::empty(order);
         let rng = Xoshiro256StarStar::new(seed);
 
@@ -769,9 +780,6 @@ impl RemoveArc for AdjacencyMatrix {
 }
 
 impl Size for AdjacencyMatrix {
-    /// # Panics
-    ///
-    /// Panics if the number of arcs is greater than `usize::MAX`.
     fn size(&self) -> usize {
         self.blocks
             .iter()
@@ -785,6 +793,10 @@ impl Star for AdjacencyMatrix {
     ///
     /// Panics if `order` is zero.
     fn star(order: usize) -> Self {
+        if order == 1 {
+            return Self::trivial();
+        }
+
         let mut digraph = Self::empty(order);
 
         for u in 1..order {

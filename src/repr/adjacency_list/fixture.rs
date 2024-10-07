@@ -48,7 +48,7 @@ use {
 /// ![Bang-Jensen, 196](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bang_jensen_196.svg)
 #[must_use]
 pub fn bang_jensen_196() -> AdjacencyList {
-    AdjacencyList::from(vec![
+    AdjacencyList::from([
         BTreeSet::from([1, 4, 7]),
         BTreeSet::from([0, 2, 7]),
         BTreeSet::from([3]),
@@ -67,7 +67,7 @@ pub fn bang_jensen_196() -> AdjacencyList {
 /// ![Bang-Jensen, 34](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bang_jensen_34.svg)
 #[must_use]
 pub fn bang_jensen_34() -> AdjacencyList {
-    AdjacencyList::from(vec![
+    AdjacencyList::from([
         BTreeSet::from([4]),
         BTreeSet::from([0]),
         BTreeSet::from([1, 3, 5]),
@@ -84,7 +84,7 @@ pub fn bang_jensen_34() -> AdjacencyList {
 /// ![Bang-Jensen, 94](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bang_jensen_94.svg)
 #[must_use]
 pub fn bang_jensen_94() -> AdjacencyList {
-    AdjacencyList::from(vec![
+    AdjacencyList::from([
         BTreeSet::from([1, 2]),
         BTreeSet::from([3]),
         BTreeSet::from([1, 3, 4, 5]),
@@ -101,7 +101,7 @@ pub fn bang_jensen_94() -> AdjacencyList {
 /// ![Kattis, builddeps](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_builddeps.svg)
 #[must_use]
 pub fn kattis_builddeps() -> AdjacencyList {
-    AdjacencyList::from(vec![
+    AdjacencyList::from([
         BTreeSet::from([3, 4]),
         BTreeSet::new(),
         BTreeSet::from([3, 4, 5]),
@@ -117,7 +117,7 @@ pub fn kattis_builddeps() -> AdjacencyList {
 /// ![Kattis, cantinaofbabel, sample 1](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_cantinaofbabel_1.svg)
 #[must_use]
 pub fn kattis_cantinaofbabel_1() -> AdjacencyList {
-    AdjacencyList::from(vec![
+    AdjacencyList::from([
         BTreeSet::from([1]),
         BTreeSet::from([0, 2, 4]),
         BTreeSet::from([1]),
@@ -139,7 +139,7 @@ pub fn kattis_cantinaofbabel_1() -> AdjacencyList {
 /// ![Kattis, cantinaofbabel, sample 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_cantinaofbabel_2.svg)
 #[must_use]
 pub fn kattis_cantinaofbabel_2() -> AdjacencyList {
-    AdjacencyList::from(vec![
+    AdjacencyList::from([
         BTreeSet::from([1]),
         BTreeSet::from([0, 7]),
         BTreeSet::from([0, 5, 7]),
@@ -161,7 +161,7 @@ pub fn kattis_cantinaofbabel_2() -> AdjacencyList {
 /// ![Kattis, escapewallmaria, sample 1](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_escapewallmaria_1.svg)
 #[must_use]
 pub fn kattis_escapewallmaria_1() -> AdjacencyList {
-    AdjacencyList::from(vec![
+    AdjacencyList::from([
         BTreeSet::new(),
         BTreeSet::new(),
         BTreeSet::new(),
@@ -187,7 +187,7 @@ pub fn kattis_escapewallmaria_1() -> AdjacencyList {
 /// ![Kattis, escapewallmaria, sample 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_escapewallmaria_2.svg)
 #[must_use]
 pub fn kattis_escapewallmaria_2() -> AdjacencyList {
-    AdjacencyList::from(vec![
+    AdjacencyList::from([
         BTreeSet::new(),
         BTreeSet::new(),
         BTreeSet::new(),
@@ -213,7 +213,7 @@ pub fn kattis_escapewallmaria_2() -> AdjacencyList {
 /// ![Kattis, escapewallmaria, sample 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_escapewallmaria_3.svg)
 #[must_use]
 pub fn kattis_escapewallmaria_3() -> AdjacencyList {
-    AdjacencyList::from(vec![
+    AdjacencyList::from([
         BTreeSet::new(),
         BTreeSet::from([2, 5]),
         BTreeSet::from([1, 6]),

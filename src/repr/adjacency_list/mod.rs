@@ -368,6 +368,10 @@ impl Complete for AdjacencyList {
     fn complete(order: usize) -> Self {
         assert!(order > 0, "a digraph has at least one vertex");
 
+        if order == 1 {
+            return Self::trivial();
+        }
+
         let neighbors = (0..order).collect::<BTreeSet<usize>>();
         let mut arcs = vec![neighbors; order];
 
@@ -409,9 +413,7 @@ impl Cycle for AdjacencyList {
         assert!(order > 0, "a digraph has at least one vertex");
 
         if order == 1 {
-            return Self {
-                arcs: vec![BTreeSet::new()],
-            };
+            return Self::trivial();
         }
 
         Self {
@@ -443,6 +445,10 @@ impl ErdosRenyi for AdjacencyList {
     fn erdos_renyi(order: usize, p: f64, seed: u64) -> Self {
         assert!(order > 0, "a digraph has at least one vertex");
         assert!((0.0..=1.0).contains(&p), "p = {p} must be in [0, 1]");
+
+        if order == 1 {
+            return Self::trivial();
+        }
 
         let mut rng = Xoshiro256StarStar::new(seed);
 
@@ -527,6 +533,10 @@ impl GrowingNetwork for AdjacencyList {
         assert!(order > 0, "a digraph has at least one vertex");
 
         let mut rng = Xoshiro256StarStar::new(seed);
+
+        if order == 1 {
+            return Self::trivial();
+        }
 
         Self {
             arcs: once(BTreeSet::new())
@@ -645,6 +655,10 @@ impl Path for AdjacencyList {
     fn path(order: usize) -> Self {
         assert!(order > 0, "a digraph has at least one vertex");
 
+        if order == 1 {
+            return Self::trivial();
+        }
+
         Self {
             arcs: (0..order - 1)
                 .map(|u| BTreeSet::from([u + 1]))
@@ -659,6 +673,10 @@ impl RandomTournament for AdjacencyList {
     ///
     /// Panics if `order` is zero.
     fn random_tournament(order: usize, seed: u64) -> Self {
+        if order == 1 {
+            return Self::trivial();
+        }
+
         let mut digraph = Self::empty(order);
         let mut rng = Xoshiro256StarStar::new(seed);
 
@@ -694,6 +712,10 @@ impl Star for AdjacencyList {
     /// Panics if `order` is zero.
     fn star(order: usize) -> Self {
         assert!(order > 0, "a digraph has at least one vertex");
+
+        if order == 1 {
+            return Self::trivial();
+        }
 
         Self {
             arcs: once((1..order).collect())

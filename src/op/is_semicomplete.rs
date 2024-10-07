@@ -117,14 +117,8 @@ where
     fn is_semicomplete(&self) -> bool {
         let order = self.order();
 
-        for u in 0..order {
-            for v in (u + 1)..order {
-                if !(self.has_arc(u, v) || self.has_arc(v, u)) {
-                    return false;
-                }
-            }
-        }
-
-        true
+        (0..order).all(|u| {
+            (u + 1..order).all(|v| self.has_arc(u, v) || self.has_arc(v, u))
+        })
     }
 }

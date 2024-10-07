@@ -120,7 +120,7 @@ where
 {
     /// # Panics
     ///
-    /// Panics if the digraph has no vertices.
+    /// Panics if the digraph has zero vertices.
     fn is_regular(&self) -> bool {
         let mut vertices = self.vertices();
 

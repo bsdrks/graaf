@@ -35,7 +35,7 @@ pub fn bang_jensen_94_isize() -> AdjacencyListWeighted<isize> {
 /// ![Bang-Jensen, 96](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bang_jensen_96.svg)
 #[must_use]
 pub fn bang_jensen_96_usize() -> AdjacencyListWeighted<usize> {
-    AdjacencyListWeighted::from(vec![
+    AdjacencyListWeighted::from([
         BTreeMap::from([(1, 9), (2, 3)]),
         BTreeMap::from([(2, 6), (3, 2)]),
         BTreeMap::from([(1, 2), (4, 1)]),
@@ -52,7 +52,7 @@ pub fn bang_jensen_96_usize() -> AdjacencyListWeighted<usize> {
 /// ![Bang-Jensen, 96](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bang_jensen_96.svg)
 #[must_use]
 pub fn bang_jensen_96_isize() -> AdjacencyListWeighted<isize> {
-    AdjacencyListWeighted::from(vec![
+    AdjacencyListWeighted::from([
         BTreeMap::from([(1, 9), (2, 3)]),
         BTreeMap::from([(2, 6), (3, 2)]),
         BTreeMap::from([(1, 2), (4, 1)]),
@@ -69,7 +69,7 @@ pub fn bang_jensen_96_isize() -> AdjacencyListWeighted<isize> {
 /// ![Bang-Jensen, 99](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bang_jensen_99.svg)
 #[must_use]
 pub fn bang_jensen_99() -> AdjacencyListWeighted<isize> {
-    AdjacencyListWeighted::from(vec![
+    AdjacencyListWeighted::from([
         BTreeMap::from([(1, 8), (2, 3)]),
         BTreeMap::from([(2, -5)]),
         BTreeMap::from([(3, -2), (4, 4)]),
@@ -85,7 +85,7 @@ pub fn bang_jensen_99() -> AdjacencyListWeighted<isize> {
 /// ![Kattis, bryr, sample 1](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_bryr_1.svg)
 #[must_use]
 pub fn kattis_bryr_1_usize() -> AdjacencyListWeighted<usize> {
-    AdjacencyListWeighted::from(vec![
+    AdjacencyListWeighted::from([
         BTreeMap::from([(1, 1), (2, 1)]),
         BTreeMap::from([(0, 1), (2, 1)]),
         BTreeMap::from([(0, 1), (1, 1)]),
@@ -98,7 +98,7 @@ pub fn kattis_bryr_1_usize() -> AdjacencyListWeighted<usize> {
 /// ![Kattis, bryr, sample 1](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_bryr_1.svg)
 #[must_use]
 pub fn kattis_bryr_1_isize() -> AdjacencyListWeighted<isize> {
-    AdjacencyListWeighted::from(vec![
+    AdjacencyListWeighted::from([
         BTreeMap::from([(1, 1), (2, 1)]),
         BTreeMap::from([(0, 1), (2, 1)]),
         BTreeMap::from([(0, 1), (1, 1)]),
@@ -111,7 +111,7 @@ pub fn kattis_bryr_1_isize() -> AdjacencyListWeighted<isize> {
 /// ![Kattis, bryr, sample 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_bryr_2.svg)
 #[must_use]
 pub fn kattis_bryr_2_usize() -> AdjacencyListWeighted<usize> {
-    AdjacencyListWeighted::from(vec![
+    AdjacencyListWeighted::from([
         BTreeMap::from([(1, 1), (3, 1)]),
         BTreeMap::from([(0, 1), (2, 1)]),
         BTreeMap::from([(1, 1), (3, 1)]),
@@ -127,7 +127,7 @@ pub fn kattis_bryr_2_usize() -> AdjacencyListWeighted<usize> {
 /// ![Kattis, bryr, sample 2](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_bryr_2.svg)
 #[must_use]
 pub fn kattis_bryr_2_isize() -> AdjacencyListWeighted<isize> {
-    AdjacencyListWeighted::from(vec![
+    AdjacencyListWeighted::from([
         BTreeMap::from([(1, 1), (3, 1)]),
         BTreeMap::from([(0, 1), (2, 1)]),
         BTreeMap::from([(1, 1), (3, 1)]),
@@ -143,7 +143,7 @@ pub fn kattis_bryr_2_isize() -> AdjacencyListWeighted<isize> {
 /// ![Kattis, bryr, sample 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_bryr_3.svg)
 #[must_use]
 pub fn kattis_bryr_3_usize() -> AdjacencyListWeighted<usize> {
-    AdjacencyListWeighted::from(vec![
+    AdjacencyListWeighted::from([
         BTreeMap::from([(3, 0)]),
         BTreeMap::from([(7, 0), (9, 1)]),
         BTreeMap::from([(6, 0)]),
@@ -163,7 +163,7 @@ pub fn kattis_bryr_3_usize() -> AdjacencyListWeighted<usize> {
 /// ![Kattis, bryr, sample 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_bryr_3.svg)
 #[must_use]
 pub fn kattis_bryr_3_isize() -> AdjacencyListWeighted<isize> {
-    AdjacencyListWeighted::from(vec![
+    AdjacencyListWeighted::from([
         BTreeMap::from([(3, 0)]),
         BTreeMap::from([(7, 0), (9, 1)]),
         BTreeMap::from([(6, 0)]),
@@ -183,7 +183,7 @@ pub fn kattis_bryr_3_isize() -> AdjacencyListWeighted<isize> {
 /// ![Kattis, crosscountry, sample](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_crosscountry.svg)
 #[must_use]
 pub fn kattis_crosscountry_usize() -> AdjacencyListWeighted<usize> {
-    AdjacencyListWeighted::from(vec![
+    AdjacencyListWeighted::from([
         BTreeMap::from([(1, 1), (2, 3), (3, 14)]),
         BTreeMap::from([(0, 2), (2, 4), (3, 22)]),
         BTreeMap::from([(0, 3), (1, 10), (3, 7)]),
@@ -197,7 +197,7 @@ pub fn kattis_crosscountry_usize() -> AdjacencyListWeighted<usize> {
 /// ![Kattis, crosscountry, sample](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_crosscountry.svg)
 #[must_use]
 pub fn kattis_crosscountry_isize() -> AdjacencyListWeighted<isize> {
-    AdjacencyListWeighted::from(vec![
+    AdjacencyListWeighted::from([
         BTreeMap::from([(1, 1), (2, 3), (3, 14)]),
         BTreeMap::from([(0, 2), (2, 4), (3, 22)]),
         BTreeMap::from([(0, 3), (1, 10), (3, 7)]),
@@ -211,7 +211,7 @@ pub fn kattis_crosscountry_isize() -> AdjacencyListWeighted<isize> {
 /// ![Kattis, shortestpath1, sample](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_shortestpath1.svg)
 #[must_use]
 pub fn kattis_shortestpath1_usize() -> AdjacencyListWeighted<usize> {
-    AdjacencyListWeighted::from(vec![
+    AdjacencyListWeighted::from([
         BTreeMap::from([(1, 2)]),
         BTreeMap::from([(2, 2)]),
         BTreeMap::new(),
@@ -225,7 +225,7 @@ pub fn kattis_shortestpath1_usize() -> AdjacencyListWeighted<usize> {
 /// ![Kattis, shortestpath1, sample](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_shortestpath1.svg)
 #[must_use]
 pub fn kattis_shortestpath1_isize() -> AdjacencyListWeighted<isize> {
-    AdjacencyListWeighted::from(vec![
+    AdjacencyListWeighted::from([
         BTreeMap::from([(1, 2)]),
         BTreeMap::from([(2, 2)]),
         BTreeMap::new(),

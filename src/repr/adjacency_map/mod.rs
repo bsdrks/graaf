@@ -342,6 +342,10 @@ impl Complete for AdjacencyMap {
     fn complete(order: usize) -> Self {
         assert!(order > 0, "a digraph has at least one vertex");
 
+        if order == 1 {
+            return Self::trivial();
+        }
+
         Self {
             arcs: (0..order)
                 .map(|u| (u, (0..u).chain((u + 1)..order).collect()))
@@ -442,6 +446,10 @@ impl ErdosRenyi for AdjacencyMap {
     fn erdos_renyi(order: usize, p: f64, seed: u64) -> Self {
         assert!(order > 0, "a digraph has at least one vertex");
         assert!((0.0..=1.0).contains(&p), "p = {p} must be in [0, 1]");
+
+        if order == 1 {
+            return Self::trivial();
+        }
 
         let mut rng = Xoshiro256StarStar::new(seed);
 
@@ -551,6 +559,10 @@ impl GrowingNetwork for AdjacencyMap {
     /// Panics if `order` is zero.
     fn growing_network(order: usize, seed: u64) -> Self {
         assert!(order > 0, "a digraph has at least one vertex");
+
+        if order == 1 {
+            return Self::trivial();
+        }
 
         let mut rng = Xoshiro256StarStar::new(seed);
 
@@ -691,6 +703,10 @@ impl RandomTournament for AdjacencyMap {
     ///
     /// Panics if `order` is zero.
     fn random_tournament(order: usize, seed: u64) -> Self {
+        if order == 1 {
+            return Self::trivial();
+        }
+
         let mut digraph = Self::empty(order);
         let mut rng = Xoshiro256StarStar::new(seed);
 
@@ -726,6 +742,10 @@ impl Star for AdjacencyMap {
     /// Panics if `order` is zero.
     fn star(order: usize) -> Self {
         assert!(order > 0, "a digraph has at least one vertex");
+
+        if order == 1 {
+            return Self::trivial();
+        }
 
         Self {
             arcs: once((0, (1..order).collect()))

@@ -316,10 +316,7 @@ impl Circuit for EdgeList {
         assert!(order > 0, "a digraph has at least one vertex");
 
         if order == 1 {
-            return Self {
-                arcs: BTreeSet::new(),
-                order,
-            };
+            return Self::trivial();
         }
 
         Self {
@@ -353,10 +350,7 @@ impl Complete for EdgeList {
         assert!(order > 0, "a digraph has at least one vertex");
 
         if order == 1 {
-            return Self {
-                arcs: BTreeSet::new(),
-                order,
-            };
+            return Self::trivial();
         }
 
         Self {
@@ -387,10 +381,7 @@ impl Cycle for EdgeList {
         assert!(order > 0, "a digraph has at least one vertex");
 
         if order == 1 {
-            return Self {
-                arcs: BTreeSet::new(),
-                order,
-            };
+            return Self::trivial();
         }
 
         Self {
@@ -510,6 +501,10 @@ impl GrowingNetwork for EdgeList {
     /// * Panics if `order` is zero.
     fn growing_network(order: usize, seed: u64) -> Self {
         assert!(order > 0, "a digraph has at least one vertex");
+
+        if order == 1 {
+            return Self::trivial();
+        }
 
         let mut rng = Xoshiro256StarStar::new(seed);
 
@@ -649,10 +644,7 @@ impl Path for EdgeList {
         assert!(order > 0, "a digraph has at least one vertex");
 
         if order == 1 {
-            return Self {
-                arcs: BTreeSet::new(),
-                order,
-            };
+            return Self::trivial();
         }
 
         Self {
@@ -667,6 +659,10 @@ impl RandomTournament for EdgeList {
     ///
     /// * Panics if `order` is zero.
     fn random_tournament(order: usize, seed: u64) -> Self {
+        if order == 1 {
+            return Self::trivial();
+        }
+
         let mut digraph = Self::empty(order);
         let mut rng = Xoshiro256StarStar::new(seed);
 
@@ -702,6 +698,10 @@ impl Star for EdgeList {
     /// * Panics if `order` is zero.
     fn star(order: usize) -> Self {
         assert!(order > 0, "a digraph has at least one vertex");
+
+        if order == 1 {
+            return Self::trivial();
+        }
 
         Self {
             arcs: (1..order)
