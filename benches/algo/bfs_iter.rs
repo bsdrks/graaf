@@ -160,8 +160,8 @@ where
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
-fn bfs_adjacency_list(bencher: Bencher<'_, '_>, n: usize) {
-    let digraph = AdjacencyList::erdos_renyi(n, 0.5, 0);
+fn bfs_adjacency_list(bencher: Bencher<'_, '_>, order: usize) {
+    let digraph = AdjacencyList::erdos_renyi(order, 0.5, 0);
 
     bencher.bench_local(|| {
         let bfs = Bfs::new(&digraph, once(0));
@@ -170,8 +170,8 @@ fn bfs_adjacency_list(bencher: Bencher<'_, '_>, n: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
-fn bfs_adjacency_list_push_back(bencher: Bencher<'_, '_>, n: usize) {
-    let digraph = AdjacencyList::erdos_renyi(n, 0.5, 0);
+fn bfs_adjacency_list_push_back(bencher: Bencher<'_, '_>, order: usize) {
+    let digraph = AdjacencyList::erdos_renyi(order, 0.5, 0);
 
     bencher.bench_local(|| {
         let bfs = BfsPushBack::new(&digraph, once(0));

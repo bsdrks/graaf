@@ -20,6 +20,14 @@
 - Return iterators instead of vectors.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 
+## [0.104.0] - 2024-10-08
+
+- Breaking: replace `impl<D> InNeighbors for D where D: Arcs` with `impl InNeighbors for [AdjacencyList, AdjacencyListWeighted, AdjacencyMap, AdjacencyMatrix, EdgeList]`.
+- Breaking: replace `impl<D> IsRegular for D where D: Arcs` with `impl IsRegular for [AdjacencyList, AdjacencyListWeighted, AdjacencyMap, AdjacencyMatrix, EdgeList]`.
+- Speed up `AdjacencyList::in_neighbors`.
+- Speed up `AdjacencyListWeighted::in_neighbors`.
+- Speed up `AdjacencyMap::in_neighbors`.
+
 ## [0.103.0] - 2024-10-07
 
 Changed

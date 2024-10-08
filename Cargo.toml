@@ -1,6 +1,6 @@
 [package]
 name = "graaf"
-version = "0.103.0"
+version = "0.104.0"
 edition = "2021"
 authors = ["Bas Dirks <bas.dirks@protonmail.com>"]
 categories = ["algorithms", "data-structures", "mathematics"]
@@ -128,6 +128,11 @@ path = "benches/op/converse.rs"
 harness = false
 
 [[bench]]
+name = "op_in_neighbors"
+path = "benches/op/in_neighbors.rs"
+harness = false
+
+[[bench]]
 name = "op_indegree_is_source"
 path = "benches/op/indegree_is_source.rs"
 harness = false
@@ -135,6 +140,11 @@ harness = false
 [[bench]]
 name = "op_is_complete"
 path = "benches/op/is_complete.rs"
+harness = false
+
+[[bench]]
+name = "op_is_regular"
+path = "benches/op/is_regular.rs"
 harness = false
 
 [[bench]]

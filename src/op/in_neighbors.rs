@@ -27,15 +27,12 @@
 //! ```
 #![doc(alias = "iter_in_neighbours")]
 
-use crate::Arcs;
-
 /// Return a digraph's in-neighbors.
 ///
 /// # Implementing [`InNeighbors`] for a custom type
 ///
 /// Provide an implementation of [`in_neighbors`](InNeighbors::in_neighbors)
-/// that returns an iterator over a vertex's in-neighbors OR implement
-/// [`Arcs`].
+/// that returns an iterator over a vertex's in-neighbors.
 ///
 /// ```
 /// use {
@@ -52,6 +49,51 @@ use crate::Arcs;
 ///         self.arcs.iter().enumerate().filter_map(move |(u, set)| {
 ///             set.iter().find(|&&y| y == v).map(move |_| u)
 ///         })
+///     }
+/// }
+///
+/// let digraph = AdjacencyList {
+///     arcs: vec![
+///         BTreeSet::from([1, 2]),
+///         BTreeSet::from([0]),
+///         BTreeSet::from([0, 1, 3]),
+///         BTreeSet::from([0]),
+///     ],
+/// };
+///
+/// assert!(digraph.in_neighbors(0).eq([1, 2, 3]));
+/// assert!(digraph.in_neighbors(1).eq([0, 2]));
+/// assert!(digraph.in_neighbors(2).eq([0]));
+/// assert!(digraph.in_neighbors(3).eq([2]));
+/// ```
+///
+/// Implementations can be built with the [`Arcs`](crate::Arcs) trait.
+///
+/// ```
+/// use {
+///     graaf::{
+///         Arcs,
+///         InNeighbors,
+///     },
+///     std::collections::BTreeSet,
+/// };
+///
+/// struct AdjacencyList {
+///     arcs: Vec<BTreeSet<usize>>,
+/// }
+///
+/// impl Arcs for AdjacencyList {
+///     fn arcs(&self) -> impl Iterator<Item = (usize, usize)> {
+///         self.arcs
+///             .iter()
+///             .enumerate()
+///             .flat_map(|(u, set)| set.iter().map(move |&v| (u, v)))
+///     }
+/// }
+///
+/// impl InNeighbors for AdjacencyList {
+///     fn in_neighbors(&self, v: usize) -> impl Iterator<Item = usize> {
+///         self.arcs().filter_map(move |(u, y)| (v == y).then_some(u))
 ///     }
 /// }
 ///
@@ -105,13 +147,4 @@ pub trait InNeighbors {
     #[doc(alias = "in_neighbours")]
     #[must_use]
     fn in_neighbors(&self, v: usize) -> impl Iterator<Item = usize>;
-}
-
-impl<D> InNeighbors for D
-where
-    D: Arcs,
-{
-    fn in_neighbors(&self, v: usize) -> impl Iterator<Item = usize> {
-        self.arcs().filter_map(move |(x, y)| (v == y).then_some(x))
-    }
 }

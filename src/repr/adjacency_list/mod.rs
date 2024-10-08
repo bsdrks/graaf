@@ -120,8 +120,11 @@ use {
         ErdosRenyi,
         GrowingNetwork,
         HasArc,
+        InNeighbors,
         Indegree,
+        IndegreeSequence,
         IsComplete,
+        IsRegular,
         IsSemicomplete,
         IsSimple,
         IsTournament,
@@ -129,6 +132,7 @@ use {
         OutNeighbors,
         OutNeighborsWeighted,
         Outdegree,
+        OutdegreeSequence,
         Path,
         RandomTournament,
         RemoveArc,
@@ -572,9 +576,24 @@ impl Indegree for AdjacencyList {
     }
 }
 
+impl InNeighbors for AdjacencyList {
+    fn in_neighbors(&self, v: usize) -> impl Iterator<Item = usize> {
+        self.arcs
+            .iter()
+            .enumerate()
+            .filter_map(move |(x, set)| set.contains(&v).then_some(x))
+    }
+}
+
 impl IsComplete for AdjacencyList {
     fn is_complete(&self) -> bool {
         *self == Self::complete(self.order())
+    }
+}
+
+impl IsRegular for AdjacencyList {
+    fn is_regular(&self) -> bool {
+        self.indegree_sequence().eq(self.outdegree_sequence())
     }
 }
 

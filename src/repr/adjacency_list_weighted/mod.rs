@@ -39,8 +39,11 @@ use {
         Empty,
         HasArc,
         HasEdge,
+        InNeighbors,
         Indegree,
+        IndegreeSequence,
         IsComplete,
+        IsRegular,
         IsSemicomplete,
         IsSimple,
         IsTournament,
@@ -48,6 +51,7 @@ use {
         OutNeighbors,
         OutNeighborsWeighted,
         Outdegree,
+        OutdegreeSequence,
         RemoveArc,
         Size,
         Vertices,
@@ -234,12 +238,27 @@ impl<W> Indegree for AdjacencyListWeighted<W> {
     }
 }
 
+impl<W> InNeighbors for AdjacencyListWeighted<W> {
+    fn in_neighbors(&self, v: usize) -> impl Iterator<Item = usize> {
+        self.arcs
+            .iter()
+            .enumerate()
+            .filter_map(move |(u, map)| map.contains_key(&v).then_some(u))
+    }
+}
+
 impl<W> IsComplete for AdjacencyListWeighted<W> {
     fn is_complete(&self) -> bool {
         let order = self.order();
 
         self.size() == order * (order - 1)
             && (0..order).all(|u| (u + 1..order).all(|v| self.has_edge(u, v)))
+    }
+}
+
+impl<W> IsRegular for AdjacencyListWeighted<W> {
+    fn is_regular(&self) -> bool {
+        self.indegree_sequence().eq(self.outdegree_sequence())
     }
 }
 
@@ -371,7 +390,6 @@ mod tests {
             IsIsolated,
             IsOriented,
             IsPendant,
-            IsRegular,
             IsSemicomplete,
             IsSubdigraph,
             IsSuperdigraph,

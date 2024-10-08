@@ -94,33 +94,33 @@ impl<'a, D> BellmanFordMooreIter<'a, D> {
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
-fn bellman_ford_moore_iter(bencher: Bencher<'_, '_>, n: usize) {
-    let digraph = AdjacencyList::erdos_renyi(n, 0.5, 0);
+fn bellman_ford_moore_iter(bencher: Bencher<'_, '_>, order: usize) {
+    let digraph = AdjacencyList::erdos_renyi(order, 0.5, 0);
 
     bencher.bench_local(|| {
-        for u in 0..n {
+        for u in 0..order {
             let _ = BellmanFordMooreIter::new(&digraph, u);
         }
     });
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
-fn bellman_ford_moore(bencher: Bencher<'_, '_>, n: usize) {
-    let digraph = AdjacencyList::erdos_renyi(n, 0.5, 0);
+fn bellman_ford_moore(bencher: Bencher<'_, '_>, order: usize) {
+    let digraph = AdjacencyList::erdos_renyi(order, 0.5, 0);
 
     bencher.bench_local(|| {
-        for u in 0..n {
+        for u in 0..order {
             let _ = BellmanFordMoore::new(&digraph, u);
         }
     });
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
-fn bellman_ford_moore_index_mut(bencher: Bencher<'_, '_>, n: usize) {
-    let digraph = AdjacencyList::erdos_renyi(n, 0.5, 0);
+fn bellman_ford_moore_index_mut(bencher: Bencher<'_, '_>, order: usize) {
+    let digraph = AdjacencyList::erdos_renyi(order, 0.5, 0);
 
     bencher.bench_local(|| {
-        for u in 0..n {
+        for u in 0..order {
             let _ = BellmanFordMooreIndexMut::new(&digraph, u);
         }
     });

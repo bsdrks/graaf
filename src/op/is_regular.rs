@@ -22,19 +22,55 @@
 //! assert!(!digraph.is_regular());
 //! ```
 
-use crate::{
-    Indegree,
-    Outdegree,
-    Vertices,
-};
-
 /// Check whether a digraph is regular.
 ///
 /// # Implementing [`IsRegular`] for a custom type
 ///
 /// Provide an implementation of [`is_regular`](IsRegular::is_regular) that
-/// returns whether the digraph is regular OR implement [`Indegree`],
-/// [`Vertices`], and [`Outdegree`].
+/// returns whether the digraph is regular.
+///
+/// ```
+/// use {
+///     graaf::IsRegular,
+///     std::collections::BTreeSet,
+/// };
+///
+/// struct AdjacencyList {
+///     arcs: Vec<BTreeSet<usize>>,
+/// }
+///
+/// impl IsRegular for AdjacencyList {
+///     fn is_regular(&self) -> bool {
+///         (0..self.arcs.len()).all(|u| {
+///             self.arcs[u].len()
+///                 == (0..self.arcs.len())
+///                     .filter(|v| self.arcs[*v].contains(&u))
+///                     .count()
+///         })
+///     }
+/// }
+///
+/// assert!(AdjacencyList {
+///     arcs: vec![
+///         BTreeSet::from([1, 2]),
+///         BTreeSet::from([2, 0]),
+///         BTreeSet::from([0, 1]),
+///     ]
+/// }
+/// .is_regular());
+///
+/// assert!(!AdjacencyList {
+///     arcs: vec![
+///         BTreeSet::from([1, 2]),
+///         BTreeSet::from([0, 2]),
+///         BTreeSet::from([0]),
+///     ]
+/// }
+/// .is_regular());
+/// ```
+///
+/// Implementations can be built with the [`Indegree`](crate::Indegree),
+/// [`Outdegree`](crate::Outdegree), and [`Vertices`](crate::Vertices) traits.
 ///
 /// ```
 /// use {
@@ -69,25 +105,30 @@ use crate::{
 ///     }
 /// }
 ///
-/// let digraph = AdjacencyList {
+/// impl IsRegular for AdjacencyList {
+///     fn is_regular(&self) -> bool {
+///         self.vertices()
+///             .all(|u| self.indegree(u) == self.outdegree(u))
+///     }
+/// }
+///
+/// assert!(AdjacencyList {
 ///     arcs: vec![
 ///         BTreeSet::from([1, 2]),
 ///         BTreeSet::from([2, 0]),
 ///         BTreeSet::from([0, 1]),
-///     ],
-/// };
+///     ]
+/// }
+/// .is_regular());
 ///
-/// assert!(digraph.is_regular());
-///
-/// let digraph = AdjacencyList {
+/// assert!(!AdjacencyList {
 ///     arcs: vec![
 ///         BTreeSet::from([1, 2]),
 ///         BTreeSet::from([0, 2]),
 ///         BTreeSet::from([0]),
-///     ],
-/// };
-///
-/// assert!(!digraph.is_regular());
+///     ]
+/// }
+/// .is_regular());
 /// ```
 pub trait IsRegular {
     /// Check whether the digraph is regular.
@@ -112,27 +153,4 @@ pub trait IsRegular {
     /// ```
     #[must_use]
     fn is_regular(&self) -> bool;
-}
-
-impl<D> IsRegular for D
-where
-    D: Indegree + Outdegree + Vertices,
-{
-    /// # Panics
-    ///
-    /// Panics if the digraph has zero vertices.
-    fn is_regular(&self) -> bool {
-        let mut vertices = self.vertices();
-
-        let order =
-            vertices.next().expect("a digraph has at least one vertex");
-
-        let indegree = self.indegree(order);
-        let outdegree = self.outdegree(order);
-
-        indegree == outdegree
-            && vertices.all(|u| {
-                self.indegree(u) == indegree && self.outdegree(u) == outdegree
-            })
-    }
 }

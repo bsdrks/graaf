@@ -121,8 +121,11 @@ use {
         FilterVertices,
         GrowingNetwork,
         HasArc,
+        InNeighbors,
         Indegree,
+        IndegreeSequence,
         IsComplete,
+        IsRegular,
         IsSemicomplete,
         IsSimple,
         IsTournament,
@@ -130,6 +133,7 @@ use {
         OutNeighbors,
         OutNeighborsWeighted,
         Outdegree,
+        OutdegreeSequence,
         Path,
         RandomTournament,
         RemoveArc,
@@ -603,9 +607,23 @@ impl Indegree for AdjacencyMap {
     }
 }
 
+impl InNeighbors for AdjacencyMap {
+    fn in_neighbors(&self, v: usize) -> impl Iterator<Item = usize> {
+        self.arcs
+            .iter()
+            .filter_map(move |(x, set)| set.contains(&v).then_some(*x))
+    }
+}
+
 impl IsComplete for AdjacencyMap {
     fn is_complete(&self) -> bool {
         *self == Self::complete(self.order())
+    }
+}
+
+impl IsRegular for AdjacencyMap {
+    fn is_regular(&self) -> bool {
+        self.indegree_sequence().eq(self.outdegree_sequence())
     }
 }
 

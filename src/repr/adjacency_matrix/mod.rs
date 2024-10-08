@@ -128,8 +128,11 @@ use crate::{
     ErdosRenyi,
     GrowingNetwork,
     HasArc,
+    InNeighbors,
     Indegree,
+    IndegreeSequence,
     IsComplete,
+    IsRegular,
     IsSemicomplete,
     IsSimple,
     IsTournament,
@@ -137,6 +140,7 @@ use crate::{
     OutNeighbors,
     OutNeighborsWeighted,
     Outdegree,
+    OutdegreeSequence,
     Path,
     RandomTournament,
     RemoveArc,
@@ -644,9 +648,21 @@ impl Indegree for AdjacencyMatrix {
     }
 }
 
+impl InNeighbors for AdjacencyMatrix {
+    fn in_neighbors(&self, v: usize) -> impl Iterator<Item = usize> {
+        self.arcs().filter_map(move |(x, y)| (v == y).then_some(x))
+    }
+}
+
 impl IsComplete for AdjacencyMatrix {
     fn is_complete(&self) -> bool {
         *self == Self::complete(self.order())
+    }
+}
+
+impl IsRegular for AdjacencyMatrix {
+    fn is_regular(&self) -> bool {
+        self.indegree_sequence().eq(self.outdegree_sequence())
     }
 }
 
