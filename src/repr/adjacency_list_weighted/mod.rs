@@ -41,7 +41,6 @@ use {
         HasEdge,
         InNeighbors,
         Indegree,
-        IndegreeSequence,
         IsComplete,
         IsRegular,
         IsSemicomplete,
@@ -51,8 +50,8 @@ use {
         OutNeighbors,
         OutNeighborsWeighted,
         Outdegree,
-        OutdegreeSequence,
         RemoveArc,
+        SemidegreeSequence,
         Size,
         Vertices,
     },
@@ -258,7 +257,13 @@ impl<W> IsComplete for AdjacencyListWeighted<W> {
 
 impl<W> IsRegular for AdjacencyListWeighted<W> {
     fn is_regular(&self) -> bool {
-        self.indegree_sequence().eq(self.outdegree_sequence())
+        let mut semidegrees = self.semidegree_sequence();
+
+        let (u, v) = semidegrees
+            .next()
+            .expect("a digraph has at least one vertex");
+
+        u == v && semidegrees.all(|(x, y)| x == u && y == v)
     }
 }
 

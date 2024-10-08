@@ -123,7 +123,6 @@ use {
         HasArc,
         InNeighbors,
         Indegree,
-        IndegreeSequence,
         IsComplete,
         IsRegular,
         IsSemicomplete,
@@ -133,10 +132,10 @@ use {
         OutNeighbors,
         OutNeighborsWeighted,
         Outdegree,
-        OutdegreeSequence,
         Path,
         RandomTournament,
         RemoveArc,
+        SemidegreeSequence,
         Size,
         Star,
         Union,
@@ -623,7 +622,13 @@ impl IsComplete for AdjacencyMap {
 
 impl IsRegular for AdjacencyMap {
     fn is_regular(&self) -> bool {
-        self.indegree_sequence().eq(self.outdegree_sequence())
+        let mut semidegrees = self.semidegree_sequence();
+
+        let (u, v) = semidegrees
+            .next()
+            .expect("a digraph has at least one vertex");
+
+        u == v && semidegrees.all(|(x, y)| x == u && y == v)
     }
 }
 
