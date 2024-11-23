@@ -28,8 +28,10 @@ Added
 
 Changed
 
+- Breaking: replace `impl<D> DegreeSequence for D where D: Arcs` with `impl DegreeSequence for [AdjacencyList, AdjacencyListWeighted, AdjacencyMap, AdjacencyMatrix, EdgeList]`.
 - Move library and benchmark lint rules to `Cargo.toml`.
 - Standardize trait, module, and method descriptions.
+- Use `is_some_and` where applicable.
 
 Removed
 

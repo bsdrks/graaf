@@ -35,6 +35,8 @@ use {
         Arcs,
         ArcsWeighted,
         Converse,
+        Degree,
+        DegreeSequence,
         EdgeList,
         Empty,
         HasArc,
@@ -132,6 +134,12 @@ where
     }
 }
 
+impl<W> DegreeSequence for AdjacencyListWeighted<W> {
+    fn degree_sequence(&self) -> impl Iterator<Item = usize> {
+        self.vertices().map(move |v| self.degree(v))
+    }
+}
+
 impl<W> Empty for AdjacencyListWeighted<W>
 where
     W: Clone,
@@ -215,7 +223,7 @@ where
 
 impl<W> HasArc for AdjacencyListWeighted<W> {
     fn has_arc(&self, u: usize, v: usize) -> bool {
-        self.arcs.get(u).map_or(false, |set| set.contains_key(&v))
+        self.arcs.get(u).is_some_and(|set| set.contains_key(&v))
     }
 }
 
@@ -348,7 +356,7 @@ impl<W> RemoveArc for AdjacencyListWeighted<W> {
     fn remove_arc(&mut self, u: usize, v: usize) -> bool {
         self.arcs
             .get_mut(u)
-            .map_or(false, |set| set.remove(&v).is_some())
+            .is_some_and(|set| set.remove(&v).is_some())
     }
 }
 

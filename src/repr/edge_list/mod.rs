@@ -116,6 +116,8 @@ use {
         Complete,
         Converse,
         Cycle,
+        Degree,
+        DegreeSequence,
         Empty,
         ErdosRenyi,
         GrowingNetwork,
@@ -398,6 +400,12 @@ impl Cycle for EdgeList {
                 .collect(),
             order,
         }
+    }
+}
+
+impl DegreeSequence for EdgeList {
+    fn degree_sequence(&self) -> impl Iterator<Item = usize> {
+        self.vertices().map(move |v| self.degree(v))
     }
 }
 

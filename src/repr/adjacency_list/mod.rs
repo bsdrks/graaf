@@ -115,6 +115,8 @@ use {
         Complete,
         Converse,
         Cycle,
+        Degree,
+        DegreeSequence,
         EdgeList,
         Empty,
         ErdosRenyi,
@@ -430,6 +432,12 @@ impl Cycle for AdjacencyList {
     }
 }
 
+impl DegreeSequence for AdjacencyList {
+    fn degree_sequence(&self) -> impl Iterator<Item = usize> {
+        self.vertices().map(move |v| self.degree(v))
+    }
+}
+
 impl Empty for AdjacencyList {
     /// # Panics
     ///
@@ -556,7 +564,7 @@ impl GrowingNetwork for AdjacencyList {
 
 impl HasArc for AdjacencyList {
     fn has_arc(&self, u: usize, v: usize) -> bool {
-        self.arcs.get(u).map_or(false, |set| set.contains(&v))
+        self.arcs.get(u).is_some_and(|set| set.contains(&v))
     }
 }
 
@@ -736,7 +744,7 @@ impl RandomTournament for AdjacencyList {
 
 impl RemoveArc for AdjacencyList {
     fn remove_arc(&mut self, u: usize, v: usize) -> bool {
-        self.arcs.get_mut(u).map_or(false, |set| set.remove(&v))
+        self.arcs.get_mut(u).is_some_and(|set| set.remove(&v))
     }
 }
 

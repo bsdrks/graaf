@@ -123,6 +123,8 @@ use crate::{
     Complete,
     Converse,
     Cycle,
+    Degree,
+    DegreeSequence,
     EdgeList,
     Empty,
     ErdosRenyi,
@@ -481,6 +483,12 @@ impl Cycle for AdjacencyMatrix {
         digraph.add_arc(0, u);
 
         digraph
+    }
+}
+
+impl DegreeSequence for AdjacencyMatrix {
+    fn degree_sequence(&self) -> impl Iterator<Item = usize> {
+        self.vertices().map(move |v| self.degree(v))
     }
 }
 
