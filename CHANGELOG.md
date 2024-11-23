@@ -20,6 +20,21 @@
 - Return iterators instead of vectors.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 
+## [0.105.0] - 2024-11-23
+
+Added
+
+- Add minimal documentation to benchmarks.
+
+Changed
+
+- Move library and benchmark lint rules to `Cargo.toml`.
+- Standardize trait, module, and method descriptions.
+
+Removed
+
+- Remove "How to implement" documentation sections.
+
 ## [0.104.0] - 2024-10-08
 
 - Breaking: replace `impl<D> InNeighbors for D where D: Arcs` with `impl InNeighbors for [AdjacencyList, AdjacencyListWeighted, AdjacencyMap, AdjacencyMatrix, EdgeList]`.
@@ -1065,7 +1080,7 @@ Added
 - Implement `Bfs::new`.
 - Implement `Circuit` for `adjacency_list::Digraph`.
 - Implement `Circuit` for `adjacency_matrix::Digraph`.
-- Implement `Iterator for Bfs` to iterate over the vertices in the BFS order.
+- Implement `Iterator for Bfs` to Iterate the vertices in the BFS order.
 
 Changed
 

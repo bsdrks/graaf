@@ -67,59 +67,7 @@
 //! ```
 #![doc(alias = "complete_bipartite")]
 
-/// Generate biclique digraphs.
-///
-/// Bicliques are also known as complete bipartite digraphs.
-///
-/// # Implementing [`Biclique`] for a custom type
-///
-/// Provide an implementation of [`biclique`](Biclique::biclique) that
-/// generates a complete bipartite digraph with two partitions of `m` and `n`
-/// vertices.
-///
-/// ```
-/// use {
-///     graaf::Biclique,
-///     std::collections::BTreeSet,
-/// };
-///
-/// struct AdjacencyList {
-///     arcs: Vec<BTreeSet<usize>>,
-/// }
-///
-/// impl Biclique for AdjacencyList {
-///     fn biclique(m: usize, n: usize) -> Self {
-///         let order = m + n;
-///         let clique_1 = (0..m).collect::<BTreeSet<_>>();
-///         let clique_2 = (m..order).collect::<BTreeSet<_>>();
-///         let mut arcs = vec![BTreeSet::new(); order];
-///
-///         for u in 0..m {
-///             arcs[u].clone_from(&clique_2);
-///         }
-///
-///         for v in m..order {
-///             arcs[v].clone_from(&clique_1);
-///         }
-///
-///         Self { arcs }
-///     }
-/// }
-///
-/// let digraph = AdjacencyList::biclique(3, 3);
-///
-/// assert_eq!(
-///     digraph.arcs,
-///     vec![
-///         BTreeSet::from([3, 4, 5]),
-///         BTreeSet::from([3, 4, 5]),
-///         BTreeSet::from([3, 4, 5]),
-///         BTreeSet::from([0, 1, 2]),
-///         BTreeSet::from([0, 1, 2]),
-///         BTreeSet::from([0, 1, 2]),
-///     ]
-/// );
-/// ```
+/// Biclique digraphs
 #[doc(alias = "CompleteBipartite")]
 pub trait Biclique {
     /// Generate a biclique digraph.

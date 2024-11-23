@@ -54,18 +54,18 @@
 //! - [`AddArcWeighted`] adds an arc to an arc-weighted digraph.
 //! - [`AddArc`] adds an arc to an unweighted digraph.
 //! - [`ArcWeight`] returns an arc's weight.
-//! - [`ArcsWeighted`] iterates over a digraph's weighted arcs.
-//! - [`Arcs`] iterates over a digraph's arcs.
+//! - [`ArcsWeighted`] iterates a digraph's weighted arcs.
+//! - [`Arcs`] iterates a digraph's arcs.
 //! - [`Complement`] returns a digraph's complement.
 //! - [`Converse`] returns a digraph's converse.
-//! - [`DegreeSequence`] iterates over a digraph's degrees.
+//! - [`DegreeSequence`] iterates a digraph's degrees.
 //! - [`Degree`] returns a vertex's degree.
 //! - [`FilterVertices`] filters a digraph's vertices.
 //! - [`HasArc`] checks whether a digraph contains an arc.
 //! - [`HasEdge`] checks whether a digraph contains an edge.
 //! - [`HasWalk`] checks whether a digraph contains a walk.
-//! - [`InNeighbors`] iterates over a vertex's in-neighbors.
-//! - [`IndegreeSequence`] iterates over a digraph's indegrees.
+//! - [`InNeighbors`] iterates a vertex's in-neighbors.
+//! - [`IndegreeSequence`] iterates a digraph's indegrees.
 //! - [`Indegree`] a vertex's indegree.
 //! - [`IsBalanced`] checks whether a digraph is balanced.
 //! - [`IsComplete`] checks whether a digraph is complete.
@@ -80,18 +80,18 @@
 //! - [`IsSuperdigraph`] checks whether a digraph is a superdigraph.
 //! - [`IsSymmetric`] checks whether a digraph is symmetric.
 //! - [`IsTournament`] checks whether a digraph is a tournament.
-//! - [`Order`] returns the number of vertices in a digraph.
-//! - [`OutNeighborsWeighted`] iterates over a vertex's weighted out-neighbors.
-//! - [`OutNeighbors`] iterates over a vertex's out-neighbors.
-//! - [`OutdegreeSequence`] iterates over a digraph's outdegrees.
+//! - [`Order`] counts the vertices in a digraph.
+//! - [`OutNeighborsWeighted`] iterates a vertex's weighted out-neighbors.
+//! - [`OutNeighbors`] iterates a vertex's out-neighbors.
+//! - [`OutdegreeSequence`] iterates a digraph's outdegrees.
 //! - [`Outdegree`] returns a vertex's outdegree.
 //! - [`RemoveArc`] removes an arc from a digraph.
-//! - [`SemidegreeSequence`] iterates over a digraph's semidegrees.
-//! - [`Sinks`] iterates over a digraph's sinks.
-//! - [`Size`] returns the number of arcs in a digraph.
-//! - [`Sources`] iterates over a digraph's sources.
+//! - [`SemidegreeSequence`] iterates a digraph's semidegrees.
+//! - [`Sinks`] iterates a digraph's sinks.
+//! - [`Size`] counts the arcs in a digraph.
+//! - [`Sources`] iterates a digraph's sources.
 //! - [`Union`] returns the union of two digraphs.
-//! - [`Vertices`] iterates over a digraph's vertices.
+//! - [`Vertices`] iterates a digraph's vertices.
 //!
 //! # Algorithms
 //!
@@ -185,44 +185,6 @@
 //! Tarjan's algorithm finds strongly connected components in a digraph.
 //!
 //! - [`Tarjan::components`] finds strongly connected components.
-
-// Clippy lint groups
-#![deny(clippy::all, clippy::cargo, clippy::pedantic, clippy::nursery)]
-// Clippy restriction lints
-#![deny(
-    clippy::get_unwrap,
-    clippy::if_then_some_else_none,
-    clippy::impl_trait_in_params,
-    clippy::missing_assert_message,
-    clippy::multiple_inherent_impl,
-    clippy::panic_in_result_fn,
-    clippy::redundant_type_annotations,
-    clippy::renamed_function_params,
-    clippy::rest_pat_in_fully_bound_structs,
-    clippy::self_named_module_files,
-    clippy::unnecessary_self_imports,
-    clippy::unneeded_field_pattern,
-    clippy::unseparated_literal_suffix,
-    clippy::unwrap_in_result
-)]
-// Rustc lint groups
-#![deny(rust_2018_idioms)]
-// Rustc lints
-#![deny(
-    missing_copy_implementations,
-    missing_debug_implementations,
-    missing_docs,
-    trivial_casts,
-    trivial_numeric_casts,
-    unused_extern_crates,
-    unused_import_braces,
-    unused_results,
-    variant_size_differences
-)]
-// Rustdoc lints
-#![deny(rustdoc::all)]
-// Overwrites
-#![allow(clippy::large_stack_frames)]
 
 pub mod algo;
 pub mod gen;

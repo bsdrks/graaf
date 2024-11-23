@@ -37,66 +37,6 @@ use crate::{
 };
 
 /// Check whether a digraph is balanced.
-///
-/// # Implementing [`IsBalanced`] for a custom type
-///
-/// Provide an implementation of [`is_balanced`](IsBalanced::is_balanced) that
-/// returns whether the digraph is balanced OR implement [`Indegree`],
-/// [`Outdegree`], and [`Vertices`].
-///
-/// ```
-/// use {
-///     graaf::{
-///         Indegree,
-///         IsBalanced,
-///         Outdegree,
-///         Vertices,
-///     },
-///     std::collections::BTreeSet,
-/// };
-///
-/// struct AdjacencyList {
-///     pub arcs: Vec<BTreeSet<usize>>,
-/// }
-///
-/// impl Indegree for AdjacencyList {
-///     fn indegree(&self, v: usize) -> usize {
-///         self.arcs.iter().filter(|set| set.contains(&v)).count()
-///     }
-/// }
-///
-/// impl Vertices for AdjacencyList {
-///     fn vertices(&self) -> impl Iterator<Item = usize> {
-///         0..self.arcs.len()
-///     }
-/// }
-///
-/// impl Outdegree for AdjacencyList {
-///     fn outdegree(&self, u: usize) -> usize {
-///         self.arcs[u].len()
-///     }
-/// }
-///
-/// let digraph = AdjacencyList {
-///     arcs: vec![
-///         BTreeSet::from([1, 2]),
-///         BTreeSet::from([0, 2]),
-///         BTreeSet::from([0, 1]),
-///     ],
-/// };
-///
-/// assert!(digraph.is_balanced());
-///
-/// let digraph = AdjacencyList {
-///     arcs: vec![
-///         BTreeSet::from([1, 2]),
-///         BTreeSet::from([0, 2]),
-///         BTreeSet::from([0]),
-///     ],
-/// };
-///
-/// assert!(!digraph.is_balanced());
-/// ```
 #[doc(alias = "Isograph")]
 #[doc(alias = "Pseudosymmetric")]
 pub trait IsBalanced {

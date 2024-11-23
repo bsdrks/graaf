@@ -1,7 +1,5 @@
 //! Return a vertex's indegree.
 //!
-//! The indegree is the number of arcs incident into a vertex.
-//!
 //! # Examples
 //!
 //! ```
@@ -26,44 +24,10 @@
 
 use crate::Vertices;
 
-/// Return a vertex's indegree.
-///
-/// # Implementing [`Indegree`] for a custom type
-///
-/// Provide an implementation of [`indegree`](Indegree::indegree) that returns
-/// a vertex's indegree.
-///
-/// ```
-/// use {
-///     graaf::Indegree,
-///     std::collections::BTreeSet,
-/// };
-///
-/// struct AdjacencyList {
-///     arcs: Vec<BTreeSet<usize>>,
-/// }
-///
-/// impl Indegree for AdjacencyList {
-///     fn indegree(&self, v: usize) -> usize {
-///         self.arcs.iter().filter(|set| set.contains(&v)).count()
-///     }
-/// }
-///
-/// let digraph = AdjacencyList {
-///     arcs: vec![
-///         BTreeSet::from([1, 2]),
-///         BTreeSet::from([2]),
-///         BTreeSet::new(),
-///     ],
-/// };
-///
-/// assert_eq!(digraph.indegree(0), 0);
-/// assert_eq!(digraph.indegree(1), 1);
-/// assert_eq!(digraph.indegree(2), 2);
-/// ```
+/// Vertex indegree
 #[doc(alias = "InDegree")]
 pub trait Indegree {
-    /// Return a vertex's indegree.
+    /// Return the vertex's indegree.
     ///
     /// # Arguments
     ///

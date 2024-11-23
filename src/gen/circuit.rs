@@ -59,68 +59,7 @@
 //! ]));
 //! ```
 
-/// Generate circuit digraphs.
-///
-/// A circuit is an oriented cycle.
-///
-/// # Implementing [`Circuit`] for a custom type
-///
-/// Provide an implementation of [`circuit`](Circuit::circuit) that generates a
-/// circuit digraph of a given `order`.
-///
-/// ```
-/// use {
-///     graaf::Circuit,
-///     std::collections::BTreeSet,
-/// };
-///
-/// struct AdjacencyList {
-///     arcs: Vec<BTreeSet<usize>>,
-/// }
-///
-/// impl Circuit for AdjacencyList {
-///     /// # Panics
-///     ///
-///     /// Panics if `order` is zero.
-///     fn circuit(order: usize) -> Self {
-///         if order == 1 {
-///             return Self {
-///                 arcs: vec![BTreeSet::new()],
-///             };
-///         }
-///
-///         Self {
-///             arcs: (0..order)
-///                 .map(|u| BTreeSet::from([(u + 1) % order]))
-///                 .collect::<Vec<_>>(),
-///         }
-///     }
-/// }
-///
-/// let digraph = AdjacencyList::circuit(3);
-///
-/// assert!(digraph.arcs.iter().eq(&[
-///     BTreeSet::from([1]),
-///     BTreeSet::from([2]),
-///     BTreeSet::from([0])
-/// ]));
-/// ```
-///
-/// # Examples
-///
-/// ```
-/// use graaf::{
-///     AdjacencyList,
-///     Arcs,
-///     Circuit,
-/// };
-///
-/// assert!(AdjacencyList::circuit(1).arcs().eq([]));
-/// assert!(AdjacencyList::circuit(2).arcs().eq([(0, 1), (1, 0)]));
-/// assert!(AdjacencyList::circuit(3)
-///     .arcs()
-///     .eq([(0, 1), (1, 2), (2, 0)]));
-/// ```
+/// Circuit digraphs
 pub trait Circuit {
     /// Generate a circuit digraph.
     ///

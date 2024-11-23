@@ -1,4 +1,4 @@
-//! Iterate over a digraph's sinks.
+//! Iterate a digraph's sinks.
 //!
 //! A sink is a vertex without out-neighbors.
 //!
@@ -26,52 +26,9 @@ use crate::{
     Vertices,
 };
 
-/// Iterate over a digraph's sinks.
-///
-/// # Implementing [`Sinks`] for a custom type
-///
-/// Provide an implementation of [`sinks`](Sinks::sinks) that returns an
-/// iterator a digraph's sinks OR implement [`Outdegree`] and [`Vertices`].
-///
-/// ```
-/// use {
-///     graaf::{
-///         Outdegree,
-///         Sinks,
-///         Vertices,
-///     },
-///     std::collections::BTreeSet,
-/// };
-///
-/// struct AdjacencyList {
-///     arcs: Vec<BTreeSet<usize>>,
-/// }
-///
-/// impl Outdegree for AdjacencyList {
-///     fn outdegree(&self, u: usize) -> usize {
-///         self.arcs[u].len()
-///     }
-/// }
-///
-/// impl Vertices for AdjacencyList {
-///     fn vertices(&self) -> impl Iterator<Item = usize> {
-///         0..self.arcs.len()
-///     }
-/// }
-///
-/// let mut digraph = AdjacencyList {
-///     arcs: vec![
-///         BTreeSet::from([1, 2]),
-///         BTreeSet::from([2]),
-///         BTreeSet::new(),
-///         BTreeSet::new(),
-///     ],
-/// };
-///
-/// assert!(digraph.sinks().eq([2, 3]));
-/// ```
+/// Digraph sinks
 pub trait Sinks {
-    /// Return an iterator over a digraph's sinks.
+    /// Iterate a digraph's sinks.
     ///
     /// # Examples
     ///

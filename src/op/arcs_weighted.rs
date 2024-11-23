@@ -1,4 +1,4 @@
-//! Iterate over a digraph's weighted arcs.
+//! Iterate a digraph's weighted arcs.
 //!
 //! # Examples
 //!
@@ -21,35 +21,12 @@
 //!     .eq([(0, 1, &2), (1, 2, &3), (2, 0, &4)]));
 //! ```
 
-/// Iterate over a digraph's weighted arcs.
-///
-/// # Implementing [`ArcsWeighted`] for a custom type
-///
-/// Provide an implementation of [`arcs_weighted`](ArcsWeighted) that returns
-/// an iterator over a digraph's arcs and their weights.
-///
-/// ```
-/// use graaf::ArcsWeighted;
-///
-/// struct AdjacencyListWeighted {
-///     arcs: Vec<(usize, usize, usize)>,
-/// }
-///
-/// impl ArcsWeighted for AdjacencyListWeighted {
-///     type Weight = usize;
-///
-///     fn arcs_weighted(
-///         &self,
-///     ) -> impl Iterator<Item = (usize, usize, &Self::Weight)> {
-///         self.arcs.iter().map(|&(u, v, ref w)| (u, v, w))
-///     }
-/// }
-/// ```
+/// Weighted arcs
 pub trait ArcsWeighted {
     /// The weight of an arc.
     type Weight;
 
-    /// Return an iterator over a digraphs' weighted arcs.
+    /// Iterate the digraph's weighted arcs.
     ///
     /// # Examples
     ///

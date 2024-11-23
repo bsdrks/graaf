@@ -1,4 +1,4 @@
-//! Return a vertex's weighted out-neighbours.
+//! Iterate a vertex's weighted out-neighbours.
 //!
 //! # Examples
 //!
@@ -36,41 +36,13 @@
 //! ```
 #![doc(alias = "weighted_out_neighbours")]
 
-/// Return a vertex's weighted out-neighbours.
-///
-/// # Implementing [`OutNeighborsWeighted`] for a custom type
-///
-/// Provide an implementation of
-/// [`out_neighbors_weighted`](OutNeighborsWeighted::out_neighbors_weighted)
-/// that returns an iterator over a vertex's weighted out-neighbours.
-///
-/// ```
-/// use {
-///     graaf::OutNeighborsWeighted,
-///     std::collections::BTreeMap,
-/// };
-///
-/// struct AdjacencyListWeighted {
-///     arcs: Vec<BTreeMap<usize, usize>>,
-/// }
-///
-/// impl OutNeighborsWeighted for AdjacencyListWeighted {
-///     type Weight = usize;
-///
-///     fn out_neighbors_weighted(
-///         &self,
-///         u: usize,
-///     ) -> impl Iterator<Item = (usize, &Self::Weight)> {
-///         self.arcs[u].iter().map(|(v, w)| (*v, w))
-///     }
-/// }
-/// ```
+/// Vertex weighted out-neighbours
 #[doc(alias = "OutNeighboursWeighted")]
 pub trait OutNeighborsWeighted {
     /// The weight of an arc.
     type Weight;
 
-    /// Return an iterator over a vertex's weighted out-neighbours.
+    /// Iterate the vertex's weighted out-neighbors.
     ///
     /// # Arguments
     ///

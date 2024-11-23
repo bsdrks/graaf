@@ -1,6 +1,4 @@
-//! Return a digraph's outdegree sequence.
-//!
-//! The outdegree sequence iterates over a digraph's outdegrees.
+//! Iterate a digraph's outdegree sequence.
 //!
 //! # Examples
 //!
@@ -27,53 +25,9 @@ use crate::{
     Vertices,
 };
 
-/// Return a digraph's outdegree sequence.
-///
-/// # Implementing [`OutdegreeSequence`] for a custom type
-///
-/// Provide an implementation of
-/// [`outdegree_sequence`](OutdegreeSequence::outdegree_sequence) that returns
-/// the digraph's outdegree sequence OR implement [`Outdegree`] and
-/// [`Vertices`].
-///
-/// ```
-/// use {
-///     graaf::{
-///         Outdegree,
-///         OutdegreeSequence,
-///         Vertices,
-///     },
-///     std::collections::BTreeSet,
-/// };
-///
-/// struct AdjacencyList {
-///     arcs: Vec<BTreeSet<usize>>,
-/// }
-///
-/// impl Outdegree for AdjacencyList {
-///     fn outdegree(&self, u: usize) -> usize {
-///         self.arcs[u].len()
-///     }
-/// }
-///
-/// impl Vertices for AdjacencyList {
-///     fn vertices(&self) -> impl Iterator<Item = usize> {
-///         0..self.arcs.len()
-///     }
-/// }
-///
-/// let digraph = AdjacencyList {
-///     arcs: vec![
-///         BTreeSet::from([1, 2]),
-///         BTreeSet::from([2]),
-///         BTreeSet::from([0]),
-///     ],
-/// };
-///
-/// assert!(digraph.outdegree_sequence().eq([2, 1, 1]));
-/// ```
+/// Digraph outdegree sequence
 pub trait OutdegreeSequence {
-    /// Return a digraph's outdegree sequence.
+    /// Iterate the digraph's outdegree sequence.
     ///
     /// # Examples
     ///

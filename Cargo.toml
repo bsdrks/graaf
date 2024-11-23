@@ -11,6 +11,47 @@ license = "MIT OR Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/bsdrks/graaf"
 
+[lints.clippy]
+# groups
+all = "deny"
+cargo = "deny"
+pedantic = "deny"
+nursery = "deny"
+# restrictions
+get_unwrap = "deny"
+if_then_some_else_none = "deny"
+impl_trait_in_params = "deny"
+missing_assert_message = "deny"
+multiple_inherent_impl = "deny"
+panic_in_result_fn = "deny"
+redundant_type_annotations = "deny"
+renamed_function_params = "deny"
+rest_pat_in_fully_bound_structs = "deny"
+self_named_module_files = "deny"
+unnecessary_self_imports = "deny"
+unneeded_field_pattern = "deny"
+unseparated_literal_suffix = "deny"
+unwrap_in_result = "deny"
+# overwrites
+large_stack_frames = { level = "allow", priority = 1 }
+
+[lints.rust]
+# groups
+rust_2018_idioms = "deny"
+# lints
+missing_copy_implementations = "deny"
+missing_debug_implementations = "deny"
+missing_docs = "deny"
+trivial_casts = "deny"
+trivial_numeric_casts = "deny"
+unused_extern_crates = "deny"
+unused_import_braces = "deny"
+unused_results = "deny"
+variant_size_differences = "deny"
+
+[lints.rustdoc]
+all = "deny"
+
 [lib]
 
 [dev-dependencies]

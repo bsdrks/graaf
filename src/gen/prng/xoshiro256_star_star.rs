@@ -105,10 +105,16 @@ impl Xoshiro256StarStar {
     /// # Panics
     ///
     /// This function never panics.
-    #[allow(clippy::cast_precision_loss)]
     #[must_use]
     pub fn next_f64(&mut self) -> f64 {
-        self.next().unwrap() as f64 / u64::MAX as f64
+        const MANTISSA_BITS: u64 = 1 << 52;
+        const MANTISSA_MASK: u64 = MANTISSA_BITS - 1;
+
+        let next_u64 = self.next().unwrap();
+        let mantissa = next_u64 & MANTISSA_MASK;
+        let exponent = 1023; // Exponent for 2^0 in IEEE 754
+
+        f64::from_bits((exponent << 52) | mantissa) - 1.0
     }
 }
 

@@ -34,31 +34,8 @@
 //! ```
 
 /// Remove an arc from a digraph.
-///
-/// # Implementing [`RemoveArc`] for a custom type
-///
-/// Provide an implementation of [`remove_arc`](RemoveArc::remove_arc) that
-/// removes the arc from a digraph and returns whether the arc was removed.
-///
-/// ```
-/// use {
-///     graaf::RemoveArc,
-///     std::collections::BTreeSet,
-/// };
-///
-/// struct AdjacencyList {
-///     arcs: Vec<BTreeSet<usize>>,
-/// }
-///
-/// impl RemoveArc for AdjacencyList {
-///     fn remove_arc(&mut self, u: usize, v: usize) -> bool {
-///         self.arcs[u].remove(&v)
-///     }
-/// }
-/// ```
 pub trait RemoveArc {
-    /// Remove the arc from `u` to `v` from the digraph. Return whether the
-    /// arc was removed.
+    /// Remove the arc from the digraph. Return whether the arc was removed.
     ///
     /// # Arguments
     ///

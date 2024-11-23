@@ -1626,7 +1626,6 @@ macro_rules! test_unweighted {
                 }));
             }
 
-            #[allow(clippy::float_cmp)]
             #[test]
             fn erdos_renyi_is_complete(
                 order in 1..25_usize,
@@ -5566,7 +5565,6 @@ macro_rules! test_unweighted {
         }
 
         #[test]
-        #[allow(clippy::cognitive_complexity)]
         fn has_walk_kattis_escapewallmaria_1() {
             let digraph = kattis_escapewallmaria_1();
 
@@ -5603,7 +5601,6 @@ macro_rules! test_unweighted {
         }
 
         #[test]
-        #[allow(clippy::cognitive_complexity)]
         fn has_walk_kattis_escapewallmaria_2() {
             let digraph = kattis_escapewallmaria_2();
 
@@ -5637,7 +5634,6 @@ macro_rules! test_unweighted {
         }
 
         #[test]
-        #[allow(clippy::cognitive_complexity)]
         fn has_walk_kattis_escapewallmaria_3() {
             let digraph = kattis_escapewallmaria_3();
 
@@ -6710,7 +6706,6 @@ macro_rules! test_unweighted {
         }
 
         #[test]
-        #[allow(clippy::cognitive_complexity)]
         fn remove_arc_bang_jensen_196() {
             let mut digraph = bang_jensen_196();
 
@@ -6876,7 +6871,6 @@ macro_rules! test_unweighted {
         }
 
         #[test]
-        #[allow(clippy::cognitive_complexity)]
         fn remove_arc_kattis_cantinaofbabel_1() {
             let mut digraph = kattis_cantinaofbabel_1();
 
@@ -6957,7 +6951,6 @@ macro_rules! test_unweighted {
         }
 
         #[test]
-        #[allow(clippy::cognitive_complexity)]
         fn remove_arc_kattis_cantinaofbabel_2() {
             let mut digraph = kattis_cantinaofbabel_2();
 
@@ -7099,7 +7092,6 @@ macro_rules! test_unweighted {
         }
 
         #[test]
-        #[allow(clippy::cognitive_complexity)]
         fn remove_arc_kattis_escapewallmaria_3() {
             let mut digraph = kattis_escapewallmaria_3();
 

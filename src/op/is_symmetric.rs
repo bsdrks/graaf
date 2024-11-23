@@ -41,54 +41,6 @@ use crate::{
 };
 
 /// Check whether a digraph is symmetric.
-///
-/// # Implementing [`IsSymmetric`] for a custom type
-///
-/// Provide an implementation of [`is_symmetric`](IsSymmetric::is_symmetric)
-/// that returns whether the digraph is symmetric OR implement [`Arcs`] and
-/// [`HasArc`].
-///
-/// ```
-/// use {
-///     graaf::{
-///         Arcs,
-///         HasArc,
-///         IsSymmetric,
-///     },
-///     std::collections::BTreeSet,
-/// };
-///
-/// struct AdjacencyList {
-///     arcs: Vec<BTreeSet<usize>>,
-/// }
-///
-/// impl HasArc for AdjacencyList {
-///     fn has_arc(&self, u: usize, v: usize) -> bool {
-///         self.arcs[u].contains(&v)
-///     }
-/// }
-///
-/// impl Arcs for AdjacencyList {
-///     fn arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-///         self.arcs
-///             .iter()
-///             .enumerate()
-///             .flat_map(|(u, set)| set.iter().map(move |&v| (u, v)))
-///     }
-/// }
-///
-/// let digraph = AdjacencyList {
-///     arcs: vec![BTreeSet::from([1]), BTreeSet::from([0])],
-/// };
-///
-/// assert!(digraph.is_symmetric());
-///
-/// let digraph = AdjacencyList {
-///     arcs: vec![BTreeSet::from([1]), BTreeSet::new()],
-/// };
-///
-/// assert!(!digraph.is_symmetric());
-/// ```
 pub trait IsSymmetric {
     /// Check whether the digraph is symmetric.
     ///

@@ -33,53 +33,7 @@ use crate::{
     Vertices,
 };
 
-/// Return a vertex's degree.
-///
-/// # Implementing [`Degree`] for a custom type
-///
-/// Provide an implementation of [`degree`](Degree::degree) that returns a
-/// vertex's degree OR implement [`Indegree`] and [`Outdegree`].
-///
-/// ```
-/// use {
-///     graaf::{
-///         Degree,
-///         Indegree,
-///         Outdegree,
-///     },
-///     std::collections::BTreeSet,
-/// };
-///
-/// struct AdjacencyList {
-///     arcs: Vec<BTreeSet<usize>>,
-/// }
-///
-/// impl Indegree for AdjacencyList {
-///     fn indegree(&self, v: usize) -> usize {
-///         self.arcs.iter().filter(|set| set.contains(&v)).count()
-///     }
-/// }
-///
-/// impl Outdegree for AdjacencyList {
-///     fn outdegree(&self, u: usize) -> usize {
-///         self.arcs[u].len()
-///     }
-/// }
-///
-/// let digraph = AdjacencyList {
-///     arcs: vec![
-///         BTreeSet::from([1, 2]),
-///         BTreeSet::from([2]),
-///         BTreeSet::from([0]),
-///         BTreeSet::new(),
-///     ],
-/// };
-///
-/// assert_eq!(digraph.degree(0), 3);
-/// assert_eq!(digraph.degree(1), 2);
-/// assert_eq!(digraph.degree(2), 3);
-/// assert_eq!(digraph.degree(3), 0);
-/// ```
+/// Vertex degree
 #[doc(alias = "Semidegree")]
 #[doc(alias = "Valence")]
 #[doc(alias = "Valency")]

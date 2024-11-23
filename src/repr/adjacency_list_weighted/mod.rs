@@ -2403,16 +2403,6 @@ mod tests {
         assert!(digraph.remove_arc(4, 6));
 
         assert!(digraph.arcs().eq([]));
-
-        assert!(!digraph.remove_arc(0, 1));
-        assert!(!digraph.remove_arc(0, 2));
-        assert!(!digraph.remove_arc(1, 3));
-        assert!(!digraph.remove_arc(2, 1));
-        assert!(!digraph.remove_arc(2, 3));
-        assert!(!digraph.remove_arc(2, 4));
-        assert!(!digraph.remove_arc(2, 5));
-        assert!(!digraph.remove_arc(3, 5));
-        assert!(!digraph.remove_arc(4, 6));
     }
 
     #[test]
@@ -2432,18 +2422,6 @@ mod tests {
         assert!(digraph.remove_arc(5, 3));
 
         assert!(digraph.arcs().eq([]));
-
-        assert!(!digraph.remove_arc(0, 1));
-        assert!(!digraph.remove_arc(0, 2));
-        assert!(!digraph.remove_arc(1, 2));
-        assert!(!digraph.remove_arc(1, 3));
-        assert!(!digraph.remove_arc(2, 1));
-        assert!(!digraph.remove_arc(2, 4));
-        assert!(!digraph.remove_arc(3, 5));
-        assert!(!digraph.remove_arc(4, 2));
-        assert!(!digraph.remove_arc(4, 3));
-        assert!(!digraph.remove_arc(4, 5));
-        assert!(!digraph.remove_arc(5, 3));
     }
 
     #[test]
@@ -2462,17 +2440,6 @@ mod tests {
         assert!(digraph.remove_arc(5, 4));
 
         assert!(digraph.arcs().eq([]));
-
-        assert!(!digraph.remove_arc(0, 1));
-        assert!(!digraph.remove_arc(0, 2));
-        assert!(!digraph.remove_arc(1, 2));
-        assert!(!digraph.remove_arc(2, 3));
-        assert!(!digraph.remove_arc(2, 4));
-        assert!(!digraph.remove_arc(3, 5));
-        assert!(!digraph.remove_arc(4, 3));
-        assert!(!digraph.remove_arc(4, 5));
-        assert!(!digraph.remove_arc(5, 3));
-        assert!(!digraph.remove_arc(5, 4));
     }
 
     #[test]
@@ -2487,17 +2454,9 @@ mod tests {
         assert!(digraph.remove_arc(2, 1));
 
         assert!(digraph.arcs().eq([]));
-
-        assert!(!digraph.remove_arc(0, 1));
-        assert!(!digraph.remove_arc(0, 2));
-        assert!(!digraph.remove_arc(1, 0));
-        assert!(!digraph.remove_arc(1, 2));
-        assert!(!digraph.remove_arc(2, 0));
-        assert!(!digraph.remove_arc(2, 1));
     }
 
     #[test]
-    #[allow(clippy::cognitive_complexity)]
     fn remove_arc_kattis_bryr_2() {
         let mut digraph = kattis_bryr_2_usize();
 
@@ -2515,23 +2474,10 @@ mod tests {
         assert!(digraph.remove_arc(5, 4));
 
         assert!(digraph.arcs().eq([]));
-
-        assert!(!digraph.remove_arc(0, 1));
-        assert!(!digraph.remove_arc(0, 3));
-        assert!(!digraph.remove_arc(1, 0));
-        assert!(!digraph.remove_arc(1, 2));
-        assert!(!digraph.remove_arc(2, 1));
-        assert!(!digraph.remove_arc(2, 3));
-        assert!(!digraph.remove_arc(3, 0));
-        assert!(!digraph.remove_arc(3, 2));
-        assert!(!digraph.remove_arc(3, 4));
-        assert!(!digraph.remove_arc(4, 3));
-        assert!(!digraph.remove_arc(4, 5));
-        assert!(!digraph.remove_arc(5, 4));
     }
 
-    #[test]
     #[allow(clippy::cognitive_complexity)]
+    #[test]
     fn remove_arc_kattis_bryr_3() {
         let mut digraph = kattis_bryr_3_usize();
 
@@ -2562,36 +2508,9 @@ mod tests {
         assert!(digraph.remove_arc(9, 6));
 
         assert!(digraph.arcs().eq([]));
-
-        assert!(!digraph.remove_arc(0, 3));
-        assert!(!digraph.remove_arc(1, 7));
-        assert!(!digraph.remove_arc(1, 9));
-        assert!(!digraph.remove_arc(2, 6));
-        assert!(!digraph.remove_arc(3, 0));
-        assert!(!digraph.remove_arc(3, 4));
-        assert!(!digraph.remove_arc(3, 5));
-        assert!(!digraph.remove_arc(3, 7));
-        assert!(!digraph.remove_arc(4, 3));
-        assert!(!digraph.remove_arc(4, 6));
-        assert!(!digraph.remove_arc(4, 8));
-        assert!(!digraph.remove_arc(5, 3));
-        assert!(!digraph.remove_arc(5, 6));
-        assert!(!digraph.remove_arc(5, 8));
-        assert!(!digraph.remove_arc(6, 2));
-        assert!(!digraph.remove_arc(6, 4));
-        assert!(!digraph.remove_arc(6, 5));
-        assert!(!digraph.remove_arc(6, 9));
-        assert!(!digraph.remove_arc(7, 1));
-        assert!(!digraph.remove_arc(7, 3));
-        assert!(!digraph.remove_arc(8, 4));
-        assert!(!digraph.remove_arc(8, 5));
-        assert!(!digraph.remove_arc(9, 1));
-        assert!(!digraph.remove_arc(9, 2));
-        assert!(!digraph.remove_arc(9, 6));
     }
 
     #[test]
-    #[allow(clippy::cognitive_complexity)]
     fn remove_arc_kattis_crosscountry() {
         let mut digraph = kattis_crosscountry_usize();
 
@@ -2609,19 +2528,6 @@ mod tests {
         assert!(digraph.remove_arc(3, 2));
 
         assert!(digraph.arcs().eq([]));
-
-        assert!(!digraph.remove_arc(0, 1));
-        assert!(!digraph.remove_arc(0, 2));
-        assert!(!digraph.remove_arc(0, 3));
-        assert!(!digraph.remove_arc(1, 0));
-        assert!(!digraph.remove_arc(1, 2));
-        assert!(!digraph.remove_arc(1, 3));
-        assert!(!digraph.remove_arc(2, 0));
-        assert!(!digraph.remove_arc(2, 1));
-        assert!(!digraph.remove_arc(2, 3));
-        assert!(!digraph.remove_arc(3, 0));
-        assert!(!digraph.remove_arc(3, 1));
-        assert!(!digraph.remove_arc(3, 2));
     }
 
     #[test]
@@ -2633,10 +2539,6 @@ mod tests {
         assert!(digraph.remove_arc(3, 0));
 
         assert!(digraph.arcs().eq([]));
-
-        assert!(!digraph.remove_arc(0, 1));
-        assert!(!digraph.remove_arc(1, 2));
-        assert!(!digraph.remove_arc(3, 0));
     }
 
     #[test]

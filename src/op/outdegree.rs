@@ -26,43 +26,9 @@
 
 use crate::Vertices;
 
-/// Return a vertex's outdegree.
-///
-/// # Implementing [`Outdegree`] for a custom type
-///
-/// Provide an implementation of [`outdegree`](Outdegree::outdegree) that
-/// returns a vertex's outdegree.
-///
-/// ```
-/// use {
-///     graaf::Outdegree,
-///     std::collections::BTreeSet,
-/// };
-///
-/// struct AdjacencyList {
-///     arcs: Vec<BTreeSet<usize>>,
-/// }
-///
-/// impl Outdegree for AdjacencyList {
-///     fn outdegree(&self, u: usize) -> usize {
-///         self.arcs.get(u).map_or(0, BTreeSet::len)
-///     }
-/// }
-///
-/// let digraph = AdjacencyList {
-///     arcs: vec![
-///         BTreeSet::from([1, 2]),
-///         BTreeSet::from([0]),
-///         BTreeSet::from([1]),
-///     ],
-/// };
-///
-/// assert_eq!(digraph.outdegree(0), 2);
-/// assert_eq!(digraph.outdegree(1), 1);
-/// assert_eq!(digraph.outdegree(2), 1);
-/// ```
+/// Vertex outdegree
 pub trait Outdegree {
-    /// Return a vertex's outdegree.
+    /// Return the vertex's outdegree.
     ///
     /// # Arguments
     ///

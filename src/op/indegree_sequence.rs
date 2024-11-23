@@ -1,6 +1,4 @@
-//! Return a digraph's indegree sequence.
-//!
-//! The indegree sequence iterates over a digraph's indegrees.
+//! Iterate a digraph's indegree sequence.
 //!
 //! # Examples
 //!
@@ -27,52 +25,9 @@ use crate::{
     Vertices,
 };
 
-/// Return a digraph's indegree sequence.
-///
-/// # Implementing [`IndegreeSequence`] for a custom type
-///
-/// Provide an implementation of
-/// [`indegree_sequence`](IndegreeSequence::indegree_sequence) that returns a
-/// digraph's indegree sequence OR implement [`Indegree`] and [`Vertices`].
-///
-/// ```
-/// use {
-///     graaf::{
-///         Indegree,
-///         IndegreeSequence,
-///         Vertices,
-///     },
-///     std::collections::BTreeSet,
-/// };
-///
-/// struct AdjacencyList {
-///     arcs: Vec<BTreeSet<usize>>,
-/// }
-///
-/// impl Indegree for AdjacencyList {
-///     fn indegree(&self, v: usize) -> usize {
-///         self.arcs.iter().filter(|set| set.contains(&v)).count()
-///     }
-/// }
-///
-/// impl Vertices for AdjacencyList {
-///     fn vertices(&self) -> impl Iterator<Item = usize> {
-///         0..self.arcs.len()
-///     }
-/// }
-///
-/// let mut digraph = AdjacencyList {
-///     arcs: vec![
-///         BTreeSet::from([1, 2]),
-///         BTreeSet::from([2]),
-///         BTreeSet::from([0]),
-///     ],
-/// };
-///
-/// assert!(digraph.indegree_sequence().eq([1, 1, 2]));
-/// ```
+/// Digraph indegree sequence
 pub trait IndegreeSequence {
-    /// Return a digraph's indegree sequence.
+    /// Iterate the digraph's indegree sequence.
     ///
     /// # Examples
     ///

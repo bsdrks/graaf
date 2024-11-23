@@ -53,44 +53,7 @@
 //! ```
 #![doc(alias = "edgeless")]
 
-/// Generate empty digraphs.
-///
-/// An empty digraph has no arcs.
-///
-/// # Implementing [`Empty`] for a custom type
-///
-/// Provide an implementation of [`empty`](Empty::empty) that generates an
-/// empty digraph with `v` vertices.
-///
-/// ```
-/// use {
-///     graaf::Empty,
-///     std::collections::BTreeSet,
-/// };
-///
-/// struct AdjacencyList {
-///     arcs: Vec<BTreeSet<usize>>,
-/// }
-///
-/// impl Empty for AdjacencyList {
-///     /// # Panics
-///     ///
-///     /// Panics if `order` is zero.
-///     fn empty(order: usize) -> Self {
-///         assert!(order > 0, "a digraph has at least one vertex");
-///
-///         AdjacencyList {
-///             arcs: vec![BTreeSet::new(); order],
-///         }
-///     }
-/// }
-///
-/// assert!(AdjacencyList::empty(3).arcs.iter().eq(&[
-///     BTreeSet::new(),
-///     BTreeSet::new(),
-///     BTreeSet::new()
-/// ]));
-/// ```
+/// Empty digraphs
 #[doc(alias = "Edgeless")]
 pub trait Empty {
     /// Generate an empty digraph.

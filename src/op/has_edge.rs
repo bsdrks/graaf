@@ -1,4 +1,4 @@
-//! Check whether a digraph contains an edge.
+//! Check whether an edge exists in a digraph.
 //!
 //! To determine whether an arc exists from `u` to `v`, see [`HasArc`].
 //!
@@ -44,42 +44,9 @@
 
 use crate::HasArc;
 
-/// Check whether a digraph contains an edge.
-///
-/// # Implementing [`HasEdge`] for a custom type
-///
-/// Provide an implementation of [`has_edge`](HasEdge::has_edge) that returns
-/// `true` if the digraph contains the arc OR implement [`HasArc`].
-///
-/// ```
-/// use {
-///     graaf::{
-///         HasArc,
-///         HasEdge,
-///     },
-///     std::collections::BTreeSet,
-/// };
-///
-/// struct AdjacencyList {
-///     arcs: Vec<BTreeSet<usize>>,
-/// }
-///
-/// impl HasArc for AdjacencyList {
-///     fn has_arc(&self, u: usize, v: usize) -> bool {
-///         self.arcs.get(u).map_or(false, |set| set.contains(&v))
-///     }
-/// }
-///
-/// let digraph = AdjacencyList {
-///     arcs: vec![BTreeSet::from([1]), BTreeSet::from([0])],
-/// };
-///
-/// assert!(digraph.has_edge(0, 1));
-/// assert!(digraph.has_edge(1, 0));
-/// ```
+/// Check whether an edge exists in a digraph.
 pub trait HasEdge {
-    /// Check whether the digraph has an arc from `u` to `v` AND from `v`
-    /// to `u`.
+    /// Check whether an edge exists in the digraph.
     ///
     /// # Arguments
     ///

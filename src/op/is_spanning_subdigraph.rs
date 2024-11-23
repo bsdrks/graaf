@@ -132,64 +132,6 @@ use crate::{
 };
 
 /// Check whether a digraph is another digraph's spanning subdigraph.
-///
-/// # Implementing [`IsSpanningSubdigraph`] for a custom type
-///
-/// Provide an implementation of
-/// [`is_spanning_subdigraph`](IsSpanningSubdigraph::is_spanning_subdigraph)
-/// that returns whether the digraph is the given digraph's spanning subdigraph
-/// OR implement [`HasArc`], [`Arcs`], and [`Vertices`].
-///
-/// ```
-/// use {
-///     graaf::{
-///         Arcs,
-///         HasArc,
-///         IsSpanningSubdigraph,
-///         Vertices,
-///     },
-///     std::collections::BTreeSet,
-/// };
-///
-/// struct AdjacencyList {
-///     arcs: Vec<BTreeSet<usize>>,
-/// }
-///
-/// impl Arcs for AdjacencyList {
-///     fn arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-///         self.arcs
-///             .iter()
-///             .enumerate()
-///             .flat_map(|(u, set)| set.iter().map(move |&v| (u, v)))
-///     }
-/// }
-///
-/// impl HasArc for AdjacencyList {
-///     fn has_arc(&self, u: usize, v: usize) -> bool {
-///         self.arcs[u].contains(&v)
-///     }
-/// }
-///
-/// impl Vertices for AdjacencyList {
-///     fn vertices(&self) -> impl Iterator<Item = usize> {
-///         0..self.arcs.len()
-///     }
-/// }
-///
-/// let h = AdjacencyList {
-///     arcs: vec![BTreeSet::from([1]), BTreeSet::new(), BTreeSet::new()],
-/// };
-///
-/// let d = AdjacencyList {
-///     arcs: vec![
-///         BTreeSet::from([1]),
-///         BTreeSet::from([2]),
-///         BTreeSet::from([0]),
-///     ],
-/// };
-///
-/// assert!(h.is_spanning_subdigraph(&d));
-/// ```
 pub trait IsSpanningSubdigraph {
     /// Check whether the digraph is another digraph's spanning subdigraph.
     ///

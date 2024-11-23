@@ -1,4 +1,4 @@
-//! Return a vertex's out-neighbors.
+//! Iterate a vertex's out-neighbors.
 //!
 //! # Examples
 //!
@@ -30,46 +30,10 @@
 //! ```
 #![doc(alias = "out_neighbours")]
 
-/// Return a vertex's out-neighbors.
-///
-/// # Implementing [`OutNeighbors`] for a custom type
-///
-/// Provide an implementation of [`out_neighbors`](OutNeighbors::out_neighbors)
-/// that returns an iterator over a vertex's out-neighbors.
-///
-/// ```
-/// use {
-///     graaf::OutNeighbors,
-///     std::collections::BTreeSet,
-/// };
-///
-/// struct AdjacencyList {
-///     arcs: Vec<BTreeSet<usize>>,
-/// }
-///
-/// impl OutNeighbors for AdjacencyList {
-///     fn out_neighbors(&self, u: usize) -> impl Iterator<Item = usize> {
-///         self.arcs[u].iter().copied()
-///     }
-/// }
-///
-/// let digraph = AdjacencyList {
-///     arcs: vec![
-///         BTreeSet::from([1, 2]),
-///         BTreeSet::from([0]),
-///         BTreeSet::from([0, 1, 3]),
-///         BTreeSet::from([0]),
-///     ],
-/// };
-///
-/// assert!(digraph.out_neighbors(0).eq([1, 2]));
-/// assert!(digraph.out_neighbors(1).eq([0]));
-/// assert!(digraph.out_neighbors(2).eq([0, 1, 3]));
-/// assert!(digraph.out_neighbors(3).eq([0]));
-/// ```
+/// Vertex out-neighbors
 #[doc(alias = "IterOutNeighbours")]
 pub trait OutNeighbors {
-    /// Return an iterator over a vertex's out-neighbors.
+    /// Iterate the vertex's out-neighbors.
     ///
     /// # Arguments
     ///

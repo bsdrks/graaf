@@ -27,55 +27,9 @@
 
 use crate::Degree;
 
-/// Check whether a vertex is Pendant.
-///
-/// # Implementing [`IsPendant`] for a custom type
-///
-/// Provide an implementation of [`is_pendant`](IsPendant::is_pendant) that
-/// returns whether the vertex is pendant OR implement [`Degree`].
-///
-/// ```
-/// use {
-///     graaf::{
-///         Indegree,
-///         IsPendant,
-///         Outdegree,
-///     },
-///     std::collections::BTreeSet,
-/// };
-///
-/// struct AdjacencyList {
-///     arcs: Vec<BTreeSet<usize>>,
-/// }
-///
-/// impl Indegree for AdjacencyList {
-///     fn indegree(&self, u: usize) -> usize {
-///         self.arcs.iter().filter(|set| set.contains(&u)).count()
-///     }
-/// }
-///
-/// impl Outdegree for AdjacencyList {
-///     fn outdegree(&self, u: usize) -> usize {
-///         self.arcs[u].len()
-///     }
-/// }
-///
-/// let digraph = AdjacencyList {
-///     arcs: vec![
-///         BTreeSet::from([1, 2]),
-///         BTreeSet::from([0]),
-///         BTreeSet::new(),
-///         BTreeSet::from([0]),
-///     ],
-/// };
-///
-/// assert!(!digraph.is_pendant(0));
-/// assert!(!digraph.is_pendant(1));
-/// assert!(digraph.is_pendant(2));
-/// assert!(digraph.is_pendant(3));
-/// ```
+/// Check whether a vertex is pendant.
 pub trait IsPendant {
-    /// Check whether a vertex is a pendant vertex.
+    /// Check whether the vertex is pendant.
     ///
     /// # Arguments
     ///

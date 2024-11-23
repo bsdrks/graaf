@@ -28,37 +28,12 @@
 //! assert_eq!(digraph.arc_weight(2, 2), None);
 //! ```
 
-/// Return an arc's weight.
-///
-/// # Implementing [`ArcWeight`] for a custom type
-///
-/// Provide an implementation of [`arc_weight`](ArcWeight::arc_weight) that
-/// returns an arc's weight.
-///
-/// ```
-/// use {
-///     graaf::ArcWeight,
-///     std::collections::BTreeMap,
-/// };
-///
-/// struct AdjacencyListWeighted {
-///     arcs: Vec<BTreeMap<usize, usize>>,
-/// }
-///
-/// impl ArcWeight<usize> for AdjacencyListWeighted {
-///     type Weight = usize;
-///
-///     fn arc_weight(&self, u: usize, v: usize) -> Option<&Self::Weight> {
-///         self.arcs.get(u).and_then(|m| m.get(&v))
-///     }
-/// }
-/// ```
+/// Arc weight
 pub trait ArcWeight<Idx> {
     /// The weight of an arc.
     type Weight;
 
-    /// Return the weight of the arc from `u` to `v` if it exists in the
-    /// digraph.
+    /// Return the weight of the arc if the arc exists in the digraph.
     ///
     /// # Arguments
     ///

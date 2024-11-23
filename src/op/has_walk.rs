@@ -1,4 +1,4 @@
-//! Check whether a digraph contains a walk.
+//! Check whether a sequence is a walk in a digraph.
 //!
 //! A sequence of vertices is a walk in a digraph if each pair of consecutive
 //! vertices in the sequence is an arc in the digraph.
@@ -27,42 +27,7 @@
 
 use crate::HasArc;
 
-/// Check whether a digraph contains a walk.
-///
-/// # Implementing [`HasWalk`] for a custom type
-///
-/// Provide an implementation of [`has_walk`](HasWalk::has_walk) that returns
-/// whether the sequence is a walk in the digraph OR implement [`HasArc`].
-///
-/// ```
-/// use {
-///     graaf::{
-///         Circuit,
-///         HasWalk,
-///     },
-///     std::collections::BTreeSet,
-/// };
-///
-/// struct AdjacencyList {
-///     pub arcs: BTreeSet<(usize, usize)>,
-/// }
-///
-/// impl HasWalk for AdjacencyList {
-///     fn has_walk(&self, walk: &[usize]) -> bool {
-///         let mut arcs = walk.iter().zip(walk.iter().skip(1));
-///
-///         arcs.clone().count() > 0
-///             && arcs.all(|(&u, &v)| self.arcs.contains(&(u, v)))
-///     }
-/// }
-///
-/// let digraph = AdjacencyList {
-///     arcs: BTreeSet::from([(0, 1), (1, 0)]),
-/// };
-///
-/// assert!(digraph.has_walk(&[0, 1]));
-/// assert!(digraph.has_walk(&[1, 0]));
-/// ```
+/// Digraph walk
 pub trait HasWalk {
     /// Check whether the sequence is a walk in the digraph.
     ///
