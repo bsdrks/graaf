@@ -34,6 +34,7 @@ unseparated_literal_suffix = "deny"
 unwrap_in_result = "deny"
 # overwrites
 large_stack_frames = { level = "allow", priority = 1 }
+large_stack_arrays = { level = "allow", priority = 1 }
 
 [lints.rust]
 # groups
