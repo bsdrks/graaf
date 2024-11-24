@@ -1195,108 +1195,60 @@ mod tests {
     }
 
     #[test]
-    fn semidegree_sequence_bang_jensen_94_weighted() {
-        assert!(bang_jensen_94_usize().semidegree_sequence().eq([
-            (0, 2),
-            (2, 1),
-            (1, 4),
-            (2, 1),
-            (1, 1),
-            (2, 0),
-            (1, 0)
-        ]));
+    fn degree_sequence_bang_jensen_94_weighted() {
+        assert!(bang_jensen_94_usize()
+            .degree_sequence()
+            .eq([2, 3, 5, 3, 2, 2, 1,]));
     }
 
     #[test]
-    fn semidegree_sequence_bang_jensen_96() {
-        assert!(bang_jensen_96_usize().semidegree_sequence().eq([
-            (0, 2),
-            (2, 2),
-            (3, 2),
-            (3, 1),
-            (1, 3),
-            (2, 1)
-        ]));
+    fn degree_sequence_bang_jensen_96() {
+        assert!(bang_jensen_96_usize()
+            .degree_sequence()
+            .eq([2, 4, 5, 4, 4, 3]));
     }
 
     #[test]
-    fn semidegree_sequence_bang_jensen_99() {
-        assert!(bang_jensen_99().semidegree_sequence().eq([
-            (0, 2),
-            (1, 1),
-            (2, 2),
-            (3, 1),
-            (2, 2),
-            (2, 2)
-        ]));
+    fn degree_sequence_bang_jensen_99() {
+        assert!(bang_jensen_99().degree_sequence().eq([2, 2, 4, 4, 4, 4]));
     }
 
     #[test]
-    fn semidegree_sequence_kattis_bryr_1() {
-        assert!(kattis_bryr_1_usize().semidegree_sequence().eq([
-            (2, 2),
-            (2, 2),
-            (2, 2)
-        ]));
+    fn degree_sequence_kattis_bryr_1() {
+        assert!(kattis_bryr_1_usize().degree_sequence().eq([4, 4, 4]));
     }
 
     #[test]
-    fn semidegree_sequence_kattis_bryr_2() {
-        assert!(kattis_bryr_2_usize().semidegree_sequence().eq([
-            (2, 2),
-            (2, 2),
-            (2, 2),
-            (3, 3),
-            (2, 2),
-            (1, 1)
-        ]));
+    fn degree_sequence_kattis_bryr_2() {
+        assert!(kattis_bryr_2_usize()
+            .degree_sequence()
+            .eq([4, 4, 4, 6, 4, 2]));
     }
 
     #[test]
-    fn semidegree_sequence_kattis_bryr_3() {
-        assert!(kattis_bryr_3_usize().semidegree_sequence().eq([
-            (1, 1),
-            (2, 2),
-            (2, 1),
-            (4, 4),
-            (3, 3),
-            (3, 3),
-            (4, 4),
-            (2, 2),
-            (2, 2),
-            (2, 3)
-        ]));
+    fn degree_sequence_kattis_bryr_3() {
+        assert!(kattis_bryr_3_usize()
+            .degree_sequence()
+            .eq([2, 4, 3, 8, 6, 6, 8, 4, 4, 5]));
     }
 
     #[test]
-    fn semidegree_sequence_kattis_crosscountry() {
-        assert!(kattis_crosscountry_usize().semidegree_sequence().eq([
-            (3, 3),
-            (3, 3),
-            (3, 3),
-            (3, 3)
-        ]));
+    fn degree_sequence_kattis_crosscountry() {
+        assert!(kattis_crosscountry_usize()
+            .degree_sequence()
+            .eq([6, 6, 6, 6]));
     }
 
     #[test]
-    fn semidegree_sequence_kattis_shortestpath1() {
-        assert!(kattis_shortestpath1_usize().semidegree_sequence().eq([
-            (1, 1),
-            (1, 1),
-            (1, 0),
-            (0, 1)
-        ]));
+    fn degree_sequence_kattis_shortestpath1() {
+        assert!(kattis_shortestpath1_usize()
+            .degree_sequence()
+            .eq([2, 2, 1, 1]));
     }
 
     #[test]
-    fn semidegree_sequence_kattis_shortestpath3() {
-        assert!(kattis_shortestpath3().semidegree_sequence().eq([
-            (0, 2),
-            (2, 1),
-            (1, 1),
-            (1, 0),
-            (0, 0)
-        ]));
+    fn degree_sequence_kattis_shortestpath3() {
+        assert!(kattis_shortestpath3().degree_sequence().eq([2, 3, 2, 1, 0]));
     }
 
     #[test]
@@ -2559,6 +2511,111 @@ mod tests {
     fn remove_arc_out_of_bounds() {
         assert!(!AdjacencyListWeighted::<usize>::trivial().remove_arc(0, 1));
         assert!(!AdjacencyListWeighted::<usize>::trivial().remove_arc(1, 0));
+    }
+
+    #[test]
+    fn semidegree_sequence_bang_jensen_94_weighted() {
+        assert!(bang_jensen_94_usize().semidegree_sequence().eq([
+            (0, 2),
+            (2, 1),
+            (1, 4),
+            (2, 1),
+            (1, 1),
+            (2, 0),
+            (1, 0)
+        ]));
+    }
+
+    #[test]
+    fn semidegree_sequence_bang_jensen_96() {
+        assert!(bang_jensen_96_usize().semidegree_sequence().eq([
+            (0, 2),
+            (2, 2),
+            (3, 2),
+            (3, 1),
+            (1, 3),
+            (2, 1)
+        ]));
+    }
+
+    #[test]
+    fn semidegree_sequence_bang_jensen_99() {
+        assert!(bang_jensen_99().semidegree_sequence().eq([
+            (0, 2),
+            (1, 1),
+            (2, 2),
+            (3, 1),
+            (2, 2),
+            (2, 2)
+        ]));
+    }
+
+    #[test]
+    fn semidegree_sequence_kattis_bryr_1() {
+        assert!(kattis_bryr_1_usize().semidegree_sequence().eq([
+            (2, 2),
+            (2, 2),
+            (2, 2)
+        ]));
+    }
+
+    #[test]
+    fn semidegree_sequence_kattis_bryr_2() {
+        assert!(kattis_bryr_2_usize().semidegree_sequence().eq([
+            (2, 2),
+            (2, 2),
+            (2, 2),
+            (3, 3),
+            (2, 2),
+            (1, 1)
+        ]));
+    }
+
+    #[test]
+    fn semidegree_sequence_kattis_bryr_3() {
+        assert!(kattis_bryr_3_usize().semidegree_sequence().eq([
+            (1, 1),
+            (2, 2),
+            (2, 1),
+            (4, 4),
+            (3, 3),
+            (3, 3),
+            (4, 4),
+            (2, 2),
+            (2, 2),
+            (2, 3)
+        ]));
+    }
+
+    #[test]
+    fn semidegree_sequence_kattis_crosscountry() {
+        assert!(kattis_crosscountry_usize().semidegree_sequence().eq([
+            (3, 3),
+            (3, 3),
+            (3, 3),
+            (3, 3)
+        ]));
+    }
+
+    #[test]
+    fn semidegree_sequence_kattis_shortestpath1() {
+        assert!(kattis_shortestpath1_usize().semidegree_sequence().eq([
+            (1, 1),
+            (1, 1),
+            (1, 0),
+            (0, 1)
+        ]));
+    }
+
+    #[test]
+    fn semidegree_sequence_kattis_shortestpath3() {
+        assert!(kattis_shortestpath3().semidegree_sequence().eq([
+            (0, 2),
+            (2, 1),
+            (1, 1),
+            (1, 0),
+            (0, 0)
+        ]));
     }
 
     #[test]

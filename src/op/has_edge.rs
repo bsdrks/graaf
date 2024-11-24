@@ -42,8 +42,6 @@
 //!
 //! [`HasArc`]: crate::HasArc
 
-use crate::HasArc;
-
 /// Check whether an edge exists in a digraph.
 pub trait HasEdge {
     /// Check whether an edge exists in the digraph.
