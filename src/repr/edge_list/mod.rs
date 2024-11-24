@@ -122,6 +122,7 @@ use {
         ErdosRenyi,
         GrowingNetwork,
         HasArc,
+        HasEdge,
         InNeighbors,
         Indegree,
         IsComplete,
@@ -539,6 +540,12 @@ impl GrowingNetwork for EdgeList {
 impl HasArc for EdgeList {
     fn has_arc(&self, u: usize, v: usize) -> bool {
         self.arcs.contains(&(u, v))
+    }
+}
+
+impl HasEdge for EdgeList {
+    fn has_edge(&self, u: usize, v: usize) -> bool {
+        self.has_arc(u, v) && self.has_arc(v, u)
     }
 }
 

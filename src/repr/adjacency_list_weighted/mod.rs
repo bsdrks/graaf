@@ -227,6 +227,12 @@ impl<W> HasArc for AdjacencyListWeighted<W> {
     }
 }
 
+impl<W> HasEdge for AdjacencyListWeighted<W> {
+    fn has_edge(&self, u: usize, v: usize) -> bool {
+        self.has_arc(u, v) && self.has_arc(v, u)
+    }
+}
+
 impl<W> Indegree for AdjacencyListWeighted<W> {
     /// # Panics
     ///

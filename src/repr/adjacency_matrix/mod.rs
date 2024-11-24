@@ -130,6 +130,7 @@ use crate::{
     ErdosRenyi,
     GrowingNetwork,
     HasArc,
+    HasEdge,
     InNeighbors,
     Indegree,
     IsComplete,
@@ -635,6 +636,12 @@ impl HasArc for AdjacencyMatrix {
         let i = self.index(u, v);
 
         self.blocks[i >> 6] & Self::mask(i) != 0
+    }
+}
+
+impl HasEdge for AdjacencyMatrix {
+    fn has_edge(&self, u: usize, v: usize) -> bool {
+        self.has_arc(u, v) && self.has_arc(v, u)
     }
 }
 

@@ -93,12 +93,3 @@ pub trait HasEdge {
     #[must_use]
     fn has_edge(&self, u: usize, v: usize) -> bool;
 }
-
-impl<D> HasEdge for D
-where
-    D: HasArc,
-{
-    fn has_edge(&self, u: usize, v: usize) -> bool {
-        self.has_arc(u, v) && self.has_arc(v, u)
-    }
-}

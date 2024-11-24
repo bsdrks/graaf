@@ -20,6 +20,12 @@
 - Return iterators instead of vectors.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 
+## [0.106.0] - 2024-11-24
+
+Changed
+
+- Breaking: replace `impl<D> HasEdge for D where D: HasArc` with `impl HasEdge for [AdjacencyList, AdjacencyListWeighted, AdjacencyMap, AdjacencyMatrix, EdgeList]`.
+
 ## [0.105.0] - 2024-11-23
 
 Added
