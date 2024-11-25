@@ -41,6 +41,7 @@ use {
         Empty,
         HasArc,
         HasEdge,
+        HasWalk,
         InNeighbors,
         Indegree,
         IsComplete,
@@ -230,6 +231,16 @@ impl<W> HasArc for AdjacencyListWeighted<W> {
 impl<W> HasEdge for AdjacencyListWeighted<W> {
     fn has_edge(&self, u: usize, v: usize) -> bool {
         self.has_arc(u, v) && self.has_arc(v, u)
+    }
+}
+
+impl<W> HasWalk for AdjacencyListWeighted<W> {
+    fn has_walk(&self, walk: &[usize]) -> bool {
+        walk.len() > 1
+            && walk
+                .iter()
+                .zip(walk.iter().skip(1))
+                .all(|(&u, &v)| self.has_arc(u, v))
     }
 }
 
@@ -1460,7 +1471,33 @@ mod tests {
     }
 
     #[test]
-    fn in_neighbors_bang_jensen_94_weighted() {
+    fn has_walk_bang_jensen_94() {
+        let digraph = bang_jensen_94_usize();
+
+        assert!(digraph.has_walk(&[0, 1, 3, 5]));
+        assert!(digraph.has_walk(&[0, 2, 1, 3, 5]));
+        assert!(digraph.has_walk(&[0, 2, 3, 5]));
+        assert!(digraph.has_walk(&[0, 2, 4, 6]));
+        assert!(digraph.has_walk(&[0, 2, 5]));
+        assert!(digraph.has_walk(&[1, 3, 5]));
+        assert!(digraph.has_walk(&[2, 1, 3, 5]));
+        assert!(digraph.has_walk(&[2, 3, 5]));
+        assert!(digraph.has_walk(&[2, 4, 6]));
+        assert!(digraph.has_walk(&[2, 5]));
+        assert!(digraph.has_walk(&[3, 5]));
+        assert!(digraph.has_walk(&[4, 6]));
+
+        assert!(!digraph.has_walk(&[0, 3]));
+        assert!(!digraph.has_walk(&[1, 0]));
+        assert!(!digraph.has_walk(&[2, 0]));
+        assert!(!digraph.has_walk(&[3, 0]));
+        assert!(!digraph.has_walk(&[4, 0]));
+        assert!(!digraph.has_walk(&[5]));
+        assert!(!digraph.has_walk(&[6]));
+    }
+
+    #[test]
+    fn in_neighbors_bang_jensen_94() {
         let digraph = bang_jensen_94_usize();
 
         assert!(digraph.in_neighbors(0).eq([]));

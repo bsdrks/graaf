@@ -131,6 +131,7 @@ use crate::{
     GrowingNetwork,
     HasArc,
     HasEdge,
+    HasWalk,
     InNeighbors,
     Indegree,
     IsComplete,
@@ -642,6 +643,16 @@ impl HasArc for AdjacencyMatrix {
 impl HasEdge for AdjacencyMatrix {
     fn has_edge(&self, u: usize, v: usize) -> bool {
         self.has_arc(u, v) && self.has_arc(v, u)
+    }
+}
+
+impl HasWalk for AdjacencyMatrix {
+    fn has_walk(&self, walk: &[usize]) -> bool {
+        walk.len() > 1
+            && walk
+                .iter()
+                .zip(walk.iter().skip(1))
+                .all(|(&u, &v)| self.has_arc(u, v))
     }
 }
 

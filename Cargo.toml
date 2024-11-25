@@ -1,6 +1,6 @@
 [package]
 name = "graaf"
-version = "0.106.0"
+version = "0.107.0"
 edition = "2021"
 authors = ["Bas Dirks <bas.dirks@protonmail.com>"]
 categories = ["algorithms", "data-structures", "mathematics"]

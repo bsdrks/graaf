@@ -25,8 +25,6 @@
 //! assert!(!digraph.has_walk(&[0, 2]));
 //! ```
 
-use crate::HasArc;
-
 /// Digraph walk
 pub trait HasWalk {
     /// Check whether the sequence is a walk in the digraph.
@@ -58,17 +56,4 @@ pub trait HasWalk {
     /// ```
     #[must_use]
     fn has_walk(&self, walk: &[usize]) -> bool;
-}
-
-impl<D> HasWalk for D
-where
-    D: HasArc,
-{
-    fn has_walk(&self, walk: &[usize]) -> bool {
-        walk.len() > 1
-            && walk
-                .iter()
-                .zip(walk.iter().skip(1))
-                .all(|(&u, &v)| self.has_arc(u, v))
-    }
 }

@@ -29,7 +29,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.106.0"
+graaf = "0.107.0"
 ```
 
 ## Representations
@@ -110,9 +110,7 @@ graaf = "0.106.0"
 
 ### Bellman-Ford-Moore
 
-The Bellman-Ford-Moore algorithm finds the shortest distances from a source vertex to all other vertices in an arc-weighted digraph with negative weights.
-
-- [`BellmanFordMoore::distances`] finds the shortest distances.
+[`BellmanFordMoore::distances`] finds the shortest distances from a source vertex to all other vertices in an arc-weighted digraph with negative weights.
 
 ### Breadth-First Search
 
@@ -158,15 +156,11 @@ A [`DistanceMatrix`] contains the shortest distances between all vertex pairs in
 
 ### Floyd-Warshall
 
-The Floyd-Warshall algorithm finds the distance between each vertex pair in an arc-weighted digraph.
-
-- [`FloydWarshall::distances`] finds the shortest distances.
+[`FloydWarshall::distances`] finds the distance between each vertex pair in an arc-weighted digraph.
 
 ### Johnson's Circuit-Finding Algorithm
 
-Johnson's circuit-finding algorithm finds all circuits in a digraph.
-
-- [`Johnson75::circuits`] finds all circuits.
+[`Johnson75::circuits`] finds all circuits in a digraph.
 
 ### Predecessor Tree
 
@@ -177,9 +171,7 @@ A [`PredecessorTree`] contains the vertex predecessors.
 
 ### Tarjan
 
-Tarjan's algorithm finds strongly connected components in a digraph.
-
-- [`Tarjan::components`] finds strongly connected components.
+The [`Tarjan::components`] algorithm finds strongly connected components in a digraph.
 
 [`AddArcWeighted`]: https://docs.rs/graaf/latest/graaf/op/add_arc_weighted/trait.AddArcWeighted.html
 [`AddArc`]: https://docs.rs/graaf/latest/graaf/op/add_arc/trait.AddArc.html
