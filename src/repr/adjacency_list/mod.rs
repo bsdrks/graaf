@@ -126,6 +126,7 @@ use {
         HasWalk,
         InNeighbors,
         Indegree,
+        IndegreeSequence,
         IsComplete,
         IsRegular,
         IsSemicomplete,
@@ -598,6 +599,12 @@ impl Indegree for AdjacencyList {
 
     fn is_source(&self, v: usize) -> bool {
         self.arcs.iter().all(|set| !set.contains(&v))
+    }
+}
+
+impl IndegreeSequence for AdjacencyList {
+    fn indegree_sequence(&self) -> impl Iterator<Item = usize> {
+        self.vertices().map(move |v| self.indegree(v))
     }
 }
 

@@ -20,11 +20,6 @@
 //! assert!(digraph.indegree_sequence().eq([1, 1, 2]));
 //! ```
 
-use crate::{
-    Indegree,
-    Vertices,
-};
-
 /// Digraph indegree sequence
 pub trait IndegreeSequence {
     /// Iterate the digraph's indegree sequence.
@@ -50,13 +45,4 @@ pub trait IndegreeSequence {
     /// ```
     #[must_use]
     fn indegree_sequence(&self) -> impl Iterator<Item = usize>;
-}
-
-impl<D> IndegreeSequence for D
-where
-    D: Indegree + Vertices,
-{
-    fn indegree_sequence(&self) -> impl Iterator<Item = usize> {
-        self.vertices().map(move |v| self.indegree(v))
-    }
 }

@@ -97,9 +97,9 @@
 //!
 //! ## Bellman-Ford-Moore
 //!
-//! [`BellmanFordMoore::distances`] finds the shortest distances from a source
-//! vertex to all other vertices in an arc-weighted digraph with negative
-//! weights.
+//! - [`BellmanFordMoore::distances`] finds the shortest distances from a
+//!   source vertex to all other vertices in an arc-weighted digraph with
+//!   negative weights.
 //!
 //! ## Breadth-First Search
 //!
@@ -160,12 +160,12 @@
 //!
 //! ## Floyd-Warshall
 //!
-//! [`FloydWarshall::distances`] finds the distance between each vertex pair in
-//! an arc-weighted digraph.
+//! - [`FloydWarshall::distances`] finds the distance between each vertex pair
+//!   in an arc-weighted digraph.
 //!
 //! ## Johnson's Circuit-Finding Algorithm
 //!
-//! [`Johnson75::circuits`] finds a digraph's circuits.
+//! - [`Johnson75::circuits`] finds a digraph's circuits.
 //!
 //! ## Predecessor Tree
 //!
@@ -177,7 +177,7 @@
 //!
 //! ## Tarjan
 //!
-//! [`Tarjan::components`] finds strongly connected components in a digraph.
+//! - [`Tarjan::components`] finds strongly connected components in a digraph.
 
 pub mod algo;
 pub mod gen;

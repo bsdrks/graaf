@@ -20,6 +20,13 @@
 - Return iterators instead of vectors.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 
+## [0.108.0] - 2024-11-25
+
+Changed
+
+- Improve documentation formatting.
+- Breaking: replace `impl<D> IndegreeSequence for D where D: Indegree + Vertices` with `impl IndegreeSequence for [AdjacencyList, AdjacencyListWeighted, AdjacencyMap, AdjacencyMatrix, EdgeList]`.
+
 ## [0.107.0] - 2024-11-25
 
 Changed

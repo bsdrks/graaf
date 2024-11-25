@@ -134,6 +134,7 @@ use crate::{
     HasWalk,
     InNeighbors,
     Indegree,
+    IndegreeSequence,
     IsComplete,
     IsRegular,
     IsSemicomplete,
@@ -670,6 +671,12 @@ impl Indegree for AdjacencyMatrix {
 
     fn is_source(&self, v: usize) -> bool {
         self.vertices().all(|u| !self.has_arc(u, v))
+    }
+}
+
+impl IndegreeSequence for AdjacencyMatrix {
+    fn indegree_sequence(&self) -> impl Iterator<Item = usize> {
+        self.vertices().map(move |v| self.indegree(v))
     }
 }
 

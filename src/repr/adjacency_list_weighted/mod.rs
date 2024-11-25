@@ -44,6 +44,7 @@ use {
         HasWalk,
         InNeighbors,
         Indegree,
+        IndegreeSequence,
         IsComplete,
         IsRegular,
         IsSemicomplete,
@@ -259,6 +260,12 @@ impl<W> Indegree for AdjacencyListWeighted<W> {
 
     fn is_source(&self, v: usize) -> bool {
         self.arcs.iter().all(|map| !map.contains_key(&v))
+    }
+}
+
+impl<W> IndegreeSequence for AdjacencyListWeighted<W> {
+    fn indegree_sequence(&self) -> impl Iterator<Item = usize> {
+        self.vertices().map(move |v| self.indegree(v))
     }
 }
 
@@ -1209,7 +1216,7 @@ mod tests {
     fn degree_sequence_bang_jensen_94_weighted() {
         assert!(bang_jensen_94_usize()
             .degree_sequence()
-            .eq([2, 3, 5, 3, 2, 2, 1,]));
+            .eq([2, 3, 5, 3, 2, 2, 1]));
     }
 
     #[test]
@@ -1688,6 +1695,65 @@ mod tests {
     #[should_panic(expected = "v = 1 isn't in the digraph")]
     fn indegree_out_of_bounds() {
         let _ = AdjacencyListWeighted::<usize>::trivial().indegree(1);
+    }
+
+    #[test]
+    fn indegree_sequence_bang_jensen_94_weighted() {
+        assert!(bang_jensen_94_usize()
+            .indegree_sequence()
+            .eq([0, 2, 1, 2, 1, 2, 1]));
+    }
+
+    #[test]
+    fn indegree_sequence_bang_jensen_96() {
+        assert!(bang_jensen_96_usize()
+            .indegree_sequence()
+            .eq([0, 2, 3, 3, 1, 2]));
+    }
+
+    #[test]
+    fn indegree_sequence_bang_jensen_99() {
+        assert!(bang_jensen_99().indegree_sequence().eq([0, 1, 2, 3, 2, 2]));
+    }
+
+    #[test]
+    fn indegree_sequence_kattis_bryr_1() {
+        assert!(kattis_bryr_1_usize().indegree_sequence().eq([2, 2, 2]));
+    }
+
+    #[test]
+    fn indegree_sequence_kattis_bryr_2() {
+        assert!(kattis_bryr_2_usize()
+            .indegree_sequence()
+            .eq([2, 2, 2, 3, 2, 1]));
+    }
+
+    #[test]
+    fn indegree_sequence_kattis_bryr_3() {
+        assert!(kattis_bryr_3_usize()
+            .indegree_sequence()
+            .eq([1, 2, 2, 4, 3, 3, 4, 2, 2, 2]));
+    }
+
+    #[test]
+    fn indegree_sequence_kattis_crosscountry() {
+        assert!(kattis_crosscountry_usize()
+            .indegree_sequence()
+            .eq([3, 3, 3, 3]));
+    }
+
+    #[test]
+    fn indegree_sequence_kattis_shortestpath1() {
+        assert!(kattis_shortestpath1_usize()
+            .indegree_sequence()
+            .eq([1, 1, 1, 0]));
+    }
+
+    #[test]
+    fn indegree_sequence_kattis_shortestpath3() {
+        assert!(kattis_shortestpath3()
+            .indegree_sequence()
+            .eq([0, 2, 1, 1, 0]));
     }
 
     #[test]
