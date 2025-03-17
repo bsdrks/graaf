@@ -1,16 +1,34 @@
 //! Benchmarks of different implementations of `Biclique::biclique`.
 use {
     graaf::{
-        AddArc, AdjacencyList, AdjacencyMap, AdjacencyMatrix, Biclique,
-        EdgeList, Empty,
+        AddArc,
+        AdjacencyList,
+        AdjacencyMap,
+        AdjacencyMatrix,
+        Biclique,
+        EdgeList,
+        Empty,
     },
     std::{
-        collections::{BTreeMap, BTreeSet, HashSet},
-        iter::{repeat_n, repeat_with},
-        mem::{transmute, MaybeUninit},
+        collections::{
+            BTreeMap,
+            BTreeSet,
+            HashSet,
+        },
+        iter::{
+            repeat_n,
+            repeat_with,
+        },
+        mem::{
+            transmute,
+            MaybeUninit,
+        },
         num::NonZero,
         sync::Arc,
-        thread::{available_parallelism, spawn},
+        thread::{
+            available_parallelism,
+            spawn,
+        },
     },
 };
 

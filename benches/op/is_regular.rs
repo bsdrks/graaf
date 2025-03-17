@@ -2,8 +2,16 @@
 use {
     divan::Bencher,
     graaf::{
-        AdjacencyList, AdjacencyMap, AdjacencyMatrix, Complete, EdgeList,
-        ErdosRenyi, Indegree, IsRegular, Outdegree, SemidegreeSequence,
+        AdjacencyList,
+        AdjacencyMap,
+        AdjacencyMatrix,
+        Complete,
+        EdgeList,
+        ErdosRenyi,
+        Indegree,
+        IsRegular,
+        Outdegree,
+        SemidegreeSequence,
         Vertices,
     },
 };

@@ -1,11 +1,20 @@
 //! Benchmarks of different implementations of `Cycle::cycle`.
 use {
     graaf::{
-        AddArc, AdjacencyList, AdjacencyMap, AdjacencyMatrix, Cycle, EdgeList,
+        AddArc,
+        AdjacencyList,
+        AdjacencyMap,
+        AdjacencyMatrix,
+        Cycle,
+        EdgeList,
         Empty,
     },
     std::{
-        collections::{BTreeMap, BTreeSet, HashSet},
+        collections::{
+            BTreeMap,
+            BTreeSet,
+            HashSet,
+        },
         iter::once,
         ptr::write,
     },

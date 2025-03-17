@@ -1,11 +1,19 @@
 //! Benchmarks of different implementations of `Wheel::wheel`.
 use {
     graaf::{
-        AddArc, AdjacencyList, AdjacencyMap, AdjacencyMatrix, EdgeList, Empty,
+        AddArc,
+        AdjacencyList,
+        AdjacencyMap,
+        AdjacencyMatrix,
+        EdgeList,
+        Empty,
         Wheel,
     },
     std::{
-        collections::{BTreeMap, BTreeSet},
+        collections::{
+            BTreeMap,
+            BTreeSet,
+        },
         iter::once,
         mem::MaybeUninit,
     },

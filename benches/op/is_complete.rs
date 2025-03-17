@@ -2,10 +2,22 @@
 use {
     divan::Bencher,
     graaf::{
-        AdjacencyList, AdjacencyMap, AdjacencyMatrix, Arcs, Complete,
-        EdgeList, ErdosRenyi, HasEdge, IsComplete, Order, Size,
+        AdjacencyList,
+        AdjacencyMap,
+        AdjacencyMatrix,
+        Arcs,
+        Complete,
+        EdgeList,
+        ErdosRenyi,
+        HasEdge,
+        IsComplete,
+        Order,
+        Size,
     },
-    std::collections::{BTreeMap, BTreeSet},
+    std::collections::{
+        BTreeMap,
+        BTreeSet,
+    },
 };
 
 fn main() {

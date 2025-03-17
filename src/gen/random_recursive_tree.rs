@@ -1,10 +1,10 @@
 //! Generate a random recursive tree.
 //!
-//! A Random Recursive Tree is a directed acyclic graph constructed incrementally.
-//! Starting from a single vertex, at each step a new vertex is added along with an arc
-//! from the new vertex to one of the existing vertices, chosen uniformly at random.
-//! This process yields a tree structure where the order of vertex addition naturally
-//! reflects its recursive growth.
+//! A Random Recursive Tree is a directed acyclic graph constructed
+//! incrementally. Starting from a single vertex, at each step a new vertex is
+//! added along with an arc from the new vertex to one of the existing
+//! vertices, chosen uniformly at random. This process yields a tree structure
+//! where the order of vertex addition naturally reflects its recursive growth.
 //!
 //! # Examples
 //!

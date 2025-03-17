@@ -4,8 +4,8 @@
 //!
 //! # Contiguity
 //!
-//! The vertices are contiguous. The digraph has vertices in the range `[0, v)`,
-//! where `v` is the digraph's order.
+//! The vertices are contiguous. The digraph has vertices in the range `[0,
+//! v)`, where `v` is the digraph's order.
 //!
 //! # Examples
 //!
@@ -107,27 +107,71 @@ pub mod fixture;
 
 use {
     crate::{
-        gen::prng::Xoshiro256StarStar, AddArc, AdjacencyMap, AdjacencyMatrix,
-        ArcWeight, Arcs, ArcsWeighted, Biclique, Circuit, Complement,
-        Complete, Converse, Cycle, DegreeSequence, EdgeList, Empty,
-        ErdosRenyi, HasArc, HasEdge, HasWalk, InNeighbors, Indegree,
-        IndegreeSequence, IsComplete, IsRegular, IsSemicomplete, IsSimple,
-        IsTournament, Order, OutNeighbors, OutNeighborsWeighted, Outdegree,
-        Path, RandomRecursiveTree, RandomTournament, RemoveArc,
-        SemidegreeSequence, Size, Star, Union, Vertices, Wheel,
+        gen::prng::Xoshiro256StarStar,
+        AddArc,
+        AdjacencyMap,
+        AdjacencyMatrix,
+        ArcWeight,
+        Arcs,
+        ArcsWeighted,
+        Biclique,
+        Circuit,
+        Complement,
+        Complete,
+        Converse,
+        Cycle,
+        DegreeSequence,
+        EdgeList,
+        Empty,
+        ErdosRenyi,
+        HasArc,
+        HasEdge,
+        HasWalk,
+        InNeighbors,
+        Indegree,
+        IndegreeSequence,
+        IsComplete,
+        IsRegular,
+        IsSemicomplete,
+        IsSimple,
+        IsTournament,
+        Order,
+        OutNeighbors,
+        OutNeighborsWeighted,
+        Outdegree,
+        Path,
+        RandomRecursiveTree,
+        RandomTournament,
+        RemoveArc,
+        SemidegreeSequence,
+        Size,
+        Star,
+        Union,
+        Vertices,
+        Wheel,
     },
     std::{
         cmp::Ordering,
-        collections::{btree_set, BTreeSet},
+        collections::{
+            btree_set,
+            BTreeSet,
+        },
         iter::once,
         marker::PhantomData,
         num::NonZero,
         ptr::write,
         sync::{
-            atomic::{self, AtomicBool},
+            atomic::{
+                self,
+                AtomicBool,
+            },
             Arc,
         },
-        thread::{available_parallelism, scope, spawn},
+        thread::{
+            available_parallelism,
+            scope,
+            spawn,
+        },
     },
 };
 
@@ -135,8 +179,8 @@ use {
 ///
 /// # Contiguity
 ///
-/// The vertices are contiguous. The digraph has vertices in the range `[0, v)`,
-/// where `v` is the digraph's order.
+/// The vertices are contiguous. The digraph has vertices in the range `[0,
+/// v)`, where `v` is the digraph's order.
 ///
 /// # Examples
 ///
@@ -605,9 +649,9 @@ impl Cycle for AdjacencyList {
 impl DegreeSequence for AdjacencyList {
     /// # Complexity
     ///
-    /// For sparse digraphs, the time complexity is `O(v * p)`, where `v` is the
-    /// digraph's order and `p` is the number of available threads. For dense
-    /// digraphs, the time complexity is `O(v^2 log v / p)`.
+    /// For sparse digraphs, the time complexity is `O(v * p)`, where `v` is
+    /// the digraph's order and `p` is the number of available threads. For
+    /// dense digraphs, the time complexity is `O(v^2 log v / p)`.
     fn degree_sequence(&self) -> impl Iterator<Item = usize> {
         let order = self.order();
         let t = available_parallelism().map_or(1, NonZero::get);
@@ -851,7 +895,12 @@ impl IndegreeSequence for AdjacencyList {
 /// # Examples
 ///
 /// ```
-/// use graaf::{AdjacencyList, AddArc, Empty, InNeighbors};
+/// use graaf::{
+///     AddArc,
+///     AdjacencyList,
+///     Empty,
+///     InNeighbors,
+/// };
 ///
 /// let mut digraph = AdjacencyList::empty(4);
 ///
@@ -1022,7 +1071,8 @@ impl IsSimple for AdjacencyList {
 impl IsTournament for AdjacencyList {
     /// # Complexity
     ///
-    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's order.
+    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's
+    /// order.
     fn is_tournament(&self) -> bool {
         let order = self.order();
 
@@ -1177,7 +1227,8 @@ impl RandomRecursiveTree for AdjacencyList {
 impl RandomTournament for AdjacencyList {
     /// # Complexity
     ///
-    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's order.
+    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's
+    /// order.
     ///
     /// # Panics
     ///
@@ -1290,8 +1341,8 @@ unsafe fn merge_two_sorted(lhs: &[usize], rhs: &[usize]) -> Vec<usize> {
 
 impl Union for AdjacencyList {
     /// The time complexity is `O((v1 + v2) log (v1 + v2) + U)`, where `v1` is
-    /// the order of `self`, `v2` is the order of `other`, and `U` is the number
-    /// of arcs in the union of `self` and `other`.
+    /// the order of `self`, `v2` is the order of `other`, and `U` is the
+    /// number of arcs in the union of `self` and `other`.
     fn union(&self, other: &Self) -> Self {
         let order = self.order().max(other.order());
         let mut arcs: Vec<BTreeSet<usize>> = vec![BTreeSet::new(); order];
@@ -1380,7 +1431,10 @@ impl Wheel for AdjacencyList {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, crate::test_unweighted};
+    use {
+        super::*,
+        crate::test_unweighted,
+    };
 
     test_unweighted!(AdjacencyList, repr::adjacency_list::fixture);
 

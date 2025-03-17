@@ -110,14 +110,49 @@
 pub mod fixture;
 
 use crate::{
-    gen::prng::Xoshiro256StarStar, AddArc, AdjacencyList, AdjacencyMap,
-    ArcWeight, Arcs, ArcsWeighted, Biclique, Circuit, Complement, Complete,
-    Converse, Cycle, Degree, DegreeSequence, EdgeList, Empty, ErdosRenyi,
-    RandomRecursiveTree, HasArc, HasEdge, HasWalk, InNeighbors, Indegree,
-    IndegreeSequence, IsComplete, IsRegular, IsSemicomplete, IsSimple,
-    IsTournament, Order, OutNeighbors, OutNeighborsWeighted, Outdegree, Path,
-    RandomTournament, RemoveArc, SemidegreeSequence, Size, Star, Union,
-    Vertices, Wheel,
+    gen::prng::Xoshiro256StarStar,
+    AddArc,
+    AdjacencyList,
+    AdjacencyMap,
+    ArcWeight,
+    Arcs,
+    ArcsWeighted,
+    Biclique,
+    Circuit,
+    Complement,
+    Complete,
+    Converse,
+    Cycle,
+    Degree,
+    DegreeSequence,
+    EdgeList,
+    Empty,
+    ErdosRenyi,
+    HasArc,
+    HasEdge,
+    HasWalk,
+    InNeighbors,
+    Indegree,
+    IndegreeSequence,
+    IsComplete,
+    IsRegular,
+    IsSemicomplete,
+    IsSimple,
+    IsTournament,
+    Order,
+    OutNeighbors,
+    OutNeighborsWeighted,
+    Outdegree,
+    Path,
+    RandomRecursiveTree,
+    RandomTournament,
+    RemoveArc,
+    SemidegreeSequence,
+    Size,
+    Star,
+    Union,
+    Vertices,
+    Wheel,
 };
 
 /// A representation of an unweighted digraph.
@@ -894,7 +929,11 @@ impl Wheel for AdjacencyMatrix {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, crate::test_unweighted, std::collections::BTreeSet};
+    use {
+        super::*,
+        crate::test_unweighted,
+        std::collections::BTreeSet,
+    };
 
     test_unweighted!(AdjacencyMatrix, repr::adjacency_matrix::fixture);
 

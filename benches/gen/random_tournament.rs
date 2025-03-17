@@ -2,14 +2,31 @@
 //! `RandomTournament::random_tournament`.
 use {
     graaf::{
-        gen::prng::Xoshiro256StarStar, AddArc, AdjacencyList, AdjacencyMap,
-        AdjacencyMatrix, EdgeList, Empty, RandomTournament,
+        gen::prng::Xoshiro256StarStar,
+        AddArc,
+        AdjacencyList,
+        AdjacencyMap,
+        AdjacencyMatrix,
+        EdgeList,
+        Empty,
+        RandomTournament,
     },
     std::{
-        collections::{BTreeMap, BTreeSet, HashSet},
+        collections::{
+            BTreeMap,
+            BTreeSet,
+            HashSet,
+        },
         num::NonZero,
-        sync::{Arc, Mutex},
-        thread::{available_parallelism, scope, spawn},
+        sync::{
+            Arc,
+            Mutex,
+        },
+        thread::{
+            available_parallelism,
+            scope,
+            spawn,
+        },
     },
 };
 
@@ -123,7 +140,8 @@ fn random_tournament_adjacency_list_btree_set_parallel(
         let mut count = 0;
 
         for u in start..end {
-            count += order - u - 1; // for vertex u, there are (order-u-1) pairs.
+            count += order - u - 1; // for vertex u, there are (order-u-1)
+                                    // pairs.
         }
 
         unsafe {

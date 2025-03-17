@@ -1,13 +1,24 @@
 //! Benchmarks of different implementations of `ErdosRenyi::erdos_renyi`.
-use std::cmp;
-use std::num::NonZero;
-use std::thread;
 use {
     graaf::{
-        gen::prng::Xoshiro256StarStar, AddArc, AdjacencyList, AdjacencyMap,
-        AdjacencyMatrix, EdgeList, Empty, ErdosRenyi,
+        gen::prng::Xoshiro256StarStar,
+        AddArc,
+        AdjacencyList,
+        AdjacencyMap,
+        AdjacencyMatrix,
+        EdgeList,
+        Empty,
+        ErdosRenyi,
     },
-    std::collections::{BTreeMap, BTreeSet},
+    std::{
+        cmp,
+        collections::{
+            BTreeMap,
+            BTreeSet,
+        },
+        num::NonZero,
+        thread,
+    },
 };
 
 fn main() {

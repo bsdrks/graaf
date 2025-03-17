@@ -2,15 +2,30 @@
 use {
     divan::Bencher,
     graaf::{
-        AddArc, AdjacencyList, AdjacencyMap, Arcs, ErdosRenyi, Order, Union,
+        AddArc,
+        AdjacencyList,
+        AdjacencyMap,
+        Arcs,
+        ErdosRenyi,
+        Order,
+        Union,
     },
     std::{
         cmp::Ordering,
-        collections::{BTreeMap, BTreeSet},
+        collections::{
+            BTreeMap,
+            BTreeSet,
+        },
         mem::ManuallyDrop,
         num::NonZero,
-        ptr::{self, read},
-        thread::{available_parallelism, scope},
+        ptr::{
+            self,
+            read,
+        },
+        thread::{
+            available_parallelism,
+            scope,
+        },
     },
 };
 

@@ -2,12 +2,24 @@
 use {
     divan::Bencher,
     graaf::{
-        AddArc, AdjacencyList, AdjacencyMap, AdjacencyMatrix, Arcs,
-        Complement, EdgeList, Empty, ErdosRenyi, HasArc, Order,
+        AddArc,
+        AdjacencyList,
+        AdjacencyMap,
+        AdjacencyMatrix,
+        Arcs,
+        Complement,
+        EdgeList,
+        Empty,
+        ErdosRenyi,
+        HasArc,
+        Order,
     },
     std::{
         cmp::Ordering,
-        collections::{BTreeMap, BTreeSet},
+        collections::{
+            BTreeMap,
+            BTreeSet,
+        },
     },
 };
 

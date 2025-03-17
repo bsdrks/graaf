@@ -2,15 +2,29 @@
 //! `GrowingNetwork::growing_network`.
 use {
     graaf::{
-        gen::prng::Xoshiro256StarStar, AddArc, AdjacencyList, AdjacencyMap,
-        AdjacencyMatrix, EdgeList, Empty, RandomRecursiveTree,
+        gen::prng::Xoshiro256StarStar,
+        AddArc,
+        AdjacencyList,
+        AdjacencyMap,
+        AdjacencyMatrix,
+        EdgeList,
+        Empty,
+        RandomRecursiveTree,
     },
     std::{
-        collections::{BTreeMap, BTreeSet, HashSet},
+        collections::{
+            BTreeMap,
+            BTreeSet,
+            HashSet,
+        },
         iter::once,
-        mem::{transmute, MaybeUninit},
+        mem::{
+            transmute,
+            MaybeUninit,
+        },
         num::NonZero,
-        ptr, thread,
+        ptr,
+        thread,
     },
 };
 

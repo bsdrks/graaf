@@ -1,14 +1,26 @@
-//! Benchmarks of different implementations of `DegreeSequence::degree_sequence`.
+//! Benchmarks of different implementations of
+//! `DegreeSequence::degree_sequence`.
 use {
     divan::Bencher,
     graaf::{
-        AdjacencyList, Arcs, Degree, DegreeSequence, ErdosRenyi, Vertices,
+        AdjacencyList,
+        Arcs,
+        Degree,
+        DegreeSequence,
+        ErdosRenyi,
+        Vertices,
     },
     std::{
         collections::BTreeSet,
         num::NonZeroUsize,
-        sync::atomic::{AtomicUsize, Ordering},
-        thread::{available_parallelism, scope},
+        sync::atomic::{
+            AtomicUsize,
+            Ordering,
+        },
+        thread::{
+            available_parallelism,
+            scope,
+        },
     },
 };
 

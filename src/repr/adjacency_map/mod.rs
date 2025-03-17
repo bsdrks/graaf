@@ -111,24 +111,78 @@ pub mod fixture;
 
 use {
     crate::{
-        gen::prng::Xoshiro256StarStar, AddArc, AdjacencyList, AdjacencyMatrix,
-        ArcWeight, Arcs, ArcsWeighted, Biclique, Circuit, Complement,
-        Complete, Converse, Cycle, Degree, DegreeSequence, EdgeList, Empty,
-        ErdosRenyi, FilterVertices, HasArc, HasEdge, HasWalk, InNeighbors,
-        Indegree, IndegreeSequence, IsComplete, IsRegular, IsSemicomplete,
-        IsSimple, IsTournament, Order, OutNeighbors, OutNeighborsWeighted,
-        Outdegree, Path, RandomRecursiveTree, RandomTournament, RemoveArc,
-        SemidegreeSequence, Size, Star, Union, Vertices, Wheel,
+        gen::prng::Xoshiro256StarStar,
+        AddArc,
+        AdjacencyList,
+        AdjacencyMatrix,
+        ArcWeight,
+        Arcs,
+        ArcsWeighted,
+        Biclique,
+        Circuit,
+        Complement,
+        Complete,
+        Converse,
+        Cycle,
+        Degree,
+        DegreeSequence,
+        EdgeList,
+        Empty,
+        ErdosRenyi,
+        FilterVertices,
+        HasArc,
+        HasEdge,
+        HasWalk,
+        InNeighbors,
+        Indegree,
+        IndegreeSequence,
+        IsComplete,
+        IsRegular,
+        IsSemicomplete,
+        IsSimple,
+        IsTournament,
+        Order,
+        OutNeighbors,
+        OutNeighborsWeighted,
+        Outdegree,
+        Path,
+        RandomRecursiveTree,
+        RandomTournament,
+        RemoveArc,
+        SemidegreeSequence,
+        Size,
+        Star,
+        Union,
+        Vertices,
+        Wheel,
     },
     std::{
         cmp::Ordering,
-        collections::{BTreeMap, BTreeSet},
-        iter::{once, repeat_n},
-        mem::{ManuallyDrop, MaybeUninit},
+        collections::{
+            BTreeMap,
+            BTreeSet,
+        },
+        iter::{
+            once,
+            repeat_n,
+        },
+        mem::{
+            ManuallyDrop,
+            MaybeUninit,
+        },
         num::NonZero,
         ptr::read,
-        sync::{Arc, Mutex, Once},
-        thread::{self, available_parallelism, scope, spawn},
+        sync::{
+            Arc,
+            Mutex,
+            Once,
+        },
+        thread::{
+            self,
+            available_parallelism,
+            scope,
+            spawn,
+        },
     },
 };
 
@@ -396,7 +450,8 @@ impl Complete for AdjacencyMap {
 impl Complement for AdjacencyMap {
     /// # Complexity
     ///
-    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's order.
+    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's
+    /// order.
     fn complement(&self) -> Self {
         let order = self.order();
         let vertices = (0..order).collect::<BTreeSet<_>>();
@@ -423,7 +478,8 @@ impl Complement for AdjacencyMap {
 impl Converse for AdjacencyMap {
     /// # Complexity
     ///
-    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's order.
+    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's
+    /// order.
     fn converse(&self) -> Self {
         let order = self.order();
         let mut vec = vec![BTreeSet::new(); order];
@@ -497,7 +553,8 @@ impl Empty for AdjacencyMap {
 impl ErdosRenyi for AdjacencyMap {
     /// # Complexity
     ///
-    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's order.
+    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's
+    /// order.
     ///
     /// # Panics
     ///
@@ -637,8 +694,8 @@ where
 impl FilterVertices for AdjacencyMap {
     /// # Complexity
     ///
-    /// The time complexity is `O(a log v)`, where `v` is the digraph's order and
-    /// `a` is the digraph's size.
+    /// The time complexity is `O(a log v)`, where `v` is the digraph's order
+    /// and `a` is the digraph's size.
     fn filter_vertices<P>(&self, predicate: P) -> Self
     where
         P: Fn(usize) -> bool,
@@ -808,7 +865,8 @@ impl IsComplete for AdjacencyMap {
 impl IsRegular for AdjacencyMap {
     /// # Complexity
     ///
-    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's order.
+    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's
+    /// order.
     ///
     /// # Panics
     ///
@@ -827,7 +885,8 @@ impl IsRegular for AdjacencyMap {
 impl IsSemicomplete for AdjacencyMap {
     /// # Complexity
     ///
-    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's order.
+    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's
+    /// order.
     fn is_semicomplete(&self) -> bool {
         let order = self.order();
 
@@ -875,7 +934,8 @@ impl IsSimple for AdjacencyMap {
 impl IsTournament for AdjacencyMap {
     /// # Complexity
     ///
-    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's order.
+    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's
+    /// order.
     fn is_tournament(&self) -> bool {
         let order = self.order();
 
@@ -1016,7 +1076,8 @@ impl Path for AdjacencyMap {
 impl RandomTournament for AdjacencyMap {
     /// # Complexity
     ///
-    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's order.
+    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's
+    /// order.
     ///
     /// # Panics
     ///
@@ -1221,8 +1282,8 @@ impl Union for AdjacencyMap {
     /// # Complexity
     ///
     /// The time complexity is `O((v1 + v2) log (v1 + v2) + U)`, where `v1` is
-    /// the order of `self`, `v2` is the order of `other`, and `U` is the number
-    /// of arcs in the union of `self` and `other`.
+    /// the order of `self`, `v2` is the order of `other`, and `U` is the
+    /// number of arcs in the union of `self` and `other`.
     fn union(&self, other: &Self) -> Self {
         let lhs_vec = self
             .arcs
@@ -1353,7 +1414,8 @@ impl Union for AdjacencyMap {
 impl Vertices for AdjacencyMap {
     /// # Complexity
     ///
-    /// The time complexity of full iteration is `O(v)`, where `v` is the digraph's order.
+    /// The time complexity of full iteration is `O(v)`, where `v` is the
+    /// digraph's order.
     fn vertices(&self) -> impl Iterator<Item = usize> {
         self.arcs.keys().copied()
     }
@@ -1386,7 +1448,10 @@ impl Wheel for AdjacencyMap {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, crate::test_unweighted};
+    use {
+        super::*,
+        crate::test_unweighted,
+    };
 
     test_unweighted!(AdjacencyMap, repr::adjacency_map::fixture);
 

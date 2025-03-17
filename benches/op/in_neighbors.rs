@@ -2,14 +2,28 @@
 use {
     divan::Bencher,
     graaf::{
-        AddArcWeighted, AdjacencyList, AdjacencyListWeighted, AdjacencyMap,
-        AdjacencyMatrix, Arcs, EdgeList, Empty, ErdosRenyi, InNeighbors,
+        AddArcWeighted,
+        AdjacencyList,
+        AdjacencyListWeighted,
+        AdjacencyMap,
+        AdjacencyMatrix,
+        Arcs,
+        EdgeList,
+        Empty,
+        ErdosRenyi,
+        InNeighbors,
     },
     std::{
-        collections::{BTreeMap, BTreeSet},
+        collections::{
+            BTreeMap,
+            BTreeSet,
+        },
         marker::PhantomData,
         num::NonZero,
-        thread::{available_parallelism, scope},
+        thread::{
+            available_parallelism,
+            scope,
+        },
     },
 };
 

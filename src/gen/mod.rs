@@ -160,7 +160,8 @@
 //!
 //! ## random recursive tree
 //!
-//! Generate a [`random recursive tree`](RandomRecursiveTree) digraph of order `6`.
+//! Generate a [`random recursive tree`](RandomRecursiveTree) digraph of order
+//! `6`.
 //!
 //! ![A random recursive tree of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/random_recursive_tree_1-0.89.3.svg?)
 //!
@@ -296,8 +297,15 @@ pub mod star;
 pub mod wheel;
 
 pub use {
-    biclique::Biclique, circuit::Circuit, complete::Complete, cycle::Cycle,
-    empty::Empty, erdos_renyi::ErdosRenyi, path::Path,
+    biclique::Biclique,
+    circuit::Circuit,
+    complete::Complete,
+    cycle::Cycle,
+    empty::Empty,
+    erdos_renyi::ErdosRenyi,
+    path::Path,
     random_recursive_tree::RandomRecursiveTree,
-    random_tournament::RandomTournament, star::Star, wheel::Wheel,
+    random_tournament::RandomTournament,
+    star::Star,
+    wheel::Wheel,
 };

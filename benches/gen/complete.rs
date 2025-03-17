@@ -1,11 +1,20 @@
 //! Benchmarks of different implementations of `Complete::complete`.
 use {
     graaf::{
-        AddArc, AdjacencyList, AdjacencyMap, AdjacencyMatrix, Complete,
-        EdgeList, Empty,
+        AddArc,
+        AdjacencyList,
+        AdjacencyMap,
+        AdjacencyMatrix,
+        Complete,
+        EdgeList,
+        Empty,
     },
     std::{
-        collections::{BTreeMap, BTreeSet, HashSet},
+        collections::{
+            BTreeMap,
+            BTreeSet,
+            HashSet,
+        },
         num::NonZero,
         thread::available_parallelism,
     },

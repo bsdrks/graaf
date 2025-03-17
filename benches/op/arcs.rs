@@ -1,8 +1,15 @@
 //! Benchmarks of different implementations of `Arcs::arcs`.
 use {
     divan::Bencher,
-    graaf::{AdjacencyList, Arcs, ErdosRenyi},
-    std::collections::{btree_set, BTreeSet},
+    graaf::{
+        AdjacencyList,
+        Arcs,
+        ErdosRenyi,
+    },
+    std::collections::{
+        btree_set,
+        BTreeSet,
+    },
 };
 
 fn main() {
