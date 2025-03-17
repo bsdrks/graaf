@@ -890,30 +890,6 @@ impl IndegreeSequence for AdjacencyList {
     }
 }
 
-/// An iterator over the digraph's in-neighbors.
-///
-/// # Examples
-///
-/// ```
-/// use graaf::{
-///     AddArc,
-///     AdjacencyList,
-///     Empty,
-///     InNeighbors,
-/// };
-///
-/// let mut digraph = AdjacencyList::empty(4);
-///
-/// digraph.add_arc(0, 1);
-/// digraph.add_arc(1, 2);
-/// digraph.add_arc(3, 2);
-///
-/// let mut in_neighbors = digraph.in_neighbors(2);
-///
-/// assert_eq!(in_neighbors.next(), Some(1));
-/// assert_eq!(in_neighbors.next(), Some(3));
-/// assert_eq!(in_neighbors.next(), None);
-/// ```
 #[derive(Clone, Debug)]
 struct InNeighborsIterator<'a> {
     ptr: *const BTreeSet<usize>,
