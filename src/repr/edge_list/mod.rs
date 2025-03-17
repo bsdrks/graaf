@@ -102,54 +102,16 @@ pub mod fixture;
 
 use {
     crate::{
-        gen::prng::Xoshiro256StarStar,
-        AddArc,
-        AdjacencyList,
-        AdjacencyMap,
-        AdjacencyMatrix,
-        ArcWeight,
-        Arcs,
-        ArcsWeighted,
-        Biclique,
-        Circuit,
-        Complement,
-        Complete,
-        Converse,
-        Cycle,
-        Degree,
-        DegreeSequence,
-        Empty,
-        ErdosRenyi,
-        GrowingNetwork,
-        HasArc,
-        HasEdge,
-        HasWalk,
-        InNeighbors,
-        Indegree,
-        IndegreeSequence,
-        IsComplete,
-        IsRegular,
-        IsSemicomplete,
-        IsSimple,
-        IsTournament,
-        Order,
-        OutNeighbors,
-        OutNeighborsWeighted,
-        Outdegree,
-        Path,
-        RandomTournament,
-        RemoveArc,
-        SemidegreeSequence,
-        Size,
-        Star,
-        Union,
-        Vertices,
-        Wheel,
+        gen::prng::Xoshiro256StarStar, AddArc, AdjacencyList, AdjacencyMap,
+        AdjacencyMatrix, ArcWeight, Arcs, ArcsWeighted, Biclique, Circuit,
+        Complement, Complete, Converse, Cycle, Degree, DegreeSequence, Empty,
+        ErdosRenyi, RandomRecursiveTree, HasArc, HasEdge, HasWalk, InNeighbors,
+        Indegree, IndegreeSequence, IsComplete, IsRegular, IsSemicomplete,
+        IsSimple, IsTournament, Order, OutNeighbors, OutNeighborsWeighted,
+        Outdegree, Path, RandomTournament, RemoveArc, SemidegreeSequence,
+        Size, Star, Union, Vertices, Wheel,
     },
-    std::{
-        collections::BTreeSet,
-        iter::once,
-    },
+    std::{collections::BTreeSet, iter::once},
 };
 
 /// A representation of an unweighted digraph.
@@ -510,11 +472,11 @@ where
     }
 }
 
-impl GrowingNetwork for EdgeList {
+impl RandomRecursiveTree for EdgeList {
     /// # Panics
     ///
     /// * Panics if `order` is zero.
-    fn growing_network(order: usize, seed: u64) -> Self {
+    fn random_recursive_tree(order: usize, seed: u64) -> Self {
         assert!(order > 0, "a digraph has at least one vertex");
 
         if order == 1 {
@@ -828,10 +790,7 @@ impl Wheel for EdgeList {
 
 #[cfg(test)]
 mod tests {
-    use {
-        super::*,
-        crate::test_unweighted,
-    };
+    use {super::*, crate::test_unweighted};
 
     test_unweighted!(EdgeList, repr::edge_list::fixture);
 

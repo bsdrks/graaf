@@ -110,49 +110,14 @@
 pub mod fixture;
 
 use crate::{
-    gen::prng::Xoshiro256StarStar,
-    AddArc,
-    AdjacencyList,
-    AdjacencyMap,
-    ArcWeight,
-    Arcs,
-    ArcsWeighted,
-    Biclique,
-    Circuit,
-    Complement,
-    Complete,
-    Converse,
-    Cycle,
-    Degree,
-    DegreeSequence,
-    EdgeList,
-    Empty,
-    ErdosRenyi,
-    GrowingNetwork,
-    HasArc,
-    HasEdge,
-    HasWalk,
-    InNeighbors,
-    Indegree,
-    IndegreeSequence,
-    IsComplete,
-    IsRegular,
-    IsSemicomplete,
-    IsSimple,
-    IsTournament,
-    Order,
-    OutNeighbors,
-    OutNeighborsWeighted,
-    Outdegree,
-    Path,
-    RandomTournament,
-    RemoveArc,
-    SemidegreeSequence,
-    Size,
-    Star,
-    Union,
-    Vertices,
-    Wheel,
+    gen::prng::Xoshiro256StarStar, AddArc, AdjacencyList, AdjacencyMap,
+    ArcWeight, Arcs, ArcsWeighted, Biclique, Circuit, Complement, Complete,
+    Converse, Cycle, Degree, DegreeSequence, EdgeList, Empty, ErdosRenyi,
+    RandomRecursiveTree, HasArc, HasEdge, HasWalk, InNeighbors, Indegree,
+    IndegreeSequence, IsComplete, IsRegular, IsSemicomplete, IsSimple,
+    IsTournament, Order, OutNeighbors, OutNeighborsWeighted, Outdegree, Path,
+    RandomTournament, RemoveArc, SemidegreeSequence, Size, Star, Union,
+    Vertices, Wheel,
 };
 
 /// A representation of an unweighted digraph.
@@ -502,7 +467,7 @@ impl Empty for AdjacencyMatrix {
     fn empty(order: usize) -> Self {
         assert!(order > 0, "a digraph has at least one vertex");
 
-        let n = (order * order + 63) / 64;
+        let n = (order * order).div_ceil(64);
 
         Self {
             blocks: vec![0; n],
@@ -605,12 +570,12 @@ where
     }
 }
 
-impl GrowingNetwork for AdjacencyMatrix {
+impl RandomRecursiveTree for AdjacencyMatrix {
     /// # Panics
     ///
     /// * Panics if `order` is zero.
     /// * Panics if conversion from `u64` to `usize` fails.
-    fn growing_network(order: usize, seed: u64) -> Self {
+    fn random_recursive_tree(order: usize, seed: u64) -> Self {
         if order == 1 {
             return Self::trivial();
         }
@@ -929,11 +894,7 @@ impl Wheel for AdjacencyMatrix {
 
 #[cfg(test)]
 mod tests {
-    use {
-        super::*,
-        crate::test_unweighted,
-        std::collections::BTreeSet,
-    };
+    use {super::*, crate::test_unweighted, std::collections::BTreeSet};
 
     test_unweighted!(AdjacencyMatrix, repr::adjacency_matrix::fixture);
 

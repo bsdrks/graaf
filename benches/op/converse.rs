@@ -2,22 +2,10 @@
 use {
     divan::Bencher,
     graaf::{
-        AddArc,
-        AdjacencyList,
-        AdjacencyListWeighted,
-        AdjacencyMap,
-        AdjacencyMatrix,
-        Arcs,
-        Converse,
-        EdgeList,
-        Empty,
-        ErdosRenyi,
-        Order,
+        AddArc, AdjacencyList, AdjacencyListWeighted, AdjacencyMap,
+        AdjacencyMatrix, Arcs, Converse, EdgeList, Empty, ErdosRenyi, Order,
     },
-    std::collections::{
-        BTreeMap,
-        BTreeSet,
-    },
+    std::collections::{BTreeMap, BTreeSet},
 };
 
 fn main() {
@@ -163,6 +151,25 @@ fn converse_adjacency_map_btree_set_for_for(
     }
 
     AdjacencyMapBTreeSet { arcs }
+}
+
+fn converse_adjacency_map_btree_set_for_for_vec(
+    digraph: &AdjacencyMapBTreeSet,
+) -> AdjacencyMapBTreeSet {
+    let order = digraph.arcs.len();
+    let mut vec = vec![BTreeSet::new(); order];
+
+    for (u, out_neighbors) in &digraph.arcs {
+        for v in out_neighbors {
+            unsafe {
+                let _ = vec.get_unchecked_mut(*v).insert(*u);
+            };
+        }
+    }
+
+    AdjacencyMapBTreeSet {
+        arcs: vec.into_iter().enumerate().collect(),
+    }
 }
 
 fn converse_adjacency_matrix_add_arc_empty_has_arc_order(
@@ -346,6 +353,24 @@ fn adjacency_map_btree_set_for_for(bencher: Bencher<'_, '_>, order: usize) {
 
     bencher.bench(|| {
         let _ = converse_adjacency_map_btree_set_for_for(&erdos_renyi);
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn adjacency_map_btree_set_for_for_vec(
+    bencher: Bencher<'_, '_>,
+    order: usize,
+) {
+    let mut arcs = BTreeMap::<usize, BTreeSet<usize>>::new();
+
+    for (u, v) in AdjacencyMap::erdos_renyi(order, 0.5, 0).arcs() {
+        let _ = arcs.entry(v).or_default().insert(u);
+    }
+
+    let erdos_renyi = AdjacencyMapBTreeSet { arcs };
+
+    bencher.bench(|| {
+        let _ = converse_adjacency_map_btree_set_for_for_vec(&erdos_renyi);
     });
 }
 

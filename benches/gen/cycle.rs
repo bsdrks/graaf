@@ -1,21 +1,13 @@
 //! Benchmarks of different implementations of `Cycle::cycle`.
 use {
     graaf::{
-        AddArc,
-        AdjacencyList,
-        AdjacencyMap,
-        AdjacencyMatrix,
-        Cycle,
-        EdgeList,
+        AddArc, AdjacencyList, AdjacencyMap, AdjacencyMatrix, Cycle, EdgeList,
         Empty,
     },
     std::{
-        collections::{
-            BTreeMap,
-            BTreeSet,
-            HashSet,
-        },
+        collections::{BTreeMap, BTreeSet, HashSet},
         iter::once,
+        ptr::write,
     },
 };
 
@@ -103,6 +95,67 @@ fn cycle_adjacency_list_btree_set_add_arc_empty(
 /// # Panics
 ///
 /// Panics if `order` is zero.
+#[allow(clippy::uninit_vec)]
+fn cycle_adjacency_list_btree_set_unsafe(
+    order: usize,
+) -> AdjacencyListBTreeSet {
+    assert!(order > 0, "a digraph has at least one vertex");
+
+    if order == 1 {
+        return AdjacencyListBTreeSet {
+            arcs: vec![BTreeSet::new()],
+        };
+    }
+
+    let mut arcs = Vec::with_capacity(order);
+    let last = order - 1;
+
+    unsafe {
+        let ptr: *mut BTreeSet<usize> = arcs.as_mut_ptr();
+
+        ptr.write(BTreeSet::from([last, 1]));
+
+        for u in 1..last {
+            ptr.add(u).write(BTreeSet::from([u - 1, u + 1]));
+        }
+
+        ptr.add(last).write(BTreeSet::from([order - 2, 0]));
+
+        arcs.set_len(order);
+    }
+
+    AdjacencyListBTreeSet { arcs }
+}
+
+/// # Panics
+///
+/// Panics if `order` is zero.
+fn cycle_adjacency_list_hash_set_insert(order: usize) -> AdjacencyListHashSet {
+    assert!(order > 0, "a digraph has at least one vertex");
+    let mut arcs = vec![HashSet::new(); order];
+
+    if order == 1 {
+        return AdjacencyListHashSet { arcs };
+    }
+
+    for u in 0..order - 1 {
+        let v = u + 1;
+
+        let _ = arcs[u].insert(v);
+        let _ = arcs[v].insert(u);
+    }
+
+    let u = order - 1;
+
+    let _ = arcs[u].insert(0);
+    let _ = arcs[0].insert(u);
+
+    AdjacencyListHashSet { arcs }
+}
+
+/// # Panics
+///
+/// Panics if `order` is zero.
 fn cycle_adjacency_map_btree_set_collect(
     order: usize,
 ) -> AdjacencyMapBTreeSet {
@@ -154,27 +207,63 @@ fn cycle_adjacency_map_btree_set_add_arc_empty(order: usize) -> AdjacencyMap {
 /// # Panics
 ///
 /// Panics if `order` is zero.
-fn cycle_adjacency_list_hash_set_insert(order: usize) -> AdjacencyListHashSet {
+fn cycle_adjacency_map_btree_set_insert(order: usize) -> AdjacencyMapBTreeSet {
     assert!(order > 0, "a digraph has at least one vertex");
-    let mut arcs = vec![HashSet::new(); order];
 
     if order == 1 {
-        return AdjacencyListHashSet { arcs };
+        return AdjacencyMapBTreeSet {
+            arcs: BTreeMap::from([(0, BTreeSet::new())]),
+        };
     }
 
-    for u in 0..order - 1 {
-        let v = u + 1;
+    let mut arcs = BTreeMap::new();
+    let _ = arcs.insert(0, BTreeSet::from([order - 1, 1]));
 
-        let _ = arcs[u].insert(v);
-        let _ = arcs[v].insert(u);
+    for u in 1..order - 1 {
+        let _ = arcs.insert(u, BTreeSet::from([u - 1, u + 1]));
     }
 
-    let u = order - 1;
+    let _ = arcs.insert(order - 1, BTreeSet::from([order - 2, 0]));
 
-    let _ = arcs[u].insert(0);
-    let _ = arcs[0].insert(u);
+    AdjacencyMapBTreeSet { arcs }
+}
 
-    AdjacencyListHashSet { arcs }
+/// # Panics
+///
+/// Panics if `order` is zero.
+fn cycle_adjacency_map_btree_set_vec_collect(
+    order: usize,
+) -> AdjacencyMapBTreeSet {
+    assert!(order > 0, "a digraph has at least one vertex");
+
+    if order == 1 {
+        return AdjacencyMapBTreeSet {
+            arcs: BTreeMap::from([(0, BTreeSet::new())]),
+        };
+    }
+
+    let mut vec = Vec::with_capacity(order);
+    let ptr: *mut (usize, BTreeSet<usize>) = vec.as_mut_ptr();
+
+    for u in 0..order {
+        unsafe {
+            write(
+                ptr.add(u),
+                (
+                    u,
+                    BTreeSet::from([(u + order - 1) % order, (u + 1) % order]),
+                ),
+            );
+        }
+    }
+
+    unsafe {
+        vec.set_len(order);
+    }
+
+    AdjacencyMapBTreeSet {
+        arcs: vec.into_iter().collect(),
+    }
 }
 
 /// # Panics
@@ -267,6 +356,11 @@ fn adjacency_list_btree_set_add_arc_empty(n: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
+fn adjacency_list_btree_set_unsafe(n: usize) {
+    let _ = cycle_adjacency_list_btree_set_unsafe(n);
+}
+
+#[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list_hash_set(n: usize) {
     let _ = cycle_adjacency_list_hash_set_insert(n);
 }
@@ -289,6 +383,16 @@ fn adjacency_map_btree_set_collect(n: usize) {
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_map_btree_set_add_arc_empty(n: usize) {
     let _ = cycle_adjacency_map_btree_set_add_arc_empty(n);
+}
+
+#[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
+fn adjacency_map_btree_set_insert(n: usize) {
+    let _ = cycle_adjacency_map_btree_set_insert(n);
+}
+
+#[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
+fn adjacency_map_btree_set_vec_collect(n: usize) {
+    let _ = cycle_adjacency_map_btree_set_vec_collect(n);
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]

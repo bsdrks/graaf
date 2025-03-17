@@ -27,7 +27,7 @@ macro_rules! test_unweighted {
                 Degree,
                 DegreeSequence,
                 ErdosRenyi,
-                GrowingNetwork,
+                RandomRecursiveTree,
                 HasEdge,
                 HasWalk,
                 InNeighbors,
@@ -1706,11 +1706,11 @@ macro_rules! test_unweighted {
             }
 
             #[test]
-            fn growing_network_degree(
+            fn random_recursive_tree_degree(
                 order in 1..25_usize,
                 seed in 0..1000_u64
             ) {
-                let digraph = $type::growing_network(order, seed);
+                let digraph = $type::random_recursive_tree(order, seed);
 
                 assert!(digraph.vertices().all(|u| {
                     digraph.degree(u) <= order - u
@@ -1718,22 +1718,22 @@ macro_rules! test_unweighted {
             }
 
             #[test]
-            fn growing_network_degree_sequence(
+            fn random_recursive_tree_degree_sequence(
                 order in 1..25_usize,
                 seed in 0..1000_u64
             ) {
-                let digraph = $type::growing_network(order, seed);
+                let digraph = $type::random_recursive_tree(order, seed);
                 let degree_sequence = &mut digraph.degree_sequence();
 
                 assert!(degree_sequence.all(|d| d < order));
             }
 
             #[test]
-            fn growing_network_degree_sum_equals_2size(
+            fn random_recursive_tree_degree_sum_equals_2size(
                 order in 1..25_usize,
                 seed in 0..1000_u64
             ) {
-                let digraph = $type::growing_network(order, seed);
+                let digraph = $type::random_recursive_tree(order, seed);
 
                 assert_eq!(
                     digraph
@@ -1744,11 +1744,11 @@ macro_rules! test_unweighted {
             }
 
             #[test]
-            fn growing_network_even_number_odd_degrees(
+            fn random_recursive_tree_even_number_odd_degrees(
                 order in 1..25_usize,
                 seed in 0..1000_u64
             ) {
-                let digraph = $type::growing_network(order, seed);
+                let digraph = $type::random_recursive_tree(order, seed);
 
                 assert_eq!(
                     digraph
@@ -1761,11 +1761,11 @@ macro_rules! test_unweighted {
             }
 
             #[test]
-            fn growing_network_has_edge(
+            fn random_recursive_tree_has_edge(
                 order in 1..25_usize,
                 seed in 0..1000_u64
             ) {
-                let digraph = $type::growing_network(order, seed);
+                let digraph = $type::random_recursive_tree(order, seed);
 
                 assert!(digraph.vertices().all(|u| {
                     digraph.vertices().all(|v| !digraph.has_edge(u, v))
@@ -1773,11 +1773,11 @@ macro_rules! test_unweighted {
             }
 
             #[test]
-            fn growing_network_indegree(
+            fn random_recursive_tree_indegree(
                 order in 1..25_usize,
                 seed in 0..1000_u64
             ) {
-                let digraph = $type::growing_network(order, seed);
+                let digraph = $type::random_recursive_tree(order, seed);
 
                 assert!(digraph.vertices().all(|v| {
                     digraph.indegree(v) <= order - v
@@ -1785,51 +1785,51 @@ macro_rules! test_unweighted {
             }
 
             #[test]
-            fn growing_network_indegree_sequence(
+            fn random_recursive_tree_indegree_sequence(
                 order in 1..25_usize,
                 seed in 0..1000_u64
             ) {
-                let digraph = $type::growing_network(order, seed);
+                let digraph = $type::random_recursive_tree(order, seed);
                 let indegree_sequence = &mut digraph.indegree_sequence();
 
                 assert!(indegree_sequence.all(|d| d < order));
             }
 
             #[test]
-            fn growing_network_is_complete(order in 1..25_usize, seed: u64) {
-                assert!((order == 1) == $type::growing_network(order, seed).is_complete());
+            fn random_recursive_tree_is_complete(order in 1..25_usize, seed: u64) {
+                assert!((order == 1) == $type::random_recursive_tree(order, seed).is_complete());
             }
 
             #[test]
-            fn growing_network_is_simple(order in 1..25_usize, seed: u64) {
-                assert!($type::growing_network(order, seed).is_simple());
+            fn random_recursive_tree_is_simple(order in 1..25_usize, seed: u64) {
+                assert!($type::random_recursive_tree(order, seed).is_simple());
             }
 
             #[test]
-            fn growing_network_is_subdigraph(order in 1..25_usize, seed: u64) {
-                let digraph = $type::growing_network(order, seed);
+            fn random_recursive_tree_is_subdigraph(order in 1..25_usize, seed: u64) {
+                let digraph = $type::random_recursive_tree(order, seed);
 
                 assert!(digraph.is_subdigraph(&digraph));
             }
 
             #[test]
-            fn growing_network_is_superdigraph(order in 1..25_usize, seed: u64) {
-                let digraph = $type::growing_network(order, seed);
+            fn random_recursive_tree_is_superdigraph(order in 1..25_usize, seed: u64) {
+                let digraph = $type::random_recursive_tree(order, seed);
 
                 assert!(digraph.is_superdigraph(&digraph));
             }
 
             #[test]
-            fn growing_network_order(order in 1..25_usize, seed: u64) {
-                assert_eq!($type::growing_network(order, seed).order(), order);
+            fn random_recursive_tree_order(order in 1..25_usize, seed: u64) {
+                assert_eq!($type::random_recursive_tree(order, seed).order(), order);
             }
 
             #[test]
-            fn growing_network_outdegree(
+            fn random_recursive_tree_outdegree(
                 order in 1..25_usize,
                 seed in 0..1000_u64
             ) {
-                let digraph = $type::growing_network(order, seed);
+                let digraph = $type::random_recursive_tree(order, seed);
 
                 assert!(digraph.vertices().all(|u| {
                     digraph.outdegree(u) <= order - u
@@ -1837,19 +1837,19 @@ macro_rules! test_unweighted {
             }
 
             #[test]
-            fn growing_network_outdegree_sequence(
+            fn random_recursive_tree_outdegree_sequence(
                 order in 1..25_usize,
                 seed in 0..1000_u64
             ) {
-                let digraph = $type::growing_network(order, seed);
+                let digraph = $type::random_recursive_tree(order, seed);
                 let outdegree_sequence = &mut digraph.outdegree_sequence();
 
                 assert!(outdegree_sequence.all(|d| d < order));
             }
 
             #[test]
-            fn growing_network_size(order in 1..25_usize, seed: u64) {
-                assert_eq!($type::growing_network(order, seed).size(), order - 1);
+            fn random_recursive_tree_size(order in 1..25_usize, seed: u64) {
+                assert_eq!($type::random_recursive_tree(order, seed).size(), order - 1);
             }
 
             #[test]
@@ -2957,24 +2957,24 @@ macro_rules! test_unweighted {
             }
 
             #[test]
-            fn union_growing_network_commutative(
+            fn union_random_recursive_tree_commutative(
                 order_1 in 1..25_usize,
                 order_2 in 1..25_usize,
                 seed_1 in 0..1000_u64,
                 seed_2 in 0..1000_u64
             ) {
-                let digraph = $type::growing_network(order_1, seed_1);
-                let other = $type::growing_network(order_2, seed_2);
+                let digraph = $type::random_recursive_tree(order_1, seed_1);
+                let other = $type::random_recursive_tree(order_2, seed_2);
 
                 assert_eq!(digraph.union(&other), other.union(&digraph));
             }
 
             #[test]
-            fn union_growing_network_complement_is_complete(
+            fn union_random_recursive_tree_complement_is_complete(
                 order in 1..25_usize,
                 seed in 0..1000_u64
             ) {
-                let digraph = $type::growing_network(order, seed);
+                let digraph = $type::random_recursive_tree(order, seed);
                 let complement = digraph.complement();
 
                 assert!(digraph.union(&complement).is_complete());
@@ -4453,8 +4453,8 @@ macro_rules! test_unweighted {
 
         #[test]
         #[should_panic(expected = "a digraph has at least one vertex")]
-        fn growing_network_0() {
-            let _ = $type::growing_network(0, 0);
+        fn random_recursive_tree_0() {
+            let _ = $type::random_recursive_tree(0, 0);
         }
 
         #[test]

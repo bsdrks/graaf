@@ -56,8 +56,8 @@ graaf = "0.108.0"
 - [`Cycle`] generates a bidirectional circuit.
 - [`Empty`] generates a digraph without arcs.
 - [`ErdosRenyi`] generates a random digraph.
-- [`GrowingNetwork`] generates a growing network digraph.
 - [`Path`] generates a path digraph.
+- [`RandomRecursiveTree`] generates a random recursive tree.
 - [`RandomTournament`] generates a random tournament.
 - [`Star`] generates a star digraph.
 - [`Wheel`] generates a wheel digraph.
@@ -219,7 +219,6 @@ A [`PredecessorTree`] contains the vertex predecessors.
 [`ErdosRenyi`]: https://docs.rs/graaf/latest/graaf/gen/erdos_renyi/trait.ErdosRenyi.html
 [`FilterVertices`]: https://docs.rs/graag/latest/graaf/op/filter_vertices/trait.FilterVertices.html
 [`FloydWarshall::distances`]: https://docs.rs/graaf/latest/graaf/algo/floyd_warshall/struct.FloydWarshall.html#method.distances
-[`GrowingNetwork`]: https://docs.rs/graaf/latest/graaf/gen/growing_network/trait.GrowingNetwork.html
 [`HasArc`]: https://docs.rs/graaf/latest/graaf/op/has_arc/trait.HasArc.html
 [`HasEdge`]: https://docs.rs/graaf/latest/graaf/op/has_edge/trait.HasEdge.html
 [`HasWalk`]: https://docs.rs/graaf/latest/graaf/op/has_walk/trait.HasWalk.html
@@ -249,6 +248,7 @@ A [`PredecessorTree`] contains the vertex predecessors.
 [`PredecessorTree::search_by`]: https://docs.rs/graaf/latest/graaf/algo/predecessor_tree/struct.PredecessorTree.html#method.search_by
 [`PredecessorTree::search`]: https://docs.rs/graaf/latest/graaf/algo/predecessor_tree/struct.PredecessorTree.html#method.search
 [`PredecessorTree`]: https://docs.rs/graaf/latest/graaf/algo/predecessor_tree/struct.PredecessorTree.html
+[`RandomRecursiveTree`]: https://docs.rs/graaf/latest/graaf/gen/random_recursive_tree/trait.RandomRecursiveTree.html
 [`RandomTournament`]: https://docs.rs/graaf/latest/graaf/gen/random_tournament/trait.RandomTournament.html
 [`RemoveArc`]: https://docs.rs/graaf/latest/graaf/op/remove_arc/trait.RemoveArc.html
 [`SemidegreeSequence`]: https://docs.rs/graaf/latest/graaf/op/semidegree_sequence/trait.SemidegreeSequence.html
