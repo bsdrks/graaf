@@ -179,7 +179,7 @@ fn find_partition(
     let mut hi = if r < lhs_len { r } else { lhs_len };
 
     while lo < hi {
-        let mid = (lo + hi) / 2;
+        let mid = usize::midpoint(lo, hi);
         let j = r - mid;
 
         if j < rhs.len()
