@@ -257,8 +257,6 @@ fn empty_set() -> &'static BTreeSet<usize> {
 }
 
 impl AddArc for AdjacencyMap {
-    /// Add an arc `u -> v` to the digraph.
-    ///
     /// We add `u` and `v` if they aren't in the digraph.
     ///
     /// # Panics

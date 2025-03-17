@@ -20,6 +20,66 @@
 - Return iterators instead of vectors.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 
+## [0.109.0] - 2025-04-17
+
+Added
+
+- Add benchmark `op_arcs`.
+- Add benchmark `op_degree_sequence`.
+- Add benchmark `op_union`.
+- Document contiguity of `AdjacencyList`.
+- Document contiguity of `AdjacencyMap`.
+- Document isolated vertices in `AdjacencyMap`.
+- Document time complexity of implementations in `adjacency_list`.
+- Document time complexity of implementations in `adjacency_map`.
+- Document panic in `AdjacencyList::is_sink`.
+- Document panic in `AdjacencyMap::is_sink`.
+
+Changed
+
+- Breaking: include empty vertices in `AdjacencyMap::filter_vertices`.
+- Breaking: rename `GrowingNetwork` to `RandomRecursiveTree`.
+- Define the weight of arcs in `AdjacencyList` as a static constant.
+- Define the weight of arcs in `AdjacencyMap` as a static constant.
+- Improve the performance of `AdjacencyList::add_arc`.
+- Improve the performance of `AdjacencyList::arcs`.
+- Improve the performance of `AdjacencyList::biclique`.
+- Improve the performance of `AdjacencyList::circuit`.
+- Improve the performance of `AdjacencyList::complement`.
+- Improve the performance of `AdjacencyList::complete`.
+- Improve the performance of `AdjacencyList::converse`.
+- Improve the performance of `AdjacencyList::cycle`.
+- Improve the performance of `AdjacencyList::degree_sequence`.
+- Improve the performance of `AdjacencyList::has_walk`.
+- Improve the performance of `AdjacencyList::in_neighbors`.
+- Improve the performance of `AdjacencyList::indegree_sequence`.
+- Improve the performance of `AdjacencyList::is_complete`.
+- Improve the performance of `AdjacencyList::is_semicomplete`.
+- Improve the performance of `AdjacencyList::is_sink`.
+- Improve the performance of `AdjacencyList::is_tournament`.
+- Improve the performance of `AdjacencyList::is_tournament`.
+- Improve the performance of `AdjacencyList::out_neighbors`.
+- Improve the performance of `AdjacencyList::outdegree`.
+- Improve the performance of `AdjacencyList::random_recursive_tree`.
+- Improve the performance of `AdjacencyList::random_tournament`.
+- Improve the performance of `AdjacencyList::union`.
+- Improve the performance of `AdjacencyMap::complete`.
+- Improve the performance of `AdjacencyMap::converse`.
+- Improve the performance of `AdjacencyMap::erdos_renyi`.
+- Improve the performance of `AdjacencyMap::random_recursive_tree`.
+- Improve the performance of `AdjacencyMap::has_walk`.
+- Improve the performance of `AdjacencyMap::is_complete`.
+- Improve the performance of `AdjacencyMap::is_semicomplete`.
+- Improve the performance of `AdjacencyMap::is_tournament`.
+- Improve the performance of `AdjacencyMap::out_neighbors`.
+- Improve the performance of `AdjacencyMap::random_tournament`.
+- Improve the performance of `AdjacencyMap::union`.
+- Improve the performance of `AdjacencyMap::wheel`.
+- Improve the performance of pseudo-random number generation.
+- Replace repeat().take() with repeat_with() in `AdjacencyMap::biclique
+- Update divan to 0.1.17
+- Update proptest to 1.6.0
+
 ## [0.108.0] - 2024-11-25
 
 Changed

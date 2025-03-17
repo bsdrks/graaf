@@ -751,31 +751,6 @@ where
     }
 }
 
-impl RandomRecursiveTree for AdjacencyList {
-    /// # Panics
-    ///
-    /// Panics if `order` is zero.
-    fn random_recursive_tree(order: usize, seed: u64) -> Self {
-        assert!(order > 0, "a digraph has at least one vertex");
-
-        let mut rng = Xoshiro256StarStar::new(seed);
-
-        if order == 1 {
-            return Self::trivial();
-        }
-
-        Self {
-            arcs: once(BTreeSet::new())
-                .chain((1..order).map(|u| {
-                    BTreeSet::from([usize::try_from(rng.next().unwrap())
-                        .unwrap()
-                        % u])
-                }))
-                .collect(),
-        }
-    }
-}
-
 impl HasArc for AdjacencyList {
     /// # Complexity
     ///
@@ -1169,6 +1144,31 @@ impl Path for AdjacencyList {
             arcs: (0..order - 1)
                 .map(|u| BTreeSet::from([u + 1]))
                 .chain(once(BTreeSet::new()))
+                .collect(),
+        }
+    }
+}
+
+impl RandomRecursiveTree for AdjacencyList {
+    /// # Panics
+    ///
+    /// Panics if `order` is zero.
+    fn random_recursive_tree(order: usize, seed: u64) -> Self {
+        assert!(order > 0, "a digraph has at least one vertex");
+
+        let mut rng = Xoshiro256StarStar::new(seed);
+
+        if order == 1 {
+            return Self::trivial();
+        }
+
+        Self {
+            arcs: once(BTreeSet::new())
+                .chain((1..order).map(|u| {
+                    BTreeSet::from([usize::try_from(rng.next().unwrap())
+                        .unwrap()
+                        % u])
+                }))
                 .collect(),
         }
     }
