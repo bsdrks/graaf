@@ -3,8 +3,8 @@
 //! Breadth-first search explores an unweighted digraph's vertices in order of
 //! their distance from a source.
 //!
-//! Runs in **O(v + a)** time, where **v** is the number of vertices and **a**
-//! is the number of arcs.
+//! The time complexity is `O(v + a)`, where `v` is the digraph's order and `a`
+//! is the digraph's size.
 //!
 //! # Examples
 //!
@@ -86,10 +86,7 @@ use {
         Order,
         OutNeighbors,
     },
-    std::collections::{
-        HashSet,
-        VecDeque,
-    },
+    std::collections::VecDeque,
 };
 
 type Step = (usize, usize);
@@ -98,9 +95,6 @@ type Step = (usize, usize);
 ///
 /// Breadth-first search explores an unweighted digraph's vertices in order of
 /// their distance from a source.
-///
-/// Runs in **O(v + a)** time, where **v** is the number of vertices and **a**
-/// is the number of arcs.
 ///
 /// # Examples
 ///
@@ -180,7 +174,7 @@ type Step = (usize, usize);
 pub struct BfsDist<'a, D> {
     digraph: &'a D,
     queue: VecDeque<Step>,
-    visited: HashSet<usize>,
+    visited: Vec<bool>,
 }
 
 impl<'a, D> BfsDist<'a, D> {
@@ -193,12 +187,26 @@ impl<'a, D> BfsDist<'a, D> {
     #[must_use]
     pub fn new<T>(digraph: &'a D, sources: T) -> Self
     where
+        D: Order,
         T: Iterator<Item = usize> + Clone,
     {
+        let order = digraph.order();
+        let mut queue = VecDeque::with_capacity(order);
+        let mut visited = vec![false; order];
+        let visited_ptr = visited.as_mut_ptr();
+
+        for u in sources {
+            queue.push_back((u, 0));
+
+            unsafe {
+                *visited_ptr.add(u) = true;
+            }
+        }
+
         Self {
             digraph,
-            queue: sources.clone().map(|source| (source, 0)).collect(),
-            visited: sources.collect(),
+            queue,
+            visited,
         }
     }
 
@@ -285,14 +293,17 @@ impl<'a, D> BfsDist<'a, D> {
     where
         D: Order + OutNeighbors,
     {
-        self.fold(
-            vec![usize::MAX; self.digraph.order()],
-            |mut distances, (u, dist)| {
-                distances[u] = dist;
+        let order = self.digraph.order();
+        let mut distances = vec![usize::MAX; order];
+        let ptr = distances.as_mut_ptr();
 
-                distances
-            },
-        )
+        for (u, w) in self {
+            unsafe {
+                *ptr.add(u) = w;
+            }
+        }
+
+        distances
     }
 }
 
@@ -303,16 +314,23 @@ where
     type Item = Step;
 
     fn next(&mut self) -> Option<Self::Item> {
-        let (u, dist) = self.queue.pop_front()?;
-        let dist_next = dist + 1;
+        let (u, w) = self.queue.pop_front()?;
+        let w_next = w + 1;
+        let visited_ptr = self.visited.as_mut_ptr();
 
-        self.queue.extend(
-            self.digraph.out_neighbors(u).filter_map(|v| {
-                self.visited.insert(v).then_some((v, dist_next))
-            }),
-        );
+        for v in self.digraph.out_neighbors(u) {
+            let visited = unsafe { visited_ptr.add(v) };
 
-        Some((u, dist))
+            unsafe {
+                if !*visited {
+                    *visited = true;
+
+                    self.queue.push_back((v, w_next));
+                }
+            }
+        }
+
+        Some((u, w))
     }
 }
 

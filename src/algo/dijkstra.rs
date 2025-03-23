@@ -3,8 +3,8 @@
 //! Dijkstra's algorithm with binary heap finds the shortest path in an
 //! arc-weighted digraph.[^1]
 //!
-//! Runs in **O(v log v + a)** time, where **v** is the number of vertices and
-//! **a** is the number of arcs.
+//! The time complexity is `O(v log v + a)`, where `v` is the digraph's order
+//! and `a` is the digraph's size.
 //!
 //! # Examples
 //!
@@ -168,19 +168,24 @@ where
     #[must_use]
     pub fn new<T>(digraph: &'a D, sources: T) -> Self
     where
+        D: Order,
         T: Iterator<Item = usize> + Clone,
     {
+        let order = digraph.order();
+        let mut dist = vec![usize::MAX; order];
+        let mut heap = BinaryHeap::with_capacity(order);
+        let dist_ptr = dist.as_mut_ptr();
+
+        for u in sources {
+            unsafe { *dist_ptr.add(u) = 0 };
+
+            heap.push((Reverse(0), u));
+        }
+
         Self {
             digraph,
-            dist: sources.clone().fold(
-                vec![usize::MAX; digraph.order()],
-                |mut dist, u| {
-                    dist[u] = 0;
-
-                    dist
-                },
-            ),
-            heap: sources.into_iter().map(|u| (Reverse(0), u)).collect(),
+            dist,
+            heap,
         }
     }
 }
@@ -192,18 +197,23 @@ where
     type Item = usize;
 
     fn next(&mut self) -> Option<Self::Item> {
-        let (Reverse(distance), u) = self.heap.pop()?;
+        let (Reverse(w_prev), u) = self.heap.pop()?;
+        let dist_ptr = self.dist.as_mut_ptr();
 
         for (v, w) in self.digraph.out_neighbors_weighted(u) {
-            let distance = distance + w;
+            let w_next = w + w_prev;
+            let dist_v = unsafe { dist_ptr.add(v) };
 
-            if distance < self.dist[v] {
-                self.dist[v] = distance;
-                self.heap.push((Reverse(distance), v));
+            unsafe {
+                if w_next < *dist_v {
+                    *dist_v = w_next;
+
+                    self.heap.push((Reverse(w_next), v));
+                }
             }
         }
 
-        if distance == self.dist[u] {
+        if unsafe { *dist_ptr.add(u) } == w_prev {
             return Some(u);
         }
 

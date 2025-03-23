@@ -37,7 +37,6 @@
 //!     .eq([None, Some(0), Some(1), None, Some(1), Some(2)]));
 //! ```
 use std::{
-    collections::HashSet,
     ops::{
         Index,
         IndexMut,
@@ -195,7 +194,8 @@ impl PredecessorTree {
             return Some(vec![s]);
         }
 
-        let mut visited = HashSet::new();
+        let mut visited = vec![false; self.pred.len()];
+        let visited_ptr = visited.as_mut_ptr();
         let mut path = vec![s];
 
         while let Some(&v) = self.pred.get(s) {
@@ -204,8 +204,12 @@ impl PredecessorTree {
             }
 
             if let Some(v) = v {
-                if !visited.insert(v) {
+                if unsafe { *visited_ptr.add(v) } {
                     break;
+                }
+
+                unsafe {
+                    *visited_ptr.add(v) = true;
                 }
 
                 if v != s {
@@ -219,6 +223,27 @@ impl PredecessorTree {
         }
 
         None
+    }
+
+    /// Returns a mutable pointer to the underlying vector of predecessors.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use graaf::PredecessorTree;
+    ///
+    /// let mut pred =
+    ///     PredecessorTree::from(vec![Some(1), Some(2), Some(3), None]);
+    ///
+    /// unsafe {
+    ///     *pred.as_mut_ptr().add(3) = Some(0);
+    /// }
+    ///
+    /// assert!(pred.into_iter().eq([Some(1), Some(2), Some(3), Some(0)]));
+    /// ```
+    #[must_use]
+    pub fn as_mut_ptr(&mut self) -> *mut Option<usize> {
+        self.pred.as_mut_ptr()
     }
 }
 

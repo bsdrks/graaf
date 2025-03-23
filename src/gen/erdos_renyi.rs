@@ -3,7 +3,7 @@
 //! The Erdős-Rényi model generates a random digraph with a given number of
 //! vertices.
 //!
-//! Runs in **O(v²)** time, where **v** is the number of vertices.
+//! The time complexity is `O(v²)`, where `v` is the digraph's order.
 //!
 //! # Examples
 //!
@@ -45,8 +45,6 @@ pub trait ErdosRenyi {
     ///
     /// The Erdős-Rényi model generates a random digraph with a given number of
     /// vertices.
-    ///
-    /// Runs in **O(v²)** time, where **v** is the number of vertices.
     ///
     /// # Arguments
     ///

@@ -70,8 +70,9 @@ impl<'a, D> Johnson75<'a, D> {
     fn unblock(&mut self, u: usize) {
         if self.is_blocked(u) {
             let _ = self.blocked.remove(&u);
+            let b_ptr = self.b.as_mut_ptr();
 
-            while let Some(v) = self.b[u].pop_first() {
+            while let Some(v) = unsafe { (*b_ptr.add(u)).pop_first() } {
                 self.unblock(v);
             }
         }
@@ -106,8 +107,10 @@ impl<'a, D> Johnson75<'a, D> {
         if f {
             self.unblock(v);
         } else {
+            let b_ptr = self.b.as_mut_ptr();
+
             for w in scc.out_neighbors(v) {
-                let _ = self.b[w].insert(v);
+                let _ = unsafe { (*b_ptr.add(w)).insert(v) };
             }
         }
 
@@ -163,11 +166,16 @@ impl<'a, D> Johnson75<'a, D> {
 
                 if component.order() > 0 {
                     let &start = min_scc.iter().min().unwrap();
+                    let b_ptr = self.b.as_mut_ptr();
 
                     for vertex in component.vertices() {
                         let _ = self.blocked.remove(&vertex);
 
-                        self.b[vertex].clear();
+                        unsafe {
+                            if let Some(b_set) = b_ptr.add(vertex).as_mut() {
+                                b_set.clear();
+                            }
+                        };
                     }
 
                     let _ =

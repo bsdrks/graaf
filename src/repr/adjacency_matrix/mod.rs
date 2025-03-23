@@ -267,6 +267,9 @@ pub struct AdjacencyMatrix {
     order: usize,
 }
 
+/// The weight of an arc is `1`.
+static WEIGHT: usize = 1;
+
 impl AdjacencyMatrix {
     #[must_use]
     const fn mask(u: usize) -> usize {
@@ -315,7 +318,7 @@ impl AdjacencyMatrix {
 
         let i = self.index(u, v);
 
-        self.blocks[i >> 6] ^= Self::mask(i);
+        unsafe { *self.blocks.get_unchecked_mut(i >> 6) ^= Self::mask(i) };
     }
 }
 
@@ -332,7 +335,7 @@ impl AddArc for AdjacencyMatrix {
 
         let i = self.index(u, v);
 
-        self.blocks[i >> 6] |= Self::mask(i);
+        unsafe { *self.blocks.get_unchecked_mut(i >> 6) |= Self::mask(i) };
     }
 }
 
@@ -340,16 +343,70 @@ impl ArcWeight<usize> for AdjacencyMatrix {
     type Weight = usize;
 
     fn arc_weight(&self, u: usize, v: usize) -> Option<&Self::Weight> {
-        self.has_arc(u, v).then_some(&1)
+        self.has_arc(u, v).then_some(&WEIGHT)
+    }
+}
+
+#[derive(Clone, Debug)]
+struct ArcsIterator<'a> {
+    matrix: &'a AdjacencyMatrix,
+    block_index: usize,
+    current_bits: usize,
+    current_base: usize,
+}
+
+impl<'a> ArcsIterator<'a> {
+    const fn new(matrix: &'a AdjacencyMatrix) -> Self {
+        Self {
+            matrix,
+            block_index: 0,
+            current_bits: 0,
+            current_base: 0,
+        }
+    }
+}
+
+impl Iterator for ArcsIterator<'_> {
+    type Item = (usize, usize);
+
+    #[inline]
+    fn next(&mut self) -> Option<Self::Item> {
+        while self.block_index < self.matrix.blocks.len()
+            || self.current_bits != 0
+        {
+            if self.current_bits == 0 {
+                unsafe {
+                    self.current_bits =
+                        *self.matrix.blocks.get_unchecked(self.block_index);
+                }
+
+                self.current_base = self.block_index * 64;
+                self.block_index += 1;
+            }
+
+            if self.current_bits != 0 {
+                let bit = self.current_bits.trailing_zeros() as usize;
+
+                self.current_bits &= self.current_bits - 1;
+
+                let cell_index = self.current_base + bit;
+
+                if cell_index < self.matrix.order * self.matrix.order {
+                    let u = cell_index / self.matrix.order;
+                    let v = cell_index % self.matrix.order;
+
+                    return Some((u, v));
+                }
+            }
+        }
+
+        None
     }
 }
 
 impl Arcs for AdjacencyMatrix {
     fn arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.vertices().flat_map(move |u| {
-            self.vertices()
-                .filter_map(move |v| self.has_arc(u, v).then_some((u, v)))
-        })
+        ArcsIterator::new(self)
     }
 }
 
@@ -359,7 +416,7 @@ impl ArcsWeighted for AdjacencyMatrix {
     fn arcs_weighted(
         &self,
     ) -> impl Iterator<Item = (usize, usize, &Self::Weight)> {
-        self.arcs().map(|(u, v)| (u, v, &1))
+        self.arcs().map(|(u, v)| (u, v, &WEIGHT))
     }
 }
 
@@ -658,7 +715,7 @@ impl HasWalk for AdjacencyMatrix {
 }
 
 impl Indegree for AdjacencyMatrix {
-    /// Warning: this implementation runs in **O(v)**.
+    /// Warning: this implementation The time complexity is **O(v)**.
     ///
     /// # Panics
     ///
@@ -745,7 +802,7 @@ impl Order for AdjacencyMatrix {
 }
 
 impl OutNeighbors for AdjacencyMatrix {
-    /// Warning: this implementation runs in **O(v)**.
+    /// Warning: this implementation The time complexity is **O(v)**.
     ///
     /// # Panics
     ///
@@ -760,7 +817,7 @@ impl OutNeighbors for AdjacencyMatrix {
 impl OutNeighborsWeighted for AdjacencyMatrix {
     type Weight = usize;
 
-    /// Warning: this implementation runs in **O(v)**.
+    /// Warning: this implementation The time complexity is **O(v)**.
     ///
     /// # Panics
     ///
@@ -769,12 +826,12 @@ impl OutNeighborsWeighted for AdjacencyMatrix {
         &self,
         u: usize,
     ) -> impl Iterator<Item = (usize, &Self::Weight)> {
-        self.out_neighbors(u).map(move |v| (v, &1))
+        self.out_neighbors(u).map(move |v| (v, &WEIGHT))
     }
 }
 
 impl Outdegree for AdjacencyMatrix {
-    /// Warning: this implementation runs in **O(v)**.
+    /// Warning: this implementation The time complexity is **O(v)**.
     ///
     /// # Panics
     ///

@@ -3,8 +3,8 @@
 //! Dijkstra's algorithm with binary heap finds the shortest path in an
 //! arc-weighted digraph.[^1]
 //!
-//! Runs in **O(v log v + a)** time, where **v** is the number of vertices and
-//! **a** is the number of arcs.
+//! The time complexity is `O(v log v + a)`, where `v` is the digraph's order
+//! and `a` is the digraph's size.
 //!
 //! # Examples
 //!
@@ -205,21 +205,24 @@ where
     #[must_use]
     pub fn new<T>(digraph: &'a D, sources: T) -> Self
     where
+        D: Order,
         T: Iterator<Item = usize> + Clone,
     {
+        let order = digraph.order();
+        let mut heap = BinaryHeap::with_capacity(order);
+        let mut dist = vec![usize::MAX; order];
+        let dist_ptr = dist.as_mut_ptr();
+
+        for u in sources {
+            unsafe { *dist_ptr.add(u) = 0 };
+
+            heap.push((Reverse(0), (None, u)));
+        }
+
         Self {
             digraph,
-            dist: {
-                sources.clone().fold(
-                    vec![usize::MAX; digraph.order()],
-                    |mut dist, u| {
-                        dist[u] = 0;
-
-                        dist
-                    },
-                )
-            },
-            heap: sources.map(|u| (Reverse(0), (None, u))).collect(),
+            dist,
+            heap,
         }
     }
 
@@ -316,14 +319,16 @@ where
     where
         D: Order + OutNeighborsWeighted<Weight = usize>,
     {
-        self.fold(
-            PredecessorTree::new(self.digraph.order()),
-            |mut pred, (u, v)| {
-                pred[v] = u;
+        let mut pred = PredecessorTree::new(self.digraph.order());
+        let pred_ptr = pred.as_mut_ptr();
 
-                pred
-            },
-        )
+        for (u, v) in self {
+            unsafe {
+                *pred_ptr.add(v) = u;
+            }
+        }
+
+        pred
     }
 
     /// Find the shortest path from the source vertices to a target vertex.
@@ -426,9 +431,10 @@ where
         P: Fn(usize) -> bool,
     {
         let mut pred = PredecessorTree::new(self.digraph.order());
+        let pred_ptr = pred.as_mut_ptr();
 
         for (u, v) in self {
-            pred[v] = u;
+            unsafe { *pred_ptr.add(v) = u };
 
             if is_target(v) {
                 return pred.search_by(v, |_, b| b.is_none()).map(
@@ -453,17 +459,20 @@ where
 
     fn next(&mut self) -> Option<Self::Item> {
         let (Reverse(distance), step @ (_, v)) = self.heap.pop()?;
+        let dist_ptr = self.dist.as_mut_ptr();
 
         for (x, w) in self.digraph.out_neighbors_weighted(v) {
             let distance = distance + w;
+            let dist_x = unsafe { dist_ptr.add(x) };
 
-            if distance < self.dist[x] {
-                self.dist[x] = distance;
+            if distance < unsafe { *dist_x } {
+                unsafe { *dist_x = distance };
+
                 self.heap.push((Reverse(distance), (Some(v), x)));
             }
         }
 
-        if distance == self.dist[v] {
+        if distance == unsafe { *dist_ptr.add(v) } {
             return Some(step);
         }
 

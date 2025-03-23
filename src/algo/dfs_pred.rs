@@ -3,8 +3,8 @@
 //! Depth-first search is a digraph traversal algorithm that explores a digraph
 //! by following a path as far as possible before backtracking.
 //!
-//! Runs in **O(v + a)** time, where **v** is the number of vertices and **a**
-//! is the number of arcs.
+//! The time complexity is `O(v + a)`, where `v` is the number of vertices and
+//! `a` is the digraph's size.
 //!
 //! # Examples
 //!
@@ -79,13 +79,10 @@
 //! ]));
 //! ```
 
-use {
-    crate::{
-        Order,
-        OutNeighbors,
-        PredecessorTree,
-    },
-    std::collections::HashSet,
+use crate::{
+    Order,
+    OutNeighbors,
+    PredecessorTree,
 };
 
 type Step = (Option<usize>, usize);
@@ -168,7 +165,7 @@ type Step = (Option<usize>, usize);
 pub struct DfsPred<'a, D> {
     digraph: &'a D,
     stack: Vec<Step>,
-    visited: HashSet<usize>,
+    visited: Vec<bool>,
 }
 
 impl<'a, D> DfsPred<'a, D> {
@@ -181,12 +178,13 @@ impl<'a, D> DfsPred<'a, D> {
     #[must_use]
     pub fn new<T>(digraph: &'a D, sources: T) -> Self
     where
+        D: Order,
         T: Iterator<Item = usize>,
     {
         Self {
             digraph,
             stack: sources.map(|u| (None, u)).collect(),
-            visited: HashSet::new(),
+            visited: vec![false; digraph.order()],
         }
     }
 
@@ -279,14 +277,16 @@ impl<'a, D> DfsPred<'a, D> {
     where
         D: Order + OutNeighbors,
     {
-        self.fold(
-            PredecessorTree::new(self.digraph.order()),
-            |mut pred, step| {
-                pred[step.1] = step.0;
+        let mut pred = PredecessorTree::new(self.digraph.order());
+        let pred_ptr = pred.as_mut_ptr();
 
-                pred
-            },
-        )
+        for (u, v) in self {
+            unsafe {
+                *pred_ptr.add(v) = u;
+            }
+        }
+
+        pred
     }
 }
 
@@ -298,17 +298,24 @@ where
 
     fn next(&mut self) -> Option<Self::Item> {
         let step @ (_, v) = self.stack.pop()?;
+        let visited_ptr = self.visited.as_mut_ptr();
+        let visited_v = unsafe { visited_ptr.add(v) };
 
-        if self.visited.insert(v) {
-            self.stack
-                .extend(self.digraph.out_neighbors(v).filter_map(|x| {
-                    (!self.visited.contains(&x)).then_some((Some(v), x))
-                }));
+        unsafe {
+            if *visited_v {
+                return None;
+            }
 
-            return Some(step);
+            *visited_v = true;
         }
 
-        None
+        for x in self.digraph.out_neighbors(v) {
+            if !unsafe { *visited_ptr.add(x) } {
+                self.stack.push((Some(v), x));
+            }
+        }
+
+        Some(step)
     }
 }
 

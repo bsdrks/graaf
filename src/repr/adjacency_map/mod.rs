@@ -422,7 +422,7 @@ impl Circuit for AdjacencyMap {
 impl Complete for AdjacencyMap {
     /// # Complexity
     ///
-    /// The time complexity is `O(v^2)`, where `v` is the digraph's order.
+    /// The time complexity is `O(v²)`, where `v` is the digraph's order.
     ///
     /// # Panics
     ///
@@ -450,7 +450,7 @@ impl Complete for AdjacencyMap {
 impl Complement for AdjacencyMap {
     /// # Complexity
     ///
-    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's
+    /// The time complexity is `O(v² log v)`, where `v` is the digraph's
     /// order.
     fn complement(&self) -> Self {
         let order = self.order();
@@ -478,7 +478,7 @@ impl Complement for AdjacencyMap {
 impl Converse for AdjacencyMap {
     /// # Complexity
     ///
-    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's
+    /// The time complexity is `O(v² log v)`, where `v` is the digraph's
     /// order.
     fn converse(&self) -> Self {
         let order = self.order();
@@ -553,7 +553,7 @@ impl Empty for AdjacencyMap {
 impl ErdosRenyi for AdjacencyMap {
     /// # Complexity
     ///
-    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's
+    /// The time complexity is `O(v² log v)`, where `v` is the digraph's
     /// order.
     ///
     /// # Panics
@@ -826,7 +826,7 @@ impl Indegree for AdjacencyMap {
 impl IndegreeSequence for AdjacencyMap {
     /// # Complexity
     ///
-    /// The time complexity of full iteration is `O(v^2 log v)`, where `v` is
+    /// The time complexity of full iteration is `O(v² log v)`, where `v` is
     /// the digraph's order.
     fn indegree_sequence(&self) -> impl Iterator<Item = usize> {
         self.vertices().map(move |v| self.indegree(v))
@@ -865,7 +865,7 @@ impl IsComplete for AdjacencyMap {
 impl IsRegular for AdjacencyMap {
     /// # Complexity
     ///
-    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's
+    /// The time complexity is `O(v² log v)`, where `v` is the digraph's
     /// order.
     ///
     /// # Panics
@@ -885,7 +885,7 @@ impl IsRegular for AdjacencyMap {
 impl IsSemicomplete for AdjacencyMap {
     /// # Complexity
     ///
-    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's
+    /// The time complexity is `O(v² log v)`, where `v` is the digraph's
     /// order.
     fn is_semicomplete(&self) -> bool {
         let order = self.order();
@@ -934,7 +934,7 @@ impl IsSimple for AdjacencyMap {
 impl IsTournament for AdjacencyMap {
     /// # Complexity
     ///
-    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's
+    /// The time complexity is `O(v² log v)`, where `v` is the digraph's
     /// order.
     fn is_tournament(&self) -> bool {
         let order = self.order();
@@ -1076,7 +1076,7 @@ impl Path for AdjacencyMap {
 impl RandomTournament for AdjacencyMap {
     /// # Complexity
     ///
-    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's
+    /// The time complexity is `O(v² log v)`, where `v` is the digraph's
     /// order.
     ///
     /// # Panics

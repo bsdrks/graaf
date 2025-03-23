@@ -562,7 +562,8 @@ impl HasWalk for EdgeList {
 }
 
 impl Indegree for EdgeList {
-    /// Warning: runs in **O(a)** time, where **a** is the number of arcs.
+    /// Warning: The time complexity is **O(a)**, where **a** is the
+    /// number of arcs.
     ///
     /// # Panics
     ///
@@ -649,8 +650,9 @@ impl Order for EdgeList {
 }
 
 impl OutNeighbors for EdgeList {
-    /// Warning: runs in **O(a)** time, where **a** is the number of arcs,
-    /// compared to **O(1)** for `AdjacencyList` and `AdjacencyListWeighted`.
+    /// Warning: The time complexity is **O(a)**, where **a** is the
+    /// number of arcs, compared to **O(1)** for `AdjacencyList` and
+    /// `AdjacencyListWeighted`.
     ///
     /// # Panics
     ///
@@ -667,8 +669,9 @@ impl OutNeighbors for EdgeList {
 impl OutNeighborsWeighted for EdgeList {
     type Weight = usize;
 
-    /// Warning: runs in **O(a)**, where **a** is the number of arcs,
-    /// compared to **O(1)** for `AdjacencyList` and `AdjacencyListWeighted`.
+    /// Warning: The time complexity is **O(a)**, where **a** is the number of
+    /// arcs, compared to **O(1)** for `AdjacencyList` and
+    /// `AdjacencyListWeighted`.
     ///
     /// # Panics
     ///
@@ -686,8 +689,9 @@ impl OutNeighborsWeighted for EdgeList {
 }
 
 impl Outdegree for EdgeList {
-    /// Warning: runs in **O(a)**, where **a** is the number of arcs, compared
-    /// to **O(1)** for `AdjacencyList` and `AdjacencyListWeighted`.
+    /// Warning: The time complexity is **O(a)**, where **a** is the number of
+    /// arcs, compared to **O(1)** for `AdjacencyList` and
+    /// `AdjacencyListWeighted`.
     ///
     /// # Panics
     ///

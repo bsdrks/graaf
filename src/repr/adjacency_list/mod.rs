@@ -432,7 +432,7 @@ impl Circuit for AdjacencyList {
 impl Complement for AdjacencyList {
     /// # Complexity
     ///
-    /// The time complexity is `O(v^2)`, where `v` is the digraph's order.
+    /// The time complexity is `O(v²)`, where `v` is the digraph's order.
     fn complement(&self) -> Self {
         let order = self.order();
         let full = (0..order).collect::<Vec<_>>();
@@ -535,7 +535,7 @@ impl Complement for AdjacencyList {
 impl Complete for AdjacencyList {
     /// # Complexity
     ///
-    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's
+    /// The time complexity is `O(v² log v)`, where `v` is the digraph's
     /// order.
     ///
     /// # Panics
@@ -651,7 +651,7 @@ impl DegreeSequence for AdjacencyList {
     ///
     /// For sparse digraphs, the time complexity is `O(v * p)`, where `v` is
     /// the digraph's order and `p` is the number of available threads. For
-    /// dense digraphs, the time complexity is `O(v^2 log v / p)`.
+    /// dense digraphs, the time complexity is `O(v² log v / p)`.
     fn degree_sequence(&self) -> impl Iterator<Item = usize> {
         let order = self.order();
         let t = available_parallelism().map_or(1, NonZero::get);
@@ -706,7 +706,7 @@ impl Empty for AdjacencyList {
 impl ErdosRenyi for AdjacencyList {
     /// # Complexity
     ///
-    /// The time complexity is `O(v^2)`, where `v` is the digraph's order.
+    /// The time complexity is `O(v²)`, where `v` is the digraph's order.
     ///
     /// # Panics
     ///
@@ -972,7 +972,7 @@ impl IsRegular for AdjacencyList {
 impl IsSemicomplete for AdjacencyList {
     /// # Complexity
     ///
-    /// The time complexity is `O(v^2)`, where `v` is the digraph's order.
+    /// The time complexity is `O(v²)`, where `v` is the digraph's order.
     fn is_semicomplete(&self) -> bool {
         let order = self.order();
 
@@ -1047,7 +1047,7 @@ impl IsSimple for AdjacencyList {
 impl IsTournament for AdjacencyList {
     /// # Complexity
     ///
-    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's
+    /// The time complexity is `O(v² log v)`, where `v` is the digraph's
     /// order.
     fn is_tournament(&self) -> bool {
         let order = self.order();
@@ -1203,7 +1203,7 @@ impl RandomRecursiveTree for AdjacencyList {
 impl RandomTournament for AdjacencyList {
     /// # Complexity
     ///
-    /// The time complexity is `O(v^2 log v)`, where `v` is the digraph's
+    /// The time complexity is `O(v² log v)`, where `v` is the digraph's
     /// order.
     ///
     /// # Panics

@@ -1,6 +1,6 @@
 //! Return a vertex's outdegree.
 //!
-//! The outdegree is the number of arcs incident out of a vertex.
+//! The outdegree is the digraph's size incident out of a vertex.
 //!
 //! # Examples
 //!

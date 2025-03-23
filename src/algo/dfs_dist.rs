@@ -3,8 +3,8 @@
 //! Depth-first search is a digraph traversal algorithm that explores a digraph
 //! by following a path as far as possible before backtracking.
 //!
-//! Runs in **O(v + a)** time, where **v** is the number of vertices and **a**
-//! is the number of arcs.
+//! The time complexity is `O(v + a)`, where `v` is the digraph's order and `a`
+//! is the digraph's size.
 //!
 //! # Examples
 //!
@@ -79,9 +79,9 @@
 //! ]));
 //! ```
 
-use {
-    crate::OutNeighbors,
-    std::collections::HashSet,
+use crate::{
+    Order,
+    OutNeighbors,
 };
 
 type Step = (usize, usize);
@@ -164,7 +164,7 @@ type Step = (usize, usize);
 pub struct DfsDist<'a, D> {
     digraph: &'a D,
     stack: Vec<Step>,
-    visited: HashSet<usize>,
+    visited: Vec<bool>,
 }
 
 impl<'a, D> DfsDist<'a, D> {
@@ -177,12 +177,13 @@ impl<'a, D> DfsDist<'a, D> {
     #[must_use]
     pub fn new<T>(digraph: &'a D, sources: T) -> Self
     where
+        D: Order,
         T: Iterator<Item = usize>,
     {
         Self {
             digraph,
             stack: sources.map(|u| (u, 0)).collect(),
-            visited: HashSet::new(),
+            visited: vec![false; digraph.order()],
         }
     }
 }
@@ -194,20 +195,27 @@ where
     type Item = Step;
 
     fn next(&mut self) -> Option<Self::Item> {
-        let (u, dist) = self.stack.pop()?;
+        let step @ (u, w) = self.stack.pop()?;
+        let visited_ptr = self.visited.as_mut_ptr();
+        let visited_u = unsafe { visited_ptr.add(u) };
 
-        if self.visited.insert(u) {
-            let dist_next = dist + 1;
+        unsafe {
+            if *visited_u {
+                return None;
+            }
 
-            self.stack
-                .extend(self.digraph.out_neighbors(u).filter_map(|v| {
-                    (!self.visited.contains(&v)).then_some((v, dist_next))
-                }));
-
-            return Some((u, dist));
+            *visited_u = true;
         }
 
-        None
+        let w = w + 1;
+
+        for v in self.digraph.out_neighbors(u) {
+            if !unsafe { *visited_ptr.add(v) } {
+                self.stack.push((v, w));
+            }
+        }
+
+        Some(step)
     }
 }
 
@@ -232,6 +240,8 @@ mod tests {
     #[test]
     fn iter_bang_jensen_196() {
         let digraph = bang_jensen_196();
+
+        println!("{:?}", DfsDist::new(&digraph, once(0)).collect::<Vec<_>>());
 
         assert!(DfsDist::new(&digraph, once(0)).eq([
             (0, 0),
