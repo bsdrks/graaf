@@ -339,7 +339,7 @@ impl<'a, D> BfsPred<'a, D> {
         let order = self.digraph.order();
         let mut pred = PredecessorTree::new(order);
         let mut cycles = Vec::new();
-        let pred_ptr = pred.as_mut_ptr();
+        let pred_ptr = pred.pred.as_mut_ptr();
 
         while let Some((u, v)) = self.next() {
             unsafe {
@@ -446,7 +446,7 @@ impl<'a, D> BfsPred<'a, D> {
     {
         let order = self.digraph.order();
         let mut pred = PredecessorTree::new(order);
-        let pred_ptr = pred.as_mut_ptr();
+        let pred_ptr = pred.pred.as_mut_ptr();
 
         for (u, v) in self.by_ref() {
             unsafe {
@@ -552,7 +552,7 @@ impl<'a, D> BfsPred<'a, D> {
     {
         let order = self.digraph.order();
         let mut pred = PredecessorTree::new(order);
-        let pred_ptr = pred.as_mut_ptr();
+        let pred_ptr = pred.pred.as_mut_ptr();
 
         for (u, v) in self.by_ref() {
             unsafe {

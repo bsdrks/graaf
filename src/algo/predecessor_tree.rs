@@ -226,27 +226,6 @@ impl PredecessorTree {
 
         None
     }
-
-    /// Returns a mutable pointer to the underlying vector of predecessors.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use graaf::PredecessorTree;
-    ///
-    /// let mut pred =
-    ///     PredecessorTree::from(vec![Some(1), Some(2), Some(3), None]);
-    ///
-    /// unsafe {
-    ///     *pred.as_mut_ptr().add(3) = Some(0);
-    /// }
-    ///
-    /// assert!(pred.into_iter().eq([Some(1), Some(2), Some(3), Some(0)]));
-    /// ```
-    #[must_use]
-    pub fn as_mut_ptr(&mut self) -> *mut Option<usize> {
-        self.pred.as_mut_ptr()
-    }
 }
 
 impl From<Vec<Option<usize>>> for PredecessorTree {

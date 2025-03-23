@@ -320,7 +320,7 @@ where
         D: Order + OutNeighborsWeighted<Weight = usize>,
     {
         let mut pred = PredecessorTree::new(self.digraph.order());
-        let pred_ptr = pred.as_mut_ptr();
+        let pred_ptr = pred.pred.as_mut_ptr();
 
         for (u, v) in self {
             unsafe {
@@ -431,7 +431,7 @@ where
         P: Fn(usize) -> bool,
     {
         let mut pred = PredecessorTree::new(self.digraph.order());
-        let pred_ptr = pred.as_mut_ptr();
+        let pred_ptr = pred.pred.as_mut_ptr();
 
         for (u, v) in self {
             unsafe { *pred_ptr.add(v) = u };

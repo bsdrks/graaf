@@ -4,8 +4,8 @@
 //!
 //! An adjacency matrix is a symmetric binary matrix where a value of `1` at
 //! row `u` and column `v` indicates an arc from vertex `u` to vertex `v`. The
-//! matrix is stored as a bit vector, and is suited for dense digraphs with a
-//! small number of vertices.
+//! matrix is stored as a bit vector, and is suited for dense digraphs of small
+//! order.
 //!
 //! # Example
 //!
@@ -159,8 +159,9 @@ use crate::{
 ///
 /// An adjacency matrix is a symmetric binary matrix where a value of `1` at
 /// row `u` and column `v` indicates an arc from vertex `u` to vertex `v`. The
-/// matrix is stored as a bit vector, and is suited for dense digraphs with a
-/// small number of vertices.
+/// matrix is stored as a bit vector, and is suited for dense digraphs of small
+/// order.
+///
 ///
 /// # Example
 ///
@@ -715,7 +716,9 @@ impl HasWalk for AdjacencyMatrix {
 }
 
 impl Indegree for AdjacencyMatrix {
-    /// Warning: this implementation The time complexity is **O(v)**.
+    /// # Complexity
+    ///
+    /// The time complexity of this implementation is `O(v)`.
     ///
     /// # Panics
     ///
@@ -802,7 +805,9 @@ impl Order for AdjacencyMatrix {
 }
 
 impl OutNeighbors for AdjacencyMatrix {
-    /// Warning: this implementation The time complexity is **O(v)**.
+    /// Warning: The time complexity of this implementation is `O(v)`,
+    /// compared to `O(log v + outdegree)` for `AdjacencyList`, where `v` is
+    /// the digraph's order and `outdegree` is the outdegree of `u`.
     ///
     /// # Panics
     ///
@@ -817,7 +822,9 @@ impl OutNeighbors for AdjacencyMatrix {
 impl OutNeighborsWeighted for AdjacencyMatrix {
     type Weight = usize;
 
-    /// Warning: this implementation The time complexity is **O(v)**.
+    /// Warning: The time complexity of this implementation is `O(v)`,
+    /// compared to `O(log v + outdegree)` for `AdjacencyList`, where `v` is
+    /// the digraph's order and `outdegree` is the outdegree of `u`.
     ///
     /// # Panics
     ///
@@ -831,7 +838,8 @@ impl OutNeighborsWeighted for AdjacencyMatrix {
 }
 
 impl Outdegree for AdjacencyMatrix {
-    /// Warning: this implementation The time complexity is **O(v)**.
+    /// Warning: The time complexity of this implementation is `O(v)`, where
+    /// `v` is the digraph's order, compared to `O(1)` for `AdjacencyList`.
     ///
     /// # Panics
     ///

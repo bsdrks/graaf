@@ -24,11 +24,18 @@
 
 Added
 
-- Expose `DistanceMatrix.dist`.
 - Add and expose `DistanceMatrix.order`.
+- Implement `Impl<W> Index<(usize, usize)> for DistanceMatrix<W>`.
+- Implement `Impl<W> IndexMut<(usize, usize)> for DistanceMatrix<W>`.
+- Implement `Impl<W> Index<RangeFull> for DistanceMatrix<W>`.
+- Implement `Impl<W> IndexMut<RangeFull> for DistanceMatrix<W>`.
+- Implement `Impl<W> Index<Range<usize>> for DistanceMatrix<W>`.
+- Implement `Impl<W> IndexMut<Range<usize>> for DistanceMatrix<W>`.
+- Expose `DistanceMatrix.dist`.
 
 Changed
 
+- **Breaking**: `Output` for `impl<W> Index<usize> for DistanceMatrix<W>` is now `W` instead of `Vec<W>`.
 - **Breaking**: the `digraph` argument to `Bfs::new` is now constrained to `Order`.
 - **Breaking**: the `digraph` argument to `BfsDist::new` is now constrained to `Order`.
 - **Breaking**: the `digraph` argument to `BfsPred::new` is now constrained to `Order`.
@@ -39,7 +46,12 @@ Changed
 - **Breaking**: the `digraph` argument to `DijkstraDist::new` is now constrained to `Order`.
 - **Breaking**: the `digraph` argument to `DijkstraPred::new` is now constrained to `Order`.
 - Change `DistanceMatrix.dist` from `Vec<Vec<W>>` to `Vec<W>`.
+- Define the weight of arcs in `AdjacencyMatrix` as a static constant.
 - Improve documentation formatting.
+- Improve the performance of `AdjacencyMatrix::mask`.
+- Improve the performance of `AdjacencyMatrix::add_arc`.
+- Improve the performance of `AdjacencyMatrix::arc_weight`.
+- Improve the performance of `AdjacencyMatrix::arcs`.
 - Improve the performance of `BellmanFordMoore::distances`.
 - Improve the performance of `BellmanFordMoore::new`.
 - Improve the performance of `Bfs::new`.
@@ -64,6 +76,11 @@ Changed
 - Improve the performance of `DijkstraPred::predecessors`.
 - Improve the performance of `DijkstraPred::shortest_path`.
 - Improve the performance of `DistanceMatrix::new`.
+- Improve the performance of `FloydWarshall::distances`.
+- Improve the performance of `Johnson75::circuits`.
+- Improve the performance of `Johnson75::distances`.
+- Improve the performance of `Johnson75::unblock`.
+- Improve the performance of `PredecessorTree::search_by`.
 - Store `BfsDist` `visited` in a `Vec<bool>` instead of a `HashSet<usize>`.
 - Store `BfsPred` `visited` in a `Vec<bool>` instead of a `HashSet<usize>`.
 - Store `Bfs` `visited` in a `Vec<bool>` instead of a `HashSet<usize>`.

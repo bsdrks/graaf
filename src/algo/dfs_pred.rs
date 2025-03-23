@@ -278,7 +278,7 @@ impl<'a, D> DfsPred<'a, D> {
         D: Order + OutNeighbors,
     {
         let mut pred = PredecessorTree::new(self.digraph.order());
-        let pred_ptr = pred.as_mut_ptr();
+        let pred_ptr = pred.pred.as_mut_ptr();
 
         for (u, v) in self {
             unsafe {
