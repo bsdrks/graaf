@@ -24,7 +24,25 @@
 
 Changed
 
+- **Breaking**: the `digraph` argument to `Bfs::new` is now constrained to `Order`.
+- **Breaking**: the `digraph` argument to `BfsDist::new` is now constrained to `Order`.
+- **Breaking**: the `digraph` argument to `BfsPred::new` is now constrained to `Order`.
+- **Breaking**: the `digraph` argument to `Dfs::new` is now constrained to `Order`.
 - Improve documentation formatting.
+- Improve the performance of `BellmanFordMoore::distances`.
+- Improve the performance of `BellmanFordMoore::new`.
+- Improve the performance of `Bfs::new`.
+- Improve the performance of `Bfs::next`.
+- Improve the performance of `BfsDist::distances`.
+- Improve the performance of `BfsDist::new`.
+- Improve the performance of `BfsDist::next`.
+- Improve the performance of `BfsPred::predecessors`.
+- Improve the performance of `BfsPred::new`.
+- Improve the performance of `BfsPred::next`.
+- Store `Bfs` `visited` in a `Vec<bool>` instead of a `HashSet<usize>`.
+- Store `BfsDist` `visited` in a `Vec<bool>` instead of a `HashSet<usize>`.
+- Store `BfsPred` `visited` in a `Vec<bool>` instead of a `HashSet<usize>`.
+- Store `Dfs` `visited` in a `Vec<bool>` instead of a `HashSet<usize>`.
 
 ## [0.109.0] - 2025-04-17
 

@@ -241,8 +241,6 @@ mod tests {
     fn iter_bang_jensen_196() {
         let digraph = bang_jensen_196();
 
-        println!("{:?}", DfsDist::new(&digraph, once(0)).collect::<Vec<_>>());
-
         assert!(DfsDist::new(&digraph, once(0)).eq([
             (0, 0),
             (7, 1),
