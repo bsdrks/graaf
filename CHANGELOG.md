@@ -25,33 +25,33 @@
 Added
 
 - Add and expose `DistanceMatrix.order`.
-- Implement `Impl<W> Index<(usize, usize)> for DistanceMatrix<W>`.
-- Implement `Impl<W> IndexMut<(usize, usize)> for DistanceMatrix<W>`.
-- Implement `Impl<W> Index<RangeFull> for DistanceMatrix<W>`.
-- Implement `Impl<W> IndexMut<RangeFull> for DistanceMatrix<W>`.
-- Implement `Impl<W> Index<Range<usize>> for DistanceMatrix<W>`.
-- Implement `Impl<W> IndexMut<Range<usize>> for DistanceMatrix<W>`.
 - Expose `DistanceMatrix.dist`.
+- Implement `Impl<W> Index<(usize, usize)> for DistanceMatrix<W>`.
+- Implement `Impl<W> Index<Range<usize>> for DistanceMatrix<W>`.
+- Implement `Impl<W> Index<RangeFull> for DistanceMatrix<W>`.
+- Implement `Impl<W> IndexMut<(usize, usize)> for DistanceMatrix<W>`.
+- Implement `Impl<W> IndexMut<Range<usize>> for DistanceMatrix<W>`.
+- Implement `Impl<W> IndexMut<RangeFull> for DistanceMatrix<W>`.
 
 Changed
 
-- **Breaking**: `Output` for `impl<W> Index<usize> for DistanceMatrix<W>` is now `W` instead of `Vec<W>`.
-- **Breaking**: the `digraph` argument to `Bfs::new` is now constrained to `Order`.
-- **Breaking**: the `digraph` argument to `BfsDist::new` is now constrained to `Order`.
-- **Breaking**: the `digraph` argument to `BfsPred::new` is now constrained to `Order`.
-- **Breaking**: the `digraph` argument to `Dfs::new` is now constrained to `Order`.
-- **Breaking**: the `digraph` argument to `DfsDist::new` is now constrained to `Order`.
-- **Breaking**: the `digraph` argument to `DfsPred::new` is now constrained to `Order`.
-- **Breaking**: the `digraph` argument to `Dijkstra::new` is now constrained to `Order`.
-- **Breaking**: the `digraph` argument to `DijkstraDist::new` is now constrained to `Order`.
-- **Breaking**: the `digraph` argument to `DijkstraPred::new` is now constrained to `Order`.
+- Breaking: `Output` for `impl<W> Index<usize> for DistanceMatrix<W>` is now `W` instead of `Vec<W>`.
+- Breaking: the `digraph` argument to `Bfs::new` is now constrained to `Order`.
+- Breaking: the `digraph` argument to `BfsDist::new` is now constrained to `Order`.
+- Breaking: the `digraph` argument to `BfsPred::new` is now constrained to `Order`.
+- Breaking: the `digraph` argument to `Dfs::new` is now constrained to `Order`.
+- Breaking: the `digraph` argument to `DfsDist::new` is now constrained to `Order`.
+- Breaking: the `digraph` argument to `DfsPred::new` is now constrained to `Order`.
+- Breaking: the `digraph` argument to `Dijkstra::new` is now constrained to `Order`.
+- Breaking: the `digraph` argument to `DijkstraDist::new` is now constrained to `Order`.
+- Breaking: the `digraph` argument to `DijkstraPred::new` is now constrained to `Order`.
 - Change `DistanceMatrix.dist` from `Vec<Vec<W>>` to `Vec<W>`.
 - Define the weight of arcs in `AdjacencyMatrix` as a static constant.
 - Improve documentation formatting.
-- Improve the performance of `AdjacencyMatrix::mask`.
 - Improve the performance of `AdjacencyMatrix::add_arc`.
 - Improve the performance of `AdjacencyMatrix::arc_weight`.
 - Improve the performance of `AdjacencyMatrix::arcs`.
+- Improve the performance of `AdjacencyMatrix::mask`.
 - Improve the performance of `BellmanFordMoore::distances`.
 - Improve the performance of `BellmanFordMoore::new`.
 - Improve the performance of `Bfs::new`.

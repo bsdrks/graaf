@@ -46,7 +46,7 @@ fn floyd_warshall(bencher: Bencher<'_, '_>) {
     let mut floyd_warshall = FloydWarshall::new(&digraph);
 
     assert!(
-        floyd_warshall.distances()[0].iter().eq(&DISTANCES_ISIZE),
+        floyd_warshall.distances()[0..6].iter().eq(&DISTANCES_ISIZE),
         "distances are incorrect"
     );
 
