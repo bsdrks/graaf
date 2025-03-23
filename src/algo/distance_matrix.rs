@@ -129,6 +129,7 @@ use std::{
 /// assert!(dist[42..49].eq(&[9, 8, 5, 9, 10, 10, 0]));
 /// ```
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[non_exhaustive]
 pub struct DistanceMatrix<W> {
     /// The distance matrix.
     pub dist: Vec<W>,

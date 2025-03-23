@@ -84,6 +84,7 @@ use std::{
 ///     .eq([None, Some(0), Some(1), None, Some(1), Some(2)]));
 /// ```
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[non_exhaustive]
 pub struct PredecessorTree {
     /// The predecessors of each vertex.
     pub pred: Vec<Option<usize>>,
