@@ -22,6 +22,11 @@
 
 ## [0.110.0] - 2025-04-23
 
+Added
+
+- Expose `DistanceMatrix.dist`.
+- Add and expose `DistanceMatrix.order`.
+
 Changed
 
 - **Breaking**: the `digraph` argument to `Bfs::new` is now constrained to `Order`.
@@ -33,6 +38,7 @@ Changed
 - **Breaking**: the `digraph` argument to `Dijkstra::new` is now constrained to `Order`.
 - **Breaking**: the `digraph` argument to `DijkstraDist::new` is now constrained to `Order`.
 - **Breaking**: the `digraph` argument to `DijkstraPred::new` is now constrained to `Order`.
+- Change `DistanceMatrix.dist` from `Vec<Vec<W>>` to `Vec<W>`.
 - Improve documentation formatting.
 - Improve the performance of `BellmanFordMoore::distances`.
 - Improve the performance of `BellmanFordMoore::new`.
@@ -57,12 +63,15 @@ Changed
 - Improve the performance of `DijkstraPred::next`.
 - Improve the performance of `DijkstraPred::predecessors`.
 - Improve the performance of `DijkstraPred::shortest_path`.
+- Improve the performance of `DistanceMatrix::new`.
 - Store `BfsDist` `visited` in a `Vec<bool>` instead of a `HashSet<usize>`.
 - Store `BfsPred` `visited` in a `Vec<bool>` instead of a `HashSet<usize>`.
 - Store `Bfs` `visited` in a `Vec<bool>` instead of a `HashSet<usize>`.
 - Store `DfsDist` `visited` in a `Vec<bool>` instead of a `HashSet<usize>`.
 - Store `DfsPred` `visited` in a `Vec<bool>` instead of a `HashSet<usize>`.
 - Store `Dfs` `visited` in a `Vec<bool>` instead of a `HashSet<usize>`.
+- `DistanceMatrix` is now marked as non-exhaustive.
+- `PredecessorTree` is now marked as non-exhaustive.
 
 ## [0.109.0] - 2025-04-17
 

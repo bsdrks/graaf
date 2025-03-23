@@ -212,28 +212,31 @@ impl<'a, D> FloydWarshall<'a, D> {
     where
         D: ArcsWeighted<Weight = isize> + Order + Vertices,
     {
+        let dist_ptr = self.dist.dist.as_mut_ptr();
+        let order = self.digraph.order();
+
         for (u, v, &w) in self.digraph.arcs_weighted() {
             unsafe {
-                self.dist.set_unchecked(u, v, w);
+                *dist_ptr.add(u * order + v) = w;
             }
         }
 
         for i in 0..self.digraph.order() {
             unsafe {
-                self.dist.set_unchecked(i, i, 0);
+                *dist_ptr.add(i * order + i) = 0;
             }
         }
 
         for i in self.digraph.vertices() {
             for j in self.digraph.vertices() {
-                let a = unsafe { *self.dist.get_unchecked(j, i) };
+                let a = unsafe { *dist_ptr.add(j * order + i) };
 
                 if a == isize::MAX {
                     continue;
                 }
 
                 for k in self.digraph.vertices() {
-                    let b = unsafe { *self.dist.get_unchecked(i, k) };
+                    let b = unsafe { *dist_ptr.add(i * order + k) };
 
                     if b == isize::MAX {
                         continue;
@@ -241,9 +244,9 @@ impl<'a, D> FloydWarshall<'a, D> {
 
                     let s = a + b;
 
-                    if s < unsafe { *self.dist.get_unchecked(j, k) } {
+                    if s < unsafe { *dist_ptr.add(j * order + k) } {
                         unsafe {
-                            self.dist.set_unchecked(j, k, s);
+                            *dist_ptr.add(j * order + k) = s;
                         }
                     }
                 }

@@ -193,60 +193,6 @@ impl<W> DistanceMatrix<W> {
         }
     }
 
-    /// Unsafe getter for the distance matrix.
-    ///
-    /// # Safety
-    ///
-    /// The caller must ensure that `u` and `v` are valid indices.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use graaf::DistanceMatrix;
-    ///
-    /// let dist = DistanceMatrix::new(4, 0);
-    ///
-    /// unsafe {
-    ///     assert_eq!(dist.get_unchecked(0, 1), &0);
-    ///     assert_eq!(dist.get_unchecked(1, 0), &0);
-    /// }
-    /// ```
-    #[must_use]
-    #[inline]
-    pub unsafe fn get_unchecked(&self, u: usize, v: usize) -> &W {
-        let dist_ptr = self.dist.as_ptr();
-
-        &*dist_ptr.add(u * self.order + v)
-    }
-
-    /// Unsafe setter for the distance matrix.
-    ///
-    /// # Safety
-    ///
-    /// The caller must ensure that `u` and `v` are valid indices.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use graaf::DistanceMatrix;
-    ///
-    /// let mut dist = DistanceMatrix::new(4, 0);
-    ///
-    /// unsafe {
-    ///     dist.set_unchecked(0, 1, 5);
-    ///     dist.set_unchecked(1, 0, 5);
-    /// }
-    ///
-    /// assert_eq!(dist[(0, 1)], 5);
-    /// assert_eq!(dist[(1, 0)], 5);
-    /// ```
-    #[inline]
-    pub unsafe fn set_unchecked(&mut self, u: usize, v: usize, w: W) {
-        let dist_ptr = self.dist.as_mut_ptr();
-
-        *dist_ptr.add(u * self.order + v) = w;
-    }
-
     /// Return a digraph's center.
     ///
     /// A digraph's center is the set of vertices with the smallest
