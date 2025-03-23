@@ -20,7 +20,7 @@
 - Return iterators instead of vectors.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 
-## [0.109.1] - 2025-04-18
+## [0.110.0] - 2025-04-23
 
 Changed
 
@@ -28,6 +28,11 @@ Changed
 - **Breaking**: the `digraph` argument to `BfsDist::new` is now constrained to `Order`.
 - **Breaking**: the `digraph` argument to `BfsPred::new` is now constrained to `Order`.
 - **Breaking**: the `digraph` argument to `Dfs::new` is now constrained to `Order`.
+- **Breaking**: the `digraph` argument to `DfsDist::new` is now constrained to `Order`.
+- **Breaking**: the `digraph` argument to `DfsPred::new` is now constrained to `Order`.
+- **Breaking**: the `digraph` argument to `Dijkstra::new` is now constrained to `Order`.
+- **Breaking**: the `digraph` argument to `DijkstraDist::new` is now constrained to `Order`.
+- **Breaking**: the `digraph` argument to `DijkstraPred::new` is now constrained to `Order`.
 - Improve documentation formatting.
 - Improve the performance of `BellmanFordMoore::distances`.
 - Improve the performance of `BellmanFordMoore::new`.
@@ -36,12 +41,27 @@ Changed
 - Improve the performance of `BfsDist::distances`.
 - Improve the performance of `BfsDist::new`.
 - Improve the performance of `BfsDist::next`.
-- Improve the performance of `BfsPred::predecessors`.
 - Improve the performance of `BfsPred::new`.
 - Improve the performance of `BfsPred::next`.
-- Store `Bfs` `visited` in a `Vec<bool>` instead of a `HashSet<usize>`.
+- Improve the performance of `BfsPred::predecessors`.
+- Improve the performance of `Dfs::next`.
+- Improve the performance of `DfsDist::next`.
+- Improve the performance of `DfsPred::next`.
+- Improve the performance of `DfsPred::predecessors`.
+- Improve the performance of `Dijkstra::new`.
+- Improve the performance of `Dijkstra::next`.
+- Improve the performance of `DijkstraDist::distances`.
+- Improve the performance of `DijkstraDist::new`.
+- Improve the performance of `DijkstraDist::next`.
+- Improve the performance of `DijkstraPred::new`.
+- Improve the performance of `DijkstraPred::next`.
+- Improve the performance of `DijkstraPred::predecessors`.
+- Improve the performance of `DijkstraPred::shortest_path`.
 - Store `BfsDist` `visited` in a `Vec<bool>` instead of a `HashSet<usize>`.
 - Store `BfsPred` `visited` in a `Vec<bool>` instead of a `HashSet<usize>`.
+- Store `Bfs` `visited` in a `Vec<bool>` instead of a `HashSet<usize>`.
+- Store `DfsDist` `visited` in a `Vec<bool>` instead of a `HashSet<usize>`.
+- Store `DfsPred` `visited` in a `Vec<bool>` instead of a `HashSet<usize>`.
 - Store `Dfs` `visited` in a `Vec<bool>` instead of a `HashSet<usize>`.
 
 ## [0.109.0] - 2025-04-17

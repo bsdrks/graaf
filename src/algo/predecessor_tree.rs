@@ -85,7 +85,8 @@ use std::{
 /// ```
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub struct PredecessorTree {
-    pred: Vec<Option<usize>>,
+    /// The predecessors of each vertex.
+    pub pred: Vec<Option<usize>>,
 }
 
 impl PredecessorTree {
