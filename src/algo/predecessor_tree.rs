@@ -37,7 +37,6 @@
 //!     .eq([None, Some(0), Some(1), None, Some(1), Some(2)]));
 //! ```
 use std::{
-    collections::HashSet,
     ops::{
         Index,
         IndexMut,
@@ -85,8 +84,10 @@ use std::{
 ///     .eq([None, Some(0), Some(1), None, Some(1), Some(2)]));
 /// ```
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[non_exhaustive]
 pub struct PredecessorTree {
-    pred: Vec<Option<usize>>,
+    /// The predecessors of each vertex.
+    pub pred: Vec<Option<usize>>,
 }
 
 impl PredecessorTree {
@@ -195,7 +196,8 @@ impl PredecessorTree {
             return Some(vec![s]);
         }
 
-        let mut visited = HashSet::new();
+        let mut visited = vec![false; self.pred.len()];
+        let visited_ptr = visited.as_mut_ptr();
         let mut path = vec![s];
 
         while let Some(&v) = self.pred.get(s) {
@@ -204,8 +206,12 @@ impl PredecessorTree {
             }
 
             if let Some(v) = v {
-                if !visited.insert(v) {
+                if unsafe { *visited_ptr.add(v) } {
                     break;
+                }
+
+                unsafe {
+                    *visited_ptr.add(v) = true;
                 }
 
                 if v != s {

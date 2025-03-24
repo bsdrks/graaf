@@ -3,8 +3,8 @@
 //! Find the shortest distances from a source vertex to all other vertices in
 //! an arc-weighted digraph with negative weights.
 //!
-//! Runs in **O(va)** time (worst-case), where **v** is the number of vertices
-//! and **a** is the number of arcs.
+//! The time complexity is `O(v a)`, where `v` is the digraph's order and `a`
+//! is the digraph's size.
 //!
 //! # Examples
 //!
@@ -69,14 +69,11 @@
 
 use crate::{
     ArcsWeighted,
-    Order,
+    ContiguousOrder,
 };
 
 /// Find the shortest distances from a source vertex to all other vertices in
 /// an arc-weighted digraph with negative weights.
-///
-/// Runs in **O(va)** time (worst-case), where **v** is the number of vertices
-/// and **a** is the number of arcs.
 ///
 /// # Arguments
 ///
@@ -156,6 +153,10 @@ pub struct BellmanFordMoore<'a, D> {
 impl<'a, D> BellmanFordMoore<'a, D> {
     /// Construct a new Bellman-Ford-Moore algorithm.
     ///
+    /// # Panics
+    ///
+    /// Panics if the source vertex is not in the digraph.
+    ///
     /// # Arguments
     ///
     /// * `digraph`: The digraph.
@@ -163,23 +164,24 @@ impl<'a, D> BellmanFordMoore<'a, D> {
     #[must_use]
     pub fn new(digraph: &'a D, s: usize) -> Self
     where
-        D: Order,
+        D: ContiguousOrder,
     {
-        let order = digraph.order();
+        let order = digraph.contiguous_order();
 
-        Self {
-            digraph,
-            dist: (0..order)
-                .map(|u| if u == s { 0 } else { isize::MAX })
-                .collect(),
+        assert!(s < order, "The source vertex is not in the digraph.");
+
+        let mut dist = vec![isize::MAX; order];
+        let dist_ptr = dist.as_mut_ptr();
+
+        unsafe {
+            *dist_ptr.add(s) = 0;
         }
+
+        Self { digraph, dist }
     }
 
     /// Find the shortest distances from a source vertex to all other vertices
     /// in an arc-weighted digraph with negative weights.
-    ///
-    /// Runs in **O(va)** time (worst-case), where **v** is the number of
-    /// vertices and **a** is the number of arcs.
     ///
     /// # Returns
     ///
@@ -251,25 +253,90 @@ impl<'a, D> BellmanFordMoore<'a, D> {
     #[must_use]
     pub fn distances(&mut self) -> Option<&[isize]>
     where
-        D: ArcsWeighted<Weight = isize> + Order,
+        D: ArcsWeighted<Weight = isize> + ContiguousOrder,
     {
-        for _ in 1..self.digraph.order() {
+        let order = self.digraph.contiguous_order();
+        let arcs = self.digraph.arcs_weighted().collect::<Vec<_>>();
+        let arcs_len = arcs.len();
+        let arcs_ptr = arcs.as_ptr();
+
+        for _ in 1..order {
             let mut updated = false;
+            let dist_ptr = self.dist.as_mut_ptr();
+            let mut i = 0;
 
-            for (u, v, &w) in self.digraph.arcs_weighted() {
-                let u = self.dist[u];
+            while i < arcs_len {
+                unsafe {
+                    {
+                        // Safety: `i` is always less than `arcs_len`, so `i`
+                        // is a valid index.
+                        let (u, v, w) = *arcs_ptr.add(i);
+                        let dist_u = *dist_ptr.add(u);
 
-                if u == isize::MAX {
-                    continue;
+                        if dist_u != isize::MAX {
+                            let w = dist_u + w;
+                            let dist_v = dist_ptr.add(v);
+
+                            if *dist_v > w {
+                                *dist_v = w;
+                                updated = true;
+                            }
+                        }
+                    }
+
+                    i += 1;
+
+                    if i < arcs_len {
+                        let (u, v, w) = *arcs_ptr.add(i);
+                        let dist_u = *dist_ptr.add(u);
+
+                        if dist_u != isize::MAX {
+                            let w = dist_u + w;
+                            let dist_v = dist_ptr.add(v);
+
+                            if *dist_v > w {
+                                *dist_v = w;
+                                updated = true;
+                            }
+                        }
+                    }
+
+                    i += 1;
+
+                    if i < arcs_len {
+                        let (u, v, w) = *arcs_ptr.add(i);
+                        let dist_u = *dist_ptr.add(u);
+
+                        if dist_u != isize::MAX {
+                            let w = dist_u + w;
+                            let dist_v = dist_ptr.add(v);
+
+                            if *dist_v > w {
+                                *dist_v = w;
+                                updated = true;
+                            }
+                        }
+                    }
+
+                    i += 1;
+
+                    if i < arcs_len {
+                        let (u, v, w) = *arcs_ptr.add(i);
+                        let dist_u = *dist_ptr.add(u);
+
+                        if dist_u != isize::MAX {
+                            let w = dist_u + w;
+                            let dist_v = dist_ptr.add(v);
+
+                            if *dist_v > w {
+                                *dist_v = w;
+                                updated = true;
+                            }
+                        }
+                    }
                 }
 
-                let w = u + w;
-
-                if self.dist[v] > w {
-                    self.dist[v] = w;
-
-                    updated = true;
-                }
+                i += 1;
             }
 
             if !updated {
@@ -277,15 +344,22 @@ impl<'a, D> BellmanFordMoore<'a, D> {
             }
         }
 
-        self.digraph
-            .arcs_weighted()
-            .all(|(u, v, &w)| {
-                let u = self.dist[u];
+        {
+            let dist_ptr = self.dist.as_mut_ptr();
 
-                u == isize::MAX || self.dist[v] <= u + w
-            })
-            .then_some(&self.dist)
-            .map(|v| &**v)
+            for i in 0..arcs_len {
+                unsafe {
+                    let (u, v, w) = *arcs_ptr.add(i);
+                    let dist_u = *dist_ptr.add(u);
+
+                    if dist_u != isize::MAX && *dist_ptr.add(v) > dist_u + w {
+                        return None;
+                    }
+                }
+            }
+        }
+
+        Some(&self.dist[..])
     }
 }
 
@@ -556,7 +630,7 @@ mod tests {
     }
 
     #[test]
-    fn test_negative_circuit() {
+    fn negative_circuit() {
         let mut digraph = AdjacencyListWeighted::<isize>::empty(3);
 
         digraph.add_arc_weighted(0, 1, -2);

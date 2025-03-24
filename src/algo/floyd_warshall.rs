@@ -3,7 +3,7 @@
 //! The Floyd[^1]-Warshall algorithm finds the shortest paths between all
 //! vertex pairs in an arc-weighted digraph.
 //!
-//! Runs in **O(v³)** time, where **v** is the number of vertices.
+//! The time complexity is `O(v³)`, where `v` is the digraph's order.
 //!
 //! # Examples
 //!
@@ -49,13 +49,13 @@
 //! let mut floyd_warshall = FloydWarshall::new(&digraph);
 //! let dist = floyd_warshall.distances();
 //!
-//! assert!(dist[0].eq(&[0, 5, 3, 2, 3, 3, 4]));
-//! assert!(dist[1].eq(&[3, 0, 5, 1, 2, 2, 3]));
-//! assert!(dist[2].eq(&[13, 12, 0, 13, 14, 14, 4]));
-//! assert!(dist[3].eq(&[11, 10, 4, 0, 1, 1, 2]));
-//! assert!(dist[4].eq(&[16, 15, 3, 16, 0, 17, 7]));
-//! assert!(dist[5].eq(&[10, 9, 6, 10, 11, 0, 1]));
-//! assert!(dist[6].eq(&[9, 8, 5, 9, 10, 10, 0]));
+//! assert!(dist[0..7].eq(&[0, 5, 3, 2, 3, 3, 4]));
+//! assert!(dist[7..14].eq(&[3, 0, 5, 1, 2, 2, 3]));
+//! assert!(dist[14..21].eq(&[13, 12, 0, 13, 14, 14, 4]));
+//! assert!(dist[21..28].eq(&[11, 10, 4, 0, 1, 1, 2]));
+//! assert!(dist[28..35].eq(&[16, 15, 3, 16, 0, 17, 7]));
+//! assert!(dist[35..42].eq(&[10, 9, 6, 10, 11, 0, 1]));
+//! assert!(dist[42..49].eq(&[9, 8, 5, 9, 10, 10, 0]));
 //! ```
 //!
 //! [^1]: Robert W. Floyd. 1962. Algorithm 97: Shortest path. Commun.
@@ -72,8 +72,6 @@ use crate::{
 ///
 /// The Floyd[^1]-Warshall algorithm finds the shortest paths between all
 /// vertex pairs in an arc-weighted digraph.
-///
-/// Runs in **O(v³)** time, where **v** is the number of vertices.
 ///
 /// # Examples
 ///
@@ -119,13 +117,13 @@ use crate::{
 /// let mut floyd_warshall = FloydWarshall::new(&digraph);
 /// let dist = floyd_warshall.distances();
 ///
-/// assert!(dist[0].eq(&[0, 5, 3, 2, 3, 3, 4]));
-/// assert!(dist[1].eq(&[3, 0, 5, 1, 2, 2, 3]));
-/// assert!(dist[2].eq(&[13, 12, 0, 13, 14, 14, 4]));
-/// assert!(dist[3].eq(&[11, 10, 4, 0, 1, 1, 2]));
-/// assert!(dist[4].eq(&[16, 15, 3, 16, 0, 17, 7]));
-/// assert!(dist[5].eq(&[10, 9, 6, 10, 11, 0, 1]));
-/// assert!(dist[6].eq(&[9, 8, 5, 9, 10, 10, 0]));
+/// assert!(dist[0..7].eq(&[0, 5, 3, 2, 3, 3, 4]));
+/// assert!(dist[7..14].eq(&[3, 0, 5, 1, 2, 2, 3]));
+/// assert!(dist[14..21].eq(&[13, 12, 0, 13, 14, 14, 4]));
+/// assert!(dist[21..28].eq(&[11, 10, 4, 0, 1, 1, 2]));
+/// assert!(dist[28..35].eq(&[16, 15, 3, 16, 0, 17, 7]));
+/// assert!(dist[35..42].eq(&[10, 9, 6, 10, 11, 0, 1]));
+/// assert!(dist[42..49].eq(&[9, 8, 5, 9, 10, 10, 0]));
 /// ```
 ///
 /// [^1]: Robert W. Floyd. 1962. Algorithm 97: Shortest path. Commun.
@@ -155,8 +153,6 @@ impl<'a, D> FloydWarshall<'a, D> {
 
     /// Find the shortest paths between all vertex pairs in an arc-weighted
     /// digraph.
-    ///
-    /// Runs in **O(v³)** time, where **v** is the number of vertices.
     ///
     /// # Examples
     ///
@@ -202,13 +198,13 @@ impl<'a, D> FloydWarshall<'a, D> {
     /// let mut floyd_warshall = FloydWarshall::new(&digraph);
     /// let dist = floyd_warshall.distances();
     ///
-    /// assert!(dist[0].eq(&[0, 5, 3, 2, 3, 3, 4]));
-    /// assert!(dist[1].eq(&[3, 0, 5, 1, 2, 2, 3]));
-    /// assert!(dist[2].eq(&[13, 12, 0, 13, 14, 14, 4]));
-    /// assert!(dist[3].eq(&[11, 10, 4, 0, 1, 1, 2]));
-    /// assert!(dist[4].eq(&[16, 15, 3, 16, 0, 17, 7]));
-    /// assert!(dist[5].eq(&[10, 9, 6, 10, 11, 0, 1]));
-    /// assert!(dist[6].eq(&[9, 8, 5, 9, 10, 10, 0]));
+    /// assert!(dist[0..7].eq(&[0, 5, 3, 2, 3, 3, 4]));
+    /// assert!(dist[7..14].eq(&[3, 0, 5, 1, 2, 2, 3]));
+    /// assert!(dist[14..21].eq(&[13, 12, 0, 13, 14, 14, 4]));
+    /// assert!(dist[21..28].eq(&[11, 10, 4, 0, 1, 1, 2]));
+    /// assert!(dist[28..35].eq(&[16, 15, 3, 16, 0, 17, 7]));
+    /// assert!(dist[35..42].eq(&[10, 9, 6, 10, 11, 0, 1]));
+    /// assert!(dist[42..49].eq(&[9, 8, 5, 9, 10, 10, 0]));
     /// ```
     #[doc(alias = "apsp")]
     #[must_use]
@@ -216,24 +212,31 @@ impl<'a, D> FloydWarshall<'a, D> {
     where
         D: ArcsWeighted<Weight = isize> + Order + Vertices,
     {
+        let dist_ptr = self.dist.dist.as_mut_ptr();
+        let order = self.digraph.order();
+
         for (u, v, &w) in self.digraph.arcs_weighted() {
-            self.dist[u][v] = w;
+            unsafe {
+                *dist_ptr.add(u * order + v) = w;
+            }
         }
 
         for i in 0..self.digraph.order() {
-            self.dist[i][i] = 0;
+            unsafe {
+                *dist_ptr.add(i * order + i) = 0;
+            }
         }
 
         for i in self.digraph.vertices() {
             for j in self.digraph.vertices() {
-                let a = self.dist[j][i];
+                let a = unsafe { *dist_ptr.add(j * order + i) };
 
                 if a == isize::MAX {
                     continue;
                 }
 
                 for k in self.digraph.vertices() {
-                    let b = self.dist[i][k];
+                    let b = unsafe { *dist_ptr.add(i * order + k) };
 
                     if b == isize::MAX {
                         continue;
@@ -241,8 +244,10 @@ impl<'a, D> FloydWarshall<'a, D> {
 
                     let s = a + b;
 
-                    if s < self.dist[j][k] {
-                        self.dist[j][k] = s;
+                    if s < unsafe { *dist_ptr.add(j * order + k) } {
+                        unsafe {
+                            *dist_ptr.add(j * order + k) = s;
+                        }
                     }
                 }
             }
@@ -286,22 +291,22 @@ mod tests {
         let mut floyd_warshall = FloydWarshall::new(&digraph);
         let dist = floyd_warshall.distances();
 
-        assert_eq!(dist[0][0], 0);
-        assert_eq!(dist[0][1], -1);
-        assert_eq!(dist[0][2], -2);
-        assert_eq!(dist[0][3], 0);
-        assert_eq!(dist[1][0], 4);
-        assert_eq!(dist[1][1], 0);
-        assert_eq!(dist[1][2], 2);
-        assert_eq!(dist[1][3], 4);
-        assert_eq!(dist[2][0], 5);
-        assert_eq!(dist[2][1], 1);
-        assert_eq!(dist[2][2], 0);
-        assert_eq!(dist[2][3], 2);
-        assert_eq!(dist[3][0], 3);
-        assert_eq!(dist[3][1], -1);
-        assert_eq!(dist[3][2], 1);
-        assert_eq!(dist[3][3], 0);
+        assert_eq!(dist[(0, 0)], 0);
+        assert_eq!(dist[(0, 1)], -1);
+        assert_eq!(dist[(0, 2)], -2);
+        assert_eq!(dist[(0, 3)], 0);
+        assert_eq!(dist[(1, 0)], 4);
+        assert_eq!(dist[(1, 1)], 0);
+        assert_eq!(dist[(1, 2)], 2);
+        assert_eq!(dist[(1, 3)], 4);
+        assert_eq!(dist[(2, 0)], 5);
+        assert_eq!(dist[(2, 1)], 1);
+        assert_eq!(dist[(2, 2)], 0);
+        assert_eq!(dist[(2, 3)], 2);
+        assert_eq!(dist[(3, 0)], 3);
+        assert_eq!(dist[(3, 1)], -1);
+        assert_eq!(dist[(3, 2)], 1);
+        assert_eq!(dist[(3, 3)], 0);
     }
 
     #[test]
@@ -310,7 +315,7 @@ mod tests {
         let mut floyd_warshall = FloydWarshall::new(&digraph);
         let dist = floyd_warshall.distances();
 
-        assert_eq!(dist[0][0], 0);
+        assert_eq!(dist[(0, 0)], 0);
     }
 
     #[test]
@@ -319,13 +324,13 @@ mod tests {
         let mut floyd_warshall = FloydWarshall::new(&digraph);
         let dist = floyd_warshall.distances();
 
-        assert_eq!(dist[0][0], 0);
-        assert_eq!(dist[0][1], 1);
-        assert_eq!(dist[0][2], 1);
-        assert_eq!(dist[0][3], 2);
-        assert_eq!(dist[0][4], 2);
-        assert_eq!(dist[0][5], 2);
-        assert_eq!(dist[0][6], 3);
+        assert_eq!(dist[(0, 0)], 0);
+        assert_eq!(dist[(0, 1)], 1);
+        assert_eq!(dist[(0, 2)], 1);
+        assert_eq!(dist[(0, 3)], 2);
+        assert_eq!(dist[(0, 4)], 2);
+        assert_eq!(dist[(0, 5)], 2);
+        assert_eq!(dist[(0, 6)], 3);
     }
 
     #[test]
@@ -334,12 +339,12 @@ mod tests {
         let mut floyd_warshall = FloydWarshall::new(&digraph);
         let dist = floyd_warshall.distances();
 
-        assert_eq!(dist[0][0], 0);
-        assert_eq!(dist[0][1], 5);
-        assert_eq!(dist[0][2], 3);
-        assert_eq!(dist[0][3], 6);
-        assert_eq!(dist[0][4], 4);
-        assert_eq!(dist[0][5], 7);
+        assert_eq!(dist[(0, 0)], 0);
+        assert_eq!(dist[(0, 1)], 5);
+        assert_eq!(dist[(0, 2)], 3);
+        assert_eq!(dist[(0, 3)], 6);
+        assert_eq!(dist[(0, 4)], 4);
+        assert_eq!(dist[(0, 5)], 7);
     }
 
     #[test]
@@ -348,12 +353,12 @@ mod tests {
         let mut floyd_warshall = FloydWarshall::new(&digraph);
         let dist = floyd_warshall.distances();
 
-        assert_eq!(dist[0][0], 0);
-        assert_eq!(dist[0][1], 8);
-        assert_eq!(dist[0][2], 3);
-        assert_eq!(dist[0][3], 1);
-        assert_eq!(dist[0][4], -4);
-        assert_eq!(dist[0][5], -1);
+        assert_eq!(dist[(0, 0)], 0);
+        assert_eq!(dist[(0, 1)], 8);
+        assert_eq!(dist[(0, 2)], 3);
+        assert_eq!(dist[(0, 3)], 1);
+        assert_eq!(dist[(0, 4)], -4);
+        assert_eq!(dist[(0, 5)], -1);
     }
 
     #[test]
@@ -362,9 +367,9 @@ mod tests {
         let mut floyd_warshall = FloydWarshall::new(&digraph);
         let dist = floyd_warshall.distances();
 
-        assert_eq!(dist[0][0], 0);
-        assert_eq!(dist[0][1], 1);
-        assert_eq!(dist[0][2], 1);
+        assert_eq!(dist[(0, 0)], 0);
+        assert_eq!(dist[(0, 1)], 1);
+        assert_eq!(dist[(0, 2)], 1);
     }
 
     #[test]
@@ -373,12 +378,12 @@ mod tests {
         let mut floyd_warshall = FloydWarshall::new(&digraph);
         let dist = floyd_warshall.distances();
 
-        assert_eq!(dist[0][0], 0);
-        assert_eq!(dist[0][1], 1);
-        assert_eq!(dist[0][2], 2);
-        assert_eq!(dist[0][3], 1);
-        assert_eq!(dist[0][4], 2);
-        assert_eq!(dist[0][5], 3);
+        assert_eq!(dist[(0, 0)], 0);
+        assert_eq!(dist[(0, 1)], 1);
+        assert_eq!(dist[(0, 2)], 2);
+        assert_eq!(dist[(0, 3)], 1);
+        assert_eq!(dist[(0, 4)], 2);
+        assert_eq!(dist[(0, 5)], 3);
     }
 
     #[test]
@@ -387,16 +392,16 @@ mod tests {
         let mut floyd_warshall = FloydWarshall::new(&digraph);
         let dist = floyd_warshall.distances();
 
-        assert_eq!(dist[0][0], 0);
-        assert_eq!(dist[0][1], 0);
-        assert_eq!(dist[0][2], 1);
-        assert_eq!(dist[0][3], 0);
-        assert_eq!(dist[0][4], 0);
-        assert_eq!(dist[0][5], 0);
-        assert_eq!(dist[0][6], 1);
-        assert_eq!(dist[0][7], 0);
-        assert_eq!(dist[0][8], 0);
-        assert_eq!(dist[0][9], 1);
+        assert_eq!(dist[(0, 0)], 0);
+        assert_eq!(dist[(0, 1)], 0);
+        assert_eq!(dist[(0, 2)], 1);
+        assert_eq!(dist[(0, 3)], 0);
+        assert_eq!(dist[(0, 4)], 0);
+        assert_eq!(dist[(0, 5)], 0);
+        assert_eq!(dist[(0, 6)], 1);
+        assert_eq!(dist[(0, 7)], 0);
+        assert_eq!(dist[(0, 8)], 0);
+        assert_eq!(dist[(0, 9)], 1);
     }
 
     #[test]
@@ -405,10 +410,10 @@ mod tests {
         let mut floyd_warshall = FloydWarshall::new(&digraph);
         let dist = floyd_warshall.distances();
 
-        assert_eq!(dist[0][0], 0);
-        assert_eq!(dist[0][1], 1);
-        assert_eq!(dist[0][2], 3);
-        assert_eq!(dist[0][3], 10);
+        assert_eq!(dist[(0, 0)], 0);
+        assert_eq!(dist[(0, 1)], 1);
+        assert_eq!(dist[(0, 2)], 3);
+        assert_eq!(dist[(0, 3)], 10);
     }
 
     #[test]
@@ -417,9 +422,9 @@ mod tests {
         let mut floyd_warshall = FloydWarshall::new(&digraph);
         let dist = floyd_warshall.distances();
 
-        assert_eq!(dist[0][0], 0);
-        assert_eq!(dist[0][1], 2);
-        assert_eq!(dist[0][2], 4);
-        assert_eq!(dist[0][3], dist.infinity);
+        assert_eq!(dist[(0, 0)], 0);
+        assert_eq!(dist[(0, 1)], 2);
+        assert_eq!(dist[(0, 2)], 4);
+        assert_eq!(dist[(0, 3)], dist.infinity);
     }
 }

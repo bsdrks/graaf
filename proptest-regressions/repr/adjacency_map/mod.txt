@@ -9,3 +9,5 @@ cc 2920ae2bc23a5b89485d6d3dbac41a53705586ab335986b93c14c34af8c84e90 # shrinks to
 cc 71cc13c9219f5853d251240cfba30ba52ee96d7d907443095abd3653a6fe52bb # shrinks to order = 3, seed = 440
 cc d58d13b446b47fb310d6d218f0ae8c83a97ca74745ccc025477972e971acb384 # shrinks to order = 4
 cc 1db0cd4f4021db8e857957ae3888b0397192563b92e0e1fadeabf12d49046b79 # shrinks to order = 5
+cc b72028f3360a117e0e2ce1f93b20928044af7a245cdbca1dbba58fe09fcd9431 # shrinks to order = 4, seed = 858
+cc bb9bc5a36c3b80e86ee430fd5db0b64120410128d500aa6e3740debe6fc62f55 # shrinks to order_1 = 1, order_2 = 2, seed_1 = 0, seed_2 = 0

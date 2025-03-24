@@ -1,0 +1,6 @@
+[build]
+incremental = true
+jobs = 8
+
+[term]
+verbose = false

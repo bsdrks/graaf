@@ -3,8 +3,8 @@
 //! Depth-first search is a digraph traversal algorithm that explores a digraph
 //! by following a path as far as possible before backtracking.
 //!
-//! Runs in **O(v + a)** time, where **v** is the number of vertices and **a**
-//! is the number of arcs.
+//! The time complexity is `O(v + a)`, where `v` is the digraph's order and `a`
+//! is the digraph's size.
 //!
 //! # Examples
 //!
@@ -65,9 +65,9 @@
 //! assert!(Dfs::new(&digraph, [3, 7].into_iter()).eq([7, 6, 5, 3, 0, 1, 4]));
 //! ```
 
-use {
-    crate::OutNeighbors,
-    std::collections::HashSet,
+use crate::{
+    Order,
+    OutNeighbors,
 };
 
 /// Depth-first search.
@@ -134,7 +134,7 @@ use {
 pub struct Dfs<'a, D> {
     digraph: &'a D,
     stack: Vec<usize>,
-    visited: HashSet<usize>,
+    visited: Vec<bool>,
 }
 
 impl<'a, D> Dfs<'a, D> {
@@ -147,12 +147,13 @@ impl<'a, D> Dfs<'a, D> {
     #[must_use]
     pub fn new<T>(digraph: &'a D, sources: T) -> Self
     where
+        D: Order,
         T: Iterator<Item = usize>,
     {
         Self {
             digraph,
             stack: sources.collect(),
-            visited: HashSet::new(),
+            visited: vec![false; digraph.order()],
         }
     }
 }
@@ -165,18 +166,23 @@ where
 
     fn next(&mut self) -> Option<Self::Item> {
         let u = self.stack.pop()?;
+        let visited_ptr = self.visited.as_mut_ptr();
 
-        if self.visited.insert(u) {
-            self.stack.extend(
-                self.digraph
-                    .out_neighbors(u)
-                    .filter(|v| !self.visited.contains(v)),
-            );
-
-            return Some(u);
+        if unsafe { *visited_ptr.add(u) } {
+            return None;
         }
 
-        None
+        unsafe {
+            *visited_ptr.add(u) = true;
+        }
+
+        for v in self.digraph.out_neighbors(u) {
+            if !unsafe { *visited_ptr.add(v) } {
+                self.stack.push(v);
+            }
+        }
+
+        Some(u)
     }
 }
 

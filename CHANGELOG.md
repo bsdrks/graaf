@@ -20,6 +20,147 @@
 - Return iterators instead of vectors.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 
+## [0.111.0] - 2025-04-24
+
+Added
+
+- Add `ContiguousOrder` trait.
+
+Changed
+
+- Breaking: constrain the `digraph` argument to `ContiguousOrder` in `BellmanFordMoore::new`.
+- Reorganize test macros.
+
+## [0.110.0] - 2025-04-23
+
+Added
+
+- Add and expose `DistanceMatrix.order`.
+- Expose `DistanceMatrix.dist`.
+- Implement `Impl<W> Index<(usize, usize)> for DistanceMatrix<W>`.
+- Implement `Impl<W> Index<Range<usize>> for DistanceMatrix<W>`.
+- Implement `Impl<W> Index<RangeFull> for DistanceMatrix<W>`.
+- Implement `Impl<W> IndexMut<(usize, usize)> for DistanceMatrix<W>`.
+- Implement `Impl<W> IndexMut<Range<usize>> for DistanceMatrix<W>`.
+- Implement `Impl<W> IndexMut<RangeFull> for DistanceMatrix<W>`.
+
+Changed
+
+- Breaking: `Output` for `impl<W> Index<usize> for DistanceMatrix<W>` is now `W` instead of `Vec<W>`.
+- Breaking: the `digraph` argument to `Bfs::new` is now constrained to `Order`.
+- Breaking: the `digraph` argument to `BfsDist::new` is now constrained to `Order`.
+- Breaking: the `digraph` argument to `BfsPred::new` is now constrained to `Order`.
+- Breaking: the `digraph` argument to `Dfs::new` is now constrained to `Order`.
+- Breaking: the `digraph` argument to `DfsDist::new` is now constrained to `Order`.
+- Breaking: the `digraph` argument to `DfsPred::new` is now constrained to `Order`.
+- Breaking: the `digraph` argument to `Dijkstra::new` is now constrained to `Order`.
+- Breaking: the `digraph` argument to `DijkstraDist::new` is now constrained to `Order`.
+- Breaking: the `digraph` argument to `DijkstraPred::new` is now constrained to `Order`.
+- Change `DistanceMatrix.dist` from `Vec<Vec<W>>` to `Vec<W>`.
+- Define the weight of arcs in `AdjacencyMatrix` as a static constant.
+- Improve documentation formatting.
+- Improve the performance of `AdjacencyMatrix::add_arc`.
+- Improve the performance of `AdjacencyMatrix::arc_weight`.
+- Improve the performance of `AdjacencyMatrix::arcs`.
+- Improve the performance of `AdjacencyMatrix::mask`.
+- Improve the performance of `BellmanFordMoore::distances`.
+- Improve the performance of `BellmanFordMoore::new`.
+- Improve the performance of `Bfs::new`.
+- Improve the performance of `Bfs::next`.
+- Improve the performance of `BfsDist::distances`.
+- Improve the performance of `BfsDist::new`.
+- Improve the performance of `BfsDist::next`.
+- Improve the performance of `BfsPred::new`.
+- Improve the performance of `BfsPred::next`.
+- Improve the performance of `BfsPred::predecessors`.
+- Improve the performance of `Dfs::next`.
+- Improve the performance of `DfsDist::next`.
+- Improve the performance of `DfsPred::next`.
+- Improve the performance of `DfsPred::predecessors`.
+- Improve the performance of `Dijkstra::new`.
+- Improve the performance of `Dijkstra::next`.
+- Improve the performance of `DijkstraDist::distances`.
+- Improve the performance of `DijkstraDist::new`.
+- Improve the performance of `DijkstraDist::next`.
+- Improve the performance of `DijkstraPred::new`.
+- Improve the performance of `DijkstraPred::next`.
+- Improve the performance of `DijkstraPred::predecessors`.
+- Improve the performance of `DijkstraPred::shortest_path`.
+- Improve the performance of `DistanceMatrix::new`.
+- Improve the performance of `FloydWarshall::distances`.
+- Improve the performance of `Johnson75::circuits`.
+- Improve the performance of `Johnson75::distances`.
+- Improve the performance of `Johnson75::unblock`.
+- Improve the performance of `PredecessorTree::search_by`.
+- Store `BfsDist` `visited` in a `Vec<bool>` instead of a `HashSet<usize>`.
+- Store `BfsPred` `visited` in a `Vec<bool>` instead of a `HashSet<usize>`.
+- Store `Bfs` `visited` in a `Vec<bool>` instead of a `HashSet<usize>`.
+- Store `DfsDist` `visited` in a `Vec<bool>` instead of a `HashSet<usize>`.
+- Store `DfsPred` `visited` in a `Vec<bool>` instead of a `HashSet<usize>`.
+- Store `Dfs` `visited` in a `Vec<bool>` instead of a `HashSet<usize>`.
+- `DistanceMatrix` is now marked as non-exhaustive.
+- `PredecessorTree` is now marked as non-exhaustive.
+
+## [0.109.0] - 2025-04-17
+
+Added
+
+- Add benchmark `op_arcs`.
+- Add benchmark `op_degree_sequence`.
+- Add benchmark `op_union`.
+- Document contiguity of `AdjacencyList`.
+- Document contiguity of `AdjacencyMap`.
+- Document isolated vertices in `AdjacencyMap`.
+- Document time complexity of implementations in `adjacency_list`.
+- Document time complexity of implementations in `adjacency_map`.
+- Document panic in `AdjacencyList::is_sink`.
+- Document panic in `AdjacencyMap::is_sink`.
+
+Changed
+
+- Breaking: include empty vertices in `AdjacencyMap::filter_vertices`.
+- Breaking: rename `GrowingNetwork` to `RandomRecursiveTree`.
+- Define the weight of arcs in `AdjacencyList` as a static constant.
+- Define the weight of arcs in `AdjacencyMap` as a static constant.
+- Improve the performance of `AdjacencyList::add_arc`.
+- Improve the performance of `AdjacencyList::arcs`.
+- Improve the performance of `AdjacencyList::biclique`.
+- Improve the performance of `AdjacencyList::circuit`.
+- Improve the performance of `AdjacencyList::complement`.
+- Improve the performance of `AdjacencyList::complete`.
+- Improve the performance of `AdjacencyList::converse`.
+- Improve the performance of `AdjacencyList::cycle`.
+- Improve the performance of `AdjacencyList::degree_sequence`.
+- Improve the performance of `AdjacencyList::has_walk`.
+- Improve the performance of `AdjacencyList::in_neighbors`.
+- Improve the performance of `AdjacencyList::indegree_sequence`.
+- Improve the performance of `AdjacencyList::is_complete`.
+- Improve the performance of `AdjacencyList::is_semicomplete`.
+- Improve the performance of `AdjacencyList::is_sink`.
+- Improve the performance of `AdjacencyList::is_tournament`.
+- Improve the performance of `AdjacencyList::is_tournament`.
+- Improve the performance of `AdjacencyList::out_neighbors`.
+- Improve the performance of `AdjacencyList::outdegree`.
+- Improve the performance of `AdjacencyList::random_recursive_tree`.
+- Improve the performance of `AdjacencyList::random_tournament`.
+- Improve the performance of `AdjacencyList::union`.
+- Improve the performance of `AdjacencyMap::complete`.
+- Improve the performance of `AdjacencyMap::converse`.
+- Improve the performance of `AdjacencyMap::erdos_renyi`.
+- Improve the performance of `AdjacencyMap::random_recursive_tree`.
+- Improve the performance of `AdjacencyMap::has_walk`.
+- Improve the performance of `AdjacencyMap::is_complete`.
+- Improve the performance of `AdjacencyMap::is_semicomplete`.
+- Improve the performance of `AdjacencyMap::is_tournament`.
+- Improve the performance of `AdjacencyMap::out_neighbors`.
+- Improve the performance of `AdjacencyMap::random_tournament`.
+- Improve the performance of `AdjacencyMap::union`.
+- Improve the performance of `AdjacencyMap::wheel`.
+- Improve the performance of pseudo-random number generation.
+- Replace repeat().take() with repeat_with() in `AdjacencyMap::biclique
+- Update divan to 0.1.17
+- Update proptest to 1.6.0
+
 ## [0.108.0] - 2024-11-25
 
 Changed

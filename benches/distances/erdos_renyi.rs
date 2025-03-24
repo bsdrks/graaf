@@ -135,8 +135,8 @@ fn floyd_warshall(bencher: Bencher<'_, '_>) {
     let mut floyd_warshall = FloydWarshall::new(&digraph);
     let dist = floyd_warshall.distances();
 
-    assert_eq!(dist[0][0], 0, "expected 0, got {}", dist[0][0]);
-    assert_eq!(dist[0][999], 6, "expected 6, got {}", dist[0][999]);
+    assert_eq!(dist[(0, 0)], 0, "expected 0, got {}", dist[(0, 0)]);
+    assert_eq!(dist[(0, 999)], 6, "expected 6, got {}", dist[(0, 999)]);
 
     bencher.bench_local(|| {
         let mut floyd_warshall = FloydWarshall::new(&digraph);

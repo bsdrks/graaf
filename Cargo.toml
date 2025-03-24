@@ -1,6 +1,6 @@
 [package]
 name = "graaf"
-version = "0.108.0"
+version = "0.111.0"
 edition = "2021"
 authors = ["Bas Dirks <bas.dirks@protonmail.com>"]
 categories = ["algorithms", "data-structures", "mathematics"]
@@ -10,6 +10,12 @@ keywords = ["bfs", "digraph", "dijkstra", "graph"]
 license = "MIT OR Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/bsdrks/graaf"
+
+[profile.dev]
+incremental = true
+
+[profile.release]
+incremental = true
 
 [lints.clippy]
 # groups
@@ -35,6 +41,7 @@ unwrap_in_result = "deny"
 # overwrites
 large_stack_frames = { level = "allow", priority = 1 }
 large_stack_arrays = { level = "allow", priority = 1 }
+many_single_char_names = { level = "allow", priority = 1 }
 
 [lints.rust]
 # groups
@@ -56,8 +63,8 @@ all = "deny"
 [lib]
 
 [dev-dependencies]
-divan = "0.1.14"
-proptest = "1.5.0"
+divan = "0.1.17"
+proptest = "1.6.0"
 
 [[bench]]
 name = "distances_bang_jensen_94"
@@ -135,8 +142,8 @@ path = "benches/gen/erdos_renyi.rs"
 harness = false
 
 [[bench]]
-name = "gen_growing_network"
-path = "benches/gen/growing_network.rs"
+name = "gen_random_recursive_tree"
+path = "benches/gen/random_recursive_tree.rs"
 harness = false
 
 [[bench]]
@@ -160,6 +167,11 @@ path = "benches/gen/wheel.rs"
 harness = false
 
 [[bench]]
+name = "op_arcs"
+path = "benches/op/arcs.rs"
+harness = false
+
+[[bench]]
 name = "op_complement"
 path = "benches/op/complement.rs"
 harness = false
@@ -167,6 +179,11 @@ harness = false
 [[bench]]
 name = "op_converse"
 path = "benches/op/converse.rs"
+harness = false
+
+[[bench]]
+name = "op_degree_sequence"
+path = "benches/op/degree_sequence.rs"
 harness = false
 
 [[bench]]
@@ -202,6 +219,11 @@ harness = false
 [[bench]]
 name = "op_outdegree_is_sink"
 path = "benches/op/outdegree_is_sink.rs"
+harness = false
+
+[[bench]]
+name = "op_union"
+path = "benches/op/union.rs"
 harness = false
 
 [[bench]]

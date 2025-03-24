@@ -4,8 +4,8 @@
 //!
 //! An adjacency matrix is a symmetric binary matrix where a value of `1` at
 //! row `u` and column `v` indicates an arc from vertex `u` to vertex `v`. The
-//! matrix is stored as a bit vector, and is suited for dense digraphs with a
-//! small number of vertices.
+//! matrix is stored as a bit vector, and is suited for dense digraphs of small
+//! order.
 //!
 //! # Example
 //!
@@ -114,13 +114,12 @@ use crate::{
     AddArc,
     AdjacencyList,
     AdjacencyMap,
-    ArcWeight,
     Arcs,
-    ArcsWeighted,
     Biclique,
     Circuit,
     Complement,
     Complete,
+    ContiguousOrder,
     Converse,
     Cycle,
     Degree,
@@ -128,7 +127,6 @@ use crate::{
     EdgeList,
     Empty,
     ErdosRenyi,
-    GrowingNetwork,
     HasArc,
     HasEdge,
     HasWalk,
@@ -142,9 +140,9 @@ use crate::{
     IsTournament,
     Order,
     OutNeighbors,
-    OutNeighborsWeighted,
     Outdegree,
     Path,
+    RandomRecursiveTree,
     RandomTournament,
     RemoveArc,
     SemidegreeSequence,
@@ -159,8 +157,9 @@ use crate::{
 ///
 /// An adjacency matrix is a symmetric binary matrix where a value of `1` at
 /// row `u` and column `v` indicates an arc from vertex `u` to vertex `v`. The
-/// matrix is stored as a bit vector, and is suited for dense digraphs with a
-/// small number of vertices.
+/// matrix is stored as a bit vector, and is suited for dense digraphs of small
+/// order.
+///
 ///
 /// # Example
 ///
@@ -315,7 +314,7 @@ impl AdjacencyMatrix {
 
         let i = self.index(u, v);
 
-        self.blocks[i >> 6] ^= Self::mask(i);
+        unsafe { *self.blocks.get_unchecked_mut(i >> 6) ^= Self::mask(i) };
     }
 }
 
@@ -332,34 +331,70 @@ impl AddArc for AdjacencyMatrix {
 
         let i = self.index(u, v);
 
-        self.blocks[i >> 6] |= Self::mask(i);
+        unsafe { *self.blocks.get_unchecked_mut(i >> 6) |= Self::mask(i) };
     }
 }
 
-impl ArcWeight<usize> for AdjacencyMatrix {
-    type Weight = usize;
+#[derive(Clone, Debug)]
+struct ArcsIterator<'a> {
+    matrix: &'a AdjacencyMatrix,
+    block_index: usize,
+    current_bits: usize,
+    current_base: usize,
+}
 
-    fn arc_weight(&self, u: usize, v: usize) -> Option<&Self::Weight> {
-        self.has_arc(u, v).then_some(&1)
+impl<'a> ArcsIterator<'a> {
+    const fn new(matrix: &'a AdjacencyMatrix) -> Self {
+        Self {
+            matrix,
+            block_index: 0,
+            current_bits: 0,
+            current_base: 0,
+        }
+    }
+}
+
+impl Iterator for ArcsIterator<'_> {
+    type Item = (usize, usize);
+
+    #[inline]
+    fn next(&mut self) -> Option<Self::Item> {
+        while self.block_index < self.matrix.blocks.len()
+            || self.current_bits != 0
+        {
+            if self.current_bits == 0 {
+                unsafe {
+                    self.current_bits =
+                        *self.matrix.blocks.get_unchecked(self.block_index);
+                }
+
+                self.current_base = self.block_index * 64;
+                self.block_index += 1;
+            }
+
+            if self.current_bits != 0 {
+                let bit = self.current_bits.trailing_zeros() as usize;
+
+                self.current_bits &= self.current_bits - 1;
+
+                let cell_index = self.current_base + bit;
+
+                if cell_index < self.matrix.order * self.matrix.order {
+                    let u = cell_index / self.matrix.order;
+                    let v = cell_index % self.matrix.order;
+
+                    return Some((u, v));
+                }
+            }
+        }
+
+        None
     }
 }
 
 impl Arcs for AdjacencyMatrix {
     fn arcs(&self) -> impl Iterator<Item = (usize, usize)> {
-        self.vertices().flat_map(move |u| {
-            self.vertices()
-                .filter_map(move |v| self.has_arc(u, v).then_some((u, v)))
-        })
-    }
-}
-
-impl ArcsWeighted for AdjacencyMatrix {
-    type Weight = usize;
-
-    fn arcs_weighted(
-        &self,
-    ) -> impl Iterator<Item = (usize, usize, &Self::Weight)> {
-        self.arcs().map(|(u, v)| (u, v, &1))
+        ArcsIterator::new(self)
     }
 }
 
@@ -450,6 +485,12 @@ impl Complete for AdjacencyMatrix {
     }
 }
 
+impl ContiguousOrder for AdjacencyMatrix {
+    fn contiguous_order(&self) -> usize {
+        self.order
+    }
+}
+
 impl Converse for AdjacencyMatrix {
     fn converse(&self) -> Self {
         let mut converse = Self::empty(self.order);
@@ -502,7 +543,7 @@ impl Empty for AdjacencyMatrix {
     fn empty(order: usize) -> Self {
         assert!(order > 0, "a digraph has at least one vertex");
 
-        let n = (order * order + 63) / 64;
+        let n = (order * order).div_ceil(64);
 
         Self {
             blocks: vec![0; n],
@@ -605,12 +646,12 @@ where
     }
 }
 
-impl GrowingNetwork for AdjacencyMatrix {
+impl RandomRecursiveTree for AdjacencyMatrix {
     /// # Panics
     ///
     /// * Panics if `order` is zero.
     /// * Panics if conversion from `u64` to `usize` fails.
-    fn growing_network(order: usize, seed: u64) -> Self {
+    fn random_recursive_tree(order: usize, seed: u64) -> Self {
         if order == 1 {
             return Self::trivial();
         }
@@ -658,7 +699,9 @@ impl HasWalk for AdjacencyMatrix {
 }
 
 impl Indegree for AdjacencyMatrix {
-    /// Warning: this implementation runs in **O(v)**.
+    /// # Complexity
+    ///
+    /// The time complexity of this implementation is `O(v)`.
     ///
     /// # Panics
     ///
@@ -745,7 +788,9 @@ impl Order for AdjacencyMatrix {
 }
 
 impl OutNeighbors for AdjacencyMatrix {
-    /// Warning: this implementation runs in **O(v)**.
+    /// Warning: The time complexity of this implementation is `O(v)`,
+    /// compared to `O(log v + outdegree)` for `AdjacencyList`, where `v` is
+    /// the digraph's order and `outdegree` is the outdegree of `u`.
     ///
     /// # Panics
     ///
@@ -757,24 +802,9 @@ impl OutNeighbors for AdjacencyMatrix {
     }
 }
 
-impl OutNeighborsWeighted for AdjacencyMatrix {
-    type Weight = usize;
-
-    /// Warning: this implementation runs in **O(v)**.
-    ///
-    /// # Panics
-    ///
-    /// Panics if `u` isn't in the digraph.
-    fn out_neighbors_weighted(
-        &self,
-        u: usize,
-    ) -> impl Iterator<Item = (usize, &Self::Weight)> {
-        self.out_neighbors(u).map(move |v| (v, &1))
-    }
-}
-
 impl Outdegree for AdjacencyMatrix {
-    /// Warning: this implementation runs in **O(v)**.
+    /// Warning: The time complexity of this implementation is `O(v)`, where
+    /// `v` is the digraph's order, compared to `O(1)` for `AdjacencyList`.
     ///
     /// # Panics
     ///
@@ -786,6 +816,8 @@ impl Outdegree for AdjacencyMatrix {
     }
 
     fn is_sink(&self, u: usize) -> bool {
+        assert!(u < self.order, "u = {u} isn't in the digraph");
+
         self.vertices().all(|v| !self.has_arc(u, v))
     }
 }
@@ -928,14 +960,574 @@ impl Wheel for AdjacencyMatrix {
 }
 
 #[cfg(test)]
+mod tests_add_arc_self_loop {
+    use {
+        super::*,
+        crate::test_add_arc_self_loop,
+    };
+
+    test_add_arc_self_loop!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod tests_add_arc_out_of_bounds {
+    use {
+        super::*,
+        crate::test_add_arc_out_of_bounds,
+    };
+
+    test_add_arc_out_of_bounds!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod tests_arcs {
+    use {
+        super::*,
+        crate::test_arcs,
+    };
+
+    test_arcs!(crate::repr::adjacency_matrix::fixture);
+}
+
+#[cfg(test)]
+mod tests_biclique {
+    use {
+        super::*,
+        crate::test_biclique,
+    };
+
+    test_biclique!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod tests_circuit {
+    use {
+        super::*,
+        crate::test_circuit,
+    };
+
+    test_circuit!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod tests_complete {
+    use {
+        super::*,
+        crate::test_complete,
+    };
+
+    test_complete!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod tests_converse {
+    use {
+        super::*,
+        crate::test_converse,
+    };
+
+    test_converse!(crate::repr::adjacency_matrix::fixture);
+}
+
+#[cfg(test)]
+mod tests_cycle {
+    use {
+        super::*,
+        crate::test_cycle,
+    };
+
+    test_cycle!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod tests_degree {
+    use {
+        super::*,
+        crate::test_degree,
+    };
+
+    test_degree!(crate::repr::adjacency_matrix::fixture);
+}
+
+#[cfg(test)]
+mod tests_degree_sequence {
+    use {
+        super::*,
+        crate::test_degree_sequence,
+    };
+
+    test_degree_sequence!(crate::repr::adjacency_matrix::fixture);
+}
+
+#[cfg(test)]
+mod tests_empty {
+    use {
+        super::*,
+        crate::test_empty,
+    };
+
+    test_empty!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod tests_erdos_renyi {
+    use {
+        super::*,
+        crate::test_erdos_renyi,
+    };
+
+    test_erdos_renyi!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod tests_has_walk {
+    use {
+        super::*,
+        crate::test_has_walk,
+    };
+
+    test_has_walk!(crate::repr::adjacency_matrix::fixture);
+}
+
+#[cfg(test)]
+mod tests_in_neighbors {
+    use {
+        super::*,
+        crate::test_in_neighbors,
+    };
+
+    test_in_neighbors!(crate::repr::adjacency_matrix::fixture);
+}
+
+#[cfg(test)]
+mod tests_indegree {
+    use {
+        super::*,
+        crate::test_indegree,
+    };
+
+    test_indegree!(AdjacencyMatrix, crate::repr::adjacency_matrix::fixture);
+}
+
+#[cfg(test)]
+mod tests_indegree_sequence {
+    use {
+        super::*,
+        crate::test_indegree_sequence,
+    };
+
+    test_indegree_sequence!(crate::repr::adjacency_matrix::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_balanced {
+    use crate::{
+        test_is_balanced,
+        IsBalanced,
+    };
+
+    test_is_balanced!(crate::repr::adjacency_matrix::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_complete {
+    use {
+        super::*,
+        crate::test_is_complete,
+    };
+
+    test_is_complete!(crate::repr::adjacency_matrix::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_isolated {
+    use crate::{
+        test_is_isolated,
+        IsIsolated,
+    };
+
+    test_is_isolated!(crate::repr::adjacency_matrix::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_oriented {
+    use crate::{
+        test_is_oriented,
+        IsOriented,
+    };
+
+    test_is_oriented!(crate::repr::adjacency_matrix::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_pendant {
+    use crate::{
+        test_is_pendant,
+        IsPendant,
+    };
+
+    test_is_pendant!(crate::repr::adjacency_matrix::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_regular {
+    use {
+        super::*,
+        crate::test_is_regular,
+    };
+
+    test_is_regular!(crate::repr::adjacency_matrix::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_semicomplete {
+    use {
+        super::*,
+        crate::test_is_semicomplete,
+    };
+
+    test_is_semicomplete!(crate::repr::adjacency_matrix::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_simple {
+    use {
+        super::*,
+        crate::test_is_simple,
+    };
+
+    test_is_simple!(crate::repr::adjacency_matrix::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_symmetric {
+    use crate::{
+        test_is_symmetric,
+        IsSymmetric,
+    };
+
+    test_is_symmetric!(crate::repr::adjacency_matrix::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_tournament {
+    use {
+        super::*,
+        crate::test_is_tournament,
+    };
+
+    test_is_tournament!(crate::repr::adjacency_matrix::fixture);
+}
+
+#[cfg(test)]
+mod tests_order {
+    use crate::{
+        test_order,
+        Order,
+    };
+
+    test_order!(crate::repr::adjacency_matrix::fixture);
+}
+
+#[cfg(test)]
+mod tests_out_neighbors {
+    use {
+        super::*,
+        crate::test_out_neighbors,
+    };
+
+    test_out_neighbors!(crate::repr::adjacency_matrix::fixture);
+}
+
+#[cfg(test)]
+mod tests_outdegree {
+    use {
+        super::*,
+        crate::test_outdegree,
+    };
+
+    test_outdegree!(AdjacencyMatrix, crate::repr::adjacency_matrix::fixture);
+}
+
+#[cfg(test)]
+mod tests_path {
+    use {
+        super::*,
+        crate::test_path,
+    };
+
+    test_path!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod tests_random_recursive_tree {
+    use {
+        super::*,
+        crate::test_random_recursive_tree,
+    };
+
+    test_random_recursive_tree!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod tests_random_tournament {
+    use {
+        super::*,
+        crate::test_random_tournament,
+    };
+
+    test_random_tournament!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod tests_remove_arc {
+    use {
+        super::*,
+        crate::test_remove_arc,
+    };
+
+    test_remove_arc!(AdjacencyMatrix, crate::repr::adjacency_matrix::fixture);
+}
+
+#[cfg(test)]
+mod tests_semidegree_sequence {
+    use {
+        super::*,
+        crate::test_semidegree_sequence,
+    };
+
+    test_semidegree_sequence!(crate::repr::adjacency_matrix::fixture);
+}
+
+#[cfg(test)]
+mod tests_sinks {
+    use crate::{
+        test_sinks,
+        Sinks,
+    };
+
+    test_sinks!(crate::repr::adjacency_matrix::fixture);
+}
+
+#[cfg(test)]
+mod tests_size {
+    use crate::{
+        test_size,
+        Size,
+    };
+
+    test_size!(crate::repr::adjacency_matrix::fixture);
+}
+
+#[cfg(test)]
+mod tests_sources {
+    use crate::{
+        test_sources,
+        Sources,
+    };
+
+    test_sources!(crate::repr::adjacency_matrix::fixture);
+}
+
+#[cfg(test)]
+mod tests_star {
+    use {
+        super::*,
+        crate::test_star,
+    };
+
+    test_star!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod tests_wheel {
+    use {
+        super::*,
+        crate::test_wheel,
+    };
+
+    test_wheel!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod proptests_add_arc {
+    use {
+        super::*,
+        crate::proptest_add_arc,
+    };
+
+    proptest_add_arc!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod proptests_biclique {
+    use {
+        super::*,
+        crate::proptest_biclique,
+    };
+
+    proptest_biclique!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod proptests_circuit {
+    use {
+        super::*,
+        crate::proptest_circuit,
+    };
+
+    proptest_circuit!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod proptests_complete {
+    use {
+        super::*,
+        crate::proptest_complete,
+    };
+
+    proptest_complete!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod proptests_contiguous_order {
+    use {
+        super::*,
+        crate::{
+            proptest_contiguous_order,
+            ContiguousOrder,
+        },
+    };
+
+    proptest_contiguous_order!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod proptests_cycle {
+    use {
+        super::*,
+        crate::proptest_cycle,
+    };
+
+    proptest_cycle!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod proptests_empty {
+    use {
+        super::*,
+        crate::proptest_empty,
+    };
+
+    proptest_empty!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod proptests_empty_complement {
+    use {
+        super::*,
+        crate::proptest_empty_complement,
+    };
+
+    proptest_empty_complement!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod proptests_empty_complete {
+    use {
+        super::*,
+        crate::proptest_empty_complete,
+    };
+
+    proptest_empty_complete!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod proptests_erdos_renyi {
+    use {
+        super::*,
+        crate::proptest_erdos_renyi,
+    };
+
+    proptest_erdos_renyi!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod proptests_has_arc {
+    use {
+        super::*,
+        crate::proptest_has_arc,
+    };
+
+    proptest_has_arc!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod proptests_path {
+    use {
+        super::*,
+        crate::proptest_path,
+    };
+
+    proptest_path!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod proptests_random_recursive_tree {
+    use {
+        super::*,
+        crate::proptest_random_recursive_tree,
+    };
+
+    proptest_random_recursive_tree!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod proptests_random_tournament {
+    use {
+        super::*,
+        crate::proptest_random_tournament,
+    };
+
+    proptest_random_tournament!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod proptests_star {
+    use {
+        super::*,
+        crate::proptest_star,
+    };
+
+    proptest_star!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod proptests_union {
+    use {
+        super::*,
+        crate::proptest_union,
+    };
+
+    proptest_union!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
+mod proptests_wheel {
+    use {
+        super::*,
+        crate::proptest_wheel,
+    };
+
+    proptest_wheel!(AdjacencyMatrix);
+}
+
+#[cfg(test)]
 mod tests {
     use {
         super::*,
-        crate::test_unweighted,
         std::collections::BTreeSet,
     };
-
-    test_unweighted!(AdjacencyMatrix, repr::adjacency_matrix::fixture);
 
     #[test]
     #[should_panic(expected = "v = 1 isn't in the digraph")]

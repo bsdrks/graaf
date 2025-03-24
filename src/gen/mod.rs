@@ -158,20 +158,21 @@
 //! ]));
 //! ```
 //!
-//! ## Growing network
+//! ## random recursive tree
 //!
-//! Generate a [`growing network`](GrowingNetwork) digraph of order `6`.
+//! Generate a [`random recursive tree`](RandomRecursiveTree) digraph of order
+//! `6`.
 //!
-//! ![A growing network of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/growing_network_1-0.89.3.svg?)
+//! ![A random recursive tree of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/random_recursive_tree_1-0.89.3.svg?)
 //!
 //! ```
 //! use graaf::{
 //!     AdjacencyList,
 //!     Arcs,
-//!     GrowingNetwork,
+//!     RandomRecursiveTree,
 //! };
 //!
-//! assert!(AdjacencyList::growing_network(6, 0).arcs().eq([
+//! assert!(AdjacencyList::random_recursive_tree(6, 0).arcs().eq([
 //!     (1, 0),
 //!     (2, 0),
 //!     (3, 1),
@@ -288,9 +289,9 @@ pub mod complete;
 pub mod cycle;
 pub mod empty;
 pub mod erdos_renyi;
-pub mod growing_network;
 pub mod path;
 pub mod prng;
+pub mod random_recursive_tree;
 pub mod random_tournament;
 pub mod star;
 pub mod wheel;
@@ -302,8 +303,8 @@ pub use {
     cycle::Cycle,
     empty::Empty,
     erdos_renyi::ErdosRenyi,
-    growing_network::GrowingNetwork,
     path::Path,
+    random_recursive_tree::RandomRecursiveTree,
     random_tournament::RandomTournament,
     star::Star,
     wheel::Wheel,

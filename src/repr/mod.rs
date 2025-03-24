@@ -5,7 +5,6 @@ pub mod adjacency_list_weighted;
 pub mod adjacency_map;
 pub mod adjacency_matrix;
 pub mod edge_list;
-pub mod test_unweighted;
 
 pub use {
     adjacency_list::AdjacencyList,

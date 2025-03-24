@@ -12,3 +12,10 @@ cc 6b979a1df2894c7417f481b30578b889fc98732d493231d376f430e2e04ae8f8 # shrinks to
 cc ef3715208240cc043bede2b5dcf506bf1a91c0d008eda2ea01fb54c7c5596af8 # shrinks to order = 3, seed = 352
 cc deb36b4e59daac48e3066154b01bebf07e1ec4ae8930823a8e74e907963fdfa8 # shrinks to order = 2, seed = 3
 cc 557dc4cb55fff02450dba1839bbc424970f4c0254dd0ba67de1a4e7ca4e157a8 # shrinks to order = 2, seed = 10
+cc 1de38360b04161329e326a7e41ee710998e33fb150a401500252e89398f9d770 # shrinks to order = 18, seed = 944
+cc ad3fbc2e09f9e9da230ae2282375955dd9f8c94cab586cfece0d6d509e1e1bfb # shrinks to order = 13
+cc b4e11089cba52d7309fb40c8e0fcd319806414fddbbd9d8d3c2b7409a8222957 # shrinks to order = 15
+cc 1c9a0f60e9fc752dc12ceaf73342b7c559116ea078993293c01132f341ac4242 # shrinks to order = 18
+cc c1593a357aa35f0b4c3a04bda45ea36ea7d80c757ffab16f05fc12e912306cd5 # shrinks to order = 19, seed = 953
+cc aafc12b9c8f2b06efdd3c29aabd3c5abb450124a3d7ce293f6cb28a84efc8851 # shrinks to order = 16
+cc 8ccb51d923de3f84fe5b47b127757199c1097b4e01503ac3f735a5a2e3e85da3 # shrinks to order = 16, seed = 928

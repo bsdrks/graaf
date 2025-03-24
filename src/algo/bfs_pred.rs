@@ -3,8 +3,8 @@
 //! Breadth-first search explores an unweighted digraph's vertices in order of
 //! their distance from a source.
 //!
-//! Runs in **O(v + a)** time, where **v** is the number of vertices and **a**
-//! the number of arcs.
+//! The time complexity is `O(v + a)`, where `v` is the digraph's order and `a`
+//! is the digraph's size.
 //!
 //! # Examples
 //!
@@ -89,10 +89,7 @@ use {
         OutNeighbors,
         PredecessorTree,
     },
-    std::collections::{
-        HashSet,
-        VecDeque,
-    },
+    std::collections::VecDeque,
 };
 
 type Step = (Option<usize>, usize);
@@ -101,9 +98,6 @@ type Step = (Option<usize>, usize);
 ///
 /// Breadth-first search explores an unweighted digraph's vertices in order of
 /// their distance from a source.
-///
-/// Runs in **O(v + a)** time, where **v** is the number of vertices and **a**
-/// the number of arcs.
 ///
 /// # Examples
 ///
@@ -185,7 +179,7 @@ type Step = (Option<usize>, usize);
 pub struct BfsPred<'a, D> {
     digraph: &'a D,
     queue: VecDeque<Step>,
-    visited: HashSet<usize>,
+    visited: Vec<bool>,
 }
 
 impl<'a, D> BfsPred<'a, D> {
@@ -198,12 +192,26 @@ impl<'a, D> BfsPred<'a, D> {
     #[must_use]
     pub fn new<T>(digraph: &'a D, sources: T) -> Self
     where
+        D: Order,
         T: Iterator<Item = usize> + Clone,
     {
+        let order = digraph.order();
+        let mut queue = VecDeque::with_capacity(order);
+        let mut visited = vec![false; order];
+        let visited_ptr = visited.as_mut_ptr();
+
+        for u in sources {
+            queue.push_back((None, u));
+
+            unsafe {
+                *visited_ptr.add(u) = true;
+            }
+        }
+
         Self {
             digraph,
-            queue: sources.clone().map(|source| (None, source)).collect(),
-            visited: sources.collect(),
+            queue,
+            visited,
         }
     }
 
@@ -328,11 +336,15 @@ impl<'a, D> BfsPred<'a, D> {
     where
         D: Order + OutNeighbors,
     {
-        let mut pred = PredecessorTree::new(self.digraph.order());
+        let order = self.digraph.order();
+        let mut pred = PredecessorTree::new(order);
         let mut cycles = Vec::new();
+        let pred_ptr = pred.pred.as_mut_ptr();
 
         while let Some((u, v)) = self.next() {
-            pred[v] = u;
+            unsafe {
+                *pred_ptr.add(v) = u;
+            }
 
             for x in self.digraph.out_neighbors(v) {
                 if let Some(mut path) = pred.search(v, x) {
@@ -432,14 +444,17 @@ impl<'a, D> BfsPred<'a, D> {
     where
         D: Order + OutNeighbors,
     {
-        self.fold(
-            PredecessorTree::new(self.digraph.order()),
-            |mut pred, (u, v)| {
-                pred[v] = u;
+        let order = self.digraph.order();
+        let mut pred = PredecessorTree::new(order);
+        let pred_ptr = pred.pred.as_mut_ptr();
 
-                pred
-            },
-        )
+        for (u, v) in self.by_ref() {
+            unsafe {
+                *pred_ptr.add(v) = u;
+            }
+        }
+
+        pred
     }
 
     /// Find the shortest path from the source vertices to a target vertex.
@@ -535,16 +550,19 @@ impl<'a, D> BfsPred<'a, D> {
         D: Order + OutNeighbors,
         P: Fn(usize) -> bool,
     {
-        let mut pred = PredecessorTree::new(self.digraph.order());
+        let order = self.digraph.order();
+        let mut pred = PredecessorTree::new(order);
+        let pred_ptr = pred.pred.as_mut_ptr();
 
         for (u, v) in self.by_ref() {
-            pred[v] = u;
+            unsafe {
+                *pred_ptr.add(v) = u;
+            }
 
             if is_target(v) {
                 return pred.search_by(v, |_, b| b.is_none()).map(
                     |mut path| {
                         path.reverse();
-
                         path
                     },
                 );
@@ -563,12 +581,19 @@ where
 
     fn next(&mut self) -> Option<Self::Item> {
         let step @ (_, v) = self.queue.pop_front()?;
+        let visited_ptr = self.visited.as_mut_ptr();
 
-        self.queue.extend(
-            self.digraph.out_neighbors(v).filter_map(|x| {
-                self.visited.insert(x).then_some((Some(v), x))
-            }),
-        );
+        for u in self.digraph.out_neighbors(v) {
+            let visited_u = unsafe { visited_ptr.add(u) };
+
+            unsafe {
+                if !*visited_u {
+                    *visited_u = true;
+
+                    self.queue.push_back((Some(v), u));
+                }
+            }
+        }
 
         Some(step)
     }

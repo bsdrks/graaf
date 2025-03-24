@@ -60,3 +60,72 @@ where
         self.vertices().filter(move |&u| self.is_sink(u))
     }
 }
+
+/// `Sinks` tests
+#[macro_export]
+macro_rules! test_sinks {
+    ($fixture:path) => {
+        use $fixture::{
+            bang_jensen_196,
+            bang_jensen_34,
+            bang_jensen_94,
+            kattis_builddeps,
+            kattis_cantinaofbabel_1,
+            kattis_cantinaofbabel_2,
+            kattis_escapewallmaria_1,
+            kattis_escapewallmaria_2,
+            kattis_escapewallmaria_3,
+        };
+
+        #[test]
+        fn sinks_bang_jensen_196() {
+            assert!(bang_jensen_196().sinks().eq([]));
+        }
+
+        #[test]
+        fn sinks_bang_jensen_34() {
+            assert!(bang_jensen_34().sinks().eq([3, 4]));
+        }
+
+        #[test]
+        fn sinks_bang_jensen_94() {
+            assert!(bang_jensen_94().sinks().eq([5, 6]));
+        }
+
+        #[test]
+        fn sinks_kattis_builddeps() {
+            assert!(kattis_builddeps().sinks().eq([1]));
+        }
+
+        #[test]
+        fn sinks_kattis_cantinaofbabel_1() {
+            assert!(kattis_cantinaofbabel_1().sinks().eq([]));
+        }
+
+        #[test]
+        fn sinks_kattis_cantinaofbabel_2() {
+            assert!(kattis_cantinaofbabel_2().sinks().eq([]));
+        }
+
+        #[test]
+        fn sinks_kattis_escapewallmaria_1() {
+            assert!(kattis_escapewallmaria_1()
+                .sinks()
+                .eq([0, 1, 2, 3, 4, 7, 8, 10, 11, 12, 14, 15]));
+        }
+
+        #[test]
+        fn sinks_kattis_escapewallmaria_2() {
+            assert!(kattis_escapewallmaria_2()
+                .sinks()
+                .eq([0, 1, 2, 3, 4, 7, 8, 10, 11, 14, 15]));
+        }
+
+        #[test]
+        fn sinks_kattis_escapewallmaria_3() {
+            assert!(kattis_escapewallmaria_3()
+                .sinks()
+                .eq([0, 3, 4, 7, 8, 10, 11, 14, 15]));
+        }
+    };
+}

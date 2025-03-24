@@ -63,7 +63,7 @@ fn floyd_warshall(bencher: Bencher<'_, '_>) {
     let dist = floyd_warshall.distances();
 
     assert!(
-        dist[0].iter().eq(&DISTANCES_ISIZE),
+        dist[0..4].iter().eq(&DISTANCES_ISIZE),
         "distances are incorrect"
     );
 

@@ -5,6 +5,7 @@ use {
         AdjacencyList,
         AdjacencyMap,
         AdjacencyMatrix,
+        Arcs,
         Complete,
         EdgeList,
         ErdosRenyi,
@@ -13,10 +14,19 @@ use {
         Order,
         Size,
     },
+    std::collections::{
+        BTreeMap,
+        BTreeSet,
+    },
 };
 
 fn main() {
     divan::main();
+}
+
+#[derive(Debug)]
+struct AdjacencyMapBTreeSet {
+    pub arcs: BTreeMap<usize, BTreeSet<usize>>,
 }
 
 fn is_complete_has_edge_order<D>(digraph: &D) -> bool
@@ -93,6 +103,20 @@ where
     let order = digraph.order();
 
     digraph.size() == order * (order - 1) && digraph == &D::complete(order)
+}
+
+fn is_complete_adjacency_map_btree_set_simple(
+    digraph: &AdjacencyMapBTreeSet,
+) -> bool {
+    let expected_neighbors = digraph.arcs.len() - 1;
+
+    for neighbors in digraph.arcs.values() {
+        if neighbors.len() != expected_neighbors {
+            return false;
+        }
+    }
+
+    true
 }
 
 #[divan::bench(args = [10, 100, 1000])]
@@ -212,6 +236,23 @@ fn adjacency_map_erdos_renyi_eq_complete(
 
     bencher.bench(|| {
         let _ = is_complete_eq_complete(&digraph);
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn adjacency_map_erdos_renyi_simple(bencher: Bencher<'_, '_>, order: usize) {
+    let digraph = AdjacencyMap::erdos_renyi(order, 0.5, 0);
+    let mut arcs = BTreeMap::new();
+
+    // Create a clone in the custom type
+    for (u, v) in digraph.arcs() {
+        let _ = arcs.entry(u).or_insert_with(BTreeSet::new).insert(v);
+    }
+
+    let digraph = AdjacencyMapBTreeSet { arcs };
+
+    bencher.bench(|| {
+        let _ = is_complete_adjacency_map_btree_set_simple(&digraph);
     });
 }
 
@@ -455,6 +496,23 @@ fn adjacency_map_complete_eq_complete(bencher: Bencher<'_, '_>, order: usize) {
 
     bencher.bench(|| {
         let _ = is_complete_eq_complete(&digraph);
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn adjacency_map_complete_simple(bencher: Bencher<'_, '_>, order: usize) {
+    let digraph = AdjacencyMap::complete(order);
+    let mut arcs = BTreeMap::new();
+
+    // Create a clone in the custom type
+    for (u, v) in digraph.arcs() {
+        let _ = arcs.entry(u).or_insert_with(BTreeSet::new).insert(v);
+    }
+
+    let digraph = AdjacencyMapBTreeSet { arcs };
+
+    bencher.bench(|| {
+        let _ = is_complete_adjacency_map_btree_set_simple(&digraph);
     });
 }
 

@@ -43,7 +43,7 @@
 //! - [`Cycle`] generates a bidirectional circuit.
 //! - [`Empty`] generates a digraph without arcs.
 //! - [`ErdosRenyi`] generates a random digraph.
-//! - [`GrowingNetwork`] generates a growing network.
+//! - [`RandomRecursiveTree`] generates a random recursive tree.
 //! - [`Path`] generates a path digraph.
 //! - [`RandomTournament`] generates a random tournament.
 //! - [`Star`] generates a star digraph.
@@ -57,6 +57,7 @@
 //! - [`ArcsWeighted`] iterates a digraph's weighted arcs.
 //! - [`Arcs`] iterates a digraph's arcs.
 //! - [`Complement`] returns a digraph's complement.
+//! - [`ContiguousOrder`] returns a contiguous digraph's order.
 //! - [`Converse`] returns a digraph's converse.
 //! - [`DegreeSequence`] iterates a digraph's degrees.
 //! - [`Degree`] returns a vertex's degree.
@@ -201,6 +202,7 @@ pub use op::{
     Arcs,
     ArcsWeighted,
     Complement,
+    ContiguousOrder,
     Converse,
     Degree,
     DegreeSequence,
@@ -245,8 +247,8 @@ pub use gen::{
     Cycle,
     Empty,
     ErdosRenyi,
-    GrowingNetwork,
     Path,
+    RandomRecursiveTree,
     RandomTournament,
     Star,
     Wheel,

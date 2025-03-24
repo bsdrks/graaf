@@ -122,17 +122,21 @@ impl Iterator for Xoshiro256StarStar {
     type Item = u64;
 
     fn next(&mut self) -> Option<Self::Item> {
-        let s = self.state[1].wrapping_mul(5).rotate_left(7).wrapping_mul(9);
-        let t = self.state[1] << 17;
+        unsafe {
+            let state_ptr = self.state.as_mut_ptr();
+            let state_1 = *state_ptr.add(1);
+            let s = state_1.wrapping_mul(5).rotate_left(7).wrapping_mul(9);
+            let t = state_1 << 17;
 
-        self.state[2] ^= self.state[0];
-        self.state[3] ^= self.state[1];
-        self.state[1] ^= self.state[2];
-        self.state[0] ^= self.state[3];
-        self.state[2] ^= t;
-        self.state[3] = self.state[3].rotate_left(45);
+            (*state_ptr.add(2)) ^= *state_ptr;
+            (*state_ptr.add(3)) ^= state_1;
+            (*state_ptr.add(1)) ^= *state_ptr.add(2);
+            (*state_ptr) ^= *state_ptr.add(3);
+            (*state_ptr.add(2)) ^= t;
+            (*state_ptr.add(3)) = (*state_ptr.add(3)).rotate_left(45);
 
-        Some(s)
+            Some(s)
+        }
     }
 }
 
@@ -150,5 +154,16 @@ mod tests {
 
             prop_assert!((0.0..1.0).contains(&rng.next_f64()));
         }
+    }
+
+    #[test]
+    fn first_3() {
+        let rng = Xoshiro256StarStar::new(0);
+
+        assert!(rng.take(3).eq([
+            0x99_EC_5F_36_CB_75_F2_B4,
+            0xBF_6E_1F_78_49_56_45_2A,
+            0x1A_5F_84_9D_49_33_E6_E0,
+        ]));
     }
 }

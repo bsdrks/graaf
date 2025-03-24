@@ -14,9 +14,12 @@ use {
         HasArc,
         Order,
     },
-    std::collections::{
-        BTreeMap,
-        BTreeSet,
+    std::{
+        cmp::Ordering,
+        collections::{
+            BTreeMap,
+            BTreeSet,
+        },
     },
 };
 
@@ -78,6 +81,63 @@ fn complement_adjacency_list_btree_set_collect(
     }
 }
 
+fn complement_adjacency_list_btree_set_unsafe(
+    digraph: &AdjacencyListBTreeSet,
+) -> AdjacencyListBTreeSet {
+    let order = digraph.arcs.len();
+    let full = (0..order).collect::<Vec<_>>();
+    let full_ptr = full.as_ptr();
+    let full_len = full.len();
+
+    AdjacencyListBTreeSet {
+        arcs: digraph
+            .arcs
+            .iter()
+            .enumerate()
+            .map(|(u, out_neighbors)| {
+                let out_vec: Vec<usize> =
+                    out_neighbors.iter().copied().collect();
+
+                let out_len = out_vec.len();
+                let out_ptr = out_vec.as_ptr();
+                let mut diff = Vec::with_capacity(full_len);
+
+                unsafe {
+                    let mut i = 0;
+                    let mut j = 0;
+
+                    while i < full_len && j < out_len {
+                        let a = *full_ptr.add(i);
+                        let b = *out_ptr.add(j);
+
+                        match a.cmp(&b) {
+                            Ordering::Less => {
+                                diff.push(a);
+                                i += 1;
+                            }
+                            Ordering::Greater => {
+                                j += 1;
+                            }
+                            Ordering::Equal => {
+                                i += 1;
+                                j += 1;
+                            }
+                        }
+                    }
+
+                    while i < full_len {
+                        diff.push(*full_ptr.add(i));
+                        i += 1;
+                    }
+                }
+
+                diff.retain(|&x| x != u);
+                diff.into_iter().collect::<BTreeSet<usize>>()
+            })
+            .collect(),
+    }
+}
+
 fn complement_adjacency_map_add_arc_empty_has_arc_order(
     digraph: &AdjacencyMap,
 ) -> AdjacencyMap {
@@ -99,7 +159,27 @@ fn complement_adjacency_map_add_arc_empty_has_arc_order(
     digraph
 }
 
-fn complement_adjacency_map_btree_set_collect(
+fn complement_adjacency_map_btree_set_clone_difference_collect(
+    digraph: &AdjacencyMapBTreeSet,
+) -> AdjacencyMapBTreeSet {
+    let order = digraph.arcs.len();
+    let out_neighbors = (0..order).collect::<BTreeSet<_>>();
+
+    AdjacencyMapBTreeSet {
+        arcs: digraph
+            .arcs
+            .iter()
+            .map(|(u, arcs)| {
+                (
+                    *u,
+                    out_neighbors.clone().difference(arcs).copied().collect(),
+                )
+            })
+            .collect(),
+    }
+}
+
+fn complement_adjacency_map_btree_set_difference_collect(
     digraph: &AdjacencyMapBTreeSet,
 ) -> AdjacencyMapBTreeSet {
     let order = digraph.arcs.len();
@@ -111,6 +191,26 @@ fn complement_adjacency_map_btree_set_collect(
             .iter()
             .map(|(u, arcs)| {
                 (*u, out_neighbors.difference(arcs).copied().collect())
+            })
+            .collect(),
+    }
+}
+
+fn complement_adjacency_map_btree_set_filter_collect(
+    digraph: &AdjacencyMapBTreeSet,
+) -> AdjacencyMapBTreeSet {
+    let order = digraph.arcs.len();
+
+    AdjacencyMapBTreeSet {
+        arcs: digraph
+            .arcs
+            .iter()
+            .map(|(u, neighbors)| {
+                let complement_neighbors = (0..order)
+                    .filter(|v| *v != *u && !neighbors.contains(v))
+                    .collect::<BTreeSet<_>>();
+
+                (*u, complement_neighbors)
             })
             .collect(),
     }
@@ -213,6 +313,21 @@ fn adjacency_list_btree_set_collect(bencher: Bencher<'_, '_>, order: usize) {
 }
 
 #[divan::bench(args = [10, 100, 1000])]
+fn adjacency_list_btree_set_unsafe(bencher: Bencher<'_, '_>, order: usize) {
+    let mut arcs = vec![BTreeSet::new(); order];
+
+    for (u, v) in AdjacencyList::erdos_renyi(order, 0.5, 0).arcs() {
+        let _ = arcs[u].insert(v);
+    }
+
+    let erdos_renyi = AdjacencyListBTreeSet { arcs };
+
+    bencher.bench(|| {
+        let _ = complement_adjacency_list_btree_set_unsafe(&erdos_renyi);
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
 fn adjacency_map(bencher: Bencher<'_, '_>, order: usize) {
     let erdos_renyi = AdjacencyMap::erdos_renyi(order, 0.5, 0);
 
@@ -235,7 +350,10 @@ fn adjacency_map_add_arc_empty_has_arc_order(
 }
 
 #[divan::bench(args = [10, 100, 1000])]
-fn adjacency_map_btree_set_collect(bencher: Bencher<'_, '_>, order: usize) {
+fn adjacency_map_btree_set_clone_difference_collect(
+    bencher: Bencher<'_, '_>,
+    order: usize,
+) {
     let mut arcs = BTreeMap::new();
 
     for (u, v) in AdjacencyMap::erdos_renyi(order, 0.5, 0).arcs() {
@@ -245,7 +363,48 @@ fn adjacency_map_btree_set_collect(bencher: Bencher<'_, '_>, order: usize) {
     let erdos_renyi = AdjacencyMapBTreeSet { arcs };
 
     bencher.bench(|| {
-        let _ = complement_adjacency_map_btree_set_collect(&erdos_renyi);
+        let _ = complement_adjacency_map_btree_set_clone_difference_collect(
+            &erdos_renyi,
+        );
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn adjacency_map_btree_set_difference_collect(
+    bencher: Bencher<'_, '_>,
+    order: usize,
+) {
+    let mut arcs = BTreeMap::new();
+
+    for (u, v) in AdjacencyMap::erdos_renyi(order, 0.5, 0).arcs() {
+        let _ = arcs.entry(u).or_insert_with(BTreeSet::new).insert(v);
+    }
+
+    let erdos_renyi = AdjacencyMapBTreeSet { arcs };
+
+    bencher.bench(|| {
+        let _ = complement_adjacency_map_btree_set_difference_collect(
+            &erdos_renyi,
+        );
+    });
+}
+
+#[divan::bench(args = [10, 100, 1000])]
+fn adjacency_map_btree_set_filter_collect(
+    bencher: Bencher<'_, '_>,
+    order: usize,
+) {
+    let mut arcs = BTreeMap::new();
+
+    for (u, v) in AdjacencyMap::erdos_renyi(order, 0.5, 0).arcs() {
+        let _ = arcs.entry(u).or_insert_with(BTreeSet::new).insert(v);
+    }
+
+    let erdos_renyi = AdjacencyMapBTreeSet { arcs };
+
+    bencher.bench(|| {
+        let _ =
+            complement_adjacency_map_btree_set_filter_collect(&erdos_renyi);
     });
 }
 
