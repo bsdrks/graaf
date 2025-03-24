@@ -10,6 +10,7 @@
 //!     AdjacencyList,
 //!     ContiguousOrder,
 //!     Empty,
+//!     Order,
 //! };
 //!
 //! let digraph = AdjacencyList::empty(4);
@@ -45,6 +46,7 @@ pub trait ContiguousOrder: Order {
     ///     AdjacencyList,
     ///     ContiguousOrder,
     ///     Empty,
+    ///     Order,
     /// };
     ///
     /// let digraph = AdjacencyList::empty(4);
