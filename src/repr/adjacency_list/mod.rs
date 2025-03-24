@@ -1801,6 +1801,7 @@ mod proptests_contiguous_order {
         crate::{
             proptest_contiguous_order,
             ContiguousOrder,
+            Empty,
         },
     };
 

@@ -414,6 +414,20 @@ mod proptests_add_arc_weighted {
 }
 
 #[cfg(test)]
+mod proptests_contiguous_order {
+    use {
+        super::*,
+        crate::{
+            proptest_contiguous_order,
+            ContiguousOrder,
+            Empty,
+        },
+    };
+
+    proptest_contiguous_order!(AdjacencyListWeighted::<usize>);
+}
+
+#[cfg(test)]
 mod proptests_empty {
     use {
         super::*,
