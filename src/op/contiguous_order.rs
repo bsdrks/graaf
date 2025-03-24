@@ -9,6 +9,7 @@
 //! use graaf::{
 //!     AdjacencyList,
 //!     ContiguousOrder,
+//!     Empty,
 //! };
 //!
 //! let digraph = AdjacencyList::empty(4);
@@ -43,6 +44,7 @@ pub trait ContiguousOrder: Order {
     /// use graaf::{
     ///     AdjacencyList,
     ///     ContiguousOrder,
+    ///     Empty,
     /// };
     ///
     /// let digraph = AdjacencyList::empty(4);
