@@ -180,7 +180,7 @@ fn biclique_adjacency_list_btree_set_parallel(
 
     for thread_id in 0..num_threads {
         let start = thread_id * chunk_size;
-        let end = ((thread_id + 1) * chunk_size).min(order);
+        let end = order.min(start + chunk_size);
         let clique_1 = Arc::clone(&clique_1);
         let clique_2 = Arc::clone(&clique_2);
         let thread_arcs_ptr_usize = arcs_ptr_usize;

@@ -269,7 +269,7 @@ fn random_tournament_adjacency_map_btree_set_parallel(
     for thread_id in 0..num_threads {
         let shared_arcs = Arc::clone(&shared_arcs);
         let start = thread_id * chunk_size;
-        let end = (start + chunk_size).min(order);
+        let end = order.min(start + chunk_size);
         let thread_seed = seed.wrapping_add(thread_id as u64);
 
         let handle = spawn(move || {

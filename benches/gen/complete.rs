@@ -141,7 +141,7 @@ fn complete_adjacency_list_btree_set_parallel_for_for(
 
     for thread_id in 0..num_threads {
         let start = thread_id * chunk_size;
-        let end = ((thread_id + 1) * chunk_size).min(order);
+        let end = order.min(start + chunk_size);
 
         let handle = std::thread::spawn(move || {
             let mut local = Vec::with_capacity(end - start);
@@ -203,7 +203,7 @@ fn complete_adjacency_list_btree_set_parallel_remove(
 
     for thread_id in 0..num_threads {
         let start = thread_id * chunk_size;
-        let end = ((thread_id + 1) * chunk_size).min(order);
+        let end = order.min(start + chunk_size);
 
         let handle = std::thread::spawn(move || {
             let mut local = Vec::with_capacity(end - start);

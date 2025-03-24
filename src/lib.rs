@@ -57,6 +57,7 @@
 //! - [`ArcsWeighted`] iterates a digraph's weighted arcs.
 //! - [`Arcs`] iterates a digraph's arcs.
 //! - [`Complement`] returns a digraph's complement.
+//! - [`ContiguousOrder`] returns a contiguous digraph's order.
 //! - [`Converse`] returns a digraph's converse.
 //! - [`DegreeSequence`] iterates a digraph's degrees.
 //! - [`Degree`] returns a vertex's degree.
@@ -201,6 +202,7 @@ pub use op::{
     Arcs,
     ArcsWeighted,
     Complement,
+    ContiguousOrder,
     Converse,
     Degree,
     DegreeSequence,

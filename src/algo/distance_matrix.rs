@@ -662,7 +662,29 @@ mod tests {
     }
 
     #[test]
-    fn index() {
+    fn index_usize() {
+        let dist = DistanceMatrix::new(4, isize::MAX);
+
+        assert_eq!(dist[0], isize::MAX);
+        assert_eq!(dist[1], isize::MAX);
+        assert_eq!(dist[2], isize::MAX);
+        assert_eq!(dist[3], isize::MAX);
+    }
+
+    #[test]
+    fn index_mut_usize() {
+        let mut dist = DistanceMatrix::new(4, isize::MAX);
+
+        dist[0] = 1;
+        dist[1] = 2;
+        dist[2] = 3;
+        dist[3] = 4;
+
+        assert!(dist[0..4].iter().eq(&[1, 2, 3, 4]));
+    }
+
+    #[test]
+    fn index_tuple() {
         let dist = DistanceMatrix::new(4, isize::MAX);
 
         assert_eq!(dist[(0, 0)], isize::MAX);
@@ -684,7 +706,7 @@ mod tests {
     }
 
     #[test]
-    fn index_mut() {
+    fn index_mut_tuple() {
         let mut dist = DistanceMatrix::new(4, isize::MAX);
 
         dist[(0, 0)] = 1;
@@ -708,6 +730,50 @@ mod tests {
         assert!(dist[4..8].iter().eq(&[5, 6, 7, 8]));
         assert!(dist[8..12].iter().eq(&[9, 10, 11, 12]));
         assert!(dist[12..16].iter().eq(&[13, 14, 15, 16]));
+    }
+
+    #[test]
+    fn index_range_full() {
+        let dist = DistanceMatrix::new(4, isize::MAX);
+
+        assert!(dist[..].iter().eq(&[isize::MAX; 16]));
+    }
+
+    #[test]
+    fn index_mut_range_full() {
+        let mut dist = DistanceMatrix::new(4, isize::MAX);
+
+        dist[..].iter_mut().for_each(|d| *d = 1);
+
+        assert!(dist[0..4].iter().eq(&[1; 4]));
+        assert!(dist[4..8].iter().eq(&[1; 4]));
+        assert!(dist[8..12].iter().eq(&[1; 4]));
+        assert!(dist[12..16].iter().eq(&[1; 4]));
+    }
+
+    #[test]
+    fn index_range() {
+        let dist = DistanceMatrix::new(4, isize::MAX);
+
+        assert!(dist[0..4].iter().eq(&[isize::MAX; 4]));
+        assert!(dist[4..8].iter().eq(&[isize::MAX; 4]));
+        assert!(dist[8..12].iter().eq(&[isize::MAX; 4]));
+        assert!(dist[12..16].iter().eq(&[isize::MAX; 4]));
+    }
+
+    #[test]
+    fn index_mut_range() {
+        let mut dist = DistanceMatrix::new(4, isize::MAX);
+
+        dist[0..4].iter_mut().for_each(|d| *d = 1);
+        dist[4..8].iter_mut().for_each(|d| *d = 2);
+        dist[8..12].iter_mut().for_each(|d| *d = 3);
+        dist[12..16].iter_mut().for_each(|d| *d = 4);
+
+        assert!(dist[0..4].iter().eq(&[1; 4]));
+        assert!(dist[4..8].iter().eq(&[2; 4]));
+        assert!(dist[8..12].iter().eq(&[3; 4]));
+        assert!(dist[12..16].iter().eq(&[4; 4]));
     }
 
     #[test]

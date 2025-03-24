@@ -67,3 +67,26 @@ pub trait HasArc {
     #[must_use]
     fn has_arc(&self, u: usize, v: usize) -> bool;
 }
+
+/// `HasArc` proptests
+#[macro_export]
+macro_rules! proptest_has_arc {
+    ($type:ty) => {
+        use {
+            proptest::proptest,
+            $crate::Empty,
+        };
+
+        proptest! {
+            #[test]
+            fn has_arc_out_of_bounds(order in 1..25_usize) {
+                let digraph = <$type>::empty(order);
+
+                for u in 0..order {
+                    assert!(!digraph.has_arc(u, order));
+                    assert!(!digraph.has_arc(order, u));
+                }
+            }
+        }
+    };
+}

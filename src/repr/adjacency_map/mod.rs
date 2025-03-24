@@ -115,9 +115,7 @@ use {
         AddArc,
         AdjacencyList,
         AdjacencyMatrix,
-        ArcWeight,
         Arcs,
-        ArcsWeighted,
         Biclique,
         Circuit,
         Complement,
@@ -143,7 +141,6 @@ use {
         IsTournament,
         Order,
         OutNeighbors,
-        OutNeighborsWeighted,
         Outdegree,
         Path,
         RandomRecursiveTree,
@@ -293,9 +290,6 @@ pub struct AdjacencyMap {
     arcs: BTreeMap<usize, BTreeSet<usize>>,
 }
 
-/// The weight of an arc is `1`.
-static WEIGHT: usize = 1;
-
 #[allow(static_mut_refs)]
 fn empty_set() -> &'static BTreeSet<usize> {
     static mut EMPTY: MaybeUninit<BTreeSet<usize>> = MaybeUninit::uninit();
@@ -332,17 +326,6 @@ impl AddArc for AdjacencyMap {
     }
 }
 
-/// # Complexity
-///
-/// The time complexity is `O(log v)`, where `v` is the digraph's order.
-impl ArcWeight<usize> for AdjacencyMap {
-    type Weight = usize;
-
-    fn arc_weight(&self, u: usize, v: usize) -> Option<&Self::Weight> {
-        self.has_arc(u, v).then_some(&WEIGHT)
-    }
-}
-
 impl Arcs for AdjacencyMap {
     /// # Complexity
     ///
@@ -352,20 +335,6 @@ impl Arcs for AdjacencyMap {
         self.arcs
             .iter()
             .flat_map(|(u, set)| set.iter().map(move |v| (*u, *v)))
-    }
-}
-
-impl ArcsWeighted for AdjacencyMap {
-    type Weight = usize;
-
-    /// # Complexity
-    ///
-    /// The time complexity is `O(v + a)`, where `v` is the digraph's order and
-    /// `a` is the digraph's size.
-    fn arcs_weighted(
-        &self,
-    ) -> impl Iterator<Item = (usize, usize, &Self::Weight)> {
-        self.arcs().map(move |(u, v)| (u, v, &WEIGHT))
     }
 }
 
@@ -578,7 +547,7 @@ impl ErdosRenyi for AdjacencyMap {
 
         for thread_id in 0..t {
             let start = thread_id * chunk_size;
-            let end = (start + chunk_size).min(order);
+            let end = order.min(start + chunk_size);
 
             if start >= end {
                 break;
@@ -994,25 +963,6 @@ impl OutNeighbors for AdjacencyMap {
     }
 }
 
-impl OutNeighborsWeighted for AdjacencyMap {
-    type Weight = usize;
-
-    /// # Complexity
-    ///
-    /// The time complexity of full iteration is `O(log v + outdegree)`, where
-    /// `v` is the digraph's order and `outdegree` is the outdegree of `u`.
-    ///
-    /// # Panics
-    ///
-    /// Panics if `u` isn't in the digraph.
-    fn out_neighbors_weighted(
-        &self,
-        u: usize,
-    ) -> impl Iterator<Item = (usize, &Self::Weight)> {
-        self.out_neighbors(u).map(move |v| (v, &WEIGHT))
-    }
-}
-
 impl Outdegree for AdjacencyMap {
     /// # Complexity
     ///
@@ -1099,7 +1049,7 @@ impl RandomTournament for AdjacencyMap {
 
         for thread_id in 0..t {
             let start = thread_id * chunk_size;
-            let end = (start + chunk_size).min(order);
+            let end = order.min(start + chunk_size);
 
             if start >= end {
                 break;
@@ -1447,13 +1397,548 @@ impl Wheel for AdjacencyMap {
 }
 
 #[cfg(test)]
-mod tests {
+mod tests_add_arc_self_loop {
     use {
         super::*,
-        crate::test_unweighted,
+        crate::test_add_arc_self_loop,
     };
 
-    test_unweighted!(AdjacencyMap, repr::adjacency_map::fixture);
+    test_add_arc_self_loop!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod tests_arcs {
+    use {
+        super::*,
+        crate::test_arcs,
+    };
+
+    test_arcs!(crate::repr::adjacency_map::fixture);
+}
+
+#[cfg(test)]
+mod tests_biclique {
+    use {
+        super::*,
+        crate::test_biclique,
+    };
+
+    test_biclique!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod tests_circuit {
+    use {
+        super::*,
+        crate::test_circuit,
+    };
+
+    test_circuit!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod tests_complete {
+    use {
+        super::*,
+        crate::test_complete,
+    };
+
+    test_complete!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod tests_converse {
+    use {
+        super::*,
+        crate::test_converse,
+    };
+
+    test_converse!(crate::repr::adjacency_map::fixture);
+}
+
+#[cfg(test)]
+mod tests_cycle {
+    use {
+        super::*,
+        crate::test_cycle,
+    };
+
+    test_cycle!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod tests_degree {
+    use {
+        super::*,
+        crate::test_degree,
+    };
+
+    test_degree!(crate::repr::adjacency_map::fixture);
+}
+
+#[cfg(test)]
+mod tests_degree_sequence {
+    use {
+        super::*,
+        crate::test_degree_sequence,
+    };
+
+    test_degree_sequence!(crate::repr::adjacency_map::fixture);
+}
+
+#[cfg(test)]
+mod tests_empty {
+    use {
+        super::*,
+        crate::test_empty,
+    };
+
+    test_empty!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod tests_erdos_renyi {
+    use {
+        super::*,
+        crate::test_erdos_renyi,
+    };
+
+    test_erdos_renyi!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod tests_has_walk {
+    use {
+        super::*,
+        crate::test_has_walk,
+    };
+
+    test_has_walk!(crate::repr::adjacency_map::fixture);
+}
+
+#[cfg(test)]
+mod tests_in_neighbors {
+    use {
+        super::*,
+        crate::test_in_neighbors,
+    };
+
+    test_in_neighbors!(crate::repr::adjacency_map::fixture);
+}
+
+#[cfg(test)]
+mod tests_indegree {
+    use {
+        super::*,
+        crate::test_indegree,
+    };
+
+    test_indegree!(AdjacencyMap, crate::repr::adjacency_map::fixture);
+}
+
+#[cfg(test)]
+mod tests_indegree_sequence {
+    use {
+        super::*,
+        crate::test_indegree_sequence,
+    };
+
+    test_indegree_sequence!(crate::repr::adjacency_map::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_balanced {
+    use crate::{
+        test_is_balanced,
+        IsBalanced,
+    };
+
+    test_is_balanced!(crate::repr::adjacency_map::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_complete {
+    use {
+        super::*,
+        crate::test_is_complete,
+    };
+
+    test_is_complete!(crate::repr::adjacency_map::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_isolated {
+    use crate::{
+        test_is_isolated,
+        IsIsolated,
+    };
+
+    test_is_isolated!(crate::repr::adjacency_map::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_oriented {
+    use crate::{
+        test_is_oriented,
+        IsOriented,
+    };
+
+    test_is_oriented!(crate::repr::adjacency_map::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_pendant {
+    use crate::{
+        test_is_pendant,
+        IsPendant,
+    };
+
+    test_is_pendant!(crate::repr::adjacency_map::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_regular {
+    use {
+        super::*,
+        crate::test_is_regular,
+    };
+
+    test_is_regular!(crate::repr::adjacency_map::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_semicomplete {
+    use {
+        super::*,
+        crate::test_is_semicomplete,
+    };
+
+    test_is_semicomplete!(crate::repr::adjacency_map::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_simple {
+    use {
+        super::*,
+        crate::test_is_simple,
+    };
+
+    test_is_simple!(crate::repr::adjacency_map::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_symmetric {
+    use crate::{
+        test_is_symmetric,
+        IsSymmetric,
+    };
+
+    test_is_symmetric!(crate::repr::adjacency_map::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_tournament {
+    use {
+        super::*,
+        crate::test_is_tournament,
+    };
+
+    test_is_tournament!(crate::repr::adjacency_map::fixture);
+}
+
+#[cfg(test)]
+mod tests_order {
+    use crate::{
+        test_order,
+        Order,
+    };
+
+    test_order!(crate::repr::adjacency_map::fixture);
+}
+
+#[cfg(test)]
+mod tests_out_neighbors {
+    use {
+        super::*,
+        crate::test_out_neighbors,
+    };
+
+    test_out_neighbors!(crate::repr::adjacency_map::fixture);
+}
+
+#[cfg(test)]
+mod tests_outdegree {
+    use {
+        super::*,
+        crate::test_outdegree,
+    };
+
+    test_outdegree!(AdjacencyMap, crate::repr::adjacency_map::fixture);
+}
+
+#[cfg(test)]
+mod tests_path {
+    use {
+        super::*,
+        crate::test_path,
+    };
+
+    test_path!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod tests_random_recursive_tree {
+    use {
+        super::*,
+        crate::test_random_recursive_tree,
+    };
+
+    test_random_recursive_tree!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod tests_random_tournament {
+    use {
+        super::*,
+        crate::test_random_tournament,
+    };
+
+    test_random_tournament!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod tests_remove_arc {
+    use {
+        super::*,
+        crate::test_remove_arc,
+    };
+
+    test_remove_arc!(AdjacencyMap, crate::repr::adjacency_map::fixture);
+}
+
+#[cfg(test)]
+mod tests_semidegree_sequence {
+    use {
+        super::*,
+        crate::test_semidegree_sequence,
+    };
+
+    test_semidegree_sequence!(crate::repr::adjacency_map::fixture);
+}
+
+#[cfg(test)]
+mod tests_sinks {
+    use crate::{
+        test_sinks,
+        Sinks,
+    };
+
+    test_sinks!(crate::repr::adjacency_map::fixture);
+}
+
+#[cfg(test)]
+mod tests_size {
+    use crate::{
+        test_size,
+        Size,
+    };
+
+    test_size!(crate::repr::adjacency_map::fixture);
+}
+
+#[cfg(test)]
+mod tests_sources {
+    use crate::{
+        test_sources,
+        Sources,
+    };
+
+    test_sources!(crate::repr::adjacency_map::fixture);
+}
+
+#[cfg(test)]
+mod tests_star {
+    use {
+        super::*,
+        crate::test_star,
+    };
+
+    test_star!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod tests_wheel {
+    use {
+        super::*,
+        crate::test_wheel,
+    };
+
+    test_wheel!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod proptests_add_arc {
+    use {
+        super::*,
+        crate::proptest_add_arc,
+    };
+
+    proptest_add_arc!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod proptests_biclique {
+    use {
+        super::*,
+        crate::proptest_biclique,
+    };
+
+    proptest_biclique!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod proptests_circuit {
+    use {
+        super::*,
+        crate::proptest_circuit,
+    };
+
+    proptest_circuit!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod proptests_complete {
+    use {
+        super::*,
+        crate::proptest_complete,
+    };
+
+    proptest_complete!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod proptests_cycle {
+    use {
+        super::*,
+        crate::proptest_cycle,
+    };
+
+    proptest_cycle!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod proptests_empty {
+    use {
+        super::*,
+        crate::proptest_empty,
+    };
+
+    proptest_empty!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod proptests_empty_complement {
+    use {
+        super::*,
+        crate::proptest_empty_complement,
+    };
+
+    proptest_empty_complement!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod proptests_empty_complete {
+    use {
+        super::*,
+        crate::proptest_empty_complete,
+    };
+
+    proptest_empty_complete!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod proptests_erdos_renyi {
+    use {
+        super::*,
+        crate::proptest_erdos_renyi,
+    };
+
+    proptest_erdos_renyi!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod proptests_has_arc {
+    use {
+        super::*,
+        crate::proptest_has_arc,
+    };
+
+    proptest_has_arc!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod proptests_path {
+    use {
+        super::*,
+        crate::proptest_path,
+    };
+
+    proptest_path!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod proptests_random_recursive_tree {
+    use {
+        super::*,
+        crate::proptest_random_recursive_tree,
+    };
+
+    proptest_random_recursive_tree!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod proptests_random_tournament {
+    use {
+        super::*,
+        crate::proptest_random_tournament,
+    };
+
+    proptest_random_tournament!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod proptests_star {
+    use {
+        super::*,
+        crate::proptest_star,
+    };
+
+    proptest_star!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod proptests_union {
+    use {
+        super::*,
+        crate::proptest_union,
+    };
+
+    proptest_union!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod proptests_wheel {
+    use {
+        super::*,
+        crate::proptest_wheel,
+    };
+
+    proptest_wheel!(AdjacencyMap);
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
 
     #[test]
     fn from_adjacency_list() {

@@ -29,7 +29,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-graaf = "0.110.0"
+graaf = "0.111.0"
 ```
 
 ## Representations
@@ -70,6 +70,7 @@ graaf = "0.110.0"
 - [`ArcsWeighted`] iterates a digraph's weighted arcs.
 - [`Arcs`] iterates a digraph's arcs.
 - [`Complement`] returns a digraph's complement.
+- [`ContiguousOrder`] returns a contiguous digraph's order.
 - [`Converse`] returns a digraph's converse.
 - [`DegreeSequence`] iterates a digraph's degrees.
 - [`Degree`] returns a vertex's degree.
@@ -194,6 +195,7 @@ A [`PredecessorTree`] contains the vertex predecessors.
 [`Circuit`]: https://docs.rs/graaf/latest/graaf/gen/circuit/trait.Circuit.html
 [`Complement`]: https://docs.rs/graaf/latest/graaf/op/complement/trait.Complement.html
 [`Complete`]: https://docs.rs/graaf/latest/graaf/gen/complete/trait.Complete.html
+[`ContiguousOrder`]: https://docs.rs/graaf/latest/graaf/op/contiguous_order/trait.ContiguousOrder.html
 [`Converse`]: https://docs.rs/graaf/latest/graaf/op/converse/trait.Converse.html
 [`Cycle`]: https://docs.rs/graaf/latest/graaf/gen/cycle/trait.Cycle.html
 [`DegreeSequence`]: https://docs.rs/graaf/latest/graaf/op/degree_sequence/trait.DegreeSequence.html

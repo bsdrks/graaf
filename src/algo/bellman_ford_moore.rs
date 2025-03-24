@@ -69,7 +69,7 @@
 
 use crate::{
     ArcsWeighted,
-    Order,
+    ContiguousOrder,
 };
 
 /// Find the shortest distances from a source vertex to all other vertices in
@@ -164,9 +164,9 @@ impl<'a, D> BellmanFordMoore<'a, D> {
     #[must_use]
     pub fn new(digraph: &'a D, s: usize) -> Self
     where
-        D: Order,
+        D: ContiguousOrder,
     {
-        let order = digraph.order();
+        let order = digraph.contiguous_order();
 
         assert!(s < order, "The source vertex is not in the digraph.");
 
@@ -253,9 +253,9 @@ impl<'a, D> BellmanFordMoore<'a, D> {
     #[must_use]
     pub fn distances(&mut self) -> Option<&[isize]>
     where
-        D: ArcsWeighted<Weight = isize> + Order,
+        D: ArcsWeighted<Weight = isize> + ContiguousOrder,
     {
-        let order = self.digraph.order();
+        let order = self.digraph.contiguous_order();
         let arcs = self.digraph.arcs_weighted().collect::<Vec<_>>();
         let arcs_len = arcs.len();
         let arcs_ptr = arcs.as_ptr();
@@ -268,6 +268,8 @@ impl<'a, D> BellmanFordMoore<'a, D> {
             while i < arcs_len {
                 unsafe {
                     {
+                        // Safety: `i` is always less than `arcs_len`, so `i`
+                        // is a valid index.
                         let (u, v, w) = *arcs_ptr.add(i);
                         let dist_u = *dist_ptr.add(u);
 
@@ -628,7 +630,7 @@ mod tests {
     }
 
     #[test]
-    fn test_negative_circuit() {
+    fn negative_circuit() {
         let mut digraph = AdjacencyListWeighted::<isize>::empty(3);
 
         digraph.add_arc_weighted(0, 1, -2);

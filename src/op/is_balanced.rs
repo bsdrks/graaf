@@ -81,3 +81,66 @@ where
             .all(|u| self.indegree(u) == self.outdegree(u))
     }
 }
+
+/// `IsBalanced` tests
+#[macro_export]
+macro_rules! test_is_balanced {
+    ($fixture:path) => {
+        use $fixture::{
+            bang_jensen_196,
+            bang_jensen_34,
+            bang_jensen_94,
+            kattis_builddeps,
+            kattis_cantinaofbabel_1,
+            kattis_cantinaofbabel_2,
+            kattis_escapewallmaria_1,
+            kattis_escapewallmaria_2,
+            kattis_escapewallmaria_3,
+        };
+
+        #[test]
+        fn is_balanced_bang_jensen_196() {
+            assert!(!bang_jensen_196().is_balanced());
+        }
+
+        #[test]
+        fn is_balanced_bang_jensen_34() {
+            assert!(!bang_jensen_34().is_balanced());
+        }
+
+        #[test]
+        fn is_balanced_bang_jensen_94() {
+            assert!(!bang_jensen_94().is_balanced());
+        }
+
+        #[test]
+        fn is_balanced_kattis_builddeps() {
+            assert!(!kattis_builddeps().is_balanced());
+        }
+
+        #[test]
+        fn is_balanced_kattis_cantinaofbabel_1() {
+            assert!(!kattis_cantinaofbabel_1().is_balanced());
+        }
+
+        #[test]
+        fn is_balanced_kattis_cantinaofbabel_2() {
+            assert!(!kattis_cantinaofbabel_2().is_balanced());
+        }
+
+        #[test]
+        fn is_balanced_kattis_escapewallmaria_1() {
+            assert!(!kattis_escapewallmaria_1().is_balanced());
+        }
+
+        #[test]
+        fn is_balanced_kattis_escapewallmaria_2() {
+            assert!(!kattis_escapewallmaria_2().is_balanced());
+        }
+
+        #[test]
+        fn is_balanced_kattis_escapewallmaria_3() {
+            assert!(kattis_escapewallmaria_3().is_balanced());
+        }
+    };
+}

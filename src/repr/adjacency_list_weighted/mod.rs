@@ -34,6 +34,7 @@ use {
         ArcWeight,
         Arcs,
         ArcsWeighted,
+        ContiguousOrder,
         Converse,
         Degree,
         DegreeSequence,
@@ -113,6 +114,12 @@ impl<W> ArcsWeighted for AdjacencyListWeighted<W> {
             .iter()
             .enumerate()
             .flat_map(|(u, map)| map.iter().map(move |(&v, w)| (u, v, w)))
+    }
+}
+
+impl<W> ContiguousOrder for AdjacencyListWeighted<W> {
+    fn contiguous_order(&self) -> usize {
+        self.arcs.len()
     }
 }
 
@@ -397,11 +404,40 @@ impl<W> Vertices for AdjacencyListWeighted<W> {
 }
 
 #[cfg(test)]
+mod proptests_add_arc_weighted {
+    use {
+        super::*,
+        crate::proptest_add_arc_weighted,
+    };
+
+    proptest_add_arc_weighted!(AdjacencyListWeighted::<usize>);
+}
+
+#[cfg(test)]
+mod proptests_empty {
+    use {
+        super::*,
+        crate::proptest_empty,
+    };
+
+    proptest_empty!(AdjacencyListWeighted::<isize>);
+}
+
+#[cfg(test)]
+mod proptests_has_arc {
+    use {
+        super::*,
+        crate::proptest_has_arc,
+    };
+
+    proptest_has_arc!(AdjacencyListWeighted::<isize>);
+}
+
+#[cfg(test)]
 mod tests {
     use {
         super::*,
         crate::{
-            proptest_strategy::arc,
             repr::{
                 adjacency_list,
                 adjacency_list_weighted::fixture::{
@@ -420,7 +456,6 @@ mod tests {
                 edge_list,
             },
             Degree,
-            HasEdge,
             InNeighbors,
             IsBalanced,
             IsComplete,
@@ -428,269 +463,11 @@ mod tests {
             IsOriented,
             IsPendant,
             IsSemicomplete,
-            IsSubdigraph,
-            IsSuperdigraph,
             IsSymmetric,
             IsTournament,
             SemidegreeSequence,
         },
-        proptest::proptest,
     };
-
-    proptest! {
-        #[test]
-        fn add_arc_weighted_arc_weight(
-            (u, v) in arc(25_usize),
-            w in 1..25_usize
-        ) {
-            let mut digraph = AdjacencyListWeighted::empty(100);
-
-            digraph.add_arc_weighted(u, v, w);
-
-            for x in digraph.vertices() {
-                for y in digraph.vertices() {
-                    assert_eq!(
-                        digraph.arc_weight(x, y),
-                        (x == u && y == v).then_some(&w)
-                    );
-                }
-            }
-        }
-
-        #[test]
-        fn add_arc_weighted_degree(
-            (u, v) in arc(25_usize),
-            w in 1..25_usize
-        ) {
-            let mut digraph = AdjacencyListWeighted::empty(100);
-
-            digraph.add_arc_weighted(u, v, w);
-
-            for x in digraph.vertices() {
-                assert_eq!(
-                    digraph.degree(x),
-                    usize::from(x == u) + usize::from(x == v)
-                );
-            }
-        }
-
-        #[test]
-        fn add_arc_weighted_has_arc(
-            (u, v) in arc(25_usize),
-            w in 1..25_usize
-        ) {
-            let mut digraph = AdjacencyListWeighted::empty(100);
-
-            digraph.add_arc_weighted(u, v, w);
-
-            assert!(digraph.has_arc(u, v));
-        }
-
-        #[test]
-        fn add_arc_weighted_indegree(
-            (u, v) in arc(25_usize),
-            w in 1..25_usize
-        ) {
-            let mut digraph = AdjacencyListWeighted::empty(100);
-
-            digraph.add_arc_weighted(u, v, w);
-
-            for u in digraph.vertices() {
-                assert_eq!(digraph.indegree(u), usize::from(u == v));
-            }
-        }
-
-        #[test]
-        fn add_arc_weighted_outdegree(
-            (u, v) in arc(25_usize),
-            w in 1..25_usize
-        ) {
-            let mut digraph = AdjacencyListWeighted::empty(100);
-
-            digraph.add_arc_weighted(u, v, w);
-
-            for x in digraph.vertices() {
-                assert_eq!(digraph.outdegree(x), usize::from(x == u));
-            }
-        }
-
-        #[test]
-        fn add_arc_weighted_remove_arc(
-            (u, v) in arc(25_usize),
-            w in 1..25_usize
-        ) {
-            let d = AdjacencyListWeighted::empty(100);
-            let mut h = d.clone();
-
-            h.add_arc_weighted(u, v, w);
-
-            for x in d.vertices() {
-                for y in d.vertices() {
-                    if x == u && y == v {
-                        assert!(h.remove_arc(x, y));
-                    } else {
-                        assert!(!h.remove_arc(x, y));
-                    }
-                }
-            }
-
-            assert_eq!(d, h);
-        }
-
-        #[test]
-        fn empty_arcs(order in 1..25_usize) {
-            assert!(AdjacencyListWeighted::<usize>::empty(order).arcs().eq([]));
-        }
-
-        #[test]
-        fn empty_degree(order in 1..25_usize) {
-            let digraph = AdjacencyListWeighted::<usize>::empty(order);
-
-            for u in digraph.vertices() {
-                assert_eq!(digraph.degree(u), 0);
-            }
-        }
-
-        #[test]
-        fn empty_has_arc(order in 1..25_usize) {
-            let digraph = AdjacencyListWeighted::<usize>::empty(order);
-
-            for u in digraph.vertices() {
-                for v in digraph.vertices() {
-                    assert!(!digraph.has_arc(u, v));
-                }
-            }
-        }
-
-        #[test]
-        fn empty_has_edge(order in 1..25_usize) {
-            let digraph = AdjacencyListWeighted::<usize>::empty(order);
-
-            for u in digraph.vertices() {
-                for v in digraph.vertices() {
-                    assert!(!digraph.has_edge(u, v));
-                }
-            }
-        }
-
-        #[test]
-        fn empty_indegree(order in 1..25_usize) {
-            let digraph = AdjacencyListWeighted::<usize>::empty(order);
-
-            for u in digraph.vertices() {
-                assert_eq!(digraph.indegree(u), 0);
-            }
-        }
-
-        #[test]
-        fn empty_is_balanced(order in 1..25_usize) {
-            assert!(AdjacencyListWeighted::<usize>::empty(order).is_balanced());
-        }
-
-        #[test]
-        fn empty_is_complete(order in 2..25_usize) {
-            assert!(!AdjacencyListWeighted::<usize>::empty(order).is_complete());
-        }
-
-        #[test]
-        fn empty_is_isolated(order in 1..25_usize) {
-            let digraph = AdjacencyListWeighted::<usize>::empty(order);
-
-            for u in digraph.vertices() {
-                assert!(digraph.is_isolated(u));
-            }
-        }
-
-        #[test]
-        fn empty_is_oriented(order in 1..25_usize) {
-            assert!(AdjacencyListWeighted::<usize>::empty(order).is_oriented());
-        }
-
-        #[test]
-        fn empty_is_pendant(order in 1..25_usize) {
-            let digraph = AdjacencyListWeighted::<usize>::empty(order);
-
-            for u in digraph.vertices() {
-                assert!(!digraph.is_pendant(u));
-            }
-        }
-
-        #[test]
-        fn empty_is_regular(order in 1..25_usize) {
-            assert!(AdjacencyListWeighted::<usize>::empty(order).is_regular());
-        }
-
-        #[test]
-        fn empty_is_semicomplete(order in 2..25_usize) {
-            assert!(!AdjacencyListWeighted::<usize>::empty(order).is_semicomplete());
-        }
-
-        #[test]
-        fn empty_is_simple(order in 1..25_usize) {
-            assert!(AdjacencyListWeighted::<usize>::empty(order).is_simple());
-        }
-
-        #[test]
-        fn empty_is_sink(order in 1..25_usize) {
-            let digraph = AdjacencyListWeighted::<usize>::empty(order);
-
-            for u in digraph.vertices() {
-                assert!(digraph.is_sink(u));
-            }
-        }
-
-        #[test]
-        fn empty_is_source(order in 1..25_usize) {
-            let digraph = AdjacencyListWeighted::<usize>::empty(order);
-
-            for u in digraph.vertices() {
-                assert!(digraph.is_source(u));
-            }
-        }
-
-        #[test]
-        fn empty_is_subdigraph(order in 1..25_usize) {
-            let digraph = AdjacencyListWeighted::<usize>::empty(order);
-
-            assert!(digraph.is_subdigraph(&digraph));
-        }
-
-        #[test]
-        fn empty_is_superdigraph(order in 1..25_usize) {
-            let digraph = AdjacencyListWeighted::<usize>::empty(order);
-
-            assert!(digraph.is_superdigraph(&digraph));
-        }
-
-        #[test]
-        fn empty_is_symmetric(order in 1..25_usize) {
-            assert!(AdjacencyListWeighted::<usize>::empty(order).is_symmetric());
-        }
-
-        #[test]
-        fn empty_is_tournament(order in 2..25_usize) {
-            assert!(!AdjacencyListWeighted::<usize>::empty(order).is_tournament());
-        }
-
-        #[test]
-        fn empty_outdegree(order in 1..25_usize) {
-            let digraph = AdjacencyListWeighted::<usize>::empty(order);
-
-            for u in digraph.vertices() {
-                assert_eq!(digraph.outdegree(u), 0);
-            }
-        }
-
-        #[test]
-        fn has_arc_out_of_bounds(order in 1..25_usize) {
-            let digraph = AdjacencyListWeighted::<isize>::empty(order);
-
-            for u in 0..order {
-                assert!(!digraph.has_arc(u, order));
-                assert!(!digraph.has_arc(order, u));
-            }
-        }
-    }
 
     #[test]
     #[should_panic(expected = "v = 1 isn't in the digraph")]
@@ -980,6 +757,17 @@ mod tests {
             (1, 2, &2),
             (3, 0, &2)
         ]));
+    }
+
+    #[test]
+    fn contiguous_order() {
+        let digraph = AdjacencyListWeighted::<isize>::trivial();
+
+        assert_eq!(digraph.order(), digraph.contiguous_order());
+
+        let digraph = AdjacencyListWeighted::<isize>::empty(2);
+
+        assert_eq!(digraph.order(), digraph.contiguous_order());
     }
 
     #[test]

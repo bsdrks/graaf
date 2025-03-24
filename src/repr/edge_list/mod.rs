@@ -107,13 +107,12 @@ use {
         AdjacencyList,
         AdjacencyMap,
         AdjacencyMatrix,
-        ArcWeight,
         Arcs,
-        ArcsWeighted,
         Biclique,
         Circuit,
         Complement,
         Complete,
+        ContiguousOrder,
         Converse,
         Cycle,
         Degree,
@@ -133,7 +132,6 @@ use {
         IsTournament,
         Order,
         OutNeighbors,
-        OutNeighborsWeighted,
         Outdegree,
         Path,
         RandomRecursiveTree,
@@ -272,27 +270,9 @@ impl AddArc for EdgeList {
     }
 }
 
-impl ArcWeight<usize> for EdgeList {
-    type Weight = usize;
-
-    fn arc_weight(&self, u: usize, v: usize) -> Option<&Self::Weight> {
-        self.has_arc(u, v).then_some(&1)
-    }
-}
-
 impl Arcs for EdgeList {
     fn arcs(&self) -> impl Iterator<Item = (usize, usize)> {
         self.arcs.iter().copied()
-    }
-}
-
-impl ArcsWeighted for EdgeList {
-    type Weight = usize;
-
-    fn arcs_weighted(
-        &self,
-    ) -> impl Iterator<Item = (usize, usize, &Self::Weight)> {
-        self.arcs.iter().map(|&(u, v)| (u, v, &1))
     }
 }
 
@@ -370,6 +350,12 @@ impl Complete for EdgeList {
                 .collect(),
             order,
         }
+    }
+}
+
+impl ContiguousOrder for EdgeList {
+    fn contiguous_order(&self) -> usize {
+        self.order
     }
 }
 
@@ -651,8 +637,7 @@ impl Order for EdgeList {
 
 impl OutNeighbors for EdgeList {
     /// Warning: The time complexity is `O(a)`, where `a` is the
-    /// number of arcs, compared to `O(1)` for `AdjacencyList` and
-    /// `AdjacencyListWeighted`.
+    /// digraph's size, compared to `O(1)` for `AdjacencyList`.
     ///
     /// # Panics
     ///
@@ -666,32 +651,9 @@ impl OutNeighbors for EdgeList {
     }
 }
 
-impl OutNeighborsWeighted for EdgeList {
-    type Weight = usize;
-
-    /// Warning: The time complexity is `O(a)`, where `a` is the number of
-    /// arcs, compared to `O(1)` for `AdjacencyList` and
-    /// `AdjacencyListWeighted`.
-    ///
-    /// # Panics
-    ///
-    /// Panics if `u` isn't in the digraph.
-    fn out_neighbors_weighted(
-        &self,
-        u: usize,
-    ) -> impl Iterator<Item = (usize, &Self::Weight)> {
-        assert!(u < self.order, "u = {u} isn't in the digraph");
-
-        self.arcs
-            .iter()
-            .filter_map(move |&(x, y)| (x == u).then_some((y, &1)))
-    }
-}
-
 impl Outdegree for EdgeList {
-    /// Warning: The time complexity is `O(a)`, where `a` is the number of
-    /// arcs, compared to `O(1)` for `AdjacencyList` and
-    /// `AdjacencyListWeighted`.
+    /// Warning: The time complexity is `O(a)`, where `a` is the digraph's
+    /// size, compared to `O(1)` for `AdjacencyList`.
     ///
     /// # Panics
     ///
@@ -703,6 +665,8 @@ impl Outdegree for EdgeList {
     }
 
     fn is_sink(&self, u: usize) -> bool {
+        assert!(u < self.order, "u = {u} isn't in the digraph");
+
         self.arcs.iter().all(|&(x, _)| x != u)
     }
 }
@@ -831,13 +795,571 @@ impl Wheel for EdgeList {
 }
 
 #[cfg(test)]
-mod tests {
+mod tests_add_arc_self_loop {
     use {
         super::*,
-        crate::test_unweighted,
+        crate::test_add_arc_self_loop,
     };
 
-    test_unweighted!(EdgeList, repr::edge_list::fixture);
+    test_add_arc_self_loop!(EdgeList);
+}
+
+#[cfg(test)]
+mod tests_add_arc_out_of_bounds {
+    use {
+        super::*,
+        crate::test_add_arc_out_of_bounds,
+    };
+
+    test_add_arc_out_of_bounds!(EdgeList);
+}
+
+#[cfg(test)]
+mod tests_arcs {
+    use {
+        super::*,
+        crate::test_arcs,
+    };
+
+    test_arcs!(crate::repr::edge_list::fixture);
+}
+
+#[cfg(test)]
+mod tests_biclique {
+    use {
+        super::*,
+        crate::test_biclique,
+    };
+
+    test_biclique!(EdgeList);
+}
+
+#[cfg(test)]
+mod tests_circuit {
+    use {
+        super::*,
+        crate::test_circuit,
+    };
+
+    test_circuit!(EdgeList);
+}
+
+#[cfg(test)]
+mod tests_complete {
+    use {
+        super::*,
+        crate::test_complete,
+    };
+
+    test_complete!(EdgeList);
+}
+
+#[cfg(test)]
+mod tests_converse {
+    use {
+        super::*,
+        crate::test_converse,
+    };
+
+    test_converse!(crate::repr::edge_list::fixture);
+}
+
+#[cfg(test)]
+mod tests_cycle {
+    use {
+        super::*,
+        crate::test_cycle,
+    };
+
+    test_cycle!(EdgeList);
+}
+
+#[cfg(test)]
+mod tests_degree {
+    use {
+        super::*,
+        crate::test_degree,
+    };
+
+    test_degree!(crate::repr::edge_list::fixture);
+}
+
+#[cfg(test)]
+mod tests_degree_sequence {
+    use {
+        super::*,
+        crate::test_degree_sequence,
+    };
+
+    test_degree_sequence!(crate::repr::edge_list::fixture);
+}
+
+#[cfg(test)]
+mod tests_empty {
+    use {
+        super::*,
+        crate::test_empty,
+    };
+
+    test_empty!(EdgeList);
+}
+
+#[cfg(test)]
+mod tests_erdos_renyi {
+    use {
+        super::*,
+        crate::test_erdos_renyi,
+    };
+
+    test_erdos_renyi!(EdgeList);
+}
+
+#[cfg(test)]
+mod tests_has_walk {
+    use {
+        super::*,
+        crate::test_has_walk,
+    };
+
+    test_has_walk!(crate::repr::edge_list::fixture);
+}
+
+#[cfg(test)]
+mod tests_in_neighbors {
+    use {
+        super::*,
+        crate::test_in_neighbors,
+    };
+
+    test_in_neighbors!(crate::repr::edge_list::fixture);
+}
+
+#[cfg(test)]
+mod tests_indegree {
+    use {
+        super::*,
+        crate::test_indegree,
+    };
+
+    test_indegree!(EdgeList, crate::repr::edge_list::fixture);
+}
+
+#[cfg(test)]
+mod tests_indegree_sequence {
+    use {
+        super::*,
+        crate::test_indegree_sequence,
+    };
+
+    test_indegree_sequence!(crate::repr::edge_list::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_balanced {
+    use crate::{
+        test_is_balanced,
+        IsBalanced,
+    };
+
+    test_is_balanced!(crate::repr::edge_list::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_complete {
+    use {
+        super::*,
+        crate::test_is_complete,
+    };
+
+    test_is_complete!(crate::repr::edge_list::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_isolated {
+    use crate::{
+        test_is_isolated,
+        IsIsolated,
+    };
+
+    test_is_isolated!(crate::repr::edge_list::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_oriented {
+    use crate::{
+        test_is_oriented,
+        IsOriented,
+    };
+
+    test_is_oriented!(crate::repr::edge_list::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_pendant {
+    use crate::{
+        test_is_pendant,
+        IsPendant,
+    };
+
+    test_is_pendant!(crate::repr::edge_list::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_regular {
+    use {
+        super::*,
+        crate::test_is_regular,
+    };
+
+    test_is_regular!(crate::repr::edge_list::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_semicomplete {
+    use {
+        super::*,
+        crate::test_is_semicomplete,
+    };
+
+    test_is_semicomplete!(crate::repr::edge_list::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_simple {
+    use {
+        super::*,
+        crate::test_is_simple,
+    };
+
+    test_is_simple!(crate::repr::edge_list::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_symmetric {
+    use crate::{
+        test_is_symmetric,
+        IsSymmetric,
+    };
+
+    test_is_symmetric!(crate::repr::edge_list::fixture);
+}
+
+#[cfg(test)]
+mod tests_is_tournament {
+    use {
+        super::*,
+        crate::test_is_tournament,
+    };
+
+    test_is_tournament!(crate::repr::edge_list::fixture);
+}
+
+#[cfg(test)]
+mod tests_order {
+    use crate::{
+        test_order,
+        Order,
+    };
+
+    test_order!(crate::repr::edge_list::fixture);
+}
+
+#[cfg(test)]
+mod tests_out_neighbors {
+    use {
+        super::*,
+        crate::test_out_neighbors,
+    };
+
+    test_out_neighbors!(crate::repr::edge_list::fixture);
+}
+
+#[cfg(test)]
+mod tests_outdegree {
+    use {
+        super::*,
+        crate::test_outdegree,
+    };
+
+    test_outdegree!(EdgeList, crate::repr::edge_list::fixture);
+}
+
+#[cfg(test)]
+mod tests_path {
+    use {
+        super::*,
+        crate::test_path,
+    };
+
+    test_path!(EdgeList);
+}
+
+#[cfg(test)]
+mod tests_random_recursive_tree {
+    use {
+        super::*,
+        crate::test_random_recursive_tree,
+    };
+
+    test_random_recursive_tree!(EdgeList);
+}
+
+#[cfg(test)]
+mod tests_random_tournament {
+    use {
+        super::*,
+        crate::test_random_tournament,
+    };
+
+    test_random_tournament!(EdgeList);
+}
+
+#[cfg(test)]
+mod tests_remove_arc {
+    use {
+        super::*,
+        crate::test_remove_arc,
+    };
+
+    test_remove_arc!(EdgeList, crate::repr::edge_list::fixture);
+}
+
+#[cfg(test)]
+mod tests_semidegree_sequence {
+    use {
+        super::*,
+        crate::test_semidegree_sequence,
+    };
+
+    test_semidegree_sequence!(crate::repr::edge_list::fixture);
+}
+
+#[cfg(test)]
+mod tests_sinks {
+    use crate::{
+        test_sinks,
+        Sinks,
+    };
+
+    test_sinks!(crate::repr::edge_list::fixture);
+}
+
+#[cfg(test)]
+mod tests_size {
+    use crate::{
+        test_size,
+        Size,
+    };
+
+    test_size!(crate::repr::edge_list::fixture);
+}
+
+#[cfg(test)]
+mod tests_sources {
+    use crate::{
+        test_sources,
+        Sources,
+    };
+
+    test_sources!(crate::repr::edge_list::fixture);
+}
+
+#[cfg(test)]
+mod tests_star {
+    use {
+        super::*,
+        crate::test_star,
+    };
+
+    test_star!(EdgeList);
+}
+
+#[cfg(test)]
+mod tests_wheel {
+    use {
+        super::*,
+        crate::test_wheel,
+    };
+
+    test_wheel!(EdgeList);
+}
+
+#[cfg(test)]
+mod proptests_add_arc {
+    use {
+        super::*,
+        crate::proptest_add_arc,
+    };
+
+    proptest_add_arc!(EdgeList);
+}
+
+#[cfg(test)]
+mod proptests_biclique {
+    use {
+        super::*,
+        crate::proptest_biclique,
+    };
+
+    proptest_biclique!(EdgeList);
+}
+
+#[cfg(test)]
+mod proptests_circuit {
+    use {
+        super::*,
+        crate::proptest_circuit,
+    };
+
+    proptest_circuit!(EdgeList);
+}
+
+#[cfg(test)]
+mod proptests_complete {
+    use {
+        super::*,
+        crate::proptest_complete,
+    };
+
+    proptest_complete!(EdgeList);
+}
+
+#[cfg(test)]
+mod proptests_cycle {
+    use {
+        super::*,
+        crate::proptest_cycle,
+    };
+
+    proptest_cycle!(EdgeList);
+}
+
+#[cfg(test)]
+mod proptests_empty {
+    use {
+        super::*,
+        crate::proptest_empty,
+    };
+
+    proptest_empty!(EdgeList);
+}
+
+#[cfg(test)]
+mod proptests_empty_complement {
+    use {
+        super::*,
+        crate::proptest_empty_complement,
+    };
+
+    proptest_empty_complement!(EdgeList);
+}
+
+#[cfg(test)]
+mod proptests_empty_complete {
+    use {
+        super::*,
+        crate::proptest_empty_complete,
+    };
+
+    proptest_empty_complete!(EdgeList);
+}
+
+#[cfg(test)]
+mod proptests_contiguous_order {
+    use {
+        super::*,
+        crate::{
+            proptest_contiguous_order,
+            ContiguousOrder,
+        },
+    };
+
+    proptest_contiguous_order!(EdgeList);
+}
+
+#[cfg(test)]
+mod proptests_erdos_renyi {
+    use {
+        super::*,
+        crate::proptest_erdos_renyi,
+    };
+
+    proptest_erdos_renyi!(EdgeList);
+}
+
+#[cfg(test)]
+mod proptests_has_arc {
+    use {
+        super::*,
+        crate::proptest_has_arc,
+    };
+
+    proptest_has_arc!(EdgeList);
+}
+
+#[cfg(test)]
+mod proptests_path {
+    use {
+        super::*,
+        crate::proptest_path,
+    };
+
+    proptest_path!(EdgeList);
+}
+
+#[cfg(test)]
+mod proptests_random_recursive_tree {
+    use {
+        super::*,
+        crate::proptest_random_recursive_tree,
+    };
+
+    proptest_random_recursive_tree!(EdgeList);
+}
+
+#[cfg(test)]
+mod proptests_random_tournament {
+    use {
+        super::*,
+        crate::proptest_random_tournament,
+    };
+
+    proptest_random_tournament!(EdgeList);
+}
+
+#[cfg(test)]
+mod proptests_star {
+    use {
+        super::*,
+        crate::proptest_star,
+    };
+
+    proptest_star!(EdgeList);
+}
+
+#[cfg(test)]
+mod proptests_union {
+    use {
+        super::*,
+        crate::proptest_union,
+    };
+
+    proptest_union!(EdgeList);
+}
+
+#[cfg(test)]
+mod proptests_wheel {
+    use {
+        super::*,
+        crate::proptest_wheel,
+    };
+
+    proptest_wheel!(EdgeList);
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
 
     #[test]
     #[should_panic(expected = "v = 1 isn't in the digraph")]

@@ -20,6 +20,17 @@
 - Return iterators instead of vectors.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 
+## [0.111.0] - 2025-04-24
+
+Added
+
+- Add `ContiguousOrder` trait.
+
+Changed
+
+- Breaking: constrain the `digraph` argument to `ContiguousOrder` in `BellmanFordMoore::new`.
+- Reorganize test macros.
+
 ## [0.110.0] - 2025-04-23
 
 Added

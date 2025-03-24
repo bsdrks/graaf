@@ -35,6 +35,7 @@ pub mod arc_weight;
 pub mod arcs;
 pub mod arcs_weighted;
 pub mod complement;
+pub mod contiguous_order;
 pub mod converse;
 pub mod degree;
 pub mod degree_sequence;
@@ -78,6 +79,7 @@ pub use {
     arcs::Arcs,
     arcs_weighted::ArcsWeighted,
     complement::Complement,
+    contiguous_order::ContiguousOrder,
     converse::Converse,
     degree::Degree,
     degree_sequence::DegreeSequence,

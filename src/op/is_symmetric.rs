@@ -77,3 +77,66 @@ where
         self.arcs().all(|(u, v)| self.has_arc(v, u))
     }
 }
+
+/// `IsSymmetric` tests
+#[macro_export]
+macro_rules! test_is_symmetric {
+    ($fixture:path) => {
+        use $fixture::{
+            bang_jensen_196,
+            bang_jensen_34,
+            bang_jensen_94,
+            kattis_builddeps,
+            kattis_cantinaofbabel_1,
+            kattis_cantinaofbabel_2,
+            kattis_escapewallmaria_1,
+            kattis_escapewallmaria_2,
+            kattis_escapewallmaria_3,
+        };
+
+        #[test]
+        fn is_symmetric_bang_jensen_196() {
+            assert!(!bang_jensen_196().is_symmetric());
+        }
+
+        #[test]
+        fn is_symmetric_bang_jensen_34() {
+            assert!(!bang_jensen_34().is_symmetric());
+        }
+
+        #[test]
+        fn is_symmetric_bang_jensen_94() {
+            assert!(!bang_jensen_94().is_symmetric());
+        }
+
+        #[test]
+        fn is_symmetric_kattis_builddeps() {
+            assert!(!kattis_builddeps().is_symmetric());
+        }
+
+        #[test]
+        fn is_symmetric_kattis_cantinaofbabel_1() {
+            assert!(!kattis_cantinaofbabel_1().is_symmetric());
+        }
+
+        #[test]
+        fn is_symmetric_kattis_cantinaofbabel_2() {
+            assert!(!kattis_cantinaofbabel_2().is_symmetric());
+        }
+
+        #[test]
+        fn is_symmetric_kattis_escapewallmaria_1() {
+            assert!(!kattis_escapewallmaria_1().is_symmetric());
+        }
+
+        #[test]
+        fn is_symmetric_kattis_escapewallmaria_2() {
+            assert!(!kattis_escapewallmaria_2().is_symmetric());
+        }
+
+        #[test]
+        fn is_symmetric_kattis_escapewallmaria_3() {
+            assert!(kattis_escapewallmaria_3().is_symmetric());
+        }
+    };
+}

@@ -24,7 +24,10 @@ use {
         },
         num::NonZero,
         ptr,
-        thread,
+        thread::{
+            self,
+            available_parallelism,
+        },
     },
 };
 
@@ -220,15 +223,15 @@ fn growing_network_adjacency_map_btree_set_parallel(
         };
     }
 
-    let num_threads = (order - 1)
-        .min(std::thread::available_parallelism().map_or(1, NonZero::get));
+    let num_threads =
+        (order - 1).min(available_parallelism().map_or(1, NonZero::get));
 
     let chunk_size = (order - 1).div_ceil(num_threads);
     let mut handles = Vec::with_capacity(num_threads);
 
     for thread_id in 0..num_threads {
         let start = 1 + thread_id * chunk_size;
-        let end = order.min(1 + (thread_id + 1) * chunk_size);
+        let end = order.min(start + chunk_size);
         let thread_seed = seed.wrapping_add(thread_id as u64);
 
         let handle = thread::spawn(move || {

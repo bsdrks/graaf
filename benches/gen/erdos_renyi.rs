@@ -275,7 +275,7 @@ fn erdos_renyi_adjacency_map_btree_set_parallel(
 
     for thread_id in 0..num_threads {
         let start = thread_id * chunk_size;
-        let end = cmp::min(start + chunk_size, order);
+        let end = order.min(start + chunk_size);
         let thread_seed = seed.wrapping_add(thread_id as u64);
 
         let handle = thread::spawn(move || {
