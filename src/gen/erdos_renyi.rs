@@ -8,7 +8,7 @@
 //! # Examples
 //!
 //! Generate a random Erdős-Rényi digraph of order `6` with a probability of
-//! `0.5`.
+//! `0.5` and seed `0`.
 //!
 //! ![A random Erdős-Rényi digraph of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/erdos_renyi_1-0.89.2.svg?)
 //!
@@ -50,11 +50,12 @@ pub trait ErdosRenyi {
     ///
     /// * `order` - The number of vertices in the digraph.
     /// * `p` - The probability of an arc between two vertices.
+    /// * `seed` - The RNG seed.
     ///
     /// # Examples
     ///
     /// Generate a random Erdős-Rényi digraph of order `6` with a probability
-    /// of `0.5`.
+    /// of `0.5` and seed `0`.
     ///
     /// ![A random Erdős-Rényi digraph of order `6`](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/erdos_renyi_1-0.89.2.svg?)
     ///

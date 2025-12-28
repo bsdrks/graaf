@@ -20,6 +20,12 @@
 - Return iterators instead of vectors.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 
+## [0.111.1] - 2025-12-28
+
+Changed
+
+- Document the `seed` parameter in `ErdosRenyi::erdos_renyi`.
+
 ## [0.111.0] - 2025-04-24
 
 Added
