@@ -1,6 +1,6 @@
 //! Return the union of two digraphs.
 //!
-//! # Example
+//! # Examples
 //!
 //! The union of a cycle digraph and a star digraph form a wheel digraph.
 //!
@@ -58,7 +58,7 @@ pub trait Union {
     ///
     /// * `other`: The other digraph.
     ///
-    /// # Example
+    /// # Examples
     ///
     /// The union of a cycle digraph and a star digraph form a wheel digraph.
     ///
@@ -72,7 +72,7 @@ pub trait Union {
     ///
     /// The union, a wheel digraph:
     ///
-    /// ![The union forms a Wheel digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/union_union_1-0.88.4.svg?)
+    /// ![The union forms a wheel digraph](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/union_union_1-0.88.4.svg?)
     ///
     /// ```
     /// use {

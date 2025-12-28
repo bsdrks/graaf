@@ -158,7 +158,7 @@
 //! ]));
 //! ```
 //!
-//! ## random recursive tree
+//! ## Random recursive tree
 //!
 //! Generate a [`random recursive tree`](RandomRecursiveTree) digraph of order
 //! `6`.

@@ -137,7 +137,12 @@ impl PredecessorTree {
     /// ```
     /// use graaf::PredecessorTree;
     ///
-    /// let pred = PredecessorTree::from(vec![Some(1), Some(2), Some(3), None]);
+    /// let pred = PredecessorTree::from(vec![
+    ///     Some(1),
+    ///     Some(2),
+    ///     Some(3),
+    ///     None,
+    /// ]);
     ///
     /// assert!(pred.search(0, 3).into_iter().eq(Some(vec![0, 1, 2, 3])));
     /// ```
@@ -168,7 +173,12 @@ impl PredecessorTree {
     /// ```
     /// use graaf::PredecessorTree;
     ///
-    /// let pred = PredecessorTree::from(vec![Some(1), Some(2), Some(3), None]);
+    /// let pred = PredecessorTree::from(vec![
+    ///     Some(1),
+    ///     Some(2),
+    ///     Some(3),
+    ///     None,
+    /// ]);
     ///
     /// assert!(pred
     ///     .search_by(0, |&v, _| v > 1)
@@ -176,7 +186,13 @@ impl PredecessorTree {
     ///     .eq(Some(vec![0, 1, 2])));
     ///
     /// let pred =
-    ///     PredecessorTree::from(vec![Some(1), Some(2), Some(3), None, Some(0)]);
+    ///     PredecessorTree::from(vec![
+    ///         Some(1),
+    ///         Some(2),
+    ///         Some(3),
+    ///         None,
+    ///         Some(0),
+    ///     ]);
     ///
     /// assert!(pred
     ///     .search_by(0, |_, v| v.is_none())

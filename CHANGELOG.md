@@ -20,6 +20,12 @@
 - Return iterators instead of vectors.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 
+## [0.XXX.X] - 2025-12-28
+
+Changed
+
+- Improve documentation formatting and consistency.
+
 ## [0.111.1] - 2025-12-28
 
 Changed

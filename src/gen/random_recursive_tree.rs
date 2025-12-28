@@ -28,7 +28,7 @@
 //! ]));
 //! ```
 
-/// random recursive trees
+/// Random recursive trees
 pub trait RandomRecursiveTree {
     /// Generate a random recursive tree.
     ///

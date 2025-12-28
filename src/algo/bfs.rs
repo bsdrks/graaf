@@ -3,8 +3,8 @@
 //! Breadth-first search explores an unweighted digraph's vertices in the order
 //! of their distance from a source.
 //!
-//! The time complexity is `O(v + a)`, where `v` is digraph's order and `a` the
-//! number of arcs.
+//! The time complexity is `O(v + a)`, where `v` is the digraph's order and
+//! `a` is the digraph's size.
 //!
 //! # Examples
 //!

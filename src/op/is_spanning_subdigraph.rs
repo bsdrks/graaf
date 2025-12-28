@@ -227,7 +227,8 @@ pub trait IsSpanningSubdigraph {
     ///     IsSpanningSubdigraph,
     /// };
     ///
-    /// // The arc (0, 2) has end-vertex `2` which isn't in the vertex set of `H`.
+    /// // The arc (0, 2) has end-vertex `2` which isn't in the vertex set
+    /// // of `H`.
     ///
     /// let mut h = AdjacencyList::empty(3);
     ///

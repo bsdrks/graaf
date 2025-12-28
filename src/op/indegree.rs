@@ -440,7 +440,7 @@ mod tests {
     };
 
     #[test]
-    fn is_sink() {
+    fn is_source() {
         struct AdjacencyList {
             arcs: Vec<BTreeSet<usize>>,
         }

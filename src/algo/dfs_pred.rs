@@ -3,7 +3,7 @@
 //! Depth-first search is a digraph traversal algorithm that explores a digraph
 //! by following a path as far as possible before backtracking.
 //!
-//! The time complexity is `O(v + a)`, where `v` is the number of vertices and
+//! The time complexity is `O(v + a)`, where `v` is the digraph's order and
 //! `a` is the digraph's size.
 //!
 //! # Examples

@@ -139,7 +139,7 @@ A depth-first search explores an unweighted digraph's vertices in order of their
 Dijkstra's algorithm finds the shortest paths in an arc-weighted digraph.
 
 - [`Dijkstra`] iterates the vertices.
-- [`DijkstraDist`] iterates the vertices.
+- [`DijkstraDist`] iterates the vertices and their distances.
 - [`DijkstraPred`] iterates the vertices and their predecessors.
 - [`DijkstraDist::distances`] finds the shortest distances.
 - [`DijkstraPred::predecessors`] finds the predecessors.
@@ -219,7 +219,7 @@ A [`PredecessorTree`] contains the vertex predecessors.
 [`EdgeList`]: https://docs.rs/graaf/latest/graaf/repr/edge_list/struct.EdgeList.html
 [`Empty`]: https://docs.rs/graaf/latest/graaf/gen/empty/trait.Empty.html
 [`ErdosRenyi`]: https://docs.rs/graaf/latest/graaf/gen/erdos_renyi/trait.ErdosRenyi.html
-[`FilterVertices`]: https://docs.rs/graag/latest/graaf/op/filter_vertices/trait.FilterVertices.html
+[`FilterVertices`]: https://docs.rs/graaf/latest/graaf/op/filter_vertices/trait.FilterVertices.html
 [`FloydWarshall::distances`]: https://docs.rs/graaf/latest/graaf/algo/floyd_warshall/struct.FloydWarshall.html#method.distances
 [`HasArc`]: https://docs.rs/graaf/latest/graaf/op/has_arc/trait.HasArc.html
 [`HasEdge`]: https://docs.rs/graaf/latest/graaf/op/has_edge/trait.HasEdge.html

@@ -67,7 +67,7 @@
 //! - [`HasWalk`] checks whether a digraph contains a walk.
 //! - [`InNeighbors`] iterates a vertex's in-neighbors.
 //! - [`IndegreeSequence`] iterates a digraph's indegrees.
-//! - [`Indegree`] a vertex's indegree.
+//! - [`Indegree`] returns a vertex's indegree.
 //! - [`IsBalanced`] checks whether a digraph is balanced.
 //! - [`IsComplete`] checks whether a digraph is complete.
 //! - [`IsIsolated`] checks whether a vertex is isolated.
@@ -111,7 +111,7 @@
 //! - [`BfsDist`] iterates the vertices and their distance from the source.
 //! - [`BfsPred`] iterates the vertices and their predecessors.
 //! - [`BfsDist::distances`](BfsDist::distances) finds the shortest distances.
-//! - [`BfsPred::cycles`](BfsPred::predecessors) returns the cycles along the
+//! - [`BfsPred::cycles`](BfsPred::cycles) returns the cycles along the
 //!   shortest path.
 //! - [`BfsPred::predecessors`](BfsPred::predecessors) finds the predecessors.
 //! - [`BfsPred::shortest_path`](BfsPred::shortest_path) finds the shortest
@@ -152,8 +152,8 @@
 //!   center.
 //! - [`DistanceMatrix::diameter`](DistanceMatrix::diameter) finds the
 //!   digraph's diameter.
-//! - [`DistanceMatrix::eccentricities`](DistanceMatrix::eccentricities) the
-//!   vertices' eccentricities.
+//! - [`DistanceMatrix::eccentricities`](DistanceMatrix::eccentricities) finds
+//!   the vertices' eccentricities.
 //! - [`DistanceMatrix::is_connected`](DistanceMatrix::is_connected) checks the
 //!   digraph's connectedness.
 //! - [`DistanceMatrix::periphery`](DistanceMatrix::periphery) finds the

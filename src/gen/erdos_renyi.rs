@@ -43,14 +43,14 @@
 pub trait ErdosRenyi {
     /// Generate an Erdős-Rényi digraph.
     ///
-    /// The Erdős-Rényi model generates a random digraph with a given number of
-    /// vertices.
+    /// The Erdős-Rényi model generates a random digraph with a given number
+    /// of vertices.
     ///
     /// # Arguments
     ///
     /// * `order` - The number of vertices in the digraph.
     /// * `p` - The probability of an arc between two vertices.
-    /// * `seed` - The RNG seed.
+    /// * `seed` - The seed for the random number generator.
     ///
     /// # Examples
     ///

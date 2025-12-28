@@ -142,11 +142,11 @@ use {
 /// digraph.add_arc_weighted(3, 0, 2);
 /// digraph.add_arc_weighted(3, 5, 1);
 /// digraph.add_arc_weighted(4, 5, 1);
-/// digraph.add_arc_weighted(5, 6, 1);
+/// digraph.add_arc_weighted(5, 6, 3);
 ///
 /// let mut dijkstra = Dijkstra::new(&digraph, [0, 3].into_iter());
 ///
-/// assert!(dijkstra.eq([3, 0, 5, 1, 6, 2, 4]));
+/// assert!(dijkstra.eq([3, 0, 5, 1, 2, 4, 6]));
 /// ```
 #[derive(Clone, Debug)]
 pub struct Dijkstra<'a, D> {

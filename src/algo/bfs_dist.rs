@@ -12,7 +12,7 @@
 //!
 //! The path from vertex `0` is red. `d` denotes the distances.
 //!
-//! ![A digraph and the distances between the source vertex and the other vertices along the breadth-first tranversal](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_1-0.87.4.svg?)
+//! ![A digraph and the distances between the source vertex and the other vertices along the breadth-first traversal](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_1-0.87.4.svg?)
 //!
 //! ```
 //! use {
@@ -102,7 +102,7 @@ type Step = (usize, usize);
 ///
 /// The path from vertex `0` is red. `d` denotes the distances.
 ///
-/// ![A digraph and the distances between the source vertex and the other vertices along the breadth-first tranversal](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_1-0.87.4.svg?)
+/// ![A digraph and the distances between the source vertex and the other vertices along the breadth-first traversal](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/bfs_dist_1-0.87.4.svg?)
 ///
 /// ```
 /// use {

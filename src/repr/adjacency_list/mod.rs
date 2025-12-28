@@ -221,8 +221,8 @@ use {
 ///
 /// ## Self-loop
 ///
-/// A self-loop isn't allowed. [`AdjacencyList`] can't represent this digraph.
-/// The self-loop is red.
+/// A self-loop isn't allowed. [`AdjacencyList`] can't represent this
+/// pseudograph. The self-loop is red.
 ///
 /// ![A pseudograph with a self-loop](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/adjacency_list_self_loop.svg?)
 ///

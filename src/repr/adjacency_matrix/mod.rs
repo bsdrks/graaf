@@ -7,7 +7,7 @@
 //! matrix is stored as a bit vector, and is suited for dense digraphs of small
 //! order.
 //!
-//! # Example
+//! # Examples
 //!
 //! ## Valid digraph
 //!
@@ -161,7 +161,7 @@ use crate::{
 /// order.
 ///
 ///
-/// # Example
+/// # Examples
 ///
 /// ## Valid digraph
 ///

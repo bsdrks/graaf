@@ -290,39 +290,6 @@ where
     ///     .distances()
     ///     .eq(&[0, 1, 2, 0, 3, 1, 4]));
     /// ```
-    /// Find the distances from the source vertices to all other vertices.
-    ///
-    /// # Panics
-    ///
-    /// * Panics if a source vertex isn't in the digraph.
-    /// * Panics if a successor vertex isn't in the digraph.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use {
-    ///     graaf::{
-    ///         AddArcWeighted,
-    ///         AdjacencyListWeighted,
-    ///         DijkstraDist,
-    ///         Empty,
-    ///     },
-    ///     std::iter::once,
-    /// };
-    ///
-    /// let mut digraph = AdjacencyListWeighted::<usize>::empty(4);
-    ///
-    /// digraph.add_arc_weighted(0, 1, 2);
-    /// digraph.add_arc_weighted(0, 2, 3);
-    /// digraph.add_arc_weighted(0, 3, 4);
-    /// digraph.add_arc_weighted(1, 2, 5);
-    /// digraph.add_arc_weighted(1, 3, 0);
-    /// digraph.add_arc_weighted(2, 3, 1);
-    ///
-    /// let mut dijkstra = DijkstraDist::new(&digraph, once(0));
-    ///
-    /// assert!(dijkstra.distances().into_iter().eq([0, 2, 3, 2]));
-    /// ```
     #[must_use]
     pub fn distances(&mut self) -> Vec<usize>
     where

@@ -2,7 +2,7 @@
 //!
 //! An [`EdgeList`] is a vector of tuples.
 //!
-//! # Example
+//! # Examples
 //!
 //! ## Valid digraph
 //!
@@ -152,7 +152,7 @@ use {
 
 /// A representation of an unweighted digraph.
 ///
-/// # Example
+/// # Examples
 ///
 /// ## Valid digraph
 ///

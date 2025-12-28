@@ -1,6 +1,6 @@
 //! Johnson's circuit-finding algorithm.
 //!
-//! # Example
+//! # Examples
 //!
 //! ```
 //! use graaf::{

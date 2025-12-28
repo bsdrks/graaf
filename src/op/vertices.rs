@@ -1,6 +1,6 @@
 //! Iterate a digraph's vertices.
 //!
-//! # Example
+//! # Examples
 //!
 //! ```
 //! use graaf::{
@@ -18,7 +18,7 @@
 pub trait Vertices {
     /// Iterate the digraph's vertices.
     ///
-    /// # Example
+    /// # Examples
     ///
     /// ```
     /// use graaf::{
