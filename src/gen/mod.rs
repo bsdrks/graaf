@@ -4,7 +4,7 @@
 //!
 //! ## Biclique digraph
 //!
-//! Generate a [`biclique`](Biclique] digraph with `m = 2` and `n = 3`.
+//! Generate a [`biclique`](Biclique) digraph with `m = 2` and `n = 3`.
 //!
 //! ![A biclique digraph with m = 2 and n = 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/biclique_2_3.svg?)
 //!
