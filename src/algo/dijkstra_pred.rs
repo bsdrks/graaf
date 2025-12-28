@@ -379,10 +379,12 @@ where
     ///
     /// let mut dijkstra = DijkstraPred::new(&digraph, once(0));
     ///
-    /// assert!(dijkstra
-    ///     .shortest_path(|v| v > 4)
-    ///     .unwrap()
-    ///     .eq(&[0, 1, 2, 4, 5]));
+    /// assert!(
+    ///     dijkstra
+    ///         .shortest_path(|v| v > 4)
+    ///         .unwrap()
+    ///         .eq(&[0, 1, 2, 4, 5])
+    /// );
     /// ```
     ///
     /// ## Multiple sources
@@ -414,15 +416,19 @@ where
     /// digraph.add_arc_weighted(4, 5, 1);
     /// digraph.add_arc_weighted(5, 6, 3);
     ///
-    /// assert!(DijkstraPred::new(&digraph, once(0))
-    ///     .shortest_path(|v| v > 1)
-    ///     .unwrap()
-    ///     .eq(&[0, 1, 2]));
+    /// assert!(
+    ///     DijkstraPred::new(&digraph, once(0))
+    ///         .shortest_path(|v| v > 1)
+    ///         .unwrap()
+    ///         .eq(&[0, 1, 2])
+    /// );
     ///
-    /// assert!(DijkstraPred::new(&digraph, once(3))
-    ///     .shortest_path(|v| v > 5)
-    ///     .unwrap()
-    ///     .eq(&[3, 5, 6]));
+    /// assert!(
+    ///     DijkstraPred::new(&digraph, once(3))
+    ///         .shortest_path(|v| v > 5)
+    ///         .unwrap()
+    ///         .eq(&[3, 5, 6])
+    /// );
     /// ```
     #[must_use]
     pub fn shortest_path<P>(&mut self, is_target: P) -> Option<Vec<usize>>
@@ -595,149 +601,185 @@ mod tests {
     fn predecessors_bang_jensen_94() {
         let digraph = bang_jensen_94_usize();
 
-        assert!(DijkstraPred::new(&digraph, once(0))
-            .predecessors()
-            .into_iter()
-            .eq([None, Some(0), Some(0), Some(2), Some(2), Some(2), Some(4)]));
+        assert!(
+            DijkstraPred::new(&digraph, once(0))
+                .predecessors()
+                .into_iter()
+                .eq([
+                    None,
+                    Some(0),
+                    Some(0),
+                    Some(2),
+                    Some(2),
+                    Some(2),
+                    Some(4)
+                ])
+        );
     }
 
     #[test]
     fn predecessors_bang_jensen_96() {
         let digraph = bang_jensen_96_usize();
 
-        assert!(DijkstraPred::new(&digraph, once(0))
-            .predecessors()
-            .into_iter()
-            .eq([None, Some(2), Some(0), Some(4), Some(2), Some(3)]));
+        assert!(
+            DijkstraPred::new(&digraph, once(0))
+                .predecessors()
+                .into_iter()
+                .eq([None, Some(2), Some(0), Some(4), Some(2), Some(3)])
+        );
     }
 
     #[test]
     fn predecessors_kattis_bryr_1() {
         let digraph = kattis_bryr_1_usize();
 
-        assert!(DijkstraPred::new(&digraph, once(0))
-            .predecessors()
-            .into_iter()
-            .eq([None, Some(0), Some(0)]));
+        assert!(
+            DijkstraPred::new(&digraph, once(0))
+                .predecessors()
+                .into_iter()
+                .eq([None, Some(0), Some(0)])
+        );
     }
 
     #[test]
     fn predecessors_kattis_bryr_2() {
         let digraph = kattis_bryr_2_usize();
 
-        assert!(DijkstraPred::new(&digraph, once(0))
-            .predecessors()
-            .into_iter()
-            .eq([None, Some(0), Some(3), Some(0), Some(3), Some(4)]));
+        assert!(
+            DijkstraPred::new(&digraph, once(0))
+                .predecessors()
+                .into_iter()
+                .eq([None, Some(0), Some(3), Some(0), Some(3), Some(4)])
+        );
     }
 
     #[test]
     fn predecessors_kattis_bryr_3() {
         let digraph = kattis_bryr_3_usize();
 
-        assert!(DijkstraPred::new(&digraph, once(0))
-            .predecessors()
-            .into_iter()
-            .eq([
-                None,
-                Some(7),
-                Some(6),
-                Some(0),
-                Some(3),
-                Some(3),
-                Some(5),
-                Some(3),
-                Some(5),
-                Some(1)
-            ]));
+        assert!(
+            DijkstraPred::new(&digraph, once(0))
+                .predecessors()
+                .into_iter()
+                .eq([
+                    None,
+                    Some(7),
+                    Some(6),
+                    Some(0),
+                    Some(3),
+                    Some(3),
+                    Some(5),
+                    Some(3),
+                    Some(5),
+                    Some(1)
+                ])
+        );
     }
 
     #[test]
     fn predecessors_kattis_crosscountry() {
         let digraph = kattis_crosscountry_usize();
 
-        assert!(DijkstraPred::new(&digraph, once(0))
-            .predecessors()
-            .into_iter()
-            .eq([None, Some(0), Some(0), Some(2)]));
+        assert!(
+            DijkstraPred::new(&digraph, once(0))
+                .predecessors()
+                .into_iter()
+                .eq([None, Some(0), Some(0), Some(2)])
+        );
     }
 
     #[test]
     fn predecessors_kattis_shortestpath1() {
         let digraph = kattis_shortestpath1_usize();
 
-        assert!(DijkstraPred::new(&digraph, once(0))
-            .predecessors()
-            .into_iter()
-            .eq([None, Some(0), Some(1), None]));
+        assert!(
+            DijkstraPred::new(&digraph, once(0))
+                .predecessors()
+                .into_iter()
+                .eq([None, Some(0), Some(1), None])
+        );
     }
 
     #[test]
     fn shortest_path_bang_jensen_94() {
         let digraph = bang_jensen_94_usize();
 
-        assert!(DijkstraPred::new(&digraph, once(0))
-            .shortest_path(|v| v == 6)
-            .unwrap()
-            .eq(&[0, 2, 4, 6]));
+        assert!(
+            DijkstraPred::new(&digraph, once(0))
+                .shortest_path(|v| v == 6)
+                .unwrap()
+                .eq(&[0, 2, 4, 6])
+        );
     }
 
     #[test]
     fn shortest_path_bang_jensen_96() {
         let digraph = bang_jensen_96_usize();
 
-        assert!(DijkstraPred::new(&digraph, once(0))
-            .shortest_path(|v| v == 5)
-            .unwrap()
-            .eq(&[0, 2, 4, 3, 5]));
+        assert!(
+            DijkstraPred::new(&digraph, once(0))
+                .shortest_path(|v| v == 5)
+                .unwrap()
+                .eq(&[0, 2, 4, 3, 5])
+        );
     }
 
     #[test]
     fn shortest_path_kattis_bryr_1() {
         let digraph = kattis_bryr_1_usize();
 
-        assert!(DijkstraPred::new(&digraph, once(0))
-            .shortest_path(|v| v == 2)
-            .unwrap()
-            .eq(&[0, 2]));
+        assert!(
+            DijkstraPred::new(&digraph, once(0))
+                .shortest_path(|v| v == 2)
+                .unwrap()
+                .eq(&[0, 2])
+        );
     }
 
     #[test]
     fn shortest_path_kattis_bryr_2() {
         let digraph = kattis_bryr_2_usize();
 
-        assert!(DijkstraPred::new(&digraph, once(0))
-            .shortest_path(|v| v == 5)
-            .unwrap()
-            .eq(&[0, 3, 4, 5]));
+        assert!(
+            DijkstraPred::new(&digraph, once(0))
+                .shortest_path(|v| v == 5)
+                .unwrap()
+                .eq(&[0, 3, 4, 5])
+        );
     }
 
     #[test]
     fn shortest_path_kattis_bryr_3() {
         let digraph = kattis_bryr_3_usize();
 
-        assert!(DijkstraPred::new(&digraph, once(0))
-            .shortest_path(|v| v == 9)
-            .unwrap()
-            .eq(&[0, 3, 7, 1, 9]));
+        assert!(
+            DijkstraPred::new(&digraph, once(0))
+                .shortest_path(|v| v == 9)
+                .unwrap()
+                .eq(&[0, 3, 7, 1, 9])
+        );
     }
 
     #[test]
     fn shortest_path_kattis_crosscountry() {
         let digraph = kattis_crosscountry_usize();
 
-        assert!(DijkstraPred::new(&digraph, once(0))
-            .shortest_path(|v| v == 2)
-            .unwrap()
-            .eq(&[0, 2]));
+        assert!(
+            DijkstraPred::new(&digraph, once(0))
+                .shortest_path(|v| v == 2)
+                .unwrap()
+                .eq(&[0, 2])
+        );
     }
 
     #[test]
     fn shortest_path_kattis_shortestpath1() {
         let digraph = kattis_shortestpath1_usize();
 
-        assert!(DijkstraPred::new(&digraph, once(0))
-            .shortest_path(|v| v == 3)
-            .is_none());
+        assert!(
+            DijkstraPred::new(&digraph, once(0))
+                .shortest_path(|v| v == 3)
+                .is_none()
+        );
     }
 }

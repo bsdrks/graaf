@@ -33,9 +33,11 @@
 //!     Circuit,
 //! };
 //!
-//! assert!(AdjacencyList::circuit(3)
-//!     .arcs()
-//!     .eq([(0, 1), (1, 2), (2, 0)]));
+//! assert!(
+//!     AdjacencyList::circuit(3)
+//!         .arcs()
+//!         .eq([(0, 1), (1, 2), (2, 0)])
+//! );
 //! ```
 //!
 //! ## Order 4
@@ -98,9 +100,11 @@ pub trait Circuit {
     ///     Circuit,
     /// };
     ///
-    /// assert!(AdjacencyList::circuit(3)
-    ///     .arcs()
-    ///     .eq([(0, 1), (1, 2), (2, 0)]));
+    /// assert!(
+    ///     AdjacencyList::circuit(3)
+    ///         .arcs()
+    ///         .eq([(0, 1), (1, 2), (2, 0)])
+    /// );
     /// ```
     ///
     /// ## Order 4

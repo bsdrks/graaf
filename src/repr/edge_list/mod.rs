@@ -102,7 +102,6 @@ pub mod fixture;
 
 use {
     crate::{
-        gen::prng::Xoshiro256StarStar,
         AddArc,
         AdjacencyList,
         AdjacencyMap,
@@ -143,6 +142,7 @@ use {
         Union,
         Vertices,
         Wheel,
+        r#gen::prng::Xoshiro256StarStar,
     },
     std::{
         collections::BTreeSet,
@@ -957,8 +957,8 @@ mod tests_indegree_sequence {
 #[cfg(test)]
 mod tests_is_balanced {
     use crate::{
-        test_is_balanced,
         IsBalanced,
+        test_is_balanced,
     };
 
     test_is_balanced!(crate::repr::edge_list::fixture);
@@ -977,8 +977,8 @@ mod tests_is_complete {
 #[cfg(test)]
 mod tests_is_isolated {
     use crate::{
-        test_is_isolated,
         IsIsolated,
+        test_is_isolated,
     };
 
     test_is_isolated!(crate::repr::edge_list::fixture);
@@ -987,8 +987,8 @@ mod tests_is_isolated {
 #[cfg(test)]
 mod tests_is_oriented {
     use crate::{
-        test_is_oriented,
         IsOriented,
+        test_is_oriented,
     };
 
     test_is_oriented!(crate::repr::edge_list::fixture);
@@ -997,8 +997,8 @@ mod tests_is_oriented {
 #[cfg(test)]
 mod tests_is_pendant {
     use crate::{
-        test_is_pendant,
         IsPendant,
+        test_is_pendant,
     };
 
     test_is_pendant!(crate::repr::edge_list::fixture);
@@ -1037,8 +1037,8 @@ mod tests_is_simple {
 #[cfg(test)]
 mod tests_is_symmetric {
     use crate::{
-        test_is_symmetric,
         IsSymmetric,
+        test_is_symmetric,
     };
 
     test_is_symmetric!(crate::repr::edge_list::fixture);
@@ -1057,8 +1057,8 @@ mod tests_is_tournament {
 #[cfg(test)]
 mod tests_order {
     use crate::{
-        test_order,
         Order,
+        test_order,
     };
 
     test_order!(crate::repr::edge_list::fixture);
@@ -1137,8 +1137,8 @@ mod tests_semidegree_sequence {
 #[cfg(test)]
 mod tests_sinks {
     use crate::{
-        test_sinks,
         Sinks,
+        test_sinks,
     };
 
     test_sinks!(crate::repr::edge_list::fixture);
@@ -1147,8 +1147,8 @@ mod tests_sinks {
 #[cfg(test)]
 mod tests_size {
     use crate::{
-        test_size,
         Size,
+        test_size,
     };
 
     test_size!(crate::repr::edge_list::fixture);
@@ -1157,8 +1157,8 @@ mod tests_size {
 #[cfg(test)]
 mod tests_sources {
     use crate::{
-        test_sources,
         Sources,
+        test_sources,
     };
 
     test_sources!(crate::repr::edge_list::fixture);
@@ -1269,8 +1269,8 @@ mod proptests_contiguous_order {
     use {
         super::*,
         crate::{
-            proptest_contiguous_order,
             ContiguousOrder,
+            proptest_contiguous_order,
         },
     };
 
@@ -1422,7 +1422,7 @@ mod tests {
     #[test]
     #[should_panic(expected = "u = 1 equals v = 1")]
     fn from_iter_self_loop() {
-        let _ = EdgeList::from(BTreeSet::from([(0, 1), (1, 1)]));
+        drop(EdgeList::from(BTreeSet::from([(0, 1), (1, 1)])));
     }
 
     #[test]

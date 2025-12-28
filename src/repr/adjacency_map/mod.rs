@@ -111,7 +111,6 @@ pub mod fixture;
 
 use {
     crate::{
-        gen::prng::Xoshiro256StarStar,
         AddArc,
         AdjacencyList,
         AdjacencyMatrix,
@@ -152,6 +151,7 @@ use {
         Union,
         Vertices,
         Wheel,
+        r#gen::prng::Xoshiro256StarStar,
     },
     std::{
         cmp::Ordering,
@@ -409,7 +409,8 @@ impl Complete for AdjacencyMap {
         for u in 0..order {
             let mut out_neighbors = vertices.clone();
             let _ = out_neighbors.remove(&u);
-            let _ = arcs.insert(u, out_neighbors);
+
+            drop(arcs.insert(u, out_neighbors));
         }
 
         Self { arcs }
@@ -1149,55 +1150,59 @@ impl Star for AdjacencyMap {
 }
 
 unsafe fn merge_two_sorted(lhs: &[usize], rhs: &[usize]) -> Vec<usize> {
-    let lhs_len = lhs.len();
-    let rhs_len = rhs.len();
-    let mut out = Vec::with_capacity(lhs_len + rhs_len);
-    let mut i = 0;
-    let mut j = 0;
+    unsafe {
+        let lhs_len = lhs.len();
+        let rhs_len = rhs.len();
+        let mut out = Vec::with_capacity(lhs_len + rhs_len);
+        let mut i = 0;
+        let mut j = 0;
 
-    while i < lhs_len && j < rhs_len {
-        let a_i = *lhs.get_unchecked(i);
-        let b_j = *rhs.get_unchecked(j);
+        while i < lhs_len && j < rhs_len {
+            let a_i = *lhs.get_unchecked(i);
+            let b_j = *rhs.get_unchecked(j);
 
-        match a_i.cmp(&b_j) {
-            Ordering::Less => {
-                out.push(a_i);
-                i += 1;
-            }
-            Ordering::Greater => {
-                out.push(b_j);
-                j += 1;
-            }
-            Ordering::Equal => {
-                out.push(a_i);
-                i += 1;
-                j += 1;
+            match a_i.cmp(&b_j) {
+                Ordering::Less => {
+                    out.push(a_i);
+                    i += 1;
+                }
+                Ordering::Greater => {
+                    out.push(b_j);
+                    j += 1;
+                }
+                Ordering::Equal => {
+                    out.push(a_i);
+                    i += 1;
+                    j += 1;
+                }
             }
         }
-    }
 
-    while i < lhs.len() {
-        out.push(*lhs.get_unchecked(i));
-        i += 1;
-    }
+        while i < lhs.len() {
+            out.push(*lhs.get_unchecked(i));
+            i += 1;
+        }
 
-    while j < rhs.len() {
-        out.push(*rhs.get_unchecked(j));
-        j += 1;
-    }
+        while j < rhs.len() {
+            out.push(*rhs.get_unchecked(j));
+            j += 1;
+        }
 
-    out
+        out
+    }
 }
 
 unsafe fn union_sets_unsafe(
     set_a: &BTreeSet<usize>,
     set_b: &BTreeSet<usize>,
 ) -> BTreeSet<usize> {
-    let vec_a: Vec<usize> = set_a.iter().copied().collect();
-    let vec_b: Vec<usize> = set_b.iter().copied().collect();
-    let merged = merge_two_sorted(&vec_a, &vec_b);
+    unsafe {
+        let vec_a: Vec<usize> = set_a.iter().copied().collect();
+        let vec_b: Vec<usize> = set_b.iter().copied().collect();
+        let merged = merge_two_sorted(&vec_a, &vec_b);
 
-    merged.into_iter().collect()
+        merged.into_iter().collect()
+    }
 }
 
 #[allow(clippy::suspicious_operation_groupings)]
@@ -1549,8 +1554,8 @@ mod tests_indegree_sequence {
 #[cfg(test)]
 mod tests_is_balanced {
     use crate::{
-        test_is_balanced,
         IsBalanced,
+        test_is_balanced,
     };
 
     test_is_balanced!(crate::repr::adjacency_map::fixture);
@@ -1569,8 +1574,8 @@ mod tests_is_complete {
 #[cfg(test)]
 mod tests_is_isolated {
     use crate::{
-        test_is_isolated,
         IsIsolated,
+        test_is_isolated,
     };
 
     test_is_isolated!(crate::repr::adjacency_map::fixture);
@@ -1579,8 +1584,8 @@ mod tests_is_isolated {
 #[cfg(test)]
 mod tests_is_oriented {
     use crate::{
-        test_is_oriented,
         IsOriented,
+        test_is_oriented,
     };
 
     test_is_oriented!(crate::repr::adjacency_map::fixture);
@@ -1589,8 +1594,8 @@ mod tests_is_oriented {
 #[cfg(test)]
 mod tests_is_pendant {
     use crate::{
-        test_is_pendant,
         IsPendant,
+        test_is_pendant,
     };
 
     test_is_pendant!(crate::repr::adjacency_map::fixture);
@@ -1629,8 +1634,8 @@ mod tests_is_simple {
 #[cfg(test)]
 mod tests_is_symmetric {
     use crate::{
-        test_is_symmetric,
         IsSymmetric,
+        test_is_symmetric,
     };
 
     test_is_symmetric!(crate::repr::adjacency_map::fixture);
@@ -1649,8 +1654,8 @@ mod tests_is_tournament {
 #[cfg(test)]
 mod tests_order {
     use crate::{
-        test_order,
         Order,
+        test_order,
     };
 
     test_order!(crate::repr::adjacency_map::fixture);
@@ -1729,8 +1734,8 @@ mod tests_semidegree_sequence {
 #[cfg(test)]
 mod tests_sinks {
     use crate::{
-        test_sinks,
         Sinks,
+        test_sinks,
     };
 
     test_sinks!(crate::repr::adjacency_map::fixture);
@@ -1739,8 +1744,8 @@ mod tests_sinks {
 #[cfg(test)]
 mod tests_size {
     use crate::{
-        test_size,
         Size,
+        test_size,
     };
 
     test_size!(crate::repr::adjacency_map::fixture);
@@ -1749,8 +1754,8 @@ mod tests_size {
 #[cfg(test)]
 mod tests_sources {
     use crate::{
-        test_sources,
         Sources,
+        test_sources,
     };
 
     test_sources!(crate::repr::adjacency_map::fixture);

@@ -232,10 +232,12 @@ mod tests {
     use {
         super::*,
         crate::{
+            AdjacencyList,
+            Empty,
             repr::adjacency_list::fixture::{
-                bang_jensen_196,
                 bang_jensen_34,
                 bang_jensen_94,
+                bang_jensen_196,
                 kattis_builddeps,
                 kattis_cantinaofbabel_1,
                 kattis_cantinaofbabel_2,
@@ -243,8 +245,6 @@ mod tests {
                 kattis_escapewallmaria_2,
                 kattis_escapewallmaria_3,
             },
-            AdjacencyList,
-            Empty,
         },
     };
 
@@ -296,97 +296,109 @@ mod tests {
 
     #[test]
     fn components_kattis_cantinaofbabel_1() {
-        assert!(Tarjan::new(&kattis_cantinaofbabel_1())
-            .components()
-            .iter()
-            .eq(&[
-                BTreeSet::from([5, 6, 10]),
-                BTreeSet::from([0, 1, 2, 3, 4, 7, 9, 11]),
-                BTreeSet::from([8]),
-            ]));
+        assert!(
+            Tarjan::new(&kattis_cantinaofbabel_1())
+                .components()
+                .iter()
+                .eq(&[
+                    BTreeSet::from([5, 6, 10]),
+                    BTreeSet::from([0, 1, 2, 3, 4, 7, 9, 11]),
+                    BTreeSet::from([8]),
+                ])
+        );
     }
 
     #[test]
     fn components_kattis_cantinaofbabel_2() {
-        assert!(Tarjan::new(&kattis_cantinaofbabel_2())
-            .components()
-            .iter()
-            .eq(&[
-                BTreeSet::from([3, 4]),
-                BTreeSet::from([5, 6]),
-                BTreeSet::from([0, 1, 2, 7]),
-                BTreeSet::from([8, 9, 10, 11]),
-            ]));
+        assert!(
+            Tarjan::new(&kattis_cantinaofbabel_2())
+                .components()
+                .iter()
+                .eq(&[
+                    BTreeSet::from([3, 4]),
+                    BTreeSet::from([5, 6]),
+                    BTreeSet::from([0, 1, 2, 7]),
+                    BTreeSet::from([8, 9, 10, 11]),
+                ])
+        );
     }
 
     #[test]
     fn components_kattis_escapewallmaria_1() {
-        assert!(Tarjan::new(&kattis_escapewallmaria_1())
-            .components()
-            .iter()
-            .eq(&[
-                BTreeSet::from([0]),
-                BTreeSet::from([1]),
-                BTreeSet::from([2]),
-                BTreeSet::from([3]),
-                BTreeSet::from([4]),
-                BTreeSet::from([12]),
-                BTreeSet::from([5, 6, 9, 13]),
-                BTreeSet::from([7]),
-                BTreeSet::from([8]),
-                BTreeSet::from([10]),
-                BTreeSet::from([11]),
-                BTreeSet::from([14]),
-                BTreeSet::from([15]),
-            ]));
+        assert!(
+            Tarjan::new(&kattis_escapewallmaria_1())
+                .components()
+                .iter()
+                .eq(&[
+                    BTreeSet::from([0]),
+                    BTreeSet::from([1]),
+                    BTreeSet::from([2]),
+                    BTreeSet::from([3]),
+                    BTreeSet::from([4]),
+                    BTreeSet::from([12]),
+                    BTreeSet::from([5, 6, 9, 13]),
+                    BTreeSet::from([7]),
+                    BTreeSet::from([8]),
+                    BTreeSet::from([10]),
+                    BTreeSet::from([11]),
+                    BTreeSet::from([14]),
+                    BTreeSet::from([15]),
+                ])
+        );
     }
 
     #[test]
     fn components_kattis_escapewallmaria_2() {
-        assert!(Tarjan::new(&kattis_escapewallmaria_2())
-            .components()
-            .iter()
-            .eq(&[
-                BTreeSet::from([0]),
-                BTreeSet::from([1]),
-                BTreeSet::from([2]),
-                BTreeSet::from([3]),
-                BTreeSet::from([4]),
-                BTreeSet::from([5, 6, 9]),
-                BTreeSet::from([7]),
-                BTreeSet::from([8]),
-                BTreeSet::from([10]),
-                BTreeSet::from([11]),
-                BTreeSet::from([12, 13]),
-                BTreeSet::from([14]),
-                BTreeSet::from([15]),
-            ]));
+        assert!(
+            Tarjan::new(&kattis_escapewallmaria_2())
+                .components()
+                .iter()
+                .eq(&[
+                    BTreeSet::from([0]),
+                    BTreeSet::from([1]),
+                    BTreeSet::from([2]),
+                    BTreeSet::from([3]),
+                    BTreeSet::from([4]),
+                    BTreeSet::from([5, 6, 9]),
+                    BTreeSet::from([7]),
+                    BTreeSet::from([8]),
+                    BTreeSet::from([10]),
+                    BTreeSet::from([11]),
+                    BTreeSet::from([12, 13]),
+                    BTreeSet::from([14]),
+                    BTreeSet::from([15]),
+                ])
+        );
     }
 
     #[test]
     fn components_kattis_escapewallmaria_3() {
-        assert!(Tarjan::new(&kattis_escapewallmaria_3())
-            .components()
-            .iter()
-            .eq(&[
-                BTreeSet::from([0]),
-                BTreeSet::from([1, 2, 5, 6, 9, 12, 13]),
-                BTreeSet::from([3]),
-                BTreeSet::from([4]),
-                BTreeSet::from([7]),
-                BTreeSet::from([8]),
-                BTreeSet::from([10]),
-                BTreeSet::from([11]),
-                BTreeSet::from([14]),
-                BTreeSet::from([15]),
-            ]));
+        assert!(
+            Tarjan::new(&kattis_escapewallmaria_3())
+                .components()
+                .iter()
+                .eq(&[
+                    BTreeSet::from([0]),
+                    BTreeSet::from([1, 2, 5, 6, 9, 12, 13]),
+                    BTreeSet::from([3]),
+                    BTreeSet::from([4]),
+                    BTreeSet::from([7]),
+                    BTreeSet::from([8]),
+                    BTreeSet::from([10]),
+                    BTreeSet::from([11]),
+                    BTreeSet::from([14]),
+                    BTreeSet::from([15]),
+                ])
+        );
     }
 
     #[test]
     fn components_trivial() {
-        assert!(Tarjan::new(&AdjacencyList::trivial())
-            .components()
-            .iter()
-            .eq(&[BTreeSet::from([0])]));
+        assert!(
+            Tarjan::new(&AdjacencyList::trivial())
+                .components()
+                .iter()
+                .eq(&[BTreeSet::from([0])])
+        );
     }
 }

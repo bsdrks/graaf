@@ -284,9 +284,11 @@ impl<'a, D> BfsDist<'a, D> {
     /// digraph.add_arc(6, 7);
     /// digraph.add_arc(7, 6);
     ///
-    /// assert!(BfsDist::new(&digraph, [3, 7].into_iter())
-    ///     .distances()
-    ///     .eq(&[1, 2, 3, 0, 3, 2, 1, 0]));
+    /// assert!(
+    ///     BfsDist::new(&digraph, [3, 7].into_iter())
+    ///         .distances()
+    ///         .eq(&[1, 2, 3, 0, 3, 2, 1, 0])
+    /// );
     /// ```
     #[must_use]
     pub fn distances(&mut self) -> Vec<usize>
@@ -339,10 +341,12 @@ mod tests {
     use {
         super::*,
         crate::{
+            AdjacencyList,
+            Empty,
             repr::adjacency_list::fixture::{
-                bang_jensen_196,
                 bang_jensen_34,
                 bang_jensen_94,
+                bang_jensen_196,
                 kattis_builddeps,
                 kattis_cantinaofbabel_1,
                 kattis_cantinaofbabel_2,
@@ -350,8 +354,6 @@ mod tests {
                 kattis_escapewallmaria_2,
                 kattis_escapewallmaria_3,
             },
-            AdjacencyList,
-            Empty,
         },
         std::iter::once,
     };
@@ -367,9 +369,11 @@ mod tests {
     fn distances_bang_jensen_94() {
         let digraph = bang_jensen_94();
 
-        assert!(BfsDist::new(&digraph, once(0))
-            .distances()
-            .eq(&[0, 1, 1, 2, 2, 2, 3]));
+        assert!(
+            BfsDist::new(&digraph, once(0))
+                .distances()
+                .eq(&[0, 1, 1, 2, 2, 2, 3])
+        );
     }
 
     #[test]

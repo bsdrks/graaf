@@ -223,10 +223,12 @@ impl<'a, D> DfsPred<'a, D> {
     /// digraph.add_arc(1, 4);
     /// digraph.add_arc(2, 5);
     ///
-    /// assert!(DfsPred::new(&digraph, once(0))
-    ///     .predecessors()
-    ///     .into_iter()
-    ///     .eq([None, Some(0), Some(1), None, Some(1), Some(2)]));
+    /// assert!(
+    ///     DfsPred::new(&digraph, once(0))
+    ///         .predecessors()
+    ///         .into_iter()
+    ///         .eq([None, Some(0), Some(1), None, Some(1), Some(2)])
+    /// );
     /// ```
     ///
     /// ## Multiple sources
@@ -258,19 +260,21 @@ impl<'a, D> DfsPred<'a, D> {
     /// digraph.add_arc(6, 7);
     /// digraph.add_arc(7, 6);
     ///
-    /// assert!(DfsPred::new(&digraph, [3, 7].into_iter())
-    ///     .predecessors()
-    ///     .into_iter()
-    ///     .eq([
-    ///         Some(3),
-    ///         Some(0),
-    ///         Some(1),
-    ///         None,
-    ///         Some(1),
-    ///         Some(6),
-    ///         Some(7),
-    ///         None
-    ///     ]));
+    /// assert!(
+    ///     DfsPred::new(&digraph, [3, 7].into_iter())
+    ///         .predecessors()
+    ///         .into_iter()
+    ///         .eq([
+    ///             Some(3),
+    ///             Some(0),
+    ///             Some(1),
+    ///             None,
+    ///             Some(1),
+    ///             Some(6),
+    ///             Some(7),
+    ///             None
+    ///         ])
+    /// );
     /// ```
     #[must_use]
     pub fn predecessors(&mut self) -> PredecessorTree
@@ -324,9 +328,9 @@ mod tests {
     use {
         super::*,
         crate::repr::adjacency_list::fixture::{
-            bang_jensen_196,
             bang_jensen_34,
             bang_jensen_94,
+            bang_jensen_196,
             kattis_builddeps,
             kattis_cantinaofbabel_1,
             kattis_cantinaofbabel_2,
@@ -464,175 +468,201 @@ mod tests {
     fn predecessors_bang_jensen_196() {
         let digraph = bang_jensen_196();
 
-        assert!(DfsPred::new(&digraph, once(0))
-            .predecessors()
-            .into_iter()
-            .eq([
-                None,
-                Some(0),
-                Some(4),
-                Some(2),
-                Some(0),
-                Some(7),
-                Some(5),
-                Some(0)
-            ]));
+        assert!(
+            DfsPred::new(&digraph, once(0))
+                .predecessors()
+                .into_iter()
+                .eq([
+                    None,
+                    Some(0),
+                    Some(4),
+                    Some(2),
+                    Some(0),
+                    Some(7),
+                    Some(5),
+                    Some(0)
+                ])
+        );
     }
 
     #[test]
     fn predecessors_bang_jensen_34() {
         let digraph = bang_jensen_34();
 
-        assert!(DfsPred::new(&digraph, once(0))
-            .predecessors()
-            .into_iter()
-            .eq([None, None, None, None, Some(0), None]));
+        assert!(
+            DfsPred::new(&digraph, once(0))
+                .predecessors()
+                .into_iter()
+                .eq([None, None, None, None, Some(0), None])
+        );
     }
 
     #[test]
     fn predecessors_bang_jensen_94() {
         let digraph = bang_jensen_94();
 
-        assert!(DfsPred::new(&digraph, once(0))
-            .predecessors()
-            .into_iter()
-            .eq([None, Some(2), Some(0), Some(2), Some(2), Some(2), Some(4)]));
+        assert!(
+            DfsPred::new(&digraph, once(0))
+                .predecessors()
+                .into_iter()
+                .eq([
+                    None,
+                    Some(2),
+                    Some(0),
+                    Some(2),
+                    Some(2),
+                    Some(2),
+                    Some(4)
+                ])
+        );
     }
 
     #[test]
     fn predecessors_kattis_builddeps() {
         let digraph = kattis_builddeps();
 
-        assert!(DfsPred::new(&digraph, once(0))
-            .predecessors()
-            .into_iter()
-            .eq([None, Some(4), None, Some(0), Some(0), None]));
+        assert!(
+            DfsPred::new(&digraph, once(0))
+                .predecessors()
+                .into_iter()
+                .eq([None, Some(4), None, Some(0), Some(0), None])
+        );
     }
 
     #[test]
     fn predecessors_kattis_cantinaofbabel_1() {
         let digraph = kattis_cantinaofbabel_1();
 
-        assert!(DfsPred::new(&digraph, once(0))
-            .predecessors()
-            .into_iter()
-            .eq([
-                None,
-                Some(0),
-                None,
-                Some(4),
-                Some(1),
-                Some(6),
-                Some(10),
-                Some(9),
-                None,
-                Some(11),
-                Some(3),
-                Some(3)
-            ]));
+        assert!(
+            DfsPred::new(&digraph, once(0))
+                .predecessors()
+                .into_iter()
+                .eq([
+                    None,
+                    Some(0),
+                    None,
+                    Some(4),
+                    Some(1),
+                    Some(6),
+                    Some(10),
+                    Some(9),
+                    None,
+                    Some(11),
+                    Some(3),
+                    Some(3)
+                ])
+        );
     }
 
     #[test]
     fn predecessors_kattis_cantinaofbabel_2() {
         let digraph = kattis_cantinaofbabel_2();
 
-        assert!(DfsPred::new(&digraph, once(0))
-            .predecessors()
-            .into_iter()
-            .eq([
-                None,
-                Some(0),
-                Some(7),
-                Some(5),
-                Some(3),
-                Some(2),
-                Some(5),
-                Some(1),
-                None,
-                None,
-                None,
-                None
-            ]));
+        assert!(
+            DfsPred::new(&digraph, once(0))
+                .predecessors()
+                .into_iter()
+                .eq([
+                    None,
+                    Some(0),
+                    Some(7),
+                    Some(5),
+                    Some(3),
+                    Some(2),
+                    Some(5),
+                    Some(1),
+                    None,
+                    None,
+                    None,
+                    None
+                ])
+        );
     }
 
     #[test]
     fn predecessors_kattis_escapewallmaria_1() {
         let digraph = kattis_escapewallmaria_1();
 
-        assert!(DfsPred::new(&digraph, once(5))
-            .predecessors()
-            .into_iter()
-            .eq([
-                None,
-                None,
-                None,
-                None,
-                None,
-                None,
-                Some(5),
-                None,
-                None,
-                Some(5),
-                None,
-                None,
-                Some(13),
-                Some(9),
-                None,
-                None
-            ]));
+        assert!(
+            DfsPred::new(&digraph, once(5))
+                .predecessors()
+                .into_iter()
+                .eq([
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(5),
+                    None,
+                    None,
+                    Some(5),
+                    None,
+                    None,
+                    Some(13),
+                    Some(9),
+                    None,
+                    None
+                ])
+        );
     }
 
     #[test]
     fn predecessors_kattis_escapewallmaria_2() {
         let digraph = kattis_escapewallmaria_2();
 
-        assert!(DfsPred::new(&digraph, once(5))
-            .predecessors()
-            .into_iter()
-            .eq([
-                None,
-                None,
-                None,
-                None,
-                None,
-                None,
-                Some(5),
-                None,
-                None,
-                Some(5),
-                None,
-                None,
-                None,
-                None,
-                None,
-                None
-            ]));
+        assert!(
+            DfsPred::new(&digraph, once(5))
+                .predecessors()
+                .into_iter()
+                .eq([
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    Some(5),
+                    None,
+                    None,
+                    Some(5),
+                    None,
+                    None,
+                    None,
+                    None,
+                    None,
+                    None
+                ])
+        );
     }
 
     #[test]
     fn predecessors_kattis_escapewallmaria_3() {
         let digraph = kattis_escapewallmaria_3();
 
-        assert!(DfsPred::new(&digraph, once(5))
-            .predecessors()
-            .into_iter()
-            .eq([
-                None,
-                Some(2),
-                Some(6),
-                None,
-                None,
-                None,
-                Some(5),
-                None,
-                None,
-                Some(5),
-                None,
-                None,
-                Some(13),
-                Some(9),
-                None,
-                None
-            ]));
+        assert!(
+            DfsPred::new(&digraph, once(5))
+                .predecessors()
+                .into_iter()
+                .eq([
+                    None,
+                    Some(2),
+                    Some(6),
+                    None,
+                    None,
+                    None,
+                    Some(5),
+                    None,
+                    None,
+                    Some(5),
+                    None,
+                    None,
+                    Some(13),
+                    Some(9),
+                    None,
+                    None
+                ])
+        );
     }
 }

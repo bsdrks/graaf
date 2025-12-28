@@ -11,9 +11,9 @@ use {
     },
     std::{
         alloc::{
+            Layout,
             alloc,
             dealloc,
-            Layout,
         },
         collections::{
             BTreeMap,
@@ -139,16 +139,18 @@ fn circuit_adjacency_map_btree_set_unsafe_vec(
 unsafe fn bulk_construct_btreemap_vec<K: Ord, V>(
     data: Vec<(K, V)>,
 ) -> BTreeMap<K, V> {
-    let mut map = BTreeMap::new();
-    let mut data = ManuallyDrop::new(data);
-    let ptr = data.as_mut_ptr();
+    unsafe {
+        let mut map = BTreeMap::new();
+        let mut data = ManuallyDrop::new(data);
+        let ptr = data.as_mut_ptr();
 
-    for i in 0..data.len() {
-        let (key, value) = ptr::read(ptr.add(i));
-        let _ = map.insert(key, value);
+        for i in 0..data.len() {
+            let (key, value) = ptr::read(ptr.add(i));
+            let _ = map.insert(key, value);
+        }
+
+        map
     }
-
-    map
 }
 
 /// # Panics
@@ -198,14 +200,16 @@ unsafe fn bulk_construct_btreemap_raw<K: Ord, V>(
     raw_ptr: *mut (K, V),
     len: usize,
 ) -> BTreeMap<K, V> {
-    let mut map: BTreeMap<K, V> = BTreeMap::new();
+    unsafe {
+        let mut map: BTreeMap<K, V> = BTreeMap::new();
 
-    for i in 0..len {
-        let (key, value) = ptr::read(raw_ptr.add(i));
-        let _ = map.insert(key, value);
+        for i in 0..len {
+            let (key, value) = ptr::read(raw_ptr.add(i));
+            let _ = map.insert(key, value);
+        }
+
+        map
     }
-
-    map
 }
 
 /// # Panics

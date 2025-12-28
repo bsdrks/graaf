@@ -66,9 +66,9 @@ where
 macro_rules! test_sinks {
     ($fixture:path) => {
         use $fixture::{
-            bang_jensen_196,
             bang_jensen_34,
             bang_jensen_94,
+            bang_jensen_196,
             kattis_builddeps,
             kattis_cantinaofbabel_1,
             kattis_cantinaofbabel_2,
@@ -109,23 +109,29 @@ macro_rules! test_sinks {
 
         #[test]
         fn sinks_kattis_escapewallmaria_1() {
-            assert!(kattis_escapewallmaria_1()
-                .sinks()
-                .eq([0, 1, 2, 3, 4, 7, 8, 10, 11, 12, 14, 15]));
+            assert!(
+                kattis_escapewallmaria_1()
+                    .sinks()
+                    .eq([0, 1, 2, 3, 4, 7, 8, 10, 11, 12, 14, 15])
+            );
         }
 
         #[test]
         fn sinks_kattis_escapewallmaria_2() {
-            assert!(kattis_escapewallmaria_2()
-                .sinks()
-                .eq([0, 1, 2, 3, 4, 7, 8, 10, 11, 14, 15]));
+            assert!(
+                kattis_escapewallmaria_2()
+                    .sinks()
+                    .eq([0, 1, 2, 3, 4, 7, 8, 10, 11, 14, 15])
+            );
         }
 
         #[test]
         fn sinks_kattis_escapewallmaria_3() {
-            assert!(kattis_escapewallmaria_3()
-                .sinks()
-                .eq([0, 3, 4, 7, 8, 10, 11, 14, 15]));
+            assert!(
+                kattis_escapewallmaria_3()
+                    .sinks()
+                    .eq([0, 3, 4, 7, 8, 10, 11, 14, 15])
+            );
         }
     };
 }

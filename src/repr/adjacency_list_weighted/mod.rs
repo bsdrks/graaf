@@ -18,9 +18,11 @@
 //! digraph.add_arc_weighted(1, 2, 3);
 //! digraph.add_arc_weighted(2, 0, 4);
 //!
-//! assert!(digraph
-//!     .arcs_weighted()
-//!     .eq([(0, 1, &2), (1, 2, &3), (2, 0, &4)]));
+//! assert!(
+//!     digraph
+//!         .arcs_weighted()
+//!         .eq([(0, 1, &2), (1, 2, &3), (2, 0, &4)])
+//! );
 //! ```
 
 pub mod fixture;
@@ -85,7 +87,7 @@ impl<W> AddArcWeighted for AdjacencyListWeighted<W> {
         assert!(u < order, "u = {u} isn't in the digraph");
         assert!(v < order, "v = {v} isn't in the digraph");
 
-        let _ = self.arcs[u].insert(v, w);
+        drop(self.arcs[u].insert(v, w));
     }
 }
 
@@ -418,9 +420,9 @@ mod proptests_contiguous_order {
     use {
         super::*,
         crate::{
-            proptest_contiguous_order,
             ContiguousOrder,
             Empty,
+            proptest_contiguous_order,
         },
     };
 
@@ -452,6 +454,17 @@ mod tests {
     use {
         super::*,
         crate::{
+            Degree,
+            InNeighbors,
+            IsBalanced,
+            IsComplete,
+            IsIsolated,
+            IsOriented,
+            IsPendant,
+            IsSemicomplete,
+            IsSymmetric,
+            IsTournament,
+            SemidegreeSequence,
             repr::{
                 adjacency_list,
                 adjacency_list_weighted::fixture::{
@@ -469,17 +482,6 @@ mod tests {
                 adjacency_matrix,
                 edge_list,
             },
-            Degree,
-            InNeighbors,
-            IsBalanced,
-            IsComplete,
-            IsIsolated,
-            IsOriented,
-            IsPendant,
-            IsSemicomplete,
-            IsSymmetric,
-            IsTournament,
-            SemidegreeSequence,
         },
     };
 
@@ -1016,16 +1018,20 @@ mod tests {
 
     #[test]
     fn degree_sequence_bang_jensen_94_weighted() {
-        assert!(bang_jensen_94_usize()
-            .degree_sequence()
-            .eq([2, 3, 5, 3, 2, 2, 1]));
+        assert!(
+            bang_jensen_94_usize()
+                .degree_sequence()
+                .eq([2, 3, 5, 3, 2, 2, 1])
+        );
     }
 
     #[test]
     fn degree_sequence_bang_jensen_96() {
-        assert!(bang_jensen_96_usize()
-            .degree_sequence()
-            .eq([2, 4, 5, 4, 4, 3]));
+        assert!(
+            bang_jensen_96_usize()
+                .degree_sequence()
+                .eq([2, 4, 5, 4, 4, 3])
+        );
     }
 
     #[test]
@@ -1040,30 +1046,38 @@ mod tests {
 
     #[test]
     fn degree_sequence_kattis_bryr_2() {
-        assert!(kattis_bryr_2_usize()
-            .degree_sequence()
-            .eq([4, 4, 4, 6, 4, 2]));
+        assert!(
+            kattis_bryr_2_usize()
+                .degree_sequence()
+                .eq([4, 4, 4, 6, 4, 2])
+        );
     }
 
     #[test]
     fn degree_sequence_kattis_bryr_3() {
-        assert!(kattis_bryr_3_usize()
-            .degree_sequence()
-            .eq([2, 4, 3, 8, 6, 6, 8, 4, 4, 5]));
+        assert!(
+            kattis_bryr_3_usize()
+                .degree_sequence()
+                .eq([2, 4, 3, 8, 6, 6, 8, 4, 4, 5])
+        );
     }
 
     #[test]
     fn degree_sequence_kattis_crosscountry() {
-        assert!(kattis_crosscountry_usize()
-            .degree_sequence()
-            .eq([6, 6, 6, 6]));
+        assert!(
+            kattis_crosscountry_usize()
+                .degree_sequence()
+                .eq([6, 6, 6, 6])
+        );
     }
 
     #[test]
     fn degree_sequence_kattis_shortestpath1() {
-        assert!(kattis_shortestpath1_usize()
-            .degree_sequence()
-            .eq([2, 2, 1, 1]));
+        assert!(
+            kattis_shortestpath1_usize()
+                .degree_sequence()
+                .eq([2, 2, 1, 1])
+        );
     }
 
     #[test]
@@ -1501,16 +1515,20 @@ mod tests {
 
     #[test]
     fn indegree_sequence_bang_jensen_94_weighted() {
-        assert!(bang_jensen_94_usize()
-            .indegree_sequence()
-            .eq([0, 2, 1, 2, 1, 2, 1]));
+        assert!(
+            bang_jensen_94_usize()
+                .indegree_sequence()
+                .eq([0, 2, 1, 2, 1, 2, 1])
+        );
     }
 
     #[test]
     fn indegree_sequence_bang_jensen_96() {
-        assert!(bang_jensen_96_usize()
-            .indegree_sequence()
-            .eq([0, 2, 3, 3, 1, 2]));
+        assert!(
+            bang_jensen_96_usize()
+                .indegree_sequence()
+                .eq([0, 2, 3, 3, 1, 2])
+        );
     }
 
     #[test]
@@ -1525,37 +1543,47 @@ mod tests {
 
     #[test]
     fn indegree_sequence_kattis_bryr_2() {
-        assert!(kattis_bryr_2_usize()
-            .indegree_sequence()
-            .eq([2, 2, 2, 3, 2, 1]));
+        assert!(
+            kattis_bryr_2_usize()
+                .indegree_sequence()
+                .eq([2, 2, 2, 3, 2, 1])
+        );
     }
 
     #[test]
     fn indegree_sequence_kattis_bryr_3() {
-        assert!(kattis_bryr_3_usize()
-            .indegree_sequence()
-            .eq([1, 2, 2, 4, 3, 3, 4, 2, 2, 2]));
+        assert!(
+            kattis_bryr_3_usize()
+                .indegree_sequence()
+                .eq([1, 2, 2, 4, 3, 3, 4, 2, 2, 2])
+        );
     }
 
     #[test]
     fn indegree_sequence_kattis_crosscountry() {
-        assert!(kattis_crosscountry_usize()
-            .indegree_sequence()
-            .eq([3, 3, 3, 3]));
+        assert!(
+            kattis_crosscountry_usize()
+                .indegree_sequence()
+                .eq([3, 3, 3, 3])
+        );
     }
 
     #[test]
     fn indegree_sequence_kattis_shortestpath1() {
-        assert!(kattis_shortestpath1_usize()
-            .indegree_sequence()
-            .eq([1, 1, 1, 0]));
+        assert!(
+            kattis_shortestpath1_usize()
+                .indegree_sequence()
+                .eq([1, 1, 1, 0])
+        );
     }
 
     #[test]
     fn indegree_sequence_kattis_shortestpath3() {
-        assert!(kattis_shortestpath3()
-            .indegree_sequence()
-            .eq([0, 2, 1, 1, 0]));
+        assert!(
+            kattis_shortestpath3()
+                .indegree_sequence()
+                .eq([0, 2, 1, 1, 0])
+        );
     }
 
     #[test]

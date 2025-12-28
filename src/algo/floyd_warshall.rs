@@ -262,6 +262,9 @@ mod tests {
     use {
         super::*,
         crate::{
+            AddArcWeighted,
+            AdjacencyListWeighted,
+            Empty,
             repr::adjacency_list_weighted::fixture::{
                 bang_jensen_94_isize,
                 bang_jensen_96_isize,
@@ -272,9 +275,6 @@ mod tests {
                 kattis_crosscountry_isize,
                 kattis_shortestpath1_isize,
             },
-            AddArcWeighted,
-            AdjacencyListWeighted,
-            Empty,
         },
     };
 

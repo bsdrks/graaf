@@ -52,9 +52,9 @@ pub trait DegreeSequence {
 macro_rules! test_degree_sequence {
     ($fixture:path) => {
         use $fixture::{
-            bang_jensen_196,
             bang_jensen_34,
             bang_jensen_94,
+            bang_jensen_196,
             kattis_builddeps,
             kattis_cantinaofbabel_1,
             kattis_cantinaofbabel_2,
@@ -65,9 +65,11 @@ macro_rules! test_degree_sequence {
 
         #[test]
         fn degree_sequence_bang_jensen_196() {
-            assert!(bang_jensen_196()
-                .degree_sequence()
-                .eq([4, 4, 4, 3, 3, 2, 2, 4]));
+            assert!(
+                bang_jensen_196()
+                    .degree_sequence()
+                    .eq([4, 4, 4, 3, 3, 2, 2, 4])
+            );
         }
 
         #[test]
@@ -77,51 +79,61 @@ macro_rules! test_degree_sequence {
 
         #[test]
         fn degree_sequence_bang_jensen_94() {
-            assert!(bang_jensen_94()
-                .degree_sequence()
-                .eq([2, 3, 5, 3, 2, 2, 1]));
+            assert!(
+                bang_jensen_94().degree_sequence().eq([2, 3, 5, 3, 2, 2, 1])
+            );
         }
 
         #[test]
         fn degree_sequence_kattis_builddeps() {
-            assert!(kattis_builddeps()
-                .degree_sequence()
-                .eq([2, 3, 3, 3, 3, 2]));
+            assert!(
+                kattis_builddeps().degree_sequence().eq([2, 3, 3, 3, 3, 2])
+            );
         }
 
         #[test]
         fn degree_sequence_kattis_cantinaofbabel_1() {
-            assert!(kattis_cantinaofbabel_1()
-                .degree_sequence()
-                .eq([2, 5, 3, 8, 3, 3, 4, 4, 2, 3, 4, 3]));
+            assert!(
+                kattis_cantinaofbabel_1()
+                    .degree_sequence()
+                    .eq([2, 5, 3, 8, 3, 3, 4, 4, 2, 3, 4, 3])
+            );
         }
 
         #[test]
         fn degree_sequence_kattis_cantinaofbabel_2() {
-            assert!(kattis_cantinaofbabel_2()
-                .degree_sequence()
-                .eq([3, 3, 4, 3, 2, 4, 2, 4, 4, 3, 3, 3]));
+            assert!(
+                kattis_cantinaofbabel_2()
+                    .degree_sequence()
+                    .eq([3, 3, 4, 3, 2, 4, 2, 4, 4, 3, 3, 3])
+            );
         }
 
         #[test]
         fn degree_sequence_kattis_escapewallmaria_1() {
-            assert!(kattis_escapewallmaria_1()
-                .degree_sequence()
-                .eq([0, 0, 0, 0, 0, 4, 2, 0, 0, 4, 0, 0, 1, 3, 0, 0]));
+            assert!(
+                kattis_escapewallmaria_1()
+                    .degree_sequence()
+                    .eq([0, 0, 0, 0, 0, 4, 2, 0, 0, 4, 0, 0, 1, 3, 0, 0])
+            );
         }
 
         #[test]
         fn degree_sequence_kattis_escapewallmaria_2() {
-            assert!(kattis_escapewallmaria_2()
-                .degree_sequence()
-                .eq([0, 0, 0, 0, 0, 4, 2, 0, 0, 3, 0, 0, 2, 3, 0, 0]));
+            assert!(
+                kattis_escapewallmaria_2()
+                    .degree_sequence()
+                    .eq([0, 0, 0, 0, 0, 4, 2, 0, 0, 3, 0, 0, 2, 3, 0, 0])
+            );
         }
 
         #[test]
         fn degree_sequence_kattis_escapewallmaria_3() {
-            assert!(kattis_escapewallmaria_3()
-                .degree_sequence()
-                .eq([0, 4, 4, 0, 0, 6, 4, 0, 0, 4, 0, 0, 2, 4, 0, 0]));
+            assert!(
+                kattis_escapewallmaria_3()
+                    .degree_sequence()
+                    .eq([0, 4, 4, 0, 0, 6, 4, 0, 0, 4, 0, 0, 2, 4, 0, 0])
+            );
         }
     };
 }

@@ -107,7 +107,6 @@ pub mod fixture;
 
 use {
     crate::{
-        gen::prng::Xoshiro256StarStar,
         AddArc,
         AdjacencyMap,
         AdjacencyMatrix,
@@ -147,23 +146,24 @@ use {
         Union,
         Vertices,
         Wheel,
+        r#gen::prng::Xoshiro256StarStar,
     },
     std::{
         cmp::Ordering,
         collections::{
-            btree_set,
             BTreeSet,
+            btree_set,
         },
         iter::once,
         marker::PhantomData,
         num::NonZero,
         ptr::write,
         sync::{
+            Arc,
             atomic::{
                 self,
                 AtomicBool,
             },
-            Arc,
         },
         thread::{
             available_parallelism,
@@ -320,10 +320,10 @@ impl Iterator for ArcsIterator<'_> {
     #[inline]
     fn next(&mut self) -> Option<Self::Item> {
         loop {
-            if let Some(ref mut inner) = self.inner {
-                if let Some(&v) = inner.next() {
-                    return Some((self.u - 1, v));
-                }
+            if let Some(ref mut inner) = self.inner
+                && let Some(&v) = inner.next()
+            {
+                return Some((self.u - 1, v));
             }
 
             if self.u >= self.arcs.len() {
@@ -638,7 +638,7 @@ impl DegreeSequence for AdjacencyList {
             for (chunk, local_indegrees) in
                 self.arcs.chunks(chunk_size).zip(indegree_chunks.iter_mut())
             {
-                let _ = s.spawn(move || {
+                drop(s.spawn(move || {
                     for out_neighbors in chunk {
                         for &v in out_neighbors {
                             unsafe {
@@ -646,7 +646,7 @@ impl DegreeSequence for AdjacencyList {
                             }
                         }
                     }
-                });
+                }));
             }
         });
 
@@ -970,7 +970,7 @@ impl IsSemicomplete for AdjacencyList {
                 let end = order.min(start + chunk_size);
                 let result_clone = Arc::clone(&result);
 
-                let _ = s.spawn(move || {
+                drop(s.spawn(move || {
                     let ptr = arcs_ptr_usize as *const BTreeSet<usize>;
 
                     for u in start..end {
@@ -998,7 +998,7 @@ impl IsSemicomplete for AdjacencyList {
                             }
                         }
                     }
-                });
+                }));
             }
         });
 
@@ -1232,44 +1232,46 @@ impl Star for AdjacencyList {
 }
 
 unsafe fn merge_two_sorted(lhs: &[usize], rhs: &[usize]) -> Vec<usize> {
-    let lhs_len = lhs.len();
-    let rhs_len = rhs.len();
-    let mut out = Vec::with_capacity(lhs_len + rhs_len);
-    let mut i = 0;
-    let mut j = 0;
+    unsafe {
+        let lhs_len = lhs.len();
+        let rhs_len = rhs.len();
+        let mut out = Vec::with_capacity(lhs_len + rhs_len);
+        let mut i = 0;
+        let mut j = 0;
 
-    while i < lhs_len && j < rhs_len {
-        let a_i = *lhs.get_unchecked(i);
-        let b_j = *rhs.get_unchecked(j);
+        while i < lhs_len && j < rhs_len {
+            let a_i = *lhs.get_unchecked(i);
+            let b_j = *rhs.get_unchecked(j);
 
-        match a_i.cmp(&b_j) {
-            Ordering::Less => {
-                out.push(a_i);
-                i += 1;
-            }
-            Ordering::Greater => {
-                out.push(b_j);
-                j += 1;
-            }
-            Ordering::Equal => {
-                out.push(a_i);
-                i += 1;
-                j += 1;
+            match a_i.cmp(&b_j) {
+                Ordering::Less => {
+                    out.push(a_i);
+                    i += 1;
+                }
+                Ordering::Greater => {
+                    out.push(b_j);
+                    j += 1;
+                }
+                Ordering::Equal => {
+                    out.push(a_i);
+                    i += 1;
+                    j += 1;
+                }
             }
         }
-    }
 
-    while i < lhs.len() {
-        out.push(*lhs.get_unchecked(i));
-        i += 1;
-    }
+        while i < lhs.len() {
+            out.push(*lhs.get_unchecked(i));
+            i += 1;
+        }
 
-    while j < rhs.len() {
-        out.push(*rhs.get_unchecked(j));
-        j += 1;
-    }
+        while j < rhs.len() {
+            out.push(*rhs.get_unchecked(j));
+            j += 1;
+        }
 
-    out
+        out
+    }
 }
 
 impl Union for AdjacencyList {
@@ -1291,7 +1293,7 @@ impl Union for AdjacencyList {
             for chunk_start in (0..order).step_by(chunk_size) {
                 let chunk_end = (chunk_start + chunk_size).min(order);
 
-                let _ = s.spawn(move || unsafe {
+                drop(s.spawn(move || unsafe {
                     let self_ptr = self_ptr_usize as *const BTreeSet<usize>;
                     let other_ptr = other_ptr_usize as *const BTreeSet<usize>;
                     let arcs_ptr = arcs_ptr_usize as *mut BTreeSet<usize>;
@@ -1319,7 +1321,7 @@ impl Union for AdjacencyList {
 
                         write(arcs_ptr.add(u), merged.into_iter().collect());
                     }
-                });
+                }));
             }
         });
 
@@ -1447,8 +1449,8 @@ mod tests_cycle {
 #[cfg(test)]
 mod tests_degree {
     use crate::{
-        test_degree,
         Degree,
+        test_degree,
     };
 
     test_degree!(crate::repr::adjacency_list::fixture);
@@ -1527,8 +1529,8 @@ mod tests_indegree_sequence {
 #[cfg(test)]
 mod tests_is_balanced {
     use crate::{
-        test_is_balanced,
         IsBalanced,
+        test_is_balanced,
     };
 
     test_is_balanced!(crate::repr::adjacency_list::fixture);
@@ -1547,8 +1549,8 @@ mod tests_is_complete {
 #[cfg(test)]
 mod tests_is_isolated {
     use crate::{
-        test_is_isolated,
         IsIsolated,
+        test_is_isolated,
     };
 
     test_is_isolated!(crate::repr::adjacency_list::fixture);
@@ -1557,8 +1559,8 @@ mod tests_is_isolated {
 #[cfg(test)]
 mod tests_is_oriented {
     use crate::{
-        test_is_oriented,
         IsOriented,
+        test_is_oriented,
     };
 
     test_is_oriented!(crate::repr::adjacency_list::fixture);
@@ -1567,8 +1569,8 @@ mod tests_is_oriented {
 #[cfg(test)]
 mod tests_is_pendant {
     use crate::{
-        test_is_pendant,
         IsPendant,
+        test_is_pendant,
     };
 
     test_is_pendant!(crate::repr::adjacency_list::fixture);
@@ -1607,8 +1609,8 @@ mod tests_is_simple {
 #[cfg(test)]
 mod tests_is_symmetric {
     use crate::{
-        test_is_symmetric,
         IsSymmetric,
+        test_is_symmetric,
     };
 
     test_is_symmetric!(crate::repr::adjacency_list::fixture);
@@ -1627,8 +1629,8 @@ mod tests_is_tournament {
 #[cfg(test)]
 mod tests_order {
     use crate::{
-        test_order,
         Order,
+        test_order,
     };
 
     test_order!(crate::repr::adjacency_list::fixture);
@@ -1707,8 +1709,8 @@ mod tests_semidegree_sequence {
 #[cfg(test)]
 mod tests_sinks {
     use crate::{
-        test_sinks,
         Sinks,
+        test_sinks,
     };
 
     test_sinks!(crate::repr::adjacency_list::fixture);
@@ -1717,8 +1719,8 @@ mod tests_sinks {
 #[cfg(test)]
 mod tests_size {
     use crate::{
-        test_size,
         Size,
+        test_size,
     };
 
     test_size!(crate::repr::adjacency_list::fixture);
@@ -1727,8 +1729,8 @@ mod tests_size {
 #[cfg(test)]
 mod tests_sources {
     use crate::{
-        test_sources,
         Sources,
+        test_sources,
     };
 
     test_sources!(crate::repr::adjacency_list::fixture);
@@ -1799,9 +1801,9 @@ mod proptests_contiguous_order {
     use {
         super::*,
         crate::{
-            proptest_contiguous_order,
             ContiguousOrder,
             Empty,
+            proptest_contiguous_order,
         },
     };
 

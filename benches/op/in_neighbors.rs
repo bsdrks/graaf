@@ -113,7 +113,7 @@ fn in_neighbors_adjacency_list_unsafe(
 fn in_neighbors_adjacency_list_parallel(
     digraph: &AdjacencyListBTreeSet,
     v: usize,
-) -> impl Iterator<Item = usize> {
+) -> impl Iterator<Item = usize> + use<> {
     let arcs = &digraph.arcs;
     let len = arcs.len();
     let num_threads = available_parallelism().map(NonZero::get).unwrap_or(1);

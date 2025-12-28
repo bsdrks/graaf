@@ -37,8 +37,8 @@
 //! ![Kattis, escapewallmaria, sample 3](https://raw.githubusercontent.com/bsdrks/graaf-images/main/out/kattis_escapewallmaria_3.svg)
 
 use crate::{
-    repr::adjacency_list::fixture,
     EdgeList,
+    repr::adjacency_list::fixture,
 };
 
 /// Jørgen Bang-Jensen and Gregory Z. Gutin. 2009. Digraphs: Theory,

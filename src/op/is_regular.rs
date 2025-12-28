@@ -53,9 +53,9 @@ pub trait IsRegular {
 macro_rules! test_is_regular {
     ($fixture:path) => {
         use $fixture::{
-            bang_jensen_196,
             bang_jensen_34,
             bang_jensen_94,
+            bang_jensen_196,
             kattis_builddeps,
             kattis_cantinaofbabel_1,
             kattis_cantinaofbabel_2,

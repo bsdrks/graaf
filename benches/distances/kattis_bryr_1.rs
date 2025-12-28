@@ -7,13 +7,13 @@
 use {
     divan::Bencher,
     graaf::{
+        BellmanFordMoore,
+        DijkstraDist,
+        FloydWarshall,
         repr::adjacency_list_weighted::fixture::{
             kattis_bryr_1_isize,
             kattis_bryr_1_usize,
         },
-        BellmanFordMoore,
-        DijkstraDist,
-        FloydWarshall,
     },
     std::iter::once,
 };

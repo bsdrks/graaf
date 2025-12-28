@@ -368,6 +368,9 @@ mod tests {
     use {
         super::*,
         crate::{
+            AddArcWeighted,
+            AdjacencyListWeighted,
+            Empty,
             repr::adjacency_list_weighted::fixture::{
                 bang_jensen_94_isize,
                 bang_jensen_96_isize,
@@ -379,246 +382,301 @@ mod tests {
                 kattis_shortestpath1_isize,
                 kattis_shortestpath3,
             },
-            AddArcWeighted,
-            AdjacencyListWeighted,
-            Empty,
         },
     };
 
     #[test]
     fn distances_trivial() {
-        assert!(BellmanFordMoore::new(
-            &AdjacencyListWeighted::<isize>::trivial(),
-            0
-        )
-        .distances()
-        .unwrap()
-        .iter()
-        .eq(&[0]));
+        assert!(
+            BellmanFordMoore::new(
+                &AdjacencyListWeighted::<isize>::trivial(),
+                0
+            )
+            .distances()
+            .unwrap()
+            .iter()
+            .eq(&[0])
+        );
     }
 
     #[test]
     fn distances_bang_jensen_94_weighted_0() {
-        assert!(BellmanFordMoore::new(&bang_jensen_94_isize(), 0)
-            .distances()
-            .unwrap()
-            .eq(&[0, 1, 1, 2, 2, 2, 3]));
+        assert!(
+            BellmanFordMoore::new(&bang_jensen_94_isize(), 0)
+                .distances()
+                .unwrap()
+                .eq(&[0, 1, 1, 2, 2, 2, 3])
+        );
     }
 
     #[test]
     fn distances_bang_jensen_94_weighted_1() {
-        assert!(BellmanFordMoore::new(&bang_jensen_94_isize(), 1)
-            .distances()
-            .unwrap()
-            .eq(&[isize::MAX, 0, isize::MAX, 1, isize::MAX, 2, isize::MAX]));
+        assert!(
+            BellmanFordMoore::new(&bang_jensen_94_isize(), 1)
+                .distances()
+                .unwrap()
+                .eq(&[
+                    isize::MAX,
+                    0,
+                    isize::MAX,
+                    1,
+                    isize::MAX,
+                    2,
+                    isize::MAX
+                ])
+        );
     }
 
     #[test]
     fn distances_bang_jensen_94_weighted_2() {
-        assert!(BellmanFordMoore::new(&bang_jensen_94_isize(), 2)
-            .distances()
-            .unwrap()
-            .eq(&[isize::MAX, 1, 0, 1, 1, 1, 2]));
+        assert!(
+            BellmanFordMoore::new(&bang_jensen_94_isize(), 2)
+                .distances()
+                .unwrap()
+                .eq(&[isize::MAX, 1, 0, 1, 1, 1, 2])
+        );
     }
 
     #[test]
     fn distances_bang_jensen_94_weighted_3() {
-        assert!(BellmanFordMoore::new(&bang_jensen_94_isize(), 3)
-            .distances()
-            .unwrap()
-            .eq(&[
-                isize::MAX,
-                isize::MAX,
-                isize::MAX,
-                0,
-                isize::MAX,
-                1,
-                isize::MAX
-            ]));
+        assert!(
+            BellmanFordMoore::new(&bang_jensen_94_isize(), 3)
+                .distances()
+                .unwrap()
+                .eq(&[
+                    isize::MAX,
+                    isize::MAX,
+                    isize::MAX,
+                    0,
+                    isize::MAX,
+                    1,
+                    isize::MAX
+                ])
+        );
     }
 
     #[test]
     fn distances_bang_jensen_94_weighted_4() {
-        assert!(BellmanFordMoore::new(&bang_jensen_94_isize(), 4)
-            .distances()
-            .unwrap()
-            .eq(&[
-                isize::MAX,
-                isize::MAX,
-                isize::MAX,
-                isize::MAX,
-                0,
-                isize::MAX,
-                1
-            ]));
+        assert!(
+            BellmanFordMoore::new(&bang_jensen_94_isize(), 4)
+                .distances()
+                .unwrap()
+                .eq(&[
+                    isize::MAX,
+                    isize::MAX,
+                    isize::MAX,
+                    isize::MAX,
+                    0,
+                    isize::MAX,
+                    1
+                ])
+        );
     }
 
     #[test]
     fn distances_bang_jensen_94_weighted_5() {
-        assert!(BellmanFordMoore::new(&bang_jensen_94_isize(), 5)
-            .distances()
-            .unwrap()
-            .eq(&[
-                isize::MAX,
-                isize::MAX,
-                isize::MAX,
-                isize::MAX,
-                isize::MAX,
-                0,
-                isize::MAX
-            ]));
+        assert!(
+            BellmanFordMoore::new(&bang_jensen_94_isize(), 5)
+                .distances()
+                .unwrap()
+                .eq(&[
+                    isize::MAX,
+                    isize::MAX,
+                    isize::MAX,
+                    isize::MAX,
+                    isize::MAX,
+                    0,
+                    isize::MAX
+                ])
+        );
     }
 
     #[test]
     fn distances_bang_jensen_94_weighted_6() {
-        assert!(BellmanFordMoore::new(&bang_jensen_94_isize(), 6)
-            .distances()
-            .unwrap()
-            .eq(&[
-                isize::MAX,
-                isize::MAX,
-                isize::MAX,
-                isize::MAX,
-                isize::MAX,
-                isize::MAX,
-                0
-            ]));
+        assert!(
+            BellmanFordMoore::new(&bang_jensen_94_isize(), 6)
+                .distances()
+                .unwrap()
+                .eq(&[
+                    isize::MAX,
+                    isize::MAX,
+                    isize::MAX,
+                    isize::MAX,
+                    isize::MAX,
+                    isize::MAX,
+                    0
+                ])
+        );
     }
 
     #[test]
     fn distances_bang_jensen_96_0() {
-        assert!(BellmanFordMoore::new(&bang_jensen_96_isize(), 0)
-            .distances()
-            .unwrap()
-            .eq(&[0, 5, 3, 6, 4, 7]));
+        assert!(
+            BellmanFordMoore::new(&bang_jensen_96_isize(), 0)
+                .distances()
+                .unwrap()
+                .eq(&[0, 5, 3, 6, 4, 7])
+        );
     }
 
     #[test]
     fn distances_bang_jensen_96_1() {
-        assert!(BellmanFordMoore::new(&bang_jensen_96_isize(), 1)
-            .distances()
-            .unwrap()
-            .eq(&[isize::MAX, 0, 6, 2, 7, 3]));
+        assert!(
+            BellmanFordMoore::new(&bang_jensen_96_isize(), 1)
+                .distances()
+                .unwrap()
+                .eq(&[isize::MAX, 0, 6, 2, 7, 3])
+        );
     }
 
     #[test]
     fn distances_bang_jensen_96_2() {
-        assert!(BellmanFordMoore::new(&bang_jensen_96_isize(), 2)
-            .distances()
-            .unwrap()
-            .eq(&[isize::MAX, 2, 0, 3, 1, 4]));
+        assert!(
+            BellmanFordMoore::new(&bang_jensen_96_isize(), 2)
+                .distances()
+                .unwrap()
+                .eq(&[isize::MAX, 2, 0, 3, 1, 4])
+        );
     }
 
     #[test]
     fn distances_bang_jensen_96_3() {
-        assert!(BellmanFordMoore::new(&bang_jensen_96_isize(), 3)
-            .distances()
-            .unwrap()
-            .eq(&[isize::MAX, isize::MAX, isize::MAX, 0, isize::MAX, 1]));
+        assert!(
+            BellmanFordMoore::new(&bang_jensen_96_isize(), 3)
+                .distances()
+                .unwrap()
+                .eq(&[isize::MAX, isize::MAX, isize::MAX, 0, isize::MAX, 1])
+        );
     }
 
     #[test]
     fn distances_bang_jensen_96_4() {
-        assert!(BellmanFordMoore::new(&bang_jensen_96_isize(), 4)
-            .distances()
-            .unwrap()
-            .eq(&[isize::MAX, 4, 2, 2, 0, 3]));
+        assert!(
+            BellmanFordMoore::new(&bang_jensen_96_isize(), 4)
+                .distances()
+                .unwrap()
+                .eq(&[isize::MAX, 4, 2, 2, 0, 3])
+        );
     }
 
     #[test]
     fn distances_bang_jensen_96_5() {
-        assert!(BellmanFordMoore::new(&bang_jensen_96_isize(), 5)
-            .distances()
-            .unwrap()
-            .eq(&[isize::MAX, isize::MAX, isize::MAX, 2, isize::MAX, 0]));
+        assert!(
+            BellmanFordMoore::new(&bang_jensen_96_isize(), 5)
+                .distances()
+                .unwrap()
+                .eq(&[isize::MAX, isize::MAX, isize::MAX, 2, isize::MAX, 0])
+        );
     }
 
     #[test]
     fn distances_bang_jensen_99_0() {
-        assert!(BellmanFordMoore::new(&bang_jensen_99(), 0)
-            .distances()
-            .unwrap()
-            .eq(&[0, 8, 3, 1, -4, -1]));
+        assert!(
+            BellmanFordMoore::new(&bang_jensen_99(), 0)
+                .distances()
+                .unwrap()
+                .eq(&[0, 8, 3, 1, -4, -1])
+        );
     }
 
     #[test]
     fn distances_bang_jensen_99_1() {
-        assert!(BellmanFordMoore::new(&bang_jensen_99(), 1)
-            .distances()
-            .unwrap()
-            .eq(&[isize::MAX, 0, -5, -7, -12, -9]));
+        assert!(
+            BellmanFordMoore::new(&bang_jensen_99(), 1)
+                .distances()
+                .unwrap()
+                .eq(&[isize::MAX, 0, -5, -7, -12, -9])
+        );
     }
 
     #[test]
     fn distances_bang_jensen_99_2() {
-        assert!(BellmanFordMoore::new(&bang_jensen_99(), 2)
-            .distances()
-            .unwrap()
-            .eq(&[isize::MAX, isize::MAX, 0, -2, -7, -4]));
+        assert!(
+            BellmanFordMoore::new(&bang_jensen_99(), 2)
+                .distances()
+                .unwrap()
+                .eq(&[isize::MAX, isize::MAX, 0, -2, -7, -4])
+        );
     }
 
     #[test]
     fn distances_bang_jensen_99_3() {
-        assert!(BellmanFordMoore::new(&bang_jensen_99(), 3)
-            .distances()
-            .unwrap()
-            .eq(&[isize::MAX, isize::MAX, isize::MAX, 0, -5, -2]));
+        assert!(
+            BellmanFordMoore::new(&bang_jensen_99(), 3)
+                .distances()
+                .unwrap()
+                .eq(&[isize::MAX, isize::MAX, isize::MAX, 0, -5, -2])
+        );
     }
 
     #[test]
     fn distances_bang_jensen_99_4() {
-        assert!(BellmanFordMoore::new(&bang_jensen_99(), 4)
-            .distances()
-            .unwrap()
-            .eq(&[isize::MAX, isize::MAX, isize::MAX, 10, 0, 8]));
+        assert!(
+            BellmanFordMoore::new(&bang_jensen_99(), 4)
+                .distances()
+                .unwrap()
+                .eq(&[isize::MAX, isize::MAX, isize::MAX, 10, 0, 8])
+        );
     }
 
     #[test]
     fn distances_bang_jensen_99_5() {
-        assert!(BellmanFordMoore::new(&bang_jensen_99(), 5)
-            .distances()
-            .unwrap()
-            .eq(&[isize::MAX, isize::MAX, isize::MAX, 5, -3, 0]));
+        assert!(
+            BellmanFordMoore::new(&bang_jensen_99(), 5)
+                .distances()
+                .unwrap()
+                .eq(&[isize::MAX, isize::MAX, isize::MAX, 5, -3, 0])
+        );
     }
 
     #[test]
     fn distances_kattis_bryr_1() {
-        assert!(BellmanFordMoore::new(&kattis_bryr_1_isize(), 0)
-            .distances()
-            .unwrap()
-            .eq(&[0, 1, 1]));
+        assert!(
+            BellmanFordMoore::new(&kattis_bryr_1_isize(), 0)
+                .distances()
+                .unwrap()
+                .eq(&[0, 1, 1])
+        );
     }
 
     #[test]
     fn distances_kattis_bryr_2() {
-        assert!(BellmanFordMoore::new(&kattis_bryr_2_isize(), 0)
-            .distances()
-            .unwrap()
-            .eq(&[0, 1, 2, 1, 2, 3]));
+        assert!(
+            BellmanFordMoore::new(&kattis_bryr_2_isize(), 0)
+                .distances()
+                .unwrap()
+                .eq(&[0, 1, 2, 1, 2, 3])
+        );
     }
 
     #[test]
     fn distances_kattis_bryr_3() {
-        assert!(BellmanFordMoore::new(&kattis_bryr_3_isize(), 0)
-            .distances()
-            .unwrap()
-            .eq(&[0, 0, 1, 0, 0, 0, 1, 0, 0, 1]));
+        assert!(
+            BellmanFordMoore::new(&kattis_bryr_3_isize(), 0)
+                .distances()
+                .unwrap()
+                .eq(&[0, 0, 1, 0, 0, 0, 1, 0, 0, 1])
+        );
     }
 
     #[test]
     fn distances_kattis_crosscountry() {
-        assert!(BellmanFordMoore::new(&kattis_crosscountry_isize(), 0)
-            .distances()
-            .unwrap()
-            .eq(&[0, 1, 3, 10]));
+        assert!(
+            BellmanFordMoore::new(&kattis_crosscountry_isize(), 0)
+                .distances()
+                .unwrap()
+                .eq(&[0, 1, 3, 10])
+        );
     }
 
     #[test]
     fn distances_kattis_shortestpath1() {
-        assert!(BellmanFordMoore::new(&kattis_shortestpath1_isize(), 0)
-            .distances()
-            .unwrap()
-            .eq(&[0, 2, 4, isize::MAX]));
+        assert!(
+            BellmanFordMoore::new(&kattis_shortestpath1_isize(), 0)
+                .distances()
+                .unwrap()
+                .eq(&[0, 2, 4, isize::MAX])
+        );
     }
 
     #[test]

@@ -8,9 +8,9 @@
 use {
     divan::Bencher,
     graaf::{
-        repr::adjacency_list_weighted::fixture::bang_jensen_99 as fixture,
         BellmanFordMoore,
         FloydWarshall,
+        repr::adjacency_list_weighted::fixture::bang_jensen_99 as fixture,
     },
 };
 

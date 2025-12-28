@@ -2,7 +2,6 @@
 //! `RandomTournament::random_tournament`.
 use {
     graaf::{
-        gen::prng::Xoshiro256StarStar,
         AddArc,
         AdjacencyList,
         AdjacencyMap,
@@ -10,6 +9,7 @@ use {
         EdgeList,
         Empty,
         RandomTournament,
+        r#gen::prng::Xoshiro256StarStar,
     },
     std::{
         collections::{
@@ -141,7 +141,7 @@ fn random_tournament_adjacency_list_btree_set_parallel(
 
         for u in start..end {
             count += order - u - 1; // for vertex u, there are (order-u-1)
-                                    // pairs.
+            // pairs.
         }
 
         unsafe {

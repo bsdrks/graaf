@@ -132,55 +132,59 @@ fn union_adjacency_map_merge(
 }
 
 unsafe fn merge_two_sorted(lhs: &[usize], rhs: &[usize]) -> Vec<usize> {
-    let lhs_len = lhs.len();
-    let rhs_len = rhs.len();
-    let mut out = Vec::with_capacity(lhs_len + rhs_len);
-    let mut i = 0;
-    let mut j = 0;
+    unsafe {
+        let lhs_len = lhs.len();
+        let rhs_len = rhs.len();
+        let mut out = Vec::with_capacity(lhs_len + rhs_len);
+        let mut i = 0;
+        let mut j = 0;
 
-    while i < lhs_len && j < rhs_len {
-        let a_i = *lhs.get_unchecked(i);
-        let b_j = *rhs.get_unchecked(j);
+        while i < lhs_len && j < rhs_len {
+            let a_i = *lhs.get_unchecked(i);
+            let b_j = *rhs.get_unchecked(j);
 
-        match a_i.cmp(&b_j) {
-            Ordering::Less => {
-                out.push(a_i);
-                i += 1;
-            }
-            Ordering::Greater => {
-                out.push(b_j);
-                j += 1;
-            }
-            Ordering::Equal => {
-                out.push(a_i);
-                i += 1;
-                j += 1;
+            match a_i.cmp(&b_j) {
+                Ordering::Less => {
+                    out.push(a_i);
+                    i += 1;
+                }
+                Ordering::Greater => {
+                    out.push(b_j);
+                    j += 1;
+                }
+                Ordering::Equal => {
+                    out.push(a_i);
+                    i += 1;
+                    j += 1;
+                }
             }
         }
-    }
 
-    while i < lhs.len() {
-        out.push(*lhs.get_unchecked(i));
-        i += 1;
-    }
+        while i < lhs.len() {
+            out.push(*lhs.get_unchecked(i));
+            i += 1;
+        }
 
-    while j < rhs.len() {
-        out.push(*rhs.get_unchecked(j));
-        j += 1;
-    }
+        while j < rhs.len() {
+            out.push(*rhs.get_unchecked(j));
+            j += 1;
+        }
 
-    out
+        out
+    }
 }
 
 unsafe fn union_sets_unsafe(
     set_a: &BTreeSet<usize>,
     set_b: &BTreeSet<usize>,
 ) -> BTreeSet<usize> {
-    let vec_a: Vec<usize> = set_a.iter().copied().collect();
-    let vec_b: Vec<usize> = set_b.iter().copied().collect();
-    let merged = merge_two_sorted(&vec_a, &vec_b);
+    unsafe {
+        let vec_a: Vec<usize> = set_a.iter().copied().collect();
+        let vec_b: Vec<usize> = set_b.iter().copied().collect();
+        let merged = merge_two_sorted(&vec_a, &vec_b);
 
-    merged.into_iter().collect()
+        merged.into_iter().collect()
+    }
 }
 
 fn find_partition(

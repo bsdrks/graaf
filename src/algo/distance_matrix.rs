@@ -231,11 +231,13 @@ impl<W> DistanceMatrix<W> {
     /// digraph.add_arc_weighted(6, 1, 8);
     /// digraph.add_arc_weighted(6, 2, 5);
     ///
-    /// assert!(FloydWarshall::new(&digraph)
-    ///     .distances()
-    ///     .center()
-    ///     .iter()
-    ///     .eq(&[0, 1]));
+    /// assert!(
+    ///     FloydWarshall::new(&digraph)
+    ///         .distances()
+    ///         .center()
+    ///         .iter()
+    ///         .eq(&[0, 1])
+    /// );
     /// ```
     #[doc(alias = "centre")]
     #[doc(alias = "jordan_center")]
@@ -346,10 +348,12 @@ impl<W> DistanceMatrix<W> {
     /// digraph.add_arc_weighted(6, 1, 8);
     /// digraph.add_arc_weighted(6, 2, 5);
     ///
-    /// assert!(FloydWarshall::new(&digraph)
-    ///     .distances()
-    ///     .eccentricities()
-    ///     .eq(&[5, 5, 14, 11, 17, 11, 10]));
+    /// assert!(
+    ///     FloydWarshall::new(&digraph)
+    ///         .distances()
+    ///         .eccentricities()
+    ///         .eq(&[5, 5, 14, 11, 17, 11, 10])
+    /// );
     /// ```
     pub fn eccentricities(&self) -> impl Iterator<Item = &'_ W>
     where
@@ -513,16 +517,16 @@ mod tests {
     use {
         super::*,
         crate::{
+            AdjacencyListWeighted,
+            Empty,
+            FloydWarshall,
+            RemoveArc,
             repr::adjacency_list_weighted::fixture::{
                 kattis_bryr_1_isize,
                 kattis_bryr_2_isize,
                 kattis_bryr_3_isize,
                 kattis_crosscountry_isize,
             },
-            AdjacencyListWeighted,
-            Empty,
-            FloydWarshall,
-            RemoveArc,
         },
     };
 

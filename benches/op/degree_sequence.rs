@@ -42,7 +42,7 @@ fn degree_sequence_adjacency_list_map_degree(
 
 fn degree_sequence_adjacency_list_btree_set_unsafe(
     digraph: &AdjacencyListBTreeSet,
-) -> impl Iterator<Item = usize> {
+) -> impl Iterator<Item = usize> + use<> {
     let order = digraph.arcs.len();
     let mut indegrees = vec![0; order];
 

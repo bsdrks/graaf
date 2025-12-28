@@ -1,7 +1,6 @@
 //! Benchmarks of different implementations of `ErdosRenyi::erdos_renyi`.
 use {
     graaf::{
-        gen::prng::Xoshiro256StarStar,
         AddArc,
         AdjacencyList,
         AdjacencyMap,
@@ -9,6 +8,7 @@ use {
         EdgeList,
         Empty,
         ErdosRenyi,
+        r#gen::prng::Xoshiro256StarStar,
     },
     std::{
         cmp,

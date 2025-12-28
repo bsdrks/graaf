@@ -8,13 +8,13 @@
 use {
     divan::Bencher,
     graaf::{
+        BellmanFordMoore,
+        DijkstraDist,
+        FloydWarshall,
         repr::adjacency_list_weighted::fixture::{
             bang_jensen_96_isize as fixture_isize,
             bang_jensen_96_usize as fixture_usize,
         },
-        BellmanFordMoore,
-        DijkstraDist,
-        FloydWarshall,
     },
     std::iter::once,
 };

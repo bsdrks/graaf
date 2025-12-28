@@ -8,6 +8,10 @@
 use {
     divan::Bencher,
     graaf::{
+        BellmanFordMoore,
+        BfsDist,
+        DijkstraDist,
+        FloydWarshall,
         repr::{
             adjacency_list::fixture::bang_jensen_94 as fixture_adjacency_list,
             adjacency_list_weighted::fixture::{
@@ -18,10 +22,6 @@ use {
             adjacency_matrix::fixture::bang_jensen_94 as fixture_adjacency_matrix,
             edge_list::fixture::bang_jensen_94 as fixture_edge_list,
         },
-        BellmanFordMoore,
-        BfsDist,
-        DijkstraDist,
-        FloydWarshall,
     },
     std::iter::once,
 };

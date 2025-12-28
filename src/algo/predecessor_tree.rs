@@ -31,10 +31,12 @@
 //! digraph.add_arc(1, 4);
 //! digraph.add_arc(2, 5);
 //!
-//! assert!(BfsPred::new(&digraph, once(0))
-//!     .predecessors()
-//!     .into_iter()
-//!     .eq([None, Some(0), Some(1), None, Some(1), Some(2)]));
+//! assert!(
+//!     BfsPred::new(&digraph, once(0))
+//!         .predecessors()
+//!         .into_iter()
+//!         .eq([None, Some(0), Some(1), None, Some(1), Some(2)])
+//! );
 //! ```
 use std::{
     ops::{
@@ -78,10 +80,12 @@ use std::{
 /// digraph.add_arc(1, 4);
 /// digraph.add_arc(2, 5);
 ///
-/// assert!(BfsPred::new(&digraph, once(0))
-///     .predecessors()
-///     .into_iter()
-///     .eq([None, Some(0), Some(1), None, Some(1), Some(2)]));
+/// assert!(
+///     BfsPred::new(&digraph, once(0))
+///         .predecessors()
+///         .into_iter()
+///         .eq([None, Some(0), Some(1), None, Some(1), Some(2)])
+/// );
 /// ```
 #[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 #[non_exhaustive]
@@ -106,9 +110,11 @@ impl PredecessorTree {
     /// ```
     /// use graaf::PredecessorTree;
     ///
-    /// assert!(PredecessorTree::new(4)
-    ///     .into_iter()
-    ///     .eq([None, None, None, None]));
+    /// assert!(
+    ///     PredecessorTree::new(4)
+    ///         .into_iter()
+    ///         .eq([None, None, None, None])
+    /// );
     /// ```
     #[must_use]
     pub fn new(order: usize) -> Self {
@@ -137,12 +143,7 @@ impl PredecessorTree {
     /// ```
     /// use graaf::PredecessorTree;
     ///
-    /// let pred = PredecessorTree::from(vec![
-    ///     Some(1),
-    ///     Some(2),
-    ///     Some(3),
-    ///     None,
-    /// ]);
+    /// let pred = PredecessorTree::from(vec![Some(1), Some(2), Some(3), None]);
     ///
     /// assert!(pred.search(0, 3).into_iter().eq(Some(vec![0, 1, 2, 3])));
     /// ```
@@ -173,31 +174,22 @@ impl PredecessorTree {
     /// ```
     /// use graaf::PredecessorTree;
     ///
-    /// let pred = PredecessorTree::from(vec![
-    ///     Some(1),
-    ///     Some(2),
-    ///     Some(3),
-    ///     None,
-    /// ]);
+    /// let pred = PredecessorTree::from(vec![Some(1), Some(2), Some(3), None]);
     ///
-    /// assert!(pred
-    ///     .search_by(0, |&v, _| v > 1)
-    ///     .into_iter()
-    ///     .eq(Some(vec![0, 1, 2])));
+    /// assert!(
+    ///     pred.search_by(0, |&v, _| v > 1)
+    ///         .into_iter()
+    ///         .eq(Some(vec![0, 1, 2]))
+    /// );
     ///
     /// let pred =
-    ///     PredecessorTree::from(vec![
-    ///         Some(1),
-    ///         Some(2),
-    ///         Some(3),
-    ///         None,
-    ///         Some(0),
-    ///     ]);
+    ///     PredecessorTree::from(vec![Some(1), Some(2), Some(3), None, Some(0)]);
     ///
-    /// assert!(pred
-    ///     .search_by(0, |_, v| v.is_none())
-    ///     .into_iter()
-    ///     .eq(Some(vec![0, 1, 2, 3])));
+    /// assert!(
+    ///     pred.search_by(0, |_, v| v.is_none())
+    ///         .into_iter()
+    ///         .eq(Some(vec![0, 1, 2, 3]))
+    /// );
     /// ```
     #[must_use]
     pub fn search_by<F>(
@@ -324,11 +316,13 @@ mod tests {
 
     #[test]
     fn search_singleton_s_equals_t() {
-        assert!(PredecessorTree::from(vec![Some(0)])
-            .search(0, 0)
-            .unwrap()
-            .into_iter()
-            .eq([0]));
+        assert!(
+            PredecessorTree::from(vec![Some(0)])
+                .search(0, 0)
+                .unwrap()
+                .into_iter()
+                .eq([0])
+        );
     }
 
     #[test]
@@ -351,29 +345,35 @@ mod tests {
 
     #[test]
     fn search_path_s_equals_t() {
-        assert!(PredecessorTree::from(vec![Some(1), Some(2), Some(0), None])
-            .search(0, 0)
-            .unwrap()
-            .into_iter()
-            .eq([0]));
+        assert!(
+            PredecessorTree::from(vec![Some(1), Some(2), Some(0), None])
+                .search(0, 0)
+                .unwrap()
+                .into_iter()
+                .eq([0])
+        );
     }
 
     #[test]
     fn search_path_s_ne_t() {
-        assert!(PredecessorTree::from(vec![Some(1), Some(2), Some(3), None])
-            .search(1, 3)
-            .unwrap()
-            .into_iter()
-            .eq([1, 2, 3]));
+        assert!(
+            PredecessorTree::from(vec![Some(1), Some(2), Some(3), None])
+                .search(1, 3)
+                .unwrap()
+                .into_iter()
+                .eq([1, 2, 3])
+        );
     }
 
     #[test]
     fn search_by_singleton_s_equals_t() {
-        assert!(PredecessorTree::from(vec![Some(0)])
-            .search_by(0, |&t, _| t == 0)
-            .unwrap()
-            .into_iter()
-            .eq([0]));
+        assert!(
+            PredecessorTree::from(vec![Some(0)])
+                .search_by(0, |&t, _| t == 0)
+                .unwrap()
+                .into_iter()
+                .eq([0])
+        );
     }
 
     #[test]
@@ -404,19 +404,23 @@ mod tests {
 
     #[test]
     fn search_by_path_s_equals_t() {
-        assert!(PredecessorTree::from(vec![Some(1), Some(2), Some(0), None])
-            .search_by(0, |&t, _| t == 0)
-            .unwrap()
-            .into_iter()
-            .eq([0]));
+        assert!(
+            PredecessorTree::from(vec![Some(1), Some(2), Some(0), None])
+                .search_by(0, |&t, _| t == 0)
+                .unwrap()
+                .into_iter()
+                .eq([0])
+        );
     }
 
     #[test]
     fn search_by_path_s_ne_t() {
-        assert!(PredecessorTree::from(vec![Some(1), Some(2), Some(3), None])
-            .search_by(1, |&t, _| t == 3)
-            .unwrap()
-            .into_iter()
-            .eq([1, 2, 3]));
+        assert!(
+            PredecessorTree::from(vec![Some(1), Some(2), Some(3), None])
+                .search_by(1, |&t, _| t == 3)
+                .unwrap()
+                .into_iter()
+                .eq([1, 2, 3])
+        );
     }
 }

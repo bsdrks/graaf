@@ -16,9 +16,11 @@
 //! digraph.add_arc_weighted(0, 2, 1);
 //! digraph.add_arc_weighted(1, 2, -3);
 //!
-//! assert!(digraph
-//!     .arcs_weighted()
-//!     .eq([(0, 1, &2), (0, 2, &1), (1, 2, &-3)]));
+//! assert!(
+//!     digraph
+//!         .arcs_weighted()
+//!         .eq([(0, 1, &2), (0, 2, &1), (1, 2, &-3)])
+//! );
 //! ```
 
 /// Add an arc to an arc-weighted digraph.
@@ -56,9 +58,11 @@ pub trait AddArcWeighted {
     /// digraph.add_arc_weighted(0, 2, 1);
     /// digraph.add_arc_weighted(1, 2, -3);
     ///
-    /// assert!(digraph
-    ///     .arcs_weighted()
-    ///     .eq([(0, 1, &2), (0, 2, &1), (1, 2, &-3)]));
+    /// assert!(
+    ///     digraph
+    ///         .arcs_weighted()
+    ///         .eq([(0, 1, &2), (0, 2, &1), (1, 2, &-3)])
+    /// );
     /// ```
     fn add_arc_weighted(&mut self, u: usize, v: usize, w: Self::Weight);
 }
@@ -70,8 +74,8 @@ macro_rules! proptest_add_arc_weighted {
         use {
             proptest::proptest,
             $crate::{
-                proptest_strategy::arc,
                 Degree,
+                proptest_strategy::arc,
             },
         };
 

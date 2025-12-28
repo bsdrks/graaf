@@ -7,8 +7,8 @@ use {
         ErdosRenyi,
     },
     std::collections::{
-        btree_set,
         BTreeSet,
+        btree_set,
     },
 };
 

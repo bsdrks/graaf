@@ -20,8 +20,8 @@ use {
             repeat_with,
         },
         mem::{
-            transmute,
             MaybeUninit,
+            transmute,
         },
         num::NonZero,
         sync::Arc,

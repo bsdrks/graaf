@@ -252,9 +252,11 @@ mod tests {
     fn circuit_5() {
         let digraph = AdjacencyMap::circuit(5);
 
-        assert!(Johnson75::new(&digraph)
-            .circuits()
-            .eq(&[vec![0, 1, 2, 3, 4]]));
+        assert!(
+            Johnson75::new(&digraph)
+                .circuits()
+                .eq(&[vec![0, 1, 2, 3, 4]])
+        );
     }
 
     #[test]

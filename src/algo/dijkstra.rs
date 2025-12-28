@@ -269,8 +269,10 @@ mod tests {
     fn iter_kattis_bryr_3() {
         let digraph = kattis_bryr_3_usize();
 
-        assert!(Dijkstra::new(&digraph, once(0))
-            .eq([0, 3, 7, 5, 8, 4, 1, 9, 6, 2]));
+        assert!(
+            Dijkstra::new(&digraph, once(0))
+                .eq([0, 3, 7, 5, 8, 4, 1, 9, 6, 2])
+        );
     }
 
     #[test]

@@ -181,7 +181,7 @@
 //! - [`Tarjan::components`] finds strongly connected components in a digraph.
 
 pub mod algo;
-pub mod gen;
+pub mod r#gen;
 pub mod op;
 #[cfg(test)]
 pub mod proptest_strategy;
@@ -240,7 +240,7 @@ pub use op::{
     Vertices,
 };
 
-pub use gen::{
+pub use r#gen::{
     Biclique,
     Circuit,
     Complete,

@@ -286,9 +286,11 @@ where
     /// digraph.add_arc_weighted(4, 5, 1);
     /// digraph.add_arc_weighted(5, 6, 3);
     ///
-    /// assert!(DijkstraDist::new(&digraph, [0, 3].into_iter())
-    ///     .distances()
-    ///     .eq(&[0, 1, 2, 0, 3, 1, 4]));
+    /// assert!(
+    ///     DijkstraDist::new(&digraph, [0, 3].into_iter())
+    ///         .distances()
+    ///         .eq(&[0, 1, 2, 0, 3, 1, 4])
+    /// );
     /// ```
     #[must_use]
     pub fn distances(&mut self) -> Vec<usize>
@@ -450,69 +452,83 @@ mod tests {
     fn distances_bang_jensen_94() {
         let digraph = bang_jensen_94_usize();
 
-        assert!(DijkstraDist::new(&digraph, once(0))
-            .distances()
-            .iter()
-            .eq(&[0, 1, 1, 2, 2, 2, 3]));
+        assert!(
+            DijkstraDist::new(&digraph, once(0))
+                .distances()
+                .iter()
+                .eq(&[0, 1, 1, 2, 2, 2, 3])
+        );
     }
 
     #[test]
     fn distances_bang_jensen_96() {
         let digraph = bang_jensen_96_usize();
 
-        assert!(DijkstraDist::new(&digraph, once(0))
-            .distances()
-            .iter()
-            .eq(&[0, 5, 3, 6, 4, 7]));
+        assert!(
+            DijkstraDist::new(&digraph, once(0))
+                .distances()
+                .iter()
+                .eq(&[0, 5, 3, 6, 4, 7])
+        );
     }
 
     #[test]
     fn distances_kattis_bryr_1() {
         let digraph = kattis_bryr_1_usize();
 
-        assert!(DijkstraDist::new(&digraph, once(0))
-            .distances()
-            .iter()
-            .eq(&[0, 1, 1]));
+        assert!(
+            DijkstraDist::new(&digraph, once(0))
+                .distances()
+                .iter()
+                .eq(&[0, 1, 1])
+        );
     }
 
     #[test]
     fn distances_kattis_bryr_2() {
         let digraph = kattis_bryr_2_usize();
 
-        assert!(DijkstraDist::new(&digraph, once(0))
-            .distances()
-            .iter()
-            .eq(&[0, 1, 2, 1, 2, 3]));
+        assert!(
+            DijkstraDist::new(&digraph, once(0))
+                .distances()
+                .iter()
+                .eq(&[0, 1, 2, 1, 2, 3])
+        );
     }
 
     #[test]
     fn distances_kattis_bryr_3() {
         let digraph = kattis_bryr_3_usize();
 
-        assert!(DijkstraDist::new(&digraph, once(0))
-            .distances()
-            .iter()
-            .eq(&[0, 0, 1, 0, 0, 0, 1, 0, 0, 1]));
+        assert!(
+            DijkstraDist::new(&digraph, once(0))
+                .distances()
+                .iter()
+                .eq(&[0, 0, 1, 0, 0, 0, 1, 0, 0, 1])
+        );
     }
 
     #[test]
     fn distances_kattis_crosscountry() {
         let digraph = kattis_crosscountry_usize();
 
-        assert!(DijkstraDist::new(&digraph, once(0))
-            .distances()
-            .iter()
-            .eq(&[0, 1, 3, 10]));
+        assert!(
+            DijkstraDist::new(&digraph, once(0))
+                .distances()
+                .iter()
+                .eq(&[0, 1, 3, 10])
+        );
     }
 
     #[test]
     fn distances_kattis_shortestpath1() {
         let digraph = kattis_shortestpath1_usize();
 
-        assert!(DijkstraDist::new(&digraph, once(0))
-            .distances()
-            .iter()
-            .eq(&[0, 2, 4, usize::MAX]));
+        assert!(
+            DijkstraDist::new(&digraph, once(0))
+                .distances()
+                .iter()
+                .eq(&[0, 2, 4, usize::MAX])
+        );
     }
 }

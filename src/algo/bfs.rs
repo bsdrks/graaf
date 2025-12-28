@@ -212,9 +212,9 @@ mod tests {
     use {
         super::*,
         crate::repr::adjacency_list::fixture::{
-            bang_jensen_196,
             bang_jensen_34,
             bang_jensen_94,
+            bang_jensen_196,
             kattis_builddeps,
             kattis_cantinaofbabel_1,
             kattis_cantinaofbabel_2,
@@ -257,8 +257,10 @@ mod tests {
     fn iter_kattis_cantinaofbabel_1() {
         let digraph = kattis_cantinaofbabel_1();
 
-        assert!(Bfs::new(&digraph, once(0))
-            .eq([0, 1, 2, 4, 3, 5, 7, 10, 11, 6, 9]));
+        assert!(
+            Bfs::new(&digraph, once(0))
+                .eq([0, 1, 2, 4, 3, 5, 7, 10, 11, 6, 9])
+        );
     }
 
     #[test]

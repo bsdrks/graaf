@@ -2,7 +2,6 @@
 //! `GrowingNetwork::growing_network`.
 use {
     graaf::{
-        gen::prng::Xoshiro256StarStar,
         AddArc,
         AdjacencyList,
         AdjacencyMap,
@@ -10,6 +9,7 @@ use {
         EdgeList,
         Empty,
         RandomRecursiveTree,
+        r#gen::prng::Xoshiro256StarStar,
     },
     std::{
         collections::{
@@ -19,8 +19,8 @@ use {
         },
         iter::once,
         mem::{
-            transmute,
             MaybeUninit,
+            transmute,
         },
         num::NonZero,
         ptr,

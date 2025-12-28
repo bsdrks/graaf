@@ -2,8 +2,8 @@
 
 use {
     crate::{
-        repr::adjacency_list::fixture::bang_jensen_94,
         AdjacencyListWeighted,
+        repr::adjacency_list::fixture::bang_jensen_94,
     },
     std::collections::BTreeMap,
 };
