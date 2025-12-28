@@ -234,25 +234,33 @@ pub trait Wheel {
 macro_rules! test_wheel {
     ($type:ty) => {
         #[test]
-        #[should_panic(expected = "a wheel digraph has at least four vertices")]
+        #[should_panic(
+            expected = "a wheel digraph has at least four vertices"
+        )]
         fn wheel_0() {
             let _ = <$type>::wheel(0);
         }
 
         #[test]
-        #[should_panic(expected = "a wheel digraph has at least four vertices")]
+        #[should_panic(
+            expected = "a wheel digraph has at least four vertices"
+        )]
         fn wheel_1() {
             let _ = <$type>::wheel(1);
         }
 
         #[test]
-        #[should_panic(expected = "a wheel digraph has at least four vertices")]
+        #[should_panic(
+            expected = "a wheel digraph has at least four vertices"
+        )]
         fn wheel_2() {
             let _ = <$type>::wheel(2);
         }
 
         #[test]
-        #[should_panic(expected = "a wheel digraph has at least four vertices")]
+        #[should_panic(
+            expected = "a wheel digraph has at least four vertices"
+        )]
         fn wheel_3() {
             let _ = <$type>::wheel(3);
         }
@@ -370,7 +378,7 @@ macro_rules! test_wheel {
                 (5, 3)
             ]));
         }
-    }
+    };
 }
 
 /// `Wheel` proptests
