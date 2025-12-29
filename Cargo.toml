@@ -1,6 +1,6 @@
 [package]
 name = "graaf"
-version = "0.111.1"
+version = "0.111.2"
 edition = "2024"
 rust-version = "1.85"
 authors = ["Bas Dirks <bas.dirks@protonmail.com>"]
