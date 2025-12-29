@@ -21,10 +21,6 @@
 //! assert!(digraph.sources().eq([0, 3]));
 //! ```
 
-use crate::{
-    Indegree,
-    Vertices,
-};
 
 /// Digraph sources
 pub trait Sources {
@@ -50,15 +46,6 @@ pub trait Sources {
     /// ```
     #[must_use]
     fn sources(&self) -> impl Iterator<Item = usize>;
-}
-
-impl<D> Sources for D
-where
-    D: Indegree + Vertices,
-{
-    fn sources(&self) -> impl Iterator<Item = usize> {
-        self.vertices().filter(move |&u| self.is_source(u))
-    }
 }
 
 /// `Sources` tests

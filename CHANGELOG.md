@@ -20,6 +20,16 @@
 - Return iterators instead of vectors.
 - Test for `order > 0` in `bellman_ford_moore` and other algorithms that take a digraph.
 
+## [0.112.0] - 2025-12-29
+
+Changed
+
+- Breaking: replace `Sources` blanket implementation with custom implementations for the `repr` types.
+
+Fixed
+
+- Fix `Tarjan::connect`.
+
 ## [0.111.2] - 2025-12-29
 
 Changed

@@ -142,6 +142,7 @@ use {
         RemoveArc,
         SemidegreeSequence,
         Size,
+        Sources,
         Star,
         Union,
         Vertices,
@@ -1339,6 +1340,29 @@ impl Vertices for AdjacencyList {
     }
 }
 
+impl Sources for AdjacencyList {
+    /// # Complexity
+    ///
+    /// The time complexity is `O(v + a)`, where `v` is the digraph's order and
+    /// `a` is the digraph's size.
+    fn sources(&self) -> impl Iterator<Item = usize> {
+        let order = self.order();
+        let mut indegrees = vec![0; order];
+
+        unsafe {
+            let ptr = indegrees.as_mut_ptr();
+
+            for set in &self.arcs {
+                for &v in set {
+                    *ptr.add(v) += 1;
+                }
+            }
+        }
+
+        (0..order).filter(move |&u| unsafe { *indegrees.get_unchecked(u) == 0 })
+    }
+}
+
 impl Wheel for AdjacencyList {
     /// # Complexity
     ///
@@ -1728,12 +1752,78 @@ mod tests_size {
 
 #[cfg(test)]
 mod tests_sources {
-    use crate::{
-        Sources,
-        test_sources,
+    use {
+        crate::{
+            AddArc,
+            Empty,
+            Indegree,
+            Sources,
+            Vertices,
+            test_sources,
+        },
+        std::collections::BTreeSet,
     };
 
     test_sources!(crate::repr::adjacency_list::fixture);
+
+    #[test]
+    fn sources_matches_filter_is_source() {
+        // Test that the specific implementation produces the same results as
+        // self.vertices().filter(move |&u| self.is_source(u))
+        let mut digraph = super::AdjacencyList::empty(5);
+
+        digraph.add_arc(0, 1);
+        digraph.add_arc(0, 2);
+        digraph.add_arc(1, 2);
+        digraph.add_arc(3, 4);
+
+        // Filter-based implementation result
+        let filter_result: BTreeSet<usize> = digraph
+            .vertices()
+            .filter(|&u| digraph.is_source(u))
+            .collect();
+
+        // Specific implementation result
+        let specific_result: BTreeSet<usize> = digraph.sources().collect();
+
+        assert_eq!(filter_result, specific_result);
+    }
+
+    #[test]
+    fn sources_empty_digraph() {
+        let digraph = super::AdjacencyList::empty(3);
+
+        let filter_result: BTreeSet<usize> = digraph
+            .vertices()
+            .filter(|&u| digraph.is_source(u))
+            .collect();
+
+        let specific_result: BTreeSet<usize> = digraph.sources().collect();
+
+        assert_eq!(filter_result, specific_result);
+    }
+
+    #[test]
+    fn sources_complete_digraph() {
+        let mut digraph = super::AdjacencyList::empty(4);
+
+        for u in 0..4 {
+            for v in 0..4 {
+                if u != v {
+                    digraph.add_arc(u, v);
+                }
+            }
+        }
+
+        let filter_result: BTreeSet<usize> = digraph
+            .vertices()
+            .filter(|&u| digraph.is_source(u))
+            .collect();
+
+        let specific_result: BTreeSet<usize> = digraph.sources().collect();
+
+        assert_eq!(filter_result, specific_result);
+    }
 }
 
 #[cfg(test)]

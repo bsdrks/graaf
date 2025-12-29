@@ -60,6 +60,7 @@ use {
         RemoveArc,
         SemidegreeSequence,
         Size,
+        Sources,
         Vertices,
     },
     std::collections::BTreeMap,
@@ -402,6 +403,12 @@ impl<W> Size for AdjacencyListWeighted<W> {
 impl<W> Vertices for AdjacencyListWeighted<W> {
     fn vertices(&self) -> impl Iterator<Item = usize> {
         0..self.order()
+    }
+}
+
+impl<W> Sources for AdjacencyListWeighted<W> {
+    fn sources(&self) -> impl Iterator<Item = usize> {
+        self.vertices().filter(move |&u| self.is_source(u))
     }
 }
 

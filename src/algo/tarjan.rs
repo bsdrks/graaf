@@ -197,10 +197,10 @@ impl<'a, D> Tarjan<'a, D> {
         self.i += 1;
 
         for v in self.digraph.out_neighbors(u) {
-            if let Some(&w) = self.index.get(&v)
-                && self.on_stack.contains(&v)
-            {
-                let _ = self.low_link.insert(u, self.low_link[&u].min(w));
+            if let Some(&w) = self.index.get(&v) {
+                if self.on_stack.contains(&v) {
+                    let _ = self.low_link.insert(u, self.low_link[&u].min(w));
+                }
             } else {
                 self.connect(v);
 

@@ -147,6 +147,7 @@ use {
         RemoveArc,
         SemidegreeSequence,
         Size,
+        Sources,
         Star,
         Union,
         Vertices,
@@ -1361,6 +1362,12 @@ impl Vertices for AdjacencyMap {
     /// digraph's order.
     fn vertices(&self) -> impl Iterator<Item = usize> {
         self.arcs.keys().copied()
+    }
+}
+
+impl Sources for AdjacencyMap {
+    fn sources(&self) -> impl Iterator<Item = usize> {
+        self.vertices().filter(move |&u| self.is_source(u))
     }
 }
 

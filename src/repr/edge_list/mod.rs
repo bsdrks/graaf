@@ -132,6 +132,7 @@ use {
         Order,
         OutNeighbors,
         Outdegree,
+        Sources,
         Path,
         RandomRecursiveTree,
         RandomTournament,
@@ -767,6 +768,12 @@ impl Union for EdgeList {
 impl Vertices for EdgeList {
     fn vertices(&self) -> impl Iterator<Item = usize> {
         0..self.order
+    }
+}
+
+impl Sources for EdgeList {
+    fn sources(&self) -> impl Iterator<Item = usize> {
+        self.vertices().filter(move |&u| self.is_source(u))
     }
 }
 
