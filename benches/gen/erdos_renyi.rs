@@ -423,152 +423,158 @@ fn erdos_renyi_edge_list_btree_set_collect_vec_collect(
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn adjacency_list_0_5(n: usize) {
-    let _ = AdjacencyList::erdos_renyi(n, 0.5, 0);
+    drop(AdjacencyList::erdos_renyi(n, 0.5, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn adjacency_list_add_arc_empty_0_5(n: usize) {
-    let _ = erdos_renyi_adjacency_list_add_arc_empty(n, 0.5, 0);
+    drop(erdos_renyi_adjacency_list_add_arc_empty(n, 0.5, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn adjacency_list_btree_set_collect_0_5(n: usize) {
-    let _ = erdos_renyi_adjacency_list_btree_set_collect(n, 0.5, 0);
+    drop(erdos_renyi_adjacency_list_btree_set_collect(n, 0.5, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn adjacency_map_0_5(n: usize) {
-    let _ = AdjacencyMap::erdos_renyi(n, 0.5, 0);
+    drop(AdjacencyMap::erdos_renyi(n, 0.5, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn adjacency_map_add_arc_empty_0_5(n: usize) {
-    let _ = erdos_renyi_adjacency_map_add_arc_empty(n, 0.5, 0);
+    drop(erdos_renyi_adjacency_map_add_arc_empty(n, 0.5, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn adjacency_map_btree_set_collect_0_5(n: usize) {
-    let _ = erdos_renyi_adjacency_map_btree_set_collect(n, 0.5, 0);
+    drop(erdos_renyi_adjacency_map_btree_set_collect(n, 0.5, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn adjacency_map_btree_set_skip_0_5(n: usize) {
-    let _ = erdos_renyi_adjacency_map_btree_set_skip(n, 0.5, 0);
+    drop(erdos_renyi_adjacency_map_btree_set_skip(n, 0.5, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn adjacency_map_btree_set_for_0_5(n: usize) {
-    let _ = erdos_renyi_adjacency_map_btree_set_for(n, 0.5, 0);
+    drop(erdos_renyi_adjacency_map_btree_set_for(n, 0.5, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn adjacency_map_btree_set_parallel_0_5(n: usize) {
-    let _ = erdos_renyi_adjacency_map_btree_set_parallel(n, 0.5, 0);
+    drop(erdos_renyi_adjacency_map_btree_set_parallel(n, 0.5, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn adjacency_matrix_0_5(n: usize) {
-    let _ = AdjacencyMatrix::erdos_renyi(n, 0.5, 0);
+    drop(AdjacencyMatrix::erdos_renyi(n, 0.5, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn adjacency_matrix_add_arc_empty_0_5(n: usize) {
-    let _ = erdos_renyi_adjacency_matrix_add_arc_empty(n, 0.5, 0);
+    drop(erdos_renyi_adjacency_matrix_add_arc_empty(n, 0.5, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn edge_list_0_5(n: usize) {
-    let _ = EdgeList::erdos_renyi(n, 0.5, 0);
+    drop(EdgeList::erdos_renyi(n, 0.5, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn edge_list_add_arc_empty_0_5(n: usize) {
-    let _ = erdos_renyi_edge_list_add_arc_empty(n, 0.5, 0);
+    drop(erdos_renyi_edge_list_add_arc_empty(n, 0.5, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn edge_list_btree_list_collect_btree_set_collect_0_5(n: usize) {
-    let _ =
-        erdos_renyi_edge_list_btree_set_collect_btree_set_collect(n, 0.5, 0);
+    drop(erdos_renyi_edge_list_btree_set_collect_btree_set_collect(
+        n, 0.5, 0,
+    ));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn edge_list_btree_list_collect_vec_collect_0_5(n: usize) {
-    let _ = erdos_renyi_edge_list_btree_set_collect_vec_collect(n, 0.5, 0);
+    drop(erdos_renyi_edge_list_btree_set_collect_vec_collect(
+        n, 0.5, 0,
+    ));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn adjacency_list_0_1(n: usize) {
-    let _ = AdjacencyList::erdos_renyi(n, 0.1, 0);
+    drop(AdjacencyList::erdos_renyi(n, 0.1, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn adjacency_list_add_arc_empty_0_1(n: usize) {
-    let _ = erdos_renyi_adjacency_list_add_arc_empty(n, 0.1, 0);
+    drop(erdos_renyi_adjacency_list_add_arc_empty(n, 0.1, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn adjacency_list_btree_set_collect_0_1(n: usize) {
-    let _ = erdos_renyi_adjacency_list_btree_set_collect(n, 0.1, 0);
+    drop(erdos_renyi_adjacency_list_btree_set_collect(n, 0.1, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn adjacency_map_0_1(n: usize) {
-    let _ = AdjacencyMap::erdos_renyi(n, 0.1, 0);
+    drop(AdjacencyMap::erdos_renyi(n, 0.1, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn adjacency_map_add_arc_empty_0_1(n: usize) {
-    let _ = erdos_renyi_adjacency_map_add_arc_empty(n, 0.1, 0);
+    drop(erdos_renyi_adjacency_map_add_arc_empty(n, 0.1, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn adjacency_map_btree_set_collect_0_1(n: usize) {
-    let _ = erdos_renyi_adjacency_map_btree_set_collect(n, 0.1, 0);
+    drop(erdos_renyi_adjacency_map_btree_set_collect(n, 0.1, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn adjacency_map_btree_set_skip_0_1(n: usize) {
-    let _ = erdos_renyi_adjacency_map_btree_set_skip(n, 0.1, 0);
+    drop(erdos_renyi_adjacency_map_btree_set_skip(n, 0.1, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn adjacency_map_btree_set_for_0_1(n: usize) {
-    let _ = erdos_renyi_adjacency_map_btree_set_for(n, 0.1, 0);
+    drop(erdos_renyi_adjacency_map_btree_set_for(n, 0.1, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn adjacency_map_btree_set_parallel_0_1(n: usize) {
-    let _ = erdos_renyi_adjacency_map_btree_set_parallel(n, 0.1, 0);
+    drop(erdos_renyi_adjacency_map_btree_set_parallel(n, 0.1, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn adjacency_matrix_0_1(n: usize) {
-    let _ = AdjacencyMatrix::erdos_renyi(n, 0.1, 0);
+    drop(AdjacencyMatrix::erdos_renyi(n, 0.1, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn adjacency_matrix_add_arc_empty_0_1(n: usize) {
-    let _ = erdos_renyi_adjacency_matrix_add_arc_empty(n, 0.1, 0);
+    drop(erdos_renyi_adjacency_matrix_add_arc_empty(n, 0.1, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn edge_list_0_1(n: usize) {
-    let _ = EdgeList::erdos_renyi(n, 0.1, 0);
+    drop(EdgeList::erdos_renyi(n, 0.1, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn edge_list_add_arc_empty_0_1(n: usize) {
-    let _ = erdos_renyi_edge_list_add_arc_empty(n, 0.1, 0);
+    drop(erdos_renyi_edge_list_add_arc_empty(n, 0.1, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn edge_list_btree_list_collect_btree_set_collect_0_1(n: usize) {
-    let _ =
-        erdos_renyi_edge_list_btree_set_collect_btree_set_collect(n, 0.1, 0);
+    drop(erdos_renyi_edge_list_btree_set_collect_btree_set_collect(
+        n, 0.1, 0,
+    ));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000])]
 fn edge_list_btree_list_collect_vec_collect_0_1(n: usize) {
-    let _ = erdos_renyi_edge_list_btree_set_collect_vec_collect(n, 0.1, 0);
+    drop(erdos_renyi_edge_list_btree_set_collect_vec_collect(
+        n, 0.1, 0,
+    ));
 }

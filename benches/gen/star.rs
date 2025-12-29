@@ -230,80 +230,80 @@ fn star_edge_list_btree_set_collect(order: usize) -> EdgeListBTreeSet {
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list(n: usize) {
-    let _ = AdjacencyList::star(n);
+    drop(AdjacencyList::star(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list_add_arc_empty(n: usize) {
-    let _ = star_adjacency_list_add_arc_empty(n);
+    drop(star_adjacency_list_add_arc_empty(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list_btree_set_push(n: usize) {
-    let _ = star_adjacency_list_btree_set_push(n);
+    drop(star_adjacency_list_btree_set_push(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list_btree_set_insert(n: usize) {
-    let _ = star_adjacency_list_btree_set_insert(n);
+    drop(star_adjacency_list_btree_set_insert(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list_btree_set_collect(n: usize) {
-    let _ = star_adjacency_list_btree_set_collect(n);
+    drop(star_adjacency_list_btree_set_collect(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list_hash_set_push(n: usize) {
-    let _ = star_adjacency_list_hash_set_push(n);
+    drop(star_adjacency_list_hash_set_push(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list_hash_set_insert(n: usize) {
-    let _ = star_adjacency_list_hash_set_insert(n);
+    drop(star_adjacency_list_hash_set_insert(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list_hash_set_collect(n: usize) {
-    let _ = star_adjacency_list_hash_set_collect(n);
+    drop(star_adjacency_list_hash_set_collect(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_map(n: usize) {
-    let _ = AdjacencyMap::star(n);
+    drop(AdjacencyMap::star(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_map_add_arc_empty(n: usize) {
-    let _ = star_adjacency_map_add_arc_empty(n);
+    drop(star_adjacency_map_add_arc_empty(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_map_btree_set_collect(n: usize) {
-    let _ = star_adjacency_map_btree_set_collect(n);
+    drop(star_adjacency_map_btree_set_collect(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_matrix(n: usize) {
-    let _ = AdjacencyMatrix::star(n);
+    drop(AdjacencyMatrix::star(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_matrix_add_arc_empty(n: usize) {
-    let _ = star_adjacency_matrix_add_arc_empty(n);
+    drop(star_adjacency_matrix_add_arc_empty(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn edge_list(n: usize) {
-    let _ = EdgeList::star(n);
+    drop(EdgeList::star(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn edge_list_add_arc_empty(n: usize) {
-    let _ = star_edge_list_add_arc_empty(n);
+    drop(star_edge_list_add_arc_empty(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn edge_list_btree_set_collect(n: usize) {
-    let _ = star_edge_list_btree_set_collect(n);
+    drop(star_edge_list_btree_set_collect(n));
 }

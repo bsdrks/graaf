@@ -112,7 +112,7 @@ fn bellman_ford_moore_iter(bencher: Bencher<'_, '_>, order: usize) {
 
     bencher.bench_local(|| {
         for u in 0..order {
-            let _ = BellmanFordMooreIter::new(&digraph, u);
+            drop(BellmanFordMooreIter::new(&digraph, u));
         }
     });
 }
@@ -123,7 +123,7 @@ fn bellman_ford_moore(bencher: Bencher<'_, '_>, order: usize) {
 
     bencher.bench_local(|| {
         for u in 0..order {
-            let _ = BellmanFordMoore::new(&digraph, u);
+            drop(BellmanFordMoore::new(&digraph, u));
         }
     });
 }
@@ -134,7 +134,7 @@ fn bellman_ford_moore_index_mut(bencher: Bencher<'_, '_>, order: usize) {
 
     bencher.bench_local(|| {
         for u in 0..order {
-            let _ = BellmanFordMooreIndexMut::new(&digraph, u);
+            drop(BellmanFordMooreIndexMut::new(&digraph, u));
         }
     });
 }
@@ -145,7 +145,7 @@ fn bellman_ford_moore_unsafe(bencher: Bencher<'_, '_>, order: usize) {
 
     bencher.bench_local(|| {
         for u in 0..order {
-            let _ = BellmanFordMooreUnsafe::new(&digraph, u);
+            drop(BellmanFordMooreUnsafe::new(&digraph, u));
         }
     });
 }

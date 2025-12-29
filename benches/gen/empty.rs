@@ -63,25 +63,25 @@ fn empty_adjacency_map_from_vec(order: usize) -> AdjacencyMapBTreeSet {
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list(n: usize) {
-    let _ = AdjacencyList::empty(n);
+    drop(AdjacencyList::empty(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list_hash_set(n: usize) {
-    let _ = empty_adjacency_list_hash_set(n);
+    drop(empty_adjacency_list_hash_set(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_map(n: usize) {
-    let _ = AdjacencyMap::empty(n);
+    drop(AdjacencyMap::empty(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_map_from_vec(n: usize) {
-    let _ = empty_adjacency_map_from_vec(n);
+    drop(empty_adjacency_map_from_vec(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_matrix(n: usize) {
-    let _ = AdjacencyMatrix::empty(n);
+    drop(AdjacencyMatrix::empty(n));
 }

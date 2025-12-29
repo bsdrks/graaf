@@ -365,13 +365,13 @@ fn biclique_adjacency_map_btree_set_loop(
             // Vertices 0..m: their neighbors are all vertices in the
             // second partition: [m, m+n)
             for v in m..order {
-                drop(set.insert(v));
+                let _ = set.insert(v);
             }
         } else {
             // Vertices m..order: their neighbors are all vertices in the
             // first partition: [0, m)
             for v in 0..m {
-                drop(set.insert(v));
+                let _ = set.insert(v);
             }
         }
 
@@ -402,11 +402,11 @@ fn biclique_unsafe(m: usize, n: usize) -> AdjacencyMapBTreeSet {
 
             if u < m {
                 for v in m..order {
-                    drop(set.insert(v));
+                    let _ = set.insert(v);
                 }
             } else {
                 for v in 0..m {
-                    drop(set.insert(v));
+                    let _ = set.insert(v);
                 }
             }
 

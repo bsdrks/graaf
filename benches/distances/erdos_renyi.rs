@@ -55,7 +55,8 @@ fn bfs_adjacency_list(bencher: Bencher<'_, '_>) {
 
     bencher.bench_local(|| {
         let mut bfs = BfsDist::new(&digraph, once(0));
-        let _ = bfs.distances();
+
+        drop(bfs.distances());
     });
 }
 
@@ -70,7 +71,8 @@ fn bfs_adjacency_map(bencher: Bencher<'_, '_>) {
 
     bencher.bench_local(|| {
         let mut bfs = BfsDist::new(&digraph, once(0));
-        let _ = bfs.distances();
+
+        drop(bfs.distances());
     });
 }
 
@@ -85,7 +87,8 @@ fn bfs_adjacency_matrix(bencher: Bencher<'_, '_>) {
 
     bencher.bench_local(|| {
         let mut bfs = BfsDist::new(&digraph, once(0));
-        let _ = bfs.distances();
+
+        drop(bfs.distances());
     });
 }
 
@@ -100,7 +103,8 @@ fn bfs_edge_list(bencher: Bencher<'_, '_>) {
 
     bencher.bench_local(|| {
         let mut bfs = BfsDist::new(&digraph, once(0));
-        let _ = bfs.distances();
+
+        drop(bfs.distances());
     });
 }
 
@@ -120,7 +124,8 @@ fn dijkstra(bencher: Bencher<'_, '_>) {
 
     bencher.bench_local(|| {
         let mut dijkstra = DijkstraDist::new(&digraph, once(0));
-        let _ = dijkstra.distances();
+
+        drop(dijkstra.distances());
     });
 }
 

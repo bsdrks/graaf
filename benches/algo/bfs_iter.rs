@@ -57,7 +57,7 @@ impl<'a, D> BfsPushBack<'a, D> {
         for source in sources {
             queue.push_back(source);
 
-            drop(visited.insert(source));
+            let _ = visited.insert(source);
         }
 
         Self {
@@ -101,7 +101,7 @@ impl<'a, D> BfsExtend<'a, D> {
         for source in sources {
             queue.push_back(source);
 
-            drop(visited.insert(source));
+            let _ = visited.insert(source);
         }
 
         Self {

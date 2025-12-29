@@ -222,7 +222,7 @@ fn adjacency_list(bencher: Bencher<'_, '_>, order: usize) {
     let erdos_renyi = AdjacencyList::erdos_renyi(order, 0.5, 0);
 
     bencher.bench(|| {
-        let _ = erdos_renyi.converse();
+        drop(erdos_renyi.converse());
     });
 }
 
@@ -234,8 +234,9 @@ fn adjacency_list_add_arc_empty_has_arc_order(
     let erdos_renyi = AdjacencyList::erdos_renyi(order, 0.5, 0);
 
     bencher.bench(|| {
-        let _ =
-            converse_adjacency_list_add_arc_empty_has_arc_order(&erdos_renyi);
+        drop(converse_adjacency_list_add_arc_empty_has_arc_order(
+            &erdos_renyi,
+        ));
     });
 }
 
@@ -250,7 +251,7 @@ fn adjacency_list_btree_set_for_for(bencher: Bencher<'_, '_>, order: usize) {
     let erdos_renyi = AdjacencyListBTreeSet { arcs };
 
     bencher.bench(|| {
-        let _ = converse_adjacency_list_btree_set_for_for(&erdos_renyi);
+        drop(converse_adjacency_list_btree_set_for_for(&erdos_renyi));
     });
 }
 
@@ -270,7 +271,7 @@ fn adjacency_list_btree_set_fold(bencher: Bencher<'_, '_>, order: usize) {
     };
 
     bencher.bench(|| {
-        let _ = converse_adjacency_list_btree_set_fold(&erdos_renyi);
+        drop(converse_adjacency_list_btree_set_fold(&erdos_renyi));
     });
 }
 
@@ -280,7 +281,7 @@ fn adjacency_list_weighted(bencher: Bencher<'_, '_>, order: usize) {
     let erdos_renyi = AdjacencyListWeighted::<usize>::from(erdos_renyi);
 
     bencher.bench(|| {
-        let _ = erdos_renyi.converse();
+        drop(erdos_renyi.converse());
     });
 }
 
@@ -303,8 +304,9 @@ fn adjacency_list_weighted_btree_map_for_for(
     };
 
     bencher.bench(|| {
-        let _ =
-            converse_adjacency_list_weighted_btree_map_for_for(&erdos_renyi);
+        drop(converse_adjacency_list_weighted_btree_map_for_for(
+            &erdos_renyi,
+        ));
     });
 }
 
@@ -327,7 +329,9 @@ fn adjacency_list_weighted_btree_map_fold(
     };
 
     bencher.bench(|| {
-        let _ = converse_adjacency_list_weighted_btree_map_fold(&erdos_renyi);
+        drop(converse_adjacency_list_weighted_btree_map_fold(
+            &erdos_renyi,
+        ));
     });
 }
 
@@ -336,7 +340,7 @@ fn adjacency_map(bencher: Bencher<'_, '_>, order: usize) {
     let erdos_renyi = AdjacencyMap::erdos_renyi(order, 0.5, 0);
 
     bencher.bench(|| {
-        let _ = erdos_renyi.converse();
+        drop(erdos_renyi.converse());
     });
 }
 
@@ -348,8 +352,9 @@ fn adjacency_map_add_arc_empty_has_arc_order(
     let erdos_renyi = AdjacencyMap::erdos_renyi(order, 0.5, 0);
 
     bencher.bench(|| {
-        let _ =
-            converse_adjacency_map_add_arc_empty_has_arc_order(&erdos_renyi);
+        drop(converse_adjacency_map_add_arc_empty_has_arc_order(
+            &erdos_renyi,
+        ));
     });
 }
 
@@ -364,7 +369,7 @@ fn adjacency_map_btree_set_for_for(bencher: Bencher<'_, '_>, order: usize) {
     let erdos_renyi = AdjacencyMapBTreeSet { arcs };
 
     bencher.bench(|| {
-        let _ = converse_adjacency_map_btree_set_for_for(&erdos_renyi);
+        drop(converse_adjacency_map_btree_set_for_for(&erdos_renyi));
     });
 }
 
@@ -382,7 +387,7 @@ fn adjacency_map_btree_set_for_for_vec(
     let erdos_renyi = AdjacencyMapBTreeSet { arcs };
 
     bencher.bench(|| {
-        let _ = converse_adjacency_map_btree_set_for_for_vec(&erdos_renyi);
+        drop(converse_adjacency_map_btree_set_for_for_vec(&erdos_renyi));
     });
 }
 
@@ -391,7 +396,7 @@ fn adjacency_matrix(bencher: Bencher<'_, '_>, order: usize) {
     let erdos_renyi = AdjacencyMatrix::erdos_renyi(order, 0.5, 0);
 
     bencher.bench(|| {
-        let _ = erdos_renyi.converse();
+        drop(erdos_renyi.converse());
     });
 }
 
@@ -403,9 +408,9 @@ fn adjacency_matrix_add_arc_empty_has_arc_order(
     let erdos_renyi = AdjacencyMatrix::erdos_renyi(order, 0.5, 0);
 
     bencher.bench(|| {
-        let _ = converse_adjacency_matrix_add_arc_empty_has_arc_order(
+        drop(converse_adjacency_matrix_add_arc_empty_has_arc_order(
             &erdos_renyi,
-        );
+        ));
     });
 }
 
@@ -414,7 +419,7 @@ fn edge_list(bencher: Bencher<'_, '_>, order: usize) {
     let erdos_renyi = EdgeList::erdos_renyi(order, 0.5, 0);
 
     bencher.bench(|| {
-        let _ = erdos_renyi.converse();
+        drop(erdos_renyi.converse());
     });
 }
 
@@ -426,7 +431,7 @@ fn edge_list_add_arc_empty_has_arc_order(
     let erdos_renyi = EdgeList::erdos_renyi(order, 0.5, 0);
 
     bencher.bench(|| {
-        let _ = converse_edge_list_add_arc_empty_has_arc_order(&erdos_renyi);
+        drop(converse_edge_list_add_arc_empty_has_arc_order(&erdos_renyi));
     });
 }
 
@@ -441,6 +446,6 @@ fn edge_list_btree_set_collect(bencher: Bencher<'_, '_>, order: usize) {
     let erdos_renyi = EdgeListBTreeSet { arcs, order };
 
     bencher.bench(|| {
-        let _ = converse_edge_list_btree_set_collect(&erdos_renyi);
+        drop(converse_edge_list_btree_set_collect(&erdos_renyi));
     });
 }

@@ -76,7 +76,7 @@ fn degree_sequence_adjacency_list_btree_set_unsafe_parallel(
         for chunk in digraph.arcs.chunks(chunk_size) {
             let indegrees_ref = &indegrees;
 
-            let _ = s.spawn(move || {
+            drop(s.spawn(move || {
                 for out_neighbors in chunk {
                     for &v in out_neighbors {
                         unsafe {
@@ -86,7 +86,7 @@ fn degree_sequence_adjacency_list_btree_set_unsafe_parallel(
                         }
                     }
                 }
-            });
+            }));
         }
     });
 

@@ -146,7 +146,7 @@ unsafe fn bulk_construct_btreemap_vec<K: Ord, V>(
 
         for i in 0..data.len() {
             let (key, value) = ptr::read(ptr.add(i));
-            let _ = map.insert(key, value);
+            drop(map.insert(key, value));
         }
 
         map
@@ -205,7 +205,7 @@ unsafe fn bulk_construct_btreemap_raw<K: Ord, V>(
 
         for i in 0..len {
             let (key, value) = ptr::read(raw_ptr.add(i));
-            let _ = map.insert(key, value);
+            drop(map.insert(key, value));
         }
 
         map
@@ -281,60 +281,60 @@ fn circuit_edge_list_btree_set_collect(order: usize) -> EdgeListBTreeSet {
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000, 1_000_000])]
 fn adjacency_list_add_arc_empty(order: usize) {
-    let _ = circuit_adjacency_list_add_arc_empty(order);
+    drop(circuit_adjacency_list_add_arc_empty(order));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000, 1_000_000])]
 fn adjacency_list_hash_set_collect(order: usize) {
-    let _ = circuit_adjacency_list_hash_set_collect(order);
+    drop(circuit_adjacency_list_hash_set_collect(order));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000, 1_000_000])]
 fn adjacency_list(n: usize) {
-    let _ = AdjacencyList::circuit(n);
+    drop(AdjacencyList::circuit(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000, 1_000_000])]
 fn adjacency_map(n: usize) {
-    let _ = AdjacencyMap::circuit(n);
+    drop(AdjacencyMap::circuit(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000, 1_000_000])]
 fn adjacency_map_collect(n: usize) {
-    let _ = circuit_adjacency_map_btree_set_collect(n);
+    drop(circuit_adjacency_map_btree_set_collect(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000, 1_000_000])]
 fn adjacency_map_unsafe_vec(n: usize) {
-    let _ = circuit_adjacency_map_btree_set_unsafe_vec(n);
+    drop(circuit_adjacency_map_btree_set_unsafe_vec(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000, 1_000_000])]
 fn adjacency_map_unsafe_raw(n: usize) {
-    let _ = circuit_adjacency_map_btree_set_unsafe_raw(n);
+    drop(circuit_adjacency_map_btree_set_unsafe_raw(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000, 1_000_000])]
 fn adjacency_map_insert_collect(n: usize) {
-    let _ = circuit_adjacency_map_btree_set_insert_collect(n);
+    drop(circuit_adjacency_map_btree_set_insert_collect(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000, 1_000_000])]
 fn adjacency_matrix(n: usize) {
-    let _ = AdjacencyMatrix::circuit(n);
+    drop(AdjacencyMatrix::circuit(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000, 1_000_000])]
 fn edge_list(n: usize) {
-    let _ = EdgeList::circuit(n);
+    drop(EdgeList::circuit(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000, 1_000_000])]
 fn edge_list_btree_set_insert(n: usize) {
-    let _ = circuit_edge_list_btree_set_insert(n);
+    drop(circuit_edge_list_btree_set_insert(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000, 1_000_000])]
 fn edge_list_btree_set_collect(n: usize) {
-    let _ = circuit_edge_list_btree_set_collect(n);
+    drop(circuit_edge_list_btree_set_collect(n));
 }

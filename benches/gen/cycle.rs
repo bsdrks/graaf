@@ -226,13 +226,14 @@ fn cycle_adjacency_map_btree_set_insert(order: usize) -> AdjacencyMapBTreeSet {
     }
 
     let mut arcs = BTreeMap::new();
-    let _ = arcs.insert(0, BTreeSet::from([order - 1, 1]));
+
+    drop(arcs.insert(0, BTreeSet::from([order - 1, 1])));
 
     for u in 1..order - 1 {
-        let _ = arcs.insert(u, BTreeSet::from([u - 1, u + 1]));
+        drop(arcs.insert(u, BTreeSet::from([u - 1, u + 1])));
     }
 
-    let _ = arcs.insert(order - 1, BTreeSet::from([order - 2, 0]));
+    drop(arcs.insert(order - 1, BTreeSet::from([order - 2, 0])));
 
     AdjacencyMapBTreeSet { arcs }
 }
@@ -351,75 +352,75 @@ fn cycle_edge_list_btree_set_flat_map_map(order: usize) -> EdgeListBTreeSet {
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list(n: usize) {
-    let _ = AdjacencyList::cycle(n);
+    drop(AdjacencyList::cycle(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list_btree_set_collect(n: usize) {
-    let _ = cycle_adjacency_list_btree_set_collect(n);
+    drop(cycle_adjacency_list_btree_set_collect(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list_btree_set_add_arc_empty(n: usize) {
-    let _ = cycle_adjacency_list_btree_set_add_arc_empty(n);
+    drop(cycle_adjacency_list_btree_set_add_arc_empty(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list_btree_set_unsafe(n: usize) {
-    let _ = cycle_adjacency_list_btree_set_unsafe(n);
+    drop(cycle_adjacency_list_btree_set_unsafe(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list_hash_set(n: usize) {
-    let _ = cycle_adjacency_list_hash_set_insert(n);
+    drop(cycle_adjacency_list_hash_set_insert(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_matrix(n: usize) {
-    let _ = AdjacencyMatrix::cycle(n);
+    drop(AdjacencyMatrix::cycle(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_map(n: usize) {
-    let _ = AdjacencyMap::cycle(n);
+    drop(AdjacencyMap::cycle(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_map_btree_set_collect(n: usize) {
-    let _ = cycle_adjacency_map_btree_set_collect(n);
+    drop(cycle_adjacency_map_btree_set_collect(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_map_btree_set_add_arc_empty(n: usize) {
-    let _ = cycle_adjacency_map_btree_set_add_arc_empty(n);
+    drop(cycle_adjacency_map_btree_set_add_arc_empty(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_map_btree_set_insert(n: usize) {
-    let _ = cycle_adjacency_map_btree_set_insert(n);
+    drop(cycle_adjacency_map_btree_set_insert(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_map_btree_set_vec_collect(n: usize) {
-    let _ = cycle_adjacency_map_btree_set_vec_collect(n);
+    drop(cycle_adjacency_map_btree_set_vec_collect(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn edge_list(n: usize) {
-    let _ = EdgeList::cycle(n);
+    drop(EdgeList::cycle(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn edge_list_add_arc_empty(n: usize) {
-    let _ = cycle_edge_list_add_arc_empty(n);
+    drop(cycle_edge_list_add_arc_empty(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn edge_list_btree_set_flat_map(n: usize) {
-    let _ = cycle_edge_list_btree_set_flat_map(n);
+    drop(cycle_edge_list_btree_set_flat_map(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn edge_list_btree_set_flat_map_map(n: usize) {
-    let _ = cycle_edge_list_btree_set_flat_map_map(n);
+    drop(cycle_edge_list_btree_set_flat_map_map(n));
 }

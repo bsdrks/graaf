@@ -150,55 +150,55 @@ fn path_edge_list_btree_set_collect(order: usize) -> EdgeListBTreeSet {
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list(n: usize) {
-    let _ = AdjacencyList::path(n);
+    drop(AdjacencyList::path(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list_btree_set_collect(n: usize) {
-    let _ = path_adjacency_list_btree_set_collect(n);
+    drop(path_adjacency_list_btree_set_collect(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list_add_arc_empty(n: usize) {
-    let _ = path_adjacency_list_add_arc_empty(n);
+    drop(path_adjacency_list_add_arc_empty(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list_hash_set_collect(n: usize) {
-    let _ = path_adjacency_list_hash_set_collect(n);
+    drop(path_adjacency_list_hash_set_collect(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_map(n: usize) {
-    let _ = AdjacencyMap::path(n);
+    drop(AdjacencyMap::path(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_map_add_arc_empty(n: usize) {
-    let _ = path_adjacency_map_add_arc_empty(n);
+    drop(path_adjacency_map_add_arc_empty(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_map_collect(n: usize) {
-    let _ = path_adjacency_map_collect(n);
+    drop(path_adjacency_map_collect(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_matrix(n: usize) {
-    let _ = AdjacencyMatrix::path(n);
+    drop(AdjacencyMatrix::path(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn edge_list(n: usize) {
-    let _ = EdgeList::path(n);
+    drop(EdgeList::path(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn edge_list_add_arc_empty(n: usize) {
-    let _ = path_edge_list_add_arc_empty(n);
+    drop(path_edge_list_add_arc_empty(n));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn edge_list_btree_list_collect(n: usize) {
-    let _ = path_edge_list_btree_set_collect(n);
+    drop(path_edge_list_btree_set_collect(n));
 }

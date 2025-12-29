@@ -159,7 +159,7 @@ fn random_tournament_adjacency_list_btree_set_parallel(
             let start_offset = unsafe { *offsets.get_unchecked(i) };
             let thread_seed = seed.wrapping_add(i as u64);
 
-            let _ = s.spawn(move || {
+            drop(s.spawn(move || {
                 let mut rng = Xoshiro256StarStar::new(thread_seed);
                 let mut offset = start_offset;
 
@@ -178,7 +178,7 @@ fn random_tournament_adjacency_list_btree_set_parallel(
                         offset += 1;
                     }
                 }
-            });
+            }));
         }
     });
 
@@ -368,60 +368,60 @@ fn random_tournament_edge_list_add_arc_empty(
 
 #[divan::bench(args = [10, 100, 1000])]
 fn adjacency_list(n: usize) {
-    let _ = AdjacencyList::random_tournament(n, 0);
+    drop(AdjacencyList::random_tournament(n, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000])]
 fn adjacency_list_add_arc_empty(n: usize) {
-    let _ = random_tournament_adjacency_list_add_arc_empty(n, 0);
+    drop(random_tournament_adjacency_list_add_arc_empty(n, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000])]
 fn adjacency_list_btree_set_insert(n: usize) {
-    let _ = random_tournament_adjacency_list_btree_set_insert(n, 0);
+    drop(random_tournament_adjacency_list_btree_set_insert(n, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000])]
 fn adjacency_list_btree_set_parallel(n: usize) {
-    let _ = random_tournament_adjacency_list_btree_set_parallel(n, 0);
+    drop(random_tournament_adjacency_list_btree_set_parallel(n, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000])]
 fn adjacency_list_hash_set_insert(n: usize) {
-    let _ = random_tournament_adjacency_list_hash_set_insert(n, 0);
+    drop(random_tournament_adjacency_list_hash_set_insert(n, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000])]
 fn adjacency_matrix(n: usize) {
-    let _ = AdjacencyMatrix::random_tournament(n, 0);
+    drop(AdjacencyMatrix::random_tournament(n, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000])]
 fn adjacency_matrix_add_arc_empty(n: usize) {
-    let _ = random_tournament_adjacency_matrix_add_arc_empty(n, 0);
+    drop(random_tournament_adjacency_matrix_add_arc_empty(n, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000])]
 fn adjacency_map(n: usize) {
-    let _ = AdjacencyMap::random_tournament(n, 0);
+    drop(AdjacencyMap::random_tournament(n, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000])]
 fn adjacency_map_add_arc_empty(n: usize) {
-    let _ = random_tournament_adjacency_map_add_arc_empty(n, 0);
+    drop(random_tournament_adjacency_map_add_arc_empty(n, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000])]
 fn adjacency_map_btree_set_parallel(n: usize) {
-    let _ = random_tournament_adjacency_map_btree_set_parallel(n, 0);
+    drop(random_tournament_adjacency_map_btree_set_parallel(n, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000])]
 fn edge_list(n: usize) {
-    let _ = EdgeList::random_tournament(n, 0);
+    drop(EdgeList::random_tournament(n, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000])]
 fn edge_list_add_arc_empty(n: usize) {
-    let _ = random_tournament_edge_list_add_arc_empty(n, 0);
+    drop(random_tournament_edge_list_add_arc_empty(n, 0));
 }

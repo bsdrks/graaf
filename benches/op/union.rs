@@ -98,29 +98,29 @@ fn union_adjacency_map_merge(
                         .copied()
                         .collect::<BTreeSet<_>>();
 
-                    let _ = arcs.insert(u, union_set);
+                    drop(arcs.insert(u, union_set));
 
                     cur_self = iter_self.next();
                     cur_other = iter_other.next();
                 }
                 Ordering::Less => {
-                    let _ = arcs.insert(u, set_self.clone());
+                    drop(arcs.insert(u, set_self.clone()));
 
                     cur_self = iter_self.next();
                 }
                 Ordering::Greater => {
-                    let _ = arcs.insert(v, set_other.clone());
+                    drop(arcs.insert(v, set_other.clone()));
 
                     cur_other = iter_other.next();
                 }
             },
             (Some((&u, set_self)), None) => {
-                let _ = arcs.insert(u, set_self.clone());
+                drop(arcs.insert(u, set_self.clone()));
 
                 cur_self = iter_self.next();
             }
             (None, Some((&v, set_other))) => {
-                let _ = arcs.insert(v, set_other.clone());
+                drop(arcs.insert(v, set_other.clone()));
 
                 cur_other = iter_other.next();
             }
@@ -349,7 +349,7 @@ fn adjacency_list_erdos_renyi(bencher: Bencher<'_, '_>, order: usize) {
     let rhs = AdjacencyList::erdos_renyi(order, 0.6, 1);
 
     bencher.bench(|| {
-        let _ = rhs.union(&lhs);
+        drop(rhs.union(&lhs));
     });
 }
 
@@ -359,7 +359,7 @@ fn adjacency_list_erdos_renyi_add_arc(bencher: Bencher<'_, '_>, order: usize) {
     let rhs = AdjacencyList::erdos_renyi(order, 0.6, 1);
 
     bencher.bench(|| {
-        let _ = union_adjacency_list_add_arc(&lhs, &rhs);
+        drop(union_adjacency_list_add_arc(&lhs, &rhs));
     });
 }
 
@@ -369,7 +369,7 @@ fn adjacency_map_erdos_renyi(bencher: Bencher<'_, '_>, order: usize) {
     let rhs = AdjacencyMap::erdos_renyi(order, 0.6, 1);
 
     bencher.bench(|| {
-        let _ = rhs.union(&lhs);
+        drop(rhs.union(&lhs));
     });
 }
 
@@ -379,7 +379,7 @@ fn adjacency_map_erdos_renyi_add_arc(bencher: Bencher<'_, '_>, order: usize) {
     let rhs = AdjacencyMap::erdos_renyi(order, 0.6, 1);
 
     bencher.bench(|| {
-        let _ = union_adjacency_map_add_arc(&lhs, &rhs);
+        drop(union_adjacency_map_add_arc(&lhs, &rhs));
     });
 }
 
@@ -410,7 +410,7 @@ fn adjacency_map_btree_set_erdos_renyi_merge(
     };
 
     bencher.bench(|| {
-        let _ = union_adjacency_map_merge(&lhs, &rhs);
+        drop(union_adjacency_map_merge(&lhs, &rhs));
     });
 }
 
@@ -441,6 +441,6 @@ fn adjacency_map_btree_set_erdos_renyi_parallel(
     };
 
     bencher.bench(|| {
-        let _ = union_adjacency_map_merge_parallel(&lhs, &rhs);
+        drop(union_adjacency_map_merge_parallel(&lhs, &rhs));
     });
 }
