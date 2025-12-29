@@ -1359,7 +1359,8 @@ impl Sources for AdjacencyList {
             }
         }
 
-        (0..order).filter(move |&u| unsafe { *indegrees.get_unchecked(u) == 0 })
+        (0..order)
+            .filter(move |&u| unsafe { *indegrees.get_unchecked(u) == 0 })
     }
 }
 

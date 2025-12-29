@@ -21,7 +21,6 @@
 //! assert!(digraph.sources().eq([0, 3]));
 //! ```
 
-
 /// Digraph sources
 pub trait Sources {
     /// Iterate the sources in the digraph.
