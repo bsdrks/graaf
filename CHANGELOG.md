@@ -25,6 +25,8 @@
 Changed
 
 - Breaking: replace `Sources` blanket implementation with custom implementations for the `repr` types.
+- Check for `grcov` at the start of `script/test-coverage.sh`.
+- Check for `llvm-profdata` at the start of `script/test-coverage.sh`.
 
 Fixed
 
