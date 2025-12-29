@@ -1981,19 +1981,19 @@ mod tests {
     #[test]
     #[should_panic(expected = "a digraph has at least one vertex")]
     fn from_iter_empty() {
-        let _ = AdjacencyList::from(Vec::<BTreeSet<usize>>::new());
+        drop(AdjacencyList::from(Vec::<BTreeSet<usize>>::new()));
     }
 
     #[test]
     #[should_panic(expected = "v = 1 isn't in the digraph")]
     fn from_iter_out_of_bounds_v() {
-        let _ = AdjacencyList::from([BTreeSet::from([1])]);
+        drop(AdjacencyList::from([BTreeSet::from([1])]));
     }
 
     #[test]
     #[should_panic(expected = "u = 0 equals v = 0")]
     fn from_iter_u_equals_v() {
-        let _ = AdjacencyList::from([BTreeSet::from([0])]);
+        drop(AdjacencyList::from([BTreeSet::from([0])]));
     }
 
     #[test]

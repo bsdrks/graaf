@@ -152,7 +152,7 @@ macro_rules! test_cycle {
         #[test]
         #[should_panic(expected = "a digraph has at least one vertex")]
         fn cycle_0() {
-            let _ = <$type>::cycle(0);
+            drop(<$type>::cycle(0));
         }
 
         #[test]

@@ -144,7 +144,7 @@ macro_rules! test_star {
         #[test]
         #[should_panic(expected = "a digraph has at least one vertex")]
         fn star_0() {
-            let _ = <$type>::star(0);
+            drop(<$type>::star(0));
         }
 
         #[test]

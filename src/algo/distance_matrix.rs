@@ -444,7 +444,7 @@ impl<W> DistanceMatrix<W> {
     ///
     /// assert!(FloydWarshall::new(&digraph).distances().periphery().eq([4]));
     /// ```
-    pub fn periphery(&self) -> impl Iterator<Item = usize> + '_
+    pub fn periphery(&self) -> impl Iterator<Item = usize>
     where
         W: Copy + Ord,
     {
@@ -867,7 +867,7 @@ mod tests {
     #[test]
     #[should_panic(expected = "a distance matrix has at least one vertex")]
     fn new_0() {
-        let _ = DistanceMatrix::new(0, isize::MAX);
+        drop(DistanceMatrix::new(0, isize::MAX));
     }
 
     #[test]

@@ -2,6 +2,7 @@
 name = "graaf"
 version = "0.111.1"
 edition = "2024"
+rust-version = "1.85"
 authors = ["Bas Dirks <bas.dirks@protonmail.com>"]
 categories = ["algorithms", "data-structures", "mathematics"]
 description = "Work with directed graphs."

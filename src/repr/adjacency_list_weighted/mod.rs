@@ -1095,7 +1095,7 @@ mod tests {
     #[test]
     #[should_panic(expected = "a digraph has at least one vertex")]
     fn empty_0() {
-        let _ = AdjacencyListWeighted::<usize>::empty(0);
+        drop(AdjacencyListWeighted::<usize>::empty(0));
     }
 
     #[test]
@@ -1277,20 +1277,21 @@ mod tests {
     #[test]
     #[should_panic(expected = "a digraph has at least one vertex")]
     fn from_iter_empty() {
-        let _ =
-            AdjacencyListWeighted::from(Vec::<BTreeMap<usize, isize>>::new());
+        drop(AdjacencyListWeighted::from(
+            Vec::<BTreeMap<usize, isize>>::new(),
+        ));
     }
 
     #[test]
     #[should_panic(expected = "v = 1 isn't in the digraph")]
     fn from_iter_out_of_bounds_v() {
-        let _ = AdjacencyListWeighted::from([BTreeMap::from([(1, -1)])]);
+        drop(AdjacencyListWeighted::from([BTreeMap::from([(1, -1)])]));
     }
 
     #[test]
     #[should_panic(expected = "u = 0 equals v = 0")]
     fn from_iter_u_equals_v() {
-        let _ = AdjacencyListWeighted::from([BTreeMap::from([(0, -1)])]);
+        drop(AdjacencyListWeighted::from([BTreeMap::from([(0, -1)])]));
     }
 
     #[test]
@@ -2173,7 +2174,7 @@ mod tests {
         expected = "index out of bounds: the len is 1 but the index is 1"
     )]
     fn out_neighbors_out_of_bounds() {
-        let _ = AdjacencyListWeighted::<usize>::trivial().out_neighbors(1);
+        drop(AdjacencyListWeighted::<usize>::trivial().out_neighbors(1));
     }
 
     #[test]
@@ -2181,8 +2182,10 @@ mod tests {
         expected = "index out of bounds: the len is 1 but the index is 1"
     )]
     fn out_neighbors_weighted_out_of_bounds() {
-        let _ = AdjacencyListWeighted::<usize>::trivial()
-            .out_neighbors_weighted(1);
+        drop(
+            AdjacencyListWeighted::<usize>::trivial()
+                .out_neighbors_weighted(1),
+        );
     }
 
     #[test]

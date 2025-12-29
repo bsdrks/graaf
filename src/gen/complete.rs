@@ -160,7 +160,7 @@ macro_rules! test_complete {
         #[test]
         #[should_panic(expected = "a digraph has at least one vertex")]
         fn complete_0() {
-            let _ = <$type>::complete(0);
+            drop(<$type>::complete(0));
         }
 
         #[test]

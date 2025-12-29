@@ -3,7 +3,7 @@
 //! # Examples
 //!
 //! ```
-//! use graaf::gen::prng::Xoshiro256StarStar;
+//! use graaf::r#gen::prng::Xoshiro256StarStar;
 //!
 //! let mut rng = Xoshiro256StarStar::new(123);
 //!

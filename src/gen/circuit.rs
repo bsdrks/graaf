@@ -138,7 +138,7 @@ macro_rules! test_circuit {
         #[test]
         #[should_panic(expected = "a digraph has at least one vertex")]
         fn circuit_0() {
-            let _ = <$type>::circuit(0);
+            drop(<$type>::circuit(0));
         }
 
         #[test]

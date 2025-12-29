@@ -213,23 +213,23 @@ impl PredecessorTree {
                 return Some(path);
             }
 
-            if let Some(v) = v {
-                if unsafe { *visited_ptr.add(v) } {
-                    break;
-                }
+            let Some(v) = v else {
+                break;
+            };
 
-                unsafe {
-                    *visited_ptr.add(v) = true;
-                }
-
-                if v != s {
-                    path.push(v);
-                }
-
-                s = v;
-            } else {
+            if unsafe { *visited_ptr.add(v) } {
                 break;
             }
+
+            unsafe {
+                *visited_ptr.add(v) = true;
+            }
+
+            if v != s {
+                path.push(v);
+            }
+
+            s = v;
         }
 
         None
@@ -306,7 +306,7 @@ mod tests {
     #[test]
     #[should_panic(expected = "a predecessor tree has at least one vertex")]
     fn new_0() {
-        let _ = PredecessorTree::new(0);
+        drop(PredecessorTree::new(0));
     }
 
     #[test]

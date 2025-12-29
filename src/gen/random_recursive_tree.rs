@@ -73,7 +73,7 @@ macro_rules! test_random_recursive_tree {
         #[test]
         #[should_panic(expected = "a digraph has at least one vertex")]
         fn random_recursive_tree_0() {
-            let _ = <$type>::random_recursive_tree(0, 0);
+            drop(<$type>::random_recursive_tree(0, 0));
         }
     };
 }

@@ -96,19 +96,19 @@ macro_rules! test_erdos_renyi {
         #[test]
         #[should_panic(expected = "a digraph has at least one vertex")]
         fn erdos_renyi_0() {
-            let _ = <$type>::erdos_renyi(0, 0.5, 0);
+            drop(<$type>::erdos_renyi(0, 0.5, 0));
         }
 
         #[test]
         #[should_panic(expected = "p = -0.1 must be in [0, 1]")]
         fn erdos_renyi_p_negative() {
-            let _ = <$type>::erdos_renyi(2, -0.1, 0);
+            drop(<$type>::erdos_renyi(2, -0.1, 0));
         }
 
         #[test]
         #[should_panic(expected = "p = 1.1 must be in [0, 1]")]
         fn erdos_renyi_p_gt_1() {
-            let _ = <$type>::erdos_renyi(2, 1.1, 0);
+            drop(<$type>::erdos_renyi(2, 1.1, 0));
         }
     };
 }

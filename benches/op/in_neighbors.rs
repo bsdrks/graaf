@@ -46,7 +46,7 @@ struct AdjacencyMapBTreeMap {
 fn in_neighbors_arcs_filter_map_eq<D>(
     digraph: &D,
     v: usize,
-) -> impl Iterator<Item = usize> + '_
+) -> impl Iterator<Item = usize>
 where
     D: Arcs,
 {
@@ -58,7 +58,7 @@ where
 fn in_neighbors_adjacency_list_contains(
     digraph: &AdjacencyListBTreeSet,
     v: usize,
-) -> impl Iterator<Item = usize> + '_ {
+) -> impl Iterator<Item = usize> {
     digraph
         .arcs
         .iter()
@@ -100,7 +100,7 @@ impl Iterator for InNeighborsIterator<'_> {
 fn in_neighbors_adjacency_list_unsafe(
     digraph: &AdjacencyListBTreeSet,
     v: usize,
-) -> impl Iterator<Item = usize> + '_ {
+) -> impl Iterator<Item = usize> {
     InNeighborsIterator {
         ptr: digraph.arcs.as_ptr(),
         len: digraph.arcs.len(),
@@ -161,7 +161,7 @@ fn in_neighbors_adjacency_list_parallel(
 fn in_neighbors_adjacency_list_weighted_contains(
     digraph: &AdjacencyListBTreeMap,
     v: usize,
-) -> impl Iterator<Item = usize> + '_ {
+) -> impl Iterator<Item = usize> {
     digraph
         .arcs
         .iter()
@@ -172,7 +172,7 @@ fn in_neighbors_adjacency_list_weighted_contains(
 fn in_neighbors_adjacency_map_contains(
     digraph: &AdjacencyMapBTreeMap,
     v: usize,
-) -> impl Iterator<Item = usize> + '_ {
+) -> impl Iterator<Item = usize> {
     digraph
         .arcs
         .iter()

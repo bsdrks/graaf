@@ -163,16 +163,13 @@ use {
             once,
             repeat_n,
         },
-        mem::{
-            ManuallyDrop,
-            MaybeUninit,
-        },
+        mem::ManuallyDrop,
         num::NonZero,
         ptr::read,
         sync::{
             Arc,
             Mutex,
-            Once,
+            OnceLock,
         },
         thread::{
             self,
@@ -290,18 +287,9 @@ pub struct AdjacencyMap {
     arcs: BTreeMap<usize, BTreeSet<usize>>,
 }
 
-#[allow(static_mut_refs)]
 fn empty_set() -> &'static BTreeSet<usize> {
-    static mut EMPTY: MaybeUninit<BTreeSet<usize>> = MaybeUninit::uninit();
-    static INIT: Once = Once::new();
-
-    unsafe {
-        INIT.call_once(|| {
-            let _ = EMPTY.write(BTreeSet::new());
-        });
-
-        EMPTY.assume_init_ref()
-    }
+    static EMPTY: OnceLock<BTreeSet<usize>> = OnceLock::new();
+    EMPTY.get_or_init(BTreeSet::new)
 }
 
 impl AddArc for AdjacencyMap {
@@ -1992,19 +1980,19 @@ mod tests {
     #[test]
     #[should_panic(expected = "a digraph has at least one vertex")]
     fn from_iter_empty() {
-        let _ = AdjacencyMap::from(Vec::<BTreeSet<usize>>::new());
+        drop(AdjacencyMap::from(Vec::<BTreeSet<usize>>::new()));
     }
 
     #[test]
     #[should_panic(expected = "v = 1 isn't in the digraph")]
     fn from_iter_out_of_bounds_v() {
-        let _ = AdjacencyMap::from([BTreeSet::from([1])]);
+        drop(AdjacencyMap::from([BTreeSet::from([1])]));
     }
 
     #[test]
     #[should_panic(expected = "u = 0 equals v = 0")]
     fn from_iter_u_equals_v() {
-        let _ = AdjacencyMap::from([BTreeSet::from([0])]);
+        drop(AdjacencyMap::from([BTreeSet::from([0])]));
     }
 
     #[test]

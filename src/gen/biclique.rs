@@ -228,13 +228,13 @@ macro_rules! test_biclique {
         #[test]
         #[should_panic(expected = "m = 0 must be greater than zero")]
         fn biclique_0_1() {
-            let _ = <$type>::biclique(0, 1);
+            drop(<$type>::biclique(0, 1));
         }
 
         #[test]
         #[should_panic(expected = "n = 0 must be greater than zero")]
         fn biclique_1_0() {
-            let _ = <$type>::biclique(1, 0);
+            drop(<$type>::biclique(1, 0));
         }
 
         #[test]

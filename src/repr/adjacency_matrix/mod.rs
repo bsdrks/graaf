@@ -1589,13 +1589,13 @@ mod tests {
     #[test]
     #[should_panic(expected = "a digraph has at least one vertex")]
     fn from_iter_empty() {
-        let _ = AdjacencyMatrix::from(Vec::<(usize, usize)>::new());
+        drop(AdjacencyMatrix::from(Vec::<(usize, usize)>::new()));
     }
 
     #[test]
     #[should_panic(expected = "u = 1 equals v = 1")]
     fn from_iter_self_loop() {
-        let _ = AdjacencyMatrix::from([(0, 1), (1, 1)]);
+        drop(AdjacencyMatrix::from([(0, 1), (1, 1)]));
     }
 
     #[test]

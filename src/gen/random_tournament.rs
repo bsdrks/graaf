@@ -90,7 +90,7 @@ macro_rules! test_random_tournament {
         #[test]
         #[should_panic(expected = "a digraph has at least one vertex")]
         fn random_tournament_0() {
-            let _ = <$type>::random_tournament(0, 0);
+            drop(<$type>::random_tournament(0, 0));
         }
     };
 }

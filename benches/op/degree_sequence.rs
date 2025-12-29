@@ -36,7 +36,7 @@ struct AdjacencyListBTreeSet {
 
 fn degree_sequence_adjacency_list_map_degree(
     digraph: &AdjacencyList,
-) -> impl Iterator<Item = usize> + '_ {
+) -> impl Iterator<Item = usize> {
     digraph.vertices().map(move |u| digraph.degree(u))
 }
 
@@ -63,7 +63,7 @@ fn degree_sequence_adjacency_list_btree_set_unsafe(
 
 fn degree_sequence_adjacency_list_btree_set_unsafe_parallel(
     digraph: &AdjacencyListBTreeSet,
-) -> impl Iterator<Item = usize> + '_ {
+) -> impl Iterator<Item = usize> {
     let order = digraph.arcs.len();
 
     let indegrees =

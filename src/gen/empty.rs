@@ -147,7 +147,7 @@ macro_rules! test_empty {
         #[test]
         #[should_panic(expected = "a digraph has at least one vertex")]
         fn empty_0() {
-            let _ = <$type>::empty(0);
+            drop(<$type>::empty(0));
         }
 
         #[test]

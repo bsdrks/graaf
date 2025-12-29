@@ -15,7 +15,7 @@
 //!     Wheel,
 //! };
 //!
-//! let _ = AdjacencyList::wheel(3);
+//! drop(AdjacencyList::wheel(3));
 //! ```
 //!
 //! ## Order 4
@@ -238,7 +238,7 @@ macro_rules! test_wheel {
             expected = "a wheel digraph has at least four vertices"
         )]
         fn wheel_0() {
-            let _ = <$type>::wheel(0);
+            drop(<$type>::wheel(0));
         }
 
         #[test]
@@ -246,7 +246,7 @@ macro_rules! test_wheel {
             expected = "a wheel digraph has at least four vertices"
         )]
         fn wheel_1() {
-            let _ = <$type>::wheel(1);
+            drop(<$type>::wheel(1));
         }
 
         #[test]
@@ -254,7 +254,7 @@ macro_rules! test_wheel {
             expected = "a wheel digraph has at least four vertices"
         )]
         fn wheel_2() {
-            let _ = <$type>::wheel(2);
+            drop(<$type>::wheel(2));
         }
 
         #[test]
@@ -262,7 +262,7 @@ macro_rules! test_wheel {
             expected = "a wheel digraph has at least four vertices"
         )]
         fn wheel_3() {
-            let _ = <$type>::wheel(3);
+            drop(<$type>::wheel(3));
         }
 
         #[test]

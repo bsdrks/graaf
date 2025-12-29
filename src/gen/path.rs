@@ -120,7 +120,7 @@ macro_rules! test_path {
         #[test]
         #[should_panic(expected = "a digraph has at least one vertex")]
         fn path_0() {
-            let _ = <$type>::path(0);
+            drop(<$type>::path(0));
         }
 
         #[test]

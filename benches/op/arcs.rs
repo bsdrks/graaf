@@ -55,7 +55,7 @@ impl Iterator for ArcsIterator<'_> {
 
 fn arcs_adjacency_list_btree_set_unsafe(
     digraph: &AdjacencyListBTreeSet,
-) -> impl Iterator<Item = (usize, usize)> + '_ {
+) -> impl Iterator<Item = (usize, usize)> {
     ArcsIterator {
         arcs_ptr: digraph.arcs.as_ptr(),
         len: digraph.arcs.len(),
