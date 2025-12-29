@@ -262,10 +262,10 @@ fn growing_network_adjacency_map_btree_set_parallel(
     parent_edges.sort_unstable_by_key(|&(u, _)| u);
 
     let mut arcs = BTreeMap::new();
-    let _ = arcs.insert(0, BTreeSet::new());
+    drop(arcs.insert(0, BTreeSet::new()));
 
     for (u, parent) in parent_edges {
-        let _ = arcs.insert(u, BTreeSet::from([parent]));
+        drop(arcs.insert(u, BTreeSet::from([parent])));
     }
 
     AdjacencyMapBTreeSet { arcs }
@@ -368,80 +368,80 @@ fn growing_network_btree_set_edge_list_collect(
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list(n: usize) {
-    let _ = AdjacencyList::random_recursive_tree(n, 0);
+    drop(AdjacencyList::random_recursive_tree(n, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list_btree_set_collect(n: usize) {
-    let _ = growing_network_adjacency_list_btree_set_collect(n, 0);
+    drop(growing_network_adjacency_list_btree_set_collect(n, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list_btree_set_push(n: usize) {
-    let _ = growing_network_adjacency_list_btree_set_push(n, 0);
+    drop(growing_network_adjacency_list_btree_set_push(n, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list_btree_set_add_arc_empty(n: usize) {
-    let _ = growing_network_adjacency_list_btree_set_add_arc_empty(n, 0);
+    drop(growing_network_adjacency_list_btree_set_add_arc_empty(n, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list_hash_set_collect(n: usize) {
-    let _ = growing_network_adjacency_list_hash_set_collect(n, 0);
+    drop(growing_network_adjacency_list_hash_set_collect(n, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_list_hash_set_push(n: usize) {
-    let _ = growing_network_adjacency_list_hash_set_push(n, 0);
+    drop(growing_network_adjacency_list_hash_set_push(n, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_matrix(n: usize) {
-    let _ = AdjacencyMatrix::random_recursive_tree(n, 0);
+    drop(AdjacencyMatrix::random_recursive_tree(n, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_map(n: usize) {
-    let _ = AdjacencyMap::random_recursive_tree(n, 0);
+    drop(AdjacencyMap::random_recursive_tree(n, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_map_add_arc_empty(n: usize) {
-    let _ = growing_network_adjacency_map_add_arc_empty(n, 0);
+    drop(growing_network_adjacency_map_add_arc_empty(n, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_map_btree_set_collect(n: usize) {
-    let _ = growing_network_adjacency_map_collect(n, 0);
+    drop(growing_network_adjacency_map_collect(n, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_map_btree_set_parallel(n: usize) {
-    let _ = growing_network_adjacency_map_btree_set_parallel(n, 0);
+    drop(growing_network_adjacency_map_btree_set_parallel(n, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_map_btree_set_pregenerate(n: usize) {
-    let _ = growing_network_adjacency_map_unsafe(n, 0);
+    drop(growing_network_adjacency_map_unsafe(n, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn adjacency_map_unsafe_vec(n: usize) {
-    let _ = growing_network_adjacency_map_unsafe(n, 0);
+    drop(growing_network_adjacency_map_unsafe(n, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn edge_list(n: usize) {
-    let _ = EdgeList::random_recursive_tree(n, 0);
+    drop(EdgeList::random_recursive_tree(n, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn edge_list_add_arc_empty(n: usize) {
-    let _ = growing_network_edge_list_add_arc_empty(n, 0);
+    drop(growing_network_edge_list_add_arc_empty(n, 0));
 }
 
 #[divan::bench(args = [10, 100, 1000, 10000, 100_000])]
 fn edge_list_btree_set_collect(n: usize) {
-    let _ = growing_network_btree_set_edge_list_collect(n, 0);
+    drop(growing_network_btree_set_edge_list_collect(n, 0));
 }

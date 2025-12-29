@@ -52,7 +52,7 @@ fn dijkstra(bencher: Bencher<'_, '_>) {
 
     bencher.bench_local(|| {
         let mut dijkstra = DijkstraDist::new(&digraph, once(0));
-        let _ = dijkstra.distances();
+        drop(dijkstra.distances());
     });
 }
 

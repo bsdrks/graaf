@@ -76,7 +76,7 @@ fn bfs_adjacency_list(bencher: Bencher<'_, '_>, n: usize) {
     let sources = 0..n / 10;
 
     bencher.bench_local(|| {
-        let _ = Bfs::new(&digraph, sources.clone());
+        drop(Bfs::new(&digraph, sources.clone()));
     });
 }
 
@@ -86,7 +86,7 @@ fn bfs_adjacency_list_collect(bencher: Bencher<'_, '_>, n: usize) {
     let sources = 0..n / 10;
 
     bencher.bench_local(|| {
-        let _ = BfsCollect::new(&digraph, sources.clone());
+        drop(BfsCollect::new(&digraph, sources.clone()));
     });
 }
 
@@ -96,7 +96,7 @@ fn bfs_adjacency_list_push_back_insert(bencher: Bencher<'_, '_>, n: usize) {
     let sources = 0..n / 10;
 
     bencher.bench_local(|| {
-        let _ = BfsPushBackInsert::new(&digraph, sources.clone());
+        drop(BfsPushBackInsert::new(&digraph, sources.clone()));
     });
 }
 
@@ -106,7 +106,7 @@ fn bfs_adjacency_map(bencher: Bencher<'_, '_>, n: usize) {
     let sources = 0..n / 10;
 
     bencher.bench_local(|| {
-        let _ = Bfs::new(&digraph, sources.clone());
+        drop(Bfs::new(&digraph, sources.clone()));
     });
 }
 
@@ -116,7 +116,7 @@ fn bfs_adjacency_map_collect(bencher: Bencher<'_, '_>, n: usize) {
     let sources = 0..n / 10;
 
     bencher.bench_local(|| {
-        let _ = BfsCollect::new(&digraph, sources.clone());
+        drop(BfsCollect::new(&digraph, sources.clone()));
     });
 }
 #[divan::bench(args = [10, 100, 1000, 10000])]
@@ -125,7 +125,7 @@ fn bfs_adjacency_map_push_back_insert(bencher: Bencher<'_, '_>, n: usize) {
     let sources = 0..n / 10;
 
     bencher.bench_local(|| {
-        let _ = BfsPushBackInsert::new(&digraph, sources.clone());
+        drop(BfsPushBackInsert::new(&digraph, sources.clone()));
     });
 }
 
@@ -135,7 +135,7 @@ fn bfs_adjacency_matrix(bencher: Bencher<'_, '_>, n: usize) {
     let sources = 0..n / 10;
 
     bencher.bench_local(|| {
-        let _ = Bfs::new(&digraph, sources.clone());
+        drop(Bfs::new(&digraph, sources.clone()));
     });
 }
 
@@ -145,7 +145,7 @@ fn bfs_adjacency_matrix_collect(bencher: Bencher<'_, '_>, n: usize) {
     let sources = 0..n / 10;
 
     bencher.bench_local(|| {
-        let _ = BfsCollect::new(&digraph, sources.clone());
+        drop(BfsCollect::new(&digraph, sources.clone()));
     });
 }
 
@@ -155,7 +155,7 @@ fn bfs_adjacency_matrix_push_back_insert(bencher: Bencher<'_, '_>, n: usize) {
     let sources = 0..n / 10;
 
     bencher.bench_local(|| {
-        let _ = BfsPushBackInsert::new(&digraph, sources.clone());
+        drop(BfsPushBackInsert::new(&digraph, sources.clone()));
     });
 }
 
@@ -165,7 +165,7 @@ fn bfs_edge_list(bencher: Bencher<'_, '_>, n: usize) {
     let sources = 0..n / 10;
 
     bencher.bench_local(|| {
-        let _ = Bfs::new(&digraph, sources.clone());
+        drop(Bfs::new(&digraph, sources.clone()));
     });
 }
 
@@ -175,7 +175,7 @@ fn bfs_edge_list_collect(bencher: Bencher<'_, '_>, n: usize) {
     let sources = 0..n / 10;
 
     bencher.bench_local(|| {
-        let _ = BfsCollect::new(&digraph, sources.clone());
+        drop(BfsCollect::new(&digraph, sources.clone()));
     });
 }
 
@@ -185,6 +185,6 @@ fn bfs_edge_list_push_back_insert(bencher: Bencher<'_, '_>, n: usize) {
     let sources = 0..n / 10;
 
     bencher.bench_local(|| {
-        let _ = BfsPushBackInsert::new(&digraph, sources.clone());
+        drop(BfsPushBackInsert::new(&digraph, sources.clone()));
     });
 }

@@ -57,7 +57,7 @@ impl<'a, D> BfsPushBack<'a, D> {
         for source in sources {
             queue.push_back(source);
 
-            let _ = visited.insert(source);
+            drop(visited.insert(source));
         }
 
         Self {
@@ -101,7 +101,7 @@ impl<'a, D> BfsExtend<'a, D> {
         for source in sources {
             queue.push_back(source);
 
-            let _ = visited.insert(source);
+            drop(visited.insert(source));
         }
 
         Self {
@@ -192,7 +192,7 @@ fn bfs_adjacency_list(bencher: Bencher<'_, '_>, order: usize) {
 
     bencher.bench_local(|| {
         let bfs = Bfs::new(&digraph, once(0));
-        let _ = bfs.collect::<Vec<_>>();
+        drop(bfs.collect::<Vec<_>>());
     });
 }
 
@@ -202,7 +202,7 @@ fn bfs_adjacency_list_push_back(bencher: Bencher<'_, '_>, order: usize) {
 
     bencher.bench_local(|| {
         let bfs = BfsPushBack::new(&digraph, once(0));
-        let _ = bfs.collect::<Vec<_>>();
+        drop(bfs.collect::<Vec<_>>());
     });
 }
 
@@ -212,7 +212,7 @@ fn bfs_adjacency_list_extend(bencher: Bencher<'_, '_>, n: usize) {
 
     bencher.bench_local(|| {
         let bfs = BfsExtend::new(&digraph, once(0));
-        let _ = bfs.collect::<Vec<_>>();
+        drop(bfs.collect::<Vec<_>>());
     });
 }
 
@@ -222,7 +222,7 @@ fn bfs_adjacency_list_unsafe(bencher: Bencher<'_, '_>, n: usize) {
 
     bencher.bench_local(|| {
         let bfs = BfsUnsafe::new(&digraph, once(0));
-        let _ = bfs.collect::<Vec<_>>();
+        drop(bfs.collect::<Vec<_>>());
     });
 }
 
@@ -232,7 +232,7 @@ fn bfs_adjacency_map(bencher: Bencher<'_, '_>, n: usize) {
 
     bencher.bench_local(|| {
         let bfs = Bfs::new(&digraph, once(0));
-        let _ = bfs.collect::<Vec<_>>();
+        drop(bfs.collect::<Vec<_>>());
     });
 }
 
@@ -242,7 +242,7 @@ fn bfs_adjacency_map_push_back(bencher: Bencher<'_, '_>, n: usize) {
 
     bencher.bench_local(|| {
         let bfs = BfsPushBack::new(&digraph, once(0));
-        let _ = bfs.collect::<Vec<_>>();
+        drop(bfs.collect::<Vec<_>>());
     });
 }
 
@@ -252,7 +252,7 @@ fn bfs_adjacency_map_extend(bencher: Bencher<'_, '_>, n: usize) {
 
     bencher.bench_local(|| {
         let bfs = BfsExtend::new(&digraph, once(0));
-        let _ = bfs.collect::<Vec<_>>();
+        drop(bfs.collect::<Vec<_>>());
     });
 }
 
@@ -262,7 +262,7 @@ fn bfs_adjacency_map_unsafe(bencher: Bencher<'_, '_>, n: usize) {
 
     bencher.bench_local(|| {
         let bfs = BfsUnsafe::new(&digraph, once(0));
-        let _ = bfs.collect::<Vec<_>>();
+        drop(bfs.collect::<Vec<_>>());
     });
 }
 
@@ -272,7 +272,7 @@ fn bfs_adjacency_matrix(bencher: Bencher<'_, '_>, n: usize) {
 
     bencher.bench_local(|| {
         let bfs = Bfs::new(&digraph, once(0));
-        let _ = bfs.collect::<Vec<_>>();
+        drop(bfs.collect::<Vec<_>>());
     });
 }
 
@@ -282,7 +282,7 @@ fn bfs_adjacency_matrix_push_back(bencher: Bencher<'_, '_>, n: usize) {
 
     bencher.bench_local(|| {
         let bfs = BfsPushBack::new(&digraph, once(0));
-        let _ = bfs.collect::<Vec<_>>();
+        drop(bfs.collect::<Vec<_>>());
     });
 }
 
@@ -292,7 +292,7 @@ fn bfs_adjacency_matrix_extend(bencher: Bencher<'_, '_>, n: usize) {
 
     bencher.bench_local(|| {
         let bfs = BfsExtend::new(&digraph, once(0));
-        let _ = bfs.collect::<Vec<_>>();
+        drop(bfs.collect::<Vec<_>>());
     });
 }
 
@@ -302,7 +302,7 @@ fn bfs_adjacency_matrix_unsafe(bencher: Bencher<'_, '_>, n: usize) {
 
     bencher.bench_local(|| {
         let bfs = BfsUnsafe::new(&digraph, once(0));
-        let _ = bfs.collect::<Vec<_>>();
+        drop(bfs.collect::<Vec<_>>());
     });
 }
 
@@ -312,7 +312,7 @@ fn bfs_edge_list(bencher: Bencher<'_, '_>, n: usize) {
 
     bencher.bench_local(|| {
         let bfs = Bfs::new(&digraph, once(0));
-        let _ = bfs.collect::<Vec<_>>();
+        drop(bfs.collect::<Vec<_>>());
     });
 }
 
@@ -322,7 +322,7 @@ fn bfs_edge_list_push_back(bencher: Bencher<'_, '_>, n: usize) {
 
     bencher.bench_local(|| {
         let bfs = BfsPushBack::new(&digraph, once(0));
-        let _ = bfs.collect::<Vec<_>>();
+        drop(bfs.collect::<Vec<_>>());
     });
 }
 
@@ -332,7 +332,7 @@ fn bfs_edge_list_extend(bencher: Bencher<'_, '_>, n: usize) {
 
     bencher.bench_local(|| {
         let bfs = BfsExtend::new(&digraph, once(0));
-        let _ = bfs.collect::<Vec<_>>();
+        drop(bfs.collect::<Vec<_>>());
     });
 }
 
@@ -342,6 +342,6 @@ fn bfs_edge_list_unsafe(bencher: Bencher<'_, '_>, n: usize) {
 
     bencher.bench_local(|| {
         let bfs = BfsUnsafe::new(&digraph, once(0));
-        let _ = bfs.collect::<Vec<_>>();
+        drop(bfs.collect::<Vec<_>>());
     });
 }

@@ -311,11 +311,11 @@ fn biclique_adjacency_map_btree_set_clone_from(
     let mut arcs = BTreeMap::new();
 
     for u in 0..m {
-        let _ = arcs.insert(u, clique_2.clone());
+        drop(arcs.insert(u, clique_2.clone()));
     }
 
     for u in m..order {
-        let _ = arcs.insert(u, clique_1.clone());
+        drop(arcs.insert(u, clique_1.clone()));
     }
 
     AdjacencyMapBTreeSet { arcs }
@@ -365,17 +365,17 @@ fn biclique_adjacency_map_btree_set_loop(
             // Vertices 0..m: their neighbors are all vertices in the
             // second partition: [m, m+n)
             for v in m..order {
-                let _ = set.insert(v);
+                drop(set.insert(v));
             }
         } else {
             // Vertices m..order: their neighbors are all vertices in the
             // first partition: [0, m)
             for v in 0..m {
-                let _ = set.insert(v);
+                drop(set.insert(v));
             }
         }
 
-        let _ = arcs.insert(u, set);
+        drop(arcs.insert(u, set));
     }
 
     AdjacencyMapBTreeSet { arcs }
@@ -402,11 +402,11 @@ fn biclique_unsafe(m: usize, n: usize) -> AdjacencyMapBTreeSet {
 
             if u < m {
                 for v in m..order {
-                    let _ = set.insert(v);
+                    drop(set.insert(v));
                 }
             } else {
                 for v in 0..m {
-                    let _ = set.insert(v);
+                    drop(set.insert(v));
                 }
             }
 
@@ -494,7 +494,7 @@ fn biclique_edge_list_flat_map_clone(m: usize, n: usize) -> EdgeListVec {
     (100, 10000),
 ])]
 fn adjacency_list((m, n): (usize, usize)) {
-    let _ = AdjacencyList::biclique(m, n);
+    drop(AdjacencyList::biclique(m, n));
 }
 
 #[divan::bench(args = [
@@ -507,7 +507,7 @@ fn adjacency_list((m, n): (usize, usize)) {
     (100, 10000),
 ])]
 fn adjacency_list_add_arc_empty((m, n): (usize, usize)) {
-    let _ = biclique_adjacency_list_add_arc_empty(m, n);
+    drop(biclique_adjacency_list_add_arc_empty(m, n));
 }
 
 #[divan::bench(args = [
@@ -520,7 +520,7 @@ fn adjacency_list_add_arc_empty((m, n): (usize, usize)) {
     (100, 10000),
 ])]
 fn adjacency_list_btree_set_clone_from((m, n): (usize, usize)) {
-    let _ = biclique_adjacency_list_btree_set_clone_from(m, n);
+    drop(biclique_adjacency_list_btree_set_clone_from(m, n));
 }
 
 #[divan::bench(args = [
@@ -533,7 +533,7 @@ fn adjacency_list_btree_set_clone_from((m, n): (usize, usize)) {
     (100, 10000),
 ])]
 fn adjacency_list_btree_set_collect((m, n): (usize, usize)) {
-    let _ = biclique_adjacency_list_btree_set_collect(m, n);
+    drop(biclique_adjacency_list_btree_set_collect(m, n));
 }
 
 #[divan::bench(args = [
@@ -546,7 +546,7 @@ fn adjacency_list_btree_set_collect((m, n): (usize, usize)) {
     (100, 10000),
 ])]
 fn adjacency_list_btree_set_repeat((m, n): (usize, usize)) {
-    let _ = biclique_adjacency_list_btree_set_repeat(m, n);
+    drop(biclique_adjacency_list_btree_set_repeat(m, n));
 }
 
 #[divan::bench(args = [
@@ -559,7 +559,7 @@ fn adjacency_list_btree_set_repeat((m, n): (usize, usize)) {
     (100, 10000),
 ])]
 fn adjacency_list_btree_set_extend((m, n): (usize, usize)) {
-    let _ = biclique_adjacency_list_btree_set_extend(m, n);
+    drop(biclique_adjacency_list_btree_set_extend(m, n));
 }
 
 #[divan::bench(args = [
@@ -572,7 +572,7 @@ fn adjacency_list_btree_set_extend((m, n): (usize, usize)) {
     (100, 10000),
 ])]
 fn adjacency_list_hash_set_clone_from((m, n): (usize, usize)) {
-    let _ = biclique_adjacency_list_hash_set_clone_from(m, n);
+    drop(biclique_adjacency_list_hash_set_clone_from(m, n));
 }
 
 #[divan::bench(args = [
@@ -585,7 +585,7 @@ fn adjacency_list_hash_set_clone_from((m, n): (usize, usize)) {
     (100, 10000),
 ])]
 fn adjacency_list_btree_set_parallel((m, n): (usize, usize)) {
-    let _ = biclique_adjacency_list_btree_set_parallel(m, n);
+    drop(biclique_adjacency_list_btree_set_parallel(m, n));
 }
 
 #[divan::bench(args = [
@@ -598,7 +598,7 @@ fn adjacency_list_btree_set_parallel((m, n): (usize, usize)) {
     (100, 10000),
 ])]
 fn adjacency_map((m, n): (usize, usize)) {
-    let _ = AdjacencyMap::biclique(m, n);
+    drop(AdjacencyMap::biclique(m, n));
 }
 
 #[divan::bench(args = [
@@ -611,7 +611,7 @@ fn adjacency_map((m, n): (usize, usize)) {
     (100, 10000),
 ])]
 fn adjacency_map_add_arc_empty((m, n): (usize, usize)) {
-    let _ = biclique_adjacency_map_add_arc_empty(m, n);
+    drop(biclique_adjacency_map_add_arc_empty(m, n));
 }
 
 #[divan::bench(args = [
@@ -624,7 +624,7 @@ fn adjacency_map_add_arc_empty((m, n): (usize, usize)) {
     (100, 10000),
 ])]
 fn adjacency_map_btree_set_clone_from((m, n): (usize, usize)) {
-    let _ = biclique_adjacency_map_btree_set_clone_from(m, n);
+    drop(biclique_adjacency_map_btree_set_clone_from(m, n));
 }
 
 #[divan::bench(args = [
@@ -637,7 +637,7 @@ fn adjacency_map_btree_set_clone_from((m, n): (usize, usize)) {
     (100, 10000),
 ])]
 fn adjacency_map_btree_set_repeat((m, n): (usize, usize)) {
-    let _ = biclique_adjacency_map_btree_set_repeat(m, n);
+    drop(biclique_adjacency_map_btree_set_repeat(m, n));
 }
 
 #[divan::bench(args = [
@@ -649,7 +649,7 @@ fn adjacency_map_btree_set_repeat((m, n): (usize, usize)) {
     (100, 10000),
 ])]
 fn adjacency_map_btree_set_loop((m, n): (usize, usize)) {
-    let _ = biclique_adjacency_map_btree_set_loop(m, n);
+    drop(biclique_adjacency_map_btree_set_loop(m, n));
 }
 
 #[divan::bench(args = [
@@ -660,7 +660,7 @@ fn adjacency_map_btree_set_loop((m, n): (usize, usize)) {
     (100, 10000),
 ])]
 fn adjacency_map_unsafe((m, n): (usize, usize)) {
-    let _ = biclique_unsafe(m, n);
+    drop(biclique_unsafe(m, n));
 }
 
 #[divan::bench(args = [
@@ -673,7 +673,7 @@ fn adjacency_map_unsafe((m, n): (usize, usize)) {
     (100, 10000),
 ])]
 fn adjacency_matrix((m, n): (usize, usize)) {
-    let _ = AdjacencyMatrix::biclique(m, n);
+    drop(AdjacencyMatrix::biclique(m, n));
 }
 
 #[divan::bench(args = [
@@ -686,7 +686,7 @@ fn adjacency_matrix((m, n): (usize, usize)) {
     (100, 10000),
 ])]
 fn edge_list((m, n): (usize, usize)) {
-    let _ = EdgeList::biclique(m, n);
+    drop(EdgeList::biclique(m, n));
 }
 
 #[divan::bench(args = [
@@ -699,7 +699,7 @@ fn edge_list((m, n): (usize, usize)) {
     (100, 10000),
 ])]
 fn edge_list_add_arc_empty((m, n): (usize, usize)) {
-    let _ = biclique_edge_list_add_arc_empty(m, n);
+    drop(biclique_edge_list_add_arc_empty(m, n));
 }
 
 #[divan::bench(args = [
@@ -712,7 +712,7 @@ fn edge_list_add_arc_empty((m, n): (usize, usize)) {
     (100, 10000),
 ])]
 fn edge_list_flat_map((m, n): (usize, usize)) {
-    let _ = biclique_edge_list_flat_map(m, n);
+    drop(biclique_edge_list_flat_map(m, n));
 }
 
 #[divan::bench(args = [
@@ -725,5 +725,5 @@ fn edge_list_flat_map((m, n): (usize, usize)) {
     (100, 10000),
 ])]
 fn edge_list_flat_map_clone((m, n): (usize, usize)) {
-    let _ = biclique_edge_list_flat_map_clone(m, n);
+    drop(biclique_edge_list_flat_map_clone(m, n));
 }
